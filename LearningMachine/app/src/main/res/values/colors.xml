@@ -14,4 +14,7 @@
     <color name="more_light_gray">#E8E9EB</color>
     <color name="almost_white">#F3F4F5</color>
 
+    <!-- Sample Color -->
+    <color name="dark_green">#ce0a4602</color>
+
 </resources>
