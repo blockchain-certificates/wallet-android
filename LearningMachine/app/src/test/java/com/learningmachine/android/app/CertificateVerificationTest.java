@@ -9,11 +9,9 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Example local unit test, which will execute on the development machine (host).
- *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
+ * Example of certificate test. Should be renamed or moved to the correct class test.
  */
-public class ExampleUnitTest {
+public class CertificateVerificationTest {
 
     @Test
     public void testCertificateVerification() throws Exception {
