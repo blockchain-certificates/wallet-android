@@ -13,7 +13,8 @@ public class IssuerViewHolder extends RecyclerView.ViewHolder {
     public IssuerViewHolder(ViewDataBinding binding) {
         super(binding.getRoot());
 
-        Context context = binding.getRoot().getContext();
+        Context context = binding.getRoot()
+                .getContext();
         mViewModel = new IssuerListItemViewModel(context);
 
         ((ListItemIssuerBinding) binding).setViewModel(mViewModel);

@@ -76,7 +76,8 @@ public class HomeFragment extends LearningMachineFragment {
         @Override
         public void onBindViewHolder(IssuerViewHolder holder, int position) {
             Issuer contact = mIssuerList.get(position);
-            holder.getViewModel().bindIssuer(contact);
+            holder.getViewModel()
+                    .bindIssuer(contact);
         }
 
         @Override
