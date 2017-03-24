@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Learning Machine</string>
+    <string name="home_issuers">Issuers</string>
 </resources>
