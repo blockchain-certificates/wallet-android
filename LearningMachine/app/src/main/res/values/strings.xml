@@ -2,4 +2,5 @@
     <string name="app_name">Learning Machine</string>
     <string name="home_issuers">Issuers</string>
     <string name="home_settings_title">Settings</string>
+    <string name="settings_title">Settings</string>
 </resources>
