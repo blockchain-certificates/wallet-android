@@ -10,9 +10,11 @@ android {
         if (buildNumber != null) {
             versionCode buildNumber.toInteger()
             versionName "1.0"
+            versionNameSuffix "-" + System.getenv("BUILD_NUMBER")
         } else {
             versionCode 1
             versionName "1.0"
+            versionNameSuffix "-debug"
         }
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
@@ -20,25 +22,24 @@ android {
 
     signingConfigs {
         LearningMachineRelease {
-            keyAlias 'SIGNING_KEY_ALIAS'
-            keyPassword 'SIGNING_KEY_PASSWORD'
-            storeFile file('/Users/rashadcureton/Documents/learning-machine-android/scripts/learningmachine.keystore.jks')
-            storePassword 'SIGNING_STORE_PASSWORD'
+            keyAlias System.getenv("SIGNING_KEY_ALIAS")
+            keyPassword System.getenv("SIGNING_KEY_PASSWORD")
+            storeFile file('../keys/learningmachine.keystore.jks')
+            storePassword System.getenv("SIGNING_STORE_PASSWORD")
         }
     }
 
 
     productFlavors {
+        dev {
+            applicationId "com.learningmachine.android.app.dev"
+        }
         staging {
-            applicationId "com.learningmachine.android.staging"
-            signingConfig signingConfigs.LearningMachineRelease
-
+            applicationId "com.learningmachine.android.app.staging"
         }
 
         production {
-            applicationId "com.learningmachine.android.production"
-            signingConfig signingConfigs.LearningMachineRelease
-
+            applicationId "com.learningmachine.android.app"
         }
     }
     
@@ -62,14 +63,7 @@ android {
         }
 
         debug {
-
-            if (System.getenv("BUILD_NUMBER") != null) {
-                versionNameSuffix "-$System.env.BUILD_NUMBER"
-            } else {
-                versionNameSuffix "-debug"
-            }
             buildConfigField "boolean", "DEBUG_BUILD", "true"
-
         }
     }
     dataBinding {
