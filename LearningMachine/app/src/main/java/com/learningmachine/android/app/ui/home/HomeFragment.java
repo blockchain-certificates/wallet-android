@@ -1,6 +1,7 @@
 package com.learningmachine.android.app.ui.home;
 
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -17,6 +19,7 @@ import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.model.Issuer;
 import com.learningmachine.android.app.databinding.FragmentHomeBinding;
 import com.learningmachine.android.app.ui.LearningMachineFragment;
+import com.learningmachine.android.app.ui.settings.SettingsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +53,16 @@ public class HomeFragment extends LearningMachineFragment {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.issuer_settings, menu);
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.issuer_settings_button:
+                Intent intent = new Intent(getContext(), SettingsActivity.class);
+                startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void setupRecyclerView() {

@@ -2,4 +2,9 @@
     <string name="app_name">Learning Machine</string>
     <string name="home_issuers">Issuers</string>
     <string name="settings">settings</string>
+    <string name="passphrase_header">Passphrase</string>
+    <string name="reveal_passphrase">Reveal Passphrase</string>
+    <string name="replace_passphrase">Replace Passphrase</string>
+    <string name="about_passphrases">About Passphrases</string>
+    <string name="settings_fragment">Settings</string>
 </resources>

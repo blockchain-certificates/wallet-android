@@ -9,8 +9,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".ui.home.HomeActivity"
+        <activity
+            android:name=".ui.home.HomeActivity"
             android:label="@string/home_issuers">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -18,7 +18,11 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
+        <activity
+            android:name=".ui.settings.SettingsActivity"
+            android:label="@string/settings_fragment"
+            android:parentActivityName=".ui.home.HomeActivity">
+        </activity>
     </application>
 
 </manifest>
