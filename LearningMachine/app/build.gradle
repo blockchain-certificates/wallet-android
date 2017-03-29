@@ -10,6 +10,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -28,6 +29,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:25.3.0'
     compile 'com.android.support:recyclerview-v7:25.3.0'
+    compile 'com.android.support:multidex:1.0.1'
     compile 'org.bitcoinj:bitcoinj-core:0.14.4'
 
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
