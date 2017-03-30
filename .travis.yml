@@ -15,7 +15,6 @@ android:
     - android-25
     # Additional components
     - extra-android-support
-    - extra-google-google_play_services
     - extra-google-m2repository
     - extra-android-m2repository
 script:
