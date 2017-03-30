@@ -31,4 +31,9 @@ public class IssuerActivity extends LearningMachineSingleFragmentActivity {
         }
         return issuer.getName();
     }
+
+    @Override
+    protected boolean requiresBackNavigation() {
+        return true;
+    }
 }

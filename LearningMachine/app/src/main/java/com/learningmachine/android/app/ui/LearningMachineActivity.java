@@ -42,7 +42,7 @@ public abstract class LearningMachineActivity extends AppCompatActivity {
         }
 
         // decide to display home caret
-        if (!isStandAlone()) {
+        if (requiresBackNavigation()) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
@@ -53,7 +53,7 @@ public abstract class LearningMachineActivity extends AppCompatActivity {
 
     /* Navigation */
 
-    protected boolean isStandAlone() {
+    protected boolean requiresBackNavigation() {
         return false;
     }
 
