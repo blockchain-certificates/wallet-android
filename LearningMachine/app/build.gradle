@@ -23,10 +23,10 @@ android {
 
     signingConfigs {
         LearningMachineRelease {
-            keyAlias "learningmachine"
-            keyPassword "TDMRMNlLWKAfhK0CEXd0"
+            keyAlias "SIGNING_KEY_ALIAS"
+            keyPassword "SIGING_KEY_PASSWORD"
             storeFile file('../../keys/learning-machine.jks')
-            storePassword "TDMRMNlLWKAfhK0CEXd0"
+            storePassword "SIGNING_STORE_PASSWORD"
         }
     }
 
