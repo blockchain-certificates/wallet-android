@@ -9,6 +9,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".ui.home.HomeActivity"
             android:label="@string/home_issuers">
@@ -23,6 +24,11 @@
             android:label="@string/settings_fragment"
             android:parentActivityName=".ui.home.HomeActivity">
         </activity>
+
+
+        <activity android:name=".ui.issuer.IssuerActivity"/>
+
+
     </application>
 
 </manifest>

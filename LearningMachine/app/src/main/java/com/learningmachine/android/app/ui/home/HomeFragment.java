@@ -3,7 +3,6 @@ package com.learningmachine.android.app.ui.home;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -18,6 +17,7 @@ import android.view.ViewGroup;
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.model.Issuer;
 import com.learningmachine.android.app.databinding.FragmentHomeBinding;
+import com.learningmachine.android.app.databinding.ListItemIssuerBinding;
 import com.learningmachine.android.app.ui.LearningMachineFragment;
 import com.learningmachine.android.app.ui.settings.SettingsActivity;
 
@@ -76,7 +76,7 @@ public class HomeFragment extends LearningMachineFragment {
         issuer = new Issuer("Issuer 3", R.drawable.issuer_targaryen);
         issuerList.add(issuer);
 
-        IssuerAdapter adapter = new IssuerAdapter(issuerList);
+        final IssuerAdapter adapter = new IssuerAdapter(issuerList);
         mBinding.issuerRecyclerview.setAdapter(adapter);
 
         int gridSize = getResources().getInteger(R.integer.fragment_home_issuer_grid_size);
@@ -97,15 +97,14 @@ public class HomeFragment extends LearningMachineFragment {
         public IssuerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             Context context = parent.getContext();
             LayoutInflater inflater = LayoutInflater.from(context);
-            ViewDataBinding binding = DataBindingUtil.inflate(inflater, R.layout.list_item_issuer, parent, false);
+            ListItemIssuerBinding binding = DataBindingUtil.inflate(inflater, R.layout.list_item_issuer, parent, false);
             return new IssuerViewHolder(binding);
         }
 
         @Override
         public void onBindViewHolder(IssuerViewHolder holder, int position) {
-            Issuer contact = mIssuerList.get(position);
-            holder.getViewModel()
-                    .bindIssuer(contact);
+            Issuer issuer = mIssuerList.get(position);
+            holder.bind(issuer);
         }
 
         @Override

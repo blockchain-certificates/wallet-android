@@ -12,9 +12,7 @@ import com.learningmachine.android.app.data.model.Issuer;
 public class IssuerListItemViewModel extends BaseObservable {
 
     private Context mContext;
-
-    private String mTitleString;
-    private int mImageResId;
+    private Issuer mIssuer;
 
     public IssuerListItemViewModel(Context context) {
         mContext = context;
@@ -22,7 +20,10 @@ public class IssuerListItemViewModel extends BaseObservable {
 
     @Bindable
     public String getTitle() {
-        return mTitleString;
+        if (mIssuer == null) {
+            return null;
+        }
+        return mIssuer.getName();
     }
 
     @Bindable
@@ -33,12 +34,18 @@ public class IssuerListItemViewModel extends BaseObservable {
 
     @VisibleForTesting
     int getImageResId() {
-        return mImageResId;
+        if (mIssuer == null) {
+            return 0;
+        }
+        return mIssuer.getImageResId();
     }
 
     public void bindIssuer(Issuer issuer) {
-        mTitleString = issuer.getName();
-        mImageResId = issuer.getImageResId();
+        mIssuer = issuer;
         notifyChange();
+    }
+
+    public Issuer getIssuer() {
+        return mIssuer;
     }
 }
