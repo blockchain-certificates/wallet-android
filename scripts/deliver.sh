@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set +x
+cd LearningMachine
 
 if [[ "$TRAVIS_PULL_REQUEST" != "false" ]]; then
   echo "Nothing to deliver, this is a pull request."
