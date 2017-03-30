@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set +x
+cd LearningMachine
 
 #### BUILD
 if [[ "$TRAVIS_PULL_REQUEST" != "false" || ( "$TRAVIS_BRANCH" != "master" && "$TRAVIS_BRANCH" != hotfix/* ) ]]; then
