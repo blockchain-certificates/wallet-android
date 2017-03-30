@@ -24,7 +24,7 @@ android {
     signingConfigs {
         LearningMachineRelease {
             keyAlias "SIGNING_KEY_ALIAS"
-            keyPassword "SIGING_KEY_PASSWORD"
+            keyPassword "SIGNING_KEY_PASSWORD"
             storeFile file('../../keys/learning-machine.jks')
             storePassword "SIGNING_STORE_PASSWORD"
         }
