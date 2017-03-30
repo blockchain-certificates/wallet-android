@@ -1,6 +1,8 @@
 package com.learningmachine.android.app.data.model;
 
-public class Issuer {
+import java.io.Serializable;
+
+public class Issuer implements Serializable {
 
     private String mName;
     private int mImageResId;

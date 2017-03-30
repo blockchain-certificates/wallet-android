@@ -16,4 +16,9 @@ public class SettingsActivity extends LearningMachineSingleFragmentActivity {
     public Fragment createFragment() {
         return SettingsFragment.newInstance();
     }
+
+    @Override
+    protected boolean requiresBackNavigation() {
+        return true;
+    }
 }

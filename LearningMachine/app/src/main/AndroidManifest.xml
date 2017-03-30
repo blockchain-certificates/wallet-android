@@ -10,7 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".ui.home.HomeActivity"
+        <activity
+            android:name=".ui.home.HomeActivity"
             android:label="@string/home_issuers">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -21,6 +22,8 @@
 
         <activity android:name=".ui.settings.SettingsActivity"
                   android:label="@string/settings_title"/>
+
+        <activity android:name=".ui.issuer.IssuerActivity"/>
 
     </application>
 
