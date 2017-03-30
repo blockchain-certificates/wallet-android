@@ -2,21 +2,19 @@ sudo: false
 language: android
 jdk:
   - oraclejdk8
+# Travis workaround for Android SDK 25 License
+# https://github.com/travis-ci/docs-travis-ci-com/issues/779
+install:
+  - echo y | android update sdk -u -a -t tools
+  - echo y | android update sdk -u -a -t platform-tools
+  - echo y | android update sdk -u -a -t build-tools-25.0.2
+  - echo y | android update sdk -u -a -t android-25
+  - echo y | android update sdk -u -a -t extra-google-m2repository
+  - echo y | android update sdk -u -a -t extra-android-m2repository
 android:
   components:
-    # Travis workaround for Android SDK 25 License
-    # travis-ci/docs-travis-ci-com#779
-    - tools
-    - platform-tools
-    - tools
-    # The BuildTools version used by your project
-    - build-tools-25.0.2
-    # The SDK version used to compile your project
-    - android-25
     # Additional components
     - extra-android-support
-    - extra-google-m2repository
-    - extra-android-m2repository
 script:
     - ./scripts/build.sh
 after_success:
