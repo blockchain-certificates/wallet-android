@@ -30,7 +30,7 @@ else
     then
       echo "Uploading $FULL_APP_NAME_STAGING to Hockeyapp."
       curl https://rink.hockeyapp.net/api/2/apps/upload \
-        -H "X-HockeyAppToken: $HOCKEYAPP_API_TOKEN" \
+        -H "X-HockeyAppToken: $HOCKEYAPP_STAGING_API_TOKEN" \
         -F "ipa=@$FULL_APP_PATH_STAGING" \
         -F "notes=$RELEASE_NOTES" \
         -F "notes_type=0" \
@@ -46,7 +46,7 @@ else
     then
       echo "Uploading $FULL_APP_NAME_PRODUCTION to Hockeyapp."
       curl https://rink.hockeyapp.net/api/2/apps/upload \
-        -H "X-HockeyAppToken: $HOCKEYAPP_API_TOKEN" \
+        -H "X-HockeyAppToken: $HOCKEYAPP_PRODUCTION_API_TOKEN" \
         -F "ipa=@$FULL_APP_PATH_PRODUCTION" \
         -F "notes=$RELEASE_NOTES" \
         -F "notes_type=0" \
