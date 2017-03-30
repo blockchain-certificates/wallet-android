@@ -7,14 +7,13 @@ android {
         applicationId "com.learningmachine.android.app"
         minSdkVersion 19
         targetSdkVersion 25
+        versionName "1.0"
         def buildNumber = System.getenv("BUILD_NUMBER")
         if (buildNumber != null) {
             versionCode buildNumber.toInteger()
-            versionName "1.0"
             versionNameSuffix "-" + buildNumber
         } else {
             versionCode 1
-            versionName "1.0"
         }
 
 
@@ -24,10 +23,10 @@ android {
 
     signingConfigs {
         LearningMachineRelease {
-            keyAlias System.getenv("SIGNING_KEY_ALIAS")
-            keyPassword System.getenv("SIGNING_KEY_PASSWORD")
-            storeFile file('../keys/learningmachine.keystore.jks')
-            storePassword System.getenv("SIGNING_STORE_PASSWORD")
+            keyAlias "learningmachine"
+            keyPassword "TDMRMNlLWKAfhK0CEXd0"
+            storeFile file('../../keys/learning-machine.jks')
+            storePassword "TDMRMNlLWKAfhK0CEXd0"
         }
     }
 
@@ -47,7 +46,10 @@ android {
 
     buildTypes {
         release {
-            versionNameSuffix "-nontravis"
+            if (System.getenv("BUILD_NUMBER") == null) {
+                versionNameSuffix "-nontravis"
+            }
+
             applicationVariants.all { variant ->
                 variant.outputs.each { output ->
                     def file = output.outputFile
@@ -61,8 +63,11 @@ android {
         }
 
         debug {
+            if (System.getenv("BUILD_NUMBER") == null) {
+                versionNameSuffix "-debug"
+            }
             buildConfigField "boolean", "DEBUG_BUILD", "true"
-            versionNameSuffix "-debug"
+
         }
     }
     dataBinding {
