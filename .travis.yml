@@ -2,8 +2,14 @@ sudo: false
 language: android
 jdk:
   - oraclejdk8
+licenses:
+    - 'android-sdk-preview-license-.+'
+    - 'android-sdk-license-.+'
+    - 'google-gdk-license-.+'
 android:
   components:
+    # Travis workaround for Android SDK 25 License
+    # travis-ci/docs-travis-ci-com#779
     - tools
     - platform-tools
     - tools
