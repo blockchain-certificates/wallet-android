@@ -23,10 +23,10 @@ android {
 
     signingConfigs {
         LearningMachineRelease {
-            keyAlias "SIGNING_KEY_ALIAS"
-            keyPassword "SIGNING_KEY_PASSWORD"
+            keyAlias System.getenv("SIGNING_KEY_ALIAS")
+            keyPassword System.getenv("SIGNING_KEY_PASSWORD")
             storeFile file('../../keys/learning-machine.jks')
-            storePassword "SIGNING_STORE_PASSWORD"
+            storePassword System.getenv("SIGNING_STORE_PASSWORD")
         }
     }
 
