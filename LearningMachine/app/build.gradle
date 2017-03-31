@@ -75,14 +75,22 @@ android {
     }
 }
 
+final SUPPORT_VERSION = '25.3.0'
+final DAGGER_VERSION = '2.7'
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:25.3.0'
-    compile 'com.android.support:recyclerview-v7:25.3.0'
+    compile "com.android.support:appcompat-v7:$SUPPORT_VERSION"
+    compile "com.android.support:recyclerview-v7:$SUPPORT_VERSION"
     compile 'com.android.support:multidex:1.0.1'
     compile 'org.bitcoinj:bitcoinj-core:0.14.4'
+    compile "com.google.dagger:dagger:$DAGGER_VERSION"
+    compile "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
+    compile 'com.jakewharton.timber:timber:4.3.1'
+
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+
     testCompile 'junit:junit:4.12'
 }
