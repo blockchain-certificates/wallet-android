@@ -26,6 +26,6 @@ public class SettingsFragment extends LearningMachineFragment {
 
         return mBinding.getRoot();
     }
-
-
 }
+
+

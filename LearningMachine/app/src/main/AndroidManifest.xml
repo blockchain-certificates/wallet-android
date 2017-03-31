@@ -25,7 +25,6 @@
             android:parentActivityName=".ui.home.HomeActivity">
         </activity>
 
-
         <activity android:name=".ui.issuer.IssuerActivity"/>
 
 

@@ -10,4 +10,7 @@
     <string name="about_header">About</string>
     <string name="about_this_app">About this app</string>
     <string name="privacy_policy">Privacy Policy</string>
+    <string name="home_settings_title">Settings</string>
+    <string name="settings_title">Settings</string>
+
 </resources>
