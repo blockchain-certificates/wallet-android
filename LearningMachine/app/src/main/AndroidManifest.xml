@@ -22,8 +22,7 @@
         <activity
             android:name=".ui.settings.SettingsActivity"
             android:label="@string/settings_fragment"
-            android:parentActivityName=".ui.home.HomeActivity">
-        </activity>
+            android:parentActivityName=".ui.home.HomeActivity"/>
 
         <activity android:name=".ui.issuer.IssuerActivity"/>
 

@@ -51,14 +51,14 @@ public class HomeFragment extends LearningMachineFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.issuer_settings, menu);
+        inflater.inflate(R.menu.fragment_home, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
-            case R.id.issuer_settings_button:
+            case R.id.fragment_home_settings:
                 Intent intent = SettingsActivity.newIntent(getContext());
                 startActivity(intent);
                 break;

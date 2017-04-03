@@ -13,97 +13,68 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:padding="@dimen/fragment_settings_linear_layout_padding"
             tools:context="com.learningmachine.android.app.ui.settings.SettingsActivity">
 
-            <LinearLayout
-                android:id="@+id/fragment_settings"
+
+            <TextView
+                android:id="@+id/settings_passphrase_header_text"
+                style="@style/LearningMachineHeaderText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="15dp"
-                >
+                android:text="@string/settings_passphrase_header"
+                />
 
-                <TextView
-                    android:id="@+id/settings_passphrase_header_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="20dp"
-                    android:text="@string/passphrase_header"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="16sp"/>
+            <TextView
+                android:id="@+id/settings_reveal_passphrase_text"
+                style="@style/LearningMachineSettingsText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_reveal_passphrase"/>
 
-                <TextView
-                    android:id="@+id/settings_reveal_passphrase_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="20dp"
-                    android:text="@string/reveal_passphrase"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"/>
+            <TextView
+                android:id="@+id/settings_replace_passphrase_text"
+                style="@style/LearningMachineSettingsText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_replace_passphrase"/>
 
-                <TextView
-                    android:id="@+id/settings_replace_passphrase_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="20dp"
-                    android:text="@string/replace_passphrase"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"/>
+            <TextView
+                android:id="@+id/settings_about_passphrase_text"
+                style="@style/LearningMachineSettingsText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_about_passphrases"/>
 
-                <TextView
-                    android:id="@+id/settings_about_passphrase_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="20dp"
-                    android:text="@string/about_passphrases"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"/>
-
-            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:background="@color/more_light_gray"
-                android:paddingTop="10dp"/>
+                android:background="@color/more_light_gray"/>
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/settings_about_header_text"
+                style="@style/LearningMachineHeaderText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="15dp"
-                >
+                android:text="@string/settings_about_header"/>
 
-                <TextView
-                    android:id="@+id/settings_about_header_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="5dp"
-                    android:text="@string/about_header"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="16sp"/>
+            <TextView
+                android:id="@+id/settings_about_this_app_text"
+                style="@style/LearningMachineSettingsText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_about_this_app"/>
 
-                <TextView
-                    android:id="@+id/settings_about_this_app_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="20dp"
-                    android:text="@string/about_this_app"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"/>
-
-                <TextView
-                    android:id="@+id/settings_privacy_policy_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="20dp"
-                    android:text="@string/privacy_policy"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"/>
-
-            </LinearLayout>
+            <TextView
+                android:id="@+id/settings_privacy_policy_text"
+                style="@style/LearningMachineSettingsText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_privacy_policy"/>
 
         </LinearLayout>
+
 
     </ScrollView>
 
