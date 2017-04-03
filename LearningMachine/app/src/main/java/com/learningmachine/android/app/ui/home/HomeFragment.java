@@ -18,13 +18,13 @@ import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.model.Issuer;
 import com.learningmachine.android.app.databinding.FragmentHomeBinding;
 import com.learningmachine.android.app.databinding.ListItemIssuerBinding;
-import com.learningmachine.android.app.ui.LearningMachineFragment;
+import com.learningmachine.android.app.ui.LMFragment;
 import com.learningmachine.android.app.ui.settings.SettingsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends LearningMachineFragment {
+public class HomeFragment extends LMFragment {
 
     private FragmentHomeBinding mBinding;
 
