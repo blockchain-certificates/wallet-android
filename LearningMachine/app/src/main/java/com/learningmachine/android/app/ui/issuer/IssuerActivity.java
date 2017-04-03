@@ -5,9 +5,9 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 
 import com.learningmachine.android.app.data.model.Issuer;
-import com.learningmachine.android.app.ui.LearningMachineSingleFragmentActivity;
+import com.learningmachine.android.app.ui.LMSingleFragmentActivity;
 
-public class IssuerActivity extends LearningMachineSingleFragmentActivity {
+public class IssuerActivity extends LMSingleFragmentActivity {
 
     public static final String EXTRA_ISSUER = "IssuerActivity.Issuer";
 
