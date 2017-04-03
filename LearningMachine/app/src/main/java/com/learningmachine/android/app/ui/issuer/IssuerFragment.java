@@ -12,9 +12,9 @@ import android.view.ViewGroup;
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.model.Issuer;
 import com.learningmachine.android.app.databinding.FragmentIssuerBinding;
-import com.learningmachine.android.app.ui.LearningMachineFragment;
+import com.learningmachine.android.app.ui.LMFragment;
 
-public class IssuerFragment extends LearningMachineFragment {
+public class IssuerFragment extends LMFragment {
 
     private static final String ARG_ISSUER = "IssuerFragment.Issuer";
 
