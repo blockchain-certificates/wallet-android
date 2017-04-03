@@ -6,10 +6,11 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textViewStyle">@style/LearningMachineTextView</item>
 
     </style>
 
-    <style name="LearningMachineTextView" parent="@android:style/Widget.TextView">
+    <style name="LearningMachineTextView" parent="android:style/Widget.TextView">
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">16sp</item>
     </style>

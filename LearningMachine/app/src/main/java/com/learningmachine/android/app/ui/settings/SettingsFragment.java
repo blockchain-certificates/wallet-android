@@ -1,6 +1,5 @@
 package com.learningmachine.android.app.ui.settings;
 
-<<<<<<< HEAD
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,10 +9,8 @@ import android.view.ViewGroup;
 
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.databinding.FragmentSettingsBinding;
-import com.learningmachine.android.app.ui.LearningMachineFragment;
-=======
 import com.learningmachine.android.app.ui.LMFragment;
->>>>>>> master
+
 
 public class SettingsFragment extends LMFragment {
 
