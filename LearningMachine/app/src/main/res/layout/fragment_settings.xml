@@ -2,8 +2,7 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    >
+    xmlns:tools="http://schemas.android.com/tools">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -16,36 +15,33 @@
             android:padding="@dimen/fragment_settings_linear_layout_padding"
             tools:context="com.learningmachine.android.app.ui.settings.SettingsActivity">
 
-
             <TextView
                 android:id="@+id/settings_passphrase_header_text"
-                style="@style/LearningMachineHeaderText"
+                style="@style/LearningMachineTextView.Settings.Header"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/settings_passphrase_header"
-                />
+                android:text="@string/settings_passphrase_header"/>
 
             <TextView
                 android:id="@+id/settings_reveal_passphrase_text"
-                style="@style/LearningMachineSettingsText"
+                style="@style/LearningMachineTextView.Settings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/settings_reveal_passphrase"/>
 
             <TextView
                 android:id="@+id/settings_replace_passphrase_text"
-                style="@style/LearningMachineSettingsText"
+                style="@style/LearningMachineTextView.Settings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/settings_replace_passphrase"/>
 
             <TextView
                 android:id="@+id/settings_about_passphrase_text"
-                style="@style/LearningMachineSettingsText"
+                style="@style/LearningMachineTextView.Settings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/settings_about_passphrases"/>
-
 
             <View
                 android:layout_width="match_parent"
@@ -54,29 +50,26 @@
 
             <TextView
                 android:id="@+id/settings_about_header_text"
-                style="@style/LearningMachineHeaderText"
+                style="@style/LearningMachineTextView.Settings.Header"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/settings_about_header"/>
 
             <TextView
                 android:id="@+id/settings_about_this_app_text"
-                style="@style/LearningMachineSettingsText"
+                style="@style/LearningMachineTextView.Settings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/settings_about_this_app"/>
 
             <TextView
                 android:id="@+id/settings_privacy_policy_text"
-                style="@style/LearningMachineSettingsText"
+                style="@style/LearningMachineTextView.Settings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/settings_privacy_policy"/>
-
         </LinearLayout>
 
-
     </ScrollView>
-
 
 </layout>
