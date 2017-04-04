@@ -13,6 +13,7 @@
     <string name="settings_about_header">About</string>
     <string name="settings_about_this_app">About this app</string>
     <string name="settings_privacy_policy">Privacy Policy</string>
+    <string name="settings_privacy_policy_endpoint">http://www.learningmachine.com/mobile-privacy.html</string>
 
 
 </resources>
