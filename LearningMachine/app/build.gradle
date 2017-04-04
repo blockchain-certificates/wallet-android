@@ -16,9 +16,13 @@ android {
             versionCode 1
         }
 
-
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     signingConfigs {
@@ -38,9 +42,7 @@ android {
         staging {
             applicationId "com.learningmachine.android.app.staging"
         }
-
         production {
-
         }
     }
 
@@ -77,6 +79,8 @@ android {
 
 final SUPPORT_VERSION = '25.3.0'
 final DAGGER_VERSION = '2.7'
+final TIMBER_VERSION = '4.5.1'
+
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -85,8 +89,8 @@ dependencies {
     compile 'com.android.support:multidex:1.0.1'
     compile 'org.bitcoinj:bitcoinj-core:0.14.4'
     compile "com.google.dagger:dagger:$DAGGER_VERSION"
-    compile "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
-    compile 'com.jakewharton.timber:timber:4.3.1'
+    annotationProcessor "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
+    compile "com.jakewharton.timber:timber:$TIMBER_VERSION"
 
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'

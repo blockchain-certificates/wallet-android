@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentManager;
 
 import com.learningmachine.android.app.R;
 
-public abstract class LearningMachineSingleFragmentActivity extends LearningMachineActivity {
+public abstract class LMSingleFragmentActivity extends LMActivity {
 
     protected abstract Fragment createFragment();
 

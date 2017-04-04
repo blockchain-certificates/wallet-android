@@ -1,7 +1,9 @@
 package com.learningmachine.android.app;
 
-import android.app.Application;
+import android.os.Handler;
+import android.support.multidex.MultiDexApplication;
 
+import com.learningmachine.android.app.data.bitcoin.BitcoinManager;
 import com.learningmachine.android.app.data.inject.LMComponent;
 import com.learningmachine.android.app.data.inject.LMGraph;
 
@@ -9,11 +11,12 @@ import javax.inject.Inject;
 
 import timber.log.Timber;
 
-public class LearningMachineApplication extends Application {
+public class LMApplication extends MultiDexApplication {
 
     protected LMGraph mGraph;
 
     @Inject Timber.Tree mTree;
+    @Inject BitcoinManager mBitcoinManager;
 
     @Override
     public void onCreate() {
@@ -21,6 +24,11 @@ public class LearningMachineApplication extends Application {
 
         setupDagger();
         setupTimber();
+
+        new Handler().postDelayed(() -> {
+            String passphrase = mBitcoinManager.getPassphrase();
+            Timber.d("Passphrase: %1$s", passphrase);
+        }, 3000);
     }
 
     private void setupDagger() {
