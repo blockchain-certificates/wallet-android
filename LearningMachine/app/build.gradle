@@ -41,8 +41,7 @@ android {
         staging {
             applicationId "com.learningmachine.android.app.staging"
         }
-        production {
-        }
+        production {}
     }
 
     buildTypes {
