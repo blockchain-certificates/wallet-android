@@ -56,13 +56,6 @@
                 android:text="@string/settings_about_header"/>
 
             <TextView
-                android:id="@+id/settings_about_this_app_text"
-                style="@style/LearningMachineTextView.Settings"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/settings_about_this_app"/>
-
-            <TextView
                 android:id="@+id/settings_privacy_policy_text"
                 style="@style/LearningMachineTextView.Settings"
                 android:layout_width="wrap_content"
