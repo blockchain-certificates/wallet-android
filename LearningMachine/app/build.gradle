@@ -21,6 +21,10 @@ android {
         multiDexEnabled true
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
+
     signingConfigs {
         LearningMachineRelease {
             keyAlias System.getenv("SIGNING_KEY_ALIAS")

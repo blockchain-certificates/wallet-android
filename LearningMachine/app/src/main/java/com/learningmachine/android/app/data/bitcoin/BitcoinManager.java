@@ -37,12 +37,6 @@ public class BitcoinManager {
         WalletAppKit kit = new WalletAppKit(LMNetworkConstants.getNetwork(), path, LMConstants.WALLET_FILE);
         kit.setAutoSave(true);
         kit.startAsync();
-        kit.addListener(new Service.Listener() {
-            @Override
-            public void running() {
-                super.running();
-            }
-        }, null);
 //        mWallet.addChangeEventListener(new WalletChangeEventListener() {
 //            @Override
 //            public void onWalletChanged(Wallet wallet) {
