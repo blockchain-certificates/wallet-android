@@ -25,14 +25,14 @@ public class LMApplication extends MultiDexApplication {
         setupDagger();
         setupTimber();
 
-        new Handler().postDelayed(() -> {
-            String passphrase = mBitcoinManager.getPassphrase();
-            Timber.d("Passphrase: %1$s", passphrase);
-        }, 3000);
+//        new Handler().postDelayed(() -> {
+//            String passphrase = mBitcoinManager.getPassphrase();
+//            Timber.d("Passphrase: %1$s", passphrase);
+//        }, 3000);
     }
 
     private void setupDagger() {
-        mGraph = LMComponent.Initializer.init();
+        mGraph = LMComponent.Initializer.init(this);
         mGraph.inject(this);
     }
 
