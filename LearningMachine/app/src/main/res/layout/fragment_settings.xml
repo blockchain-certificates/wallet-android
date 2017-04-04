@@ -17,31 +17,31 @@
 
             <TextView
                 android:id="@+id/settings_passphrase_header_text"
-                style="@style/LearningMachineTextView.Settings.Header"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/settings_passphrase_header"/>
+                android:text="@string/settings_passphrase_header"
+                style="@style/LearningMachineTextView.Settings.Header"/>
 
             <TextView
                 android:id="@+id/settings_reveal_passphrase_text"
-                style="@style/LearningMachineTextView.Settings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/settings_reveal_passphrase"/>
+                android:text="@string/settings_reveal_passphrase"
+                style="@style/LearningMachineTextView.Settings"/>
 
             <TextView
                 android:id="@+id/settings_replace_passphrase_text"
-                style="@style/LearningMachineTextView.Settings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/settings_replace_passphrase"/>
+                android:text="@string/settings_replace_passphrase"
+                style="@style/LearningMachineTextView.Settings"/>
 
             <TextView
                 android:id="@+id/settings_about_passphrase_text"
-                style="@style/LearningMachineTextView.Settings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/settings_about_passphrases"/>
+                android:text="@string/settings_about_passphrases"
+                style="@style/LearningMachineTextView.Settings"/>
 
             <View
                 android:layout_width="match_parent"
@@ -50,17 +50,17 @@
 
             <TextView
                 android:id="@+id/settings_about_header_text"
-                style="@style/LearningMachineTextView.Settings.Header"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/settings_about_header"/>
+                android:text="@string/settings_about_header"
+                style="@style/LearningMachineTextView.Settings.Header"/>
 
             <TextView
                 android:id="@+id/settings_privacy_policy_text"
-                style="@style/LearningMachineTextView.Settings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/settings_privacy_policy"/>
+                android:text="@string/settings_privacy_policy"
+                style="@style/LearningMachineTextView.Settings"/>
         </LinearLayout>
 
     </ScrollView>
