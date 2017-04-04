@@ -35,8 +35,6 @@ public class BitcoinManager {
         };
         kit.setAutoSave(true);
         kit.startAsync();
-
-
     }
 
     public String getPassphrase() {
