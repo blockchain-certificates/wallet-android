@@ -88,4 +88,5 @@ dependencies {
     compile 'org.bitcoinj:bitcoinj-core:0.14.4'
 
     testCompile 'junit:junit:4.12'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 }
