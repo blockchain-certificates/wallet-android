@@ -6,6 +6,27 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textViewStyle">@style/LearningMachineTextView</item>
+
     </style>
+
+    <style name="LearningMachineTextView" parent="android:style/Widget.TextView">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="LearningMachineTextView.Settings">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/fragment_settings_passphrase_textsize</item>
+        <item name="android:paddingTop">@dimen/fragment_settings_textview_padding_top</item>
+        <item name="android:paddingBottom">@dimen/fragment_settings_textview_padding_bottom</item>
+    </style>
+
+    <style name="LearningMachineTextView.Settings.Header">
+        <item name="android:textColor">@color/primary</item>
+        <item name="android:textSize">@dimen/fragment_settings_header_textsize</item>
+        <item name="android:paddingTop">@dimen/fragment_settings_textview_padding_top</item>
+    </style>
+
 
 </resources>

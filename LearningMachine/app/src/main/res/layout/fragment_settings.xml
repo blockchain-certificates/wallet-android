@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/fragment_settings_linear_layout_padding"
+            tools:context="com.learningmachine.android.app.ui.settings.SettingsActivity">
+
+            <TextView
+                android:id="@+id/settings_passphrase_header_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_passphrase_header"
+                style="@style/LearningMachineTextView.Settings.Header"/>
+
+            <TextView
+                android:id="@+id/settings_reveal_passphrase_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_reveal_passphrase"
+                style="@style/LearningMachineTextView.Settings"/>
+
+            <TextView
+                android:id="@+id/settings_replace_passphrase_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_replace_passphrase"
+                style="@style/LearningMachineTextView.Settings"/>
+
+            <TextView
+                android:id="@+id/settings_about_passphrase_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_about_passphrases"
+                style="@style/LearningMachineTextView.Settings"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/more_light_gray"/>
+
+            <TextView
+                android:id="@+id/settings_about_header_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_about_header"
+                style="@style/LearningMachineTextView.Settings.Header"/>
+
+            <TextView
+                android:id="@+id/settings_privacy_policy_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_privacy_policy"
+                style="@style/LearningMachineTextView.Settings"/>
+        </LinearLayout>
+
+    </ScrollView>
+
+</layout>

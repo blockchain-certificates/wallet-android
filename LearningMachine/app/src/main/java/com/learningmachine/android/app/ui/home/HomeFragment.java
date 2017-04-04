@@ -56,7 +56,8 @@ public class HomeFragment extends LMFragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()) {
+
+        switch (item.getItemId()) {
             case R.id.fragment_home_settings:
                 Intent intent = SettingsActivity.newIntent(getContext());
                 startActivity(intent);

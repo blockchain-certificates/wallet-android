@@ -1,6 +1,6 @@
 package com.learningmachine.android.app;
 
-import android.app.Application;
+import android.support.multidex.MultiDexApplication;
 
-public class LMApplication extends Application {
+public class LMApplication extends MultiDexApplication {
 }
