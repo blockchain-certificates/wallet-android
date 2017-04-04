@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion 25
@@ -20,11 +21,6 @@ android {
         multiDexEnabled true
     }
 
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-
     signingConfigs {
         LearningMachineRelease {
             keyAlias System.getenv("SIGNING_KEY_ALIAS")
@@ -33,7 +29,6 @@ android {
             storePassword System.getenv("SIGNING_STORE_PASSWORD")
         }
     }
-
 
     productFlavors {
         dev {
@@ -77,10 +72,13 @@ android {
     }
 }
 
-final SUPPORT_VERSION = '25.3.0'
+retrolambda {
+    jvmArgs '-noverify'
+}
+
+final SUPPORT_VERSION = '25.3.1'
 final DAGGER_VERSION = '2.7'
 final TIMBER_VERSION = '4.5.1'
-
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
