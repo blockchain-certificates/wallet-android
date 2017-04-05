@@ -8,13 +8,10 @@ import android.view.KeyEvent;
 import com.learningmachine.android.app.ui.LMSingleFragmentActivity;
 
 public class LMWebActivity extends LMSingleFragmentActivity {
-    protected LMWebFragment mLMWebFragment;
+    protected LMWebFragment LmWebFragment;
 
-    public LMWebActivity() {
-    }
-
-    private static final String EXTRA_ACTION_BAR_TITLE = "LMLMWebActivity.ActionBarTitle";
-    private static final String EXTRA_END_POINT = "LMLMWebActivity.EndPoint";
+    private static final String EXTRA_ACTION_BAR_TITLE = "LMWebActivity.ActionBarTitle";
+    private static final String EXTRA_END_POINT = "LMWebActivity.EndPoint";
 
     public static Intent newIntent(Context context, String actionBarTitle, String endPoint) {
         Intent intent = new Intent(context, LMWebActivity.class);
@@ -26,8 +23,8 @@ public class LMWebActivity extends LMSingleFragmentActivity {
     @Override
     protected Fragment createFragment() {
         String endPoint = getEndpoint();
-        mLMWebFragment = LMWebFragment.newInstance(endPoint);
-        return mLMWebFragment;
+        LmWebFragment = LMWebFragment.newInstance(endPoint);
+        return LmWebFragment;
     }
 
     public String getEndpoint() {
@@ -39,11 +36,11 @@ public class LMWebActivity extends LMSingleFragmentActivity {
     }
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (event.getAction() == 0) {
+        if (event.getAction() == KeyEvent.ACTION_DOWN) {
             switch (keyCode) {
-                case 4:
-                    if (this.mLMWebFragment != null) {
-                        this.mLMWebFragment.backPressed();
+                case KeyEvent.KEYCODE_BACK:
+                    if (LmWebFragment != null) {
+                        LmWebFragment.backPressed();
                     }
 
                     return true;
