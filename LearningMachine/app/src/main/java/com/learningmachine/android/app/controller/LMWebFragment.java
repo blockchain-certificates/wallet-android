@@ -12,11 +12,21 @@ import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.databinding.ActivitySupportWebBinding;
 import com.learningmachine.android.app.ui.LMFragment;
 
-public abstract class SupportWebFragment extends LMFragment {
+public class LMWebFragment extends LMFragment {
+
+    private static final String ARG_END_POINT = "LMSupportWebFragment.EndPoint";
 
     protected ActivitySupportWebBinding mBinding;
 
-    public SupportWebFragment() {
+    public LMWebFragment() {
+    }
+
+    public static LMWebFragment newInstance(String endPoint) {
+        Bundle args =  new Bundle();
+        args.putSerializable(ARG_END_POINT, endPoint);
+        LMWebFragment fragment = new LMWebFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Nullable
@@ -32,6 +42,8 @@ public abstract class SupportWebFragment extends LMFragment {
     protected void setupWebView() {
         WebViewClient webViewClient = new WebViewClient();
         mBinding.baseWebView.setWebViewClient(webViewClient);
+        mBinding.baseWebView.getSettings().setJavaScriptEnabled(true);
+
     }
 
     public void backPressed() {
@@ -50,5 +62,7 @@ public abstract class SupportWebFragment extends LMFragment {
         }
     }
 
-    protected abstract String getEndPoint();
+    protected String getEndPoint() {
+        return getArguments().getString(ARG_END_POINT);
+    }
 }
