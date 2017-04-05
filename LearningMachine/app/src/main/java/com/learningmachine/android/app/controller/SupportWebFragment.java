@@ -23,8 +23,8 @@ public abstract class SupportWebFragment extends LMFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.activity_support_web, container, false);
-        this.setupWebView();
-        this.chooseWebsite();
+        setupWebView();
+        loadWebsite();
 
         return mBinding.getRoot();
     }
@@ -35,18 +35,18 @@ public abstract class SupportWebFragment extends LMFragment {
     }
 
     public void backPressed() {
-        if (this.mBinding.baseWebView.canGoBack()) {
-            this.mBinding.baseWebView.goBack();
+        if (mBinding.baseWebView.canGoBack()) {
+            mBinding.baseWebView.goBack();
         } else {
             this.getActivity()
                     .finish();
         }
     }
 
-    private void chooseWebsite() {
+    private void loadWebsite() {
         String endPoint = this.getEndPoint();
         if (endPoint != null && !endPoint.isEmpty()) {
-            this.mBinding.baseWebView.loadUrl(endPoint);
+            mBinding.baseWebView.loadUrl(endPoint);
         }
     }
 

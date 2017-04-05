@@ -7,8 +7,8 @@ import android.support.v4.app.Fragment;
 public class LMSupportWebActivity extends SupportWebActivity {
 
 
-    private static final String EXTRA_ACTION_BAR_TITLE = "LMSupportActivity.ActionBarTitle";
-    private static final String EXTRA_END_POINT = "LMSupportActivity.EndPoint";
+    private static final String EXTRA_ACTION_BAR_TITLE = "LMSupportWebActivity.ActionBarTitle";
+    private static final String EXTRA_END_POINT = "LMSupportWebActivity.EndPoint";
 
     public static Intent newIntent(Context context, String actionBarTitle, String endPoint) {
         Intent intent = new Intent(context, LMSupportWebActivity.class);
