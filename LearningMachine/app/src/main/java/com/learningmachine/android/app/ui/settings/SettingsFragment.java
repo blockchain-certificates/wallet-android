@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.learningmachine.android.app.R;
-import com.learningmachine.android.app.controller.LMSupportWebActivity;
+import com.learningmachine.android.app.controller.LMWebActivity;
 import com.learningmachine.android.app.databinding.FragmentSettingsBinding;
 import com.learningmachine.android.app.ui.LMFragment;
 
@@ -32,7 +32,7 @@ public class SettingsFragment extends LMFragment {
             public void onClick(View v) {
                 String actionBarTitle = getString(R.string.settings_privacy_policy);
                 String endPoint = getString(R.string.settings_privacy_policy_endpoint);
-                Intent intent = LMSupportWebActivity.newIntent(getContext(), actionBarTitle, endPoint);
+                Intent intent = LMWebActivity.newIntent(getContext(), actionBarTitle, endPoint);
                 startActivity(intent);
             }
         });
