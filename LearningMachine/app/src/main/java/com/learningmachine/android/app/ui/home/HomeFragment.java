@@ -19,6 +19,7 @@ import com.learningmachine.android.app.data.model.Issuer;
 import com.learningmachine.android.app.databinding.FragmentHomeBinding;
 import com.learningmachine.android.app.databinding.ListItemIssuerBinding;
 import com.learningmachine.android.app.ui.LMFragment;
+import com.learningmachine.android.app.ui.issuer.IssuerAddActivity;
 import com.learningmachine.android.app.ui.settings.SettingsActivity;
 
 import java.util.ArrayList;
@@ -44,6 +45,14 @@ public class HomeFragment extends LMFragment {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
 
         setupRecyclerView();
+
+        mBinding.issuerFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = IssuerAddActivity.newIntent(getContext());
+                startActivity(intent);
+            }
+        });
 
         return mBinding.getRoot();
     }
