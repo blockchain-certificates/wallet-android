@@ -25,10 +25,7 @@
             android:label="@string/settings_fragment"
             android:parentActivityName=".ui.home.HomeActivity"/>
         <activity android:name=".ui.issuer.IssuerActivity"/>
-        <activity android:name=".controller.SupportWebActivity">
-        </activity>
-        <activity android:name=".controller.LMSupportWebActivity">
-        </activity>
+        <activity android:name=".controller.LMWebActivity"/>
     </application>
 
 </manifest>

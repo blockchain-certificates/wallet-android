@@ -12,19 +12,29 @@ import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.databinding.ActivitySupportWebBinding;
 import com.learningmachine.android.app.ui.LMFragment;
 
-public abstract class SupportWebFragment extends LMFragment {
+public class LMWebFragment extends LMFragment {
+
+    private static final String ARG_END_POINT = "LMSupportWebFragment.EndPoint";
 
     protected ActivitySupportWebBinding mBinding;
 
-    public SupportWebFragment() {
+    public LMWebFragment() {
+    }
+
+    public static LMWebFragment newInstance(String endPoint) {
+        Bundle args =  new Bundle();
+        args.putSerializable(ARG_END_POINT, endPoint);
+        LMWebFragment fragment = new LMWebFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.activity_support_web, container, false);
-        this.setupWebView();
-        this.chooseWebsite();
+        setupWebView();
+        loadWebsite();
 
         return mBinding.getRoot();
     }
@@ -32,23 +42,27 @@ public abstract class SupportWebFragment extends LMFragment {
     protected void setupWebView() {
         WebViewClient webViewClient = new WebViewClient();
         mBinding.baseWebView.setWebViewClient(webViewClient);
+        mBinding.baseWebView.getSettings().setJavaScriptEnabled(true);
+
     }
 
     public void backPressed() {
-        if (this.mBinding.baseWebView.canGoBack()) {
-            this.mBinding.baseWebView.goBack();
+        if (mBinding.baseWebView.canGoBack()) {
+            mBinding.baseWebView.goBack();
         } else {
             this.getActivity()
                     .finish();
         }
     }
 
-    private void chooseWebsite() {
+    private void loadWebsite() {
         String endPoint = this.getEndPoint();
         if (endPoint != null && !endPoint.isEmpty()) {
-            this.mBinding.baseWebView.loadUrl(endPoint);
+            mBinding.baseWebView.loadUrl(endPoint);
         }
     }
 
-    protected abstract String getEndPoint();
+    protected String getEndPoint() {
+        return getArguments().getString(ARG_END_POINT);
+    }
 }
