@@ -12,11 +12,10 @@ import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.controller.LMWebActivity;
 import com.learningmachine.android.app.databinding.FragmentSettingsBinding;
 import com.learningmachine.android.app.ui.LMFragment;
+import com.learningmachine.android.app.ui.settings.passphrase.RevealPassphraseActivity;
 
 
 public class SettingsFragment extends LMFragment {
-
-    private FragmentSettingsBinding mBinding;
 
     public static SettingsFragment newInstance() {
         return new SettingsFragment();
@@ -25,19 +24,24 @@ public class SettingsFragment extends LMFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_settings, container, false);
+        FragmentSettingsBinding binding = DataBindingUtil.inflate(inflater,
+                R.layout.fragment_settings,
+                container,
+                false);
 
-        mBinding.settingsPrivacyPolicyText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String actionBarTitle = getString(R.string.settings_privacy_policy);
-                String endPoint = getString(R.string.settings_privacy_policy_endpoint);
-                Intent intent = LMWebActivity.newIntent(getContext(), actionBarTitle, endPoint);
-                startActivity(intent);
-            }
+        binding.settingsRevealPassphraseText.setOnClickListener(v -> {
+            Intent intent = RevealPassphraseActivity.newIntent(getContext());
+            startActivity(intent);
         });
 
-        return mBinding.getRoot();
+        binding.settingsPrivacyPolicyText.setOnClickListener(v -> {
+            String actionBarTitle = getString(R.string.settings_privacy_policy);
+            String endPoint = getString(R.string.settings_privacy_policy_endpoint);
+            Intent intent = LMWebActivity.newIntent(getContext(), actionBarTitle, endPoint);
+            startActivity(intent);
+        });
+
+        return binding.getRoot();
     }
 }
 

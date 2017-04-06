@@ -28,9 +28,15 @@
         <item name="android:paddingTop">@dimen/fragment_settings_textview_padding_top</item>
     </style>
 
+
     <style name="LearningMachineTextView.AddIssuerText">
         <item name="android:paddingTop">@dimen/add_identity_top_padding</item>
         <item name="android:paddingBottom">@dimen/fragment_add_isser_textview_padding_bottom</item>
+    </style>
+
+    <style name="LearningMachineTextView.RevealPassphrase">
+        <item name="android:paddingStart">@dimen/fragment_reveal_passphrase_padding_start</item>
+        <item name="android:paddingEnd">@dimen/fragment_reveal_passphrase_padding_end</item>
     </style>
 
 

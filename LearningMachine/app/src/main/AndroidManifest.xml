@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.learningmachine.android.app">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
@@ -11,6 +12,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".ui.home.HomeActivity"
             android:label="@string/home_issuers">
@@ -20,14 +22,23 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
         <activity
             android:name=".ui.settings.SettingsActivity"
             android:label="@string/settings_fragment"
             android:parentActivityName=".ui.home.HomeActivity"/>
+
         <activity android:name=".ui.issuer.IssuerActivity"/>
         <activity android:name=".ui.issuer.AddIssuerActivity"/>
         <activity android:name=".controller.LMWebActivity"/>
 
+        <activity android:name=".controller.LMWebActivity"/>
+
+        <activity
+            android:name=".ui.settings.passphrase.RevealPassphraseActivity"
+            android:label="@string/reveal_passphrase_title"/>
+
+        >>>>>>> master
     </application>
 
 </manifest>
