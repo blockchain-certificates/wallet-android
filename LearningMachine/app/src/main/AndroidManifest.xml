@@ -32,13 +32,10 @@
         <activity android:name=".ui.issuer.AddIssuerActivity"/>
         <activity android:name=".controller.LMWebActivity"/>
 
-        <activity android:name=".controller.LMWebActivity"/>
-
         <activity
             android:name=".ui.settings.passphrase.RevealPassphraseActivity"
             android:label="@string/reveal_passphrase_title"/>
 
-        >>>>>>> master
     </application>
 
 </manifest>
