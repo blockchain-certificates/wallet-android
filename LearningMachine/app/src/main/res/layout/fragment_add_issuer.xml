@@ -5,41 +5,41 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
-        android:orientation="vertical"
-        android:padding="@dimen/fragment_add_issuer_linear_layout_padding"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/fragment_add_issuer_linear_layout_padding"
         tools:context="com.learningmachine.android.app.ui.issuer.AddIssuerActivity">
 
         <TextView
             android:id="@+id/add_issuer_url_info_text_view"
-            android:text="@string/fragment_add_issuer_info_url_text"
-            style="@style/LearningMachineTextView.AddIssuerText"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="@string/fragment_add_issuer_info_url_text"
+            style="@style/LearningMachineTextView.AddIssuerText"/>
 
         <EditText
             android:id="@+id/add_issuer_url_edit_text"
-            android:hint="@string/fragment_add_issuer_url"
-            android:paddingTop="@dimen/add_identity_top_padding"
-            android:paddingBottom="@dimen/fragment_add_isser_textview_padding_bottom"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:hint="@string/fragment_add_issuer_url"
+            android:paddingBottom="@dimen/fragment_add_isser_textview_padding_bottom"
+            android:paddingTop="@dimen/add_identity_top_padding"/>
 
         <TextView
             android:id="@+id/add_issuer_identity_text_view"
-            android:text="@string/fragment_add_issuer_identity_text"
-            style="@style/LearningMachineTextView.AddIssuerText"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="@string/fragment_add_issuer_identity_text"
+            style="@style/LearningMachineTextView.AddIssuerText"/>
 
         <EditText
             android:id="@+id/add_issuer_identity_edit_text"
-            android:hint="@string/fragment_add_issuer_add_identity"
-            android:paddingTop="@dimen/add_identity_top_padding"
-            android:paddingBottom="@dimen/fragment_add_isser_textview_padding_bottom"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:hint="@string/fragment_add_issuer_add_identity"
+            android:paddingBottom="@dimen/fragment_add_isser_textview_padding_bottom"
+            android:paddingTop="@dimen/add_identity_top_padding"/>
 
     </LinearLayout>
 
