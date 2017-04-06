@@ -21,6 +21,8 @@ import java.util.List;
 
 import timber.log.Timber;
 
+import static com.learningmachine.android.app.util.BitcoinUtils.generateMnemonic;
+
 public class BitcoinManager {
 
     private Context mContext;
@@ -34,7 +36,7 @@ public class BitcoinManager {
     private void createWallet() {
         SecureRandom random = new SecureRandom();
         byte[] seedData = random.generateSeed(32);
-        List<String> mnemonic = generateMnemonic(seedData);
+        List<String> mnemonic = generateMnemonic(mContext, seedData);
         if (ListUtils.isEmpty(mnemonic)) {
             Timber.e("No mnemonic, wallet creation failure");
             return;
@@ -45,22 +47,6 @@ public class BitcoinManager {
 
         mWallet = new Wallet(networkParameters, keyChainGroup);
         // write wallet to file
-    }
-
-    protected List<String> generateMnemonic(byte[] seedData) {
-        try {
-            AssetManager assetManager = mContext.getAssets();
-            InputStream inputStream = assetManager.open("english.txt");
-            MnemonicCode mnemonicCode = new MnemonicCode(inputStream, null);
-            return mnemonicCode.toMnemonic(seedData);
-        } catch (IOException e) {
-            Timber.e(e, "Unable to read word list.");
-            e.printStackTrace();
-        } catch (MnemonicException.MnemonicLengthException e) {
-            Timber.e(e, "Unable to create mnemonic from word list");
-            e.printStackTrace();
-        }
-        return null;
     }
 
     public String getPassphrase() {
