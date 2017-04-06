@@ -10,14 +10,14 @@ import android.view.ViewGroup;
 import android.webkit.WebViewClient;
 
 import com.learningmachine.android.app.R;
-import com.learningmachine.android.app.databinding.ActivitySupportWebBinding;
+import com.learningmachine.android.app.databinding.FragmentWebBinding;
 import com.learningmachine.android.app.ui.LMFragment;
 
 public class LMWebFragment extends LMFragment {
 
     private static final String ARG_END_POINT = "LMWebFragment.EndPoint";
 
-    protected ActivitySupportWebBinding mBinding;
+    protected FragmentWebBinding mBinding;
 
     public static LMWebFragment newInstance(String endPoint) {
         Bundle args = new Bundle();
@@ -39,15 +39,15 @@ public class LMWebFragment extends LMFragment {
 
     protected void setupWebView() {
         WebViewClient webViewClient = new WebViewClient();
-        mBinding.baseWebView.setWebViewClient(webViewClient);
-        mBinding.baseWebView.getSettings()
+        mBinding.webViewController.setWebViewClient(webViewClient);
+        mBinding.webViewController.getSettings()
                 .setJavaScriptEnabled(true);
 
     }
 
     public void backPressed() {
-        if (mBinding.baseWebView.canGoBack()) {
-            mBinding.baseWebView.goBack();
+        if (mBinding.webViewController.canGoBack()) {
+            mBinding.webViewController.goBack();
         } else {
             getActivity().finish();
         }
@@ -56,7 +56,7 @@ public class LMWebFragment extends LMFragment {
     private void loadWebsite() {
         String endPoint = getEndPoint();
         if (endPoint != null && TextUtils.isEmpty(endPoint)) {
-            mBinding.baseWebView.loadUrl(endPoint);
+            mBinding.webViewController.loadUrl(endPoint);
         }
     }
 

@@ -8,7 +8,7 @@ import android.view.KeyEvent;
 import com.learningmachine.android.app.ui.LMSingleFragmentActivity;
 
 public class LMWebActivity extends LMSingleFragmentActivity {
-    protected LMWebFragment LmWebFragment;
+    protected LMWebFragment mLmWebFragment;
 
     private static final String EXTRA_ACTION_BAR_TITLE = "LMWebActivity.ActionBarTitle";
     private static final String EXTRA_END_POINT = "LMWebActivity.EndPoint";
@@ -23,8 +23,8 @@ public class LMWebActivity extends LMSingleFragmentActivity {
     @Override
     protected Fragment createFragment() {
         String endPoint = getEndpoint();
-        LmWebFragment = LMWebFragment.newInstance(endPoint);
-        return LmWebFragment;
+        mLmWebFragment = LMWebFragment.newInstance(endPoint);
+        return mLmWebFragment;
     }
 
     public String getEndpoint() {
@@ -39,8 +39,8 @@ public class LMWebActivity extends LMSingleFragmentActivity {
         if (event.getAction() == KeyEvent.ACTION_DOWN) {
             switch (keyCode) {
                 case KeyEvent.KEYCODE_BACK:
-                    if (LmWebFragment != null) {
-                        LmWebFragment.backPressed();
+                    if (mLmWebFragment != null) {
+                        mLmWebFragment.backPressed();
                     }
 
                     return true;
