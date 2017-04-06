@@ -23,8 +23,7 @@
             android:label="@string/settings_fragment"
             android:parentActivityName=".ui.home.HomeActivity"/>
         <activity android:name=".ui.issuer.IssuerActivity"/>
-        <activity android:name=".ui.issuer.IssuerAddActivity">
-        </activity>
+        <activity android:name=".ui.issuer.AddIssuerActivity"/>
     </application>
 
 </manifest>

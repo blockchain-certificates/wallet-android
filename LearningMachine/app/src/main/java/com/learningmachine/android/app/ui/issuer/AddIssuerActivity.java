@@ -6,14 +6,14 @@ import android.support.v4.app.Fragment;
 
 import com.learningmachine.android.app.ui.LMSingleFragmentActivity;
 
-public class IssuerAddActivity extends LMSingleFragmentActivity {
+public class AddIssuerActivity extends LMSingleFragmentActivity {
 
     public static Intent newIntent(Context context) {
-        return new Intent(context, IssuerAddActivity.class);
+        return new Intent(context, AddIssuerActivity.class);
     }
 
     @Override
     protected Fragment createFragment() {
-        return IssuerAddFragment.newInstance();
+        return AddIssuerFragment.newInstance();
     }
 }

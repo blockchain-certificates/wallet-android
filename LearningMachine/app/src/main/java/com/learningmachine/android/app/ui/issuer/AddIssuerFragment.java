@@ -8,21 +8,21 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.learningmachine.android.app.R;
-import com.learningmachine.android.app.databinding.FragmentIssuerAddBinding;
+import com.learningmachine.android.app.databinding.FragmentAddIssuerBinding;
 import com.learningmachine.android.app.ui.LMFragment;
 
-public class IssuerAddFragment extends LMFragment {
+public class AddIssuerFragment extends LMFragment {
 
-    private FragmentIssuerAddBinding mBinding;
+    private FragmentAddIssuerBinding mBinding;
 
-    public static IssuerAddFragment newInstance() {
-     return new IssuerAddFragment();
+    public static AddIssuerFragment newInstance() {
+        return new AddIssuerFragment();
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_issuer_add, container, false);
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_issuer, container, false);
 
         return mBinding.getRoot();
     }

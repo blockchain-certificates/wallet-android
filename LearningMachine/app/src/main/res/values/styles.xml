@@ -29,7 +29,7 @@
     </style>
 
     <style name="LearningMachineTextView.AddIssuerText">
-        <item name="android:paddingTop">@dimen/fragment_add_isser_textview_padding_top</item>
+        <item name="android:paddingTop">@dimen/add_identity_top_padding</item>
         <item name="android:paddingBottom">@dimen/fragment_add_isser_textview_padding_bottom</item>
     </style>
 
