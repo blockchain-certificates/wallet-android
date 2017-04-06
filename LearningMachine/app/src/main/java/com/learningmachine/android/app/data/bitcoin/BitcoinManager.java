@@ -1,8 +1,10 @@
 package com.learningmachine.android.app.data.bitcoin;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 
 import com.learningmachine.android.app.LMNetworkConstants;
+import com.learningmachine.android.app.util.ListUtils;
 import com.learningmachine.android.app.util.StringUtils;
 
 import org.bitcoinj.core.NetworkParameters;
@@ -33,8 +35,8 @@ public class BitcoinManager {
         SecureRandom random = new SecureRandom();
         byte[] seedData = random.generateSeed(32);
         List<String> mnemonic = generateMnemonic(seedData);
-        if (mnemonic == null) {
-            Timber.e("Mnemonic is null, wallet creation failure");
+        if (ListUtils.isEmpty(mnemonic)) {
+            Timber.e("No mnemonic, wallet creation failure");
             return;
         }
         DeterministicSeed deterministicSeed = new DeterministicSeed(mnemonic, seedData, "", 0);
@@ -45,10 +47,10 @@ public class BitcoinManager {
         // write wallet to file
     }
 
-    private List<String> generateMnemonic(byte[] seedData) {
+    protected List<String> generateMnemonic(byte[] seedData) {
         try {
-            InputStream inputStream = mContext.getAssets()
-                    .open("english.txt");
+            AssetManager assetManager = mContext.getAssets();
+            InputStream inputStream = assetManager.open("english.txt");
             MnemonicCode mnemonicCode = new MnemonicCode(inputStream, null);
             return mnemonicCode.toMnemonic(seedData);
         } catch (IOException e) {
