@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion 25
@@ -16,9 +17,12 @@ android {
             versionCode 1
         }
 
-
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
     }
 
     signingConfigs {
@@ -30,7 +34,6 @@ android {
         }
     }
 
-
     productFlavors {
         dev {
             applicationId "com.learningmachine.android.app.dev"
@@ -38,10 +41,7 @@ android {
         staging {
             applicationId "com.learningmachine.android.app.staging"
         }
-
-        production {
-
-        }
+        production {}
     }
 
     buildTypes {
@@ -70,23 +70,35 @@ android {
 
         }
     }
+
     dataBinding {
         enabled = true
     }
 }
 
+retrolambda {
+    jvmArgs '-noverify'
+}
+
+final SUPPORT_VERSION = '25.3.1'
+final DAGGER_VERSION = '2.7'
+final TIMBER_VERSION = '4.5.1'
+
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile "com.android.support:appcompat-v7:$SUPPORT_VERSION"
+    compile "com.android.support:recyclerview-v7:$SUPPORT_VERSION"
+    compile "com.android.support:design:$SUPPORT_VERSION"
+    compile 'com.android.support:multidex:1.0.1'
+    compile 'org.bitcoinj:bitcoinj-core:0.14.4'
+    compile "com.google.dagger:dagger:$DAGGER_VERSION"
+    annotationProcessor "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
+    compile "com.jakewharton.timber:timber:$TIMBER_VERSION"
+
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
-    compile 'com.android.support:appcompat-v7:25.3.0'
-    compile 'com.android.support:design:25.3.1'
-    compile 'com.android.support:recyclerview-v7:25.3.0'
-    compile 'com.android.support:multidex:1.0.1'
-    compile 'org.bitcoinj:bitcoinj-core:0.14.4'
-
     testCompile 'junit:junit:4.12'
-
+    testCompile "org.mockito:mockito-core:2.2.11"
 }
