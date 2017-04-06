@@ -2,9 +2,19 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+
     <dimen name="fragment_settings_textview_padding_top">13dp</dimen>
     <dimen name="fragment_settings_textview_padding_bottom">13dp</dimen>
     <dimen name="fragment_settings_linear_layout_padding">15dp</dimen>
+
+    <dimen name="fragment_reveal_passphrase_current_container_padding_top">15dp</dimen>
+    <dimen name="fragment_reveal_passphrase_current_container_padding_bottom">30dp</dimen>
+    <dimen name="fragment_reveal_passphrase_padding_top">15dp</dimen>
+    <dimen name="fragment_reveal_passphrase_padding_start">15dp</dimen>
+    <dimen name="fragment_reveal_passphrase_padding_end">10dp</dimen>
+    <dimen name="fragment_reveal_passphrase_instructional_message_vertical_padding">15dp</dimen>
+    <dimen name="fragment_reveal_passphrase_current_passphrase_title_bottom">15dp</dimen>
+
     <dimen name="fragment_settings_passphrase_textsize">18sp</dimen>
     <dimen name="fragment_settings_header_textsize">16sp</dimen>
 </resources>

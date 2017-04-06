@@ -3,17 +3,24 @@
     <string name="home_issuers">Issuers</string>
     <string name="home_settings_title">Settings</string>
 
-    <!--Settings Strings-->
+    <!-- Settings -->
     <string name="settings">settings</string>
+    <string name="settings_fragment">Settings</string>
+
     <string name="settings_passphrase_header">Passphrase</string>
     <string name="settings_reveal_passphrase">Reveal Passphrase</string>
     <string name="settings_replace_passphrase">Replace Passphrase</string>
     <string name="settings_about_passphrases">About Passphrases</string>
-    <string name="settings_fragment">Settings</string>
+
     <string name="settings_about_header">About</string>
     <string name="settings_about_this_app">About this app</string>
     <string name="settings_privacy_policy">Privacy Policy</string>
     <string name="settings_privacy_policy_endpoint">http://www.learningmachine.com/mobile-privacy.html</string>
 
+    <!-- Reveal Passphrase -->
+
+    <string name="reveal_passphrase_title">Reveal Passphrase</string>
+    <string name="reveal_passphrase_instructional_message">Some instructional text about passphrases.</string>
+    <string name="reveal_passphrase_current_title">Current Passphrase</string>
 
 </resources>

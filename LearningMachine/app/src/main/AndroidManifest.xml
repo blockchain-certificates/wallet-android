@@ -32,6 +32,9 @@
 
         <activity android:name=".controller.LMWebActivity"/>
 
+        <activity android:name=".ui.settings.passphrase.RevealPassphraseActivity"
+                  android:label="@string/reveal_passphrase_title"/>
+
     </application>
 
 </manifest>
