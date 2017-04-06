@@ -55,7 +55,7 @@ public class LMWebFragment extends LMFragment {
 
     private void loadWebsite() {
         String endPoint = getEndPoint();
-        if (endPoint != null && TextUtils.isEmpty(endPoint)) {
+        if (endPoint != null && !TextUtils.isEmpty(endPoint)) {
             mBinding.webViewController.loadUrl(endPoint);
         }
     }
