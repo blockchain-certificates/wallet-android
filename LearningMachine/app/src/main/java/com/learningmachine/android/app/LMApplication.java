@@ -1,6 +1,5 @@
 package com.learningmachine.android.app;
 
-import android.os.Handler;
 import android.support.multidex.MultiDexApplication;
 
 import com.learningmachine.android.app.data.bitcoin.BitcoinManager;
@@ -24,11 +23,6 @@ public class LMApplication extends MultiDexApplication {
 
         setupDagger();
         setupTimber();
-
-//        new Handler().postDelayed(() -> {
-//            String passphrase = mBitcoinManager.getPassphrase();
-//            Timber.d("Passphrase: %1$s", passphrase);
-//        }, 3000);
     }
 
     private void setupDagger() {

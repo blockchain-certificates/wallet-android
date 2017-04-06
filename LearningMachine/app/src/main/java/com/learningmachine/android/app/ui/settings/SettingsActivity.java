@@ -8,6 +8,7 @@ import com.learningmachine.android.app.ui.LMSingleFragmentActivity;
 
 public class SettingsActivity extends LMSingleFragmentActivity {
 
+
     public static Intent newIntent(Context context) {
         return new Intent(context, SettingsActivity.class);
     }
@@ -21,4 +22,5 @@ public class SettingsActivity extends LMSingleFragmentActivity {
     protected boolean requiresBackNavigation() {
         return true;
     }
+
 }
