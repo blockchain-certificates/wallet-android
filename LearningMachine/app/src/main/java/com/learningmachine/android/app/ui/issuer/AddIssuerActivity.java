@@ -16,4 +16,9 @@ public class AddIssuerActivity extends LMSingleFragmentActivity {
     protected Fragment createFragment() {
         return AddIssuerFragment.newInstance();
     }
+
+    @Override
+    protected boolean requiresBackNavigation() {
+        return true;
+    }
 }

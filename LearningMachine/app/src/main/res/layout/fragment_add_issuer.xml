@@ -19,16 +19,19 @@
             android:paddingBottom="@dimen/fragment_add_issuer_url_textview_bottom_padding"
             android:paddingTop="@dimen/fragment_add_issuer_url_textview_top_padding"
             android:text="@string/fragment_add_issuer_info_url_text"
-            style="@style/LearningMachineTextView.URL"
-            />
+            style="@style/LearningMachineTextView.URL"/>
 
-        <EditText
-            android:id="@+id/add_issuer_url_edit_text"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/fragment_add_issuer_url"
-            android:paddingBottom="@dimen/fragment_add_isser_url_edittext_bottom_padding"
-            />
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/add_issuer_url_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/fragment_add_issuer_url"
+                android:paddingBottom="@dimen/fragment_add_isser_url_edittext_bottom_padding"/>
+        </android.support.design.widget.TextInputLayout>
 
         <TextView
             android:id="@+id/add_issuer_identity_text_view"
@@ -38,12 +41,18 @@
             android:text="@string/fragment_add_issuer_identity_text"
             style="@style/LearningMachineTextView.URL"/>
 
-        <EditText
-            android:id="@+id/add_issuer_identity_edit_text"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/fragment_add_issuer_add_identity"
-            />
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/add_issuer_identity_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/fragment_add_issuer_add_identity"/>
+
+        </android.support.design.widget.TextInputLayout>
+
 
     </LinearLayout>
 
