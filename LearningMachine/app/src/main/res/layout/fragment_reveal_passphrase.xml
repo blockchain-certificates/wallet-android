@@ -4,7 +4,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/more_light_gray"
+        android:background="@color/off_white_background"
         android:orientation="vertical">
 
         <TextView
@@ -13,12 +13,12 @@
             android:paddingTop="@dimen/fragment_reveal_passphrase_instructional_message_vertical_padding"
             android:paddingBottom="@dimen/fragment_reveal_passphrase_instructional_message_vertical_padding"
             android:text="@string/reveal_passphrase_instructional_message"
-            style="@style/LearningMachineTextView.RevealPassphrase"/>
+            style="@style/Material.Light.Body1"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/almost_white"
+            android:background="@color/white"
             android:orientation="vertical"
             android:paddingBottom="@dimen/fragment_reveal_passphrase_current_container_padding_bottom"
             android:paddingTop="@dimen/fragment_reveal_passphrase_current_container_padding_top">
@@ -28,14 +28,13 @@
                 android:layout_height="wrap_content"
                 android:paddingBottom="@dimen/fragment_reveal_passphrase_current_passphrase_title_bottom"
                 android:text="@string/reveal_passphrase_current_title"
-                android:textColor="@color/dark_gray"
-                style="@style/LearningMachineTextView.RevealPassphrase"/>
+                style="@style/Material.Light.Subhead.Secondary"/>
 
             <TextView
                 android:id="@+id/current_passphrase_textview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/LearningMachineTextView.RevealPassphrase"/>
+                style="@style/Material.Light.Body1"/>
 
         </LinearLayout>
 

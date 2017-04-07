@@ -7,7 +7,6 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textViewStyle">@style/LearningMachineTextView</item>
-
     </style>
 
     <style name="LearningMachineTextView" parent="android:style/Widget.TextView">
@@ -78,6 +77,14 @@
         <item name="android:textSize">@dimen/material_light_caption_text_size</item>
         <item name="android:lineSpacingExtra">@dimen/material_light_caption_line_spacing_extra</item>
         <item name="android:textColor">@color/black_de</item>
+    </style>
+
+    <!-- Missing Styles -->
+
+    <style name="Settings.Header" parent="LearningMachineTextView.Medium">
+        <item name="android:textSize">@dimen/fragment_settings_header_text_size</item>
+        <item name="android:lineSpacingExtra">@dimen/fragment_settings_header_line_spacing_extra</item>
+        <item name="android:textColor">@color/brand_green</item>
     </style>
 
 </resources>

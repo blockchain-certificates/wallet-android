@@ -24,6 +24,7 @@
     <dimen name="material_light_body2_text_size">14sp</dimen>
     <dimen name="material_light_body1_text_size">14sp</dimen>
     <dimen name="material_light_caption_text_size">12sp</dimen>
+    <dimen name="fragment_settings_header_text_size">14sp</dimen>
 
     <!-- Line Spacing Extra -->
 
@@ -34,5 +35,6 @@
     <dimen name="material_light_body2_line_spacing_extra">10sp</dimen>
     <dimen name="material_light_body1_line_spacing_extra">6sp</dimen>
     <dimen name="material_light_caption_line_spacing_extra">4sp</dimen>
+    <dimen name="fragment_settings_header_line_spacing_extra">10sp</dimen>
 
 </resources>
