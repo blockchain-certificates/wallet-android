@@ -3,11 +3,17 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="add_identity_top_padding">13dp</dimen>
-    <dimen name="fragment_add_isser_textview_padding_bottom">13dp</dimen>
-    <dimen name="fragment_add_issuer_linear_layout_padding">15dp</dimen>
-    <dimen name="fragment_add_issuer_textsize">16sp</dimen>
 
+    <!--Add Issuer Fragment Dimensions -->
+    <dimen name="fragment_add_issuer_linear_layout_top_padding">22dp</dimen>
+    <dimen name="fragment_add_issuer_linear_layout_left_padding">16dp</dimen>
+    <dimen name="fragment_add_issuer_url_textview_top_padding">22dp</dimen>
+    <dimen name="fragment_add_issuer_url_textview_bottom_padding">20dp</dimen>
+    <dimen name="fragment_add_isser_url_edittext_bottom_padding">38dp</dimen>
+    <dimen name="fragment_add_issuer_identity_textview_bottom_padding">23dp</dimen>
+    <dimen name="fragment_add_issuer_textsize">14sp</dimen>
 
+    <!-- Settings Fragment Dimensions -->
     <dimen name="fragment_settings_textview_padding_top">13dp</dimen>
     <dimen name="fragment_settings_textview_padding_bottom">13dp</dimen>
     <dimen name="fragment_settings_linear_layout_padding">15dp</dimen>
