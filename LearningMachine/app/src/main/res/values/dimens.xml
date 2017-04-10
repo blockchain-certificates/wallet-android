@@ -1,4 +1,5 @@
 <resources>
+
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
@@ -14,6 +15,15 @@
     <dimen name="fragment_reveal_passphrase_padding_end">10dp</dimen>
     <dimen name="fragment_reveal_passphrase_instructional_message_vertical_padding">15dp</dimen>
     <dimen name="fragment_reveal_passphrase_current_passphrase_title_bottom">15dp</dimen>
+
+    <!-- Home -->
+
+    <dimen name="fragment_home_recyclerview_spacing">4dp</dimen>
+    <dimen name="list_item_issuer_imageview_size">94dp</dimen>
+    <dimen name="list_item_issuer_imageview_margin_top">17dp</dimen>
+    <dimen name="list_item_issuer_imageview_margin_bottom">25dp</dimen>
+    <dimen name="list_item_issuer_imageview_margin_horizontal">37dp</dimen>
+    <dimen name="list_item_issuer_textview_padding_bottom">12dp</dimen>
 
     <!-- Text Sizes -->
 
