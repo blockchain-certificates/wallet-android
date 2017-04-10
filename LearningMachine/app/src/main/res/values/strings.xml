@@ -4,6 +4,7 @@
     <string name="home_settings_title">Settings</string>
 
     <!-- Settings -->
+
     <string name="settings">settings</string>
     <string name="settings_fragment">Settings</string>
 
@@ -22,5 +23,11 @@
     <string name="reveal_passphrase_title">Reveal Passphrase</string>
     <string name="reveal_passphrase_instructional_message">Some instructional text about passphrases.</string>
     <string name="reveal_passphrase_current_title">Current Passphrase</string>
+
+
+    <!-- Replace Passphrase -->
+    <string name="replace_passphrase_title">Replace Passphrase</string>
+    <string name="replace_passphrase_warning_message">Note that replacing your passphrase will remove all your issuers and certificates. Make sure this is what you want to do before proceeding.</string>
+    <string name="replace_passphrase_hint">Paste Passphrase</string>
 
 </resources>

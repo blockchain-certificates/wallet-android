@@ -18,6 +18,11 @@
     <dimen name="fragment_reveal_passphrase_textsize">14sp</dimen>
     <dimen name="fragment_reveal_passphrase_title_textsize">16sp</dimen>
 
+    <!-- Replace Passphrase -->
+
+    <dimen name="fragment_replace_passphrase_warning_textview_margin">16dp</dimen>
+    <dimen name="fragment_replace_passphrase_container_min_height">117dp</dimen>
+    <dimen name="fragment_replace_passphrase_container_padding">16dp</dimen>
 
     <!-- Home -->
 

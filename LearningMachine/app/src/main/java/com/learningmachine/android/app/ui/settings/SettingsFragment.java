@@ -12,6 +12,7 @@ import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.controller.LMWebActivity;
 import com.learningmachine.android.app.databinding.FragmentSettingsBinding;
 import com.learningmachine.android.app.ui.LMFragment;
+import com.learningmachine.android.app.ui.settings.passphrase.ReplacePassphraseActivity;
 import com.learningmachine.android.app.ui.settings.passphrase.RevealPassphraseActivity;
 
 
@@ -31,6 +32,11 @@ public class SettingsFragment extends LMFragment {
 
         binding.settingsRevealPassphraseText.setOnClickListener(v -> {
             Intent intent = RevealPassphraseActivity.newIntent(getContext());
+            startActivity(intent);
+        });
+
+        binding.settingsReplacePassphraseText.setOnClickListener(v -> {
+            Intent intent = ReplacePassphraseActivity.newIntent(getContext());
             startActivity(intent);
         });
 
