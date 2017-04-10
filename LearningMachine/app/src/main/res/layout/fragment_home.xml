@@ -11,6 +11,9 @@
             android:id="@+id/issuer_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingTop="@dimen/fragment_home_recyclerview_spacing"
+            android:paddingStart="@dimen/fragment_home_recyclerview_spacing"
+            android:paddingEnd="@dimen/fragment_home_recyclerview_spacing"
             android:background="@color/off_white_background"/>
 
         <android.support.design.widget.FloatingActionButton
