@@ -73,11 +73,6 @@
         <item name="android:textColor">@color/black_8b</item>
     </style>
 
-    <style name="LearningMachineTextView.RevealPassphrase">
-        <item name="android:paddingStart">@dimen/fragment_reveal_passphrase_padding_start</item>
-        <item name="android:paddingEnd">@dimen/fragment_reveal_passphrase_padding_end</item>
-    </style>
-
     <style name="Material.Light.Caption" parent="LearningMachineTextView">
         <item name="android:textSize">@dimen/material_light_caption_text_size</item>
         <item name="android:lineSpacingExtra">@dimen/material_light_caption_line_spacing_extra</item>

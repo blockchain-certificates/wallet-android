@@ -11,8 +11,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingEnd="@dimen/fragment_settings_linear_layout_padding_end"
-            android:paddingStart="@dimen/fragment_settings_linear_layout_padding_start"
+            android:paddingEnd="@dimen/fragment_settings_linear_layout_horizontal_padding"
+            android:paddingStart="@dimen/fragment_settings_linear_layout_horizontal_padding"
             android:paddingTop="@dimen/fragment_settings_linear_layout_padding_top"
             tools:context="com.learningmachine.android.app.ui.settings.SettingsActivity">
 
@@ -47,8 +47,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:background="@color/off_white_background"
-                style="@style/Settings.TextView"/>
+                android:background="@color/off_white_background"/>
 
             <TextView
                 android:id="@+id/settings_about_header_text"
