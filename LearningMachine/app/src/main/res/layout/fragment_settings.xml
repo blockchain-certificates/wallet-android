@@ -11,7 +11,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="@dimen/fragment_settings_linear_layout_padding"
+            android:paddingEnd="@dimen/fragment_settings_linear_layout_padding_end"
+            android:paddingStart="@dimen/fragment_settings_linear_layout_padding_start"
+            android:paddingTop="@dimen/fragment_settings_linear_layout_padding_top"
             tools:context="com.learningmachine.android.app.ui.settings.SettingsActivity">
 
             <TextView
@@ -19,47 +21,48 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/settings_passphrase_header"
-                style="@style/LearningMachineTextView.Settings.Header"/>
+                style="@style/Settings.Header"/>
 
             <TextView
                 android:id="@+id/settings_reveal_passphrase_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/settings_reveal_passphrase"
-                style="@style/LearningMachineTextView.Settings"/>
+                style="@style/Settings.TextView"/>
 
             <TextView
                 android:id="@+id/settings_replace_passphrase_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/settings_replace_passphrase"
-                style="@style/LearningMachineTextView.Settings"/>
+                style="@style/Settings.TextView"/>
 
             <TextView
                 android:id="@+id/settings_about_passphrase_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/settings_about_passphrases"
-                style="@style/LearningMachineTextView.Settings"/>
+                style="@style/Settings.TextView"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:background="@color/more_light_gray"/>
+                android:background="@color/off_white_background"
+                style="@style/Settings.TextView"/>
 
             <TextView
                 android:id="@+id/settings_about_header_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/settings_about_header"
-                style="@style/LearningMachineTextView.Settings.Header"/>
+                style="@style/Settings.Header"/>
 
             <TextView
                 android:id="@+id/settings_privacy_policy_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/settings_privacy_policy"
-                style="@style/LearningMachineTextView.Settings"/>
+                style="@style/Settings.TextView"/>
 
         </LinearLayout>
 

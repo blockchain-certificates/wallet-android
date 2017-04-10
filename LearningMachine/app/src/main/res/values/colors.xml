@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">@color/primary</color>
-    <color name="colorPrimaryDark">@color/dark_gray</color>
-    <color name="colorAccent">@color/more_light_gray</color>
+    <color name="colorPrimary">@color/brand_green</color>
+    <color name="colorPrimaryDark">@color/brand_green</color>
+    <color name="colorAccent">@color/brand_green</color>
 
-<!-- App Theme Colors -->
-    <color name="primary">#2ab27b</color>
-    <color name="dark_gray">#1B2B37</color>
-    <color name="medium_gray">#49555F</color>
-    <color name="less_medium">#768087</color>
-    <color name="light_gray">#A4AAAF</color>
-    <color name="lighter_gray">#D1D5D7</color>
-    <color name="more_light_gray">#E8E9EB</color>
-    <color name="almost_white">#F3F4F5</color>
+    <!-- Brand -->
+    <color name="brand_green">#2ab27b</color>
+    <color name="white">#ffffff</color>
+    <color name="off_white_background">#f3f4f5</color>
     <color name="black">#000000</color>
+    <color name="black_8a">#8a000000</color>
+    <color name="black_8b">#8b000000</color>
+    <color name="black_de">#de000000</color>
+    <color name="black_61">#61000000</color>
+
     <!-- Sample Color -->
+
     <color name="dark_green">#ce0a4602</color>
 
 </resources>
