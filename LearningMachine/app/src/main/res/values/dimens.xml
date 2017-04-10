@@ -19,6 +19,26 @@
     <dimen name="fragment_reveal_passphrase_title_textsize">16sp</dimen>
 
 
-    <dimen name="fragment_settings_passphrase_textsize">18sp</dimen>
-    <dimen name="fragment_settings_header_textsize">16sp</dimen>
+    <!-- Text Sizes -->
+
+    <dimen name="material_title_text_size">20sp</dimen>
+    <dimen name="text_style_text_size">16sp</dimen>
+    <dimen name="material_light_subhead_text_size">16sp</dimen>
+    <dimen name="material_desktop_light_menu_text_size">15sp</dimen>
+    <dimen name="material_light_body2_text_size">14sp</dimen>
+    <dimen name="material_light_body1_text_size">14sp</dimen>
+    <dimen name="material_light_caption_text_size">12sp</dimen>
+    <dimen name="fragment_settings_header_text_size">14sp</dimen>
+
+    <!-- Line Spacing Extra -->
+
+    <dimen name="material_title_line_spacing_extra">8sp</dimen>
+    <dimen name="text_style_line_spacing_extra">8sp</dimen>
+    <dimen name="material_light_subhead_line_spacing_extra">8sp</dimen>
+    <dimen name="material_desktop_light_menu_line_spacing_extra">5sp</dimen>
+    <dimen name="material_light_body2_line_spacing_extra">10sp</dimen>
+    <dimen name="material_light_body1_line_spacing_extra">6sp</dimen>
+    <dimen name="material_light_caption_line_spacing_extra">4sp</dimen>
+    <dimen name="fragment_settings_header_line_spacing_extra">10sp</dimen>
+
 </resources>
