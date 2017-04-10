@@ -9,6 +9,8 @@
         <item name="android:textViewStyle">@style/LearningMachineTextView</item>
     </style>
 
+    <!-- Base -->
+
     <style name="LearningMachineTextView" parent="android:style/Widget.TextView">
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textStyle">normal</item>
@@ -17,6 +19,8 @@
     <style name="LearningMachineTextView.Medium" parent="android:style/Widget.TextView">
         <item name="android:fontFamily">sans-serif-medium</item>
     </style>
+
+    <!-- Spec -->
 
     <style name="Material.Title" parent="LearningMachineTextView.Medium">
         <item name="android:textSize">@dimen/material_title_text_size</item>
@@ -79,7 +83,7 @@
         <item name="android:textColor">@color/black_de</item>
     </style>
 
-    <!-- Missing Styles -->
+    <!-- Custom -->
 
     <style name="Settings.Header" parent="LearningMachineTextView.Medium">
         <item name="android:textSize">@dimen/fragment_settings_header_text_size</item>

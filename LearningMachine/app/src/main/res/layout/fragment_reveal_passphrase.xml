@@ -10,8 +10,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/fragment_reveal_passphrase_instructional_message_vertical_padding"
-            android:paddingBottom="@dimen/fragment_reveal_passphrase_instructional_message_vertical_padding"
+            android:layout_margin="@dimen/fragment_reveal_passphrase_instructional_message_margin"
             android:text="@string/reveal_passphrase_instructional_message"
             style="@style/Material.Light.Body1"/>
 
@@ -20,13 +19,12 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:orientation="vertical"
-            android:paddingBottom="@dimen/fragment_reveal_passphrase_current_container_padding_bottom"
-            android:paddingTop="@dimen/fragment_reveal_passphrase_current_container_padding_top">
+            android:padding="@dimen/fragment_reveal_passphrase_current_container_padding">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/fragment_reveal_passphrase_current_passphrase_title_bottom"
+                android:layout_marginBottom="@dimen/fragment_reveal_passphrase_current_passphrase_title_bottom_margin"
                 android:text="@string/reveal_passphrase_current_title"
                 style="@style/Material.Light.Subhead.Secondary"/>
 
