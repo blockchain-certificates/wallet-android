@@ -48,4 +48,8 @@ public class LMWebActivity extends LMSingleFragmentActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+    @Override
+    protected boolean requiresBackNavigation() {
+        return true;
+    }
 }
