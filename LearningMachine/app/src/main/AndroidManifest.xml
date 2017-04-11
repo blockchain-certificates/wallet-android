@@ -30,7 +30,7 @@
 
         <activity
             android:name=".ui.issuer.IssuerActivity"
-            android:windowSoftInputMode="stateHidden"/>
+            />
         <activity android:name=".ui.issuer.AddIssuerActivity"/>
         <activity android:name=".ui.LMWebActivity"/>
 

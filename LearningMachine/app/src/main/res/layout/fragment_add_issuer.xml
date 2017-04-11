@@ -10,13 +10,14 @@
         android:orientation="vertical"
         android:paddingStart="@dimen/fragment_add_issuer_linear_layout_padding_horizontal"
         android:paddingEnd="@dimen/fragment_add_issuer_linear_layout_padding_horizontal"
-        android:paddingTop="@dimen/fragment_add_issuer_linear_layout_top_padding"
+        android:focusableInTouchMode="true"
         tools:context="com.learningmachine.android.app.ui.issuer.AddIssuerActivity">
 
         <TextView
             android:id="@+id/add_issuer_url_info_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingTop="@dimen/fragment_add_issuer_linear_layout_top_padding"
             android:paddingBottom="@dimen/fragment_add_issuer_url_textview_bottom_padding"
             android:text="@string/fragment_add_issuer_info_url_text"
             style="@style/Material.Light.Body1"/>
