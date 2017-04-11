@@ -29,12 +29,19 @@ public class SettingsFragment extends LMFragment {
                 container,
                 false);
 
-        binding.settingsRevealPassphraseText.setOnClickListener(v -> {
+        binding.settingsRevealPassphraseTextView.setOnClickListener(v -> {
             Intent intent = RevealPassphraseActivity.newIntent(getContext());
             startActivity(intent);
         });
 
-        binding.settingsPrivacyPolicyText.setOnClickListener(v -> {
+        binding.settingsAboutPassphraseTextView.setOnClickListener(v -> {
+            String actionBarTitle = getString(R.string.about_passphrases_title);
+            String endPoint = getString(R.string.about_passphrases_endpoint);
+            Intent intent = LMWebActivity.newIntent(getContext(), actionBarTitle, endPoint);
+            startActivity(intent);
+        });
+
+        binding.settingsPrivacyPolicyTextView.setOnClickListener(v -> {
             String actionBarTitle = getString(R.string.settings_privacy_policy);
             String endPoint = getString(R.string.settings_privacy_policy_endpoint);
             Intent intent = LMWebActivity.newIntent(getContext(), actionBarTitle, endPoint);
