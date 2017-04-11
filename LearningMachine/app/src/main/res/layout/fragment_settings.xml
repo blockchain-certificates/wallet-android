@@ -15,28 +15,27 @@
             tools:context="com.learningmachine.android.app.ui.settings.SettingsActivity">
 
             <TextView
-                android:id="@+id/settings_passphrase_header_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/settings_passphrase_header"
                 style="@style/Settings.Header"/>
 
             <TextView
-                android:id="@+id/settings_reveal_passphrase_text"
+                android:id="@+id/settings_reveal_passphrase_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/settings_reveal_passphrase"
                 style="@style/Settings.TextView"/>
 
             <TextView
-                android:id="@+id/settings_replace_passphrase_text"
+                android:id="@+id/settings_replace_passphrase_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/settings_replace_passphrase"
                 style="@style/Settings.TextView"/>
 
             <TextView
-                android:id="@+id/settings_about_passphrase_text"
+                android:id="@+id/settings_about_passphrase_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/settings_about_passphrases"
@@ -48,14 +47,13 @@
                 android:background="@color/off_white_background"/>
 
             <TextView
-                android:id="@+id/settings_about_header_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/settings_about_header"
                 style="@style/Settings.Header"/>
 
             <TextView
-                android:id="@+id/settings_privacy_policy_text"
+                android:id="@+id/settings_privacy_policy_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/settings_privacy_policy"
