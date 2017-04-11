@@ -21,7 +21,7 @@
     <string name="fragment_add_issuer_identity_text">Add information to identify yourself to the Issuer.</string>
     <string name="fragment_add_issuer_add_identity">One-time Code</string>
 
-    <string name="settings_privacy_policy_endpoint">http://www.learningmachine.com/mobile-privacy.html</string>
+    <string name="settings_privacy_policy_endpoint">http://www.learningmachine.com/mobile-privacy/</string>
 
     <!-- Reveal Passphrase -->
 
