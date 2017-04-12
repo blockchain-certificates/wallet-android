@@ -8,7 +8,7 @@
     <!--Add Issuer Fragment Dimensions -->
     <dimen name="fragment_add_issuer_linear_layout_top_padding">22dp</dimen>
     <dimen name="fragment_add_issuer_linear_layout_padding_horizontal">16dp</dimen>
-    <dimen name="fragment_add_isser_editText_padding_right">3dp</dimen>
+    <dimen name="fragment_add_isser_edittext_padding_right">3dp</dimen>
     <dimen name="fragment_add_issuer_url_textview_top_padding">22dp</dimen>
     <dimen name="fragment_add_issuer_url_textview_bottom_padding">20dp</dimen>
     <dimen name="fragment_add_isser_url_edittext_bottom_padding">38dp</dimen>

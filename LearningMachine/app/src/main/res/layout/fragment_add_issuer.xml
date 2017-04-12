@@ -31,7 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/fragment_add_issuer_url"
-                android:paddingRight="@dimen/fragment_add_isser_editText_padding_right"
+                android:paddingRight="@dimen/fragment_add_isser_edittext_padding_right"
                 android:layout_marginBottom="@dimen/fragment_add_isser_url_edittext_bottom_padding"
                 style="@style/Material.Light.Subhead.Disabled"/>
         </android.support.design.widget.TextInputLayout>
@@ -53,7 +53,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/fragment_add_issuer_add_identity"
-                android:paddingRight="@dimen/fragment_add_isser_editText_padding_right"
+                android:paddingRight="@dimen/fragment_add_isser_edittext_padding_right"
                 style="@style/Material.Light.Subhead.Disabled"/>
 
         </android.support.design.widget.TextInputLayout>
