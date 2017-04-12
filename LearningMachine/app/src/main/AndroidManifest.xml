@@ -30,11 +30,13 @@
 
         <activity
             android:name=".ui.issuer.IssuerActivity"
+
             android:windowSoftInputMode="stateHidden"/>
         <activity
             android:name=".ui.issuer.AddIssuerActivity"
             android:label="@string/fragment_add_issuer_title"/>
-        <activity android:name=".controller.LMWebActivity"/>
+
+        <activity android:name=".ui.LMWebActivity"/>
 
         <activity
             android:name=".ui.settings.passphrase.RevealPassphraseActivity"
