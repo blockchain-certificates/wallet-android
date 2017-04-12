@@ -1,21 +1,16 @@
 package com.learningmachine.android.app.data.bitcoin;
 
 import android.content.Context;
-import android.content.res.AssetManager;
 
 import com.learningmachine.android.app.LMNetworkConstants;
 import com.learningmachine.android.app.util.ListUtils;
 import com.learningmachine.android.app.util.StringUtils;
 
 import org.bitcoinj.core.NetworkParameters;
-import org.bitcoinj.crypto.MnemonicCode;
-import org.bitcoinj.crypto.MnemonicException;
 import org.bitcoinj.wallet.DeterministicSeed;
 import org.bitcoinj.wallet.KeyChainGroup;
 import org.bitcoinj.wallet.Wallet;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.security.SecureRandom;
 import java.util.List;
 
