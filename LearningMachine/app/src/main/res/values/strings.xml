@@ -24,7 +24,6 @@
     <string name="reveal_passphrase_instructional_message">Some instructional text about passphrases.</string>
     <string name="reveal_passphrase_current_title">Current Passphrase</string>
 
-
     <!-- Replace Passphrase -->
 
     <string name="replace_passphrase_title">Replace Passphrase</string>
