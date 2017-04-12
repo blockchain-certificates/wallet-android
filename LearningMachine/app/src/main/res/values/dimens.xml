@@ -3,10 +3,23 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="add_identity_top_padding">13dp</dimen>
 
+    <!--Add Issuer Fragment Dimensions -->
+    <dimen name="fragment_add_issuer_linear_layout_top_padding">22dp</dimen>
+    <dimen name="fragment_add_issuer_linear_layout_padding_horizontal">16dp</dimen>
+    <dimen name="fragment_add_isser_edittext_padding_right">3dp</dimen>
+    <dimen name="fragment_add_issuer_url_textview_top_padding">22dp</dimen>
+    <dimen name="fragment_add_issuer_url_textview_bottom_padding">20dp</dimen>
+    <dimen name="fragment_add_isser_url_edittext_bottom_padding">38dp</dimen>
+    <dimen name="fragment_add_issuer_identity_textview_bottom_padding">23dp</dimen>
+    <dimen name="fragment_add_issuer_textsize">14sp</dimen>
+
+    <!-- Settings Fragment Dimensions -->
     <dimen name="fragment_settings_textview_padding_top">13dp</dimen>
-    <dimen name="fragment_settings_textview_padding_bottom">13dp</dimen>
-    <dimen name="fragment_settings_linear_layout_padding">15dp</dimen>
+    <dimen name="fragment_settings_textview_padding_bottom">11dp</dimen>
+    <dimen name="fragment_settings_linear_layout_horizontal_padding">16dp</dimen>
+    <dimen name="fragment_settings_linear_layout_padding_top">13dp</dimen>
 
     <dimen name="fragment_reveal_passphrase_current_container_padding">16dp</dimen>
     <dimen name="fragment_reveal_passphrase_padding_top">15dp</dimen>

@@ -11,7 +11,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="@dimen/fragment_settings_linear_layout_padding"
+            android:paddingTop="@dimen/fragment_settings_linear_layout_padding_top"
             tools:context="com.learningmachine.android.app.ui.settings.SettingsActivity">
 
             <TextView
@@ -25,21 +25,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/settings_reveal_passphrase"
-                style="@style/TextStyle"/>
+                style="@style/Settings.TextView"/>
 
             <TextView
                 android:id="@+id/settings_replace_passphrase_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/settings_replace_passphrase"
-                style="@style/TextStyle"/>
+                style="@style/Settings.TextView"/>
 
             <TextView
                 android:id="@+id/settings_about_passphrase_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/settings_about_passphrases"
-                style="@style/TextStyle"/>
+                style="@style/Settings.TextView"/>
 
             <View
                 android:layout_width="match_parent"
@@ -57,7 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/settings_privacy_policy"
-                style="@style/TextStyle"/>
+                style="@style/Settings.TextView"/>
 
         </LinearLayout>
 

@@ -28,12 +28,15 @@
             android:label="@string/settings_fragment"
             android:parentActivityName=".ui.home.HomeActivity"/>
 
-        <activity android:name=".ui.issuer.IssuerActivity"/>
-
+        <activity
+            android:name=".ui.issuer.IssuerActivity"
+            />
+        <activity android:name=".ui.issuer.AddIssuerActivity"/>
         <activity android:name=".ui.LMWebActivity"/>
 
-        <activity android:name=".ui.settings.passphrase.RevealPassphraseActivity"
-                  android:label="@string/reveal_passphrase_title"/>
+        <activity
+            android:name=".ui.settings.passphrase.RevealPassphraseActivity"
+            android:label="@string/reveal_passphrase_title"/>
 
     </application>
 
