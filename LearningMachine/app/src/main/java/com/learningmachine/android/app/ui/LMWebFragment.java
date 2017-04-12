@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.controller;
+package com.learningmachine.android.app.ui;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -11,7 +11,6 @@ import android.webkit.WebViewClient;
 
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.databinding.FragmentWebBinding;
-import com.learningmachine.android.app.ui.LMFragment;
 
 public class LMWebFragment extends LMFragment {
 
