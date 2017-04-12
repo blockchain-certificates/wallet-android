@@ -17,8 +17,8 @@
             android:id="@+id/add_issuer_url_info_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/fragment_add_issuer_linear_layout_top_padding"
-            android:paddingBottom="@dimen/fragment_add_issuer_url_textview_bottom_padding"
+            android:layout_marginTop="@dimen/fragment_add_issuer_linear_layout_top_padding"
+            android:layout_marginBottom="@dimen/fragment_add_issuer_url_textview_bottom_padding"
             android:text="@string/fragment_add_issuer_info_url_text"
             style="@style/Material.Light.Body1"/>
 
@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/fragment_add_issuer_url"
                 android:paddingRight="@dimen/fragment_add_isser_editText_padding_right"
-                android:paddingBottom="@dimen/fragment_add_isser_url_edittext_bottom_padding"
+                android:layout_marginBottom="@dimen/fragment_add_isser_url_edittext_bottom_padding"
                 style="@style/Material.Light.Subhead.Disabled"/>
         </android.support.design.widget.TextInputLayout>
 
@@ -40,7 +40,7 @@
             android:id="@+id/add_issuer_identity_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/fragment_add_issuer_identity_textview_bottom_padding"
+            android:layout_marginBottom="@dimen/fragment_add_issuer_identity_textview_bottom_padding"
             android:text="@string/fragment_add_issuer_identity_text"
             style="@style/Material.Light.Body1"/>
 
