@@ -17,6 +17,8 @@
     <string name="settings_about_this_app">About this app</string>
     <string name="settings_privacy_policy">Privacy Policy</string>
 
+    <!-- Add Issuer -->
+    <string name="fragment_add_issuer_title">Add Issuer</string>
     <string name="fragment_add_issuer_info_url_text">Add the URL you were given by your Issuer.</string>
     <string name="fragment_add_issuer_url">Issuer URL</string>
     <string name="fragment_add_issuer_identity_text">Add information to identify yourself to the Issuer.</string>
@@ -41,5 +43,6 @@
 
     <string name="about_passphrases_title">About Passphrases</string>
     <string name="about_passphrases_endpoint">http://www.learningmachine.com/about-passphrases/</string>
+
 
 </resources>

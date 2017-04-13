@@ -29,13 +29,14 @@
             android:parentActivityName=".ui.home.HomeActivity"/>
 
         <activity
-            android:name=".ui.issuer.IssuerActivity"/>
+            android:name=".ui.issuer.IssuerActivity"
 
+            android:windowSoftInputMode="stateHidden"/>
         <activity
-            android:name=".ui.issuer.AddIssuerActivity"/>
+            android:name=".ui.issuer.AddIssuerActivity"
+            android:label="@string/fragment_add_issuer_title"/>
 
-        <activity
-            android:name=".ui.LMWebActivity"/>
+        <activity android:name=".ui.LMWebActivity"/>
 
         <activity
             android:name=".ui.settings.passphrase.RevealPassphraseActivity"
