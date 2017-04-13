@@ -96,8 +96,8 @@ public class HomeFragment extends LMFragment {
 
         private List<Issuer> mIssuerList;
 
-        public IssuerAdapter(List<Issuer> contactList) {
-            mIssuerList = contactList;
+        IssuerAdapter(List<Issuer> issuerList) {
+            mIssuerList = issuerList;
         }
 
         @Override
