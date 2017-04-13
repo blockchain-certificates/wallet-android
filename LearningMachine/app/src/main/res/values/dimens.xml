@@ -1,6 +1,7 @@
 <resources>
 
     <!-- Default screen margins, per the Android Design guidelines. -->
+
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="add_identity_top_padding">13dp</dimen>
@@ -47,6 +48,13 @@
     <dimen name="list_item_issuer_imageview_margin_bottom">25dp</dimen>
     <dimen name="list_item_issuer_imageview_margin_horizontal">37dp</dimen>
     <dimen name="list_item_issuer_textview_padding_bottom">12dp</dimen>
+
+    <!-- Issuer -->
+
+    <dimen name="list_item_certificate_view_height">72dp</dimen>
+    <dimen name="list_item_certificate_view_padding_top">16dp</dimen>
+    <dimen name="list_item_certificate_view_padding_horizontal">16dp</dimen>
+    <dimen name="list_item_certificate_description_margin_top">23dp</dimen>
 
     <!-- Text Sizes -->
 

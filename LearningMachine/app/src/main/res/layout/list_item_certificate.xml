@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.learningmachine.android.app.ui.issuer.CertificateListItemViewModel"/>
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/list_item_certificate_view_height"
+        android:paddingEnd="@dimen/list_item_certificate_view_padding_horizontal"
+        android:paddingStart="@dimen/list_item_certificate_view_padding_horizontal"
+        android:paddingTop="@dimen/list_item_certificate_view_padding_top">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.title}"
+            style="@style/TextStyle"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/list_item_certificate_description_margin_top"
+            android:text="@{viewModel.description}"
+            style="@style/Material.Light.Body1.Secondary"/>
+
+    </FrameLayout>
+
+</layout>

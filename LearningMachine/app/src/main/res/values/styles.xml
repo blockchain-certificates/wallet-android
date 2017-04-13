@@ -27,11 +27,11 @@
         <item name="android:lineSpacingExtra">@dimen/material_title_line_spacing_extra</item>
     </style>
 
-    <style name="Material.Title.Light" parent="LearningMachineTextView.Medium">
+    <style name="Material.Title.Light">
         <item name="android:textColor">@color/black_de</item>
     </style>
 
-    <style name="Material.Title.Dark" parent="LearningMachineTextView.Medium">
+    <style name="Material.Title.Dark">
         <item name="android:textColor">@color/white</item>
     </style>
 
@@ -47,11 +47,11 @@
         <item name="android:textColor">@color/black_8a</item>
     </style>
 
-    <style name="Material.Light.Subhead.Secondary" parent="LearningMachineTextView">
+    <style name="Material.Light.Subhead.Secondary">
         <item name="android:textColor">@color/black_8a</item>
     </style>
 
-    <style name="Material.Light.Subhead.Disabled" parent="LearningMachineTextView">
+    <style name="Material.Light.Subhead.Disabled">
         <item name="android:textColor">@color/black_61</item>
     </style>
 
@@ -73,7 +73,7 @@
         <item name="android:textColor">@color/black_de</item>
     </style>
 
-    <style name="Material.Light.Body1.Secondary" parent="LearningMachineTextView">
+    <style name="Material.Light.Body1.Secondary">
         <item name="android:textColor">@color/black_8b</item>
     </style>
 
