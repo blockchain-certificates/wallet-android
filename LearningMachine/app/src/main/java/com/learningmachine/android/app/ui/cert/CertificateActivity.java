@@ -36,5 +36,4 @@ public class CertificateActivity extends LMSingleFragmentActivity {
     protected boolean requiresBackNavigation() {
         return true;
     }
-
 }

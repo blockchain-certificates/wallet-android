@@ -8,6 +8,7 @@ import com.learningmachine.android.app.data.model.Issuer;
 import com.learningmachine.android.app.ui.LMSingleFragmentActivity;
 
 public class IssuerActivity extends LMSingleFragmentActivity {
+
     public static final String EXTRA_ISSUER = "IssuerActivity.Issuer";
 
     public static Intent newIntent(Context context, Issuer issuer) {
@@ -35,5 +36,4 @@ public class IssuerActivity extends LMSingleFragmentActivity {
     protected boolean requiresBackNavigation() {
         return true;
     }
-
 }
