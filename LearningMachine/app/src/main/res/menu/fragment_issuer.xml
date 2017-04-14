@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/certificate_info_icon"
-        android:title="@string/certificate_info"
+        android:title="@string/issuer_info"
         android:icon="@drawable/ic_action_info"
         app:showAsAction="always"/>
 
