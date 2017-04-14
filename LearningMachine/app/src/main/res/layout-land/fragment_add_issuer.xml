@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical"
+        android:paddingEnd="@dimen/fragment_add_issuer_linear_layout_padding_horizontal"
+        android:paddingStart="@dimen/fragment_add_issuer_linear_layout_padding_horizontal"
+        tools:context="com.learningmachine.android.app.ui.issuer.AddIssuerActivity">
+
+        <TextView
+            android:id="@+id/add_issuer_url_info_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/fragment_add_issuer_url_textview_bottom_padding"
+            android:layout_marginTop="@dimen/fragment_add_issuer_linear_layout_top_padding"
+            android:text="@string/fragment_add_issuer_info_url_text"
+            style="@style/Material.Light.Body1"/>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/add_issuer_url_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="flagNoFullscreen"
+                android:layout_marginBottom="@dimen/fragment_add_isser_url_edittext_bottom_padding"
+                android:hint="@string/fragment_add_issuer_url"
+                android:paddingRight="@dimen/fragment_add_isser_edittext_padding_right"
+                style="@style/Material.Light.Subhead.Disabled"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <TextView
+            android:id="@+id/add_issuer_identity_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/fragment_add_issuer_identity_textview_bottom_padding"
+            android:text="@string/fragment_add_issuer_identity_text"
+            style="@style/Material.Light.Body1"/>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/add_issuer_identity_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="flagNoFullscreen"
+                android:hint="@string/fragment_add_issuer_add_identity"
+                android:paddingRight="@dimen/fragment_add_isser_edittext_padding_right"
+                style="@style/Material.Light.Subhead.Disabled"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+
+    </LinearLayout>
+
+</layout>
