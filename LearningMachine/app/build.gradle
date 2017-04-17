@@ -94,6 +94,8 @@ dependencies {
     compile "com.google.dagger:dagger:$DAGGER_VERSION"
     annotationProcessor "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
     compile "com.jakewharton.timber:timber:$TIMBER_VERSION"
+    compile 'io.reactivex.rxjava2:rxjava:2.0.8'
+    compile 'com.squareup.retrofit2:retrofit:2.2.0'
 
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
