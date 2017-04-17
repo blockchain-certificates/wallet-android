@@ -43,5 +43,6 @@
 
     <string name="about_passphrases_title">About Passphrases</string>
     <string name="about_passphrases_endpoint">http://www.learningmachine.com/about-passphrases/</string>
+    <string name="issuer_info">Info</string>
 
 </resources>

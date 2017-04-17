@@ -3,7 +3,9 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:title="STUB"
-        app:showAsAction="never"/>
+        android:id="@+id/certificate_info_icon"
+        android:title="@string/issuer_info"
+        android:icon="@drawable/ic_action_info"
+        app:showAsAction="always"/>
 
 </menu>
