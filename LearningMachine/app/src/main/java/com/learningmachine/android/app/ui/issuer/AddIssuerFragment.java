@@ -11,12 +11,18 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.learningmachine.android.app.R;
+import com.learningmachine.android.app.data.inject.Injector;
+import com.learningmachine.android.app.data.webservice.LMRetrofit;
 import com.learningmachine.android.app.databinding.FragmentAddIssuerBinding;
 import com.learningmachine.android.app.ui.LMFragment;
+
+import javax.inject.Inject;
 
 public class AddIssuerFragment extends LMFragment {
 
     private FragmentAddIssuerBinding mBinding;
+
+    @Inject protected LMRetrofit mLMRetrofit;
 
     public static AddIssuerFragment newInstance() {
         return new AddIssuerFragment();
@@ -33,6 +39,8 @@ public class AddIssuerFragment extends LMFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Injector.obtain(getContext())
+                .inject(this);
         setHasOptionsMenu(true);
     }
 
@@ -45,9 +53,11 @@ public class AddIssuerFragment extends LMFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
-           case  R.id.fragment_add_issuer_verify:
-
-               break;
+            case R.id.fragment_add_issuer_verify:
+                String url = mBinding.addIssuerUrlEditText.getText()
+                        .toString();
+                mLMRetrofit.addIssuerRequest(url);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

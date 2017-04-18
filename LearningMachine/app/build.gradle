@@ -44,6 +44,10 @@ android {
         production {}
     }
 
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
+    }
+
     buildTypes {
         release {
             if (System.getenv("BUILD_NUMBER") == null) {
@@ -96,6 +100,10 @@ dependencies {
     compile "com.jakewharton.timber:timber:$TIMBER_VERSION"
     compile 'io.reactivex.rxjava2:rxjava:2.0.8'
     compile 'com.squareup.retrofit2:retrofit:2.2.0'
+    compile 'com.google.code.gson:gson:2.8.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.2.0'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.2.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
 
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
