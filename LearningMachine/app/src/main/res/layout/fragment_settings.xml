@@ -22,21 +22,21 @@
 
             <TextView
                 android:id="@+id/settings_reveal_passphrase_text_view"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/settings_reveal_passphrase"
                 style="@style/Settings.TextView"/>
 
             <TextView
                 android:id="@+id/settings_replace_passphrase_text_view"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/settings_replace_passphrase"
                 style="@style/Settings.TextView"/>
 
             <TextView
                 android:id="@+id/settings_about_passphrase_text_view"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/settings_about_passphrases"
                 style="@style/Settings.TextView"/>
@@ -54,7 +54,7 @@
 
             <TextView
                 android:id="@+id/settings_privacy_policy_text_view"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/settings_privacy_policy"
                 style="@style/Settings.TextView"/>
