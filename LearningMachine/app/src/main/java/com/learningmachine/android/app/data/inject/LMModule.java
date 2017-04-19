@@ -3,7 +3,7 @@ package com.learningmachine.android.app.data.inject;
 import android.content.Context;
 
 import com.learningmachine.android.app.LMConstants;
-import com.learningmachine.android.app.data.webservice.LMRetrofit;
+import com.learningmachine.android.app.data.webservice.DataManager;
 
 import javax.inject.Singleton;
 
@@ -61,7 +61,8 @@ public class LMModule {
     }
 
     @Singleton
-    @Provides LMRetrofit provideLMRetrofit(Retrofit retrofit) {
-        return new LMRetrofit(retrofit);
+    @Provides
+    DataManager provideLMRetrofit(Retrofit retrofit) {
+        return new DataManager(retrofit);
     }
 }
