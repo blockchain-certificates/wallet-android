@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="com.learningmachine.android.app.ui.issuer.IssuerInfoViewModel"/>
+            type="com.learningmachine.android.app.data.model.IssuerInfo"/>
     </data>
 
     <LinearLayout
@@ -27,21 +27,71 @@
             android:id="@+id/issuer_info_introduced_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/fragment_issuer_info_introduced_on"/>
+            android:text="@string/fragment_issuer_info_introduced_on"
+            style="@style/TextStyle"/>
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/issuer_info_viewmodel_textview_bottom_padding"
             android:text="@{viewModel.date}"
+            style="@style/Material.Light.Body1.Secondary"/>
+
+        <TextView
+            android:id="@+id/issuer_info_shared_address_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fragment_issuer_info_shared_address"
             style="@style/TextStyle"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/list_item_certificate_description_margin_top"
-            android:text="@{viewModel.description}"
+            android:paddingBottom="@dimen/issuer_info_viewmodel_textview_bottom_padding"
+            android:text="@{viewModel.sharedAddress}"
             style="@style/Material.Light.Body1.Secondary"/>
 
+        <TextView
+            android:id="@+id/issuer_info_url_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fragment_issuer_info_url"
+            style="@style/TextStyle"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/issuer_info_viewmodel_textview_bottom_padding"
+            android:text="@{viewModel.url}"
+            style="@style/Material.Light.Body1.Secondary"/>
+
+        <TextView
+            android:id="@+id/issuer_info_email_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fragment_issuer_info_email"
+            style="@style/TextStyle"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/issuer_info_viewmodel_textview_bottom_padding"
+            android:text="@{viewModel.email}"
+            style="@style/Material.Light.Body1.Secondary"/>
+
+        <TextView
+            android:id="@+id/issuer_info_description_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fragment_issuer_info_description"
+            style="@style/TextStyle"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/issuer_info_viewmodel_textview_bottom_padding"
+            android:text="@{viewModel.description}"
+            style="@style/Material.Light.Body1.Secondary"/>
     </LinearLayout>
 
 </layout>

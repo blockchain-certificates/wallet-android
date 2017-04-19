@@ -1,6 +1,7 @@
 package com.learningmachine.android.app.ui.issuer;
 
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,12 +10,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.model.Certificate;
 import com.learningmachine.android.app.data.model.Issuer;
+import com.learningmachine.android.app.data.model.IssuerInfo;
 import com.learningmachine.android.app.databinding.FragmentIssuerBinding;
 import com.learningmachine.android.app.databinding.ListItemCertificateBinding;
 import com.learningmachine.android.app.ui.LMFragment;
@@ -27,6 +30,7 @@ public class IssuerFragment extends LMFragment {
     private static final String ARG_ISSUER = "IssuerFragment.Issuer";
 
     private Issuer mIssuer;
+    private IssuerInfo mIssuerInfo;
     private FragmentIssuerBinding mBinding;
 
     public static IssuerFragment newInstance(Issuer issuer) {
@@ -61,6 +65,19 @@ public class IssuerFragment extends LMFragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.fragment_issuer, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.certificate_info_icon:
+                mIssuerInfo = new IssuerInfo("April, 4th, 2017", "rekbrgregbr", "google.com", "rashad@bignerdranch.com", "sample");
+                Intent intent = IssuerInfoActivity.newIntent(getContext(), mIssuerInfo);
+                startActivity(intent);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void setupRecyclerView() {
