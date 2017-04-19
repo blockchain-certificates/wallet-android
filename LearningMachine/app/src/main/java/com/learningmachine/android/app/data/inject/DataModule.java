@@ -36,8 +36,8 @@ public class DataModule {
 
     @Provides
     @Singleton
-    IssuerStore providesIssuerStore(LMDatabase database, ImageStore imageStore) {
-        return new IssuerStore(database, imageStore);
+    IssuerStore providesIssuerStore(Context context, LMDatabase database, ImageStore imageStore) {
+        return new IssuerStore(context, database, imageStore);
     }
 
 }

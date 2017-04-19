@@ -1,6 +1,7 @@
 package com.learningmachine.android.app.data.store;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.VisibleForTesting;
@@ -10,22 +11,51 @@ import com.learningmachine.android.app.data.model.KeyRotation;
 import com.learningmachine.android.app.data.store.cursor.IssuerCursorWrapper;
 import com.learningmachine.android.app.data.store.cursor.KeyRotationCursorWrapper;
 import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
+import com.learningmachine.android.app.util.GsonUtil;
 import com.learningmachine.android.app.util.ListUtils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class IssuerStore implements DataStore {
 
+    // Context can be removed when mock data is no longer necessary
+    private Context mContext;
     private SQLiteDatabase mDatabase;
     private ImageStore mImageStore;
 
-    public IssuerStore(LMDatabase database, ImageStore imageStore) {
+    public IssuerStore(Context context, LMDatabase database, ImageStore imageStore) {
+        mContext = context;
         mDatabase = database.getWritableDatabase();
         mImageStore = imageStore;
+        loadMockData();
+    }
+
+    private void loadMockData() {
+        List<Issuer> issuerList = loadIssuers();
+        if (!issuerList.isEmpty()) {
+            return;
+        }
+
+        GsonUtil gsonUtil = new GsonUtil(mContext);
+        String files[] = {"issuer-baratheon", "issuer-stark", "issuer-targaryen"};
+
+        for (String file : files) {
+            try {
+                IssuerResponse issuerResponse = (IssuerResponse) gsonUtil.loadModelObject(file, IssuerResponse.class);
+                saveIssuerResponse(issuerResponse);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void saveIssuerResponse(IssuerResponse issuerResponse) {
+        if (issuerResponse == null) {
+            return;
+        }
+
         ContentValues contentValues = new ContentValues();
 
         contentValues.put(LMDatabase.Column.Issuer.NAME, issuerResponse.getName());
@@ -46,7 +76,7 @@ public class IssuerStore implements DataStore {
                 contentValues);
     }
 
-    public void saveIssuer(Issuer issuer) {
+    private void saveIssuer(Issuer issuer) {
         ContentValues contentValues = new ContentValues();
 
         contentValues.put(LMDatabase.Column.Issuer.NAME, issuer.getName());
@@ -69,7 +99,7 @@ public class IssuerStore implements DataStore {
         }
     }
 
-    public List<Issuer> loadIssuers() {
+    private List<Issuer> loadIssuers() {
         List<Issuer> issuerList = new ArrayList<>();
 
         Cursor cursor = mDatabase.query(
@@ -141,7 +171,8 @@ public class IssuerStore implements DataStore {
         }
     }
 
-    private void saveKeyRotation(KeyRotation keyRotation, String issuerUuid, String tableName) {
+    @VisibleForTesting
+    void saveKeyRotation(KeyRotation keyRotation, String issuerUuid, String tableName) {
         ContentValues contentValues = new ContentValues();
 
         contentValues.put(LMDatabase.Column.KeyRotation.KEY, keyRotation.getKey());
@@ -168,7 +199,8 @@ public class IssuerStore implements DataStore {
         return loadKeyRotations(issuerUuid, LMDatabase.Table.REVOCATION_KEY);
     }
 
-    private List<KeyRotation> loadKeyRotations(String issuerUuid, String tableName) {
+    @VisibleForTesting
+    List<KeyRotation> loadKeyRotations(String issuerUuid, String tableName) {
         List<KeyRotation> keyRotationList = new ArrayList<>();
 
         Cursor cursor = mDatabase.query(
