@@ -60,7 +60,6 @@ public class LMDatabase extends SQLiteOpenHelper {
                 + ", " + Column.Issuer.UUID + " TEXT"
                 + ", " + Column.Issuer.CERTS_URL + " TEXT"
                 + ", " + Column.Issuer.INTRO_URL + " TEXT"
-                + ", " + Column.Issuer.NAME + " TEXT"
                 + ");";
         sqLiteDatabase.execSQL(issuerCreate);
     }

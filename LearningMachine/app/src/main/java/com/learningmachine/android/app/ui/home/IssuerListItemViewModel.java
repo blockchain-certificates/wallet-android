@@ -37,7 +37,8 @@ public class IssuerListItemViewModel extends BaseObservable {
         if (mIssuer == null) {
             return 0;
         }
-        return mIssuer.getImageResId();
+        // TODO fix
+        return 0;
     }
 
     public void bindIssuer(Issuer issuer) {

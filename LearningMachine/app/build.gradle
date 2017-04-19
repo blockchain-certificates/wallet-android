@@ -82,7 +82,14 @@ retrolambda {
 
 final SUPPORT_VERSION = '25.3.1'
 final DAGGER_VERSION = '2.7'
+final BITCOINJ_VERSION = '0.14.4'
 final TIMBER_VERSION = '4.5.1'
+final JODATIME_VERSION = '2.8.2'
+final RETROFIT_VERSION = '2.1.0'
+final MOCKITO_VERSION = '2.2.11'
+final ROBOLECTRIC_VERSION = '3.3.2'
+// Stuck at v20 until Roblectric updates
+final GUAVA_VERSION = '20.0'
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -90,16 +97,21 @@ dependencies {
     compile "com.android.support:recyclerview-v7:$SUPPORT_VERSION"
     compile "com.android.support:design:$SUPPORT_VERSION"
     compile 'com.android.support:multidex:1.0.1'
-    compile 'org.bitcoinj:bitcoinj-core:0.14.4'
+    compile "org.bitcoinj:bitcoinj-core:$BITCOINJ_VERSION"
     compile "com.google.dagger:dagger:$DAGGER_VERSION"
     annotationProcessor "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
     compile "com.jakewharton.timber:timber:$TIMBER_VERSION"
-    compile 'net.danlew:android.joda:2.8.2'
+    compile "net.danlew:android.joda:$JODATIME_VERSION"
+    compile "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
+    compile "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION"
+    compile "com.google.guava:guava:$GUAVA_VERSION"
 
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
     testCompile 'junit:junit:4.12'
-    testCompile "org.mockito:mockito-core:2.2.11"
+    testCompile "org.mockito:mockito-core:$MOCKITO_VERSION"
+    testCompile "org.robolectric:robolectric:$ROBOLECTRIC_VERSION"
+    testCompile "org.robolectric:shadows-multidex:$ROBOLECTRIC_VERSION"
 }

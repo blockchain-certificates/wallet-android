@@ -73,15 +73,8 @@ public class HomeFragment extends LMFragment {
     }
 
     private void setupRecyclerView() {
-        // build list
+        // TODO load from issuer store
         List<Issuer> issuerList = new ArrayList<>();
-
-        Issuer issuer = new Issuer("Issuer 1", R.drawable.issuer_baratheon);
-        issuerList.add(issuer);
-        issuer = new Issuer("Issuer 2", R.drawable.issuer_stark);
-        issuerList.add(issuer);
-        issuer = new Issuer("Issuer 3", R.drawable.issuer_targaryen);
-        issuerList.add(issuer);
 
         final IssuerAdapter adapter = new IssuerAdapter(issuerList);
         mBinding.issuerRecyclerview.setAdapter(adapter);

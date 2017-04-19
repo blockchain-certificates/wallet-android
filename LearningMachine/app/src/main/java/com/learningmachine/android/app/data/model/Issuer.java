@@ -1,5 +1,6 @@
 package com.learningmachine.android.app.data.model;
 
+import com.learningmachine.android.app.util.ImageUtils;
 import com.learningmachine.android.app.util.ListUtils;
 
 import java.io.Serializable;
@@ -19,11 +20,6 @@ public class Issuer implements Serializable {
     /** The URL where you can make a POST request with recipient data in order to introduce a Recipient to an Issuer.
      * For more information, look at `IssuerIntroductionRequest` */
     private String mIntroUrl;
-
-    // TODO replace with data
-    /** Image data for the issuer */
-    private int mImageResId;
-
     /** An ordered list of KeyRotation objects, with the most recent key rotation first.
      * These represent the keys used to issue certificates during specific date ranges */
     private List<KeyRotation> mIssuerKeys;
@@ -73,6 +69,12 @@ public class Issuer implements Serializable {
 
     public void setRevocationKeys(List<KeyRotation> revocationKeys) {
         mRevocationKeys = revocationKeys;
+    }
+
+
+    /** Image filename, created with the md5 of mUuid*/
+    public String getImageFilename() {
+        return ImageUtils.getIssuerImageFilename(mUuid);
     }
 
     /** A convenience method for the most recent (and theoretically only valid) issuerKey. */
