@@ -30,6 +30,7 @@
                 android:id="@+id/add_issuer_url_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:imeOptions="flagNoFullscreen"
                 android:layout_marginBottom="@dimen/fragment_add_isser_url_edittext_bottom_padding"
                 android:hint="@string/fragment_add_issuer_url"
                 android:paddingRight="@dimen/fragment_add_isser_edittext_padding_right"
@@ -52,6 +53,7 @@
                 android:id="@+id/add_issuer_identity_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:imeOptions="flagNoFullscreen"
                 android:hint="@string/fragment_add_issuer_add_identity"
                 android:paddingRight="@dimen/fragment_add_isser_edittext_padding_right"
                 style="@style/Material.Light.Subhead.Disabled"/>
