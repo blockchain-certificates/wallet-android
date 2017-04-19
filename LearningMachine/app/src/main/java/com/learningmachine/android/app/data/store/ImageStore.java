@@ -35,11 +35,16 @@ public class ImageStore implements DataStore {
             return false;
         }
 
+        String imageData = ImageUtils.getImageDataFromJson(jsonData);
+        if (StringUtils.isEmpty(imageData)) {
+            return false;
+        }
+
         boolean success = false;
         FileOutputStream fileOutputStream;
         try {
             fileOutputStream = mContext.openFileOutput(filename, Context.MODE_PRIVATE);
-            byte[] decodedString = Base64.decode(jsonData, Base64.DEFAULT);
+            byte[] decodedString = Base64.decode(imageData, Base64.DEFAULT);
             fileOutputStream.write(decodedString);
             fileOutputStream.flush();
             fileOutputStream.close();

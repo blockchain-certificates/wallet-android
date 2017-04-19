@@ -28,8 +28,9 @@ public class IssuerListItemViewModel extends BaseObservable {
 
     @Bindable
     public Drawable getImage() {
-        int imageResId = getImageResId();
-        return ContextCompat.getDrawable(mContext, imageResId);
+//        int imageResId = getImageResId();
+//        return ContextCompat.getDrawable(mContext, imageResId);
+        return null;
     }
 
     @VisibleForTesting

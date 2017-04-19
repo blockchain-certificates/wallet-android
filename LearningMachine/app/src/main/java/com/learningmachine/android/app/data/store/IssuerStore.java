@@ -99,7 +99,7 @@ public class IssuerStore implements DataStore {
         }
     }
 
-    private List<Issuer> loadIssuers() {
+    public List<Issuer> loadIssuers() {
         List<Issuer> issuerList = new ArrayList<>();
 
         Cursor cursor = mDatabase.query(

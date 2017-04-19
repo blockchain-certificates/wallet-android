@@ -15,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.learningmachine.android.app.R;
+import com.learningmachine.android.app.data.IssuerManager;
+import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.data.model.Issuer;
 import com.learningmachine.android.app.databinding.FragmentHomeBinding;
 import com.learningmachine.android.app.databinding.ListItemIssuerBinding;
@@ -25,7 +27,13 @@ import com.learningmachine.android.app.ui.settings.SettingsActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import timber.log.Timber;
+
 public class HomeFragment extends LMFragment {
+
+    @Inject IssuerManager mIssuerManager;
 
     private FragmentHomeBinding mBinding;
 
@@ -37,6 +45,8 @@ public class HomeFragment extends LMFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        Injector.obtain(getContext())
+                .inject(this);
     }
 
     @Nullable
@@ -44,7 +54,11 @@ public class HomeFragment extends LMFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
 
-        setupRecyclerView();
+        mIssuerManager.getIssuers()
+                .compose(bindToMainThread())
+                .subscribe(this::setupRecyclerView, throwable -> {
+                    Timber.e(throwable, "Unable to load issuers");
+                });
 
         mBinding.issuerFloatingActionButton.setOnClickListener(v -> {
             Intent intent = AddIssuerActivity.newIntent(getContext());
@@ -62,7 +76,6 @@ public class HomeFragment extends LMFragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()) {
             case R.id.fragment_home_settings_menu_item:
                 Intent intent = SettingsActivity.newIntent(getContext());
@@ -72,10 +85,7 @@ public class HomeFragment extends LMFragment {
         return super.onOptionsItemSelected(item);
     }
 
-    private void setupRecyclerView() {
-        // TODO load from issuer store
-        List<Issuer> issuerList = new ArrayList<>();
-
+    private void setupRecyclerView(List<Issuer> issuerList) {
         final IssuerAdapter adapter = new IssuerAdapter(issuerList);
         mBinding.issuerRecyclerview.setAdapter(adapter);
 

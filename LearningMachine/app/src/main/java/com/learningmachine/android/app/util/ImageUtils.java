@@ -11,4 +11,12 @@ public class ImageUtils {
         }
         return hash + IMAGE_FILE_EXT;
     }
+
+    public static String getImageDataFromJson(String jsonData) {
+        String[] parts = jsonData.split(",");
+        if (parts.length != 2) {
+            return null;
+        }
+        return parts[1];
+    }
 }
