@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.learningmachine.android.app.ui.issuer.IssuerInfoViewModel"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/issuer_info_linear_layout_padding_start"
+        android:paddingEnd="@dimen/issuer_info_linear_layout_padding_end"
+        android:paddingTop="@dimen/issuer_info_linear_layout_padding_top">
+
+        <TextView
+            android:id="@+id/issuer_info_additional_info_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fragment_issuer_info_additional_information"
+            style="@style/IssuerInfo.Header"/>
+
+        <TextView
+            android:id="@+id/issuer_info_introduced_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fragment_issuer_info_introduced_on"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.date}"
+            style="@style/TextStyle"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/list_item_certificate_description_margin_top"
+            android:text="@{viewModel.description}"
+            style="@style/Material.Light.Body1.Secondary"/>
+
+    </LinearLayout>
+
+</layout>

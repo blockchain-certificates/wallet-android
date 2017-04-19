@@ -100,5 +100,11 @@
         <item name="android:paddingEnd">@dimen/fragment_add_issuer_linear_layout_padding_horizontal</item>
     </style>
 
+    <style name="IssuerInfo.Header" parent="LearningMachineTextView">
+        <item name="android:textSize">@dimen/material_light_body1_text_size</item>
+        <item name="android:textColor">@color/brand_green</item>
+        <item name="android:paddingBottom">@dimen/issuer_info_textview_padding_bottom</item>
+    </style>
+
 
 </resources>
