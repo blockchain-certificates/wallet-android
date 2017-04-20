@@ -36,6 +36,7 @@ public class HomeFragment extends LMFragment {
     @Inject IssuerManager mIssuerManager;
 
     private FragmentHomeBinding mBinding;
+    private List<Issuer> mIssuerList;
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
@@ -47,6 +48,7 @@ public class HomeFragment extends LMFragment {
         setHasOptionsMenu(true);
         Injector.obtain(getContext())
                 .inject(this);
+        mIssuerList = new ArrayList<>();
     }
 
     @Nullable
@@ -54,11 +56,11 @@ public class HomeFragment extends LMFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
 
+        setupRecyclerView();
+
         mIssuerManager.getIssuers()
                 .compose(bindToMainThread())
-                .subscribe(this::setupRecyclerView, throwable -> {
-                    Timber.e(throwable, "Unable to load issuers");
-                });
+                .subscribe(this::updateRecyclerView, throwable -> Timber.e(throwable, "Unable to load issuers"));
 
         mBinding.issuerFloatingActionButton.setOnClickListener(v -> {
             Intent intent = AddIssuerActivity.newIntent(getContext());
@@ -85,14 +87,20 @@ public class HomeFragment extends LMFragment {
         return super.onOptionsItemSelected(item);
     }
 
-    private void setupRecyclerView(List<Issuer> issuerList) {
-        final IssuerAdapter adapter = new IssuerAdapter(issuerList);
+    private void setupRecyclerView() {
+        final IssuerAdapter adapter = new IssuerAdapter(mIssuerList);
         mBinding.issuerRecyclerview.setAdapter(adapter);
 
         int gridSize = getResources().getInteger(R.integer.fragment_home_issuer_grid_size);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), gridSize);
         mBinding.issuerRecyclerview.setLayoutManager(layoutManager);
         mBinding.issuerRecyclerview.setHasFixedSize(true);
+    }
+
+    private void updateRecyclerView(List<Issuer> issuerList) {
+        mIssuerList.clear();
+        mIssuerList.addAll(issuerList);
+        mBinding.issuerRecyclerview.getAdapter().notifyDataSetChanged();
     }
 
     private class IssuerAdapter extends RecyclerView.Adapter<IssuerViewHolder> {
