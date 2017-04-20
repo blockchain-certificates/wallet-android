@@ -61,6 +61,11 @@ public class ImageStore implements DataStore {
 
     @Override
     public void reset() {
-        // TODO delete all images
+        String[] fileList = mContext.fileList();
+        for (String file : fileList) {
+            if (file.contains(".png")) {
+                mContext.deleteFile(file);
+            }
+        }
     }
 }

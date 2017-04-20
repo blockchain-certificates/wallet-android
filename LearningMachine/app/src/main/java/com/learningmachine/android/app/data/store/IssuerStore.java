@@ -226,8 +226,14 @@ public class IssuerStore implements DataStore {
         return keyRotationList;
     }
 
+    private void deleteKeyRotations() {
+
+    }
+
     @Override
     public void reset() {
-        // TODO delete all issuers & keyrotations
+        mDatabase.delete(LMDatabase.Table.ISSUER, null, null);
+        mDatabase.delete(LMDatabase.Table.ISSUER_KEY, null, null);
+        mDatabase.delete(LMDatabase.Table.REVOCATION_KEY, null, null);
     }
 }
