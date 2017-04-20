@@ -1,6 +1,7 @@
 package com.learningmachine.android.app.data.store;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 
 import com.learningmachine.android.app.BuildConfig;
 import com.learningmachine.android.app.data.model.Issuer;
@@ -19,7 +20,9 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Currently only tests saving and loading since users cannot modify Issuer or KeyRotations
@@ -35,6 +38,13 @@ public class IssuerStoreTest {
         ImageStore imageStore = mock(ImageStore.class);
         Context context = RuntimeEnvironment.application;
         LMDatabase database = new LMDatabase(context);
+
+        context = mock(Context.class);
+        AssetManager assetManager = mock(AssetManager.class);
+        when(context.getAssets()).thenReturn(assetManager);
+        when(assetManager.open(any())).thenReturn(getClass().getClassLoader()
+                .getResourceAsStream("issuer-stark.json"));
+
         mIssuerStore = new IssuerStore(context, database, imageStore);
     }
 
