@@ -5,22 +5,21 @@ import com.learningmachine.android.app.data.web.Issuer;
 
 import retrofit2.Retrofit;
 import rx.Observable;
-import rx.Observer;
 import rx.Scheduler;
 import rx.schedulers.Schedulers;
-import timber.log.Timber;
 
 
 public class DataManager {
     private Retrofit mRetrofit;
     private Scheduler mSubscribeOnScheduler;
     private Scheduler mObserveOnScheduler;
-
+    private final IssuerService mIssuerService;
 
     public DataManager(Retrofit retrofit) {
         mRetrofit = retrofit;
         mObserveOnScheduler = getObserveOnScheduler();
         mSubscribeOnScheduler = getSubscribeOnScheduler();
+        mIssuerService = mRetrofit.create(IssuerService.class);
     }
 
     private Scheduler getObserveOnScheduler() {
@@ -31,26 +30,13 @@ public class DataManager {
         return Schedulers.io();
     }
 
-    public void addIssuerRequest(String url) {
-        IssuerService issuerService = mRetrofit.create(IssuerService.class);
-        Observable<Issuer> getSample = issuerService.introductionRequest(url);
-        getSample.subscribeOn(mSubscribeOnScheduler)
+    public Observable<Issuer> addIssuerRequest(String url, String nonce) {
+        return mIssuerService.getIssuer(url)
+                .flatMap(issuer -> Observable.combineLatest(Observable.just(issuer),
+                        mIssuerService.doIntroduction(issuer.getIntroductionURL(), nonce),
+                        (issuer1, aVoid) -> issuer1))
                 .observeOn(mObserveOnScheduler)
-                .subscribe(new Observer<Issuer>() {
-                    @Override
-                    public void onCompleted() {
-                        Timber.d("Success");
-                    }
-
-                    @Override
-                    public void onError(Throwable throwable) {
-                        Timber.e("Failed Call", throwable);
-                    }
-
-                    @Override
-                    public void onNext(Issuer issuer) {
-                        Timber.d("Results: email=%s, id=%s", issuer.getEmail(), issuer.getId());
-                    }
-                });
+                .subscribeOn(mSubscribeOnScheduler);
     }
+
 }

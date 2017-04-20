@@ -54,9 +54,11 @@ public class AddIssuerFragment extends LMFragment {
 
         switch (item.getItemId()) {
             case R.id.fragment_add_issuer_verify:
-                String url = mBinding.addIssuerUrlEditText.getText()
+                String introUrl = mBinding.addIssuerUrlEditText.getText()
                         .toString();
-                mDataManager.addIssuerRequest(url);
+                String nonce = mBinding.addIssuerIdentityEditText.getText().toString();
+
+                mDataManager.addIssuerRequest(introUrl, nonce).subscribe();
                 break;
         }
         return super.onOptionsItemSelected(item);
