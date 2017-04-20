@@ -1,8 +1,12 @@
 package com.learningmachine.android.app.ui.settings.passphrase;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +45,13 @@ public class RevealPassphraseFragment extends LMFragment {
 
         String currentPassphrase = mBitcoinManager.getPassphrase();
         binding.currentPassphraseTextview.setText(currentPassphrase);
+        binding.currentPassphraseTextview.setOnLongClickListener(v -> {
+            ClipboardManager clipboardManager = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clipData = ClipData.newPlainText("text", currentPassphrase);
+            clipboardManager.setPrimaryClip(clipData);
+            Snackbar.make(binding.getRoot(), R.string.reveal_passphrase_text_copied, Snackbar.LENGTH_LONG).show();
+            return true;
+        });
 
         return binding.getRoot();
     }

@@ -31,6 +31,7 @@
     <string name="reveal_passphrase_title">Reveal Passphrase</string>
     <string name="reveal_passphrase_instructional_message">Some instructional text about passphrases.</string>
     <string name="reveal_passphrase_current_title">Current Passphrase</string>
+    <string name="reveal_passphrase_text_copied">Passphrase has been copied.</string>
 
     <!-- Replace Passphrase -->
 
@@ -43,5 +44,7 @@
 
     <string name="about_passphrases_title">About Passphrases</string>
     <string name="about_passphrases_endpoint">http://www.learningmachine.com/about-passphrases/</string>
+    <string name="issuer_info">Info</string>
+
 
 </resources>
