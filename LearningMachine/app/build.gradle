@@ -84,10 +84,28 @@ retrolambda {
     jvmArgs '-noverify'
 }
 
+// main
 final SUPPORT_VERSION = '25.3.1'
 final DAGGER_VERSION = '2.7'
+final BITCOINJ_VERSION = '0.14.4'
 final TIMBER_VERSION = '4.5.1'
 final JODATIME_VERSION = '2.8.2'
+final RXJAVA_VERSION = '1.2.1'
+final RXLIFECYCLE_VERSION = '1.0'
+final RXLINT_VERSION = '1.2'
+
+// test
+final MOCKITO_VERSION = '2.2.11'
+
+// These must be forced until everyone gets on the same page
+// RxLifecycle: 3.0.1, ??: 2.0.1
+final FINDBUGS_VERSION = '3.0.1'
+
+configurations.all {
+    resolutionStrategy {
+        force "com.google.code.findbugs:jsr305:$FINDBUGS_VERSION"
+    }
+}
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -95,22 +113,27 @@ dependencies {
     compile "com.android.support:recyclerview-v7:$SUPPORT_VERSION"
     compile "com.android.support:design:$SUPPORT_VERSION"
     compile 'com.android.support:multidex:1.0.1'
-    compile 'org.bitcoinj:bitcoinj-core:0.14.4'
+    compile "org.bitcoinj:bitcoinj-core:$BITCOINJ_VERSION"
     compile "com.google.dagger:dagger:$DAGGER_VERSION"
     annotationProcessor "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
     compile "com.jakewharton.timber:timber:$TIMBER_VERSION"
     compile "net.danlew:android.joda:$JODATIME_VERSION"
-    compile 'io.reactivex.rxjava2:rxjava:2.0.8'
     compile 'com.squareup.retrofit2:retrofit:2.2.0'
     compile 'com.google.code.gson:gson:2.8.0'
     compile 'com.squareup.retrofit2:converter-gson:2.2.0'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.2.0'
     compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
+    compile "io.reactivex:rxjava:$RXJAVA_VERSION"
+    compile "io.reactivex:rxandroid:$RXJAVA_VERSION"
+    compile "com.trello:rxlifecycle:$RXLIFECYCLE_VERSION"
+    compile "com.trello:rxlifecycle-android:$RXLIFECYCLE_VERSION"
+    compile "nl.littlerobots.rxlint:rxlint:$RXLINT_VERSION"
+
 
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
     testCompile 'junit:junit:4.12'
-    testCompile "org.mockito:mockito-core:2.2.11"
+    testCompile "org.mockito:mockito-core:$MOCKITO_VERSION"
 }
