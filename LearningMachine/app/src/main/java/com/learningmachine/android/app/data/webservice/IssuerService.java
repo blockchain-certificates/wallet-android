@@ -1,6 +1,6 @@
 package com.learningmachine.android.app.data.webservice;
 
-import com.learningmachine.android.app.data.web.Issuer;
+import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -11,7 +11,7 @@ import rx.Observable;
 public interface IssuerService {
 
     @GET
-    Observable<Issuer> getIssuer(@Url String url);
+    Observable<IssuerResponse> getIssuer(@Url String url);
 
     @POST
     Observable<Void> doIntroduction(@Url String url, @Body String payload);

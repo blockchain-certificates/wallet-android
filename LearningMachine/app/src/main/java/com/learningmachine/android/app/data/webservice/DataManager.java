@@ -1,7 +1,7 @@
 package com.learningmachine.android.app.data.webservice;
 
 
-import com.learningmachine.android.app.data.web.Issuer;
+import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 
 import retrofit2.Retrofit;
 import rx.Observable;
@@ -30,10 +30,10 @@ public class DataManager {
         return Schedulers.io();
     }
 
-    public Observable<Issuer> addIssuerRequest(String url, String nonce) {
+    public Observable<IssuerResponse> addIssuerRequest(String url, String nonce) {
         return mIssuerService.getIssuer(url)
                 .flatMap(issuer -> Observable.combineLatest(Observable.just(issuer),
-                        mIssuerService.doIntroduction(issuer.getIntroductionURL(), nonce),
+                        mIssuerService.doIntroduction(issuer.getIntroUrl(), nonce),
                         (issuer1, aVoid) -> issuer1))
                 .observeOn(mObserveOnScheduler)
                 .subscribeOn(mSubscribeOnScheduler);

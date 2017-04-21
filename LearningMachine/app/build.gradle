@@ -87,6 +87,7 @@ retrolambda {
 final SUPPORT_VERSION = '25.3.1'
 final DAGGER_VERSION = '2.7'
 final TIMBER_VERSION = '4.5.1'
+final JODATIME_VERSION = '2.8.2'
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -98,6 +99,7 @@ dependencies {
     compile "com.google.dagger:dagger:$DAGGER_VERSION"
     annotationProcessor "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
     compile "com.jakewharton.timber:timber:$TIMBER_VERSION"
+    compile "net.danlew:android.joda:$JODATIME_VERSION"
     compile 'io.reactivex.rxjava2:rxjava:2.0.8'
     compile 'com.squareup.retrofit2:retrofit:2.2.0'
     compile 'com.google.code.gson:gson:2.8.0'
