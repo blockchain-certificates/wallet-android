@@ -9,17 +9,15 @@ import rx.Scheduler;
 import rx.schedulers.Schedulers;
 
 
-public class DataManager {
-    private Retrofit mRetrofit;
+public class IssuerIntroduction {
     private Scheduler mSubscribeOnScheduler;
     private Scheduler mObserveOnScheduler;
     private final IssuerService mIssuerService;
 
-    public DataManager(Retrofit retrofit) {
-        mRetrofit = retrofit;
+    public IssuerIntroduction(Retrofit retrofit) {
         mObserveOnScheduler = getObserveOnScheduler();
         mSubscribeOnScheduler = getSubscribeOnScheduler();
-        mIssuerService = mRetrofit.create(IssuerService.class);
+        mIssuerService = retrofit.create(IssuerService.class);
     }
 
     private Scheduler getObserveOnScheduler() {
@@ -30,7 +28,7 @@ public class DataManager {
         return Schedulers.io();
     }
 
-    public Observable<IssuerResponse> addIssuerRequest(String url, String nonce) {
+    public Observable<IssuerResponse> addIssuer(String url, String nonce) {
         return mIssuerService.getIssuer(url)
                 .flatMap(issuer -> Observable.combineLatest(Observable.just(issuer),
                         mIssuerService.doIntroduction(issuer.getIntroUrl(), nonce),

@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.inject.Injector;
-import com.learningmachine.android.app.data.webservice.DataManager;
+import com.learningmachine.android.app.data.webservice.IssuerIntroduction;
 import com.learningmachine.android.app.databinding.FragmentAddIssuerBinding;
 import com.learningmachine.android.app.ui.LMFragment;
 
@@ -22,7 +22,7 @@ public class AddIssuerFragment extends LMFragment {
 
     private FragmentAddIssuerBinding mBinding;
 
-    @Inject protected DataManager mDataManager;
+    @Inject protected IssuerIntroduction mIssuerIntroduction;
 
     public static AddIssuerFragment newInstance() {
         return new AddIssuerFragment();
@@ -58,7 +58,7 @@ public class AddIssuerFragment extends LMFragment {
                         .toString();
                 String nonce = mBinding.addIssuerIdentityEditText.getText().toString();
 
-                mDataManager.addIssuerRequest(introUrl, nonce).subscribe();
+                mIssuerIntroduction.addIssuer(introUrl, nonce).subscribe();
                 break;
         }
         return super.onOptionsItemSelected(item);
