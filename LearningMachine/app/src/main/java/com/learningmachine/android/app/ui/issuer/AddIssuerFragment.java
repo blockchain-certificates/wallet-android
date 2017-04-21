@@ -13,10 +13,13 @@ import android.view.ViewGroup;
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.data.webservice.IssuerIntroduction;
+import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 import com.learningmachine.android.app.databinding.FragmentAddIssuerBinding;
 import com.learningmachine.android.app.ui.LMFragment;
 
 import javax.inject.Inject;
+
+import timber.log.Timber;
 
 public class AddIssuerFragment extends LMFragment {
 
@@ -58,9 +61,17 @@ public class AddIssuerFragment extends LMFragment {
                         .toString();
                 String nonce = mBinding.addIssuerIdentityEditText.getText().toString();
 
-                mIssuerIntroduction.addIssuer(introUrl, nonce).subscribe();
+                // TODO: retrieve the next public bitcoin address
+                mIssuerIntroduction.addIssuer(introUrl, "", nonce)
+                        .subscribe(this::issuerAdded,
+                                throwable -> Timber.e(throwable, "Failed to add issuer"));
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void issuerAdded(IssuerResponse issuerResponse) {
+        // TODO: persist issuer
+        // TODO: display success - go back to issuers list
     }
 }
