@@ -4,7 +4,7 @@ import android.database.Cursor;
 import android.database.CursorWrapper;
 
 import com.learningmachine.android.app.data.model.KeyRotation;
-import com.learningmachine.android.app.data.store.LMDatabase;
+import com.learningmachine.android.app.data.store.LMDatabaseHelper;
 
 public class KeyRotationCursorWrapper extends CursorWrapper {
 
@@ -13,8 +13,8 @@ public class KeyRotationCursorWrapper extends CursorWrapper {
     }
 
     public KeyRotation getKeyRotation() {
-        String createdDate = getString(getColumnIndex(LMDatabase.Column.KeyRotation.CREATED_DATE));
-        String key = getString(getColumnIndex(LMDatabase.Column.KeyRotation.KEY));
+        String createdDate = getString(getColumnIndex(LMDatabaseHelper.Column.KeyRotation.CREATED_DATE));
+        String key = getString(getColumnIndex(LMDatabaseHelper.Column.KeyRotation.KEY));
 
         return new KeyRotation(createdDate, key);
     }

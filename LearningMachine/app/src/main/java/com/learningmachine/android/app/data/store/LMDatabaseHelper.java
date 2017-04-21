@@ -6,13 +6,13 @@ import android.database.sqlite.SQLiteDatabaseCorruptException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.VisibleForTesting;
 
-public class LMDatabase extends SQLiteOpenHelper {
+public class LMDatabaseHelper extends SQLiteOpenHelper {
 
     @VisibleForTesting static final String DB_NAME = "com.learningmachine.android.app.sqlite";
 
     private static final int DB_VERSION = 1;
 
-    public LMDatabase(Context context) {
+    public LMDatabaseHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
 
@@ -24,7 +24,7 @@ public class LMDatabase extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersino, int newVersion) {
     }
 
     static class Table {

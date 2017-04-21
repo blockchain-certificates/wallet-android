@@ -6,7 +6,7 @@ import com.learningmachine.android.app.data.IssuerManager;
 import com.learningmachine.android.app.data.bitcoin.BitcoinManager;
 import com.learningmachine.android.app.data.store.ImageStore;
 import com.learningmachine.android.app.data.store.IssuerStore;
-import com.learningmachine.android.app.data.store.LMDatabase;
+import com.learningmachine.android.app.data.store.LMDatabaseHelper;
 
 import javax.inject.Singleton;
 
@@ -24,8 +24,8 @@ public class DataModule {
 
     @Provides
     @Singleton
-    LMDatabase provideLmDatabase(Context context) {
-        return new LMDatabase(context);
+    LMDatabaseHelper provideLmDatabase(Context context) {
+        return new LMDatabaseHelper(context);
     }
 
     @Provides
@@ -36,8 +36,8 @@ public class DataModule {
 
     @Provides
     @Singleton
-    IssuerStore providesIssuerStore(Context context, LMDatabase database, ImageStore imageStore) {
-        return new IssuerStore(context, database, imageStore);
+    IssuerStore providesIssuerStore(Context context, LMDatabaseHelper databaseHelper, ImageStore imageStore) {
+        return new IssuerStore(context, databaseHelper, imageStore);
     }
 
     @Provides

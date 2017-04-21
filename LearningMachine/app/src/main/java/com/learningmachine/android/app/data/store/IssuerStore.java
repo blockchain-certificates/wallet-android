@@ -26,9 +26,9 @@ public class IssuerStore implements DataStore {
     private SQLiteDatabase mDatabase;
     private ImageStore mImageStore;
 
-    public IssuerStore(Context context, LMDatabase database, ImageStore imageStore) {
+    public IssuerStore(Context context, LMDatabaseHelper databaseHelper, ImageStore imageStore) {
         mContext = context;
-        mDatabase = database.getWritableDatabase();
+        mDatabase = databaseHelper.getWritableDatabase();
         mImageStore = imageStore;
         loadMockData();
     }
@@ -68,22 +68,22 @@ public class IssuerStore implements DataStore {
     private void saveIssuer(Issuer issuer) {
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put(LMDatabase.Column.Issuer.NAME, issuer.getName());
-        contentValues.put(LMDatabase.Column.Issuer.EMAIL, issuer.getEmail());
-        contentValues.put(LMDatabase.Column.Issuer.UUID, issuer.getUuid());
-        contentValues.put(LMDatabase.Column.Issuer.CERTS_URL, issuer.getCertsUrl());
-        contentValues.put(LMDatabase.Column.Issuer.INTRO_URL, issuer.getIntroUrl());
+        contentValues.put(LMDatabaseHelper.Column.Issuer.NAME, issuer.getName());
+        contentValues.put(LMDatabaseHelper.Column.Issuer.EMAIL, issuer.getEmail());
+        contentValues.put(LMDatabaseHelper.Column.Issuer.UUID, issuer.getUuid());
+        contentValues.put(LMDatabaseHelper.Column.Issuer.CERTS_URL, issuer.getCertsUrl());
+        contentValues.put(LMDatabaseHelper.Column.Issuer.INTRO_URL, issuer.getIntroUrl());
 
         saveIssuerKeys(issuer.getIssuerKeys(), issuer.getUuid());
         saveRevocationKeys(issuer.getRevocationKeys(), issuer.getUuid());
 
         if (loadIssuer(issuer.getUuid()) == null) {
-            mDatabase.insert(LMDatabase.Table.ISSUER,
+            mDatabase.insert(LMDatabaseHelper.Table.ISSUER,
                     null,
                     contentValues);
         } else {
-            mDatabase.update(LMDatabase.Table.ISSUER,
-                    contentValues, LMDatabase.Column.Issuer.UUID + " = ?",
+            mDatabase.update(LMDatabaseHelper.Table.ISSUER,
+                    contentValues, LMDatabaseHelper.Column.Issuer.UUID + " = ?",
                     new String[] { issuer.getUuid() });
         }
     }
@@ -92,7 +92,7 @@ public class IssuerStore implements DataStore {
         List<Issuer> issuerList = new ArrayList<>();
 
         Cursor cursor = mDatabase.query(
-                LMDatabase.Table.ISSUER,
+                LMDatabaseHelper.Table.ISSUER,
                 null,
                 null,
                 null,
@@ -124,9 +124,9 @@ public class IssuerStore implements DataStore {
     Issuer loadIssuer(String uuid) {
         Issuer issuer = null;
         Cursor cursor = mDatabase.query(
-                LMDatabase.Table.ISSUER,
+                LMDatabaseHelper.Table.ISSUER,
                 null,
-                LMDatabase.Column.Issuer.UUID + " = ?",
+                LMDatabaseHelper.Column.Issuer.UUID + " = ?",
                 new String[] { uuid },
                 null,
                 null,
@@ -147,11 +147,11 @@ public class IssuerStore implements DataStore {
     }
 
     private void saveIssuerKeys(List<KeyRotation> keyRotationList, String issuerUuid) {
-        saveKeyRotations(keyRotationList, issuerUuid, LMDatabase.Table.ISSUER_KEY);
+        saveKeyRotations(keyRotationList, issuerUuid, LMDatabaseHelper.Table.ISSUER_KEY);
     }
 
     private void saveRevocationKeys(List<KeyRotation> keyRotationList, String issuerUuid) {
-        saveKeyRotations(keyRotationList, issuerUuid, LMDatabase.Table.REVOCATION_KEY);
+        saveKeyRotations(keyRotationList, issuerUuid, LMDatabaseHelper.Table.REVOCATION_KEY);
     }
 
     private void saveKeyRotations(List<KeyRotation> keyRotationList, String issuerUuid, String tableName) {
@@ -164,9 +164,9 @@ public class IssuerStore implements DataStore {
     void saveKeyRotation(KeyRotation keyRotation, String issuerUuid, String tableName) {
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put(LMDatabase.Column.KeyRotation.KEY, keyRotation.getKey());
-        contentValues.put(LMDatabase.Column.KeyRotation.CREATED_DATE, keyRotation.getCreatedDate());
-        contentValues.put(LMDatabase.Column.KeyRotation.ISSUER_UUID, issuerUuid);
+        contentValues.put(LMDatabaseHelper.Column.KeyRotation.KEY, keyRotation.getKey());
+        contentValues.put(LMDatabaseHelper.Column.KeyRotation.CREATED_DATE, keyRotation.getCreatedDate());
+        contentValues.put(LMDatabaseHelper.Column.KeyRotation.ISSUER_UUID, issuerUuid);
 
         if (ListUtils.isEmpty(loadKeyRotations(issuerUuid, tableName))) {
             mDatabase.insert(tableName,
@@ -174,18 +174,18 @@ public class IssuerStore implements DataStore {
                     contentValues);
         } else {
             mDatabase.update(tableName,
-                    contentValues, LMDatabase.Column.KeyRotation.KEY + " = ? "
-                    + " AND " + LMDatabase.Column.KeyRotation.ISSUER_UUID + " = ?",
+                    contentValues, LMDatabaseHelper.Column.KeyRotation.KEY + " = ? "
+                    + " AND " + LMDatabaseHelper.Column.KeyRotation.ISSUER_UUID + " = ?",
                     new String[] { keyRotation.getKey(), issuerUuid });
         }
     }
 
     private List<KeyRotation> loadIssuerKeys(String issuerUuid) {
-        return loadKeyRotations(issuerUuid, LMDatabase.Table.ISSUER_KEY);
+        return loadKeyRotations(issuerUuid, LMDatabaseHelper.Table.ISSUER_KEY);
     }
 
     private List<KeyRotation> loadRevocationKeys(String issuerUuid) {
-        return loadKeyRotations(issuerUuid, LMDatabase.Table.REVOCATION_KEY);
+        return loadKeyRotations(issuerUuid, LMDatabaseHelper.Table.REVOCATION_KEY);
     }
 
     @VisibleForTesting
@@ -195,7 +195,7 @@ public class IssuerStore implements DataStore {
         Cursor cursor = mDatabase.query(
                 tableName,
                 null,
-                LMDatabase.Column.KeyRotation.ISSUER_UUID + " = ?",
+                LMDatabaseHelper.Column.KeyRotation.ISSUER_UUID + " = ?",
                 new String[] { issuerUuid },
                 null,
                 null,
@@ -255,8 +255,8 @@ public class IssuerStore implements DataStore {
 
     @Override
     public void reset() {
-        mDatabase.delete(LMDatabase.Table.ISSUER, null, null);
-        mDatabase.delete(LMDatabase.Table.ISSUER_KEY, null, null);
-        mDatabase.delete(LMDatabase.Table.REVOCATION_KEY, null, null);
+        mDatabase.delete(LMDatabaseHelper.Table.ISSUER, null, null);
+        mDatabase.delete(LMDatabaseHelper.Table.ISSUER_KEY, null, null);
+        mDatabase.delete(LMDatabaseHelper.Table.REVOCATION_KEY, null, null);
     }
 }

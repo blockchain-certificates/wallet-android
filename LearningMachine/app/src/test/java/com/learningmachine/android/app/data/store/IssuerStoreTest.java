@@ -37,7 +37,7 @@ public class IssuerStoreTest {
     public void setup() throws Exception {
         ImageStore imageStore = mock(ImageStore.class);
         Context context = RuntimeEnvironment.application;
-        LMDatabase database = new LMDatabase(context);
+        LMDatabaseHelper database = new LMDatabaseHelper(context);
 
         context = mock(Context.class);
         AssetManager assetManager = mock(AssetManager.class);
@@ -73,7 +73,7 @@ public class IssuerStoreTest {
         String key = "249jm9wmldskjgmawe";
         KeyRotation keyRotation = new KeyRotation(createdDate, key);
 
-        String tableName = LMDatabase.Table.ISSUER_KEY;
+        String tableName = LMDatabaseHelper.Table.ISSUER_KEY;
         mIssuerStore.saveKeyRotation(keyRotation, issuerUuid, tableName);
         List<KeyRotation> keyRotationList = mIssuerStore.loadKeyRotations(issuerUuid, tableName);
 

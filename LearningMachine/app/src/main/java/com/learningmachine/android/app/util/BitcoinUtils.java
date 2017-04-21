@@ -2,7 +2,6 @@ package com.learningmachine.android.app.util;
 
 import android.content.Context;
 import android.content.res.AssetManager;
-import android.renderscript.ScriptGroup;
 
 import org.bitcoinj.crypto.MnemonicCode;
 import org.bitcoinj.crypto.MnemonicException;
