@@ -1,7 +1,6 @@
 package com.learningmachine.android.app.data.webservice.response;
 
 import com.google.gson.annotations.SerializedName;
-import com.learningmachine.android.app.data.model.KeyRotation;
 
 import java.util.List;
 
@@ -17,9 +16,9 @@ public class IssuerResponse {
     @SerializedName("introductionURL")
     private String mIntroUrl;
     @SerializedName("issuerKeys")
-    private List<KeyRotation> mIssuerKeys;
+    private List<KeyRotationResponse> mIssuerKeys;
     @SerializedName("revocationKeys")
-    private List<KeyRotation> mRevocationKeys;
+    private List<KeyRotationResponse> mRevocationKeys;
     @SerializedName("image")
     private String mImageData;
 
@@ -43,11 +42,11 @@ public class IssuerResponse {
         return mIntroUrl;
     }
 
-    public List<KeyRotation> getIssuerKeys() {
+    public List<KeyRotationResponse> getIssuerKeys() {
         return mIssuerKeys;
     }
 
-    public List<KeyRotation> getRevocationKeys() {
+    public List<KeyRotationResponse> getRevocationKeys() {
         return mRevocationKeys;
     }
 

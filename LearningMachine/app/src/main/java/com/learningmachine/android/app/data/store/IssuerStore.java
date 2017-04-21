@@ -11,6 +11,7 @@ import com.learningmachine.android.app.data.model.KeyRotation;
 import com.learningmachine.android.app.data.store.cursor.IssuerCursorWrapper;
 import com.learningmachine.android.app.data.store.cursor.KeyRotationCursorWrapper;
 import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
+import com.learningmachine.android.app.data.webservice.response.KeyRotationResponse;
 import com.learningmachine.android.app.util.GsonUtil;
 import com.learningmachine.android.app.util.ListUtils;
 
@@ -56,24 +57,12 @@ public class IssuerStore implements DataStore {
             return;
         }
 
-        ContentValues contentValues = new ContentValues();
-
-        contentValues.put(LMDatabase.Column.Issuer.NAME, issuerResponse.getName());
-        contentValues.put(LMDatabase.Column.Issuer.EMAIL, issuerResponse.getEmail());
-        String issuerUuid = issuerResponse.getUuid();
-        contentValues.put(LMDatabase.Column.Issuer.UUID, issuerUuid);
-        contentValues.put(LMDatabase.Column.Issuer.CERTS_URL, issuerResponse.getCertsUrl());
-        contentValues.put(LMDatabase.Column.Issuer.INTRO_URL, issuerResponse.getIntroUrl());
-
-        saveIssuerKeys(issuerResponse.getIssuerKeys(), issuerResponse.getUuid());
-        saveRevocationKeys(issuerResponse.getRevocationKeys(), issuerResponse.getUuid());
-
+        String uuid = issuerResponse.getUuid();
         String imageData = issuerResponse.getImageData();
-        mImageStore.saveImage(issuerUuid, imageData);
+        mImageStore.saveImage(uuid, imageData);
 
-        mDatabase.insert(LMDatabase.Table.ISSUER,
-                null,
-                contentValues);
+        Issuer issuer = issuerFromResponse(issuerResponse);
+        saveIssuer(issuer);
     }
 
     private void saveIssuer(Issuer issuer) {
@@ -226,8 +215,42 @@ public class IssuerStore implements DataStore {
         return keyRotationList;
     }
 
-    private void deleteKeyRotations() {
 
+    // Converters
+
+    private Issuer issuerFromResponse(IssuerResponse issuerResponse) {
+        String name = issuerResponse.getName();
+        String email = issuerResponse.getEmail();
+        String uuid = issuerResponse.getUuid();
+        String certsUrl = issuerResponse.getCertsUrl();
+        String introUrl = issuerResponse.getIntroUrl();
+
+        Issuer issuer = new Issuer(name, email, uuid, certsUrl, introUrl);
+        List<KeyRotationResponse> keyRotationResponseList = issuerResponse.getIssuerKeys();
+        List<KeyRotation> keyRotationList = keyRotationsFromResponses(keyRotationResponseList);
+        issuer.setIssuerKeys(keyRotationList);
+
+        keyRotationResponseList = issuerResponse.getRevocationKeys();
+        keyRotationList = keyRotationsFromResponses(keyRotationResponseList);
+        issuer.setRevocationKeys(keyRotationList);
+
+        return issuer;
+    }
+
+    private List<KeyRotation> keyRotationsFromResponses(List<KeyRotationResponse> keyRotationResponseList) {
+        List<KeyRotation> keyRotationList = new ArrayList<>();
+        if (ListUtils.isEmpty(keyRotationResponseList)) {
+            return keyRotationList;
+        }
+
+        for (KeyRotationResponse keyRotationResponse : keyRotationResponseList) {
+            String createdDate = keyRotationResponse.getCreatedDate();
+            String key = keyRotationResponse.getKey();
+            KeyRotation keyRotation = new KeyRotation(createdDate, key);
+            keyRotationList.add(keyRotation);
+        }
+
+        return keyRotationList;
     }
 
     @Override

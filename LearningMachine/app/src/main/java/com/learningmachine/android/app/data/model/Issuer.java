@@ -1,5 +1,6 @@
 package com.learningmachine.android.app.data.model;
 
+import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 import com.learningmachine.android.app.util.ImageUtils;
 import com.learningmachine.android.app.util.ListUtils;
 

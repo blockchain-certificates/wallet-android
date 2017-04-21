@@ -1,15 +1,17 @@
-package com.learningmachine.android.app.data.model;
+package com.learningmachine.android.app.data.webservice.response;
+
+import com.google.gson.annotations.SerializedName;
 
 import org.joda.time.DateTime;
 
-import java.io.Serializable;
+public class KeyRotationResponse {
 
-public class KeyRotation implements Serializable {
-
+    @SerializedName("date")
     private String mCreatedDate;
+    @SerializedName("key")
     private String mKey;
 
-    public KeyRotation(String createdDate, String key) {
+    public KeyRotationResponse(String createdDate, String key) {
         mCreatedDate = createdDate;
         mKey = key;
     }
