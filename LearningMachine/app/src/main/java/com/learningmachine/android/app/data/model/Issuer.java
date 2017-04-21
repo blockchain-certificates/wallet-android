@@ -1,6 +1,5 @@
 package com.learningmachine.android.app.data.model;
 
-import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 import com.learningmachine.android.app.util.ImageUtils;
 import com.learningmachine.android.app.util.ListUtils;
 
@@ -75,7 +74,7 @@ public class Issuer implements Serializable {
 
     /** Image filename, created with the md5 of mUuid*/
     public String getImageFilename() {
-        return ImageUtils.getIssuerImageFilename(mUuid);
+        return ImageUtils.getImageFilename(mUuid);
     }
 
     /** A convenience method for the most recent (and theoretically only valid) issuerKey. */

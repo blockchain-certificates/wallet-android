@@ -82,6 +82,4 @@ public class LMDatabaseHelper extends SQLiteOpenHelper {
                 + ");";
         sqLiteDatabase.execSQL(keyRotationCreate);
     }
-
-
 }

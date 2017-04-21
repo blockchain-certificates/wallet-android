@@ -30,7 +30,7 @@ public class ImageStore implements DataStore {
             return false;
         }
 
-        String filename = ImageUtils.getIssuerImageFilename(uuid);
+        String filename = ImageUtils.getImageFilename(uuid);
         if (StringUtils.isEmpty(filename)) {
             return false;
         }
