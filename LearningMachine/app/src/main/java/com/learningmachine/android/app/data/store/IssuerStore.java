@@ -19,6 +19,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Retrofit;
+
 public class IssuerStore implements DataStore {
 
     // Context can be removed when mock data is no longer necessary
@@ -44,7 +46,7 @@ public class IssuerStore implements DataStore {
 
         for (String file : files) {
             try {
-                IssuerResponse issuerResponse = (IssuerResponse) gsonUtil.loadModelObject(file, IssuerResponse.class);
+                IssuerResponse issuerResponse = gsonUtil.loadModelObject(file, IssuerResponse.class);
                 saveIssuerResponse(issuerResponse);
             } catch (IOException e) {
                 e.printStackTrace();

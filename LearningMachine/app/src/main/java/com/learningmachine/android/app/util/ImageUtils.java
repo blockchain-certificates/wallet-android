@@ -37,10 +37,14 @@ public class ImageUtils {
 
         String uuid = issuer.getUuid();
         String filename = ImageUtils.getIssuerImageFilename(uuid);
-        File filesDir = context.getFilesDir();
-        String path = filesDir.toString();
 
-        File file = new File(path + PATH_SEPARATOR + filename);
+        if (StringUtils.isEmpty(filename)) {
+            return;
+        }
+
+        File filesDir = context.getFilesDir();
+        File file = new File(filesDir, filename);
+
         Picasso.with(context)
                 .load(file)
                 .into(imageView);

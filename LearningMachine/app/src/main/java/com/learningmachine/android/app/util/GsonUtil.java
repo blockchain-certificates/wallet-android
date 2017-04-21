@@ -20,7 +20,7 @@ public class GsonUtil {
         mContext = context;
     }
 
-    public Object loadModelObject(String file, Class clazz) throws IOException {
+    public <T> T loadModelObject(String file, Class clazz) throws IOException {
         String filename = file + ".json";
 
         AssetManager assetManager = mContext.getAssets();
@@ -28,6 +28,6 @@ public class GsonUtil {
         InputStreamReader reader = new InputStreamReader(inputStream);
 
         Gson gson = new Gson();
-        return gson.fromJson(reader, clazz);
+        return (T) gson.fromJson(reader, clazz);
     }
 }
