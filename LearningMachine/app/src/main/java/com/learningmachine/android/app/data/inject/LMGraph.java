@@ -10,5 +10,5 @@ public interface LMGraph {
     // fragments
     void inject(RevealPassphraseFragment fragment);
 
-    void inject(AddIssuerFragment addIssuerFragment);
+    void inject(AddIssuerFragment fragment);
 }

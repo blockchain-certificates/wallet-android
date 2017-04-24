@@ -44,9 +44,6 @@ android {
         production {}
     }
 
-    packagingOptions {
-        exclude 'META-INF/rxjava.properties'
-    }
 
     buildTypes {
         release {

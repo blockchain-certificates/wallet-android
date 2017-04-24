@@ -2,11 +2,13 @@ package com.learningmachine.android.app.data.webservice.request;
 
 import com.google.gson.annotations.SerializedName;
 
-public class IssuerIntroductionPayloadRequest {
-    @SerializedName("bitcoinAddress") private String mBitcoinAddress;
-    @SerializedName("nonce") private String mNonce;
+public class IssuerIntroductionRequest {
+    @SerializedName("bitcoinAddress")
+    private String mBitcoinAddress;
+    @SerializedName("nonce")
+    private String mNonce;
 
-    public IssuerIntroductionPayloadRequest(String bitcoinAddress, String nonce) {
+    public IssuerIntroductionRequest(String bitcoinAddress, String nonce) {
         mBitcoinAddress = bitcoinAddress;
         mNonce = nonce;
     }

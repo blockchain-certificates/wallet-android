@@ -1,7 +1,7 @@
 package com.learningmachine.android.app.data.webservice;
 
 
-import com.learningmachine.android.app.data.webservice.request.IssuerIntroductionPayloadRequest;
+import com.learningmachine.android.app.data.webservice.request.IssuerIntroductionRequest;
 import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 
 import retrofit2.Retrofit;
@@ -16,7 +16,7 @@ public class IssuerIntroduction {
     }
 
     public Observable<IssuerResponse> addIssuer(String url, String bitcoinAddress, String nonce) {
-        IssuerIntroductionPayloadRequest payload = new IssuerIntroductionPayloadRequest("", nonce);
+        IssuerIntroductionRequest payload = new IssuerIntroductionRequest("", nonce);
         return mIssuerService.getIssuer(url)
                 .flatMap(issuer -> {
                     return Observable.combineLatest(Observable.just(issuer),
