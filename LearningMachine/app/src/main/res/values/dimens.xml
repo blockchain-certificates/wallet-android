@@ -43,6 +43,8 @@
     <!-- Home -->
 
     <dimen name="fragment_home_recyclerview_spacing">4dp</dimen>
+    <dimen name="list_item_issuer_width">168dp</dimen>
+    <dimen name="list_item_issuer_width_total">176dp</dimen>
     <dimen name="list_item_issuer_imageview_size">94dp</dimen>
     <dimen name="list_item_issuer_imageview_margin_top">17dp</dimen>
     <dimen name="list_item_issuer_imageview_margin_bottom">25dp</dimen>
