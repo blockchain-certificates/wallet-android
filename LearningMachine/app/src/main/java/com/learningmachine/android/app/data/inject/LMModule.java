@@ -42,22 +42,18 @@ public class LMModule {
     @Singleton
     @Provides
     OkHttpClient provideOkHttpClient(Interceptor loggingInterceptor) {
-        OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .addInterceptor(loggingInterceptor)
+        return new OkHttpClient.Builder().addInterceptor(loggingInterceptor)
                 .build();
-        return okHttpClient;
     }
 
     @Singleton
-    @Provides Retrofit provideRetrofit(OkHttpClient okHttpClient) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(LMConstants.BASE_URL)
+    @Provides
+    Retrofit provideRetrofit(OkHttpClient okHttpClient) {
+        return new Retrofit.Builder().baseUrl(LMConstants.BASE_URL)
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
-
-        return retrofit;
     }
 
     @Singleton

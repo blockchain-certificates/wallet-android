@@ -1,12 +1,11 @@
 package com.learningmachine.android.app.data.webservice;
 
 
-import com.learningmachine.android.app.data.webservice.request.IssuerIntroductionPayload;
+import com.learningmachine.android.app.data.webservice.request.IssuerIntroductionPayloadRequest;
 import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 
 import retrofit2.Retrofit;
 import rx.Observable;
-import rx.schedulers.Schedulers;
 
 
 public class IssuerIntroduction {
@@ -17,14 +16,12 @@ public class IssuerIntroduction {
     }
 
     public Observable<IssuerResponse> addIssuer(String url, String bitcoinAddress, String nonce) {
-        IssuerIntroductionPayload payload = new IssuerIntroductionPayload("", nonce);
+        IssuerIntroductionPayloadRequest payload = new IssuerIntroductionPayloadRequest("", nonce);
         return mIssuerService.getIssuer(url)
                 .flatMap(issuer -> {
                     return Observable.combineLatest(Observable.just(issuer),
                             mIssuerService.doIntroduction(issuer.getIntroUrl(), payload),
                             (issuer1, aVoid) -> issuer1);
-                })
-                .observeOn(Schedulers.io())
-                .subscribeOn(Schedulers.io());
+                });
     }
 }

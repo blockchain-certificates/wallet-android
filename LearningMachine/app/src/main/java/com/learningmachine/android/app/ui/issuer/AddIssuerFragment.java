@@ -59,12 +59,13 @@ public class AddIssuerFragment extends LMFragment {
             case R.id.fragment_add_issuer_verify:
                 String introUrl = mBinding.addIssuerUrlEditText.getText()
                         .toString();
-                String nonce = mBinding.addIssuerIdentityEditText.getText().toString();
+                String nonce = mBinding.addIssuerIdentityEditText.getText()
+                        .toString();
 
                 // TODO: retrieve the next public bitcoin address
                 mIssuerIntroduction.addIssuer(introUrl, "", nonce)
-                        .subscribe(this::issuerAdded,
-                                throwable -> Timber.e(throwable, "Failed to add issuer"));
+                        .compose(bindToMainThread())
+                        .subscribe(this::issuerAdded, throwable -> Timber.e(throwable, "Failed to add issuer"));
                 break;
         }
         return super.onOptionsItemSelected(item);
