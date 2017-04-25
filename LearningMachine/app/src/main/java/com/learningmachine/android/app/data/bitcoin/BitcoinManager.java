@@ -7,36 +7,60 @@ import com.learningmachine.android.app.util.ListUtils;
 import com.learningmachine.android.app.util.StringUtils;
 
 import org.bitcoinj.core.NetworkParameters;
-import org.bitcoinj.kits.WalletAppKit;
 import org.bitcoinj.wallet.DeterministicSeed;
 import org.bitcoinj.wallet.KeyChainGroup;
 import org.bitcoinj.wallet.Protos;
+import org.bitcoinj.wallet.UnreadableWalletException;
 import org.bitcoinj.wallet.Wallet;
 import org.bitcoinj.wallet.WalletExtension;
 import org.bitcoinj.wallet.WalletProtobufSerializer;
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.security.SecureRandom;
-import java.util.ArrayList;
 import java.util.List;
 
 import timber.log.Timber;
 
+import static com.learningmachine.android.app.LMConstants.WALLET_FILE;
+import static com.learningmachine.android.app.LMConstants.WALLET_SEED_BYTE_SIZE;
 import static com.learningmachine.android.app.util.BitcoinUtils.generateMnemonic;
 
 public class BitcoinManager {
+
+    private static final String PASSPHRASE_DELIMETER = " ";
 
     private Context mContext;
     private Wallet mWallet;
 
     public BitcoinManager(Context context) {
         mContext = context;
-        createWallet();
+        setup();
+    }
+
+    private void setup() {
+        boolean walletLoaded = false;
+        if (getWalletFile().exists()) {
+            Timber.d("Wallet exists, attempting to load");
+            walletLoaded = loadWallet();
+        }
+
+        if (!walletLoaded) {
+            Timber.d("Wallet not loaded, creating a new one");
+            createWallet();
+            saveWallet();
+        }
+    }
+
+    private File getWalletFile() {
+        return new File(mContext.getFilesDir(), WALLET_FILE);
     }
 
     private void createWallet() {
         SecureRandom random = new SecureRandom();
-        byte[] seedData = random.generateSeed(32);
+        byte[] seedData = random.generateSeed(WALLET_SEED_BYTE_SIZE);
         List<String> mnemonic = generateMnemonic(mContext, seedData);
         if (ListUtils.isEmpty(mnemonic)) {
             Timber.e("No mnemonic, wallet creation failure");
@@ -50,24 +74,43 @@ public class BitcoinManager {
         // write wallet to file
     }
 
-    private void DELETE_ME() {
-//        WalletAppKit walletAppKit = new WalletAppKit();
-    }
-
-    private Wallet loadWallet() throws Exception {
-        // check wallet exists
-        Wallet wallet;
-        FileInputStream walletStream = new FileInputStream("whatever.wallet");
+    /**
+     * @return true if wallet was loaded successfully
+     */
+    private boolean loadWallet() {
         try {
+            FileInputStream walletStream = new FileInputStream(getWalletFile());
             WalletExtension[] extensions = {};
             Protos.Wallet proto = WalletProtobufSerializer.parseToProto(walletStream);
             WalletProtobufSerializer serializer = new WalletProtobufSerializer();
             NetworkParameters networkParameters = LMNetworkConstants.getNetwork();
-            wallet = serializer.readWallet(networkParameters, extensions, proto);
-        } finally {
+            mWallet = serializer.readWallet(networkParameters, extensions, proto);
             walletStream.close();
+            Timber.d("Wallet successfully loaded");
+            return true;
+        } catch (UnreadableWalletException e) {
+            Timber.e(e, "Wallet is corrupted");
+        } catch (FileNotFoundException e) {
+            Timber.e(e, "Wallet file not found");
+        } catch (IOException e) {
+            Timber.e(e, "Wallet unable to be parsed");
         }
-        return wallet;
+        Timber.e("Wallet not loaded, something went wrong");
+        return false;
+    }
+
+    /**
+     * @return true if wallet was saved successfully
+     */
+    private boolean saveWallet() {
+        try {
+            mWallet.saveToFile(getWalletFile());
+            Timber.d("Wallet successfully saved");
+        } catch (IOException e) {
+            Timber.e(e, "Unable to save Wallet");
+        }
+
+        return false;
     }
 
     public String getPassphrase() {
@@ -76,6 +119,6 @@ public class BitcoinManager {
         }
         DeterministicSeed seed = mWallet.getKeyChainSeed();
         List<String> mnemonicCode = seed.getMnemonicCode();
-        return StringUtils.join(" ", mnemonicCode);
+        return StringUtils.join(PASSPHRASE_DELIMETER, mnemonicCode);
     }
 }
