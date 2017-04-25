@@ -15,5 +15,5 @@ public interface IssuerService {
     Observable<IssuerResponse> getIssuer(@Url String url);
 
     @POST
-    Observable<Void> doIntroduction(@Url String url, @Body IssuerIntroductionRequest payload);
+    Observable<Void> doIntroduction(@Url String url, @Body IssuerIntroductionRequest request);
 }

@@ -16,11 +16,11 @@ public class IssuerIntroduction {
     }
 
     public Observable<IssuerResponse> addIssuer(String url, String bitcoinAddress, String nonce) {
-        IssuerIntroductionRequest payload = new IssuerIntroductionRequest("", nonce);
+        IssuerIntroductionRequest request = new IssuerIntroductionRequest("", nonce);
         return mIssuerService.getIssuer(url)
                 .flatMap(issuer -> {
                     return Observable.combineLatest(Observable.just(issuer),
-                            mIssuerService.doIntroduction(issuer.getIntroUrl(), payload),
+                            mIssuerService.doIntroduction(issuer.getIntroUrl(), request),
                             (issuer1, aVoid) -> issuer1);
                 });
     }
