@@ -53,9 +53,8 @@ public class ImageStore implements DataStore {
             Timber.e(e, "Unable to open file");
         } catch (IOException e) {
             Timber.e(e, "Unable to write to file");
-        } finally {
-            fileOutputStream = null;
         }
+        fileOutputStream = null;
         return success;
     }
 
