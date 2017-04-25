@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion 25
@@ -23,6 +22,7 @@ android {
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     signingConfigs {
@@ -77,11 +77,6 @@ android {
     }
 }
 
-retrolambda {
-    jvmArgs '-noverify'
-}
-
-// main
 final SUPPORT_VERSION = '25.3.1'
 final DAGGER_VERSION = '2.7'
 final BITCOINJ_VERSION = '0.14.4'
