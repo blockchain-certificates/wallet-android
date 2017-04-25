@@ -6,6 +6,7 @@ import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 
 import retrofit2.Retrofit;
 import rx.Observable;
+import rx.schedulers.Schedulers;
 
 
 public class IssuerIntroduction {
@@ -16,12 +17,12 @@ public class IssuerIntroduction {
     }
 
     public Observable<IssuerResponse> addIssuer(String url, String bitcoinAddress, String nonce) {
-        IssuerIntroductionRequest request = new IssuerIntroductionRequest("", nonce);
+        IssuerIntroductionRequest request = new IssuerIntroductionRequest(bitcoinAddress, nonce);
         return mIssuerService.getIssuer(url)
                 .flatMap(issuer -> {
                     return Observable.combineLatest(Observable.just(issuer),
                             mIssuerService.doIntroduction(issuer.getIntroUrl(), request),
                             (issuer1, aVoid) -> issuer1);
-                });
+                }).subscribeOn(Schedulers.io());
     }
 }

@@ -52,4 +52,12 @@ public class BitcoinManager {
         List<String> mnemonicCode = seed.getMnemonicCode();
         return StringUtils.join(" ", mnemonicCode);
     }
+
+    public String getBitcoinAddress() {
+        if (mWallet == null) {
+            return null;
+        }
+
+        return mWallet.currentReceiveAddress().toString();
+    }
 }
