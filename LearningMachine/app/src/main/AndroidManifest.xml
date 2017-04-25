@@ -14,8 +14,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".ui.home.HomeActivity"
-            android:label="@string/home_issuers">
+            android:name=".ui.home.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
