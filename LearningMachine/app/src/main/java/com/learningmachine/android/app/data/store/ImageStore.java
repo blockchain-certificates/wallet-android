@@ -41,20 +41,18 @@ public class ImageStore implements DataStore {
         }
 
         boolean success = false;
-        FileOutputStream fileOutputStream;
-        try {
-            fileOutputStream = mContext.openFileOutput(filename, Context.MODE_PRIVATE);
+
+        try (FileOutputStream fileOutputStream = mContext.openFileOutput(filename, Context.MODE_PRIVATE)) {
             byte[] decodedString = Base64.decode(imageData, Base64.DEFAULT);
             fileOutputStream.write(decodedString);
             fileOutputStream.flush();
-            fileOutputStream.close();
             success = true;
         } catch (FileNotFoundException e) {
             Timber.e(e, "Unable to open file");
         } catch (IOException e) {
             Timber.e(e, "Unable to write to file");
         }
-        fileOutputStream = null;
+
         return success;
     }
 
