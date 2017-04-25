@@ -1,6 +1,7 @@
 package com.learningmachine.android.app.data.bitcoin;
 
 import android.content.Context;
+import android.support.annotation.VisibleForTesting;
 
 import com.learningmachine.android.app.LMNetworkConstants;
 import com.learningmachine.android.app.util.ListUtils;
@@ -54,7 +55,8 @@ public class BitcoinManager {
         }
     }
 
-    private File getWalletFile() {
+    @VisibleForTesting
+    protected File getWalletFile() {
         return new File(mContext.getFilesDir(), WALLET_FILE);
     }
 
