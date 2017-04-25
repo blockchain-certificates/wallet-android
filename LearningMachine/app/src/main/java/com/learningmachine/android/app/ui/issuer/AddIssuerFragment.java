@@ -11,12 +11,21 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.learningmachine.android.app.R;
+import com.learningmachine.android.app.data.inject.Injector;
+import com.learningmachine.android.app.data.webservice.IssuerIntroduction;
+import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 import com.learningmachine.android.app.databinding.FragmentAddIssuerBinding;
 import com.learningmachine.android.app.ui.LMFragment;
+
+import javax.inject.Inject;
+
+import timber.log.Timber;
 
 public class AddIssuerFragment extends LMFragment {
 
     private FragmentAddIssuerBinding mBinding;
+
+    @Inject protected IssuerIntroduction mIssuerIntroduction;
 
     public static AddIssuerFragment newInstance() {
         return new AddIssuerFragment();
@@ -33,6 +42,8 @@ public class AddIssuerFragment extends LMFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Injector.obtain(getContext())
+                .inject(this);
         setHasOptionsMenu(true);
     }
 
@@ -45,10 +56,23 @@ public class AddIssuerFragment extends LMFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
-           case  R.id.fragment_add_issuer_verify:
+            case R.id.fragment_add_issuer_verify:
+                String introUrl = mBinding.addIssuerUrlEditText.getText()
+                        .toString();
+                String nonce = mBinding.addIssuerIdentityEditText.getText()
+                        .toString();
 
-               break;
+                // TODO: retrieve the next public bitcoin address
+                mIssuerIntroduction.addIssuer(introUrl, "", nonce)
+                        .compose(bindToMainThread())
+                        .subscribe(this::issuerAdded, throwable -> Timber.e(throwable, "Failed to add issuer"));
+                break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void issuerAdded(IssuerResponse issuerResponse) {
+        // TODO: persist issuer
+        // TODO: display success - go back to issuers list
     }
 }
