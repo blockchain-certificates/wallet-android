@@ -37,10 +37,13 @@ public class BitcoinManager {
             return;
         }
         DeterministicSeed deterministicSeed = new DeterministicSeed(mnemonic, seedData, "", 0);
-        NetworkParameters productionNetworkParameters = LMNetworkConstants.getProductionNetwork();
-        KeyChainGroup keyChainGroup = new KeyChainGroup(productionNetworkParameters, deterministicSeed);
+        NetworkParameters testNetworkParameters = LMNetworkConstants.getNetwork();
 
-        mWallet = new Wallet(productionNetworkParameters, keyChainGroup);
+        // The production Network will be used once we are ready for Production
+        NetworkParameters productionNetworkParameters = LMNetworkConstants.getProductionNetwork();
+        KeyChainGroup keyChainGroup = new KeyChainGroup(testNetworkParameters, deterministicSeed);
+
+        mWallet = new Wallet(testNetworkParameters, keyChainGroup);
         // write wallet to file
     }
 
