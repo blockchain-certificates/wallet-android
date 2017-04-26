@@ -17,6 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.learningmachine.android.app.R;
+import com.learningmachine.android.app.data.IssuerManager;
+import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.data.model.Issuer;
 import com.learningmachine.android.app.databinding.FragmentHomeBinding;
 import com.learningmachine.android.app.databinding.ListItemIssuerBinding;
@@ -27,9 +29,16 @@ import com.learningmachine.android.app.ui.settings.SettingsActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import timber.log.Timber;
+
 public class HomeFragment extends LMFragment {
 
+    @Inject IssuerManager mIssuerManager;
+
     private FragmentHomeBinding mBinding;
+    private List<Issuer> mIssuerList;
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
@@ -39,6 +48,9 @@ public class HomeFragment extends LMFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        Injector.obtain(getContext())
+                .inject(this);
+        mIssuerList = new ArrayList<>();
     }
 
     @Nullable
@@ -47,6 +59,10 @@ public class HomeFragment extends LMFragment {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
 
         setupRecyclerView();
+
+        mIssuerManager.getIssuers()
+                .compose(bindToMainThread())
+                .subscribe(this::updateRecyclerView, throwable -> Timber.e(throwable, "Unable to load issuers"));
 
         mBinding.issuerFloatingActionButton.setOnClickListener(v -> {
             Intent intent = AddIssuerActivity.newIntent(getContext());
@@ -64,7 +80,6 @@ public class HomeFragment extends LMFragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()) {
             case R.id.fragment_home_settings_menu_item:
                 Intent intent = SettingsActivity.newIntent(getContext());
@@ -75,17 +90,7 @@ public class HomeFragment extends LMFragment {
     }
 
     private void setupRecyclerView() {
-        // build list
-        List<Issuer> issuerList = new ArrayList<>();
-
-        Issuer issuer = new Issuer("Issuer 1", R.drawable.issuer_baratheon);
-        issuerList.add(issuer);
-        issuer = new Issuer("Issuer 2", R.drawable.issuer_stark);
-        issuerList.add(issuer);
-        issuer = new Issuer("Issuer 3", R.drawable.issuer_targaryen);
-        issuerList.add(issuer);
-
-        IssuerAdapter adapter = new IssuerAdapter(issuerList);
+        IssuerAdapter adapter = new IssuerAdapter(mIssuerList);
         mBinding.issuerRecyclerview.setAdapter(adapter);
 
         int gridSize = calculateSpanCount();
@@ -94,11 +99,17 @@ public class HomeFragment extends LMFragment {
         mBinding.issuerRecyclerview.setHasFixedSize(true);
     }
 
-    public int calculateSpanCount() {
+    private int calculateSpanCount() {
         Resources resources = getResources();
         DisplayMetrics displayMetrics = resources.getDisplayMetrics();
         int itemWidth = resources.getDimensionPixelSize(R.dimen.list_item_issuer_width_total);
         return displayMetrics.widthPixels / itemWidth;
+    }
+
+    private void updateRecyclerView(List<Issuer> issuerList) {
+        mIssuerList.clear();
+        mIssuerList.addAll(issuerList);
+        mBinding.issuerRecyclerview.getAdapter().notifyDataSetChanged();
     }
 
     private class IssuerAdapter extends RecyclerView.Adapter<IssuerViewHolder> {
