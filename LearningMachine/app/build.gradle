@@ -78,23 +78,36 @@ android {
 }
 
 final SUPPORT_VERSION = '25.3.1'
+final MULTIDEX_VERSION = '1.0.1'
 final DAGGER_VERSION = '2.7'
 final BITCOINJ_VERSION = '0.14.4'
 final TIMBER_VERSION = '4.5.1'
 final JODATIME_VERSION = '2.8.2'
+final RETROFIT_VERSION = '2.2.0'
+final LOGGINGINTERCEPTOR_VERSION = '3.4.1'
+final GSON_VERSION = '2.8.0'
 final RXJAVA_VERSION = '1.2.1'
 final RXLIFECYCLE_VERSION = '1.0'
 final RXLINT_VERSION = '1.2'
+final PICASSO_VERSION = '2.5.2'
+
+// android test
+final ESPRESSO_VERSION = '2.2.2'
 
 // test
+final JUNIT_VERSION = '4.12'
 final MOCKITO_VERSION = '2.2.11'
+final ROBOLECTRIC_VERSION = '3.3.2'
 
 // These must be forced until everyone gets on the same page
-// RxLifecycle: 3.0.1, ??: 2.0.1
+// ?: 18.0, Robolectric: 20.0
+final GUAVA_VERSION = '20.0'
+// RxLifecycle: 3.0.1, Robolectric: 2.0.1
 final FINDBUGS_VERSION = '3.0.1'
 
 configurations.all {
     resolutionStrategy {
+        force "com.google.guava:guava:$GUAVA_VERSION"
         force "com.google.code.findbugs:jsr305:$FINDBUGS_VERSION"
     }
 }
@@ -104,28 +117,32 @@ dependencies {
     compile "com.android.support:appcompat-v7:$SUPPORT_VERSION"
     compile "com.android.support:recyclerview-v7:$SUPPORT_VERSION"
     compile "com.android.support:design:$SUPPORT_VERSION"
-    compile 'com.android.support:multidex:1.0.1'
+    compile "com.android.support:multidex:$MULTIDEX_VERSION"
     compile "org.bitcoinj:bitcoinj-core:$BITCOINJ_VERSION"
     compile "com.google.dagger:dagger:$DAGGER_VERSION"
     annotationProcessor "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
     compile "com.jakewharton.timber:timber:$TIMBER_VERSION"
     compile "net.danlew:android.joda:$JODATIME_VERSION"
-    compile 'com.squareup.retrofit2:retrofit:2.2.0'
-    compile 'com.google.code.gson:gson:2.8.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.2.0'
-    compile 'com.squareup.retrofit2:adapter-rxjava:2.2.0'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
+    compile "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
+    compile "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION"
+    compile "com.squareup.retrofit2:adapter-rxjava:$RETROFIT_VERSION"
+    compile "com.squareup.okhttp3:logging-interceptor:$LOGGINGINTERCEPTOR_VERSION"
+    compile "com.google.code.gson:gson:$GSON_VERSION"
     compile "io.reactivex:rxjava:$RXJAVA_VERSION"
     compile "io.reactivex:rxandroid:$RXJAVA_VERSION"
     compile "com.trello:rxlifecycle:$RXLIFECYCLE_VERSION"
     compile "com.trello:rxlifecycle-android:$RXLIFECYCLE_VERSION"
     compile "nl.littlerobots.rxlint:rxlint:$RXLINT_VERSION"
+    compile "com.squareup.picasso:picasso:$PICASSO_VERSION"
 
 
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+
+    androidTestCompile("com.android.support.test.espresso:espresso-core:$ESPRESSO_VERSION", {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
-    testCompile 'junit:junit:4.12'
+    testCompile "junit:junit:$JUNIT_VERSION"
     testCompile "org.mockito:mockito-core:$MOCKITO_VERSION"
+    testCompile "org.robolectric:robolectric:$ROBOLECTRIC_VERSION"
+    testCompile "org.robolectric:shadows-multidex:$ROBOLECTRIC_VERSION"
 }

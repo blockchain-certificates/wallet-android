@@ -20,7 +20,7 @@ public class IssuerIntroduction {
         return mIssuerService.getIssuer(url)
                 .flatMap(issuer -> {
                     return Observable.combineLatest(Observable.just(issuer),
-                            mIssuerService.doIntroduction(issuer.getIntroUrl(), request),
+                            mIssuerService.postIntroduction(issuer.getIntroUrl(), request),
                             (issuer1, aVoid) -> issuer1);
                 });
     }
