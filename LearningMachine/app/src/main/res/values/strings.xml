@@ -46,5 +46,12 @@
     <string name="about_passphrases_endpoint">http://www.learningmachine.com/about-passphrases/</string>
     <string name="issuer_info">Info</string>
 
+    <!--Dialog Error Messages-->
+    <string name="fragment_add_issuer_invalid_issuer_error">This doesn’t appear to be a valid Issuer. Please check the URL and try again.</string>
+    <string name="connection_error">Connection unavailable. Please check your connection and try again.</string>
+    <string name="unknown_error">Unknown error. Something unexepected occurred.</string>
+    <string name="bad_url_error">Invalid url was enter for the issuer URL.</string>
+    <string name="bad_identity_info_error">Bad info for the identity.</string>
+    <string name="adding_issuer_progress_message">Adding Issuer…</string>
 
 </resources>

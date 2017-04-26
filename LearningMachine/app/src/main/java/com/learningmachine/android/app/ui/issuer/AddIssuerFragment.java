@@ -17,10 +17,9 @@ import com.learningmachine.android.app.data.webservice.IssuerIntroduction;
 import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 import com.learningmachine.android.app.databinding.FragmentAddIssuerBinding;
 import com.learningmachine.android.app.ui.LMFragment;
+import com.learningmachine.android.app.util.DialogUtils;
 
 import javax.inject.Inject;
-
-import timber.log.Timber;
 
 public class AddIssuerFragment extends LMFragment {
 
@@ -68,10 +67,18 @@ public class AddIssuerFragment extends LMFragment {
                 // TODO: retrieve the next public bitcoin address
                 mIssuerIntroduction.addIssuer(introUrl, bitcoinAddress, nonce)
                         .compose(bindToMainThread())
-                        .subscribe(this::issuerAdded, throwable -> Timber.e(throwable, "Failed to add issuer"));
+                        .subscribe(this::issuerAdded, throwable -> displayErrors(throwable));
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void displayErrors(Throwable throwable) {
+        DialogUtils.showErrorAlertDialog(getContext(), getFragmentManager(), throwable);
+    }
+
+    private void displayProgress() {
+        DialogUtils.showAlertDialog(getContext(),getFragmentManager(),R.string.adding_issuer_progress_message);
     }
 
     private void issuerAdded(IssuerResponse issuerResponse) {
