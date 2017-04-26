@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class IssuerResponse {
+
     @SerializedName("name")
     private String mName;
     @SerializedName("email")
