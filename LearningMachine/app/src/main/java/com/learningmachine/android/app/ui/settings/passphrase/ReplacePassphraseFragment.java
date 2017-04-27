@@ -57,7 +57,7 @@ public class ReplacePassphraseFragment extends LMFragment {
         switch (item.getItemId()) {
             case R.id.fragment_replace_passphrase_done_menu_item:
                 replacePassphrase();
-                break;
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
