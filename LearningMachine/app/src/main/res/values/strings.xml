@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Learning Machine</string>
+    <string name="app_name">Certificates</string>
     <string name="home_issuers">Issuers</string>
     <string name="home_settings_menu_item_title">Settings</string>
 
@@ -31,6 +31,7 @@
     <string name="reveal_passphrase_title">Reveal Passphrase</string>
     <string name="reveal_passphrase_instructional_message">Some instructional text about passphrases.</string>
     <string name="reveal_passphrase_current_title">Current Passphrase</string>
+    <string name="reveal_passphrase_text_copied">Passphrase has been copied.</string>
 
     <!-- Replace Passphrase -->
 
@@ -52,5 +53,6 @@
     <string name="fragment_issuer_info_url">URL</string>
     <string name="fragment_issuer_info_email">Email</string>
     <string name="fragment_issuer_info_description">Description</string>
+
 
 </resources>

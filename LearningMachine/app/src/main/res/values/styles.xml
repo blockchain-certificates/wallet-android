@@ -98,6 +98,7 @@
         <item name="android:paddingBottom">@dimen/fragment_settings_textview_padding_bottom</item>
         <item name="android:paddingStart">@dimen/fragment_add_issuer_linear_layout_padding_horizontal</item>
         <item name="android:paddingEnd">@dimen/fragment_add_issuer_linear_layout_padding_horizontal</item>
+        <item name="android:background">?android:attr/selectableItemBackground</item>
     </style>
 
     <style name="IssuerInfo.Header" parent="LearningMachineTextView">

@@ -41,7 +41,7 @@ public class IssuerInfoFragment extends LMFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mInfoBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_issuer_info, container, false);
 
-        IssuerInfo info = new IssuerInfo("April, 4th, 2017", "rekbrgregbr", "google.com", "rashad@bignerdranch.com", "sample");
+        IssuerInfo info = new IssuerInfo(mIssuerInfo.getDate(), mIssuerInfo.getSharedAddress(), mIssuerInfo.getUrl(), mIssuerInfo.getEmail(), mIssuerInfo.getDescription());
         mInfoBinding.setViewModel(info);
         return mInfoBinding.getRoot();
     }

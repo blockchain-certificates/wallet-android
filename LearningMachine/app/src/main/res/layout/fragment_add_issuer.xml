@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
@@ -32,8 +31,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/fragment_add_isser_url_edittext_bottom_padding"
                 android:hint="@string/fragment_add_issuer_url"
+                android:imeOptions="flagNoFullscreen|actionNext"
+                android:inputType="textUri"
+                android:maxLines="1"
+                android:nextFocusForward="@+id/add_issuer_identity_edit_text"
                 android:paddingRight="@dimen/fragment_add_isser_edittext_padding_right"
                 style="@style/Material.Light.Subhead.Disabled"/>
+
         </android.support.design.widget.TextInputLayout>
 
         <TextView
@@ -49,10 +53,13 @@
             android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/add_issuer_identity_edit_text"
+                android:id="@id/add_issuer_identity_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/fragment_add_issuer_add_identity"
+                android:imeOptions="flagNoFullscreen|actionDone"
+                android:inputType="text"
+                android:maxLines="1"
                 android:paddingRight="@dimen/fragment_add_isser_edittext_padding_right"
                 style="@style/Material.Light.Subhead.Disabled"/>
 
