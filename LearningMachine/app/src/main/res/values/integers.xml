@@ -2,4 +2,5 @@
 <resources>
 
     <integer name="fragment_home_issuer_grid_size">2</integer>
+    <integer name="action_done">100</integer>
 </resources>

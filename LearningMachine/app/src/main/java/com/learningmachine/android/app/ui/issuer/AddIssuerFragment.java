@@ -3,12 +3,15 @@ package com.learningmachine.android.app.ui.issuer;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.TextView;
 
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.inject.Injector;
@@ -36,6 +39,8 @@ public class AddIssuerFragment extends LMFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_issuer, container, false);
 
+        mBinding.addIssuerIdentityEditText.setOnEditorActionListener(mActionListener);
+
         return mBinding.getRoot();
     }
 
@@ -52,20 +57,36 @@ public class AddIssuerFragment extends LMFragment {
         inflater.inflate(R.menu.fragment_add_issuer, menu);
     }
 
+    private void startIssuerIntroduction() {
+        String introUrl = mBinding.addIssuerUrlEditText.getText()
+                .toString();
+        String nonce = mBinding.addIssuerIdentityEditText.getText()
+                .toString();
+
+        mIssuerIntroduction.addIssuer(introUrl, "", nonce)
+                .compose(bindToMainThread())
+                .subscribe(this::issuerAdded, throwable -> Timber.e(throwable, "Failed to add issuer"));
+
+    }
+
+    private TextView.OnEditorActionListener mActionListener = new TextView.OnEditorActionListener() {
+        @Override
+        public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+            if (actionId == getResources().getInteger(R.integer.action_done)
+                    || actionId == EditorInfo.IME_ACTION_DONE) {
+                startIssuerIntroduction();
+                return false;
+            }
+            return false;
+        }
+    };
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
             case R.id.fragment_add_issuer_verify:
-                String introUrl = mBinding.addIssuerUrlEditText.getText()
-                        .toString();
-                String nonce = mBinding.addIssuerIdentityEditText.getText()
-                        .toString();
-
-                // TODO: retrieve the next public bitcoin address
-                mIssuerIntroduction.addIssuer(introUrl, "", nonce)
-                        .compose(bindToMainThread())
-                        .subscribe(this::issuerAdded, throwable -> Timber.e(throwable, "Failed to add issuer"));
+                startIssuerIntroduction();
                 break;
         }
         return super.onOptionsItemSelected(item);
