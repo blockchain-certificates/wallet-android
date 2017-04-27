@@ -50,6 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/settings_about_header"
+                android:paddingTop="@dimen/fragment_settings_about_padding_top"
                 style="@style/Settings.Header"/>
 
             <TextView
