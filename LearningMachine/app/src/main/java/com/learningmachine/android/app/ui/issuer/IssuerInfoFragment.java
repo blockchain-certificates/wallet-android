@@ -15,14 +15,14 @@ import com.learningmachine.android.app.ui.LMFragment;
 
 public class IssuerInfoFragment extends LMFragment {
 
-    private static final String ARG_ISSUER_INFO = "IssuerInfoFragment.Info";
+    private static final String ARG_ISSUER = "IssuerInfoFragment.Issuer";
 
     private FragmentIssuerInfoBinding mInfoBinding;
     private Issuer mIssuer;
 
     public static IssuerInfoFragment newInstance(Issuer issuer) {
         Bundle args = new Bundle();
-        args.putSerializable(ARG_ISSUER_INFO, issuer);
+        args.putSerializable(ARG_ISSUER, issuer);
 
         IssuerInfoFragment fragment = new IssuerInfoFragment();
         fragment.setArguments(args);
@@ -33,7 +33,7 @@ public class IssuerInfoFragment extends LMFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mIssuer = (Issuer) getArguments().getSerializable(ARG_ISSUER_INFO);
+        mIssuer = (Issuer) getArguments().getSerializable(ARG_ISSUER);
     }
 
     @Nullable

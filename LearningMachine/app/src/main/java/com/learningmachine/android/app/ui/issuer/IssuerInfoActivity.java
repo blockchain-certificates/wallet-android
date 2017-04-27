@@ -9,18 +9,17 @@ import com.learningmachine.android.app.ui.LMSingleFragmentActivity;
 
 public class IssuerInfoActivity extends LMSingleFragmentActivity {
 
-
-    private static final String EXTRA_ISSUER_INFO = "IssuerInfoActivity.Info";
+    private static final String EXTRA_ISSUER = "IssuerInfoActivity.Issuer";
 
     public static Intent newIntent(Context context, Issuer issuer) {
         Intent intent = new Intent(context, IssuerInfoActivity.class);
-        intent.putExtra(EXTRA_ISSUER_INFO, issuer);
+        intent.putExtra(EXTRA_ISSUER, issuer);
         return intent;
     }
 
     @Override
     protected Fragment createFragment() {
-        Issuer issuer = (Issuer) getIntent().getSerializableExtra(EXTRA_ISSUER_INFO);
+        Issuer issuer = (Issuer) getIntent().getSerializableExtra(EXTRA_ISSUER);
         return IssuerInfoFragment.newInstance(issuer);
     }
 

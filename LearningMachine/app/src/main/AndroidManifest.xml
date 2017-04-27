@@ -20,28 +20,36 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
         <activity
             android:name=".ui.settings.SettingsActivity"
             android:label="@string/settings_fragment"
             android:parentActivityName=".ui.home.HomeActivity"/>
+
         <activity
             android:name=".ui.issuer.IssuerActivity"
             android:windowSoftInputMode="stateHidden"/>
+
         <activity
             android:name=".ui.issuer.AddIssuerActivity"
             android:label="@string/fragment_add_issuer_title"/>
+
         <activity android:name=".ui.LMWebActivity"/>
+
         <activity
             android:name=".ui.settings.passphrase.RevealPassphraseActivity"
             android:label="@string/reveal_passphrase_title"
             android:parentActivityName=".ui.settings.SettingsActivity"/>
+
         <activity
             android:name=".ui.settings.passphrase.ReplacePassphraseActivity"
             android:label="@string/replace_passphrase_title"
             android:parentActivityName=".ui.settings.SettingsActivity"/>
+
         <activity
             android:name=".ui.cert.CertificateActivity"
             android:parentActivityName=".ui.issuer.IssuerActivity"/>
+
         <activity android:name=".ui.issuer.IssuerInfoActivity"/>
     </application>
 
