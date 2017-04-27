@@ -53,5 +53,6 @@
     <string name="bad_url_error">Invalid url was enter for the issuer URL.</string>
     <string name="bad_identity_info_error">Bad info for the identity.</string>
     <string name="adding_issuer_progress_message">Adding Issuer…</string>
+    <string name="error_title">Error</string>
 
 </resources>

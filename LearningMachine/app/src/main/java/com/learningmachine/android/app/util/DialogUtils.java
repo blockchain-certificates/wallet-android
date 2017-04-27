@@ -28,7 +28,6 @@ public class DialogUtils {
 
     }
 
-
     public static void hideProgressDialog(FragmentManager fragmentManager) {
         Fragment fragment = fragmentManager.findFragmentByTag(TAG_DIALOG_PROGRESS);
         if (fragment instanceof ProgressDialogFragment) {
@@ -41,24 +40,18 @@ public class DialogUtils {
         dialog.show(fragmentManager, TAG_DIALOG_ALERT);
     }
 
-    public static void showErrorAlertDialog(Context context, FragmentManager fragmentManager, @StringRes int errorMessageResId, Throwable throwable) {
-        String errorString = context.getString(errorMessageResId);
-        showErrorAlertDialog(context, fragmentManager, errorString, throwable);
+    public static void showErrorAlertDialog(Context context, FragmentManager fragmentManager, @StringRes int titleResId, Throwable throwable) {
+        String titleString = context.getString(titleResId);
+        String errorString = context.getString(getErrorMessageResourceId(throwable));
+        showErrorAlertDialog(context, fragmentManager, titleString, errorString, throwable);
     }
 
-    public static void showErrorAlertDialog(Context context, FragmentManager fragmentManager, String errorMessage, Throwable throwable) {
-
-        AlertDialogFragment dialog = AlertDialogFragment.newInstance(errorMessage);
+    private static void showErrorAlertDialog(Context context, FragmentManager fragmentManager, String title, String errorMessage, Throwable throwable) {
+        AlertDialogFragment dialog = AlertDialogFragment.newInstance(title, errorMessage);
         fragmentManager.beginTransaction()
                 .add(dialog, TAG_DIALOG_ALERT)
                 .commitAllowingStateLoss();
     }
-
-    public static void showErrorAlertDialog(Context context, FragmentManager fragmentManager, Throwable throwable) {
-
-        showErrorAlertDialog(context, fragmentManager, getErrorMessageResourceId(throwable), throwable);
-    }
-
 
     private static int getErrorMessageResourceId(Throwable throwable) {
         if (throwable instanceof UnknownHostException) {
