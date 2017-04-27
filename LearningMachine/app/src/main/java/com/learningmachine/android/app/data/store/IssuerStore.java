@@ -119,7 +119,7 @@ public class IssuerStore implements DataStore {
     }
 
     @VisibleForTesting
-    public Issuer loadIssuer(String uuid) {
+    Issuer loadIssuer(String uuid) {
         Issuer issuer = null;
         Cursor cursor = mDatabase.query(
                 LMDatabaseHelper.Table.ISSUER,

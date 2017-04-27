@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.model.Certificate;
 import com.learningmachine.android.app.data.model.Issuer;
-import com.learningmachine.android.app.data.store.IssuerStore;
 import com.learningmachine.android.app.databinding.FragmentIssuerBinding;
 import com.learningmachine.android.app.databinding.ListItemCertificateBinding;
 import com.learningmachine.android.app.ui.LMFragment;
@@ -25,13 +24,9 @@ import com.learningmachine.android.app.ui.LMFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
 public class IssuerFragment extends LMFragment {
 
     private static final String ARG_ISSUER = "IssuerFragment.Issuer";
-
-    @Inject protected IssuerStore mIssuerStore;
 
     private Issuer mIssuer;
     private FragmentIssuerBinding mBinding;
