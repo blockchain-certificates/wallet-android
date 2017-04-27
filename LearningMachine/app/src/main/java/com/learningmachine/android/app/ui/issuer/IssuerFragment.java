@@ -72,7 +72,7 @@ public class IssuerFragment extends LMFragment {
             case R.id.certificate_info_icon:
                 Intent intent = IssuerInfoActivity.newIntent(getContext(), mIssuer);
                 startActivity(intent);
-                break;
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
