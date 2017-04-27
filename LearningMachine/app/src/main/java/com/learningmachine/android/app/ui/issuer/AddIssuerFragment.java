@@ -11,8 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.learningmachine.android.app.R;
+import com.learningmachine.android.app.data.IssuerManager;
 import com.learningmachine.android.app.data.inject.Injector;
-import com.learningmachine.android.app.data.webservice.IssuerIntroduction;
 import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 import com.learningmachine.android.app.databinding.FragmentAddIssuerBinding;
 import com.learningmachine.android.app.ui.LMFragment;
@@ -25,7 +25,7 @@ public class AddIssuerFragment extends LMFragment {
 
     private FragmentAddIssuerBinding mBinding;
 
-    @Inject protected IssuerIntroduction mIssuerIntroduction;
+    @Inject protected IssuerManager mIssuerManager;
 
     public static AddIssuerFragment newInstance() {
         return new AddIssuerFragment();
@@ -63,7 +63,7 @@ public class AddIssuerFragment extends LMFragment {
                         .toString();
 
                 // TODO: retrieve the next public bitcoin address
-                mIssuerIntroduction.addIssuer(introUrl, "", nonce)
+                mIssuerManager.addIssuer(introUrl, "", nonce)
                         .compose(bindToMainThread())
                         .subscribe(this::issuerAdded, throwable -> Timber.e(throwable, "Failed to add issuer"));
                 break;

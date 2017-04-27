@@ -11,10 +11,10 @@
             android:id="@+id/issuer_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/fragment_home_recyclerview_spacing"
-            android:paddingStart="@dimen/fragment_home_recyclerview_spacing"
+            android:background="@color/off_white_background"
             android:paddingEnd="@dimen/fragment_home_recyclerview_spacing"
-            android:background="@color/off_white_background"/>
+            android:paddingStart="@dimen/fragment_home_recyclerview_spacing"
+            android:paddingTop="@dimen/fragment_home_recyclerview_spacing"/>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/issuer_floating_action_button"
