@@ -10,7 +10,7 @@ import com.learningmachine.android.app.data.model.Issuer;
 import com.learningmachine.android.app.data.model.KeyRotation;
 import com.learningmachine.android.app.data.store.cursor.IssuerCursorWrapper;
 import com.learningmachine.android.app.data.store.cursor.KeyRotationCursorWrapper;
-import com.learningmachine.android.app.data.webservice.response.AddIssuerResponse;
+import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 import com.learningmachine.android.app.util.GsonUtil;
 import com.learningmachine.android.app.util.ListUtils;
 
@@ -43,24 +43,24 @@ public class IssuerStore implements DataStore {
 
         for (String file : files) {
             try {
-                AddIssuerResponse addIssuerResponse = gsonUtil.loadModelObject(file, AddIssuerResponse.class);
-                saveIssuerResponse(addIssuerResponse);
+                IssuerResponse issuerResponse = gsonUtil.loadModelObject(file, IssuerResponse.class);
+                saveIssuerResponse(issuerResponse);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public void saveIssuerResponse(AddIssuerResponse addIssuerResponse) {
-        if (addIssuerResponse == null) {
+    public void saveIssuerResponse(IssuerResponse issuerResponse) {
+        if (issuerResponse == null) {
             return;
         }
 
-        String uuid = addIssuerResponse.getUuid();
-        String imageData = addIssuerResponse.getImageData();
+        String uuid = issuerResponse.getUuid();
+        String imageData = issuerResponse.getImageData();
         mImageStore.saveImage(uuid, imageData);
 
-        saveIssuer(addIssuerResponse);
+        saveIssuer(issuerResponse);
     }
 
     private void saveIssuer(Issuer issuer) {
@@ -172,7 +172,8 @@ public class IssuerStore implements DataStore {
                     contentValues);
         } else {
             mDatabase.update(tableName,
-                    contentValues, LMDatabaseHelper.Column.KeyRotation.KEY + " = ? "
+                    contentValues,
+                    LMDatabaseHelper.Column.KeyRotation.KEY + " = ? "
                     + " AND " + LMDatabaseHelper.Column.KeyRotation.ISSUER_UUID + " = ?",
                     new String[] { keyRotation.getKey(), issuerUuid });
         }

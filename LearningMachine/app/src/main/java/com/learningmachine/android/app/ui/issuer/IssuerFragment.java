@@ -67,11 +67,11 @@ public class IssuerFragment extends LMFragment {
         // build list
         List<Certificate> certificateList = new ArrayList<>();
 
-        Certificate certificate = new Certificate("Sample Certificate 1", "Welcome to the sample certificate!");
+        Certificate certificate = new Certificate("certUuid1", "issuerUuid1", "Sample Certificate 1", "Welcome to the sample certificate!");
         certificateList.add(certificate);
-        certificate = new Certificate("Sample Certificate 2", "Welcome to the sample certificate, again!");
+        certificate = new Certificate("certUuid2", "issuerUuid1", "Sample Certificate 2", "Welcome to the sample certificate, again!");
         certificateList.add(certificate);
-        certificate = new Certificate("Sample Certificate 3", "Okay, we get it by now. It’s a certificate.");
+        certificate = new Certificate("certUuid3", "issuerUuid1", "Sample Certificate 3", "Okay, we get it by now. It’s a certificate.");
         certificateList.add(certificate);
 
         CertificateAdapter adapter = new CertificateAdapter(certificateList);

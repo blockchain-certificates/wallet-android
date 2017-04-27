@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.IssuerManager;
 import com.learningmachine.android.app.data.inject.Injector;
-import com.learningmachine.android.app.data.webservice.response.AddIssuerResponse;
+import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 import com.learningmachine.android.app.databinding.FragmentAddIssuerBinding;
 import com.learningmachine.android.app.ui.LMFragment;
 
@@ -71,7 +71,7 @@ public class AddIssuerFragment extends LMFragment {
         return super.onOptionsItemSelected(item);
     }
 
-    private void issuerAdded(AddIssuerResponse addIssuerResponse) {
+    private void issuerAdded(IssuerResponse issuerResponse) {
         // TODO: persist issuer
         // TODO: display success - go back to issuers list
     }

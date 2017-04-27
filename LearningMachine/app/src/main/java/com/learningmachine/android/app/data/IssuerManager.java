@@ -4,7 +4,7 @@ import com.learningmachine.android.app.data.model.Issuer;
 import com.learningmachine.android.app.data.store.IssuerStore;
 import com.learningmachine.android.app.data.webservice.IssuerService;
 import com.learningmachine.android.app.data.webservice.request.IssuerIntroductionRequest;
-import com.learningmachine.android.app.data.webservice.response.AddIssuerResponse;
+import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 
 import java.util.List;
 
@@ -25,7 +25,7 @@ public class IssuerManager {
         return Observable.just(mIssuerStore.loadIssuers());
     }
 
-    public Observable<AddIssuerResponse> addIssuer(String url, String bitcoinAddress, String nonce) {
+    public Observable<IssuerResponse> addIssuer(String url, String bitcoinAddress, String nonce) {
         IssuerIntroductionRequest request = new IssuerIntroductionRequest("", nonce);
         return mIssuerService.getIssuer(url)
                 .flatMap(issuer -> Observable.combineLatest(Observable.just(issuer),
