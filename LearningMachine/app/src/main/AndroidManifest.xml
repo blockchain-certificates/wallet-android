@@ -42,8 +42,7 @@
         <activity
             android:name=".ui.cert.CertificateActivity"
             android:parentActivityName=".ui.issuer.IssuerActivity"/>
-        <activity android:name=".ui.issuer.IssuerInfoActivity">
-        </activity>
+        <activity android:name=".ui.issuer.IssuerInfoActivity"/>
     </application>
 
 </manifest>

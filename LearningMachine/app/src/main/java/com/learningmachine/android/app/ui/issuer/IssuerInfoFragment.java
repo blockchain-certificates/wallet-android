@@ -24,10 +24,10 @@ public class IssuerInfoFragment extends LMFragment {
         Bundle args = new Bundle();
         args.putSerializable(ARG_ISSUER_INFO, issuerInfo);
 
-        IssuerInfoFragment infoFragment = new IssuerInfoFragment();
-        infoFragment.setArguments(args);
+        IssuerInfoFragment fragment = new IssuerInfoFragment();
+        fragment.setArguments(args);
 
-        return infoFragment;
+        return fragment;
     }
 
     @Override
@@ -42,7 +42,7 @@ public class IssuerInfoFragment extends LMFragment {
         mInfoBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_issuer_info, container, false);
 
         IssuerInfo info = new IssuerInfo(mIssuerInfo.getDate(), mIssuerInfo.getSharedAddress(), mIssuerInfo.getUrl(), mIssuerInfo.getEmail(), mIssuerInfo.getDescription());
-        mInfoBinding.setViewModel(info);
+        mInfoBinding.setIssuerInfoViewModel(info);
         return mInfoBinding.getRoot();
     }
 

@@ -145,5 +145,4 @@ dependencies {
     testCompile "org.mockito:mockito-core:$MOCKITO_VERSION"
     testCompile "org.robolectric:robolectric:$ROBOLECTRIC_VERSION"
     testCompile "org.robolectric:shadows-multidex:$ROBOLECTRIC_VERSION"
-
 }

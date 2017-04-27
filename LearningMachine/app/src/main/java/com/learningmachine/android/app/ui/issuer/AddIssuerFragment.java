@@ -11,9 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.learningmachine.android.app.R;
+import com.learningmachine.android.app.data.IssuerManager;
 import com.learningmachine.android.app.data.inject.Injector;
-import com.learningmachine.android.app.data.webservice.IssuerIntroduction;
-import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
+import com.learningmachine.android.app.data.webservice.response.AddIssuerResponse;
 import com.learningmachine.android.app.databinding.FragmentAddIssuerBinding;
 import com.learningmachine.android.app.ui.LMFragment;
 
@@ -25,7 +25,7 @@ public class AddIssuerFragment extends LMFragment {
 
     private FragmentAddIssuerBinding mBinding;
 
-    @Inject protected IssuerIntroduction mIssuerIntroduction;
+    @Inject protected IssuerManager mIssuerManager;
 
     public static AddIssuerFragment newInstance() {
         return new AddIssuerFragment();
@@ -62,7 +62,7 @@ public class AddIssuerFragment extends LMFragment {
                 String nonce = mBinding.addIssuerIdentityEditText.getText()
                         .toString();
 
-                mIssuerIntroduction.addIssuer(introUrl, "", nonce)
+                mIssuerManager.addIssuer(introUrl, "", nonce)
                         .compose(bindToMainThread())
                         .subscribe(this::issuerAdded, throwable -> Timber.e(throwable, "Failed to add issuer"));
                 break;
@@ -70,7 +70,7 @@ public class AddIssuerFragment extends LMFragment {
         return super.onOptionsItemSelected(item);
     }
 
-    private void issuerAdded(IssuerResponse issuerResponse) {
+    private void issuerAdded(AddIssuerResponse addIssuerResponse) {
         // TODO: persist issuer
         // TODO: display success - go back to issuers list
     }

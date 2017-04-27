@@ -4,7 +4,7 @@
     <data>
 
         <variable
-            name="viewModel"
+            name="issuerInfoViewModel"
             type="com.learningmachine.android.app.data.model.IssuerInfo"/>
     </data>
 
@@ -34,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/issuer_info_viewmodel_textview_bottom_padding"
-            android:text="@{viewModel.date}"
+            android:text="@{issuerInfoViewModel.date}"
             style="@style/Material.Light.Body1.Secondary"/>
 
         <TextView
@@ -48,7 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/issuer_info_viewmodel_textview_bottom_padding"
-            android:text="@{viewModel.sharedAddress}"
+            android:text="@{issuerInfoViewModel.sharedAddress}"
             style="@style/Material.Light.Body1.Secondary"/>
 
         <TextView
@@ -62,7 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/issuer_info_viewmodel_textview_bottom_padding"
-            android:text="@{viewModel.url}"
+            android:text="@{issuerInfoViewModel.url}"
             style="@style/Material.Light.Body1.Secondary"/>
 
         <TextView
@@ -76,7 +76,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/issuer_info_viewmodel_textview_bottom_padding"
-            android:text="@{viewModel.email}"
+            android:text="@{issuerInfoViewModel.email}"
             style="@style/Material.Light.Body1.Secondary"/>
 
         <TextView
@@ -90,7 +90,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/issuer_info_viewmodel_textview_bottom_padding"
-            android:text="@{viewModel.description}"
+            android:text="@{issuerInfoViewModel.description}"
             style="@style/Material.Light.Body1.Secondary"/>
     </LinearLayout>
 
