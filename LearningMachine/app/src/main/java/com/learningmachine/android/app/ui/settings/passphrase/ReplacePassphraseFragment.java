@@ -12,10 +12,19 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.learningmachine.android.app.R;
+import com.learningmachine.android.app.data.bitcoin.BitcoinManager;
+import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.databinding.FragmentReplacePassphraseBinding;
 import com.learningmachine.android.app.ui.LMFragment;
 
+import javax.inject.Inject;
+
 public class ReplacePassphraseFragment extends LMFragment {
+
+    @Inject
+    protected BitcoinManager mBitcoinManager;
+
+    private FragmentReplacePassphraseBinding mBinding;
 
     public static Fragment newInstance() {
         return new ReplacePassphraseFragment();
@@ -25,16 +34,15 @@ public class ReplacePassphraseFragment extends LMFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        Injector.obtain(getContext())
+                .inject(this);
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        FragmentReplacePassphraseBinding binding = DataBindingUtil.inflate(inflater,
-                R.layout.fragment_replace_passphrase,
-                container,
-                false);
-        return binding.getRoot();
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_replace_passphrase, container, false);
+        return mBinding.getRoot();
     }
 
     @Override
@@ -48,8 +56,15 @@ public class ReplacePassphraseFragment extends LMFragment {
 
         switch (item.getItemId()) {
             case R.id.fragment_replace_passphrase_done_menu_item:
+                replacePassphrase();
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void replacePassphrase() {
+        String passphrase = mBinding.replacePassphraseEditText.getText()
+                .toString();
+        mBitcoinManager.setPassphrase(passphrase);
     }
 }
