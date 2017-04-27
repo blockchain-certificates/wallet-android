@@ -41,7 +41,7 @@ public class IssuerInfoFragment extends LMFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mInfoBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_issuer_info, container, false);
 
-        String introducedDate = "Temp";
+        String introducedDate = "April 30th, 2017"; //We need to retrieve the date added from the database
         String sharedAddress = "mitm";
         IssuerInfoViewModel viewModel = new IssuerInfoViewModel(mIssuer, introducedDate, sharedAddress);
         mInfoBinding.setIssuerInfo(viewModel);
