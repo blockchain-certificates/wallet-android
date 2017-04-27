@@ -16,6 +16,7 @@
     <string name="settings_about_header">About</string>
     <string name="settings_about_this_app">About this app</string>
     <string name="settings_privacy_policy">Privacy Policy</string>
+    <string name="settings_privacy_policy_endpoint">http://www.learningmachine.com/mobile-privacy/</string>
 
     <!-- Add Issuer -->
     <string name="fragment_add_issuer_title">Add Issuer</string>
@@ -23,8 +24,10 @@
     <string name="fragment_add_issuer_url">Issuer URL</string>
     <string name="fragment_add_issuer_identity_text">Add information to identify yourself to the Issuer.</string>
     <string name="fragment_add_issuer_add_identity">One-time Code</string>
-
-    <string name="settings_privacy_policy_endpoint">http://www.learningmachine.com/mobile-privacy/</string>
+    <string name="fragment_add_issuer_invalid_issuer_error">This doesn’t appear to be a valid Issuer. Please check the URL and try again.</string>
+    <string name="fragment_add_issuer_bad_url_error">Invalid url was enter for the issuer URL.</string>
+    <string name="fragment_add_issuer_bad_identity_info_error">Bad info for the identity.</string>
+    <string name="fragment_add_issuer_adding_issuer_progress_dialog_message">Adding Issuer…</string>
 
     <!-- Reveal Passphrase -->
 
@@ -47,12 +50,8 @@
     <string name="issuer_info">Info</string>
 
     <!--Dialog Error Messages-->
-    <string name="fragment_add_issuer_invalid_issuer_error">This doesn’t appear to be a valid Issuer. Please check the URL and try again.</string>
     <string name="connection_error">Connection unavailable. Please check your connection and try again.</string>
     <string name="unknown_error">Unknown error. Something unexepected occurred.</string>
-    <string name="bad_url_error">Invalid url was enter for the issuer URL.</string>
-    <string name="bad_identity_info_error">Bad info for the identity.</string>
-    <string name="adding_issuer_progress_message">Adding Issuer…</string>
     <string name="error_title">Error</string>
 
 </resources>

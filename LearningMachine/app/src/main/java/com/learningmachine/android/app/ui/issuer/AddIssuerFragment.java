@@ -64,10 +64,11 @@ public class AddIssuerFragment extends LMFragment {
                         .toString();
                 String bitcoinAddress = mBitcoinManager.getBitcoinAddress();
 
-                // TODO: retrieve the next public bitcoin address
                 mIssuerIntroduction.addIssuer(introUrl, bitcoinAddress, nonce)
+                        .doOnSubscribe(this::displayProgressDialog)
+                        .doOnTerminate(this::hideProgressDialog)
                         .compose(bindToMainThread())
-                        .subscribe(this::issuerAdded, throwable -> displayErrors(throwable));
+                        .subscribe(this::issuerAdded, this::displayErrors);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -77,8 +78,12 @@ public class AddIssuerFragment extends LMFragment {
         DialogUtils.showErrorAlertDialog(getContext(), getFragmentManager(), R.string.error_title, throwable);
     }
 
-    private void displayProgress() {
-        DialogUtils.showProgressDialog(getFragmentManager(),getString(R.string.adding_issuer_progress_message));
+    private void displayProgressDialog() {
+        DialogUtils.showProgressDialog(getFragmentManager(), getString(R.string.fragment_add_issuer_adding_issuer_progress_dialog_message));
+    }
+
+    private void hideProgressDialog() {
+        DialogUtils.hideProgressDialog(getFragmentManager());
     }
 
     private void issuerAdded(IssuerResponse issuerResponse) {

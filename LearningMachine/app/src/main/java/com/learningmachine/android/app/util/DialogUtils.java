@@ -59,7 +59,7 @@ public class DialogUtils {
         } else if (throwable instanceof HttpException) {
             switch (((HttpException) throwable).code()) {
                 case HTTP_NOT_FOUND:
-                    return R.string.bad_url_error;
+                    return R.string.fragment_add_issuer_bad_url_error;
                 default:
                 case HTTP_BAD_REQUEST:
                     return R.string.fragment_add_issuer_invalid_issuer_error;
