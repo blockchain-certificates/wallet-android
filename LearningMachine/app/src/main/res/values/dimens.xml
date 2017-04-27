@@ -60,6 +60,14 @@
     <dimen name="list_item_certificate_view_padding_horizontal">16dp</dimen>
     <dimen name="list_item_certificate_description_margin_top">23dp</dimen>
 
+    <!-- Issuer Info -->
+
+    <dimen name="issuer_info_linear_layout_padding_top">14dp</dimen>
+    <dimen name="issuer_info_linear_layout_padding_start">16dp</dimen>
+    <dimen name="issuer_info_linear_layout_padding_end">36dp</dimen>
+    <dimen name="issuer_info_textview_padding_bottom">16dp</dimen>
+    <dimen name="issuer_info_viewmodel_textview_bottom_padding">29dp</dimen>
+
     <!-- Text Sizes -->
 
     <dimen name="material_title_text_size">20sp</dimen>

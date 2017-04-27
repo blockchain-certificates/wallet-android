@@ -62,7 +62,6 @@ public class AddIssuerFragment extends LMFragment {
                 String nonce = mBinding.addIssuerIdentityEditText.getText()
                         .toString();
 
-                // TODO: retrieve the next public bitcoin address
                 mIssuerManager.addIssuer(introUrl, "", nonce)
                         .compose(bindToMainThread())
                         .subscribe(this::issuerAdded, throwable -> Timber.e(throwable, "Failed to add issuer"));
