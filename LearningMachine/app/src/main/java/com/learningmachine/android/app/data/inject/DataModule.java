@@ -7,6 +7,7 @@ import com.learningmachine.android.app.data.bitcoin.BitcoinManager;
 import com.learningmachine.android.app.data.store.ImageStore;
 import com.learningmachine.android.app.data.store.IssuerStore;
 import com.learningmachine.android.app.data.store.LMDatabaseHelper;
+import com.learningmachine.android.app.data.webservice.IssuerService;
 
 import javax.inject.Singleton;
 
@@ -42,7 +43,7 @@ public class DataModule {
 
     @Provides
     @Singleton
-    IssuerManager providesIssuerManager(IssuerStore issuerStore) {
-        return new IssuerManager(issuerStore);
+    IssuerManager providesIssuerManager(IssuerStore issuerStore, IssuerService issuerService) {
+        return new IssuerManager(issuerStore, issuerService);
     }
 }
