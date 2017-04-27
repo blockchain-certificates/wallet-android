@@ -7,5 +7,4 @@ public class LMNetworkConstants {
     public static NetworkParameters getNetwork() {
         return TestNet3Params.get();
     }
-
 }
