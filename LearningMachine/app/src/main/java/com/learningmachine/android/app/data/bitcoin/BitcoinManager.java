@@ -103,9 +103,14 @@ public class BitcoinManager {
      * @return true if wallet was saved successfully
      */
     private boolean saveWallet() {
+        if (mWallet == null) {
+            Timber.e(new Exception(), "Wallet doesn't exit");
+            return false;
+        }
         try {
             mWallet.saveToFile(getWalletFile());
             Timber.d("Wallet successfully saved");
+            return true;
         } catch (IOException e) {
             Timber.e(e, "Unable to save Wallet");
         }
