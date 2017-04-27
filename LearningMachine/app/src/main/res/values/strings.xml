@@ -50,8 +50,8 @@
     <string name="issuer_info">Info</string>
 
     <!--Dialog Error Messages-->
-    <string name="connection_error">Connection unavailable. Please check your connection and try again.</string>
-    <string name="unknown_error">Unknown error. Something unexepected occurred.</string>
-    <string name="error_title">Error</string>
+    <string name="connection_error_message">Connection unavailable. Please check your connection and try again.</string>
+    <string name="unknown_error_message">Unknown error. Something unexepected occurred.</string>
+    <string name="error_title_message">Error</string>
 
 </resources>

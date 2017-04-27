@@ -8,30 +8,39 @@
             type="com.learningmachine.android.app.ui.home.IssuerListItemViewModel"/>
     </data>
 
-    <LinearLayout
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fragment_home_recyclerview_spacing"
-        android:background="@color/white"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:background="@android:color/transparent">
 
-        <ImageView
-            android:id="@+id/image_view"
-            android:layout_width="@dimen/list_item_issuer_imageview_size"
-            android:layout_height="@dimen/list_item_issuer_imageview_size"
-            android:layout_marginBottom="@dimen/list_item_issuer_imageview_margin_bottom"
-            android:layout_marginLeft="@dimen/list_item_issuer_imageview_margin_horizontal"
-            android:layout_marginRight="@dimen/list_item_issuer_imageview_margin_horizontal"
-            android:layout_marginTop="@dimen/list_item_issuer_imageview_margin_top"/>
-
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="@dimen/list_item_issuer_width"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/list_item_issuer_textview_padding_bottom"
-            android:text="@{viewModel.title}"
-            style="@style/Material.Light.Body1"/>
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/fragment_home_recyclerview_spacing"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <ImageView
+                android:id="@+id/image_view"
+                android:layout_width="@dimen/list_item_issuer_imageview_size"
+                android:layout_height="@dimen/list_item_issuer_imageview_size"
+                android:layout_marginBottom="@dimen/list_item_issuer_imageview_margin_bottom"
+                android:layout_marginLeft="@dimen/list_item_issuer_imageview_margin_horizontal"
+                android:layout_marginRight="@dimen/list_item_issuer_imageview_margin_horizontal"
+                android:layout_marginTop="@dimen/list_item_issuer_imageview_margin_top"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/list_item_issuer_textview_padding_bottom"
+                android:text="@{viewModel.title}"
+                style="@style/Material.Light.Body1"/>
+
+        </LinearLayout>
+
+    </FrameLayout>
 
 </layout>

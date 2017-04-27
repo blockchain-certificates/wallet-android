@@ -1,7 +1,6 @@
 package com.learningmachine.android.app;
 
 import org.bitcoinj.core.NetworkParameters;
-import org.bitcoinj.params.MainNetParams;
 import org.bitcoinj.params.TestNet3Params;
 
 public class LMNetworkConstants {
@@ -9,7 +8,4 @@ public class LMNetworkConstants {
         return TestNet3Params.get();
     }
 
-    public static NetworkParameters getProductionNetwork() {
-        return MainNetParams.get();
-    }
 }

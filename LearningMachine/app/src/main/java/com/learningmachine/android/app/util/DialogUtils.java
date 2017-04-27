@@ -55,7 +55,7 @@ public class DialogUtils {
 
     private static int getErrorMessageResourceId(Throwable throwable) {
         if (throwable instanceof UnknownHostException) {
-            return R.string.connection_error;
+            return R.string.connection_error_message;
         } else if (throwable instanceof HttpException) {
             switch (((HttpException) throwable).code()) {
                 case HTTP_NOT_FOUND:
@@ -65,7 +65,7 @@ public class DialogUtils {
                     return R.string.fragment_add_issuer_invalid_issuer_error;
             }
         } else {
-            return R.string.unknown_error;
+            return R.string.unknown_error_message;
         }
     }
 

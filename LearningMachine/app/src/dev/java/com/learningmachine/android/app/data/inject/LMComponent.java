@@ -7,7 +7,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 
 @Singleton
-@Component(modules = {LMModule.class, DevDataModule.class})
+@Component(modules = {LMModule.class, DevDataModule.class, ApiModule.class})
 public interface LMComponent extends LMGraph {
 
     final class Initializer {

@@ -11,10 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.learningmachine.android.app.R;
+import com.learningmachine.android.app.data.IssuerManager;
 import com.learningmachine.android.app.data.bitcoin.BitcoinManager;
 import com.learningmachine.android.app.data.inject.Injector;
-import com.learningmachine.android.app.data.webservice.IssuerIntroduction;
-import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
+import com.learningmachine.android.app.data.webservice.response.AddIssuerResponse;
 import com.learningmachine.android.app.databinding.FragmentAddIssuerBinding;
 import com.learningmachine.android.app.ui.LMFragment;
 import com.learningmachine.android.app.util.DialogUtils;
@@ -25,8 +25,9 @@ public class AddIssuerFragment extends LMFragment {
 
     private FragmentAddIssuerBinding mBinding;
 
-    @Inject protected IssuerIntroduction mIssuerIntroduction;
     @Inject protected BitcoinManager mBitcoinManager;
+    @Inject protected IssuerManager mIssuerManager;
+
 
     public static AddIssuerFragment newInstance() {
         return new AddIssuerFragment();
@@ -64,7 +65,7 @@ public class AddIssuerFragment extends LMFragment {
                         .toString();
                 String bitcoinAddress = mBitcoinManager.getBitcoinAddress();
 
-                mIssuerIntroduction.addIssuer(introUrl, bitcoinAddress, nonce)
+                mIssuerManager.addIssuer(introUrl, bitcoinAddress, nonce)
                         .doOnSubscribe(this::displayProgressDialog)
                         .doOnTerminate(this::hideProgressDialog)
                         .compose(bindToMainThread())
@@ -75,7 +76,7 @@ public class AddIssuerFragment extends LMFragment {
     }
 
     private void displayErrors(Throwable throwable) {
-        DialogUtils.showErrorAlertDialog(getContext(), getFragmentManager(), R.string.error_title, throwable);
+        DialogUtils.showErrorAlertDialog(getContext(), getFragmentManager(), R.string.error_title_message, throwable);
     }
 
     private void displayProgressDialog() {
@@ -86,7 +87,7 @@ public class AddIssuerFragment extends LMFragment {
         DialogUtils.hideProgressDialog(getFragmentManager());
     }
 
-    private void issuerAdded(IssuerResponse issuerResponse) {
+    private void issuerAdded(AddIssuerResponse addIssuerResponse) {
         // TODO: persist issuer
         // TODO: display success - go back to issuers list
     }
