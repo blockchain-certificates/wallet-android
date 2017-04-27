@@ -8,13 +8,12 @@ import com.learningmachine.android.app.data.webservice.response.AddIssuerRespons
 
 import java.util.List;
 
-import retrofit2.Retrofit;
 import rx.Observable;
 
 public class IssuerManager {
 
     private IssuerStore mIssuerStore;
-    private final IssuerService mIssuerService;
+    private IssuerService mIssuerService;
 
 
     public IssuerManager(IssuerStore issuerStore, IssuerService issuerService) {
