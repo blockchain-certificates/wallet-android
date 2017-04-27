@@ -49,7 +49,7 @@ public class RevealPassphraseFragment extends LMFragment {
             ClipboardManager clipboardManager = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
             ClipData clipData = ClipData.newPlainText("text", currentPassphrase);
             clipboardManager.setPrimaryClip(clipData);
-            Snackbar.make(binding.getRoot(), R.string.reveal_passphrase_text_copied, Snackbar.LENGTH_LONG).show();
+            showSnackbar(binding.getRoot(), R.string.reveal_passphrase_text_copied);
             return true;
         });
 

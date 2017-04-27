@@ -50,7 +50,6 @@ public class BitcoinManager {
         if (!walletLoaded) {
             Timber.d("Wallet not loaded, creating a new one");
             createWallet();
-            saveWallet();
         }
     }
 
@@ -67,19 +66,26 @@ public class BitcoinManager {
             Timber.e("No mnemonic, wallet creation failure");
             return;
         }
-        DeterministicSeed deterministicSeed = new DeterministicSeed(mnemonic, seedData, "", 0);
+
+        buildWallet(mnemonic, seedData);
+    }
+
+    private void buildWallet(List<String> mnemonic, byte[] seedData) {
+        DeterministicSeed deterministicSeed = new DeterministicSeed(mnemonic,
+                seedData,
+                LMConstants.WALLET_PASSPHRASE,
+                LMConstants.WALLET_CREATION_TIME_SECONDS);
         NetworkParameters networkParameters = LMNetworkConstants.getNetwork();
         KeyChainGroup keyChainGroup = new KeyChainGroup(networkParameters, deterministicSeed);
-
         mWallet = new Wallet(networkParameters, keyChainGroup);
-        // write wallet to file
+        saveWallet();
     }
 
     /**
      * @return true if wallet was loaded successfully
      */
     private boolean loadWallet() {
-        try (FileInputStream walletStream = new FileInputStream(getWalletFile());) {
+        try (FileInputStream walletStream = new FileInputStream(getWalletFile())) {
             WalletExtension[] extensions = {};
             Protos.Wallet proto = WalletProtobufSerializer.parseToProto(walletStream);
             WalletProtobufSerializer serializer = new WalletProtobufSerializer();
@@ -125,5 +131,13 @@ public class BitcoinManager {
         DeterministicSeed seed = mWallet.getKeyChainSeed();
         List<String> mnemonicCode = seed.getMnemonicCode();
         return StringUtils.join(PASSPHRASE_DELIMETER, mnemonicCode);
+    }
+
+    public void setPassphrase(String newPassphrase) {
+        if (StringUtils.isEmpty(newPassphrase)) {
+            return;
+        }
+        List<String> newPassphraseList = StringUtils.split(newPassphrase, PASSPHRASE_DELIMETER);
+        buildWallet(newPassphraseList, null);
     }
 }
