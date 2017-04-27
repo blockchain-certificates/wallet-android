@@ -68,9 +68,9 @@ public class IssuerStoreTest {
 
     @Test
     public void testKeyRotation_save_andLoad() {
-            String issuerUuid = "issuer.com";
-            String createdDate = "2017-04-18";
-            String key = "249jm9wmldskjgmawe";
+        String issuerUuid = "issuer.com";
+        String createdDate = "2017-04-18";
+        String key = "249jm9wmldskjgmawe";
         KeyRotation keyRotation = new KeyRotation(createdDate, key);
 
         String tableName = LMDatabaseHelper.Table.ISSUER_KEY;
