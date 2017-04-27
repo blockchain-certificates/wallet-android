@@ -30,7 +30,6 @@ public class IssuerFragment extends LMFragment {
     private static final String ARG_ISSUER = "IssuerFragment.Issuer";
 
     private Issuer mIssuer;
-    private IssuerInfo mIssuerInfo;
     private FragmentIssuerBinding mBinding;
 
     public static IssuerFragment newInstance(Issuer issuer) {
@@ -72,8 +71,12 @@ public class IssuerFragment extends LMFragment {
 
         switch (item.getItemId()) {
             case R.id.certificate_info_icon:
-                mIssuerInfo = new IssuerInfo("April, 4th, 2017", "rekbrgregbr", "google.com", "rashad@bignerdranch.com", "sample");
-                Intent intent = IssuerInfoActivity.newIntent(getContext(), mIssuerInfo);
+                IssuerInfo issuerInfo = new IssuerInfo("April, 4th, 2017",
+                        "rekbrgregbr",
+                        "google.com",
+                        "rashad@bignerdranch.com",
+                        "sample");
+                Intent intent = IssuerInfoActivity.newIntent(getContext(), issuerInfo);
                 startActivity(intent);
                 break;
         }
