@@ -176,7 +176,8 @@ public class IssuerStore implements DataStore {
                     contentValues);
         } else {
             mDatabase.update(tableName,
-                    contentValues, LMDatabaseHelper.Column.KeyRotation.KEY + " = ? "
+                    contentValues,
+                    LMDatabaseHelper.Column.KeyRotation.KEY + " = ? "
                     + " AND " + LMDatabaseHelper.Column.KeyRotation.ISSUER_UUID + " = ?",
                     new String[] { keyRotation.getKey(), issuerUuid });
         }
