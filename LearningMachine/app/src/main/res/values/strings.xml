@@ -46,5 +46,9 @@
     <string name="about_passphrases_endpoint">http://www.learningmachine.com/about-passphrases/</string>
     <string name="issuer_info">Info</string>
 
+    <!--Add Certificate-->
+    <string name="add_certificate_by_file">BY FILE</string>
+    <string name="add_certificate_by_url">BY URL</string>
+
 
 </resources>
