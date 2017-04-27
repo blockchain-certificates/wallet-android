@@ -50,7 +50,6 @@ public class BitcoinManager {
         if (!walletLoaded) {
             Timber.d("Wallet not loaded, creating a new one");
             createWallet();
-            saveWallet();
         }
     }
 
@@ -79,13 +78,14 @@ public class BitcoinManager {
         NetworkParameters networkParameters = LMNetworkConstants.getNetwork();
         KeyChainGroup keyChainGroup = new KeyChainGroup(networkParameters, deterministicSeed);
         mWallet = new Wallet(networkParameters, keyChainGroup);
+        saveWallet();
     }
 
     /**
      * @return true if wallet was loaded successfully
      */
     private boolean loadWallet() {
-        try (FileInputStream walletStream = new FileInputStream(getWalletFile());) {
+        try (FileInputStream walletStream = new FileInputStream(getWalletFile())) {
             WalletExtension[] extensions = {};
             Protos.Wallet proto = WalletProtobufSerializer.parseToProto(walletStream);
             WalletProtobufSerializer serializer = new WalletProtobufSerializer();
@@ -139,6 +139,5 @@ public class BitcoinManager {
         }
         List<String> newPassphraseList = StringUtils.split(newPassphrase, PASSPHRASE_DELIMETER);
         buildWallet(newPassphraseList, null);
-        saveWallet();
     }
 }

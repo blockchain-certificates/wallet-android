@@ -39,6 +39,7 @@
     <string name="replace_passphrase_menu_item_title">Replace</string>
     <string name="replace_passphrase_warning_message">Note that replacing your passphrase will remove all your issuers and certificates. Make sure this is what you want to do before proceeding.</string>
     <string name="replace_passphrase_hint">Paste Passphrase</string>
+    <string name="replace_passphrase_success_message">Passphrase successfully replaced</string>
 
     <!-- About Passphrase -->
 
