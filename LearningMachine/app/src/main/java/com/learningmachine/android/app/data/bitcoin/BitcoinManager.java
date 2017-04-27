@@ -3,6 +3,7 @@ package com.learningmachine.android.app.data.bitcoin;
 import android.content.Context;
 import android.support.annotation.VisibleForTesting;
 
+import com.learningmachine.android.app.LMConstants;
 import com.learningmachine.android.app.LMNetworkConstants;
 import com.learningmachine.android.app.util.ListUtils;
 import com.learningmachine.android.app.util.StringUtils;
@@ -25,8 +26,6 @@ import java.util.List;
 
 import timber.log.Timber;
 
-import static com.learningmachine.android.app.LMConstants.WALLET_FILE;
-import static com.learningmachine.android.app.LMConstants.WALLET_SEED_BYTE_SIZE;
 import static com.learningmachine.android.app.util.BitcoinUtils.generateMnemonic;
 
 public class BitcoinManager {
@@ -57,12 +56,12 @@ public class BitcoinManager {
 
     @VisibleForTesting
     protected File getWalletFile() {
-        return new File(mContext.getFilesDir(), WALLET_FILE);
+        return new File(mContext.getFilesDir(), LMConstants.WALLET_FILE);
     }
 
     private void createWallet() {
         SecureRandom random = new SecureRandom();
-        byte[] seedData = random.generateSeed(WALLET_SEED_BYTE_SIZE);
+        byte[] seedData = random.generateSeed(LMConstants.WALLET_SEED_BYTE_SIZE);
         List<String> mnemonic = generateMnemonic(mContext, seedData);
         if (ListUtils.isEmpty(mnemonic)) {
             Timber.e("No mnemonic, wallet creation failure");
@@ -80,14 +79,12 @@ public class BitcoinManager {
      * @return true if wallet was loaded successfully
      */
     private boolean loadWallet() {
-        try {
-            FileInputStream walletStream = new FileInputStream(getWalletFile());
+        try (FileInputStream walletStream = new FileInputStream(getWalletFile());) {
             WalletExtension[] extensions = {};
             Protos.Wallet proto = WalletProtobufSerializer.parseToProto(walletStream);
             WalletProtobufSerializer serializer = new WalletProtobufSerializer();
             NetworkParameters networkParameters = LMNetworkConstants.getNetwork();
             mWallet = serializer.readWallet(networkParameters, extensions, proto);
-            walletStream.close();
             Timber.d("Wallet successfully loaded");
             return true;
         } catch (UnreadableWalletException e) {
@@ -97,6 +94,7 @@ public class BitcoinManager {
         } catch (IOException e) {
             Timber.e(e, "Wallet unable to be parsed");
         }
+
         Timber.e("Wallet not loaded, something went wrong");
         return false;
     }
