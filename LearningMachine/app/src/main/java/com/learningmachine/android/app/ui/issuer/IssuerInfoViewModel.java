@@ -3,58 +3,51 @@ package com.learningmachine.android.app.ui.issuer;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
-import com.learningmachine.android.app.data.model.IssuerInfo;
+import com.learningmachine.android.app.data.model.Issuer;
 
 public class IssuerInfoViewModel extends BaseObservable {
 
-    private IssuerInfo mIssuerInfo;
+    private Issuer mIssuer;
+    private String mIntroDate;
+    private String mSharedAddress;
+
+    public IssuerInfoViewModel(Issuer issuer, String introDate, String sharedAddress) {
+        mIssuer = issuer;
+        mIntroDate = introDate;
+        mSharedAddress = sharedAddress;
+    }
 
     @Bindable
     public String getDate() {
-        if (mIssuerInfo == null) {
-            return null;
-        }
-        return mIssuerInfo.getDate();
+        return mIntroDate;
     }
 
     @Bindable
     public String getSharedAddress() {
-        if (mIssuerInfo == null) {
-            return null;
-        }
-        return mIssuerInfo.getSharedAddress();
+        return mSharedAddress;
     }
 
     @Bindable
     public String getUrl() {
-        if (mIssuerInfo == null) {
+        if (mIssuer == null) {
             return null;
         }
-        return mIssuerInfo.getUrl();
+        return mIssuer.getUuid();
     }
 
     @Bindable
     public String getEmail() {
-        if (mIssuerInfo == null) {
+        if (mIssuer == null) {
             return null;
         }
-        return mIssuerInfo.getEmail();
+        return mIssuer.getEmail();
     }
 
     @Bindable
     public String getDescription() {
-        if (mIssuerInfo == null) {
+        if (mIssuer == null) {
             return null;
         }
-        return mIssuerInfo.getDescription();
-    }
-
-    public void bindIssuerInfo(IssuerInfo issuerInfo) {
-        mIssuerInfo = issuerInfo;
-        notifyChange();
-    }
-
-    public IssuerInfo getIssuerInfo() {
-        return mIssuerInfo;
+        return mIssuer.getName(); // TODO: confirm whether there's a separate description field
     }
 }

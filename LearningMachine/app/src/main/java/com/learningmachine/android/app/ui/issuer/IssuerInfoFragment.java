@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.learningmachine.android.app.R;
-import com.learningmachine.android.app.data.model.IssuerInfo;
+import com.learningmachine.android.app.data.model.Issuer;
 import com.learningmachine.android.app.databinding.FragmentIssuerInfoBinding;
 import com.learningmachine.android.app.ui.LMFragment;
 
@@ -18,11 +18,11 @@ public class IssuerInfoFragment extends LMFragment {
     private static final String ARG_ISSUER_INFO = "IssuerInfoFragment.Info";
 
     private FragmentIssuerInfoBinding mInfoBinding;
-    private IssuerInfo mIssuerInfo;
+    private Issuer mIssuer;
 
-    public static IssuerInfoFragment newInstance(IssuerInfo issuerInfo) {
+    public static IssuerInfoFragment newInstance(Issuer issuer) {
         Bundle args = new Bundle();
-        args.putSerializable(ARG_ISSUER_INFO, issuerInfo);
+        args.putSerializable(ARG_ISSUER_INFO, issuer);
 
         IssuerInfoFragment fragment = new IssuerInfoFragment();
         fragment.setArguments(args);
@@ -33,7 +33,7 @@ public class IssuerInfoFragment extends LMFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mIssuerInfo = (IssuerInfo) getArguments().getSerializable(ARG_ISSUER_INFO);
+        mIssuer = (Issuer) getArguments().getSerializable(ARG_ISSUER_INFO);
     }
 
     @Nullable
@@ -41,8 +41,10 @@ public class IssuerInfoFragment extends LMFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mInfoBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_issuer_info, container, false);
 
-        IssuerInfo info = new IssuerInfo(mIssuerInfo.getDate(), mIssuerInfo.getSharedAddress(), mIssuerInfo.getUrl(), mIssuerInfo.getEmail(), mIssuerInfo.getDescription());
-        mInfoBinding.setIssuerInfoViewModel(info);
+        String introducedDate = "Temp";
+        String sharedAddress = "mitm";
+        IssuerInfoViewModel viewModel = new IssuerInfoViewModel(mIssuer, introducedDate, sharedAddress);
+        mInfoBinding.setIssuerInfo(viewModel);
         return mInfoBinding.getRoot();
     }
 

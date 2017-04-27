@@ -4,8 +4,8 @@
     <data>
 
         <variable
-            name="issuerInfoViewModel"
-            type="com.learningmachine.android.app.data.model.IssuerInfo"/>
+            name="issuerInfo"
+            type="com.learningmachine.android.app.ui.issuer.IssuerInfoViewModel"/>
     </data>
 
     <LinearLayout
@@ -34,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/issuer_info_viewmodel_textview_bottom_padding"
-            android:text="@{issuerInfoViewModel.date}"
+            android:text="@{issuerInfo.date}"
             style="@style/Material.Light.Body1.Secondary"/>
 
         <TextView
@@ -48,7 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/issuer_info_viewmodel_textview_bottom_padding"
-            android:text="@{issuerInfoViewModel.sharedAddress}"
+            android:text="@{issuerInfo.sharedAddress}"
             style="@style/Material.Light.Body1.Secondary"/>
 
         <TextView
@@ -62,7 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/issuer_info_viewmodel_textview_bottom_padding"
-            android:text="@{issuerInfoViewModel.url}"
+            android:text="@{issuerInfo.url}"
             style="@style/Material.Light.Body1.Secondary"/>
 
         <TextView
@@ -76,7 +76,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/issuer_info_viewmodel_textview_bottom_padding"
-            android:text="@{issuerInfoViewModel.email}"
+            android:text="@{issuerInfo.email}"
             style="@style/Material.Light.Body1.Secondary"/>
 
         <TextView
@@ -90,7 +90,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/issuer_info_viewmodel_textview_bottom_padding"
-            android:text="@{issuerInfoViewModel.description}"
+            android:text="@{issuerInfo.description}"
             style="@style/Material.Light.Body1.Secondary"/>
     </LinearLayout>
 
