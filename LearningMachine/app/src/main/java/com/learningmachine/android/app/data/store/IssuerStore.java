@@ -10,16 +10,13 @@ import com.learningmachine.android.app.data.model.Issuer;
 import com.learningmachine.android.app.data.model.KeyRotation;
 import com.learningmachine.android.app.data.store.cursor.IssuerCursorWrapper;
 import com.learningmachine.android.app.data.store.cursor.KeyRotationCursorWrapper;
-import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
-import com.learningmachine.android.app.data.webservice.response.KeyRotationResponse;
+import com.learningmachine.android.app.data.webservice.response.AddIssuerResponse;
 import com.learningmachine.android.app.util.GsonUtil;
 import com.learningmachine.android.app.util.ListUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Retrofit;
 
 public class IssuerStore implements DataStore {
 
@@ -46,25 +43,24 @@ public class IssuerStore implements DataStore {
 
         for (String file : files) {
             try {
-                IssuerResponse issuerResponse = gsonUtil.loadModelObject(file, IssuerResponse.class);
-                saveIssuerResponse(issuerResponse);
+                AddIssuerResponse addIssuerResponse = gsonUtil.loadModelObject(file, AddIssuerResponse.class);
+                saveIssuerResponse(addIssuerResponse);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public void saveIssuerResponse(IssuerResponse issuerResponse) {
-        if (issuerResponse == null) {
+    public void saveIssuerResponse(AddIssuerResponse addIssuerResponse) {
+        if (addIssuerResponse == null) {
             return;
         }
 
-        String uuid = issuerResponse.getUuid();
-        String imageData = issuerResponse.getImageData();
+        String uuid = addIssuerResponse.getUuid();
+        String imageData = addIssuerResponse.getImageData();
         mImageStore.saveImage(uuid, imageData);
 
-        Issuer issuer = issuerFromResponse(issuerResponse);
-        saveIssuer(issuer);
+        saveIssuer(addIssuerResponse);
     }
 
     private void saveIssuer(Issuer issuer) {
@@ -213,44 +209,6 @@ public class IssuerStore implements DataStore {
         }
 
         cursor.close();
-
-        return keyRotationList;
-    }
-
-
-    // Converters
-
-    private Issuer issuerFromResponse(IssuerResponse issuerResponse) {
-        String name = issuerResponse.getName();
-        String email = issuerResponse.getEmail();
-        String uuid = issuerResponse.getUuid();
-        String certsUrl = issuerResponse.getCertsUrl();
-        String introUrl = issuerResponse.getIntroUrl();
-
-        Issuer issuer = new Issuer(name, email, uuid, certsUrl, introUrl);
-        List<KeyRotationResponse> keyRotationResponseList = issuerResponse.getIssuerKeys();
-        List<KeyRotation> keyRotationList = keyRotationsFromResponses(keyRotationResponseList);
-        issuer.setIssuerKeys(keyRotationList);
-
-        keyRotationResponseList = issuerResponse.getRevocationKeys();
-        keyRotationList = keyRotationsFromResponses(keyRotationResponseList);
-        issuer.setRevocationKeys(keyRotationList);
-
-        return issuer;
-    }
-
-    private List<KeyRotation> keyRotationsFromResponses(List<KeyRotationResponse> keyRotationResponseList) {
-        List<KeyRotation> keyRotationList = new ArrayList<>();
-        if (ListUtils.isEmpty(keyRotationResponseList)) {
-            return keyRotationList;
-        }
-
-        for (KeyRotationResponse keyRotationResponse : keyRotationResponseList) {
-            String createdDate = keyRotationResponse.getCreatedDate();
-            String key = keyRotationResponse.getKey();
-            KeyRotation keyRotation = new KeyRotation(createdDate, key);
-            keyRotationList.add(keyRotation);
-        }
 
         return keyRotationList;
     }
