@@ -22,7 +22,11 @@ public class Certificate implements Serializable {
     @SerializedName("type")
     private String mType;
 
-    public Certificate(String name, String description) {
+    private String mIssuerUuid;
+
+    public Certificate(String uuid, String issuerUuid, String name, String description) {
+        mUuid = uuid;
+        mIssuerUuid = issuerUuid;
         mName = name;
         mDescription = description;
     }
@@ -81,5 +85,13 @@ public class Certificate implements Serializable {
 
     public void setType(String type) {
         mType = type;
+    }
+
+    public String getIssuerUuid() {
+        return mIssuerUuid;
+    }
+
+    public void setIssuerUuid(String issuerUuid) {
+        mIssuerUuid = issuerUuid;
     }
 }
