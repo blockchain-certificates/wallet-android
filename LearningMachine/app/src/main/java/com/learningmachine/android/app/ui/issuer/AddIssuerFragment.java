@@ -17,7 +17,6 @@ import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.data.webservice.response.AddIssuerResponse;
 import com.learningmachine.android.app.databinding.FragmentAddIssuerBinding;
 import com.learningmachine.android.app.ui.LMFragment;
-import com.learningmachine.android.app.util.DialogUtils;
 
 import javax.inject.Inject;
 
@@ -66,25 +65,13 @@ public class AddIssuerFragment extends LMFragment {
                 String bitcoinAddress = mBitcoinManager.getBitcoinAddress();
 
                 mIssuerManager.addIssuer(introUrl, bitcoinAddress, nonce)
-                        .doOnSubscribe(this::displayProgressDialog)
+                        .doOnSubscribe(() -> displayProgressDialog(R.string.fragment_add_issuer_adding_issuer_progress_dialog_message))
                         .doOnTerminate(this::hideProgressDialog)
                         .compose(bindToMainThread())
-                        .subscribe(this::issuerAdded, this::displayErrors);
+                        .subscribe(this::issuerAdded, throwable -> displayErrors(throwable, R.string.error_title_message));
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void displayErrors(Throwable throwable) {
-        DialogUtils.showErrorAlertDialog(getContext(), getFragmentManager(), R.string.error_title_message, throwable);
-    }
-
-    private void displayProgressDialog() {
-        DialogUtils.showProgressDialog(getFragmentManager(), getString(R.string.fragment_add_issuer_adding_issuer_progress_dialog_message));
-    }
-
-    private void hideProgressDialog() {
-        DialogUtils.hideProgressDialog(getFragmentManager());
     }
 
     private void issuerAdded(AddIssuerResponse addIssuerResponse) {

@@ -18,8 +18,8 @@ import static java.net.HttpURLConnection.HTTP_NOT_FOUND;
 
 public class DialogUtils {
 
-    public static final String TAG_DIALOG_PROGRESS = "dialog_progress";
-    private static final String TAG_DIALOG_ALERT = "dialog_alert";
+    public static final String TAG_DIALOG_PROGRESS = "DialogUtils.Dialog.Progress";
+    private static final String TAG_DIALOG_ALERT = "DialogUtils.Dialog.Alert";
 
     public static void showProgressDialog(FragmentManager fragmentManager, String message) {
         ProgressDialogFragment dialog = ProgressDialogFragment.newInstance(message);

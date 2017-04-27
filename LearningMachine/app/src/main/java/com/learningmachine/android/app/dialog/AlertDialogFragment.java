@@ -15,10 +15,10 @@ public class AlertDialogFragment extends DialogFragment {
     public static final int RESULT_POSITIVE = 1;
     public static final int RESULT_NEGATIVE = 0;
 
-    private static final String ARG_TITLE = "title";
-    private static final String ARG_MESSAGE = "message";
-    private static final String ARG_POSITIVE_BUTTON_MESSAGE = "positive_button_message";
-    private static final String ARG_NEGATIVE_BUTTON_MESSAGE = "negative_button_message";
+    private static final String ARG_TITLE = "AlertDialogFragment.Title";
+    private static final String ARG_MESSAGE = "AlertDialogFragment.Message";
+    private static final String ARG_POSITIVE_BUTTON_MESSAGE = "AlertDialogFragment.Positive.Button_Message";
+    private static final String ARG_NEGATIVE_BUTTON_MESSAGE = "AlertDialogFragment.Negative.Button.Message";
 
     public interface AlertCallback {
         void onDialogPositive();

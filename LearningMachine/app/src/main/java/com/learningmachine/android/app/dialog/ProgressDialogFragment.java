@@ -12,7 +12,7 @@ import com.learningmachine.android.app.R;
 
 public class ProgressDialogFragment extends DialogFragment {
 
-    private static final String ARG_MESSAGE = "message";
+    private static final String ARG_MESSAGE = "ProgressDialogFragment.Message";
 
     public static ProgressDialogFragment newInstance(String message) {
         Bundle args = new Bundle();
