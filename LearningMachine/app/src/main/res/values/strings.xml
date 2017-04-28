@@ -63,4 +63,6 @@
     <string name="unknown_error_message">Unknown error. Something unexepected occurred.</string>
     <string name="error_title_message">Error</string>
 
+    <string name="ime_action_done">Done</string>
+
 </resources>

@@ -9,6 +9,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.TextView;
 
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.IssuerManager;
@@ -19,6 +21,8 @@ import com.learningmachine.android.app.databinding.FragmentAddIssuerBinding;
 import com.learningmachine.android.app.ui.LMFragment;
 
 import javax.inject.Inject;
+
+import timber.log.Timber;
 
 public class AddIssuerFragment extends LMFragment {
 
@@ -37,6 +41,8 @@ public class AddIssuerFragment extends LMFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_issuer, container, false);
 
+        mBinding.addIssuerIdentityEditText.setOnEditorActionListener(mActionListener);
+
         return mBinding.getRoot();
     }
 
@@ -53,22 +59,32 @@ public class AddIssuerFragment extends LMFragment {
         inflater.inflate(R.menu.fragment_add_issuer, menu);
     }
 
+    private void startIssuerIntroduction() {
+        String introUrl = mBinding.addIssuerUrlEditText.getText()
+                .toString();
+        String nonce = mBinding.addIssuerIdentityEditText.getText()
+                .toString();
+
+        mIssuerManager.addIssuer(introUrl, "", nonce)
+                .compose(bindToMainThread())
+                .subscribe(this::issuerAdded, throwable -> Timber.e(throwable, "Failed to add issuer"));
+
+    }
+
+    private TextView.OnEditorActionListener mActionListener = (v, actionId, event) -> {
+        if (actionId == getResources().getInteger(R.integer.action_done) || actionId == EditorInfo.IME_ACTION_DONE) {
+            startIssuerIntroduction();
+            return false;
+        }
+        return false;
+    };
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
             case R.id.fragment_add_issuer_verify:
-                String introUrl = mBinding.addIssuerUrlEditText.getText()
-                        .toString();
-                String nonce = mBinding.addIssuerIdentityEditText.getText()
-                        .toString();
-                String bitcoinAddress = mBitcoinManager.getBitcoinAddress();
-
-                mIssuerManager.addIssuer(introUrl, bitcoinAddress, nonce)
-                        .doOnSubscribe(() -> displayProgressDialog(R.string.fragment_add_issuer_adding_issuer_progress_dialog_message))
-                        .doOnTerminate(this::hideProgressDialog)
-                        .compose(bindToMainThread())
-                        .subscribe(this::issuerAdded, throwable -> displayErrors(throwable, R.string.error_title_message));
+                startIssuerIntroduction();
                 return true;
         }
         return super.onOptionsItemSelected(item);
