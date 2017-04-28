@@ -140,4 +140,13 @@ public class BitcoinManager {
         List<String> newPassphraseList = StringUtils.split(newPassphrase, PASSPHRASE_DELIMETER);
         buildWallet(newPassphraseList, null);
     }
+
+    public String getBitcoinAddress() {
+        if (mWallet == null) {
+            return null;
+        }
+
+        return mWallet.currentReceiveAddress()
+                .toString();
+    }
 }
