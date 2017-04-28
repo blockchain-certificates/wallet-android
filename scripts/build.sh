@@ -9,8 +9,10 @@ if [[ "$TRAVIS_PULL_REQUEST" != "false" || ( "$TRAVIS_BRANCH" != "master" && "$T
     ./gradlew clean testDevDebug -PdisablePreDex
     exit $?
 else
-  echo "Building Staging and Production releases on $TRAVIS_BRANCH"
-  export BUILD_NUMBER=$TRAVIS_BUILD_NUMBER
-  ./gradlew clean assembleStagingRelease assembleProductionRelease -PdisablePreDex
-    exit $?
+	echo "Building Staging and Production releases on $TRAVIS_BRANCH"
+	export BUILD_NUMBER=$TRAVIS_BUILD_NUMBER
+	./gradlew clean
+	./gradlew assembleStagingRelease  -PdisablePreDex
+	./gradlew assembleProductionRelease -PdisablePreDex
+	exit $?
 fi
