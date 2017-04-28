@@ -75,6 +75,11 @@ android {
     dataBinding {
         enabled = true
     }
+
+    dexOptions {
+        incremental true
+        javaMaxHeapSize "4g"
+    }
 }
 
 final SUPPORT_VERSION = '25.3.1'
