@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.learningmachine.android.app">
+    package="com.learningmachine.android.app" >
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".LMApplication"
@@ -11,38 +11,38 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".ui.home.HomeActivity">
+        android:theme="@style/AppTheme" >
+        <activity android:name=".ui.home.HomeActivity" >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".ui.settings.SettingsActivity"
             android:label="@string/settings_fragment"
-            android:parentActivityName=".ui.home.HomeActivity"/>
+            android:parentActivityName=".ui.home.HomeActivity" />
         <activity
             android:name=".ui.issuer.IssuerActivity"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".ui.issuer.AddIssuerActivity"
-            android:label="@string/fragment_add_issuer_title"/>
-        <activity android:name=".ui.LMWebActivity"/>
+            android:label="@string/fragment_add_issuer_title" />
+        <activity android:name=".ui.LMWebActivity" />
         <activity
             android:name=".ui.settings.passphrase.RevealPassphraseActivity"
             android:label="@string/reveal_passphrase_title"
-            android:parentActivityName=".ui.settings.SettingsActivity"/>
+            android:parentActivityName=".ui.settings.SettingsActivity" />
         <activity
             android:name=".ui.settings.passphrase.ReplacePassphraseActivity"
             android:label="@string/replace_passphrase_title"
-            android:parentActivityName=".ui.settings.SettingsActivity"/>
+            android:parentActivityName=".ui.settings.SettingsActivity" />
         <activity
             android:name=".ui.cert.CertificateActivity"
-            android:parentActivityName=".ui.issuer.IssuerActivity"/>
-        <activity android:name=".ui.cert.AddCertificateActivity">
-        </activity>
+            android:parentActivityName=".ui.issuer.IssuerActivity" />
+        <activity android:name=".ui.cert.AddCertificateActivity" />
+        <activity android:name=".ui.issuer.IssuerInfoActivity" />
     </application>
 
 </manifest>
