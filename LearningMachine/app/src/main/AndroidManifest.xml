@@ -12,7 +12,6 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
             android:name=".ui.home.HomeActivity">
             <intent-filter>
@@ -29,8 +28,8 @@
 
         <activity
             android:name=".ui.issuer.IssuerActivity"
-
             android:windowSoftInputMode="stateHidden"/>
+
         <activity
             android:name=".ui.issuer.AddIssuerActivity"
             android:label="@string/fragment_add_issuer_title"/>
@@ -51,6 +50,7 @@
             android:name=".ui.cert.CertificateActivity"
             android:parentActivityName=".ui.issuer.IssuerActivity"/>
 
+        <activity android:name=".ui.issuer.IssuerInfoActivity"/>
     </application>
 
 </manifest>

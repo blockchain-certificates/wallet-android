@@ -23,11 +23,13 @@
     <dimen name="fragment_settings_textview_padding_bottom">11dp</dimen>
     <dimen name="fragment_settings_linear_layout_horizontal_padding">16dp</dimen>
     <dimen name="fragment_settings_linear_layout_padding_top">13dp</dimen>
+    <dimen name="fragment_settings_about_padding_top">13dp</dimen>
 
     <dimen name="fragment_reveal_passphrase_current_container_padding">16dp</dimen>
     <dimen name="fragment_reveal_passphrase_padding_top">15dp</dimen>
     <dimen name="fragment_reveal_passphrase_padding_start">15dp</dimen>
     <dimen name="fragment_reveal_passphrase_padding_end">10dp</dimen>
+
 
     <dimen name="fragment_reveal_passphrase_instructional_message_margin">16dp</dimen>
     <dimen name="fragment_reveal_passphrase_current_passphrase_title_bottom_margin">16dp</dimen>
@@ -43,6 +45,8 @@
     <!-- Home -->
 
     <dimen name="fragment_home_recyclerview_spacing">4dp</dimen>
+    <dimen name="list_item_issuer_width">168dp</dimen>
+    <dimen name="list_item_issuer_width_total">176dp</dimen>
     <dimen name="list_item_issuer_imageview_size">94dp</dimen>
     <dimen name="list_item_issuer_imageview_margin_top">17dp</dimen>
     <dimen name="list_item_issuer_imageview_margin_bottom">25dp</dimen>
@@ -55,6 +59,14 @@
     <dimen name="list_item_certificate_view_padding_top">16dp</dimen>
     <dimen name="list_item_certificate_view_padding_horizontal">16dp</dimen>
     <dimen name="list_item_certificate_description_margin_top">23dp</dimen>
+
+    <!-- Issuer Info -->
+
+    <dimen name="issuer_info_linear_layout_padding_top">14dp</dimen>
+    <dimen name="issuer_info_linear_layout_padding_start">16dp</dimen>
+    <dimen name="issuer_info_linear_layout_padding_end">36dp</dimen>
+    <dimen name="issuer_info_textview_padding_bottom">16dp</dimen>
+    <dimen name="issuer_info_viewmodel_textview_bottom_padding">29dp</dimen>
 
     <!-- Text Sizes -->
 

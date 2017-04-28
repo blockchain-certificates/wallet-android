@@ -2,11 +2,13 @@ package com.learningmachine.android.app.ui.home;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -88,13 +90,20 @@ public class HomeFragment extends LMFragment {
     }
 
     private void setupRecyclerView() {
-        final IssuerAdapter adapter = new IssuerAdapter(mIssuerList);
+        IssuerAdapter adapter = new IssuerAdapter(mIssuerList);
         mBinding.issuerRecyclerview.setAdapter(adapter);
 
-        int gridSize = getResources().getInteger(R.integer.fragment_home_issuer_grid_size);
+        int gridSize = calculateSpanCount();
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), gridSize);
         mBinding.issuerRecyclerview.setLayoutManager(layoutManager);
         mBinding.issuerRecyclerview.setHasFixedSize(true);
+    }
+
+    private int calculateSpanCount() {
+        Resources resources = getResources();
+        DisplayMetrics displayMetrics = resources.getDisplayMetrics();
+        int itemWidth = resources.getDimensionPixelSize(R.dimen.list_item_issuer_width_total);
+        return displayMetrics.widthPixels / itemWidth;
     }
 
     private void updateRecyclerView(List<Issuer> issuerList) {

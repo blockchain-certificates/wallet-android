@@ -4,9 +4,12 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
+import com.learningmachine.android.app.util.DialogUtils;
+import android.support.design.widget.Snackbar;
 import com.trello.rxlifecycle.LifecycleProvider;
 import com.trello.rxlifecycle.LifecycleTransformer;
 import com.trello.rxlifecycle.RxLifecycle;
@@ -110,5 +113,23 @@ public class LMFragment extends Fragment implements LifecycleProvider<FragmentEv
         }
 
         return (Observable.Transformer<T, T>) mMainThreadTransformer;
+    }
+
+    protected void displayErrors(Throwable throwable, @StringRes int errorTitleResId) {
+        DialogUtils.showErrorAlertDialog(getContext(), getFragmentManager(), errorTitleResId, throwable);
+    }
+
+    protected void displayProgressDialog(@StringRes int progressMessageResId) {
+        DialogUtils.showProgressDialog(getFragmentManager(), getString(progressMessageResId));
+    }
+
+    protected void hideProgressDialog() {
+        DialogUtils.hideProgressDialog(getFragmentManager());
+    }
+    // Snackbars
+
+    protected void showSnackbar(View view, int messageResId) {
+        Snackbar.make(view, messageResId, Snackbar.LENGTH_LONG).show();
+
     }
 }

@@ -3,7 +3,6 @@ package com.learningmachine.android.app.ui.issuer;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,8 +13,9 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
 import com.learningmachine.android.app.R;
+import com.learningmachine.android.app.data.IssuerManager;
+import com.learningmachine.android.app.data.bitcoin.BitcoinManager;
 import com.learningmachine.android.app.data.inject.Injector;
-import com.learningmachine.android.app.data.webservice.IssuerIntroduction;
 import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 import com.learningmachine.android.app.databinding.FragmentAddIssuerBinding;
 import com.learningmachine.android.app.ui.LMFragment;
@@ -28,7 +28,9 @@ public class AddIssuerFragment extends LMFragment {
 
     private FragmentAddIssuerBinding mBinding;
 
-    @Inject protected IssuerIntroduction mIssuerIntroduction;
+    @Inject protected BitcoinManager mBitcoinManager;
+    @Inject protected IssuerManager mIssuerManager;
+
 
     public static AddIssuerFragment newInstance() {
         return new AddIssuerFragment();
@@ -63,22 +65,18 @@ public class AddIssuerFragment extends LMFragment {
         String nonce = mBinding.addIssuerIdentityEditText.getText()
                 .toString();
 
-        mIssuerIntroduction.addIssuer(introUrl, "", nonce)
+        mIssuerManager.addIssuer(introUrl, "", nonce)
                 .compose(bindToMainThread())
                 .subscribe(this::issuerAdded, throwable -> Timber.e(throwable, "Failed to add issuer"));
 
     }
 
-    private TextView.OnEditorActionListener mActionListener = new TextView.OnEditorActionListener() {
-        @Override
-        public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-            if (actionId == getResources().getInteger(R.integer.action_done)
-                    || actionId == EditorInfo.IME_ACTION_DONE) {
-                startIssuerIntroduction();
-                return false;
-            }
+    private TextView.OnEditorActionListener mActionListener = (v, actionId, event) -> {
+        if (actionId == getResources().getInteger(R.integer.action_done) || actionId == EditorInfo.IME_ACTION_DONE) {
+            startIssuerIntroduction();
             return false;
         }
+        return false;
     };
 
     @Override
@@ -87,7 +85,7 @@ public class AddIssuerFragment extends LMFragment {
         switch (item.getItemId()) {
             case R.id.fragment_add_issuer_verify:
                 startIssuerIntroduction();
-                break;
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
