@@ -32,8 +32,8 @@ public class AlertDialogFragment extends DialogFragment {
 
 
     public static AlertDialogFragment newInstance(Context context, @StringRes int titleResId, @StringRes int messageResId, @StringRes int positiveButtonResId, @StringRes int negativeButtonResId) {
-        String title = context.getString(titleResId);
-        String message = context.getString(messageResId);
+        String title = titleResId == 0 ? "" : context.getString(titleResId);
+        String message = messageResId == 0 ? "" : context.getString(messageResId);
         String positiveButtonMessage = positiveButtonResId == 0 ? "" : context.getString(positiveButtonResId);
         String negativeButtonMessage = negativeButtonResId == 0 ? "" : context.getString(negativeButtonResId);
         return newInstance(title, message, positiveButtonMessage, negativeButtonMessage);
@@ -41,10 +41,7 @@ public class AlertDialogFragment extends DialogFragment {
 
 
     public static AlertDialogFragment newInstance(Context context, @StringRes int messageResId, @StringRes int positiveButtonResId, @StringRes int negativeButtonResId) {
-        String message = context.getString(messageResId);
-        String positiveButtonMessage = positiveButtonResId == 0 ? "" : context.getString(positiveButtonResId);
-        String negativeButtonMessage = negativeButtonResId == 0 ? "" : context.getString(negativeButtonResId);
-        return newInstance("", message, positiveButtonMessage, negativeButtonMessage);
+        return newInstance(context, 0, messageResId, positiveButtonResId, negativeButtonResId);
     }
 
     public static AlertDialogFragment newInstance(String message) {
