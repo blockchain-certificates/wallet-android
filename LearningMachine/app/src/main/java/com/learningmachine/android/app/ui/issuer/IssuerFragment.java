@@ -1,6 +1,7 @@
 package com.learningmachine.android.app.ui.issuer;
 
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -63,15 +65,27 @@ public class IssuerFragment extends LMFragment {
         inflater.inflate(R.menu.fragment_issuer, menu);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.certificate_info_icon:
+                Intent intent = IssuerInfoActivity.newIntent(getContext(), mIssuer);
+                startActivity(intent);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private void setupRecyclerView() {
         // build list
         List<Certificate> certificateList = new ArrayList<>();
 
-        Certificate certificate = new Certificate("Sample Certificate 1", "Welcome to the sample certificate!");
+        Certificate certificate = new Certificate("certUuid1", "issuerUuid1", "Sample Certificate 1", "Welcome to the sample certificate!");
         certificateList.add(certificate);
-        certificate = new Certificate("Sample Certificate 2", "Welcome to the sample certificate, again!");
+        certificate = new Certificate("certUuid2", "issuerUuid1", "Sample Certificate 2", "Welcome to the sample certificate, again!");
         certificateList.add(certificate);
-        certificate = new Certificate("Sample Certificate 3", "Okay, we get it by now. It’s a certificate.");
+        certificate = new Certificate("certUuid3", "issuerUuid1", "Sample Certificate 3", "Okay, we get it by now. It’s a certificate.");
         certificateList.add(certificate);
 
         CertificateAdapter adapter = new CertificateAdapter(certificateList);

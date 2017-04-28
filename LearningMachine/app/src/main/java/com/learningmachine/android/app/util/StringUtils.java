@@ -3,7 +3,10 @@ package com.learningmachine.android.app.util;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.annotation.Nullable;
 
@@ -26,6 +29,25 @@ public class StringUtils {
             }
         }
         return sb.toString();
+    }
+
+    /**
+     * String.split() returns [''] when the string to be split is empty. This returns []. This does
+     * not remove any empty strings from the result. For example split("a,", ","  ) returns {"a", ""}.
+     *
+     * @param text the string to split
+     * @param expression the regular expression to match
+     * @return an array of strings. The array will be empty if text is empty
+     *
+     * @throws NullPointerException if expression or text is null
+     */
+    public static List<String> split(String text, String expression) {
+        if (text.length() == 0) {
+            return new ArrayList<>();
+        } else {
+            String[] split = text.split(expression, -1);
+            return Arrays.asList(split);
+        }
     }
 
     /**

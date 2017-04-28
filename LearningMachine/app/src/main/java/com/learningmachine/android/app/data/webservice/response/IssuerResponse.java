@@ -3,12 +3,12 @@ package com.learningmachine.android.app.data.webservice.response;
 import com.google.gson.annotations.SerializedName;
 import com.learningmachine.android.app.data.model.Issuer;
 
-public class AddIssuerResponse extends Issuer {
+public class IssuerResponse extends Issuer {
 
     @SerializedName("image")
     private String mImageData;
 
-    public AddIssuerResponse(String name, String email, String uuid, String certsUrl, String introUrl) {
+    public IssuerResponse(String name, String email, String uuid, String certsUrl, String introUrl) {
         super(name, email, uuid, certsUrl, introUrl);
     }
 

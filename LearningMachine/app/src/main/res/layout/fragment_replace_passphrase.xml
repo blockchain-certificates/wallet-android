@@ -27,10 +27,14 @@
                 android:layout_height="wrap_content">
 
                 <EditText
+                    android:id="@+id/replace_passphrase_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
                     android:hint="@string/replace_passphrase_hint"
+                    android:inputType="textMultiLine"
+                    android:scrollHorizontally="false"
+                    android:textIsSelectable="true"
                     style="@style/Material.Light.Subhead.Secondary"/>
 
             </android.support.design.widget.TextInputLayout>

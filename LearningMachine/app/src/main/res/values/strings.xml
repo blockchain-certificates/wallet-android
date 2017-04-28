@@ -42,12 +42,21 @@
     <string name="replace_passphrase_menu_item_title">Replace</string>
     <string name="replace_passphrase_warning_message">Note that replacing your passphrase will remove all your issuers and certificates. Make sure this is what you want to do before proceeding.</string>
     <string name="replace_passphrase_hint">Paste Passphrase</string>
+    <string name="replace_passphrase_success_message">Passphrase successfully replaced</string>
 
     <!-- About Passphrase -->
 
     <string name="about_passphrases_title">About Passphrases</string>
     <string name="about_passphrases_endpoint">http://www.learningmachine.com/about-passphrases/</string>
+
+    <!-- Issuer Info Fragment -->
     <string name="issuer_info">Info</string>
+    <string name="fragment_issuer_info_additional_information">Additional Information</string>
+    <string name="fragment_issuer_info_introduced_on">Introduced on</string>
+    <string name="fragment_issuer_info_shared_address">Shared Address</string>
+    <string name="fragment_issuer_info_url">URL</string>
+    <string name="fragment_issuer_info_email">Email</string>
+    <string name="fragment_issuer_info_description">Description</string>
 
     <!--Dialog Error Messages-->
     <string name="connection_error_message">Connection unavailable. Please check your connection and try again.</string>
