@@ -67,9 +67,12 @@ public class AddIssuerFragment extends LMFragment {
                 .toString();
 
         mIssuerManager.addIssuer(introUrl, bitcoinAddress, nonce)
+                .doOnSubscribe(() -> displayProgressDialog(R.string.fragment_add_issuer_adding_issuer_progress_dialog_message))
                 .compose(bindToMainThread())
-                .subscribe(this::issuerAdded, throwable -> Timber.e(throwable, "Failed to add issuer"));
-
+                .subscribe(this::issuerAdded, throwable -> {
+                    hideProgressDialog();
+                    displayErrors(throwable, R.string.error_title_message);
+                });
     }
 
     private TextView.OnEditorActionListener mActionListener = (v, actionId, event) -> {
@@ -92,6 +95,7 @@ public class AddIssuerFragment extends LMFragment {
     }
 
     private void issuerAdded(IssuerResponse issuerResponse) {
+        hideProgressDialog();
         // TODO: persist issuer
         // TODO: display success - go back to issuers list
     }
