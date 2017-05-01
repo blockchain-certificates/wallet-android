@@ -216,5 +216,6 @@ public class IssuerStore implements DataStore {
         mDatabase.delete(LMDatabaseHelper.Table.ISSUER_KEY, null, null);
         mDatabase.delete(LMDatabaseHelper.Table.REVOCATION_KEY, null, null);
         mImageStore.reset();
+        loadSampleIssuer();
     }
 }
