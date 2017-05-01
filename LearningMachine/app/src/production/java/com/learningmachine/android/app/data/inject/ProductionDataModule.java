@@ -2,6 +2,9 @@ package com.learningmachine.android.app.data.inject;
 
 import com.learningmachine.android.app.data.log.NoLoggingTree;
 
+import org.bitcoinj.core.NetworkParameters;
+import org.bitcoinj.params.TestNet3Params;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -15,5 +18,11 @@ public class ProductionDataModule {
     @Singleton
     Timber.Tree provideLoggingTree() {
         return new NoLoggingTree();
+    }
+
+    @Provides
+    @Singleton
+    NetworkParameters providesBitcoinNetworkParameters() {
+        return TestNet3Params.get();
     }
 }
