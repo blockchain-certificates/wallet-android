@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.annotation.VisibleForTesting;
 
 import com.learningmachine.android.app.LMConstants;
-import com.learningmachine.android.app.LMNetworkConstants;
 import com.learningmachine.android.app.util.ListUtils;
 import com.learningmachine.android.app.util.StringUtils;
 
@@ -32,11 +31,13 @@ public class BitcoinManager {
 
     private static final String PASSPHRASE_DELIMETER = " ";
 
-    private Context mContext;
+    private final Context mContext;
+    private final NetworkParameters mNetworkParameters;
     private Wallet mWallet;
 
-    public BitcoinManager(Context context) {
+    public BitcoinManager(Context context, NetworkParameters networkParameters) {
         mContext = context;
+        mNetworkParameters = networkParameters;
         setup();
     }
 
@@ -75,9 +76,8 @@ public class BitcoinManager {
                 seedData,
                 LMConstants.WALLET_PASSPHRASE,
                 LMConstants.WALLET_CREATION_TIME_SECONDS);
-        NetworkParameters networkParameters = LMNetworkConstants.getNetwork();
-        KeyChainGroup keyChainGroup = new KeyChainGroup(networkParameters, deterministicSeed);
-        mWallet = new Wallet(networkParameters, keyChainGroup);
+        KeyChainGroup keyChainGroup = new KeyChainGroup(mNetworkParameters, deterministicSeed);
+        mWallet = new Wallet(mNetworkParameters, keyChainGroup);
         saveWallet();
     }
 
@@ -89,8 +89,7 @@ public class BitcoinManager {
             WalletExtension[] extensions = {};
             Protos.Wallet proto = WalletProtobufSerializer.parseToProto(walletStream);
             WalletProtobufSerializer serializer = new WalletProtobufSerializer();
-            NetworkParameters networkParameters = LMNetworkConstants.getNetwork();
-            mWallet = serializer.readWallet(networkParameters, extensions, proto);
+            mWallet = serializer.readWallet(mNetworkParameters, extensions, proto);
             Timber.d("Wallet successfully loaded");
             return true;
         } catch (UnreadableWalletException e) {
