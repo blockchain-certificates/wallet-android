@@ -4,6 +4,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -23,6 +24,7 @@ public class CertificateURLFragment extends LMFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Nullable
@@ -31,5 +33,17 @@ public class CertificateURLFragment extends LMFragment {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_certificate_by_url, container, false);
 
         return mBinding.getRoot();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.fragment_add_certificate_verify:
+                String url = mBinding.certificateAddByUrlEditText.getText().toString();
+
+                //TODO: Start verification process for the URL
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

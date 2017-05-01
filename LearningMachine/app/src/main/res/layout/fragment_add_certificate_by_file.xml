@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
+        tools:context=".ui.cert.CertificateFileFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/fragment_add_certificate_linearlayout_top_padding"
+        android:paddingTop="@dimen/fragment_add_certificate_linearlayout_top_padding"
         android:orientation="vertical"
-        android:paddingStart="@dimen/fragment_add_certificate_linearlayout_start_padding">
+        android:paddingStart="@dimen/fragment_add_certificate_linearlayout_start_padding"
+        android:focusableInTouchMode="true"
+        android:paddingEnd="@dimen/fragment_add_certificate_linearlayout_start_padding">
 
         <TextView
             android:id="@+id/certificate_add_by_file_text_view"
@@ -27,6 +31,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/certificate_add_file_edit_text_hint"
+                android:imeOptions="flagNoFullscreen|actionDone"
+                android:inputType="text"
+                android:maxLines="1"
                 style="@style/Material.Light.Subhead.Disabled"/>
 
         </android.support.design.widget.TextInputLayout>

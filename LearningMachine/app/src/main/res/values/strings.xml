@@ -62,6 +62,7 @@
     <string name="certificate_add_url_edit_text_hint">Certificate URL</string>
     <string name="certificate_add_name_of_file">What is the File of the certificate?</string>
     <string name="certificate_add_file_edit_text_hint">Certificate File</string>
+    <string name="fragment_add_certificate_title">Add Certificate</string>
 
 
 </resources>

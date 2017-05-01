@@ -1,18 +1,105 @@
 package com.learningmachine.android.app.ui.cert;
 
+import android.content.Context;
+import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.view.Menu;
+import android.view.MenuInflater;
 
 import com.learningmachine.android.app.R;
+import com.learningmachine.android.app.databinding.ActivityAddCertificateBinding;
+import com.learningmachine.android.app.ui.LMActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
-public class CertificatePagerActivity extends FragmentActivity {
+public class CertificatePagerActivity extends LMActivity {
+
+    private ActivityAddCertificateBinding mBinding;
+
+    public static Intent newIntent(Context context) {
+        return new Intent(context, CertificatePagerActivity.class);
+    }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
-        setContentView(R.layout.fragment_add_certificate);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_add_certificate);
+
+        setupViewPager(mBinding.activityCertificatePagerViewPager);
+        mBinding.addCertificateTabs.setupWithViewPager(mBinding.activityCertificatePagerViewPager);
+    }
+
+    private void setupViewPager(ViewPager viewPager) {
+        List<CertificateType> certificateTypes = new ArrayList<>();
+        certificateTypes.add(CertificateType.URL);
+        certificateTypes.add(CertificateType.FILE);
+
+        CertificateViewPagerAdapter adapter = new CertificateViewPagerAdapter(this, getSupportFragmentManager(), certificateTypes);
+        viewPager.setAdapter(adapter);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.fragment_add_certificate, menu);
+        return true;
+    }
+
+    private enum CertificateType {
+        URL(R.string.add_certificate_by_url),
+        FILE(R.string.add_certificate_by_file);
+
+        private int mTitleResId;
+
+        CertificateType(int titleResId) {
+            mTitleResId = titleResId;
+        }
+
+        public int getTitleResId() {
+            return mTitleResId;
+        }
+    }
+
+    private class CertificateViewPagerAdapter extends FragmentStatePagerAdapter {
+        private List<CertificateType> mCertificateTypes;
+        private Context mContext;
+
+        public CertificateViewPagerAdapter(Context context, FragmentManager manager, List<CertificateType> certificateTypes) {
+            super(manager);
+            mContext = context;
+            mCertificateTypes = certificateTypes;
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            CertificateType certificateType = mCertificateTypes.get(position);
+            switch (certificateType) {
+                case URL:
+                    return new CertificateURLFragment();
+                case FILE:
+                    return new CertificateFileFragment();
+            }
+            return null;
+        }
+
+        @Override
+        public int getCount() {
+            return mCertificateTypes.size();
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+
+            CertificateType certificateType = mCertificateTypes.get(position);
+            return mContext.getString(certificateType.getTitleResId());
+        }
     }
 }
