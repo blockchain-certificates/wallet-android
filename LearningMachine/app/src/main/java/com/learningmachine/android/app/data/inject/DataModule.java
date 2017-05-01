@@ -19,8 +19,8 @@ public class DataModule {
 
     @Provides
     @Singleton
-    BitcoinManager providesBitcoinManager(Context context) {
-        return new BitcoinManager(context);
+    BitcoinManager providesBitcoinManager(Context context, IssuerManager issuerManager) {
+        return new BitcoinManager(context, issuerManager);
     }
 
     @Provides

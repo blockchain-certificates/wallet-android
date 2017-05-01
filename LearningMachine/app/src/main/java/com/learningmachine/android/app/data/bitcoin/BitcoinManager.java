@@ -5,6 +5,7 @@ import android.support.annotation.VisibleForTesting;
 
 import com.learningmachine.android.app.LMConstants;
 import com.learningmachine.android.app.LMNetworkConstants;
+import com.learningmachine.android.app.data.IssuerManager;
 import com.learningmachine.android.app.util.ListUtils;
 import com.learningmachine.android.app.util.StringUtils;
 
@@ -33,10 +34,12 @@ public class BitcoinManager {
     private static final String PASSPHRASE_DELIMETER = " ";
 
     private Context mContext;
+    private IssuerManager mIssuerManager;
     private Wallet mWallet;
 
-    public BitcoinManager(Context context) {
+    public BitcoinManager(Context context, IssuerManager issuerManager) {
         mContext = context;
+        mIssuerManager = issuerManager;
         setup();
     }
 
@@ -139,6 +142,7 @@ public class BitcoinManager {
         }
         List<String> newPassphraseList = StringUtils.split(newPassphrase, PASSPHRASE_DELIMETER);
         buildWallet(newPassphraseList, null);
+        mIssuerManager.purgeIssuers();
     }
 
     public String getBitcoinAddress() {

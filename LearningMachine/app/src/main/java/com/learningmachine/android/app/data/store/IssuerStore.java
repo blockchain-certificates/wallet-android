@@ -29,25 +29,21 @@ public class IssuerStore implements DataStore {
         mContext = context;
         mDatabase = databaseHelper.getWritableDatabase();
         mImageStore = imageStore;
-        loadMockData();
+        loadSampleIssuer();
     }
 
-    private void loadMockData() {
+    private void loadSampleIssuer() {
         List<Issuer> issuerList = loadIssuers();
         if (!issuerList.isEmpty()) {
             return;
         }
 
         GsonUtil gsonUtil = new GsonUtil(mContext);
-        String files[] = {"issuer-baratheon", "issuer-stark", "issuer-targaryen"};
-
-        for (String file : files) {
-            try {
-                IssuerResponse issuerResponse = gsonUtil.loadModelObject(file, IssuerResponse.class);
-                saveIssuerResponse(issuerResponse);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        try {
+            IssuerResponse issuerResponse = gsonUtil.loadModelObject("sample-issuer", IssuerResponse.class);
+            saveIssuerResponse(issuerResponse);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -219,5 +215,6 @@ public class IssuerStore implements DataStore {
         mDatabase.delete(LMDatabaseHelper.Table.ISSUER, null, null);
         mDatabase.delete(LMDatabaseHelper.Table.ISSUER_KEY, null, null);
         mDatabase.delete(LMDatabaseHelper.Table.REVOCATION_KEY, null, null);
+        mImageStore.reset();
     }
 }
