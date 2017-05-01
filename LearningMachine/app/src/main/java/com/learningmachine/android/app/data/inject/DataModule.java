@@ -9,6 +9,9 @@ import com.learningmachine.android.app.data.store.IssuerStore;
 import com.learningmachine.android.app.data.store.LMDatabaseHelper;
 import com.learningmachine.android.app.data.webservice.IssuerService;
 
+import org.bitcoinj.core.NetworkParameters;
+import org.bitcoinj.params.TestNet3Params;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -19,8 +22,8 @@ public class DataModule {
 
     @Provides
     @Singleton
-    BitcoinManager providesBitcoinManager(Context context) {
-        return new BitcoinManager(context);
+    BitcoinManager providesBitcoinManager(Context context, NetworkParameters networkParameters) {
+        return new BitcoinManager(context, networkParameters);
     }
 
     @Provides

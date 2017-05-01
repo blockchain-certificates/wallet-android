@@ -6,6 +6,7 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
 
+import org.bitcoinj.params.TestNet3Params;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -19,14 +20,15 @@ public class BitcoinManagerTest {
     @Test
     public void walletShouldBeSaved_andLoaded() {
         Context context = InstrumentationRegistry.getTargetContext();
-        BitcoinManager bitcoinManager = new BitcoinManager(context);
+        TestNet3Params networkParameters = TestNet3Params.get();
+        BitcoinManager bitcoinManager = new BitcoinManager(context, networkParameters);
 
         assertTrue(bitcoinManager.getWalletFile()
                 .exists());
 
         String firstPassphrase = bitcoinManager.getPassphrase();
 
-        bitcoinManager = new BitcoinManager(context);
+        bitcoinManager = new BitcoinManager(context, networkParameters);
 
         assertTrue(bitcoinManager.getWalletFile()
                 .exists());
