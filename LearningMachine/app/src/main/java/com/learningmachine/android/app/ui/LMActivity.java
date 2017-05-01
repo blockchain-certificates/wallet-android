@@ -28,13 +28,14 @@ public abstract class LMActivity extends AppCompatActivity implements LifecycleP
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mLifecycleSubject.onNext(ActivityEvent.CREATE);
-        setupActionBar();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         mLifecycleSubject.onNext(ActivityEvent.START);
+        setupActionBar();
+
     }
 
     @Override

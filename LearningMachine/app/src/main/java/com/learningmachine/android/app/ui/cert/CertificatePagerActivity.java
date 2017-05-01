@@ -32,6 +32,7 @@ public class CertificatePagerActivity extends LMActivity {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_add_certificate);
+        setSupportActionBar(mBinding.addCertificateToolbar);
 
         setupViewPager(mBinding.activityCertificatePagerViewPager);
         mBinding.addCertificateTabs.setupWithViewPager(mBinding.activityCertificatePagerViewPager);
@@ -50,6 +51,11 @@ public class CertificatePagerActivity extends LMActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.fragment_add_certificate, menu);
+        return true;
+    }
+
+    @Override
+    protected boolean requiresBackNavigation() {
         return true;
     }
 
