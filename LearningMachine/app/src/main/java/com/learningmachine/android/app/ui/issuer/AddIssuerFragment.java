@@ -22,6 +22,8 @@ import com.learningmachine.android.app.ui.LMFragment;
 
 import javax.inject.Inject;
 
+import rx.Subscription;
+import rx.functions.Action1;
 import timber.log.Timber;
 
 public class AddIssuerFragment extends LMFragment {
@@ -68,8 +70,7 @@ public class AddIssuerFragment extends LMFragment {
 
         mIssuerManager.addIssuer(introUrl, bitcoinAddress, nonce)
                 .compose(bindToMainThread())
-                .subscribe(this::issuerAdded, throwable -> Timber.e(throwable, "Failed to add issuer"));
-
+                .subscribe(aVoid -> getActivity().finish(), throwable -> Timber.e(throwable, "Failed to add issuer"));
     }
 
     private TextView.OnEditorActionListener mActionListener = (v, actionId, event) -> {
@@ -82,17 +83,11 @@ public class AddIssuerFragment extends LMFragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()) {
             case R.id.fragment_add_issuer_verify:
                 startIssuerIntroduction();
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void issuerAdded(IssuerResponse issuerResponse) {
-        // TODO: persist issuer
-        // TODO: display success - go back to issuers list
     }
 }
