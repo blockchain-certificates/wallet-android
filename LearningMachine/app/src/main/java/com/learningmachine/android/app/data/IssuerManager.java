@@ -32,4 +32,8 @@ public class IssuerManager {
                         mIssuerService.postIntroduction(issuer.getIntroUrl(), request),
                         (issuer1, aVoid) -> issuer1));
     }
+
+    public void purgeIssuers() {
+        mIssuerStore.reset();
+    }
 }
