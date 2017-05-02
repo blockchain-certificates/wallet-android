@@ -41,7 +41,6 @@ public class LMWebFragment extends LMFragment {
         mBinding.webViewController.setWebViewClient(webViewClient);
         mBinding.webViewController.getSettings()
                 .setJavaScriptEnabled(true);
-
     }
 
     public void backPressed() {
