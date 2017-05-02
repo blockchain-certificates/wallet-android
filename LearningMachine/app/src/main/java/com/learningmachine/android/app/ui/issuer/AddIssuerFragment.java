@@ -16,13 +16,10 @@ import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.IssuerManager;
 import com.learningmachine.android.app.data.bitcoin.BitcoinManager;
 import com.learningmachine.android.app.data.inject.Injector;
-import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 import com.learningmachine.android.app.databinding.FragmentAddIssuerBinding;
 import com.learningmachine.android.app.ui.LMFragment;
 
 import javax.inject.Inject;
-
-import timber.log.Timber;
 
 public class AddIssuerFragment extends LMFragment {
 
@@ -69,7 +66,10 @@ public class AddIssuerFragment extends LMFragment {
         mIssuerManager.addIssuer(introUrl, bitcoinAddress, nonce)
                 .doOnSubscribe(() -> displayProgressDialog(R.string.fragment_add_issuer_adding_issuer_progress_dialog_message))
                 .compose(bindToMainThread())
-                .subscribe(this::issuerAdded, throwable -> {
+                .subscribe(aVoid -> {
+                    hideProgressDialog();
+                    getActivity().finish();
+                }, throwable -> {
                     hideProgressDialog();
                     displayErrors(throwable, R.string.error_title_message);
                 });
@@ -85,18 +85,11 @@ public class AddIssuerFragment extends LMFragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()) {
             case R.id.fragment_add_issuer_verify:
                 startIssuerIntroduction();
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void issuerAdded(IssuerResponse issuerResponse) {
-        hideProgressDialog();
-        // TODO: persist issuer
-        // TODO: display success - go back to issuers list
     }
 }
