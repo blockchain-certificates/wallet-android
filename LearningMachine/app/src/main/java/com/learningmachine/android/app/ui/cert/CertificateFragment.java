@@ -4,6 +4,9 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -43,5 +46,24 @@ public class CertificateFragment extends LMFragment {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_certificate, container, false);
 
         return mBinding.getRoot();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.fragment_certificate, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.fragment_certificate_verify_menu_item:
+                return true;
+            case R.id.fragment_certificate_share_menu_item:
+                return true;
+            case R.id.fragment_certificate_info_menu_item:
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
