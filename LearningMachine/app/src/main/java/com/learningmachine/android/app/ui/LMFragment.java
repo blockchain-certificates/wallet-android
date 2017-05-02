@@ -9,7 +9,9 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 
 import com.learningmachine.android.app.util.DialogUtils;
+
 import android.support.design.widget.Snackbar;
+
 import com.trello.rxlifecycle.LifecycleProvider;
 import com.trello.rxlifecycle.LifecycleTransformer;
 import com.trello.rxlifecycle.RxLifecycle;
@@ -126,10 +128,11 @@ public class LMFragment extends Fragment implements LifecycleProvider<FragmentEv
     protected void hideProgressDialog() {
         DialogUtils.hideProgressDialog(getFragmentManager());
     }
+
     // Snackbars
 
     protected void showSnackbar(View view, int messageResId) {
-        Snackbar.make(view, messageResId, Snackbar.LENGTH_LONG).show();
-
+        Snackbar.make(view, messageResId, Snackbar.LENGTH_LONG)
+                .show();
     }
 }
