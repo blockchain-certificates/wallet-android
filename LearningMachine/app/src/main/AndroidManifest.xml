@@ -34,7 +34,8 @@
             android:name=".ui.issuer.AddIssuerActivity"
             android:label="@string/fragment_add_issuer_title"/>
 
-        <activity android:name=".ui.LMWebActivity"/>
+        <activity
+            android:name=".ui.LMWebActivity"/>
 
         <activity
             android:name=".ui.settings.passphrase.RevealPassphraseActivity"
@@ -50,7 +51,9 @@
             android:name=".ui.cert.CertificateActivity"
             android:parentActivityName=".ui.issuer.IssuerActivity"/>
 
-        <activity android:name=".ui.issuer.IssuerInfoActivity"/>
+        <activity
+            android:name=".ui.issuer.IssuerInfoActivity"/>
+
     </application>
 
 </manifest>

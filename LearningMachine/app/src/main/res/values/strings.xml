@@ -25,7 +25,7 @@
     <string name="fragment_add_issuer_identity_text">Add information to identify yourself to the Issuer.</string>
     <string name="fragment_add_issuer_add_identity">One-time Code</string>
     <string name="fragment_add_issuer_invalid_issuer_error">This doesn’t appear to be a valid Issuer. Please check the URL and try again.</string>
-    <string name="fragment_add_issuer_bad_url_error">Invalid url was enter for the issuer URL.</string>
+    <string name="fragment_add_issuer_bad_url_error">Invalid url was entered for the issuer URL.</string>
     <string name="fragment_add_issuer_bad_identity_info_error">Bad info for the identity.</string>
     <string name="fragment_add_issuer_adding_issuer_progress_dialog_message">Adding Issuer…</string>
 
@@ -50,7 +50,8 @@
     <string name="about_passphrases_endpoint">http://www.learningmachine.com/about-passphrases/</string>
 
     <!-- Issuer Info Fragment -->
-    <string name="issuer_info">Info</string>
+
+    <string name="issuer_info_menu_item_title">Info</string>
     <string name="fragment_issuer_info_additional_information">Additional Information</string>
     <string name="fragment_issuer_info_introduced_on">Introduced on</string>
     <string name="fragment_issuer_info_shared_address">Shared Address</string>
@@ -58,7 +59,15 @@
     <string name="fragment_issuer_info_email">Email</string>
     <string name="fragment_issuer_info_description">Description</string>
 
-    <!--Dialog Error Messages-->
+    <!-- Certificate Fragment -->
+
+    <string name="fragment_certificate_title">\u00A0</string>
+    <string name="certificate_verify_menu_item_title">Verify</string>
+    <string name="certificate_share_menu_item_title">Share</string>
+    <string name="certificate_info_menu_item_title">Info</string>
+
+    <!-- Dialog Error Messages -->
+
     <string name="connection_error_message">Connection unavailable. Please check your connection and try again.</string>
     <string name="unknown_error_message">Unknown error. Something unexepected occurred.</string>
     <string name="error_title_message">Error</string>

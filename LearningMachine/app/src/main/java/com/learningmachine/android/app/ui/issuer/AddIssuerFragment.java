@@ -16,15 +16,10 @@ import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.IssuerManager;
 import com.learningmachine.android.app.data.bitcoin.BitcoinManager;
 import com.learningmachine.android.app.data.inject.Injector;
-import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 import com.learningmachine.android.app.databinding.FragmentAddIssuerBinding;
 import com.learningmachine.android.app.ui.LMFragment;
 
 import javax.inject.Inject;
-
-import rx.Subscription;
-import rx.functions.Action1;
-import timber.log.Timber;
 
 public class AddIssuerFragment extends LMFragment {
 
@@ -69,8 +64,15 @@ public class AddIssuerFragment extends LMFragment {
                 .toString();
 
         mIssuerManager.addIssuer(introUrl, bitcoinAddress, nonce)
+                .doOnSubscribe(() -> displayProgressDialog(R.string.fragment_add_issuer_adding_issuer_progress_dialog_message))
                 .compose(bindToMainThread())
-                .subscribe(aVoid -> getActivity().finish(), throwable -> Timber.e(throwable, "Failed to add issuer"));
+                .subscribe(aVoid -> {
+                    hideProgressDialog();
+                    getActivity().finish();
+                }, throwable -> {
+                    hideProgressDialog();
+                    displayErrors(throwable, R.string.error_title_message);
+                });
     }
 
     private TextView.OnEditorActionListener mActionListener = (v, actionId, event) -> {
