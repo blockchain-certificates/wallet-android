@@ -62,10 +62,11 @@ public class AddIssuerFragment extends LMFragment {
     private void startIssuerIntroduction() {
         String introUrl = mBinding.addIssuerUrlEditText.getText()
                 .toString();
+        String bitcoinAddress = mBitcoinManager.getBitcoinAddress();
         String nonce = mBinding.addIssuerIdentityEditText.getText()
                 .toString();
 
-        mIssuerManager.addIssuer(introUrl, "", nonce)
+        mIssuerManager.addIssuer(introUrl, bitcoinAddress, nonce)
                 .compose(bindToMainThread())
                 .subscribe(this::issuerAdded, throwable -> Timber.e(throwable, "Failed to add issuer"));
 
