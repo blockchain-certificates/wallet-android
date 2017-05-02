@@ -2,8 +2,11 @@ package com.learningmachine.android.app.ui.cert;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 
+import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.model.Certificate;
 import com.learningmachine.android.app.ui.LMSingleFragmentActivity;
 
@@ -24,12 +27,18 @@ public class CertificateActivity extends LMSingleFragmentActivity {
     }
 
     @Override
-    public String getActionBarTitle() {
-        Certificate certificate = (Certificate) getIntent().getSerializableExtra(EXTRA_CERTIFICATE);
-        if (certificate == null) {
-            return null;
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_close_white_24dp);
         }
-        return certificate.getName();
+    }
+
+    @Override
+    public String getActionBarTitle() {
+        return getString(R.string.fragment_certificate_title);
     }
 
     @Override
