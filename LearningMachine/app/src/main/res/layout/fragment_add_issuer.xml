@@ -58,6 +58,8 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/fragment_add_issuer_add_identity"
                 android:imeOptions="flagNoFullscreen|actionDone"
+                android:imeActionLabel="@string/ime_action_done"
+                android:imeActionId="@integer/action_done"
                 android:inputType="text"
                 android:maxLines="1"
                 android:paddingRight="@dimen/fragment_add_isser_edittext_padding_right"

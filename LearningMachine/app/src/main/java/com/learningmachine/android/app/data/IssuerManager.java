@@ -9,6 +9,7 @@ import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 import java.util.List;
 
 import rx.Observable;
+import rx.functions.Func1;
 
 public class IssuerManager {
 
@@ -25,11 +26,19 @@ public class IssuerManager {
         return Observable.just(mIssuerStore.loadIssuers());
     }
 
-    public Observable<IssuerResponse> addIssuer(String url, String bitcoinAddress, String nonce) {
-        IssuerIntroductionRequest request = new IssuerIntroductionRequest("", nonce);
+    public Observable<Void> addIssuer(String url, String bitcoinAddress, String nonce) {
+        IssuerIntroductionRequest request = new IssuerIntroductionRequest(bitcoinAddress, nonce);
         return mIssuerService.getIssuer(url)
                 .flatMap(issuer -> Observable.combineLatest(Observable.just(issuer),
                         mIssuerService.postIntroduction(issuer.getIntroUrl(), request),
-                        (issuer1, aVoid) -> issuer1));
+                        (issuer1, aVoid) -> issuer1))
+                .map(issuerResponse -> {
+                    mIssuerStore.saveIssuerResponse(issuerResponse);
+                    return null;
+                });
+    }
+
+    public void purgeIssuers() {
+        mIssuerStore.reset();
     }
 }

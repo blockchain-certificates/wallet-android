@@ -29,18 +29,23 @@
         <activity
             android:name=".ui.issuer.AddIssuerActivity"
             android:label="@string/fragment_add_issuer_title"/>
+
         <activity android:name=".ui.LMWebActivity"/>
+
         <activity
             android:name=".ui.settings.passphrase.RevealPassphraseActivity"
             android:label="@string/reveal_passphrase_title"
             android:parentActivityName=".ui.settings.SettingsActivity"/>
+
         <activity
             android:name=".ui.settings.passphrase.ReplacePassphraseActivity"
             android:label="@string/replace_passphrase_title"
             android:parentActivityName=".ui.settings.SettingsActivity"/>
+
         <activity
             android:name=".ui.cert.CertificateActivity"
             android:parentActivityName=".ui.issuer.IssuerActivity"/>
+
         <activity android:name=".ui.issuer.IssuerInfoActivity"/>
 
         <activity
@@ -48,6 +53,7 @@
             android:label="@string/fragment_add_certificate_title"
             android:theme="@style/noToolbarTheme"
             android:parentActivityName=".ui.cert.CertificateActivity"/>
+
     </application>
 
 </manifest>

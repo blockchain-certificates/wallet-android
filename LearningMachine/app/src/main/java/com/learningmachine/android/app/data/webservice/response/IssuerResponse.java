@@ -3,8 +3,6 @@ package com.learningmachine.android.app.data.webservice.response;
 import com.google.gson.annotations.SerializedName;
 import com.learningmachine.android.app.data.model.Issuer;
 
-import java.util.List;
-
 public class IssuerResponse extends Issuer {
 
     @SerializedName("image")

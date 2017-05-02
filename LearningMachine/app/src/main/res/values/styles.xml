@@ -31,6 +31,9 @@
         <item name="android:fontFamily">sans-serif-medium</item>
     </style>
 
+    <style name="LearningMachineDialog" parent="AlertDialog.AppCompat">
+    </style>
+
     <!-- Spec -->
 
     <style name="Material.Title" parent="LearningMachineTextView.Medium">

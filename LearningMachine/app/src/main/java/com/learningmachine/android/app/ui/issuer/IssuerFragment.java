@@ -75,7 +75,7 @@ public class IssuerFragment extends LMFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
-            case R.id.certificate_info_icon:
+            case R.id.fragment_issuer_info_menu_item:
                 Intent intent = IssuerInfoActivity.newIntent(getContext(), mIssuer);
                 startActivity(intent);
                 return true;

@@ -43,18 +43,18 @@ public class IssuerStoreTest {
         AssetManager assetManager = mock(AssetManager.class);
         when(context.getAssets()).thenReturn(assetManager);
         when(assetManager.open(any())).thenReturn(getClass().getClassLoader()
-                .getResourceAsStream("issuer-stark.json"));
+                .getResourceAsStream("sample-issuer.json"));
 
         mIssuerStore = new IssuerStore(context, database, imageStore);
     }
 
     @Test
     public void testIssuer_save_andLoad() throws Exception {
-        String uuid = "https://issuer.stark.com/issuer/lm-issuer.json";
-        String certsUrl = "https://issuer.stark.com/";
-        String introUrl = "https://issuer.stark.com/intro/";
-        String name = "House Stark";
-        String email = "contact@stark.com";
+        String uuid = "https://www.learningmachine.com/sample-issuer/issuer.json";
+        String certsUrl = "https://www.learningmachine.com/sample-issuer";
+        String introUrl = "https://www.learningmachine.com/sample-issuer/intro/";
+        String name = "Sample Issuer";
+        String email = "sample-certificate@learningmachine.com";
 
         Issuer issuer = mIssuerStore.loadIssuer(uuid);
 

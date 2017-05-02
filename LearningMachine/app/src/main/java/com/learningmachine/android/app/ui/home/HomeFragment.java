@@ -60,16 +60,21 @@ public class HomeFragment extends LMFragment {
 
         setupRecyclerView();
 
-        mIssuerManager.getIssuers()
-                .compose(bindToMainThread())
-                .subscribe(this::updateRecyclerView, throwable -> Timber.e(throwable, "Unable to load issuers"));
-
         mBinding.issuerFloatingActionButton.setOnClickListener(v -> {
             Intent intent = AddIssuerActivity.newIntent(getContext());
             startActivity(intent);
         });
 
         return mBinding.getRoot();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        mIssuerManager.getIssuers()
+                .compose(bindToMainThread())
+                .subscribe(this::updateRecyclerView, throwable -> Timber.e(throwable, "Unable to load issuers"));
     }
 
     @Override
