@@ -9,13 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.learningmachine.android.app.R;
-import com.learningmachine.android.app.databinding.FragmentAddCertificateByFileBinding;
+import com.learningmachine.android.app.databinding.FragmentAddCertificateFileBinding;
 import com.learningmachine.android.app.ui.LMFragment;
 
 
 public class AddCertificateFileFragment extends LMFragment {
 
-    private FragmentAddCertificateByFileBinding mBinding;
+    private FragmentAddCertificateFileBinding mBinding;
 
     public static AddCertificateFileFragment newInstance() {
         return new AddCertificateFileFragment();

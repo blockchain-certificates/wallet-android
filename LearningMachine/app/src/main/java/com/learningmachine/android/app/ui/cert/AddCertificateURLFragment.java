@@ -9,13 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.learningmachine.android.app.R;
-import com.learningmachine.android.app.databinding.FragmentAddCertificateByUrlBinding;
+import com.learningmachine.android.app.databinding.FragmentAddCertificateUrlBinding;
 import com.learningmachine.android.app.ui.LMFragment;
 
 
 public class AddCertificateURLFragment extends LMFragment {
 
-    private FragmentAddCertificateByUrlBinding mBinding;
+    private FragmentAddCertificateUrlBinding mBinding;
 
     public static AddCertificateURLFragment newInstance() {
         return new AddCertificateURLFragment();
