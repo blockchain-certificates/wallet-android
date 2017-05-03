@@ -7,6 +7,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import okhttp3.logging.HttpLoggingInterceptor;
 import timber.log.Timber;
 import timber.log.Timber.DebugTree;
 
@@ -23,5 +24,10 @@ public class DevDataModule {
     @Singleton
     NetworkParameters providesBitcoinNetworkParameters() {
         return TestNet3Params.get();
+    }
+
+    @Provides
+    HttpLoggingInterceptor.Level providesLogLevel() {
+        return HttpLoggingInterceptor.Level.BODY;
     }
 }
