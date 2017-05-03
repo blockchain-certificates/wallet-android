@@ -21,14 +21,14 @@ public class BitcoinManagerTest {
     public void walletShouldBeSaved_andLoaded() {
         Context context = InstrumentationRegistry.getTargetContext();
         TestNet3Params networkParameters = TestNet3Params.get();
-        BitcoinManager bitcoinManager = new BitcoinManager(context, networkParameters);
+        BitcoinManager bitcoinManager = new BitcoinManager(context, networkParameters, null);
 
         assertTrue(bitcoinManager.getWalletFile()
                 .exists());
 
         String firstPassphrase = bitcoinManager.getPassphrase();
 
-        bitcoinManager = new BitcoinManager(context, networkParameters);
+        bitcoinManager = new BitcoinManager(context, networkParameters, null);
 
         assertTrue(bitcoinManager.getWalletFile()
                 .exists());
