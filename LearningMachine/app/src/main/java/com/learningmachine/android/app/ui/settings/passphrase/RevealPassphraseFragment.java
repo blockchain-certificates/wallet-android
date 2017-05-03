@@ -22,6 +22,7 @@ import javax.inject.Inject;
 public class RevealPassphraseFragment extends LMFragment {
 
     @Inject BitcoinManager mBitcoinManager;
+    private FragmentRevealPassphraseBinding mBinding;
 
     public static Fragment newInstance() {
         return new RevealPassphraseFragment();
@@ -37,24 +38,35 @@ public class RevealPassphraseFragment extends LMFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        FragmentRevealPassphraseBinding binding = DataBindingUtil.inflate(inflater,
+        mBinding = DataBindingUtil.inflate(inflater,
                 R.layout.fragment_reveal_passphrase,
                 container,
                 false);
 
         mBitcoinManager.getPassphrase()
                 .compose(bindToMainThread())
-                .subscribe(currentPassphrase -> {
-                    binding.currentPassphraseTextView.setText(currentPassphrase);
-                    binding.currentPassphraseTextView.setOnLongClickListener(v -> {
-                        ClipboardManager clipboardManager = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
-                        ClipData clipData = ClipData.newPlainText("text", currentPassphrase);
-                        clipboardManager.setPrimaryClip(clipData);
-                        showSnackbar(binding.getRoot(), R.string.reveal_passphrase_text_copied);
-                        return true;
-                    });
-                });
+                .subscribe(this::configureCurrentPassphraseTextView);
 
-        return binding.getRoot();
+        return mBinding.getRoot();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mBinding = null;
+    }
+
+    private void configureCurrentPassphraseTextView(String currentPassphrase) {
+        if (mBinding == null) {
+            return;
+        }
+        mBinding.currentPassphraseTextView.setText(currentPassphrase);
+        mBinding.currentPassphraseTextView.setOnLongClickListener(v -> {
+            ClipboardManager clipboardManager = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clipData = ClipData.newPlainText("text", currentPassphrase);
+            clipboardManager.setPrimaryClip(clipData);
+            showSnackbar(mBinding.getRoot(), R.string.reveal_passphrase_text_copied);
+            return true;
+        });
     }
 }
