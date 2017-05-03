@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.List;
 
+import rx.Observable;
 import timber.log.Timber;
 
 import static com.learningmachine.android.app.util.BitcoinUtils.generateMnemonic;
@@ -41,20 +42,19 @@ public class BitcoinManager {
         mContext = context;
         mNetworkParameters = networkParameters;
         mIssuerManager = issuerManager;
-        setup();
     }
 
-    private void setup() {
-        boolean walletLoaded = false;
-        if (getWalletFile().exists()) {
-            Timber.d("Wallet exists, attempting to load");
-            walletLoaded = loadWallet();
-        }
-
-        if (!walletLoaded) {
-            Timber.d("Wallet not loaded, creating a new one");
-            createWallet();
-        }
+    private Observable<Wallet> getWallet() {
+        return Observable.defer(() -> {
+            if (mWallet != null) {
+                return Observable.just(mWallet);
+            }
+            if (getWalletFile().exists()) {
+                return loadWallet();
+            } else {
+                return createWallet();
+            }
+        });
     }
 
     @VisibleForTesting
@@ -62,94 +62,89 @@ public class BitcoinManager {
         return new File(mContext.getFilesDir(), LMConstants.WALLET_FILE);
     }
 
-    private void createWallet() {
+    private Observable<Wallet> createWallet() {
         SecureRandom random = new SecureRandom();
         byte[] seedData = random.generateSeed(LMConstants.WALLET_SEED_BYTE_SIZE);
         List<String> mnemonic = generateMnemonic(mContext, seedData);
         if (ListUtils.isEmpty(mnemonic)) {
             Timber.e("No mnemonic, wallet creation failure");
-            return;
+            return Observable.error(new Exception("Mnemonic cannot be empty"));
         }
 
         buildWallet(mnemonic, seedData);
+        return Observable.just(mWallet);
     }
 
-    private void buildWallet(List<String> mnemonic, byte[] seedData) {
+    private Observable<Wallet> buildWallet(List<String> mnemonic, byte[] seedData) {
         DeterministicSeed deterministicSeed = new DeterministicSeed(mnemonic,
                 seedData,
                 LMConstants.WALLET_PASSPHRASE,
                 LMConstants.WALLET_CREATION_TIME_SECONDS);
         KeyChainGroup keyChainGroup = new KeyChainGroup(mNetworkParameters, deterministicSeed);
         mWallet = new Wallet(mNetworkParameters, keyChainGroup);
-        saveWallet();
+        return saveWallet();
     }
 
     /**
      * @return true if wallet was loaded successfully
      */
-    private boolean loadWallet() {
+    private Observable<Wallet> loadWallet() {
         try (FileInputStream walletStream = new FileInputStream(getWalletFile())) {
             WalletExtension[] extensions = {};
             Protos.Wallet proto = WalletProtobufSerializer.parseToProto(walletStream);
             WalletProtobufSerializer serializer = new WalletProtobufSerializer();
             mWallet = serializer.readWallet(mNetworkParameters, extensions, proto);
             Timber.d("Wallet successfully loaded");
-            return true;
+            return Observable.just(mWallet);
         } catch (UnreadableWalletException e) {
             Timber.e(e, "Wallet is corrupted");
+            return Observable.error(e);
         } catch (FileNotFoundException e) {
             Timber.e(e, "Wallet file not found");
+            return Observable.error(e);
         } catch (IOException e) {
             Timber.e(e, "Wallet unable to be parsed");
+            return Observable.error(e);
         }
-
-        Timber.e("Wallet not loaded, something went wrong");
-        return false;
     }
 
     /**
      * @return true if wallet was saved successfully
      */
-    private boolean saveWallet() {
+    private Observable<Wallet> saveWallet() {
         if (mWallet == null) {
-            Timber.e(new Exception(), "Wallet doesn't exit");
-            return false;
+            Exception e = new Exception("Wallet doesn't exist");
+            Timber.e(e, "Wallet doesn't exist");
+            return Observable.error(e);
         }
         try {
             mWallet.saveToFile(getWalletFile());
             Timber.d("Wallet successfully saved");
-            return true;
+            return Observable.just(mWallet);
         } catch (IOException e) {
             Timber.e(e, "Unable to save Wallet");
+            return Observable.error(e);
         }
-
-        return false;
     }
 
-    public String getPassphrase() {
-        if (mWallet == null) {
-            return null;
-        }
-        DeterministicSeed seed = mWallet.getKeyChainSeed();
-        List<String> mnemonicCode = seed.getMnemonicCode();
-        return StringUtils.join(PASSPHRASE_DELIMETER, mnemonicCode);
+    public Observable<String> getPassphrase() {
+        return getWallet().map(wallet -> {
+            DeterministicSeed seed = mWallet.getKeyChainSeed();
+            List<String> mnemonicCode = seed.getMnemonicCode();
+            return StringUtils.join(PASSPHRASE_DELIMETER, mnemonicCode);
+        });
     }
 
-    public void setPassphrase(String newPassphrase) {
+    public Observable<Wallet> setPassphrase(String newPassphrase) {
         if (StringUtils.isEmpty(newPassphrase)) {
-            return;
+            return Observable.error(new Exception("Passphrase cannot be empty"));
         }
         List<String> newPassphraseList = StringUtils.split(newPassphrase, PASSPHRASE_DELIMETER);
-        buildWallet(newPassphraseList, null);
         mIssuerManager.purgeIssuers();
+        return buildWallet(newPassphraseList, null);
     }
 
-    public String getBitcoinAddress() {
-        if (mWallet == null) {
-            return null;
-        }
-
-        return mWallet.currentReceiveAddress()
-                .toString();
+    public Observable<String> getBitcoinAddress() {
+        return getWallet().map(wallet -> wallet.currentReceiveAddress().toString());
     }
 }

@@ -65,7 +65,8 @@ public class ReplacePassphraseFragment extends LMFragment {
     private void replacePassphrase() {
         String passphrase = mBinding.replacePassphraseEditText.getText()
                 .toString();
-        mBitcoinManager.setPassphrase(passphrase);
-        showSnackbar(mBinding.getRoot(), R.string.replace_passphrase_success_message);
+        mBitcoinManager.setPassphrase(passphrase)
+                .compose(bindToMainThread())
+                .subscribe(wallet -> showSnackbar(mBinding.getRoot(), R.string.replace_passphrase_success_message));
     }
 }
