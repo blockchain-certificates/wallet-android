@@ -34,12 +34,13 @@ public class BitcoinManager {
 
     private final Context mContext;
     private final NetworkParameters mNetworkParameters;
-    private IssuerManager mIssuerManager;
+    private final IssuerManager mIssuerManager;
     private Wallet mWallet;
 
     public BitcoinManager(Context context, NetworkParameters networkParameters, IssuerManager issuerManager) {
         mContext = context;
         mNetworkParameters = networkParameters;
+        mIssuerManager = issuerManager;
         setup();
     }
 
