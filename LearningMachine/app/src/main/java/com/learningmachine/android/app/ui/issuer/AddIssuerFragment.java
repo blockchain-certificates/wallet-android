@@ -64,8 +64,8 @@ public class AddIssuerFragment extends LMFragment {
 
         mBitcoinManager.getBitcoinAddress()
                 .doOnSubscribe(() -> displayProgressDialog(R.string.fragment_add_issuer_adding_issuer_progress_dialog_message))
-                .compose(bindToMainThread())
                 .flatMap(bitcoinAddress -> mIssuerManager.addIssuer(introUrl, bitcoinAddress, nonce))
+                .compose(bindToMainThread())
                 .subscribe(aVoid -> {
                     hideProgressDialog();
                     getActivity().finish();

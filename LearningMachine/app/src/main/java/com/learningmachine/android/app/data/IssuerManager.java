@@ -4,12 +4,10 @@ import com.learningmachine.android.app.data.model.Issuer;
 import com.learningmachine.android.app.data.store.IssuerStore;
 import com.learningmachine.android.app.data.webservice.IssuerService;
 import com.learningmachine.android.app.data.webservice.request.IssuerIntroductionRequest;
-import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 
 import java.util.List;
 
 import rx.Observable;
-import rx.functions.Func1;
 
 public class IssuerManager {
 
