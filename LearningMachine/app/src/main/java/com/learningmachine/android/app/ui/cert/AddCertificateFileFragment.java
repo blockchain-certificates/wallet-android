@@ -13,12 +13,12 @@ import com.learningmachine.android.app.databinding.FragmentAddCertificateByFileB
 import com.learningmachine.android.app.ui.LMFragment;
 
 
-public class CertificateFileFragment extends LMFragment {
+public class AddCertificateFileFragment extends LMFragment {
 
     private FragmentAddCertificateByFileBinding mBinding;
 
-    public CertificateFileFragment() {
-
+    public static AddCertificateFileFragment newInstance() {
+        return new AddCertificateFileFragment();
     }
 
     @Override
@@ -30,7 +30,7 @@ public class CertificateFileFragment extends LMFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_certificate_by_file, container, false);
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_certificate_file, container, false);
 
         return mBinding.getRoot();
     }

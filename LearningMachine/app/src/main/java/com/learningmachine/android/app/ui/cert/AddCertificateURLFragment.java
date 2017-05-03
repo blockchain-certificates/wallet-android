@@ -13,12 +13,12 @@ import com.learningmachine.android.app.databinding.FragmentAddCertificateByUrlBi
 import com.learningmachine.android.app.ui.LMFragment;
 
 
-public class CertificateURLFragment extends LMFragment {
+public class AddCertificateURLFragment extends LMFragment {
 
     private FragmentAddCertificateByUrlBinding mBinding;
 
-    public CertificateURLFragment() {
-
+    public static AddCertificateURLFragment newInstance() {
+        return new AddCertificateURLFragment();
     }
 
     @Override
@@ -30,7 +30,7 @@ public class CertificateURLFragment extends LMFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_certificate_by_url, container, false);
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_certificate_url, container, false);
 
         return mBinding.getRoot();
     }

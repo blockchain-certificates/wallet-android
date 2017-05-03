@@ -20,12 +20,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class CertificatePagerActivity extends LMActivity {
+public class AddCertificatePagerActivity extends LMActivity {
 
     private ActivityAddCertificateBinding mBinding;
 
     public static Intent newIntent(Context context) {
-        return new Intent(context, CertificatePagerActivity.class);
+        return new Intent(context, AddCertificatePagerActivity.class);
     }
 
     @Override
@@ -43,7 +43,7 @@ public class CertificatePagerActivity extends LMActivity {
         certificateTypes.add(CertificateType.URL);
         certificateTypes.add(CertificateType.FILE);
 
-        CertificateViewPagerAdapter adapter = new CertificateViewPagerAdapter(this, getSupportFragmentManager(), certificateTypes);
+        AddCertificateViewPagerAdapter adapter = new AddCertificateViewPagerAdapter(this, getSupportFragmentManager(), certificateTypes);
         viewPager.setAdapter(adapter);
     }
 
@@ -72,13 +72,23 @@ public class CertificatePagerActivity extends LMActivity {
         public int getTitleResId() {
             return mTitleResId;
         }
+
+        public Fragment createFragment() {
+            switch (this) {
+                case URL:
+                    return new AddCertificateURLFragment();
+                case FILE:
+                    return new AddCertificateFileFragment();
+            }
+            return null;
+        }
     }
 
-    private class CertificateViewPagerAdapter extends FragmentStatePagerAdapter {
+    private class AddCertificateViewPagerAdapter extends FragmentStatePagerAdapter {
         private List<CertificateType> mCertificateTypes;
         private Context mContext;
 
-        public CertificateViewPagerAdapter(Context context, FragmentManager manager, List<CertificateType> certificateTypes) {
+        public AddCertificateViewPagerAdapter(Context context, FragmentManager manager, List<CertificateType> certificateTypes) {
             super(manager);
             mContext = context;
             mCertificateTypes = certificateTypes;
@@ -87,13 +97,7 @@ public class CertificatePagerActivity extends LMActivity {
         @Override
         public Fragment getItem(int position) {
             CertificateType certificateType = mCertificateTypes.get(position);
-            switch (certificateType) {
-                case URL:
-                    return new CertificateURLFragment();
-                case FILE:
-                    return new CertificateFileFragment();
-            }
-            return null;
+            return certificateType.createFragment();
         }
 
         @Override
