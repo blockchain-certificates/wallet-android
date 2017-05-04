@@ -1,0 +1,20 @@
+{
+  "name": "www",
+  "homepage": "https://github.com/bignerdranch/learning-machine-android",
+  "authors": [
+    "andrew@bignerdranch.com"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.9.1"
+  }
+}
