@@ -103,7 +103,7 @@ public class CertificateStore implements DataStore {
      * @param uuid document.assertion.uid from the Certificate's json
      * @return filepath for the certificates json
      */
-    public String getCertificateJsonFile(String uuid) {
+    public String getCertificateJsonFileUrl(String uuid) {
         return "file:///android_asset/sample-certificate.json";
     }
 

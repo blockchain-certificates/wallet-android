@@ -28,8 +28,6 @@ public class CertificateFragment extends LMFragment {
 
     private static final String ARG_CERTIFICATE = "CertificateFragment.Certificate";
     private static final String INDEX_FILE_PATH = "file:///android_asset/www/index.html";
-    private static final String JS_OPEN = "javascript:(function() { document.getElementsByTagName('blockchain-certificate')[0].href='";
-    private static final String JS_CLOSE = "';})()";
 
     @Inject protected CertificateStore mCertificateStore;
 
@@ -115,8 +113,11 @@ public class CertificateFragment extends LMFragment {
         @Override
         public void onPageFinished(WebView view, String url) {
             // uuid is currently wrong, but will be fixed when certs are actually added & saved
-            String certFilePath = mCertificateStore.getCertificateJsonFile(mCertificate.getUuid());
-            String javascript =  JS_OPEN + certFilePath + JS_CLOSE;
+            String certFilePath = mCertificateStore.getCertificateJsonFileUrl(mCertificate.getUuid());
+
+            String javascript = String.format(
+                    "javascript:(function() { document.getElementsByTagName('blockchain-certificate')[0].href='%1$s';})()",
+                    certFilePath);
             mBinding.webView.loadUrl(javascript);
         }
     }
