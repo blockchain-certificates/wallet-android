@@ -10,7 +10,10 @@ import org.bitcoinj.params.TestNet3Params;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static org.hamcrest.Matchers.isEmptyOrNullString;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 @LargeTest
@@ -21,21 +24,23 @@ public class BitcoinManagerTest {
     public void walletShouldBeSaved_andLoaded() {
         Context context = InstrumentationRegistry.getTargetContext();
         TestNet3Params networkParameters = TestNet3Params.get();
-        BitcoinManager bitcoinManager = new BitcoinManager(context, networkParameters, null);
 
-        assertTrue(bitcoinManager.getWalletFile()
-                .exists());
+        StringHolder stringHolder = new StringHolder();
+        BitcoinManager firstBitcoinManager = new BitcoinManager(context, networkParameters, null);
+        firstBitcoinManager.getPassphrase().subscribe(firstPassphrase -> {
+            assertTrue(firstBitcoinManager.getWalletFile().exists());
+            assertThat(firstPassphrase, not(isEmptyOrNullString()));
+            stringHolder.string = firstPassphrase;
+        });
 
-        String firstPassphrase = bitcoinManager.getPassphrase();
-
-        bitcoinManager = new BitcoinManager(context, networkParameters, null);
-
-        assertTrue(bitcoinManager.getWalletFile()
-                .exists());
-
-        String secondPassphrase = bitcoinManager.getPassphrase();
-
-        assertEquals(firstPassphrase, secondPassphrase);
+        BitcoinManager secondBitcoinManager = new BitcoinManager(context, networkParameters, null);
+        secondBitcoinManager.getPassphrase().subscribe(secondPassphrase -> {
+            assertTrue(secondBitcoinManager.getWalletFile().exists());
+            assertEquals(stringHolder.string, secondPassphrase);
+        });
     }
 
+    static class StringHolder {
+        String string;
+    }
 }
