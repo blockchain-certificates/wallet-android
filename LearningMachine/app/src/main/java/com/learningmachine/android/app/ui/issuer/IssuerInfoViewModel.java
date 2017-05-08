@@ -8,23 +8,26 @@ import com.learningmachine.android.app.data.model.Issuer;
 public class IssuerInfoViewModel extends BaseObservable {
 
     private Issuer mIssuer;
-    private String mIntroDate;
-    private String mSharedAddress;
 
-    public IssuerInfoViewModel(Issuer issuer, String introDate, String sharedAddress) {
+    public IssuerInfoViewModel(Issuer issuer) {
         mIssuer = issuer;
-        mIntroDate = introDate;
-        mSharedAddress = sharedAddress;
+
     }
 
     @Bindable
     public String getDate() {
-        return mIntroDate;
+        if (mIssuer == null) {
+            return null;
+        }
+        return mIssuer.getPublicKey().getCreatedDate();
     }
 
     @Bindable
     public String getSharedAddress() {
-        return mSharedAddress;
+        if (mIssuer == null) {
+            return null;
+        }
+        return mIssuer.getPublicKey().getKey();
     }
 
     @Bindable
