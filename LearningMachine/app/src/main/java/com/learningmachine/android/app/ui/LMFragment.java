@@ -5,12 +5,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
 import com.learningmachine.android.app.util.DialogUtils;
-
-import android.support.design.widget.Snackbar;
 
 import com.trello.rxlifecycle.LifecycleProvider;
 import com.trello.rxlifecycle.LifecycleTransformer;
@@ -20,6 +19,7 @@ import com.trello.rxlifecycle.android.RxLifecycleAndroid;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import rx.subjects.BehaviorSubject;
 
 public class LMFragment extends Fragment implements LifecycleProvider<FragmentEvent> {
@@ -111,6 +111,7 @@ public class LMFragment extends Fragment implements LifecycleProvider<FragmentEv
 
         if (mMainThreadTransformer == null) {
             mMainThreadTransformer = (Observable.Transformer<T, T>) observable -> observable.observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
                     .compose(bindUntilEvent(FragmentEvent.DESTROY));
         }
 

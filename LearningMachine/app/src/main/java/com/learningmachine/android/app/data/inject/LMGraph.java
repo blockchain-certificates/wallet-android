@@ -1,6 +1,7 @@
 package com.learningmachine.android.app.data.inject;
 
 import com.learningmachine.android.app.LMApplication;
+import com.learningmachine.android.app.ui.cert.CertificateFragment;
 import com.learningmachine.android.app.ui.home.HomeFragment;
 import com.learningmachine.android.app.ui.issuer.AddIssuerFragment;
 import com.learningmachine.android.app.ui.settings.passphrase.ReplacePassphraseFragment;
@@ -14,4 +15,5 @@ public interface LMGraph {
     void inject(RevealPassphraseFragment fragment);
     void inject(ReplacePassphraseFragment fragment);
     void inject(AddIssuerFragment fragment);
+    void inject(CertificateFragment fragment);
 }

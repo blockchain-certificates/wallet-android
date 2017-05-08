@@ -98,6 +98,15 @@ public class CertificateStore implements DataStore {
         }
     }
 
+    /**
+     * Currently returns a static filepath until saving of certificates is implemented
+     * @param uuid document.assertion.uid from the Certificate's json
+     * @return filepath for the certificates json
+     */
+    public String getCertificateJsonFileUrl(String uuid) {
+        return "file:///android_asset/sample-certificate.json";
+    }
+
     @Override
     public void reset() {
         mDatabase.delete(LMDatabaseHelper.Table.CERTIFICATE, null, null);
