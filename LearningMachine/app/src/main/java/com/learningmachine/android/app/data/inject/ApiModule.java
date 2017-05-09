@@ -1,6 +1,7 @@
 package com.learningmachine.android.app.data.inject;
 
 import com.learningmachine.android.app.LMConstants;
+import com.learningmachine.android.app.data.webservice.CertificateService;
 import com.learningmachine.android.app.data.webservice.IssuerService;
 
 import javax.inject.Singleton;
@@ -47,5 +48,11 @@ public class ApiModule {
     @Provides
     IssuerService provideIssuerService(Retrofit retrofit) {
         return retrofit.create(IssuerService.class);
+    }
+
+    @Singleton
+    @Provides
+    CertificateService provideCertificateService(Retrofit retrofit) {
+        return retrofit.create(CertificateService.class);
     }
 }

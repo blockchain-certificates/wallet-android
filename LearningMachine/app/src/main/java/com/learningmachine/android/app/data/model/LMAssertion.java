@@ -15,4 +15,24 @@ public class LMAssertion {
     private String mType;
     @SerializedName("uid")
     private String mUid;
+
+    public String getIssuedOn() {
+        return mIssuedOn;
+    }
+
+    public String getId() {
+        return mId;
+    }
+
+    public List<ImageSignature> getImageSignatureList() {
+        return mImageSignatureList;
+    }
+
+    public String getType() {
+        return mType;
+    }
+
+    public String getUuid() {
+        return mUid;
+    }
 }

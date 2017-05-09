@@ -9,8 +9,6 @@ public class Certificate implements Serializable {
 
     @SerializedName("language")
     private String mLanguage;
-    @SerializedName("id")
-    private String mUuid;
     @SerializedName("name")
     private String mName;
     @SerializedName("subtitle")
@@ -21,6 +19,7 @@ public class Certificate implements Serializable {
     private String mDescription;
     @SerializedName("type")
     private String mType;
+    private String mUuid;
 
     private String mIssuerUuid;
 

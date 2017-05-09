@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.learningmachine.android.app.R;
+import com.learningmachine.android.app.data.CertificateManager;
 import com.learningmachine.android.app.data.IssuerManager;
 import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.data.model.Issuer;
@@ -31,11 +32,14 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import okhttp3.ResponseBody;
+import rx.functions.Action1;
 import timber.log.Timber;
 
 public class HomeFragment extends LMFragment {
 
     @Inject IssuerManager mIssuerManager;
+    @Inject CertificateManager mCertificateManager;
 
     private FragmentHomeBinding mBinding;
     private List<Issuer> mIssuerList;
@@ -59,6 +63,12 @@ public class HomeFragment extends LMFragment {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
 
         setupRecyclerView();
+
+        // TODO remove temp code
+        String url = "https://certificates.learningmachine.com/certificate/8dc46898e94e4596a311b0faaa42e4a3";
+        mCertificateManager.addCertificate(url)
+                .compose(bindToMainThread())
+                .subscribe(responseBody -> Timber.d("Cert downloaded"), throwable -> Timber.e("Unable to dl cert"));
 
         mBinding.issuerFloatingActionButton.setOnClickListener(v -> {
             Intent intent = AddIssuerActivity.newIntent(getContext());
@@ -114,7 +124,8 @@ public class HomeFragment extends LMFragment {
     private void updateRecyclerView(List<Issuer> issuerList) {
         mIssuerList.clear();
         mIssuerList.addAll(issuerList);
-        mBinding.issuerRecyclerview.getAdapter().notifyDataSetChanged();
+        mBinding.issuerRecyclerview.getAdapter()
+                .notifyDataSetChanged();
     }
 
     private class IssuerAdapter extends RecyclerView.Adapter<IssuerViewHolder> {
