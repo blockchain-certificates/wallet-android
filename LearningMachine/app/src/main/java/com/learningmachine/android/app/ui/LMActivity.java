@@ -34,6 +34,11 @@ public abstract class LMActivity extends AppCompatActivity implements LifecycleP
     protected void onStart() {
         super.onStart();
         mLifecycleSubject.onNext(ActivityEvent.START);
+        /*
+         Toolbar in CertificatePagerActivity isn't being created properly because of a timing issue in the onCreate of LMActivity.
+         CertificatePagerActivity is subclassing LMActivity and getSupportActionBar in setupActionBar is coming up null and not setting the proper toolbar
+         so moving it to onStart sets the proper toolbar.
+         */
         setupActionBar();
 
     }
