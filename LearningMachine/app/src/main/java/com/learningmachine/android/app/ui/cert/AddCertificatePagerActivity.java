@@ -76,9 +76,9 @@ public class AddCertificatePagerActivity extends LMActivity {
         public Fragment createFragment() {
             switch (this) {
                 case URL:
-                    return new AddCertificateURLFragment();
+                    return AddCertificateURLFragment.newInstance();
                 case FILE:
-                    return new AddCertificateFileFragment();
+                    return AddCertificateFileFragment.newInstance();
             }
             return null;
         }

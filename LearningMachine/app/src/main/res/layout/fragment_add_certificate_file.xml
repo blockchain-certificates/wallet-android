@@ -9,16 +9,16 @@
         android:layout_height="match_parent"
         android:focusableInTouchMode="true"
         android:orientation="vertical"
-        android:paddingEnd="@dimen/fragment_add_certificate_linearlayout_start_padding"
-        android:paddingStart="@dimen/fragment_add_certificate_linearlayout_start_padding"
-        android:paddingTop="@dimen/fragment_add_certificate_linearlayout_top_padding"
+        android:paddingEnd="@dimen/fragment_add_certificate_linear_layout_start_padding"
+        android:paddingStart="@dimen/fragment_add_certificate_linear_layout_start_padding"
+        android:paddingTop="@dimen/fragment_add_certificate_linear_layout_top_padding"
         tools:context=".ui.cert.AddCertificateFileFragment">
 
         <TextView
             android:id="@+id/certificate_add_by_file_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/fragment_add_certificate_textView_bottom_margin"
+            android:paddingBottom="@dimen/fragment_add_certificate_text_view_bottom_margin"
             android:text="@string/certificate_add_file_label"
             style="@style/Material.Light.Body1"/>
 
