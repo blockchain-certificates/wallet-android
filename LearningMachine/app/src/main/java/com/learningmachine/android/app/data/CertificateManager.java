@@ -10,6 +10,7 @@ import com.learningmachine.android.app.util.FileUtils;
 
 import java.io.IOException;
 
+import okhttp3.Request;
 import okhttp3.ResponseBody;
 import rx.Observable;
 
@@ -36,7 +37,7 @@ public class CertificateManager {
     }
 
     public Observable<ResponseBody> addCertificate(String url) {
-        return mCertificateService.getCertificate(url, "json")
+        return mCertificateService.getCertificate(url)
                 .map(responseBody -> {
                     saveCertificateResponse(responseBody);
                     return null;

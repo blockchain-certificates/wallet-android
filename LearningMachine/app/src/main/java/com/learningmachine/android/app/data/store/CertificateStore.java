@@ -10,6 +10,7 @@ import com.learningmachine.android.app.data.model.LMAssertion;
 import com.learningmachine.android.app.data.model.LMDocument;
 import com.learningmachine.android.app.data.store.cursor.CertificateCursorWrapper;
 import com.learningmachine.android.app.data.webservice.response.AddCertificateResponse;
+import com.learningmachine.android.app.data.webservice.response.CertificateResponse;
 import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 
 public class CertificateStore implements DataStore {
@@ -47,7 +48,7 @@ public class CertificateStore implements DataStore {
 
     public void saveAddCertificateResponse(AddCertificateResponse response) {
         LMDocument document = response.getDocument();
-        Certificate certificate = document.getCertificate();
+        CertificateResponse certificate = document.getCertificateResponse();
 
         LMAssertion assertion = document.getLMAssertion();
         String uuid = assertion.getUuid();

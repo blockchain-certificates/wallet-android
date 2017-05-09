@@ -9,5 +9,5 @@ import rx.Observable;
 public interface CertificateService {
 
     @GET
-    Observable<ResponseBody> getCertificate(@Url String url, @Query("format") String format);
+    Observable<ResponseBody> getCertificate(@Url String url);
 }
