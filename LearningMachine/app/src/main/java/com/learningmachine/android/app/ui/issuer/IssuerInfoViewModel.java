@@ -11,7 +11,6 @@ public class IssuerInfoViewModel extends BaseObservable {
 
     public IssuerInfoViewModel(Issuer issuer) {
         mIssuer = issuer;
-
     }
 
     @Bindable
