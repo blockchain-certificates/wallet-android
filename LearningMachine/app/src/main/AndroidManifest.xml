@@ -12,8 +12,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".ui.home.HomeActivity">
+
+        <activity android:name=".ui.home.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -34,8 +34,7 @@
             android:name=".ui.issuer.AddIssuerActivity"
             android:label="@string/fragment_add_issuer_title"/>
 
-        <activity
-            android:name=".ui.LMWebActivity"/>
+        <activity android:name=".ui.LMWebActivity"/>
 
         <activity
             android:name=".ui.settings.passphrase.RevealPassphraseActivity"
@@ -51,8 +50,13 @@
             android:name=".ui.cert.CertificateActivity"
             android:parentActivityName=".ui.issuer.IssuerActivity"/>
 
+        <activity android:name=".ui.issuer.IssuerInfoActivity"/>
+
         <activity
-            android:name=".ui.issuer.IssuerInfoActivity"/>
+            android:name=".ui.cert.AddCertificatePagerActivity"
+            android:label="@string/fragment_add_certificate_title"
+            android:theme="@style/noToolbarTheme"
+            android:parentActivityName=".ui.cert.CertificateActivity"/>
 
     </application>
 
