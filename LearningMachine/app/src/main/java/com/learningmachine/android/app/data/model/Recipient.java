@@ -17,4 +17,8 @@ public class Recipient {
     private String mRevocationKey;
     @SerializedName("hashed")
     private boolean mHashed;
+
+    public String getPublicKey() {
+        return mPublicKey;
+    }
 }

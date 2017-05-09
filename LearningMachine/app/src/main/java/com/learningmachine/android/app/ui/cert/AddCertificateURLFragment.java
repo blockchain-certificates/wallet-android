@@ -56,9 +56,16 @@ public class AddCertificateURLFragment extends LMFragment {
                 String url = mBinding.certificateUrlEditText.getText()
                         .toString();
                 mCertificateManager.addCertificate(url)
+                        .doOnSubscribe(() -> displayProgressDialog(R.string.fragment_add_certificate_progress_dialog_message))
                         .compose(bindToMainThread())
-                        .subscribe(responseBody -> Timber.d("Cert downloaded"),
-                                throwable -> Timber.e("Unable to dl cert"));
+                        .subscribe(responseBody -> {
+                            Timber.d("Cert downloaded");
+                            hideProgressDialog();
+                            getActivity().finish();
+                        }, throwable -> {
+                            hideProgressDialog();
+                            displayErrors(throwable, R.string.error_title_message);
+                        });
                 return true;
         }
         return super.onOptionsItemSelected(item);

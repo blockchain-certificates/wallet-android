@@ -3,6 +3,10 @@ package com.learningmachine.android.app.data;
 import android.content.Context;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
+import com.learningmachine.android.app.data.bitcoin.BitcoinManager;
+import com.learningmachine.android.app.data.model.LMDocument;
+import com.learningmachine.android.app.data.model.Recipient;
 import com.learningmachine.android.app.data.store.CertificateStore;
 import com.learningmachine.android.app.data.webservice.CertificateService;
 import com.learningmachine.android.app.data.webservice.response.AddCertificateResponse;
@@ -10,20 +14,22 @@ import com.learningmachine.android.app.util.FileUtils;
 
 import java.io.IOException;
 
-import okhttp3.Request;
 import okhttp3.ResponseBody;
 import rx.Observable;
+import timber.log.Timber;
 
 public class CertificateManager {
 
     private Context mContext;
     private CertificateStore mCertificateStore;
     private CertificateService mCertificateService;
+    private BitcoinManager mBitcoinManager;
 
-    public CertificateManager(Context context, CertificateStore certificateStore, CertificateService certificateService) {
+    public CertificateManager(Context context, CertificateStore certificateStore, CertificateService certificateService, BitcoinManager bitcoinManager) {
         mContext = context;
         mCertificateStore = certificateStore;
         mCertificateService = certificateService;
+        mBitcoinManager = bitcoinManager;
     }
 
     /**
@@ -36,27 +42,45 @@ public class CertificateManager {
         return "file:///android_asset/sample-certificate.json";
     }
 
-    public Observable<ResponseBody> addCertificate(String url) {
-        return mCertificateService.getCertificate(url)
-                .map(responseBody -> {
-                    saveCertificateResponse(responseBody);
+    public Observable<Void> addCertificate(String url) {
+
+        return Observable.combineLatest(mCertificateService.getCertificate(url),
+                mBitcoinManager.getBitcoinAddress(),
+                (responseBody, bitcoinAddress) -> {
+                    handleCertificateResponse(responseBody, bitcoinAddress);
                     return null;
                 });
     }
 
-    private void saveCertificateResponse(ResponseBody responseBody) {
+    /**
+     * @param responseBody   Unparsed certificate response json
+     * @param bitcoinAddress Wallet receive address
+     * @return true if save was successful
+     */
+    private boolean handleCertificateResponse(ResponseBody responseBody, String bitcoinAddress) {
         Gson gson = new Gson();
         try {
             AddCertificateResponse addCertificateResponse = gson.fromJson(responseBody.string(),
                     AddCertificateResponse.class);
-            String uuid = addCertificateResponse.getDocument()
-                    .getLMAssertion()
-                    .getUuid();
-            mCertificateStore.saveAddCertificateResponse(addCertificateResponse);
+            LMDocument document = addCertificateResponse.getDocument();
+            Recipient recipient = document.getRecipient();
+            String recipientKey = recipient.getPublicKey();
 
-            FileUtils.saveCertificate(mContext, responseBody, uuid);
+            if (bitcoinAddress.equals(recipientKey)) {
+                mCertificateStore.saveAddCertificateResponse(addCertificateResponse);
+
+                String uuid = document.getLMAssertion()
+                        .getUuid();
+                FileUtils.saveCertificate(mContext, responseBody, uuid);
+
+                return true;
+            }
+        } catch (JsonSyntaxException e) {
+            Timber.e(e, "Unable to parse response body");
         } catch (IOException e) {
-            e.printStackTrace();
+            Timber.e(e, "ResponseBody could not be sent to String");
         }
+
+        return false;
     }
 }
