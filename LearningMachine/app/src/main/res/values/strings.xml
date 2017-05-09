@@ -59,6 +59,19 @@
     <string name="fragment_issuer_info_email">Email</string>
     <string name="fragment_issuer_info_description">Description</string>
 
+    <!--Add Certificate-->
+    <string name="add_certificate_by_file">BY FILE</string>
+    <string name="add_certificate_by_url">BY URL</string>
+    <string name="certificate_add_url_label">What is the URL of the certificate?</string>
+    <string name="certificate_add_url_edit_text_hint">Certificate URL</string>
+    <string name="certificate_add_file_label">What is the File of the certificate?</string>
+    <string name="certificate_add_file_edit_text_hint">Certificate File</string>
+    <string name="fragment_add_certificate_title">Add Certificate</string>
+    <string name="add_certificate_progress_dialog_message">Adding certificate…</string>
+    <string name="add_certificate_alert_dialog_success_title">Success!</string>
+    <string name="add_certificate_alert_dialog_success_message">This is a valid certificate.</string>
+    <string name="add_certificate_by_url_error_message">That doesn\'t appear to be a valid certificate. Please check the URL and try again.</string>
+
     <!-- Certificate Fragment -->
 
     <string name="fragment_certificate_title">\u00A0</string>
@@ -71,7 +84,6 @@
     <string name="connection_error_message">Connection unavailable. Please check your connection and try again.</string>
     <string name="unknown_error_message">Unknown error. Something unexepected occurred.</string>
     <string name="error_title_message">Error</string>
-
     <string name="ime_action_done">Done</string>
 
 </resources>

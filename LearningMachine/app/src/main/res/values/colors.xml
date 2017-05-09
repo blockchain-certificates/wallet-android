@@ -6,6 +6,8 @@
 
     <!-- Brand -->
     <color name="brand_green">#2ab27b</color>
+    <color name="status_bar_green">#26a471</color>
+    <color name="certificate_dark_green">#1a895c</color>
     <color name="white">#ffffff</color>
     <color name="off_white_background">#f3f4f5</color>
     <color name="black">#000000</color>

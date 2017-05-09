@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical"
+        android:paddingEnd="@dimen/fragment_add_certificate_linear_layout_start_padding"
+        android:paddingStart="@dimen/fragment_add_certificate_linear_layout_start_padding"
+        android:paddingTop="@dimen/fragment_add_certificate_linear_layout_top_padding"
+        tools:context=".ui.cert.AddCertificateFileFragment">
+
+        <TextView
+            android:id="@+id/certificate_add_by_file_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/fragment_add_certificate_text_view_bottom_margin"
+            android:text="@string/certificate_add_file_label"
+            style="@style/Material.Light.Body1"/>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/certificate_add_by_file_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/certificate_add_file_edit_text_hint"
+                android:imeOptions="flagNoFullscreen|actionDone"
+                android:inputType="text"
+                android:maxLines="1"
+                style="@style/Material.Light.Subhead.Disabled"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+    </LinearLayout>
+
+</layout>
