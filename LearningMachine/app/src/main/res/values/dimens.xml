@@ -68,6 +68,13 @@
     <dimen name="issuer_info_textview_padding_bottom">16dp</dimen>
     <dimen name="issuer_info_viewmodel_textview_bottom_padding">29dp</dimen>
 
+    <!--Certificate Info-->
+
+    <dimen name="certificate_info_viewmodel_textview_bottom_padding">29dp</dimen>
+    <dimen name="certificate_info_linear_layout_padding_top">14dp</dimen>
+    <dimen name="certificate_info_linear_layout_padding_start">16dp</dimen>
+    <dimen name="certificate_info_linear_layout_padding_end">36dp</dimen>
+
     <!-- Text Sizes -->
 
     <dimen name="material_title_text_size">20sp</dimen>

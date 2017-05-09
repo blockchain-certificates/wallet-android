@@ -74,4 +74,8 @@
 
     <string name="ime_action_done">Done</string>
 
+    <!--Certificate Info Fragment-->
+    <string name="fragment_certificate_info_issuer_title">Issuer</string>
+    <string name="fragment_certificate_info_issuer_issue_date">Issue Date</string>
+
 </resources>

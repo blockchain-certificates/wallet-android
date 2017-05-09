@@ -78,6 +78,8 @@ public class CertificateFragment extends LMFragment {
             case R.id.fragment_certificate_share_menu_item:
                 return true;
             case R.id.fragment_certificate_info_menu_item:
+                    Intent intent = CertificateInfoActivity.newIntent(getActivity(), mCertificate);
+                    startActivity(intent);
                 return true;
         }
         return super.onOptionsItemSelected(item);
