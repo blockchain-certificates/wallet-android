@@ -20,6 +20,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.security.SignatureException;
+import java.util.List;
 
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.equalTo;
@@ -55,13 +56,22 @@ public class CertificateVerificationTest {
     public void testGetCertificateAndBlockchainTransaction() throws IOException, SignatureException {
         Gson gson = new Gson();
 
+        // Inputs
+
+        // Blockchain Certificate
         Reader in = getResourceAsReader(CERT_FILENAME);
         Certificate certificate = gson.fromJson(in, Certificate.class);
 
+        // Blockchain Transaction
+        // get blockchain transaction record ID from certificate.signature.anchors[0].sourceId
         String txId = certificate.getReceipt().getFirstAnchorSourceId();
+
+        // txId would now be used to download the blockchain transaction record
         assertThat(txId, equalTo(BLOCKCHAIN_TX_RECORD_ID));
+
         Sha256Hash localHash = Sha256Hash.of(ByteStreams.toByteArray(getResourceAsStream(CERT_FILENAME)));
 
+        // download blockchain transaction record from http://blockchain.info/rawtx/<transaction_id>
         Reader txRecordReader = getResourceAsReader(BLOCKCHAIN_TX_RECORD_FILENAME);
         TxRecord txRecord = gson.fromJson(txRecordReader, TxRecord.class);
 
@@ -76,6 +86,8 @@ public class CertificateVerificationTest {
 
         assertThat(remoteHash, equalTo(certificate.getReceipt().getMerkleRoot()));
 
+        // Issuer
+        // get issuer from URL in certificate.badge.issuer.id
         Reader issuerReader = getResourceAsReader(ISSUER_FILENAME);
         Issuer issuer = gson.fromJson(issuerReader, Issuer.class);
 
@@ -92,6 +104,12 @@ public class CertificateVerificationTest {
 
         Address address = ecKey.toAddress(MainNetParams.get());
         assertEquals(firstIssuerKey.getKey(), address.toBase58());
+
+        // Revocation
+        List<KeyRotation> revocationKeys = issuer.getRevocationKeys();
+        // TODO: check certificate against revocations
+
+        // TODO: JSON-LD canonicalization
     }
 
     private Reader getResourceAsReader(String name) {
