@@ -1,6 +1,7 @@
 package com.learningmachine.android.app.data.inject;
 
 import com.learningmachine.android.app.LMConstants;
+import com.learningmachine.android.app.data.webservice.BlockchainService;
 import com.learningmachine.android.app.data.webservice.CertificateInterceptor;
 import com.learningmachine.android.app.data.webservice.CertificateService;
 import com.learningmachine.android.app.data.webservice.IssuerService;
@@ -85,5 +86,11 @@ public class ApiModule {
     @Singleton
     CertificateService provideCertificateService(@Named("certificate") Retrofit retrofit) {
         return retrofit.create(CertificateService.class);
+    }
+
+    @Singleton
+    @Provides
+    BlockchainService provideBlockchainService(@Named("issuer") Retrofit retrofit) {
+        return retrofit.create(BlockchainService.class);
     }
 }

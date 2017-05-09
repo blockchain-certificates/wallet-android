@@ -97,7 +97,7 @@ public class CertificateVerificationTest {
 
         Document document = certificate.getDocument();
         String signature = document.getSignature();
-        String uid = document.getAssertion().getUid();
+        String uid = document.getAssertion().getUuid();
 
         ECKey ecKey = ECKey.signedMessageToKey(uid, signature);
         ecKey.verifyMessage(uid, signature); // this is tautological
