@@ -48,17 +48,17 @@ public class CertificateStore implements DataStore {
 
     public void saveAddCertificateResponse(AddCertificateResponse response) {
         LMDocument document = response.getDocument();
-        CertificateResponse certificate = document.getCertificateResponse();
+        CertificateResponse certificateResponse = document.getCertificateResponse();
 
         LMAssertion assertion = document.getLMAssertion();
         String uuid = assertion.getUuid();
-        certificate.setUuid(uuid);
+        certificateResponse.setUuid(uuid);
 
-        IssuerResponse issuerResponse = certificate.getIssuerResponse();
+        IssuerResponse issuerResponse = certificateResponse.getIssuerResponse();
         String issuerUuid = issuerResponse.getUuid();
-        certificate.setIssuerUuid(issuerUuid);
+        certificateResponse.setIssuerUuid(issuerUuid);
 
-        saveCertificate(certificate);
+        saveCertificate(certificateResponse);
     }
 
     public void saveCertificate(Certificate certificate) {

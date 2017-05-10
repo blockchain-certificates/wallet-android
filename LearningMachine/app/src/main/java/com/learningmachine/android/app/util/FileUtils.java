@@ -35,15 +35,12 @@ public class FileUtils {
 
             while (true) {
                 int read = inputStream.read(fileReader);
-
                 if (read == -1) {
                     break;
                 }
 
                 outputStream.write(fileReader, 0, read);
-
                 fileSizeDownloaded += read;
-
                 Timber.d("file download: " + fileSizeDownloaded + " of " + fileSize);
             }
 
