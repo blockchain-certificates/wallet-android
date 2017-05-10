@@ -15,7 +15,6 @@
         tools:context=".ui.cert.AddCertificateURLFragment">
 
         <TextView
-            android:id="@+id/certificate_add_by_url_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/fragment_add_certificate_text_view_bottom_margin"
@@ -27,12 +26,12 @@
             android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/certificate_add_by_url_edit_text"
+                android:id="@+id/certificate_url_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/certificate_add_url_edit_text_hint"
                 android:imeOptions="flagNoFullscreen|actionDone"
-                android:inputType="text"
+                android:inputType="textUri"
                 android:maxLines="1"
                 style="@style/Material.Light.Subhead.Disabled"/>
 
