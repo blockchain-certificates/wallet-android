@@ -42,7 +42,7 @@ public class DialogUtils {
 
     public static void showErrorAlertDialog(Context context, FragmentManager fragmentManager, @StringRes int titleResId, Throwable throwable) {
         String titleString = context.getString(titleResId);
-        String errorString = context.getString(getErrorMessageResourceId(throwable));
+        String errorString = getErrorMessageString(context, throwable);
         showErrorAlertDialog(context, fragmentManager, titleString, errorString, throwable);
     }
 
@@ -51,6 +51,14 @@ public class DialogUtils {
         fragmentManager.beginTransaction()
                 .add(dialog, TAG_DIALOG_ALERT)
                 .commitAllowingStateLoss();
+    }
+
+    private static String getErrorMessageString(Context context, Throwable throwable) {
+        int resId = getErrorMessageResourceId(throwable);
+        if (resId == 0) {
+            return throwable.getMessage();
+        }
+        return context.getString(resId);
     }
 
     private static int getErrorMessageResourceId(Throwable throwable) {
@@ -65,7 +73,7 @@ public class DialogUtils {
                     return R.string.fragment_add_issuer_invalid_issuer_error;
             }
         } else {
-            return R.string.unknown_error_message;
+            return 0;
         }
     }
 

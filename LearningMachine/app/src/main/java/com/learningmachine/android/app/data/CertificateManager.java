@@ -5,6 +5,7 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.learningmachine.android.app.data.bitcoin.BitcoinManager;
+import com.learningmachine.android.app.data.error.CertificateOwnershipException;
 import com.learningmachine.android.app.data.model.LMDocument;
 import com.learningmachine.android.app.data.model.Recipient;
 import com.learningmachine.android.app.data.store.CertificateStore;
@@ -16,7 +17,6 @@ import java.io.IOException;
 
 import okhttp3.ResponseBody;
 import rx.Observable;
-import timber.log.Timber;
 
 public class CertificateManager {
 
@@ -43,13 +43,9 @@ public class CertificateManager {
     }
 
     public Observable<Void> addCertificate(String url) {
-
         return Observable.combineLatest(mCertificateService.getCertificate(url),
-                mBitcoinManager.getBitcoinAddress(),
-                (responseBody, bitcoinAddress) -> {
-                    handleCertificateResponse(responseBody, bitcoinAddress);
-                    return null;
-                });
+                mBitcoinManager.getBitcoinAddress(), AddCertificateHolder::new)
+                .flatMap(holder -> handleCertificateResponse(holder.getResponseBody(), holder.getBitcoinAddress()));
     }
 
     /**
@@ -57,30 +53,45 @@ public class CertificateManager {
      * @param bitcoinAddress Wallet receive address
      * @return true if save was successful
      */
-    private boolean handleCertificateResponse(ResponseBody responseBody, String bitcoinAddress) {
-        Gson gson = new Gson();
+    private Observable<Void> handleCertificateResponse(ResponseBody responseBody, String bitcoinAddress) {
         try {
+            Gson gson = new Gson();
             AddCertificateResponse addCertificateResponse = gson.fromJson(responseBody.string(),
                     AddCertificateResponse.class);
             LMDocument document = addCertificateResponse.getDocument();
             Recipient recipient = document.getRecipient();
             String recipientKey = recipient.getPublicKey();
 
-            if (bitcoinAddress.equals(recipientKey)) {
-                mCertificateStore.saveAddCertificateResponse(addCertificateResponse);
-
-                String uuid = document.getLMAssertion()
-                        .getUuid();
-                FileUtils.saveCertificate(mContext, responseBody, uuid);
-
-                return true;
+            if (!bitcoinAddress.equals(recipientKey)) {
+                return Observable.error(new CertificateOwnershipException());
             }
-        } catch (JsonSyntaxException e) {
-            Timber.e(e, "Unable to parse response body");
-        } catch (IOException e) {
-            Timber.e(e, "ResponseBody could not be sent to String");
+
+            mCertificateStore.saveAddCertificateResponse(addCertificateResponse);
+
+            String uuid = document.getLMAssertion()
+                    .getUuid();
+            FileUtils.saveCertificate(mContext, responseBody, uuid);
+            return null;
+        } catch (JsonSyntaxException | IOException e) {
+            return Observable.error(e);
+        }
+    }
+
+    static class AddCertificateHolder {
+        private final ResponseBody mResponseBody;
+        private final String mBitcoinAddress;
+
+        public AddCertificateHolder(ResponseBody responseBody, String bitcoinAddress) {
+            mResponseBody = responseBody;
+            mBitcoinAddress = bitcoinAddress;
         }
 
-        return false;
+        public ResponseBody getResponseBody() {
+            return mResponseBody;
+        }
+
+        public String getBitcoinAddress() {
+            return mBitcoinAddress;
+        }
     }
 }
