@@ -27,17 +27,16 @@ public class ApiModule {
 
     @Provides
     @Singleton
-    @Named("logging")
-    Interceptor provideLoggingInterceptor() {
+    Interceptor provideLoggingInterceptor(HttpLoggingInterceptor.Level level) {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        loggingInterceptor.setLevel(level);
         return loggingInterceptor;
     }
 
     @Provides
     @Singleton
     @Named("issuer")
-    OkHttpClient provideIssuerOkHttpClient(@Named("logging") Interceptor loggingInterceptor) {
+    OkHttpClient provideIssuerOkHttpClient(Interceptor loggingInterceptor) {
         return new OkHttpClient.Builder().addInterceptor(loggingInterceptor)
                 .build();
     }
@@ -68,7 +67,7 @@ public class ApiModule {
     @Provides
     @Singleton
     @Named("certificate")
-    OkHttpClient provideCertificateOkHttpClient(@Named("logging") Interceptor loggingInterceptor, CertificateInterceptor certificateInterceptor) {
+    OkHttpClient provideCertificateOkHttpClient(Interceptor loggingInterceptor, CertificateInterceptor certificateInterceptor) {
         return new OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)
                 .addInterceptor(certificateInterceptor)
