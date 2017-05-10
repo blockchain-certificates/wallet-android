@@ -58,6 +58,9 @@
             android:theme="@style/noToolbarTheme"
             android:parentActivityName=".ui.cert.CertificateActivity"/>
 
+        <activity android:name=".ui.cert.CertificateInfoActivity"
+                  android:parentActivityName=".ui.cert.CertificateActivity"/>
+
     </application>
 
 </manifest>

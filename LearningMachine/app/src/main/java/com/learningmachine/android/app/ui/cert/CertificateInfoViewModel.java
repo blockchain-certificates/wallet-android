@@ -18,13 +18,13 @@ public class CertificateInfoViewModel extends BaseObservable {
         if (mCertificate == null) {
             return null;
         }
-        return mCertificate.getIssuerResponse().getName();
+        return mCertificate.getName();
     }
     @Bindable
     public String getDate() {
         if (mCertificate == null) {
             return null;
         }
-        return mCertificate.getLanguage(); //TODO: Change to get Document-> Assertion -> getIssuedOn
+        return mCertificate.getUuid(); //TODO: Change to get Document-> Assertion -> getIssuedOn
     }
 }
