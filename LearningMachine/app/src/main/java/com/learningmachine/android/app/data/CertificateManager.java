@@ -44,7 +44,8 @@ public class CertificateManager {
 
     public Observable<Void> addCertificate(String url) {
         return Observable.combineLatest(mCertificateService.getCertificate(url),
-                mBitcoinManager.getBitcoinAddress(), AddCertificateHolder::new)
+                mBitcoinManager.getBitcoinAddress(),
+                AddCertificateHolder::new)
                 .flatMap(holder -> handleCertificateResponse(holder.getResponseBody(), holder.getBitcoinAddress()));
     }
 
