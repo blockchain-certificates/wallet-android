@@ -17,6 +17,11 @@
     <dimen name="fragment_add_issuer_identity_textview_bottom_padding">23dp</dimen>
     <dimen name="fragment_add_issuer_textsize">14sp</dimen>
 
+    <!--Add Certificate-->
+    <dimen name="fragment_add_certificate_linear_layout_top_padding">20dp</dimen>
+    <dimen name="fragment_add_certificate_linear_layout_start_padding">16dp</dimen>
+    <dimen name="fragment_add_certificate_text_view_bottom_margin">31dp</dimen>
+
     <!-- Settings -->
 
     <dimen name="fragment_settings_textview_padding_top">13dp</dimen>

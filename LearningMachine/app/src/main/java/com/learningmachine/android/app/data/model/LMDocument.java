@@ -1,6 +1,7 @@
 package com.learningmachine.android.app.data.model;
 
 import com.google.gson.annotations.SerializedName;
+import com.learningmachine.android.app.data.webservice.response.CertificateResponse;
 
 public class LMDocument {
     @SerializedName("signature")
@@ -14,7 +15,7 @@ public class LMDocument {
     @SerializedName("assertion")
     private LMAssertion mLMAssertion;
     @SerializedName("certificate")
-    private Certificate mCertificate;
+    private CertificateResponse mCertificateResponse;
     @SerializedName("verify")
     private Verify mVerify;
 
@@ -58,12 +59,12 @@ public class LMDocument {
         mLMAssertion = LMAssertion;
     }
 
-    public Certificate getCertificate() {
-        return mCertificate;
+    public CertificateResponse getCertificateResponse() {
+        return mCertificateResponse;
     }
 
-    public void setCertificate(Certificate certificate) {
-        mCertificate = certificate;
+    public void setCertificateResponse(CertificateResponse certificateResponse) {
+        mCertificateResponse = certificateResponse;
     }
 
     public Verify getVerify() {

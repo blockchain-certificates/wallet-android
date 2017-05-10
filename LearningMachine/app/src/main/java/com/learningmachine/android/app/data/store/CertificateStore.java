@@ -6,9 +6,11 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.google.gson.Gson;
 import com.learningmachine.android.app.data.model.Certificate;
+import com.learningmachine.android.app.data.model.LMAssertion;
 import com.learningmachine.android.app.data.model.LMDocument;
 import com.learningmachine.android.app.data.store.cursor.CertificateCursorWrapper;
 import com.learningmachine.android.app.data.webservice.response.AddCertificateResponse;
+import com.learningmachine.android.app.data.webservice.response.CertificateResponse;
 import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 
 public class CertificateStore implements DataStore {
@@ -46,31 +48,20 @@ public class CertificateStore implements DataStore {
 
     public void saveAddCertificateResponse(AddCertificateResponse response) {
         LMDocument document = response.getDocument();
-        Certificate certificate = document.getCertificate();
+        CertificateResponse certificateResponse = document.getCertificateResponse();
 
-        String certUuid = certificate.getUuid();
-        IssuerResponse issuerResponse = certificate.getIssuerResponse();
+        LMAssertion assertion = document.getLMAssertion();
+        String uuid = assertion.getUuid();
+        certificateResponse.setUuid(uuid);
+
+        IssuerResponse issuerResponse = certificateResponse.getIssuerResponse();
         String issuerUuid = issuerResponse.getUuid();
-        certificate.setIssuerUuid(issuerUuid);
+        certificateResponse.setIssuerUuid(issuerUuid);
 
-        ContentValues contentValues = createCertificateContentValues(certificate);
-
-        Gson gson = new Gson();
-        contentValues.put(LMDatabaseHelper.Column.Certificate.JSON, gson.toJson(response));
-
-        saveCertificateContentValues(contentValues, certUuid, issuerUuid);
+        saveCertificate(certificateResponse);
     }
 
     public void saveCertificate(Certificate certificate) {
-
-        String certUuid = certificate.getUuid();
-        String issuerUuid = certificate.getIssuerUuid();
-
-        ContentValues contentValues = createCertificateContentValues(certificate);
-        saveCertificateContentValues(contentValues, certUuid, issuerUuid);
-    }
-
-    private ContentValues createCertificateContentValues(Certificate certificate) {
         ContentValues contentValues = new ContentValues();
 
         String certUuid = certificate.getUuid();
@@ -81,10 +72,6 @@ public class CertificateStore implements DataStore {
         contentValues.put(LMDatabaseHelper.Column.Certificate.DESCRIPTION, certificate.getDescription());
         contentValues.put(LMDatabaseHelper.Column.Certificate.ISSUER_UUID, issuerUuid);
 
-        return contentValues;
-    }
-
-    private void saveCertificateContentValues(ContentValues contentValues, String certUuid, String issuerUuid) {
         if (loadCertificate(certUuid, issuerUuid) == null) {
             mDatabase.insert(LMDatabaseHelper.Table.CERTIFICATE,
                     null,
@@ -96,15 +83,6 @@ public class CertificateStore implements DataStore {
                             + " AND " + LMDatabaseHelper.Column.Certificate.ISSUER_UUID + " = ?",
                     new String[] { certUuid, issuerUuid });
         }
-    }
-
-    /**
-     * Currently returns a static filepath until saving of certificates is implemented
-     * @param uuid document.assertion.uid from the Certificate's json
-     * @return filepath for the certificates json
-     */
-    public String getCertificateJsonFileUrl(String uuid) {
-        return "file:///android_asset/sample-certificate.json";
     }
 
     @Override

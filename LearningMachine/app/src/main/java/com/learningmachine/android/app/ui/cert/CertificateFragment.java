@@ -16,6 +16,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.learningmachine.android.app.R;
+import com.learningmachine.android.app.data.CertificateManager;
 import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.data.model.Certificate;
 import com.learningmachine.android.app.data.store.CertificateStore;
@@ -29,7 +30,7 @@ public class CertificateFragment extends LMFragment {
     private static final String ARG_CERTIFICATE = "CertificateFragment.Certificate";
     private static final String INDEX_FILE_PATH = "file:///android_asset/www/index.html";
 
-    @Inject protected CertificateStore mCertificateStore;
+    @Inject protected CertificateManager mCertificateManager;
 
     private Certificate mCertificate;
     private FragmentCertificateBinding mBinding;
@@ -115,7 +116,7 @@ public class CertificateFragment extends LMFragment {
         @Override
         public void onPageFinished(WebView view, String url) {
             // uuid is currently wrong, but will be fixed when certs are actually added & saved
-            String certFilePath = mCertificateStore.getCertificateJsonFileUrl(mCertificate.getUuid());
+            String certFilePath = mCertificateManager.getCertificateJsonFileUrl(mCertificate.getUuid());
 
             String javascript = String.format(
                     "javascript:(function() { document.getElementsByTagName('blockchain-certificate')[0].href='%1$s';})()",

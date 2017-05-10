@@ -114,7 +114,8 @@ public class HomeFragment extends LMFragment {
     private void updateRecyclerView(List<Issuer> issuerList) {
         mIssuerList.clear();
         mIssuerList.addAll(issuerList);
-        mBinding.issuerRecyclerview.getAdapter().notifyDataSetChanged();
+        mBinding.issuerRecyclerview.getAdapter()
+                .notifyDataSetChanged();
     }
 
     private class IssuerAdapter extends RecyclerView.Adapter<IssuerViewHolder> {
