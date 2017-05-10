@@ -20,9 +20,9 @@ public class ApiModule {
 
     @Singleton
     @Provides
-    Interceptor provideInterceptor() {
+    Interceptor provideInterceptor(HttpLoggingInterceptor.Level level) {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        loggingInterceptor.setLevel(level);
         return loggingInterceptor;
     }
 
