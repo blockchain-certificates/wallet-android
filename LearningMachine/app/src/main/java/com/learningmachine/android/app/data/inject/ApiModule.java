@@ -1,6 +1,8 @@
 package com.learningmachine.android.app.data.inject;
 
 import com.learningmachine.android.app.LMConstants;
+import com.learningmachine.android.app.data.model.Certificate;
+import com.learningmachine.android.app.data.webservice.CertificateInterceptor;
 import com.learningmachine.android.app.data.webservice.CertificateService;
 import com.learningmachine.android.app.data.webservice.IssuerService;
 
@@ -25,17 +27,16 @@ public class ApiModule {
 
     @Provides
     @Singleton
-    @Named("logging")
-    Interceptor provideInterceptor() {
+    Interceptor provideLoggingInterceptor(HttpLoggingInterceptor.Level level) {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        loggingInterceptor.setLevel(level);
         return loggingInterceptor;
     }
 
     @Provides
     @Singleton
     @Named("issuer")
-    OkHttpClient provideIssuerOkHttpClient(@Named("logging") Interceptor loggingInterceptor) {
+    OkHttpClient provideIssuerOkHttpClient(Interceptor loggingInterceptor) {
         return new OkHttpClient.Builder().addInterceptor(loggingInterceptor)
                 .build();
     }
@@ -59,47 +60,16 @@ public class ApiModule {
 
     @Provides
     @Singleton
-    @Named("certificate")
-    Interceptor provideCertificateInterceptor() {
-        return chain -> {
-            Request request = chain.request();
-            HttpUrl url = request.url();
-            String urlString = url.toString();
-
-            if (!urlString.contains(".json")) {
-                // first try to append json
-                String urlStringAppended = urlString + ".json";
-                HttpUrl urlAppended = HttpUrl.parse(urlStringAppended);
-                request = request.newBuilder()
-                        .url(urlAppended)
-                        .build();
-            }
-
-            Response response = chain.proceed(request);
-            if (!response.isSuccessful()) {
-                // use query params
-                url = request.url();
-                urlString = url.toString();
-                String jsonExtRemoved = urlString.replace(".json", "");
-                HttpUrl jsonFormatAdded = HttpUrl.parse(jsonExtRemoved)
-                        .newBuilder()
-                        .addEncodedQueryParameter("format", "json")
-                        .build();
-                request = request.newBuilder()
-                        .url(jsonFormatAdded)
-                        .build();
-                response = chain.proceed(request);
-            }
-
-            return response;
-        };
+    CertificateInterceptor provideCertificateInterceptor() {
+        return new CertificateInterceptor();
     }
 
     @Provides
     @Singleton
     @Named("certificate")
-    OkHttpClient provideCertificateOkHttpClient(@Named("logging") Interceptor loggingInterceptor, @Named("certificate") Interceptor certificateInterceptor) {
-        return new OkHttpClient.Builder().addInterceptor(loggingInterceptor)
+    OkHttpClient provideCertificateOkHttpClient(Interceptor loggingInterceptor, CertificateInterceptor certificateInterceptor) {
+        return new OkHttpClient.Builder()
+                .addInterceptor(loggingInterceptor)
                 .addInterceptor(certificateInterceptor)
                 .build();
     }

@@ -19,8 +19,9 @@ public class Certificate implements Serializable {
     private String mDescription;
     @SerializedName("type")
     private String mType;
-    private String mUuid;
 
+    // Must be set manually
+    private String mUuid;
     private String mIssuerUuid;
 
     public Certificate(String uuid, String issuerUuid, String name, String description) {

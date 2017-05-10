@@ -14,7 +14,7 @@ public class LMAssertion {
     @SerializedName("type")
     private String mType;
     @SerializedName("uid")
-    private String mUid;
+    private String mUuid;
 
     public String getIssuedOn() {
         return mIssuedOn;
@@ -33,6 +33,6 @@ public class LMAssertion {
     }
 
     public String getUuid() {
-        return mUid;
+        return mUuid;
     }
 }
