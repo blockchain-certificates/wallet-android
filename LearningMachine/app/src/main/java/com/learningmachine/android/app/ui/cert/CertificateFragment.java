@@ -19,7 +19,6 @@ import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.CertificateManager;
 import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.data.model.Certificate;
-import com.learningmachine.android.app.data.store.CertificateStore;
 import com.learningmachine.android.app.databinding.FragmentCertificateBinding;
 import com.learningmachine.android.app.ui.LMFragment;
 
@@ -79,8 +78,8 @@ public class CertificateFragment extends LMFragment {
             case R.id.fragment_certificate_share_menu_item:
                 return true;
             case R.id.fragment_certificate_info_menu_item:
-                    Intent intent = CertificateInfoActivity.newIntent(getActivity(), mCertificate);
-                    startActivity(intent);
+                Intent intent = CertificateInfoActivity.newIntent(getActivity(), mCertificate);
+                startActivity(intent);
                 return true;
         }
         return super.onOptionsItemSelected(item);

@@ -9,7 +9,7 @@ public class CertificateInfoViewModel extends BaseObservable {
 
     private Certificate mCertificate;
 
-    public CertificateInfoViewModel (Certificate certificate) {
+    public CertificateInfoViewModel(Certificate certificate) {
         mCertificate = certificate;
     }
 
@@ -20,6 +20,7 @@ public class CertificateInfoViewModel extends BaseObservable {
         }
         return mCertificate.getName();
     }
+
     @Bindable
     public String getDate() {
         if (mCertificate == null) {
