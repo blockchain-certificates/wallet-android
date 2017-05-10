@@ -19,15 +19,19 @@ import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.CertificateManager;
 import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.data.model.Certificate;
-import com.learningmachine.android.app.data.store.CertificateStore;
 import com.learningmachine.android.app.databinding.FragmentCertificateBinding;
 import com.learningmachine.android.app.ui.LMFragment;
+import com.learningmachine.android.app.util.FileUtils;
+
+import java.io.File;
 
 import javax.inject.Inject;
 
+import timber.log.Timber;
+
 public class CertificateFragment extends LMFragment {
 
-    private static final String ARG_CERTIFICATE = "CertificateFragment.Certificate";
+    private static final String ARG_CERTIFICATE_UUID = "CertificateFragment.CertificateUuid";
     private static final String INDEX_FILE_PATH = "file:///android_asset/www/index.html";
 
     @Inject protected CertificateManager mCertificateManager;
@@ -35,9 +39,9 @@ public class CertificateFragment extends LMFragment {
     private Certificate mCertificate;
     private FragmentCertificateBinding mBinding;
 
-    public static CertificateFragment newInstance(Certificate certificate) {
+    public static CertificateFragment newInstance(String certificateUuid) {
         Bundle args = new Bundle();
-        args.putSerializable(ARG_CERTIFICATE, certificate);
+        args.putString(ARG_CERTIFICATE_UUID, certificateUuid);
 
         CertificateFragment fragment = new CertificateFragment();
         fragment.setArguments(args);
@@ -52,7 +56,6 @@ public class CertificateFragment extends LMFragment {
         Injector.obtain(getContext())
                 .inject(this);
 
-        mCertificate = (Certificate) getArguments().getSerializable(ARG_CERTIFICATE);
     }
 
     @Nullable
@@ -60,7 +63,19 @@ public class CertificateFragment extends LMFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_certificate, container, false);
 
-        setupWebView();
+        String certificateUuid = getArguments().getString(ARG_CERTIFICATE_UUID);
+        mCertificateManager.getCertificate(certificateUuid)
+                .doOnSubscribe(() -> displayProgressDialog(R.string.fragment_certificate_progress_dialog_message))
+                .compose(bindToMainThread())
+                .subscribe(certificate -> {
+                    mCertificate = certificate;
+                    setupWebView();
+                    hideProgressDialog();
+                }, throwable -> {
+                    Timber.e(throwable, "Unable to load certificate");
+                    displayErrors(throwable, R.string.error_title_message);
+                });
+
 
         return mBinding.getRoot();
     }
@@ -113,8 +128,9 @@ public class CertificateFragment extends LMFragment {
 
         @Override
         public void onPageFinished(WebView view, String url) {
-            // uuid is currently wrong, but will be fixed when certs are actually added & saved
-            String certFilePath = mCertificateManager.getCertificateJsonFileUrl(mCertificate.getUuid());
+            String certUuid = mCertificate.getUuid();
+            File certFile = FileUtils.getCertificateFile(getContext(), certUuid);
+            String certFilePath = certFile.toString();
 
             String javascript = String.format(
                     "javascript:(function() { document.getElementsByTagName('blockchain-certificate')[0].href='%1$s';})()",

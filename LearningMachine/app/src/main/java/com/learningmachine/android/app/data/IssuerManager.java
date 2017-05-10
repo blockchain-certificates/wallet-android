@@ -20,6 +20,10 @@ public class IssuerManager {
         mIssuerService = issuerService;
     }
 
+    public Observable<Issuer> getIssuer(String issuerUuid) {
+        return Observable.just(mIssuerStore.loadIssuer(issuerUuid));
+    }
+
     public Observable<List<Issuer>> getIssuers() {
         return Observable.just(mIssuerStore.loadIssuers());
     }

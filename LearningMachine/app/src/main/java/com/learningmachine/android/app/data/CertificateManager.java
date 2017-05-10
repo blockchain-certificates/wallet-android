@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.learningmachine.android.app.data.bitcoin.BitcoinManager;
 import com.learningmachine.android.app.data.error.CertificateOwnershipException;
+import com.learningmachine.android.app.data.model.Certificate;
 import com.learningmachine.android.app.data.model.LMDocument;
 import com.learningmachine.android.app.data.model.Recipient;
 import com.learningmachine.android.app.data.store.CertificateStore;
@@ -13,10 +14,13 @@ import com.learningmachine.android.app.data.webservice.CertificateService;
 import com.learningmachine.android.app.data.webservice.response.AddCertificateResponse;
 import com.learningmachine.android.app.util.FileUtils;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import rx.Observable;
+import rx.functions.Func1;
 
 public class CertificateManager {
 
@@ -38,8 +42,21 @@ public class CertificateManager {
      * @param uuid document.assertion.uid from the Certificate's json
      * @return filepath for the certificates json
      */
-    public String getCertificateJsonFileUrl(String uuid) {
-        return "file:///android_asset/sample-certificate.json";
+    public Observable<String> getCertificateJsonFileUrl(String uuid) {
+//        return "file:///android_asset/sample-certificate.json";
+        return getCertificate(uuid).map(certificate -> {
+            String uuid1 = certificate.getUuid();
+            File certFile = FileUtils.getCertificateFile(mContext, uuid1);
+            return certFile.toString();
+        });
+    }
+
+    public Observable<Certificate> getCertificate(String certificateUuid) {
+        return Observable.just(mCertificateStore.loadCertificate(certificateUuid));
+    }
+
+    public Observable<List<Certificate>> getCertificates(String issuerUuid) {
+        return Observable.just(mCertificateStore.loadCertificates(issuerUuid));
     }
 
     public Observable<Void> addCertificate(String url) {

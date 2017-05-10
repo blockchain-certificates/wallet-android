@@ -62,12 +62,8 @@ public class AddCertificateURLFragment extends LMFragment {
                             Timber.d("Cert downloaded");
                             hideProgressDialog();
                             getActivity().finish();
-                        }, throwable -> {
-                            hideProgressDialog();
-                            displayErrors(throwable, R.string.error_title_message);
-                        });
+                        }, throwable -> displayErrors(throwable, R.string.error_title_message));
                 return true;
-        }
-        return super.onOptionsItemSelected(item);
+        } return super.onOptionsItemSelected(item);
     }
 }

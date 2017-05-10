@@ -9,29 +9,30 @@ import com.learningmachine.android.app.data.model.Certificate;
 import com.learningmachine.android.app.data.model.LMAssertion;
 import com.learningmachine.android.app.data.model.LMDocument;
 import com.learningmachine.android.app.data.store.cursor.CertificateCursorWrapper;
+import com.learningmachine.android.app.data.store.cursor.IssuerCursorWrapper;
 import com.learningmachine.android.app.data.webservice.response.AddCertificateResponse;
 import com.learningmachine.android.app.data.webservice.response.CertificateResponse;
 import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CertificateStore implements DataStore {
 
     private SQLiteDatabase mDatabase;
-    private ImageStore mImageStore;
 
-    public CertificateStore(LMDatabaseHelper databaseHelper, ImageStore imageStore) {
+    public CertificateStore(LMDatabaseHelper databaseHelper) {
         mDatabase = databaseHelper.getWritableDatabase();
-        mImageStore = imageStore;
     }
 
-    public Certificate loadCertificate(String certUuid, String issuerUuid) {
+    public Certificate loadCertificate(String certUuid) {
 
         Certificate certificate = null;
         Cursor cursor = mDatabase.query(
                 LMDatabaseHelper.Table.CERTIFICATE,
                 null,
-                LMDatabaseHelper.Column.Certificate.UUID + " = ? "
-                        + " AND " + LMDatabaseHelper.Column.Certificate.ISSUER_UUID + " = ?",
-                new String[] { certUuid, issuerUuid },
+                LMDatabaseHelper.Column.Certificate.UUID + " = ? ",
+                new String[] { certUuid },
                 null,
                 null,
                 null);
@@ -44,6 +45,32 @@ public class CertificateStore implements DataStore {
         cursor.close();
 
         return certificate;
+    }
+
+    public List<Certificate> loadCertificates(String issuerUuid) {
+        List<Certificate> certificateList = new ArrayList<>();
+
+        Cursor cursor = mDatabase.query(
+                LMDatabaseHelper.Table.CERTIFICATE,
+                null,
+                LMDatabaseHelper.Column.Certificate.ISSUER_UUID + " = ?",
+                new String[] { issuerUuid },
+                null,
+                null,
+                null);
+
+        if (cursor.moveToFirst()) {
+            CertificateCursorWrapper cursorWrapper = new CertificateCursorWrapper(cursor);
+            while (!cursorWrapper.isAfterLast()) {
+                Certificate certificate = cursorWrapper.getCertificate();
+                certificateList.add(certificate);
+                cursorWrapper.moveToNext();
+            }
+        }
+
+        cursor.close();
+
+        return certificateList;
     }
 
     public void saveAddCertificateResponse(AddCertificateResponse response) {
@@ -72,16 +99,15 @@ public class CertificateStore implements DataStore {
         contentValues.put(LMDatabaseHelper.Column.Certificate.DESCRIPTION, certificate.getDescription());
         contentValues.put(LMDatabaseHelper.Column.Certificate.ISSUER_UUID, issuerUuid);
 
-        if (loadCertificate(certUuid, issuerUuid) == null) {
+        if (loadCertificate(certUuid) == null) {
             mDatabase.insert(LMDatabaseHelper.Table.CERTIFICATE,
                     null,
                     contentValues);
         } else {
             mDatabase.update(LMDatabaseHelper.Table.CERTIFICATE,
                     contentValues,
-                    LMDatabaseHelper.Column.Certificate.UUID + " = ? "
-                            + " AND " + LMDatabaseHelper.Column.Certificate.ISSUER_UUID + " = ?",
-                    new String[] { certUuid, issuerUuid });
+                    LMDatabaseHelper.Column.Certificate.UUID + " = ? ",
+                    new String[] { certUuid });
         }
     }
 

@@ -2,6 +2,7 @@ package com.learningmachine.android.app.data.model;
 
 import com.google.gson.annotations.SerializedName;
 import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
+import com.learningmachine.android.app.util.StringUtils;
 
 import java.io.Serializable;
 
@@ -88,7 +89,12 @@ public class Certificate implements Serializable {
     }
 
     public String getIssuerUuid() {
-        return mIssuerUuid;
+        if (!StringUtils.isEmpty(mIssuerUuid)) {
+            return mIssuerUuid;
+        } else if (mIssuerResponse != null) {
+            return mIssuerResponse.getUuid();
+        }
+        return null;
     }
 
     public void setIssuerUuid(String issuerUuid) {

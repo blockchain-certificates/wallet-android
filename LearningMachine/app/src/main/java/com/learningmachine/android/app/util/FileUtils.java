@@ -17,11 +17,21 @@ public class FileUtils {
     private static final String JSON_EXT = ".json";
 
     public static boolean saveCertificate(Context context, ResponseBody responseBody, String uuid) {
-        File dir = new File(context.getFilesDir(), CERT_DIR);
-        dir.mkdirs();
-        String filename = uuid + JSON_EXT;
-        File file = new File(dir, filename);
+        File file = getCertificateFile(context, uuid, true);
         return writeResponseBodyToDisk(file, responseBody);
+    }
+
+    public static File getCertificateFile(Context context, String uuid) {
+        return getCertificateFile(context, uuid, false);
+    }
+
+    private static File getCertificateFile(Context context, String uuid, boolean createDir) {
+        File certDir = new File(context.getFilesDir(), CERT_DIR);
+        if (createDir) {
+            certDir.mkdirs();
+        }
+        String filename = uuid + JSON_EXT;
+        return new File(certDir, filename);
     }
 
     private static boolean writeResponseBodyToDisk(File file, ResponseBody body) {

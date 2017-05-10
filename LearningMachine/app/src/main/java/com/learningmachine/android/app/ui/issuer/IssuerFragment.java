@@ -15,8 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.learningmachine.android.app.R;
+import com.learningmachine.android.app.data.CertificateManager;
+import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.data.model.Certificate;
-import com.learningmachine.android.app.data.model.Issuer;
 import com.learningmachine.android.app.databinding.FragmentIssuerBinding;
 import com.learningmachine.android.app.databinding.ListItemCertificateBinding;
 import com.learningmachine.android.app.ui.LMFragment;
@@ -25,16 +26,23 @@ import com.learningmachine.android.app.ui.cert.AddCertificatePagerActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import timber.log.Timber;
+
 public class IssuerFragment extends LMFragment {
 
-    private static final String ARG_ISSUER = "IssuerFragment.Issuer";
+    private static final String ARG_ISSUER_UUID = "IssuerFragment.IssuerUuid";
 
-    private Issuer mIssuer;
+    @Inject protected CertificateManager mCertificateManager;
+
+    private String mIssuerUuid;
     private FragmentIssuerBinding mBinding;
+    private List<Certificate> mCertificateList;
 
-    public static IssuerFragment newInstance(Issuer issuer) {
+    public static IssuerFragment newInstance(String issuerUuid) {
         Bundle args = new Bundle();
-        args.putSerializable(ARG_ISSUER, issuer);
+        args.putSerializable(ARG_ISSUER_UUID, issuerUuid);
 
         IssuerFragment fragment = new IssuerFragment();
         fragment.setArguments(args);
@@ -46,8 +54,11 @@ public class IssuerFragment extends LMFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        Injector.obtain(getContext())
+                .inject(this);
 
-        mIssuer = (Issuer) getArguments().getSerializable(ARG_ISSUER);
+        mIssuerUuid = getArguments().getString(ARG_ISSUER_UUID);
+        mCertificateList = new ArrayList<>();
     }
 
     @Nullable
@@ -76,29 +87,35 @@ public class IssuerFragment extends LMFragment {
 
         switch (item.getItemId()) {
             case R.id.fragment_issuer_info_menu_item:
-                Intent intent = IssuerInfoActivity.newIntent(getContext(), mIssuer);
+                Intent intent = IssuerInfoActivity.newIntent(getContext(), mIssuerUuid);
                 startActivity(intent);
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        mCertificateManager.getCertificates(mIssuerUuid)
+                .compose(bindToMainThread())
+                .subscribe(this::updateRecyclerView, throwable -> Timber.e(throwable, "Unable to load certificates"));
+    }
+
     private void setupRecyclerView() {
-        // build list
-        List<Certificate> certificateList = new ArrayList<>();
-
-        Certificate certificate = new Certificate("certUuid1", "issuerUuid1", "Sample Certificate 1", "Welcome to the sample certificate!");
-        certificateList.add(certificate);
-        certificate = new Certificate("certUuid2", "issuerUuid1", "Sample Certificate 2", "Welcome to the sample certificate, again!");
-        certificateList.add(certificate);
-        certificate = new Certificate("certUuid3", "issuerUuid1", "Sample Certificate 3", "Okay, we get it by now. It’s a certificate.");
-        certificateList.add(certificate);
-
-        CertificateAdapter adapter = new CertificateAdapter(certificateList);
+        CertificateAdapter adapter = new CertificateAdapter(mCertificateList);
         mBinding.certificateRecyclerView.setAdapter(adapter);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         mBinding.certificateRecyclerView.setLayoutManager(layoutManager);
+    }
+
+    private void updateRecyclerView(List<Certificate> certificateList) {
+        mCertificateList.clear();
+        mCertificateList.addAll(certificateList);
+        mBinding.certificateRecyclerView.getAdapter()
+                .notifyDataSetChanged();
     }
 
     private class CertificateAdapter extends RecyclerView.Adapter<CertificateViewHolder> {
