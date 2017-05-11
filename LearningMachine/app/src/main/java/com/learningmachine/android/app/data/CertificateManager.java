@@ -14,13 +14,11 @@ import com.learningmachine.android.app.data.webservice.CertificateService;
 import com.learningmachine.android.app.data.webservice.response.AddCertificateResponse;
 import com.learningmachine.android.app.util.FileUtils;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
 import okhttp3.ResponseBody;
 import rx.Observable;
-import rx.functions.Func1;
 
 public class CertificateManager {
 
@@ -34,21 +32,6 @@ public class CertificateManager {
         mCertificateStore = certificateStore;
         mCertificateService = certificateService;
         mBitcoinManager = bitcoinManager;
-    }
-
-    /**
-     * Currently returns a static filepath until saving of certificates is implemented
-     *
-     * @param uuid document.assertion.uid from the Certificate's json
-     * @return filepath for the certificates json
-     */
-    public Observable<String> getCertificateJsonFileUrl(String uuid) {
-//        return "file:///android_asset/sample-certificate.json";
-        return getCertificate(uuid).map(certificate -> {
-            String uuid1 = certificate.getUuid();
-            File certFile = FileUtils.getCertificateFile(mContext, uuid1);
-            return certFile.toString();
-        });
     }
 
     public Observable<Certificate> getCertificate(String certificateUuid) {

@@ -64,6 +64,7 @@ public class AddCertificateURLFragment extends LMFragment {
                             getActivity().finish();
                         }, throwable -> displayErrors(throwable, R.string.error_title_message));
                 return true;
-        } return super.onOptionsItemSelected(item);
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
