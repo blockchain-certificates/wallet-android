@@ -18,6 +18,8 @@ import java.io.IOException;
 import java.util.List;
 
 import okhttp3.ResponseBody;
+import okio.Buffer;
+import okio.BufferedSource;
 import rx.Observable;
 
 public class CertificateManager {
@@ -56,6 +58,13 @@ public class CertificateManager {
      */
     private Observable<Void> handleCertificateResponse(ResponseBody responseBody, String bitcoinAddress) {
         try {
+            // Copy the responseBody bytes before Gson consumes it
+            BufferedSource source = responseBody.source();
+            source.request(Long.MAX_VALUE);
+            Buffer buffer = source.buffer()
+                    .clone();
+
+            // Parse
             Gson gson = new Gson();
             AddCertificateResponse addCertificateResponse = gson.fromJson(responseBody.string(),
                     AddCertificateResponse.class);
@@ -63,15 +72,18 @@ public class CertificateManager {
             Recipient recipient = document.getRecipient();
             String recipientKey = recipient.getPublicKey();
 
+            // Reject on address mismatch
             if (!bitcoinAddress.equals(recipientKey)) {
                 return Observable.error(new CertificateOwnershipException());
             }
 
+            // Save to DB
             mCertificateStore.saveAddCertificateResponse(addCertificateResponse);
 
+            // Write response to file
             String uuid = document.getLMAssertion()
                     .getUuid();
-            FileUtils.saveCertificate(mContext, responseBody, uuid);
+            FileUtils.saveCertificate(mContext, buffer, uuid);
             return null;
         } catch (JsonSyntaxException | IOException e) {
             return Observable.error(e);

@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import okhttp3.ResponseBody;
+import okio.Buffer;
 import timber.log.Timber;
 
 public class FileUtils {
@@ -16,9 +16,9 @@ public class FileUtils {
     private static final String CERT_DIR = "certs";
     private static final String JSON_EXT = ".json";
 
-    public static boolean saveCertificate(Context context, ResponseBody responseBody, String uuid) {
+    public static boolean saveCertificate(Context context, Buffer buffer, String uuid) {
         File file = getCertificateFile(context, uuid, true);
-        return writeResponseBodyToDisk(file, responseBody);
+        return writeResponseBodyToDisk(file, buffer);
     }
 
     public static File getCertificateFile(Context context, String uuid) {
@@ -34,13 +34,13 @@ public class FileUtils {
         return new File(certDir, filename);
     }
 
-    private static boolean writeResponseBodyToDisk(File file, ResponseBody body) {
+    private static boolean writeResponseBodyToDisk(File file, Buffer buffer) {
         try (OutputStream outputStream = new FileOutputStream(file)) {
 
-            InputStream inputStream = body.byteStream();
+            InputStream inputStream = buffer.inputStream();
 
             byte[] fileReader = new byte[4096];
-            long fileSize = body.contentLength();
+            long fileSize = buffer.size();
             long fileSizeDownloaded = 0;
 
             while (true) {
