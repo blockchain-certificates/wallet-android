@@ -42,10 +42,6 @@ public class AddCertificateURLFragment extends LMFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_certificate_url, container, false);
 
-        // TODO remove test code
-        String url = "https://certificates.learningmachine.com/certificate/8dc46898e94e4596a311b0faaa42e4a3";
-        mBinding.certificateUrlEditText.setText(url);
-
         return mBinding.getRoot();
     }
 
