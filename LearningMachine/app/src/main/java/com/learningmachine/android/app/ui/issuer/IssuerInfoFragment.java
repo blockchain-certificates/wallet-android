@@ -50,9 +50,7 @@ public class IssuerInfoFragment extends LMFragment {
         mIssuerManager.getIssuer(issuerUuid)
                 .compose(bindToMainThread())
                 .subscribe(issuer -> {
-                    String introducedDate = "April 30th, 2017"; //We need to retrieve the date added from the database
-                    String sharedAddress = "mitm";
-                    IssuerInfoViewModel viewModel = new IssuerInfoViewModel(issuer, introducedDate, sharedAddress);
+                    IssuerInfoViewModel viewModel = new IssuerInfoViewModel(issuer);
                     mBinding.setIssuerInfo(viewModel);
                 });
 
