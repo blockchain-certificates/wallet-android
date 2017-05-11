@@ -47,7 +47,7 @@ public class CertificateStore implements DataStore {
         return certificate;
     }
 
-    public List<Certificate> loadCertificates(String issuerUuid) {
+    public List<Certificate> loadCertificatesForIssuer(String issuerUuid) {
         List<Certificate> certificateList = new ArrayList<>();
 
         Cursor cursor = mDatabase.query(

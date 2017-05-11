@@ -38,8 +38,8 @@ public class CertificateManager {
         return Observable.just(mCertificateStore.loadCertificate(certificateUuid));
     }
 
-    public Observable<List<Certificate>> getCertificates(String issuerUuid) {
-        return Observable.just(mCertificateStore.loadCertificates(issuerUuid));
+    public Observable<List<Certificate>> getCertificatesForIssuer(String issuerUuid) {
+        return Observable.just(mCertificateStore.loadCertificatesForIssuer(issuerUuid));
     }
 
     public Observable<Void> addCertificate(String url) {

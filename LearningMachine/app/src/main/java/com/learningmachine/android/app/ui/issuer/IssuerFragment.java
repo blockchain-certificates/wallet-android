@@ -42,7 +42,7 @@ public class IssuerFragment extends LMFragment {
 
     public static IssuerFragment newInstance(String issuerUuid) {
         Bundle args = new Bundle();
-        args.putSerializable(ARG_ISSUER_UUID, issuerUuid);
+        args.putString(ARG_ISSUER_UUID, issuerUuid);
 
         IssuerFragment fragment = new IssuerFragment();
         fragment.setArguments(args);
@@ -98,7 +98,7 @@ public class IssuerFragment extends LMFragment {
     public void onResume() {
         super.onResume();
 
-        mCertificateManager.getCertificates(mIssuerUuid)
+        mCertificateManager.getCertificatesForIssuer(mIssuerUuid)
                 .compose(bindToMainThread())
                 .subscribe(this::updateRecyclerView, throwable -> Timber.e(throwable, "Unable to load certificates"));
     }
