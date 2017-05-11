@@ -52,7 +52,7 @@ public class CertificateManager {
     /**
      * @param responseBody   Unparsed certificate response json
      * @param bitcoinAddress Wallet receive address
-     * @return true if save was successful
+     * @return Error if save was unsuccessful
      */
     private Observable<Void> handleCertificateResponse(ResponseBody responseBody, String bitcoinAddress) {
         try {
@@ -82,16 +82,16 @@ public class CertificateManager {
         private final ResponseBody mResponseBody;
         private final String mBitcoinAddress;
 
-        public AddCertificateHolder(ResponseBody responseBody, String bitcoinAddress) {
+        AddCertificateHolder(ResponseBody responseBody, String bitcoinAddress) {
             mResponseBody = responseBody;
             mBitcoinAddress = bitcoinAddress;
         }
 
-        public ResponseBody getResponseBody() {
+        ResponseBody getResponseBody() {
             return mResponseBody;
         }
 
-        public String getBitcoinAddress() {
+        String getBitcoinAddress() {
             return mBitcoinAddress;
         }
     }

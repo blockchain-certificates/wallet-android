@@ -23,7 +23,7 @@ public class StagingDataModule {
     @Provides
     @Singleton
     NetworkParameters providesBitcoinNetworkParameters() {
-        return TestNet3Params.get();
+        return MainNetParams.get();
     }
 
     @Provides
