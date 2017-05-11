@@ -145,6 +145,7 @@ public class BitcoinManager {
     }
 
     public Observable<String> getBitcoinAddress() {
-        return getWallet().map(wallet -> wallet.currentReceiveAddress().toString());
+        return getWallet().map(wallet -> wallet.currentReceiveAddress()
+                .toString());
     }
 }
