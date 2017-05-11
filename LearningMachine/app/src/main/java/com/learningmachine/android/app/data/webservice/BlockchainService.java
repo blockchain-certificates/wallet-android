@@ -11,6 +11,6 @@ import rx.Observable;
  */
 
 public interface BlockchainService {
-    @GET("/rawtx/${transaction_id}")
+    @GET("/rawtx/{transaction_id}")
     Observable<TxRecord> getBlockchain(@Path("transaction_id") String transactionId);
 }

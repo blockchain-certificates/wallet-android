@@ -88,9 +88,20 @@ public class ApiModule {
         return retrofit.create(CertificateService.class);
     }
 
-    @Singleton
     @Provides
-    BlockchainService provideBlockchainService(@Named("issuer") Retrofit retrofit) {
+    @Singleton
+    @Named("blockchain")
+    Retrofit provideBlockchainRetrofit(@Named("issuer") OkHttpClient okHttpClient) {
+        return new Retrofit.Builder().baseUrl(LMConstants.BLOCKCHAIN_SERVICE_URL)
+                .client(okHttpClient)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.createWithScheduler(Schedulers.io()))
+                .build();
+    }
+
+    @Provides
+    @Singleton
+    BlockchainService provideBlockchainService(@Named("blockchain") Retrofit retrofit) {
         return retrofit.create(BlockchainService.class);
     }
 }
