@@ -54,7 +54,7 @@ public class AddCertificateURLFragment extends LMFragment {
                 mCertificateManager.addCertificate(url)
                         .doOnSubscribe(() -> displayProgressDialog(R.string.fragment_add_certificate_progress_dialog_message))
                         .compose(bindToMainThread())
-                        .subscribe(responseBody -> {
+                        .subscribe(uuid -> {
                             Timber.d("Cert downloaded");
                             hideProgressDialog();
                             getActivity().finish();

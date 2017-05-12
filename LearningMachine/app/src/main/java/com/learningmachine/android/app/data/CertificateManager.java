@@ -44,7 +44,7 @@ public class CertificateManager {
         return Observable.just(mCertificateStore.loadCertificatesForIssuer(issuerUuid));
     }
 
-    public Observable<Void> addCertificate(String url) {
+    public Observable<String> addCertificate(String url) {
         return Observable.combineLatest(mCertificateService.getCertificate(url),
                 mBitcoinManager.getBitcoinAddress(),
                 AddCertificateHolder::new)
@@ -56,7 +56,7 @@ public class CertificateManager {
      * @param bitcoinAddress Wallet receive address
      * @return Error if save was unsuccessful
      */
-    private Observable<Void> handleCertificateResponse(ResponseBody responseBody, String bitcoinAddress) {
+    private Observable<String> handleCertificateResponse(ResponseBody responseBody, String bitcoinAddress) {
         try {
             // Copy the responseBody bytes before Gson consumes it
             BufferedSource source = responseBody.source();
@@ -84,7 +84,7 @@ public class CertificateManager {
             String uuid = document.getLMAssertion()
                     .getUuid();
             FileUtils.saveCertificate(mContext, buffer, uuid);
-            return null;
+            return Observable.just(uuid);
         } catch (JsonSyntaxException | IOException e) {
             return Observable.error(e);
         }
