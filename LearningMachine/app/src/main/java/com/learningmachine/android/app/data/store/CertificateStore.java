@@ -4,12 +4,10 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.google.gson.Gson;
 import com.learningmachine.android.app.data.model.Certificate;
 import com.learningmachine.android.app.data.model.LMAssertion;
 import com.learningmachine.android.app.data.model.LMDocument;
 import com.learningmachine.android.app.data.store.cursor.CertificateCursorWrapper;
-import com.learningmachine.android.app.data.store.cursor.IssuerCursorWrapper;
 import com.learningmachine.android.app.data.webservice.response.AddCertificateResponse;
 import com.learningmachine.android.app.data.webservice.response.CertificateResponse;
 import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
@@ -109,6 +107,13 @@ public class CertificateStore implements DataStore {
                     LMDatabaseHelper.Column.Certificate.UUID + " = ? ",
                     new String[] { certUuid });
         }
+    }
+
+    public boolean deleteCertificate(String uuid) {
+        // the delete operation should remove 1 row from the table
+        return 1 == mDatabase.delete(LMDatabaseHelper.Table.CERTIFICATE,
+                LMDatabaseHelper.Column.Certificate.UUID + " = ? ",
+                new String[] { uuid });
     }
 
     @Override

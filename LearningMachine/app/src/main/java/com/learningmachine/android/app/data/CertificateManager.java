@@ -51,6 +51,11 @@ public class CertificateManager {
                 .flatMap(holder -> handleCertificateResponse(holder.getResponseBody(), holder.getBitcoinAddress()));
     }
 
+    public Observable<Boolean> removeCertificate(String uuid) {
+        return Observable.just(FileUtils.deleteCertificate(mContext, uuid))
+                .map(success -> mCertificateStore.deleteCertificate(uuid));
+    }
+
     /**
      * @param responseBody   Unparsed certificate response json
      * @param bitcoinAddress Wallet receive address
