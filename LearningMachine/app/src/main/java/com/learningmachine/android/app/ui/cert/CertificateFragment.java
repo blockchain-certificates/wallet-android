@@ -31,6 +31,8 @@ public class CertificateFragment extends LMFragment {
     private static final String ARG_CERTIFICATE_UUID = "CertificateFragment.CertificateUuid";
     private static final String INDEX_FILE_PATH = "file:///android_asset/www/index.html";
 
+    private String mCertificateUuid;
+
     @Inject protected CertificateManager mCertificateManager;
 
     private FragmentCertificateBinding mBinding;
@@ -51,6 +53,8 @@ public class CertificateFragment extends LMFragment {
         setHasOptionsMenu(true);
         Injector.obtain(getContext())
                 .inject(this);
+
+        mCertificateUuid = getArguments().getString(ARG_CERTIFICATE_UUID);
 
     }
 
@@ -78,6 +82,8 @@ public class CertificateFragment extends LMFragment {
             case R.id.fragment_certificate_share_menu_item:
                 return true;
             case R.id.fragment_certificate_info_menu_item:
+                Intent intent = CertificateInfoActivity.newIntent(getActivity(), mCertificateUuid);
+                startActivity(intent);
                 return true;
         }
         return super.onOptionsItemSelected(item);

@@ -55,7 +55,11 @@
         <activity
             android:name=".ui.cert.AddCertificatePagerActivity"
             android:label="@string/fragment_add_certificate_title"
-            android:theme="@style/noToolbarTheme"
+            android:parentActivityName=".ui.cert.CertificateActivity"
+            android:theme="@style/noToolbarTheme"/>
+
+        <activity
+            android:name=".ui.cert.CertificateInfoActivity"
             android:parentActivityName=".ui.cert.CertificateActivity"/>
 
     </application>
