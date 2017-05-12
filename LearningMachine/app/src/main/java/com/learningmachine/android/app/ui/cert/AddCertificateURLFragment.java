@@ -42,10 +42,6 @@ public class AddCertificateURLFragment extends LMFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_certificate_url, container, false);
 
-        // TODO remove test code
-        String url = "https://certificates.learningmachine.com/certificate/8dc46898e94e4596a311b0faaa42e4a3";
-        mBinding.certificateUrlEditText.setText(url);
-
         return mBinding.getRoot();
     }
 
@@ -56,9 +52,13 @@ public class AddCertificateURLFragment extends LMFragment {
                 String url = mBinding.certificateUrlEditText.getText()
                         .toString();
                 mCertificateManager.addCertificate(url)
+                        .doOnSubscribe(() -> displayProgressDialog(R.string.fragment_add_certificate_progress_dialog_message))
                         .compose(bindToMainThread())
-                        .subscribe(responseBody -> Timber.d("Cert downloaded"),
-                                throwable -> Timber.e("Unable to dl cert"));
+                        .subscribe(uuid -> {
+                            Timber.d("Cert downloaded");
+                            hideProgressDialog();
+                            getActivity().finish();
+                        }, throwable -> displayErrors(throwable, R.string.error_title_message));
                 return true;
         }
         return super.onOptionsItemSelected(item);

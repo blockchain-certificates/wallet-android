@@ -26,8 +26,7 @@ public class CertificateStoreTest {
     public void setup() {
         Context context = RuntimeEnvironment.application;
         LMDatabaseHelper databaseHelper = new LMDatabaseHelper(context);
-        ImageStore imageStore = mock(ImageStore.class);
-        mCertificateStore = new CertificateStore(databaseHelper, imageStore);
+        mCertificateStore = new CertificateStore(databaseHelper);
     }
 
     @Test
@@ -40,7 +39,7 @@ public class CertificateStoreTest {
         Certificate certificate = new Certificate(certUuid, issuerUuid, name, description);
         mCertificateStore.saveCertificate(certificate);
 
-        Certificate actualCertificate = mCertificateStore.loadCertificate(certUuid, issuerUuid);
+        Certificate actualCertificate = mCertificateStore.loadCertificate(certUuid);
 
         assertNotNull(actualCertificate);
         assertEquals(certUuid, actualCertificate.getUuid());

@@ -7,23 +7,22 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 
 import com.learningmachine.android.app.R;
-import com.learningmachine.android.app.data.model.Certificate;
 import com.learningmachine.android.app.ui.LMSingleFragmentActivity;
 
 public class CertificateActivity extends LMSingleFragmentActivity {
 
-    public static final String EXTRA_CERTIFICATE = "CertificateActivity.Certificate";
+    public static final String EXTRA_CERTIFICATE_UUID = "CertificateActivity.CertificateUuid";
 
-    public static Intent newIntent(Context context, Certificate certificate) {
+    public static Intent newIntent(Context context, String certificateUuid) {
         Intent intent = new Intent(context, CertificateActivity.class);
-        intent.putExtra(EXTRA_CERTIFICATE, certificate);
+        intent.putExtra(EXTRA_CERTIFICATE_UUID, certificateUuid);
         return intent;
     }
 
     @Override
     protected Fragment createFragment() {
-        Certificate certificate = (Certificate) getIntent().getSerializableExtra(EXTRA_CERTIFICATE);
-        return CertificateFragment.newInstance(certificate);
+        String certificateUuid = getIntent().getStringExtra(EXTRA_CERTIFICATE_UUID);
+        return CertificateFragment.newInstance(certificateUuid);
     }
 
     @Override

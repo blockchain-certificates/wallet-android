@@ -1,6 +1,7 @@
 package com.learningmachine.android.app.data.inject;
 
 import org.bitcoinj.core.NetworkParameters;
+import org.bitcoinj.params.MainNetParams;
 import org.bitcoinj.params.TestNet3Params;
 
 import javax.inject.Singleton;
@@ -23,7 +24,7 @@ public class DevDataModule {
     @Provides
     @Singleton
     NetworkParameters providesBitcoinNetworkParameters() {
-        return TestNet3Params.get();
+        return MainNetParams.get();
     }
 
     @Provides

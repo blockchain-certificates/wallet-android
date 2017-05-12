@@ -67,10 +67,11 @@
     <string name="certificate_add_file_label">What is the File of the certificate?</string>
     <string name="certificate_add_file_edit_text_hint">Certificate File</string>
     <string name="fragment_add_certificate_title">Add Certificate</string>
-    <string name="add_certificate_progress_dialog_message">Adding certificate…</string>
-    <string name="add_certificate_alert_dialog_success_title">Success!</string>
-    <string name="add_certificate_alert_dialog_success_message">This is a valid certificate.</string>
-    <string name="add_certificate_by_url_error_message">That doesn\'t appear to be a valid certificate. Please check the URL and try again.</string>
+    <string name="fragment_add_certificate_progress_dialog_message">Adding certificate…</string>
+    <string name="fragment_add_certificate_alert_dialog_success_title">Success!</string>
+    <string name="fragment_add_certificate_alert_dialog_success_message">This is a valid certificate.</string>
+    <string name="fragment_add_certificate_alert_dialog_error_message">That doesn\'t appear to be a valid certificate. Please check the URL and try again.</string>
+
 
     <!-- Certificate Fragment -->
 
@@ -78,6 +79,7 @@
     <string name="certificate_verify_menu_item_title">Verify</string>
     <string name="certificate_share_menu_item_title">Share</string>
     <string name="certificate_info_menu_item_title">Info</string>
+    <string name="fragment_certificate_progress_dialog_message">Loading Certificate…</string>
 
     <!-- Dialog Error Messages -->
 

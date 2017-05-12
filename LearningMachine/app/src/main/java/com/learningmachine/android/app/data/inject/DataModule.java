@@ -5,7 +5,6 @@ import android.content.Context;
 import com.learningmachine.android.app.data.CertificateManager;
 import com.learningmachine.android.app.data.IssuerManager;
 import com.learningmachine.android.app.data.bitcoin.BitcoinManager;
-import com.learningmachine.android.app.data.model.Certificate;
 import com.learningmachine.android.app.data.store.CertificateStore;
 import com.learningmachine.android.app.data.store.ImageStore;
 import com.learningmachine.android.app.data.store.IssuerStore;
@@ -14,7 +13,6 @@ import com.learningmachine.android.app.data.webservice.CertificateService;
 import com.learningmachine.android.app.data.webservice.IssuerService;
 
 import org.bitcoinj.core.NetworkParameters;
-import org.bitcoinj.params.TestNet3Params;
 
 import javax.inject.Singleton;
 
@@ -56,13 +54,13 @@ public class DataModule {
 
     @Provides
     @Singleton
-    CertificateManager providesCertificateManager(Context context, CertificateStore certificateStore, CertificateService certificateService) {
-        return new CertificateManager(context, certificateStore, certificateService);
+    CertificateManager providesCertificateManager(Context context, CertificateStore certificateStore, CertificateService certificateService, BitcoinManager bitcoinManager) {
+        return new CertificateManager(context, certificateStore, certificateService, bitcoinManager);
     }
 
     @Provides
     @Singleton
-    CertificateStore providesCertificateStore(LMDatabaseHelper databaseHelper, ImageStore imageStore) {
-        return new CertificateStore(databaseHelper, imageStore);
+    CertificateStore providesCertificateStore(LMDatabaseHelper databaseHelper) {
+        return new CertificateStore(databaseHelper);
     }
 }

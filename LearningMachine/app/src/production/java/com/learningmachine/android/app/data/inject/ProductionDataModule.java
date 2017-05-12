@@ -24,7 +24,7 @@ public class ProductionDataModule {
     @Provides
     @Singleton
     NetworkParameters providesBitcoinNetworkParameters() {
-        return TestNet3Params.get();
+        return MainNetParams.get();
     }
 
     @Provides

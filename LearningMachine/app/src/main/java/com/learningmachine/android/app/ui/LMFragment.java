@@ -119,6 +119,7 @@ public class LMFragment extends Fragment implements LifecycleProvider<FragmentEv
     }
 
     protected void displayErrors(Throwable throwable, @StringRes int errorTitleResId) {
+        hideProgressDialog();
         DialogUtils.showErrorAlertDialog(getContext(), getFragmentManager(), errorTitleResId, throwable);
     }
 

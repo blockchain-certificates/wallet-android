@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import okhttp3.ResponseBody;
+import okio.Buffer;
 import timber.log.Timber;
 
 public class FileUtils {
@@ -16,21 +16,31 @@ public class FileUtils {
     private static final String CERT_DIR = "certs";
     private static final String JSON_EXT = ".json";
 
-    public static boolean saveCertificate(Context context, ResponseBody responseBody, String uuid) {
-        File dir = new File(context.getFilesDir(), CERT_DIR);
-        dir.mkdirs();
-        String filename = uuid + JSON_EXT;
-        File file = new File(dir, filename);
-        return writeResponseBodyToDisk(file, responseBody);
+    public static boolean saveCertificate(Context context, Buffer buffer, String uuid) {
+        File file = getCertificateFile(context, uuid, true);
+        return writeResponseBodyToDisk(file, buffer);
     }
 
-    private static boolean writeResponseBodyToDisk(File file, ResponseBody body) {
+    public static File getCertificateFile(Context context, String uuid) {
+        return getCertificateFile(context, uuid, false);
+    }
+
+    private static File getCertificateFile(Context context, String uuid, boolean createDir) {
+        File certDir = new File(context.getFilesDir(), CERT_DIR);
+        if (createDir) {
+            certDir.mkdirs();
+        }
+        String filename = uuid + JSON_EXT;
+        return new File(certDir, filename);
+    }
+
+    private static boolean writeResponseBodyToDisk(File file, Buffer buffer) {
         try (OutputStream outputStream = new FileOutputStream(file)) {
 
-            InputStream inputStream = body.byteStream();
+            InputStream inputStream = buffer.inputStream();
 
             byte[] fileReader = new byte[4096];
-            long fileSize = body.contentLength();
+            long fileSize = buffer.size();
             long fileSizeDownloaded = 0;
 
             while (true) {

@@ -4,23 +4,22 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 
-import com.learningmachine.android.app.data.model.Certificate;
 import com.learningmachine.android.app.ui.LMSingleFragmentActivity;
 
 public class CertificateInfoActivity extends LMSingleFragmentActivity {
 
-    private static final String EXTRA_CERTIFICATE = "CertificateInfoActivity.Certificate";
+    private static final String EXTRA_CERTIFICATE_UUID = "CertificateInfoActivity.Uuid";
 
-    public static Intent newIntent(Context context, Certificate certificate) {
+    public static Intent newIntent(Context context, String uuid) {
         Intent intent = new Intent(context, CertificateInfoActivity.class);
-        intent.putExtra(EXTRA_CERTIFICATE, certificate);
+        intent.putExtra(EXTRA_CERTIFICATE_UUID, uuid);
         return intent;
     }
 
     @Override
     protected Fragment createFragment() {
-        Certificate certificate = (Certificate) getIntent().getSerializableExtra(EXTRA_CERTIFICATE);
-        return CertificateInfoFragment.newInstance(certificate);
+        String certificateUuid = getIntent().getStringExtra(EXTRA_CERTIFICATE_UUID);
+        return CertificateInfoFragment.newInstance(certificateUuid);
     }
 
     @Override
