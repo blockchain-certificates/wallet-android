@@ -7,11 +7,9 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.view.View;
 
 import com.learningmachine.android.app.util.DialogUtils;
-
 import com.trello.rxlifecycle.LifecycleProvider;
 import com.trello.rxlifecycle.LifecycleTransformer;
 import com.trello.rxlifecycle.RxLifecycle;
@@ -120,7 +118,13 @@ public class LMFragment extends Fragment implements LifecycleProvider<FragmentEv
     }
 
     protected void displayAlert(int requestCode, @StringRes int titleResId, @StringRes int messageResId, @StringRes int positiveButtonResId, @StringRes int negativeButtonResId) {
-        DialogUtils.showAlertDialog(getContext(), this, requestCode, titleResId, messageResId, positiveButtonResId, negativeButtonResId);
+        DialogUtils.showAlertDialog(getContext(),
+                this,
+                requestCode,
+                titleResId,
+                messageResId,
+                positiveButtonResId,
+                negativeButtonResId);
     }
 
     protected void displayErrors(Throwable throwable, @StringRes int errorTitleResId) {

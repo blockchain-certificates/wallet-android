@@ -28,7 +28,7 @@ import timber.log.Timber;
 public class CertificateInfoFragment extends LMFragment {
 
     private static final String ARG_CERTIFICATE_UUID = "CertificateInfoFragment.CertificateUuid";
-    private static final int REQUEST_CODE = 999;
+    private static final int DELETE_CONFIRMATION_REQUEST_CODE = 999;
 
     @Inject CertificateManager mCertificateManager;
     @Inject IssuerManager mIssuerManager;
@@ -85,7 +85,7 @@ public class CertificateInfoFragment extends LMFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.fragment_certificate_info_delete_menu_item:
-                displayAlert(REQUEST_CODE,
+                displayAlert(DELETE_CONFIRMATION_REQUEST_CODE,
                         R.string.fragment_certificate_info_delete_warning_title,
                         R.string.fragment_certificate_info_delete_warning_message,
                         R.string.fragment_certificate_info_delete_warning_positive_title,
@@ -97,7 +97,7 @@ public class CertificateInfoFragment extends LMFragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_CODE && resultCode == AlertDialogFragment.RESULT_POSITIVE) {
+        if (requestCode == DELETE_CONFIRMATION_REQUEST_CODE && resultCode == AlertDialogFragment.RESULT_POSITIVE) {
             String uuid = mCertificate.getUuid();
             mCertificateManager.removeCertificate(uuid)
                     .compose(bindToMainThread())
