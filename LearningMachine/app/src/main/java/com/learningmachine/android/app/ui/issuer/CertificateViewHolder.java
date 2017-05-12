@@ -30,7 +30,8 @@ public class CertificateViewHolder extends RecyclerView.ViewHolder implements Vi
         Certificate certificate = mViewModel.getCertificate();
         Context context = mBinding.getRoot()
                 .getContext();
-        Intent intent = CertificateActivity.newIntent(context, certificate);
+        String certUuid = certificate.getUuid();
+        Intent intent = CertificateActivity.newIntent(context, certUuid);
         context.startActivity(intent);
     }
 

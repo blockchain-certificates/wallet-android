@@ -36,7 +36,8 @@ public class IssuerViewHolder extends RecyclerView.ViewHolder implements View.On
     @Override
     public void onClick(View v) {
         Issuer issuer = mViewModel.getIssuer();
-        Intent intent = IssuerActivity.newIntent(mContext, issuer);
+        String issuerUuid = issuer.getUuid();
+        Intent intent = IssuerActivity.newIntent(mContext, issuerUuid);
         mContext.startActivity(intent);
     }
 

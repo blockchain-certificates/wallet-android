@@ -8,21 +8,25 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.learningmachine.android.app.R;
-import com.learningmachine.android.app.data.model.Issuer;
+import com.learningmachine.android.app.data.IssuerManager;
+import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.databinding.FragmentIssuerInfoBinding;
 import com.learningmachine.android.app.ui.LMFragment;
+
+import javax.inject.Inject;
 
 
 public class IssuerInfoFragment extends LMFragment {
 
-    private static final String ARG_ISSUER = "IssuerInfoFragment.Issuer";
+    private static final String ARG_ISSUER_UUID = "IssuerInfoFragment.IssuerUuid";
 
-    private FragmentIssuerInfoBinding mInfoBinding;
-    private Issuer mIssuer;
+    @Inject protected IssuerManager mIssuerManager;
 
-    public static IssuerInfoFragment newInstance(Issuer issuer) {
+    private FragmentIssuerInfoBinding mBinding;
+
+    public static IssuerInfoFragment newInstance(String issuerUuid) {
         Bundle args = new Bundle();
-        args.putSerializable(ARG_ISSUER, issuer);
+        args.putString(ARG_ISSUER_UUID, issuerUuid);
 
         IssuerInfoFragment fragment = new IssuerInfoFragment();
         fragment.setArguments(args);
@@ -33,17 +37,23 @@ public class IssuerInfoFragment extends LMFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mIssuer = (Issuer) getArguments().getSerializable(ARG_ISSUER);
+        Injector.obtain(getContext())
+                .inject(this);
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mInfoBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_issuer_info, container, false);
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_issuer_info, container, false);
 
-        IssuerInfoViewModel viewModel = new IssuerInfoViewModel(mIssuer);
-        mInfoBinding.setIssuerInfo(viewModel);
-        return mInfoBinding.getRoot();
+        String issuerUuid = getArguments().getString(ARG_ISSUER_UUID);
+        mIssuerManager.getIssuer(issuerUuid)
+                .compose(bindToMainThread())
+                .subscribe(issuer -> {
+                    IssuerInfoViewModel viewModel = new IssuerInfoViewModel(issuer);
+                    mBinding.setIssuerInfo(viewModel);
+                });
+
+        return mBinding.getRoot();
     }
-
 }

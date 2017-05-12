@@ -70,7 +70,6 @@ public class AddIssuerFragment extends LMFragment {
                     hideProgressDialog();
                     getActivity().finish();
                 }, throwable -> {
-                    hideProgressDialog();
                     displayErrors(throwable, R.string.error_title_message);
                 });
     }
