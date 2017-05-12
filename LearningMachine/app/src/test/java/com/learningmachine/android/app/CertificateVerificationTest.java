@@ -33,11 +33,10 @@ import static org.junit.Assert.assertThat;
  */
 public class CertificateVerificationTest {
 
-    public static final String BLOCKCHAIN_TX_RECORD_ID = "8623beadbc7877a9e20fb7f83eda6c1a1fc350171f0714ff6c6c4054018eb54d";
-    public static final String BLOCKCHAIN_TX_RECORD_FILENAME = BLOCKCHAIN_TX_RECORD_ID + ".json";
-    public static final String CERT_ASSERTION_UID = "609c2989-275f-4f4c-ab02-b245cfb09017";
-    public static final String CERT_FILENAME = CERT_ASSERTION_UID + ".json";
-    public static final String ISSUER_FILENAME = "got-issuer_live.json";
+    public static final String BLOCKCHAIN_TX_RECORD_ID = "d3f042497b1469446e95a9e289f26c551083a3a94c10fbb9c848be327ebf620d";
+    public static final String BLOCKCHAIN_TX_RECORD_FILENAME = "txrecord-" + BLOCKCHAIN_TX_RECORD_ID + ".json";
+    public static final String CERT_FILENAME = "certificate-8e02c2c4499e4e108b07ff5504438f4d.json";
+    public static final String ISSUER_FILENAME = "issuer-58ffaf130456e116107f68e6.json";
 
     @Test
     public void testCertificateVerification() throws Exception {
@@ -71,7 +70,7 @@ public class CertificateVerificationTest {
 
         Sha256Hash localHash = Sha256Hash.of(ByteStreams.toByteArray(getResourceAsStream(CERT_FILENAME)));
 
-        // download blockchain transaction record from http://blockchain.info/rawtx/<transaction_id>
+        // download blockchain transaction record from https://blockchain.info/rawtx/<transaction_id>
         Reader txRecordReader = getResourceAsReader(BLOCKCHAIN_TX_RECORD_FILENAME);
         TxRecord txRecord = gson.fromJson(txRecordReader, TxRecord.class);
 
