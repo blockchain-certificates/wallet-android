@@ -17,14 +17,14 @@
         android:paddingTop="@dimen/certificate_info_linear_layout_padding_top">
 
         <TextView
-            android:id="@+id/certificate_info_additional_info_textview"
+            android:id="@+id/certificate_info_additional_info_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/fragment_issuer_info_additional_information"
             style="@style/CertificateInfo.Header"/>
 
         <TextView
-            android:id="@+id/certificate_info_issuer_textview"
+            android:id="@+id/certificate_info_issuer_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/fragment_certificate_info_issuer_title"

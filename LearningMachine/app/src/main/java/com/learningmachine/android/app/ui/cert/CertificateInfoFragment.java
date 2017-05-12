@@ -20,7 +20,6 @@ import com.learningmachine.android.app.databinding.FragmentCertificateInfoBindin
 import com.learningmachine.android.app.dialog.AlertDialogFragment;
 import com.learningmachine.android.app.ui.LMFragment;
 import com.learningmachine.android.app.ui.issuer.IssuerActivity;
-import com.learningmachine.android.app.util.DialogUtils;
 
 import javax.inject.Inject;
 
