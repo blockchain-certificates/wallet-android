@@ -11,13 +11,16 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.google.gson.Gson;
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.CertificateManager;
 import com.learningmachine.android.app.data.inject.Injector;
+import com.learningmachine.android.app.data.model.Certificate;
 import com.learningmachine.android.app.data.model.Document;
 import com.learningmachine.android.app.data.model.KeyRotation;
 import com.learningmachine.android.app.data.model.Receipt;
@@ -33,9 +36,14 @@ import com.learningmachine.android.app.util.FileUtils;
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.ECKey;
 import org.bitcoinj.params.MainNetParams;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.security.SignatureException;
+import java.util.Scanner;
 
 import javax.inject.Inject;
 
@@ -51,6 +59,7 @@ public class CertificateFragment extends LMFragment {
     @Inject protected IssuerService mIssuerService;
 
     private FragmentCertificateBinding mBinding;
+    private String mCertUuid;
 
     public static CertificateFragment newInstance(String certificateUuid) {
         Bundle args = new Bundle();
@@ -69,6 +78,7 @@ public class CertificateFragment extends LMFragment {
         Injector.obtain(getContext())
                 .inject(this);
 
+        mCertUuid = getArguments().getString(ARG_CERTIFICATE_UUID);
     }
 
     @Nullable
@@ -105,23 +115,46 @@ public class CertificateFragment extends LMFragment {
     }
 
     private void verifyCertificate() {
-        Receipt receipt = mCertificate.getReceipt();
+        File file = FileUtils.getCertificateFile(getContext(), mCertUuid);
+        try (FileInputStream inputStream = new FileInputStream(file)) {
+            Scanner scanner = new Scanner(inputStream);
+            String jsonString = scanner.useDelimiter("\\A").next();
+            scanner.close();
+
+            Gson gson = new Gson();
+            Certificate certificate = gson.fromJson(jsonString, Certificate.class);
+
+            JSONObject jsonObject = new JSONObject(jsonString);
+            JSONObject document = jsonObject.getJSONObject("document");
+            String serializedDoc = document.toString();
+
+            verifyCertificate(certificate, serializedDoc);
+
+        } catch (IOException | JSONException e) {
+            Timber.e(e, "Could not load the certificate");
+            displayErrors(e, R.string.error_title_message); // TODO: use correct error string
+        }
+    }
+
+    private void verifyCertificate(Certificate certificate, String serializedDoc) {
+        Receipt receipt = certificate.getReceipt();
         if (receipt == null) {
             // TODO: show an error
             Timber.d("Certificate receipt missing");
             return;
         }
         String sourceId = receipt.getFirstAnchorSourceId();
-        String issuerUuid = mCertificate.getIssuerUuid();
+        String issuerUuid = certificate.getIssuerUuid();
         mBlockchainService.getBlockchain(sourceId)
                 .compose(bindToMainThread())
-                .subscribe(this::blockchainDownloaded, e -> Timber.e(e));
+                .subscribe(txRecord -> blockchainDownloaded(txRecord, certificate), e -> Timber.e(e));
         mIssuerService.getIssuer(issuerUuid)
                 .compose(bindToMainThread())
-                .subscribe(this::issuerDownloaded, e -> Timber.e(e));
+                .subscribe(issuer -> issuerDownloaded(issuer, certificate), e -> Timber.e(e));
+        jsonldProcess("alpha", serializedDoc);
     }
 
-    private void blockchainDownloaded(TxRecord txRecord) {
+    private void blockchainDownloaded(TxRecord txRecord, Certificate certificate) {
         TxRecordOut lastOut = txRecord.getLastOut();
         int value = lastOut.getValue();
         String remoteHash = lastOut.getScript();
@@ -135,7 +168,7 @@ public class CertificateFragment extends LMFragment {
         // strip out 6a20 prefix, if present
         remoteHash = remoteHash.startsWith("6a20") ? remoteHash.substring(4) : remoteHash;
 
-        String merkleRoot = mCertificate.getReceipt().getMerkleRoot();
+        String merkleRoot = certificate.getReceipt().getMerkleRoot();
 
         if (!remoteHash.equals(merkleRoot)) {
             // TODO: show an error
@@ -146,7 +179,7 @@ public class CertificateFragment extends LMFragment {
         Timber.d("Blockchain transaction is downloaded successfully");
     }
 
-    private void issuerDownloaded(IssuerResponse issuerResponse) {
+    private void issuerDownloaded(IssuerResponse issuerResponse, Certificate certificate) {
         if (issuerResponse.getIssuerKeys().isEmpty()) {
             // TODO: show an error
             Timber.d("Issuer is missing keys");
@@ -155,13 +188,12 @@ public class CertificateFragment extends LMFragment {
 
         KeyRotation firstIssuerKey = issuerResponse.getIssuerKeys().get(0);
 
-        Document document = mCertificate.getDocument();
+        Document document = certificate.getDocument();
         String signature = document.getSignature();
         String uuid = document.getAssertion().getUuid();
 
-        ECKey ecKey = null;
         try {
-            ecKey = ECKey.signedMessageToKey(uuid, signature);
+            ECKey ecKey = ECKey.signedMessageToKey(uuid, signature);
             ecKey.verifyMessage(uuid, signature); // this is tautological
             Address address = ecKey.toAddress(MainNetParams.get());
             if (!firstIssuerKey.getKey().equals(address.toBase58())) {
@@ -179,6 +211,24 @@ public class CertificateFragment extends LMFragment {
         Timber.d("Issuer matches certificate");
     }
 
+    private void jsonldProcess(String uniqueId, String serializedDoc) {
+        String options = "{algorithm: 'URDNA2015', format: 'application/nquads'}";
+        String jsResultHandler = "function(err, result) { var id = '" + uniqueId + "'; jsonldCallback.result(id, err, result); }";
+        String jsString = "javascript:(function() {jsonld.normalize(" + serializedDoc + ", " + options + ", " + jsResultHandler + ")})()";
+        mBinding.webView.loadUrl(jsString);
+    }
+
+    static class JsonLdCallback {
+        @JavascriptInterface
+        public void result(String id, Object error, String normalizedJsonld) {
+            if (error == null) {
+                Timber.d("Got the callback for id %s", id);
+            } else {
+                Timber.e(new Exception(), "Could not normalize JSON-LD");
+            }
+        }
+    }
+
     private void setupWebView() {
         WebSettings webSettings = mBinding.webView.getSettings();
         // Enable JavaScript.
@@ -187,6 +237,7 @@ public class CertificateFragment extends LMFragment {
         webSettings.setAllowFileAccessFromFileURLs(true);
         // Ensure local links/redirects in WebView, not the browser.
         mBinding.webView.setWebViewClient(new LMWebViewClient());
+        mBinding.webView.addJavascriptInterface(new JsonLdCallback(), "jsonldCallback");
 
         mBinding.webView.loadUrl(INDEX_FILE_PATH);
     }
@@ -208,8 +259,7 @@ public class CertificateFragment extends LMFragment {
 
         @Override
         public void onPageFinished(WebView view, String url) {
-            String certUuid = getArguments().getString(ARG_CERTIFICATE_UUID);
-            File certFile = FileUtils.getCertificateFile(getContext(), certUuid);
+            File certFile = FileUtils.getCertificateFile(getContext(), mCertUuid);
             String certFilePath = certFile.toString();
 
             String javascript = String.format(

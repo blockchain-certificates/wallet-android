@@ -101,6 +101,8 @@ public class Certificate implements Serializable {
             return mIssuerUuid;
         } else if (mIssuerResponse != null) {
             return mIssuerResponse.getUuid();
+        } else if (mDocument != null && mDocument.getInnerCertificate() != null) {
+            return mDocument.getInnerCertificate().getIssuerUuid();
         }
         return null;
     }
