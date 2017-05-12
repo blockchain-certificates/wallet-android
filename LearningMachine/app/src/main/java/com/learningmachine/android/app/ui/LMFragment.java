@@ -10,7 +10,6 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 
 import com.learningmachine.android.app.util.DialogUtils;
-
 import com.trello.rxlifecycle.LifecycleProvider;
 import com.trello.rxlifecycle.LifecycleTransformer;
 import com.trello.rxlifecycle.RxLifecycle;
@@ -116,6 +115,16 @@ public class LMFragment extends Fragment implements LifecycleProvider<FragmentEv
         }
 
         return (Observable.Transformer<T, T>) mMainThreadTransformer;
+    }
+
+    protected void displayAlert(int requestCode, @StringRes int titleResId, @StringRes int messageResId, @StringRes int positiveButtonResId, @StringRes int negativeButtonResId) {
+        DialogUtils.showAlertDialog(getContext(),
+                this,
+                requestCode,
+                titleResId,
+                messageResId,
+                positiveButtonResId,
+                negativeButtonResId);
     }
 
     protected void displayErrors(Throwable throwable, @StringRes int errorTitleResId) {

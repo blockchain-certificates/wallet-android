@@ -21,6 +21,11 @@ public class FileUtils {
         return writeResponseBodyToDisk(file, buffer);
     }
 
+    public static boolean deleteCertificate(Context context, String uuid) {
+        File file = getCertificateFile(context, uuid);
+        return file.delete();
+    }
+
     public static File getCertificateFile(Context context, String uuid) {
         return getCertificateFile(context, uuid, false);
     }

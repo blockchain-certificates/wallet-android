@@ -28,6 +28,7 @@
 
         <activity
             android:name=".ui.issuer.IssuerActivity"
+
             android:windowSoftInputMode="stateHidden"/>
 
         <activity

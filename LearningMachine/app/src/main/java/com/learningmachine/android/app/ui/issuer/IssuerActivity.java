@@ -22,6 +22,7 @@ public class IssuerActivity extends LMSingleFragmentActivity {
     public static Intent newIntent(Context context, String issuerUuid) {
         Intent intent = new Intent(context, IssuerActivity.class);
         intent.putExtra(EXTRA_ISSUER_UUID, issuerUuid);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         return intent;
     }
 

@@ -10,9 +10,9 @@ public class CertificateInfoActivity extends LMSingleFragmentActivity {
 
     private static final String EXTRA_CERTIFICATE_UUID = "CertificateInfoActivity.CertificateUuid";
 
-    public static Intent newIntent(Context context, String uuid) {
+    public static Intent newIntent(Context context, String certificateUuid) {
         Intent intent = new Intent(context, CertificateInfoActivity.class);
-        intent.putExtra(EXTRA_CERTIFICATE_UUID, uuid);
+        intent.putExtra(EXTRA_CERTIFICATE_UUID, certificateUuid);
         return intent;
     }
 

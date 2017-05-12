@@ -1,15 +1,20 @@
 package com.learningmachine.android.app.util;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentManagerNonConfig;
 
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.dialog.AlertDialogFragment;
 import com.learningmachine.android.app.dialog.ProgressDialogFragment;
 
 import java.net.UnknownHostException;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
 
 import retrofit2.HttpException;
 
@@ -22,9 +27,9 @@ public class DialogUtils {
     private static final String TAG_DIALOG_ALERT = "DialogUtils.Dialog.Alert";
 
     public static void showProgressDialog(FragmentManager fragmentManager, String message) {
-        ProgressDialogFragment dialog = ProgressDialogFragment.newInstance(message);
-        dialog.setCancelable(false);
-        dialog.show(fragmentManager, TAG_DIALOG_PROGRESS);
+        ProgressDialogFragment progressDialogFragment = ProgressDialogFragment.newInstance(message);
+        progressDialogFragment.setCancelable(false);
+        progressDialogFragment.show(fragmentManager, TAG_DIALOG_PROGRESS);
 
     }
 
@@ -36,8 +41,19 @@ public class DialogUtils {
     }
 
     public static void showAlertDialog(Context context, FragmentManager fragmentManager, @StringRes int messageResId) {
-        AlertDialogFragment dialog = AlertDialogFragment.newInstance(context, messageResId);
-        dialog.show(fragmentManager, TAG_DIALOG_ALERT);
+        AlertDialogFragment alertDialogFragment = AlertDialogFragment.newInstance(context, messageResId);
+        alertDialogFragment.show(fragmentManager, TAG_DIALOG_ALERT);
+    }
+
+    public static void showAlertDialog(Context context, @NonNull Fragment targetFragment, int requestCode, @StringRes int titleResId, @StringRes int messageResId, @StringRes int positiveButtonResId, @StringRes int negativeButtonResId) {
+        FragmentManager fragmentManager = targetFragment.getFragmentManager();
+        AlertDialogFragment alertDialogFragment = AlertDialogFragment.newInstance(context,
+                titleResId,
+                messageResId,
+                positiveButtonResId,
+                negativeButtonResId);
+        alertDialogFragment.setTargetFragment(targetFragment, requestCode);
+        alertDialogFragment.show(fragmentManager, TAG_DIALOG_ALERT);
     }
 
     public static void showErrorAlertDialog(Context context, FragmentManager fragmentManager, @StringRes int titleResId, Throwable throwable) {
