@@ -4,21 +4,24 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
 import com.learningmachine.android.app.data.model.Certificate;
+import com.learningmachine.android.app.data.model.Issuer;
 
 public class CertificateInfoViewModel extends BaseObservable {
 
     private Certificate mCertificate;
+    private Issuer mIssuer;
 
-    public CertificateInfoViewModel(Certificate certificate) {
+    public CertificateInfoViewModel(Certificate certificate, Issuer issuer) {
         mCertificate = certificate;
+        mIssuer = issuer;
     }
 
     @Bindable
-    public String getIssuer() {
-        if (mCertificate == null) {
+    public String getIssuerName() {
+        if (mIssuer == null) {
             return null;
         }
-        return mCertificate.getName();
+        return mIssuer.getName();
     }
 
     @Bindable

@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.CertificateManager;
+import com.learningmachine.android.app.data.IssuerManager;
 import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.data.model.Certificate;
 import com.learningmachine.android.app.databinding.FragmentCertificateInfoBinding;
@@ -31,6 +32,7 @@ public class CertificateInfoFragment extends LMFragment {
     private static final int REQUEST_CODE = 999;
 
     @Inject CertificateManager mCertificateManager;
+    @Inject IssuerManager mIssuerManager;
 
     private FragmentCertificateInfoBinding mBinding;
     private Certificate mCertificate;
@@ -60,12 +62,16 @@ public class CertificateInfoFragment extends LMFragment {
 
         String certificateUuid = getArguments().getString(ARG_CERTIFICATE_UUID);
         mCertificateManager.getCertificate(certificateUuid)
-                .compose(bindToMainThread())
-                .subscribe(certificate -> {
+                .flatMap(certificate -> {
                     mCertificate = certificate;
-                    CertificateInfoViewModel viewModel = new CertificateInfoViewModel(certificate);
+                    String issuerUuid = certificate.getIssuerUuid();
+                    return mIssuerManager.getIssuer(issuerUuid);
+                })
+                .compose(bindToMainThread())
+                .subscribe(issuer -> {
+                    CertificateInfoViewModel viewModel = new CertificateInfoViewModel(mCertificate, issuer);
                     mBinding.setCertificateInfo(viewModel);
-                }, throwable -> Timber.e(throwable, "Unable to load certificate"));
+                }, throwable -> Timber.e(throwable, "Unable to load certificate & issuer"));
 
         return mBinding.getRoot();
     }
