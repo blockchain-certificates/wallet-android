@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 
@@ -105,8 +106,9 @@ public class AlertDialogFragment extends DialogFragment {
     }
 
     private void onButtonTapped(int buttonResultCode) {
-        if (getTargetFragment() != null) {
-            getTargetFragment().onActivityResult(getTargetRequestCode(), buttonResultCode, null);
+        Fragment fragment = getTargetFragment();
+        if (fragment != null) {
+            fragment.onActivityResult(getTargetRequestCode(), buttonResultCode, null);
         } else if (callback != null) {
             if (buttonResultCode == RESULT_POSITIVE) {
                 callback.onDialogPositive();

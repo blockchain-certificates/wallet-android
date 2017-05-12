@@ -83,6 +83,7 @@
 
     <!-- Certificate Info Fragment -->
 
+    <string name="fragment_certificate_info_delete_menu_item_title">Delete</string>
     <string name="fragment_certificate_info_delete_warning_title">Be careful</string>
     <string name="fragment_certificate_info_delete_warning_message">If you delete this certificate and don\'t have a backup, then you\'ll have to ask the issuer to send it to you again if you want to recover it. Are you sure you want to delete this certificate?</string>
     <string name="fragment_certificate_info_delete_warning_positive_title">Delete</string>
@@ -94,5 +95,9 @@
     <string name="unknown_error_message">Unknown error. Something unexepected occurred.</string>
     <string name="error_title_message">Error</string>
     <string name="ime_action_done">Done</string>
+
+    <!--Certificate Info Fragment-->
+    <string name="fragment_certificate_info_issuer_title">Issuer</string>
+    <string name="fragment_certificate_info_issuer_issue_date">Issue Date</string>
 
 </resources>

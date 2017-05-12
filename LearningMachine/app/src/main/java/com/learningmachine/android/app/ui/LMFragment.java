@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
 
 import com.learningmachine.android.app.util.DialogUtils;
@@ -116,6 +117,10 @@ public class LMFragment extends Fragment implements LifecycleProvider<FragmentEv
         }
 
         return (Observable.Transformer<T, T>) mMainThreadTransformer;
+    }
+
+    protected void displayAlert(int requestCode, @StringRes int titleResId, @StringRes int messageResId, @StringRes int positiveButtonResId, @StringRes int negativeButtonResId) {
+        DialogUtils.showAlertDialog(getContext(), this, requestCode, titleResId, messageResId, positiveButtonResId, negativeButtonResId);
     }
 
     protected void displayErrors(Throwable throwable, @StringRes int errorTitleResId) {
