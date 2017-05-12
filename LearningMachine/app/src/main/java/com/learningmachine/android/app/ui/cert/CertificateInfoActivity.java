@@ -8,7 +8,7 @@ import com.learningmachine.android.app.ui.LMSingleFragmentActivity;
 
 public class CertificateInfoActivity extends LMSingleFragmentActivity {
 
-    private static final String EXTRA_CERTIFICATE_UUID = "CertificateInfoActivity.Uuid";
+    private static final String EXTRA_CERTIFICATE_UUID = "CertificateInfoActivity.CertificateUuid";
 
     public static Intent newIntent(Context context, String uuid) {
         Intent intent = new Intent(context, CertificateInfoActivity.class);

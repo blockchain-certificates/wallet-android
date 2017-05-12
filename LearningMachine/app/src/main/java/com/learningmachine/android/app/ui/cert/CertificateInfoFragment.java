@@ -9,17 +9,23 @@ import android.view.ViewGroup;
 
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.CertificateManager;
+import com.learningmachine.android.app.data.IssuerManager;
 import com.learningmachine.android.app.data.inject.Injector;
+import com.learningmachine.android.app.data.model.Certificate;
 import com.learningmachine.android.app.databinding.FragmentCertificateInfoBinding;
 import com.learningmachine.android.app.ui.LMFragment;
 
 import javax.inject.Inject;
 
+import timber.log.Timber;
+
 public class CertificateInfoFragment extends LMFragment {
 
-    private static final String ARG_CERTIFICATE_UUID = "CertificateInfoFragment.Uuid";
+    private static final String ARG_CERTIFICATE_UUID = "CertificateInfoFragment.CertificateUuid";
 
     @Inject protected CertificateManager mCertificateManager;
+    @Inject protected IssuerManager mIssuerManager;
+    private Certificate mCertificate;
 
     private FragmentCertificateInfoBinding mInfoBinding;
 
@@ -47,12 +53,17 @@ public class CertificateInfoFragment extends LMFragment {
 
         String certificateUuid = getArguments().getString(ARG_CERTIFICATE_UUID);
         mCertificateManager.getCertificate(certificateUuid)
+                .flatMap(certificate -> {
+                    mCertificate = certificate;
+                    String issuerUuid = certificate.getIssuerUuid();
+                    return mIssuerManager.getIssuer(issuerUuid);
+                })
                 .compose(bindToMainThread())
-                .subscribe(certificate -> {
-                    CertificateInfoViewModel viewModel = new CertificateInfoViewModel(certificate);
+                .subscribe(issuer -> {
+                    CertificateInfoViewModel viewModel = new CertificateInfoViewModel(mCertificate, issuer);
                     mInfoBinding.setCertificateInfo(viewModel);
 
-                });
+                },throwable -> Timber.e(throwable, "Unable to load certificate & issuer"));
 
         return mInfoBinding.getRoot();
     }
