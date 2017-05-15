@@ -102,7 +102,7 @@ public class CertificateVerifier {
                 .flatMap(remoteHash -> blockchainDownloaded(remoteHash, certificate));
     }
 
-    public Observable<String> getBitcoinTransactionRecordHash(String sourceId) {
+    private Observable<String> getBitcoinTransactionRecordHash(String sourceId) {
         return mBlockchainService.getBlockchain(sourceId)
                 .flatMap(txRecord -> {
                     TxRecordOut txRecordOut = txRecord.getLastOut();
