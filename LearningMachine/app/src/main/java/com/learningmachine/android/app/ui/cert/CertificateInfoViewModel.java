@@ -29,6 +29,6 @@ public class CertificateInfoViewModel extends BaseObservable {
         if (mCertificate == null) {
             return null;
         }
-        return mCertificate.getUuid(); //TODO: Change to get Document-> Assertion -> getIssuedOn
+        return mCertificate.getIssueDate();
     }
 }

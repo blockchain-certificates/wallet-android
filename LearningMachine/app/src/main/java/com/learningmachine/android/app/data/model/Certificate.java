@@ -4,6 +4,8 @@ import com.google.gson.annotations.SerializedName;
 import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 import com.learningmachine.android.app.util.StringUtils;
 
+import org.joda.time.DateTime;
+
 import java.io.Serializable;
 
 public class Certificate implements Serializable {
@@ -24,12 +26,14 @@ public class Certificate implements Serializable {
     // Must be set manually
     private String mUuid;
     private String mIssuerUuid;
+    private String mIssueDate;
 
-    public Certificate(String uuid, String issuerUuid, String name, String description) {
+    public Certificate(String uuid, String issuerUuid, String name, String description, String issueDate) {
         mUuid = uuid;
         mIssuerUuid = issuerUuid;
         mName = name;
         mDescription = description;
+        mIssueDate = issueDate;
     }
 
     public String getName() {
@@ -99,5 +103,17 @@ public class Certificate implements Serializable {
 
     public void setIssuerUuid(String issuerUuid) {
         mIssuerUuid = issuerUuid;
+    }
+
+    public DateTime getIssueDateTime() {
+        return DateTime.parse(mIssueDate);
+    }
+
+    public String getIssueDate() {
+        return mIssueDate;
+    }
+
+    public void setIssueDate(String issueDate) {
+        mIssueDate = issueDate;
     }
 }
