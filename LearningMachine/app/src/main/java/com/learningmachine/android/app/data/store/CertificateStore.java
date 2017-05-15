@@ -84,7 +84,7 @@ public class CertificateStore implements DataStore {
         certificateResponse.setIssuerUuid(issuerUuid);
 
         String issueDate = assertion.getIssuedOn();
-        certificateResponse.setIssueDate(issueDate);
+        certificateResponse.setIssuedOn(issueDate);
 
         saveCertificate(certificateResponse);
     }
@@ -94,7 +94,7 @@ public class CertificateStore implements DataStore {
 
         String certUuid = certificate.getUuid();
         String issuerUuid = certificate.getIssuerUuid();
-        String issueDate = certificate.getIssueDate();
+        String issueDate = certificate.getIssueOn();
 
         contentValues.put(LMDatabaseHelper.Column.Certificate.UUID, certUuid);
         contentValues.put(LMDatabaseHelper.Column.Certificate.NAME, certificate.getName());

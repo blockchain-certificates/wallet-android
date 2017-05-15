@@ -29,6 +29,6 @@ public class CertificateInfoViewModel extends BaseObservable {
         if (mCertificate == null) {
             return null;
         }
-        return mCertificate.getIssueDate();
+        return mCertificate.getIssueOn();
     }
 }

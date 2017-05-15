@@ -26,14 +26,14 @@ public class Certificate implements Serializable {
     // Must be set manually
     private String mUuid;
     private String mIssuerUuid;
-    private String mIssueDate;
+    private String mIssuedOn;
 
-    public Certificate(String uuid, String issuerUuid, String name, String description, String issueDate) {
+    public Certificate(String uuid, String issuerUuid, String name, String description, String issuedOn) {
         mUuid = uuid;
         mIssuerUuid = issuerUuid;
         mName = name;
         mDescription = description;
-        mIssueDate = issueDate;
+        mIssuedOn = issuedOn;
     }
 
     public String getName() {
@@ -105,15 +105,15 @@ public class Certificate implements Serializable {
         mIssuerUuid = issuerUuid;
     }
 
-    public DateTime getIssueDateTime() {
-        return DateTime.parse(mIssueDate);
+    public DateTime getIssuedOnDateTime() {
+        return DateTime.parse(mIssuedOn);
     }
 
-    public String getIssueDate() {
-        return mIssueDate;
+    public String getIssueOn() {
+        return mIssuedOn;
     }
 
-    public void setIssueDate(String issueDate) {
-        mIssueDate = issueDate;
+    public void setIssuedOn(String issuedOn) {
+        mIssuedOn = issuedOn;
     }
 }
