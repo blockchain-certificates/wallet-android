@@ -57,6 +57,7 @@ public class AddIssuerFragment extends LMFragment {
     }
 
     private void startIssuerIntroduction() {
+        hideKeyboard();
         String introUrl = mBinding.addIssuerUrlEditText.getText()
                 .toString();
         String nonce = mBinding.addIssuerIdentityEditText.getText()

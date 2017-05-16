@@ -31,6 +31,8 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/certificate_add_url_edit_text_hint"
                 android:imeOptions="flagNoFullscreen|actionDone"
+                android:imeActionLabel="@string/ime_action_done"
+                android:imeActionId="@integer/action_done"
                 android:inputType="textUri"
                 android:maxLines="1"
                 style="@style/Material.Light.Subhead.Disabled"/>
