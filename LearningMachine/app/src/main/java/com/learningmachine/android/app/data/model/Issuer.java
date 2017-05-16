@@ -5,6 +5,8 @@ import com.learningmachine.android.app.util.DateUtils;
 import com.learningmachine.android.app.util.ImageUtils;
 import com.learningmachine.android.app.util.ListUtils;
 
+import org.joda.time.DateTime;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -42,13 +44,16 @@ public class Issuer implements Serializable {
     @SerializedName("revocationKeys")
     private List<KeyRotation> mRevocationKeys;
 
+    // created when added to DB
+    private String mIntroducedOn;
 
-    public Issuer(String name, String email, String uuid, String certsUrl, String introUrl) {
+    public Issuer(String name, String email, String uuid, String certsUrl, String introUrl, String introducedOn) {
         mName = name;
         mEmail = email;
         mUuid = uuid;
         mCertsUrl = certsUrl;
         mIntroUrl = introUrl;
+        mIntroducedOn = introducedOn;
     }
 
     public String getName() {
@@ -101,12 +106,11 @@ public class Issuer implements Serializable {
         return null;
     }
 
-    public String getIntroducedDateString() {
-        KeyRotation keyRotation = getPublicKey();
-        if (keyRotation == null) {
-            return null;
-        }
-        String dateString = keyRotation.getCreatedDate();
-        return DateUtils.formatDateString(dateString);
+    public String getIntroducedOn() {
+        return mIntroducedOn;
+    }
+
+    public void setIntroducedOn(String introducedOn) {
+        mIntroducedOn = introducedOn;
     }
 }

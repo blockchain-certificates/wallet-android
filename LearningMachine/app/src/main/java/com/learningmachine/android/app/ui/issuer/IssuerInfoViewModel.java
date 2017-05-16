@@ -4,6 +4,7 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
 import com.learningmachine.android.app.data.model.Issuer;
+import com.learningmachine.android.app.util.DateUtils;
 
 public class IssuerInfoViewModel extends BaseObservable {
 
@@ -18,7 +19,8 @@ public class IssuerInfoViewModel extends BaseObservable {
         if (mIssuer == null) {
             return null;
         }
-        return mIssuer.getIntroducedDateString();
+        String dateString = mIssuer.getIntroducedOn();
+        return DateUtils.formatDateString(dateString);
     }
 
     @Bindable

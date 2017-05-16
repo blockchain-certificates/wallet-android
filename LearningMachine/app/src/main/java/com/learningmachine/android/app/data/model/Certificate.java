@@ -105,10 +105,6 @@ public class Certificate implements Serializable {
         mIssuerUuid = issuerUuid;
     }
 
-    public DateTime getIssuedOnDateTime() {
-        return DateTime.parse(mIssuedOn);
-    }
-
     public String getIssueOn() {
         return mIssuedOn;
     }
