@@ -8,8 +8,8 @@ public class CertificateResponse extends Certificate {
     @SerializedName("image")
     private String mImageData;
 
-    public CertificateResponse(String uuid, String issuerUuid, String name, String description) {
-        super(uuid, issuerUuid, name, description);
+    public CertificateResponse(String uuid, String issuerUuid, String name, String description, String issueDate) {
+        super(uuid, issuerUuid, name, description, null);
     }
 
     public String getImageData() {

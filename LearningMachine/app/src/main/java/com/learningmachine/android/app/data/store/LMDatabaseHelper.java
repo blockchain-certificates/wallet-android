@@ -57,6 +57,7 @@ public class LMDatabaseHelper extends SQLiteOpenHelper {
             public static final String ISSUER_UUID = "issuer_id";
             public static final String NAME = "name";
             public static final String DESCRIPTION = "description";
+            public static final String ISSUE_DATE = "issue_date";
         }
     }
 
@@ -100,6 +101,7 @@ public class LMDatabaseHelper extends SQLiteOpenHelper {
                 + ", " + Column.Certificate.ISSUER_UUID + " TEXT"
                 + ", " + Column.Certificate.NAME + " TEXT"
                 + ", " + Column.Certificate.DESCRIPTION + " TEXT"
+                + ", " + Column.Certificate.ISSUE_DATE + " TEXT"
                 + ");";
         sqLiteDatabase.execSQL(createTable);
     }
