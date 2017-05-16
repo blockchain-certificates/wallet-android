@@ -1,6 +1,7 @@
 package com.learningmachine.android.app.data.model;
 
 import com.google.gson.annotations.SerializedName;
+import com.learningmachine.android.app.util.DateUtils;
 import com.learningmachine.android.app.util.ImageUtils;
 import com.learningmachine.android.app.util.ListUtils;
 
@@ -98,5 +99,14 @@ public class Issuer implements Serializable {
             return mIssuerKeys.get(0);
         }
         return null;
+    }
+
+    public String getIntroducedDateString() {
+        KeyRotation keyRotation = getPublicKey();
+        if (keyRotation == null) {
+            return null;
+        }
+        String dateString = keyRotation.getCreatedDate();
+        return DateUtils.formatDateString(dateString);
     }
 }

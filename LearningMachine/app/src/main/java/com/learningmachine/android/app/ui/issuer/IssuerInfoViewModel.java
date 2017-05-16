@@ -18,7 +18,7 @@ public class IssuerInfoViewModel extends BaseObservable {
         if (mIssuer == null) {
             return null;
         }
-        return mIssuer.getPublicKey().getCreatedDate();
+        return mIssuer.getIntroducedDateString();
     }
 
     @Bindable
