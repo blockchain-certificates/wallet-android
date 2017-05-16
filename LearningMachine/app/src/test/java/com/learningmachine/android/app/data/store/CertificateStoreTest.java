@@ -35,8 +35,9 @@ public class CertificateStoreTest {
         String issuerUuid = "issuerUuid";
         String name = "Sample Certificate 1";
         String description = "Welcome to the sample certificate!";
+        String issuedDate = "2017-05-11T18:28:27.415+00:00";
 
-        Certificate certificate = new Certificate(certUuid, issuerUuid, name, description);
+        Certificate certificate = new Certificate(certUuid, issuerUuid, name, description, issuedDate);
         mCertificateStore.saveCertificate(certificate);
 
         Certificate actualCertificate = mCertificateStore.loadCertificate(certUuid);
@@ -46,5 +47,6 @@ public class CertificateStoreTest {
         assertEquals(issuerUuid, actualCertificate.getIssuerUuid());
         assertEquals(name, actualCertificate.getName());
         assertEquals(description, actualCertificate.getDescription());
+        assertEquals(issuedDate, actualCertificate.getIssueOn());
     }
 }
