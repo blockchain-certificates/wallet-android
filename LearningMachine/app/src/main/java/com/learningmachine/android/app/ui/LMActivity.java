@@ -1,10 +1,12 @@
 package com.learningmachine.android.app.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
 
 import com.trello.rxlifecycle.LifecycleProvider;
 import com.trello.rxlifecycle.LifecycleTransformer;
@@ -108,6 +110,15 @@ public abstract class LMActivity extends AppCompatActivity implements LifecycleP
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    /* Keyboard */
+
+    public void hideKeyboard() {
+        if (getCurrentFocus() != null && getCurrentFocus().getWindowToken() != null) {
+            InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
     }
 
     /* ActionBar */

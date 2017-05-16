@@ -146,4 +146,11 @@ public class LMFragment extends Fragment implements LifecycleProvider<FragmentEv
         Snackbar.make(view, messageResId, Snackbar.LENGTH_LONG)
                 .show();
     }
+
+    // Keyboard
+
+    protected void hideKeyboard() {
+        LMActivity activity = (LMActivity) getActivity();
+        activity.hideKeyboard();
+    }
 }

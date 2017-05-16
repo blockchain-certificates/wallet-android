@@ -49,6 +49,7 @@ public class AddCertificateURLFragment extends LMFragment {
     }
 
     private void addCertificate() {
+        hideKeyboard();
         String url = mBinding.certificateUrlEditText.getText()
                 .toString();
         mCertificateManager.addCertificate(url)
