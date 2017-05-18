@@ -9,8 +9,6 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
-import android.view.View;
-import android.widget.ArrayAdapter;
 
 public class AlertDialogFragment extends DialogFragment {
 
@@ -22,8 +20,6 @@ public class AlertDialogFragment extends DialogFragment {
     private static final String ARG_MESSAGE = "AlertDialogFragment.Message";
     private static final String ARG_POSITIVE_BUTTON_MESSAGE = "AlertDialogFragment.Positive.Button_Message";
     private static final String ARG_NEGATIVE_BUTTON_MESSAGE = "AlertDialogFragment.Negative.Button.Message";
-    private static final String ARG_ARRAY_ADAPTER = "AlertDialogFragment.ArrayAdapter";
-    private static final String ARG_ON_CLICK_LISTENER = "AlertDialogFragment.OnClickListener";
 
     public interface AlertCallback {
         void onDialogPositive();

@@ -3,7 +3,6 @@
           package="com.learningmachine.android.app">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.file"/>
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application

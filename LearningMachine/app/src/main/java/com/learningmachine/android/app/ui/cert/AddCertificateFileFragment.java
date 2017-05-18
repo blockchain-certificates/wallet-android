@@ -73,22 +73,7 @@ public class AddCertificateFileFragment extends LMFragment {
         return super.onOptionsItemSelected(item);
     }
 
-    private void addCertificateFile() {
-        if (mSelectedFile == null) {
-            return;
-        }
-        mCertificateManager.addCertificate(mSelectedFile)
-                .doOnSubscribe(() -> displayProgressDialog(R.string.fragment_add_certificate_progress_dialog_message))
-                .compose(bindToMainThread())
-                .subscribe(uuid -> {
-                    Timber.d("Cert copied");
-                    hideProgressDialog();
-                    getActivity().finish();
-                }, throwable -> displayErrors(throwable, R.string.error_title_message));
-    }
-
     private View.OnClickListener mOnClickListener = v -> {
-
         if (ContextCompat.checkSelfPermission(getContext(),
                 Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(),
@@ -112,6 +97,21 @@ public class AddCertificateFileFragment extends LMFragment {
             showFileDialog(files);
         }
     };
+
+    private void addCertificateFile() {
+        if (mSelectedFile == null) {
+            return;
+        }
+        mCertificateManager.addCertificate(mSelectedFile)
+                .doOnSubscribe(() -> displayProgressDialog(R.string.fragment_add_certificate_progress_dialog_message))
+                .compose(bindToMainThread())
+                .subscribe(uuid -> {
+                    Timber.d("Cert copied");
+                    hideProgressDialog();
+                    getActivity().finish();
+                }, throwable -> displayErrors(throwable, R.string.error_title_message));
+    }
+
 
     private void selectFile(File file) {
         if (file == null) {
