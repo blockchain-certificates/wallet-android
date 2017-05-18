@@ -14,6 +14,8 @@ import com.learningmachine.android.app.data.webservice.CertificateService;
 import com.learningmachine.android.app.data.webservice.response.AddCertificateResponse;
 import com.learningmachine.android.app.util.FileUtils;
 
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
 
@@ -49,6 +51,11 @@ public class CertificateManager {
                 mBitcoinManager.getBitcoinAddress(),
                 AddCertificateHolder::new)
                 .flatMap(holder -> handleCertificateResponse(holder.getResponseBody(), holder.getBitcoinAddress()));
+    }
+
+    public Observable<String> addCertificate(File file) {
+        return mBitcoinManager.getBitcoinAddress()
+                .flatMap(bitcoinAddress -> handleCertificateFile(file, bitcoinAddress));
     }
 
     public Observable<Boolean> removeCertificate(String uuid) {
@@ -91,6 +98,32 @@ public class CertificateManager {
             FileUtils.saveCertificate(mContext, buffer, uuid);
             return Observable.just(uuid);
         } catch (JsonSyntaxException | IOException e) {
+            return Observable.error(e);
+        }
+    }
+
+    private Observable<String> handleCertificateFile(File certificateFile, String bitcoinAddress) {
+        try (FileReader fileReader = new FileReader(certificateFile)) {
+            Gson gson = new Gson();
+            AddCertificateResponse addCertificateResponse = gson.fromJson(fileReader, AddCertificateResponse.class);
+            LMDocument document = addCertificateResponse.getDocument();
+            Recipient recipient = document.getRecipient();
+            String recipientKey = recipient.getPublicKey();
+
+            // Reject on address mismatch
+            if (!bitcoinAddress.equals(recipientKey)) {
+                return Observable.error(new CertificateOwnershipException());
+            }
+
+            // Save to DB
+            mCertificateStore.saveAddCertificateResponse(addCertificateResponse);
+
+            // Copy file
+            String uuid = document.getLMAssertion()
+                    .getUuid();
+            FileUtils.copyCerificate(mContext, certificateFile, uuid);
+            return Observable.just(uuid);
+        } catch (IOException e) {
             return Observable.error(e);
         }
     }

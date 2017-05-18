@@ -6,6 +6,8 @@ import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentManagerNonConfig;
+import android.view.View;
+import android.widget.ArrayAdapter;
 
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.dialog.AlertDialogFragment;
