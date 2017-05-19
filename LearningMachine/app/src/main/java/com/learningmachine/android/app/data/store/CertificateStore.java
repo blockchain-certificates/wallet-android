@@ -78,6 +78,8 @@ public class CertificateStore implements DataStore {
         LMAssertion assertion = document.getLMAssertion();
         String uuid = assertion.getUuid();
         certificateResponse.setUuid(uuid);
+        String urlString = assertion.getId();
+        certificateResponse.setUrlString(urlString);
 
         IssuerResponse issuerResponse = certificateResponse.getIssuerResponse();
         String issuerUuid = issuerResponse.getUuid();
@@ -94,13 +96,15 @@ public class CertificateStore implements DataStore {
 
         String certUuid = certificate.getUuid();
         String issuerUuid = certificate.getIssuerUuid();
-        String issueDate = certificate.getIssueOn();
+        String issueDate = certificate.getIssuedOn();
+        String urlString = certificate.getUrlString();
 
         contentValues.put(LMDatabaseHelper.Column.Certificate.UUID, certUuid);
         contentValues.put(LMDatabaseHelper.Column.Certificate.NAME, certificate.getName());
         contentValues.put(LMDatabaseHelper.Column.Certificate.DESCRIPTION, certificate.getDescription());
         contentValues.put(LMDatabaseHelper.Column.Certificate.ISSUER_UUID, issuerUuid);
         contentValues.put(LMDatabaseHelper.Column.Certificate.ISSUE_DATE, issueDate);
+        contentValues.put(LMDatabaseHelper.Column.Certificate.URL, urlString);
 
         if (loadCertificate(certUuid) == null) {
             mDatabase.insert(LMDatabaseHelper.Table.CERTIFICATE,
