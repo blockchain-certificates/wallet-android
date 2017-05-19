@@ -24,6 +24,10 @@ public class IssuerManager {
         return Observable.just(mIssuerStore.loadIssuer(issuerUuid));
     }
 
+    public Observable<Issuer> getIssuerForCertificate(String certUuid) {
+        return Observable.just(mIssuerStore.loadIssuerForCertificate(certUuid));
+    }
+
     public Observable<List<Issuer>> getIssuers() {
         return Observable.just(mIssuerStore.loadIssuers());
     }

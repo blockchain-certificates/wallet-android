@@ -27,6 +27,7 @@ public class Certificate implements Serializable {
     private String mUuid;
     private String mIssuerUuid;
     private String mIssuedOn;
+    private String mUrlString;
 
     public Certificate(String uuid, String issuerUuid, String name, String description, String issuedOn) {
         mUuid = uuid;
@@ -115,5 +116,15 @@ public class Certificate implements Serializable {
 
     public void setIssuedOn(String issuedOn) {
         mIssuedOn = issuedOn;
+    }
+
+    public String getUrlString() {
+        // TODO remove when document.assertion.id
+//        return mUrlString;
+        return "https://someurl.com";
+    }
+
+    public void setUrlString(String urlString) {
+        mUrlString = urlString;
     }
 }
