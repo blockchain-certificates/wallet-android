@@ -14,6 +14,8 @@ import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 import com.learningmachine.android.app.util.GsonUtil;
 import com.learningmachine.android.app.util.ListUtils;
 
+import org.joda.time.DateTime;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +58,9 @@ public class IssuerStore implements DataStore {
         String imageData = issuerResponse.getImageData();
         mImageStore.saveImage(uuid, imageData);
 
+        String introducedOn = DateTime.now().toString();
+        issuerResponse.setIntroducedOn(introducedOn);
+
         saveIssuer(issuerResponse);
     }
 
@@ -67,6 +72,7 @@ public class IssuerStore implements DataStore {
         contentValues.put(LMDatabaseHelper.Column.Issuer.UUID, issuer.getUuid());
         contentValues.put(LMDatabaseHelper.Column.Issuer.CERTS_URL, issuer.getCertsUrl());
         contentValues.put(LMDatabaseHelper.Column.Issuer.INTRO_URL, issuer.getIntroUrl());
+        contentValues.put(LMDatabaseHelper.Column.Issuer.INTRODUCED_ON, issuer.getIntroducedOn());
 
         saveIssuerKeys(issuer.getIssuerKeys(), issuer.getUuid());
         saveRevocationKeys(issuer.getRevocationKeys(), issuer.getUuid());

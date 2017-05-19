@@ -29,12 +29,13 @@ public class Certificate implements Serializable {
     private String mIssuedOn;
     private String mUrlString;
 
-    public Certificate(String uuid, String issuerUuid, String name, String description, String issuedOn) {
+    public Certificate(String uuid, String issuerUuid, String name, String description, String issuedOn, String urlString) {
         mUuid = uuid;
         mIssuerUuid = issuerUuid;
         mName = name;
         mDescription = description;
         mIssuedOn = issuedOn;
+        mUrlString = urlString;
     }
 
     public String getName() {
@@ -106,11 +107,7 @@ public class Certificate implements Serializable {
         mIssuerUuid = issuerUuid;
     }
 
-    public DateTime getIssuedOnDateTime() {
-        return DateTime.parse(mIssuedOn);
-    }
-
-    public String getIssueOn() {
+    public String getIssuedOn() {
         return mIssuedOn;
     }
 
@@ -119,9 +116,7 @@ public class Certificate implements Serializable {
     }
 
     public String getUrlString() {
-        // TODO remove when document.assertion.id
-//        return mUrlString;
-        return "https://someurl.com";
+        return mUrlString;
     }
 
     public void setUrlString(String urlString) {

@@ -5,6 +5,7 @@ import android.databinding.Bindable;
 
 import com.learningmachine.android.app.data.model.Certificate;
 import com.learningmachine.android.app.data.model.Issuer;
+import com.learningmachine.android.app.util.DateUtils;
 
 public class CertificateInfoViewModel extends BaseObservable {
 
@@ -29,6 +30,7 @@ public class CertificateInfoViewModel extends BaseObservable {
         if (mCertificate == null) {
             return null;
         }
-        return mCertificate.getIssueOn();
+        String dateString = mCertificate.getIssuedOn();
+        return DateUtils.formatDateString(dateString);
     }
 }

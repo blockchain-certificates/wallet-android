@@ -36,8 +36,9 @@ public class CertificateStoreTest {
         String name = "Sample Certificate 1";
         String description = "Welcome to the sample certificate!";
         String issuedDate = "2017-05-11T18:28:27.415+00:00";
+        String urlString = "https://certificates.learningmachine.com/certificate/sampelcertificate";
 
-        Certificate certificate = new Certificate(certUuid, issuerUuid, name, description, issuedDate);
+        Certificate certificate = new Certificate(certUuid, issuerUuid, name, description, issuedDate, urlString);
         mCertificateStore.saveCertificate(certificate);
 
         Certificate actualCertificate = mCertificateStore.loadCertificate(certUuid);
@@ -47,6 +48,7 @@ public class CertificateStoreTest {
         assertEquals(issuerUuid, actualCertificate.getIssuerUuid());
         assertEquals(name, actualCertificate.getName());
         assertEquals(description, actualCertificate.getDescription());
-        assertEquals(issuedDate, actualCertificate.getIssueOn());
+        assertEquals(issuedDate, actualCertificate.getIssuedOn());
+        assertEquals(urlString, actualCertificate.getUrlString());
     }
 }

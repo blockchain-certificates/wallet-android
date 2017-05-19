@@ -8,6 +8,8 @@ import com.learningmachine.android.app.data.model.Issuer;
 import com.learningmachine.android.app.data.model.KeyRotation;
 import com.learningmachine.android.app.util.ListUtils;
 
+import net.danlew.android.joda.JodaTimeAndroid;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

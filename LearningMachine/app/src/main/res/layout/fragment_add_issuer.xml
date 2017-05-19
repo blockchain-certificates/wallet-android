@@ -3,71 +3,76 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:focusableInTouchMode="true"
-        android:orientation="vertical"
-        android:paddingEnd="@dimen/fragment_add_issuer_linear_layout_padding_horizontal"
-        android:paddingStart="@dimen/fragment_add_issuer_linear_layout_padding_horizontal"
-        tools:context="com.learningmachine.android.app.ui.issuer.AddIssuerActivity">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/add_issuer_url_info_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/fragment_add_issuer_url_textview_bottom_padding"
-            android:layout_marginTop="@dimen/fragment_add_issuer_linear_layout_top_padding"
-            android:text="@string/fragment_add_issuer_info_url_text"
-            style="@style/Material.Light.Body1"/>
-
-        <android.support.design.widget.TextInputLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical"
+            android:paddingEnd="@dimen/fragment_add_issuer_linear_layout_padding_horizontal"
+            android:paddingStart="@dimen/fragment_add_issuer_linear_layout_padding_horizontal"
+            tools:context="com.learningmachine.android.app.ui.issuer.AddIssuerActivity">
 
-            <EditText
-                android:id="@+id/add_issuer_url_edit_text"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/add_issuer_url_info_text_view"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/fragment_add_isser_url_edittext_bottom_padding"
-                android:hint="@string/fragment_add_issuer_url"
-                android:imeOptions="flagNoFullscreen|actionNext"
-                android:inputType="textUri"
-                android:maxLines="1"
-                android:nextFocusForward="@+id/add_issuer_identity_edit_text"
-                android:paddingRight="@dimen/fragment_add_isser_edittext_padding_right"
-                style="@style/Material.Light.Subhead.Disabled"/>
+                android:layout_marginBottom="@dimen/fragment_add_issuer_url_textview_bottom_padding"
+                android:layout_marginTop="@dimen/fragment_add_issuer_linear_layout_top_padding"
+                android:text="@string/fragment_add_issuer_info_url_text"
+                style="@style/Material.Light.Body1"/>
 
-        </android.support.design.widget.TextInputLayout>
-
-        <TextView
-            android:id="@+id/add_issuer_identity_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/fragment_add_issuer_identity_textview_bottom_padding"
-            android:text="@string/fragment_add_issuer_identity_text"
-            style="@style/Material.Light.Body1"/>
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@id/add_issuer_identity_edit_text"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/add_issuer_url_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/fragment_add_isser_url_edittext_bottom_padding"
+                    android:hint="@string/fragment_add_issuer_url"
+                    android:imeOptions="flagNoFullscreen|actionNext"
+                    android:inputType="textUri"
+                    android:maxLines="1"
+                    android:nextFocusForward="@+id/add_issuer_identity_edit_text"
+                    android:paddingRight="@dimen/fragment_add_isser_edittext_padding_right"
+                    style="@style/Material.Light.Subhead.Disabled"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                android:id="@+id/add_issuer_identity_text_view"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="@string/fragment_add_issuer_add_identity"
-                android:imeOptions="flagNoFullscreen|actionDone"
-                android:imeActionLabel="@string/ime_action_done"
-                android:imeActionId="@integer/action_done"
-                android:inputType="text"
-                android:maxLines="1"
-                android:paddingRight="@dimen/fragment_add_isser_edittext_padding_right"
-                style="@style/Material.Light.Subhead.Disabled"/>
+                android:layout_marginBottom="@dimen/fragment_add_issuer_identity_textview_bottom_padding"
+                android:text="@string/fragment_add_issuer_identity_text"
+                style="@style/Material.Light.Body1"/>
 
-        </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
+                <EditText
+                    android:id="@id/add_issuer_identity_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/fragment_add_issuer_add_identity"
+                    android:imeActionId="@integer/action_done"
+                    android:imeActionLabel="@string/ime_action_done"
+                    android:imeOptions="flagNoFullscreen|actionDone"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:paddingRight="@dimen/fragment_add_isser_edittext_padding_right"
+                    style="@style/Material.Light.Subhead.Disabled"/>
 
-    </LinearLayout>
+            </android.support.design.widget.TextInputLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </layout>
