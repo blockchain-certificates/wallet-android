@@ -2,6 +2,7 @@ package com.learningmachine.android.app.data;
 
 import android.content.Context;
 import android.os.Handler;
+import android.os.Looper;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
@@ -9,6 +10,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.google.gson.Gson;
+import com.learningmachine.android.app.R;
+import com.learningmachine.android.app.data.error.ExceptionWithResourceString;
 import com.learningmachine.android.app.data.model.Certificate;
 import com.learningmachine.android.app.data.model.Document;
 import com.learningmachine.android.app.data.model.KeyRotation;
@@ -18,6 +21,7 @@ import com.learningmachine.android.app.data.webservice.BlockchainService;
 import com.learningmachine.android.app.data.webservice.IssuerService;
 import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 import com.learningmachine.android.app.util.FileUtils;
+import com.learningmachine.android.app.util.ListUtils;
 
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.ECKey;
@@ -32,6 +36,7 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SignatureException;
+import java.util.List;
 import java.util.Scanner;
 
 import javax.inject.Inject;
@@ -41,6 +46,9 @@ import rx.Observable;
 import timber.log.Timber;
 
 public class CertificateVerifier {
+    private static final String BEGINNING_OF_INPUT = "\\A"; // see Pattern docs
+    private static final String OP_RETURN_PREFIX = "6a20";
+
     private final WebView mWebView;
     private Context mContext;
     private BlockchainService mBlockchainService;
@@ -63,7 +71,7 @@ public class CertificateVerifier {
         File file = FileUtils.getCertificateFile(context, certificateUuid);
         try (FileInputStream inputStream = new FileInputStream(file)) {
             Scanner scanner = new Scanner(inputStream);
-            String jsonString = scanner.useDelimiter("\\A").next();
+            String jsonString = scanner.useDelimiter(BEGINNING_OF_INPUT).next();
             scanner.close();
 
             return Observable.just(jsonString);
@@ -95,7 +103,8 @@ public class CertificateVerifier {
         if (receipt == null) {
             // TODO: show an error
             Timber.d("Certificate receipt missing");
-            return Observable.error(new Exception());
+            Exception e = new ExceptionWithResourceString(R.string.error_invalid_certificate_json);
+            return Observable.error(e);
         }
         String sourceId = receipt.getFirstAnchorSourceId();
         return getBitcoinTransactionRecordHash(sourceId)
@@ -107,26 +116,31 @@ public class CertificateVerifier {
                 .flatMap(txRecord -> {
                     TxRecordOut txRecordOut = txRecord.getLastOut();
                     if (txRecordOut == null) {
-                        return Observable.error(new Exception());
+                        return Observable.error(new ExceptionWithResourceString(R.string.error_invalid_certificate_json));
                     }
                     int value = txRecordOut.getValue();
                     if (value != 0) {
-                        return Observable.error(new Exception());
+                        return Observable.error(new ExceptionWithResourceString(R.string.error_invalid_certificate_json));
                     }
                     String remoteHash = txRecordOut.getScript();
                     // strip out 6a20 prefix, if present
-                    remoteHash = remoteHash.startsWith("6a20") ? remoteHash.substring(4) : remoteHash;
+                    remoteHash = remoteHash.startsWith(OP_RETURN_PREFIX) ? remoteHash.substring(4) : remoteHash;
                     return Observable.just(remoteHash);
                 });
     }
 
     private Observable<String> blockchainDownloaded(String remoteHash, Certificate certificate) {
-        String merkleRoot = certificate.getReceipt().getMerkleRoot();
+        Receipt receipt = certificate.getReceipt();
+        if (receipt == null) {
+            Timber.e("The receipt is missing from the certificate");
+            return Observable.error(new ExceptionWithResourceString(R.string.error_invalid_certificate_json));
+        }
+        String merkleRoot = receipt.getMerkleRoot();
 
         if (!remoteHash.equals(merkleRoot)) {
             // TODO: show an error
             Timber.d("The transaction record hash doesn't match the certificate's Merkle root");
-            return Observable.error(new Exception());
+            return Observable.error(new ExceptionWithResourceString(R.string.error_invalid_certificate_json));
         }
 
         Timber.d("Blockchain transaction is downloaded successfully");
@@ -140,16 +154,18 @@ public class CertificateVerifier {
     }
 
     private Observable<String> issuerDownloaded(IssuerResponse issuerResponse, Certificate certificate) {
-        if (issuerResponse.getIssuerKeys().isEmpty()) {
+        List<KeyRotation> issuerKeys = issuerResponse.getIssuerKeys();
+        if (ListUtils.isEmpty(issuerKeys)) {
             // TODO: show an error
             Timber.d("Issuer is missing keys");
-            return Observable.error(new Exception());
+            return Observable.error(new ExceptionWithResourceString(R.string.error_invalid_certificate_json));
         }
 
-        KeyRotation firstIssuerKey = issuerResponse.getIssuerKeys().get(0);
+        KeyRotation firstIssuerKey = issuerKeys.get(0);
 
         Document document = certificate.getDocument();
         String signature = document.getSignature();
+        // TODO: check if we could get UUID from the cert
         String uuid = document.getAssertion().getUuid();
 
         try {
@@ -159,70 +175,47 @@ public class CertificateVerifier {
             if (!firstIssuerKey.getKey().equals(address.toBase58())) {
                 // TODO: show an error
                 Timber.d("The issuer key doesn't match the certificate address");
-                return Observable.error(new Exception());
+                return Observable.error(new ExceptionWithResourceString(R.string.error_invalid_certificate_json));
             }
 
             Timber.d("Issuer matches certificate");
             return Observable.just(firstIssuerKey.getKey());
         } catch (SignatureException e) {
-            Timber.e(e);
             // TODO: show an error
-            Timber.d("The document signature is invalid");
-            return Observable.error(new Exception());
+            Timber.e(e, "The document signature is invalid");
+            return Observable.error(new ExceptionWithResourceString(R.string.error_invalid_certificate_json));
         }
     }
 
     public Observable<String> verifyJsonLd(String remoteHash, String serializedDoc) {
-        Handler handler = new Handler();
+        Handler handler = new Handler(Looper.getMainLooper());
         return Observable.fromEmitter(emitter -> {
-            Object jsonldCallback = new Object() {
-                @JavascriptInterface
-                public void result(Object error, String normalizedJsonld) {
-                    if (error != null) {
-                        Timber.e(new Exception(), "Could not normalize JSON-LD");
-                        emitter.onError(new Exception());
-                        return;
-                    }
-                    Timber.d("Got the callback!");
-                    MessageDigest sha256 = null;
-                    try {
-                        sha256 = MessageDigest.getInstance("SHA-256");
-                    } catch (NoSuchAlgorithmException e) {
-                        Timber.e(e, "Couldn't obtain SHA-256, the impossible situation");
-                        emitter.onError(new Exception());
-                        return;
-                    }
-                    String localHash = String.format("%032x", new BigInteger(1, sha256.digest(normalizedJsonld.getBytes())));
-                    if (localHash.equals(remoteHash)) {
-                        emitter.onNext(localHash);
-                    } else {
-                        emitter.onError(new Exception());
-                    }
-                }
-            };
-            handler.post(() -> {
-                String html = "<html><head><script src=\"https://cdnjs.cloudflare.com/ajax/libs/jsonld/0.4.12/jsonld.js\"></script></head></html>";
-                mWebView.addJavascriptInterface(jsonldCallback, "jsonldCallback");
-                WebSettings webSettings = mWebView.getSettings();
-                // Enable JavaScript.
-                webSettings.setJavaScriptEnabled(true);
-                mWebView.setWebViewClient(new WebViewClient() {
-                    @Override
-                    public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                        return false;
-                    }
-
-                    @Override
-                    public void onPageFinished(WebView view, String url) {
-                        String options = "{algorithm: 'URDNA2015', format: 'application/nquads'}";
-                        String jsResultHandler = "function(err, result) { jsonldCallback.result(err, result); }";
-                        String jsString = "(function() {jsonld.normalize(" + serializedDoc + ", " + options + ", " + jsResultHandler + ")})()";
-                        view.loadUrl("javascript:" + jsString);
-                    }
-                });
-                mWebView.loadData(html, "text/html", "UTF-8");
-            });
+            HashComparison jsonldCallback = new HashComparison(emitter, remoteHash);
+            handler.post(() -> configureWebView(serializedDoc, jsonldCallback));
         }, Emitter.BackpressureMode.DROP);
+    }
+
+    private void configureWebView(String serializedDoc, HashComparison jsonldCallback) {
+        String html = "<html><head><script src=\"https://cdnjs.cloudflare.com/ajax/libs/jsonld/0.4.12/jsonld.js\"></script></head></html>";
+        mWebView.addJavascriptInterface(jsonldCallback, "jsonldCallback");
+        WebSettings webSettings = mWebView.getSettings();
+        // Enable JavaScript.
+        webSettings.setJavaScriptEnabled(true);
+        mWebView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                return false;
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                String options = "{algorithm: 'URDNA2015', format: 'application/nquads'}";
+                String jsResultHandler = "function(err, result) { jsonldCallback.result(err, result); }";
+                String jsString = "(function() {jsonld.normalize(" + serializedDoc + ", " + options + ", " + jsResultHandler + ")})()";
+                view.loadUrl("javascript:" + jsString);
+            }
+        });
+        mWebView.loadData(html, "text/html", "UTF-8");
     }
 
     public static class CertificateAndDocument {
@@ -240,6 +233,43 @@ public class CertificateVerifier {
 
         public String getDocument() {
             return mDocument;
+        }
+    }
+
+    private static class HashComparison {
+        private final Emitter<String> mEmitter;
+        private final String mRemoteHash;
+
+        public HashComparison(Emitter<String> emitter, String remoteHash) {
+            mEmitter = emitter;
+            mRemoteHash = remoteHash;
+        }
+
+        @JavascriptInterface
+        public void result(Object error, String normalizedJsonld) {
+            if (error != null) {
+                Exception e = new ExceptionWithResourceString(R.string.error_invalid_certificate_json);
+                Timber.e(e, "Could not normalize JSON-LD");
+                mEmitter.onError(e);
+                return;
+            }
+            Timber.d("Got the callback!");
+            MessageDigest sha256 = null;
+            try {
+                sha256 = MessageDigest.getInstance("SHA-256");
+            } catch (NoSuchAlgorithmException e) {
+                Timber.e(e, "Couldn't obtain SHA-256, the impossible situation");
+                mEmitter.onError(e);
+                return;
+            }
+            byte[] localHashBytes = sha256.digest(normalizedJsonld.getBytes());
+            String localHash = String.format("%032x", new BigInteger(1, localHashBytes));
+            if (localHash.equals(mRemoteHash)) {
+                mEmitter.onNext(localHash);
+            } else {
+                Exception e = new ExceptionWithResourceString(R.string.error_invalid_certificate_json);
+                mEmitter.onError(e);
+            }
         }
     }
 }

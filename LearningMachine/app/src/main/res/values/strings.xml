@@ -91,6 +91,7 @@
 
     <!-- Certificate Verification -->
     <string name="certificate_verification_success">Certificate Verified!</string>
+    <string name="error_invalid_certificate_json">The certificate file is invalid</string>
 
     <!-- Dialog Error Messages -->
 

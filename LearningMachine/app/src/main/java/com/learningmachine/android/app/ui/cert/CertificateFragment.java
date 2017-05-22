@@ -20,7 +20,6 @@ import com.learningmachine.android.app.data.CertificateManager;
 import com.learningmachine.android.app.data.CertificateVerifier;
 import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.data.model.Certificate;
-import com.learningmachine.android.app.data.webservice.IssuerService;
 import com.learningmachine.android.app.databinding.FragmentCertificateBinding;
 import com.learningmachine.android.app.ui.LMFragment;
 import com.learningmachine.android.app.util.FileUtils;
@@ -37,7 +36,6 @@ public class CertificateFragment extends LMFragment {
     private static final String INDEX_FILE_PATH = "file:///android_asset/www/index.html";
 
     @Inject protected CertificateManager mCertificateManager;
-    @Inject protected IssuerService mIssuerService;
     @Inject protected CertificateVerifier mCertificateVerifier;
 
     private FragmentCertificateBinding mBinding;
@@ -99,11 +97,11 @@ public class CertificateFragment extends LMFragment {
     private void verifyCertificate() {
         mCertificateVerifier.loadCertificate(mCertUuid)
                 .compose(bindToMainThread())
-                .subscribe(result -> {
+                .subscribe(certificateAndDocument -> {
                     Timber.d("Successfully loaded certificate and document");
-                    verifyIssuer(result.getCertificate(), result.getDocument());
+                    verifyIssuer(certificateAndDocument.getCertificate(), certificateAndDocument.getDocument());
                 }, throwable -> {
-                    Timber.d(throwable, "Error!");
+                    Timber.e(throwable, "Error!");
                     displayErrors(throwable, R.string.error_title_message); // TODO: use correct error string
                 });
     }
@@ -114,7 +112,7 @@ public class CertificateFragment extends LMFragment {
                 .subscribe(issuerKey -> {
                     verifyBitcoinTransactionRecord(certificate, serializedDoc);
                 }, throwable -> {
-                    Timber.d(throwable, "Error! Couldn't verify issuer");
+                    Timber.e(throwable, "Error! Couldn't verify issuer");
                     displayErrors(throwable, R.string.error_title_message); // TODO: use correct error string
                 });
     }
@@ -126,7 +124,7 @@ public class CertificateFragment extends LMFragment {
                     // TODO: success
                     verifyJsonLd(remoteHash, serializedDoc);
                 }, throwable -> {
-                    Timber.d(throwable, "Error!");
+                    Timber.e(throwable, "Error!");
                     displayErrors(throwable, R.string.error_title_message); // TODO: use correct error string
                 });
     }
@@ -138,7 +136,7 @@ public class CertificateFragment extends LMFragment {
                     Timber.d("Success!");
                     showSnackbar(getView(), R.string.certificate_verification_success);
                 }, throwable -> {
-                    Timber.d(throwable, "Error!");
+                    Timber.e(throwable, "Error!");
                     displayErrors(throwable, R.string.error_title_message); // TODO: use correct error string
                 });
     }
