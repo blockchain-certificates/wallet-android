@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
 import com.learningmachine.android.app.R;
+import com.learningmachine.android.app.data.error.ExceptionWithResourceString;
 import com.learningmachine.android.app.dialog.AlertDialogFragment;
 import com.learningmachine.android.app.dialog.ProgressDialogFragment;
 
@@ -84,6 +85,9 @@ public class DialogUtils {
                 case HTTP_BAD_REQUEST:
                     return R.string.fragment_add_issuer_invalid_issuer_error;
             }
+        } else if (throwable instanceof ExceptionWithResourceString) {
+            ExceptionWithResourceString exceptionWithResourceString = (ExceptionWithResourceString) throwable;
+            return exceptionWithResourceString.getErrorMessageResId();
         } else {
             return 0;
         }

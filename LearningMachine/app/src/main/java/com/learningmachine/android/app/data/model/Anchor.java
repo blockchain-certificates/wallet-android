@@ -7,4 +7,8 @@ public class Anchor {
     private String mSourceId;
     @SerializedName("type")
     private String mType;
+
+    public String getSourceId() {
+        return mSourceId;
+    }
 }

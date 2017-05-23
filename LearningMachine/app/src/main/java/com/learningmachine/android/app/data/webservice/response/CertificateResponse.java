@@ -9,7 +9,7 @@ public class CertificateResponse extends Certificate {
     private String mImageData;
 
     public CertificateResponse(String uuid, String issuerUuid, String name, String description, String issueDate) {
-        super(uuid, issuerUuid, name, description, null);
+        super(uuid, issuerUuid, name, description, null, null);
     }
 
     public String getImageData() {

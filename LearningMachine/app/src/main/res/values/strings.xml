@@ -89,6 +89,10 @@
     <string name="fragment_certificate_info_delete_warning_positive_title">Delete</string>
     <string name="fragment_certificate_info_delete_warning_negative_title">Cancel</string>
 
+    <!-- Certificate Verification -->
+    <string name="certificate_verification_success">Certificate Verified!</string>
+    <string name="error_invalid_certificate_json">The certificate file is invalid</string>
+
     <!-- Dialog Error Messages -->
 
     <string name="connection_error_message">Connection unavailable. Please check your connection and try again.</string>

@@ -15,6 +15,7 @@ import com.learningmachine.android.app.data.CertificateManager;
 import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.databinding.FragmentAddCertificateUrlBinding;
 import com.learningmachine.android.app.ui.LMFragment;
+import com.learningmachine.android.app.util.StringUtils;
 
 import javax.inject.Inject;
 
@@ -23,12 +24,20 @@ import timber.log.Timber;
 
 public class AddCertificateURLFragment extends LMFragment {
 
+    private static final String ARG_CERT_URL = "AddCertificateURLFragment.CertUrl";
+
     @Inject CertificateManager mCertificateManager;
 
     private FragmentAddCertificateUrlBinding mBinding;
 
-    public static AddCertificateURLFragment newInstance() {
-        return new AddCertificateURLFragment();
+    public static AddCertificateURLFragment newInstance(String certUrlString) {
+        Bundle args = new Bundle();
+        args.putString(ARG_CERT_URL, certUrlString);
+
+        AddCertificateURLFragment fragment = new AddCertificateURLFragment();
+        fragment.setArguments(args);
+
+        return fragment;
     }
 
     @Override
@@ -45,7 +54,21 @@ public class AddCertificateURLFragment extends LMFragment {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_certificate_url, container, false);
         mBinding.certificateUrlEditText.setOnEditorActionListener(mActionListener);
 
+        handleArgs();
+
         return mBinding.getRoot();
+    }
+
+    private void handleArgs() {
+        Bundle args = getArguments();
+        if (args == null) {
+            return;
+        }
+
+        String certUrlString = args.getString(ARG_CERT_URL);
+        if (!StringUtils.isEmpty(certUrlString)) {
+            mBinding.certificateUrlEditText.setText(certUrlString);
+        }
     }
 
     private void addCertificate() {
