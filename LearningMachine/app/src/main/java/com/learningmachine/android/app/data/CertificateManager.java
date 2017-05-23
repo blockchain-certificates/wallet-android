@@ -6,13 +6,13 @@ import android.content.res.AssetManager;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.learningmachine.android.app.data.bitcoin.BitcoinManager;
+import com.learningmachine.android.app.data.cert.v12.BlockchainCertificate;
+import com.learningmachine.android.app.data.cert.v12.Document;
+import com.learningmachine.android.app.data.cert.v12.Recipient;
 import com.learningmachine.android.app.data.error.CertificateOwnershipException;
 import com.learningmachine.android.app.data.model.Certificate;
-import com.learningmachine.android.app.data.model.LMDocument;
-import com.learningmachine.android.app.data.model.Recipient;
 import com.learningmachine.android.app.data.store.CertificateStore;
 import com.learningmachine.android.app.data.webservice.CertificateService;
-import com.learningmachine.android.app.data.webservice.response.AddCertificateResponse;
 import com.learningmachine.android.app.util.FileUtils;
 
 import java.io.File;
@@ -90,9 +90,8 @@ public class CertificateManager {
 
             // Parse
             Gson gson = new Gson();
-            AddCertificateResponse addCertificateResponse = gson.fromJson(responseBody.string(),
-                    AddCertificateResponse.class);
-            LMDocument document = addCertificateResponse.getDocument();
+            BlockchainCertificate certificate = gson.fromJson(responseBody.string(), BlockchainCertificate.class);
+            Document document = certificate.getDocument();
             Recipient recipient = document.getRecipient();
             String recipientKey = recipient.getPublicKey();
 
@@ -105,11 +104,10 @@ public class CertificateManager {
             }
 
             // Save to DB
-            mCertificateStore.saveAddCertificateResponse(addCertificateResponse);
+            mCertificateStore.saveBlockchainCertificate(certificate);
 
             // Write response to file
-            String uuid = document.getLMAssertion()
-                    .getUuid();
+            String uuid = document.getAssertion().getUid();
             FileUtils.saveCertificate(mContext, buffer, uuid);
             return Observable.just(uuid);
         } catch (JsonSyntaxException | IOException e) {
@@ -128,8 +126,8 @@ public class CertificateManager {
     private Observable<String> handleCertificateInputStream(InputStream certInputStream, String bitcoinAddress) {
         Gson gson = new Gson();
         InputStreamReader inputStreamReader = new InputStreamReader(certInputStream);
-        AddCertificateResponse addCertificateResponse = gson.fromJson(inputStreamReader, AddCertificateResponse.class);
-        LMDocument document = addCertificateResponse.getDocument();
+        BlockchainCertificate blockchainCertificate = gson.fromJson(inputStreamReader, BlockchainCertificate.class);
+        Document document = blockchainCertificate.getDocument();
         Recipient recipient = document.getRecipient();
         String recipientKey = recipient.getPublicKey();
 
@@ -139,11 +137,10 @@ public class CertificateManager {
         }
 
         // Save to DB
-        mCertificateStore.saveAddCertificateResponse(addCertificateResponse);
+        mCertificateStore.saveBlockchainCertificate(blockchainCertificate);
 
         // Copy file
-        String uuid = document.getLMAssertion()
-                .getUuid();
+        String uuid = document.getAssertion().getUid();
         FileUtils.copyCertificateStream(mContext, certInputStream, uuid);
         return Observable.just(uuid);
     }
