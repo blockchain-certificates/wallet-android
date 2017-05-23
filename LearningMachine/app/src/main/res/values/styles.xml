@@ -16,6 +16,10 @@
         <item name="android:textViewStyle">@style/LearningMachineTextView</item>
     </style>
 
+    <style name="NoToolbarTheme.UrlLauncher">
+        <item name="android:background">@drawable/url_launcher_background</item>
+    </style>
+
     <!-- Base -->
 
     <style name="LearningMachineTextView" parent="android:style/Widget.TextView">
