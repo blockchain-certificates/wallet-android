@@ -17,21 +17,17 @@ import timber.log.Timber;
 
 public class IssuerManager {
 
-    private Context mContext;
     private IssuerStore mIssuerStore;
     private IssuerService mIssuerService;
 
-
-    public IssuerManager(Context context, IssuerStore issuerStore, IssuerService issuerService) {
-        mContext = context;
+    public IssuerManager(IssuerStore issuerStore, IssuerService issuerService) {
         mIssuerStore = issuerStore;
         mIssuerService = issuerService;
-        loadSampleIssuer();
     }
 
-    public Observable<Void> loadSampleIssuer() {
-        GsonUtil gsonUtil = new GsonUtil(mContext);
+    public Observable<Void> loadSampleIssuer(Context context) {
         try {
+            GsonUtil gsonUtil = new GsonUtil(context);
             IssuerResponse issuerResponse = gsonUtil.loadModelObject("sample-issuer", IssuerResponse.class);
             mIssuerStore.saveIssuerResponse(issuerResponse);
             return Observable.just(null);
@@ -59,10 +55,5 @@ public class IssuerManager {
                     mIssuerStore.saveIssuerResponse(issuerResponse);
                     return null;
                 });
-    }
-
-    public void purgeIssuers() {
-        mIssuerStore.reset();
-        loadSampleIssuer();
     }
 }
