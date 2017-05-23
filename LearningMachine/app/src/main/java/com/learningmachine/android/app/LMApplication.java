@@ -3,13 +3,18 @@ package com.learningmachine.android.app;
 import android.support.annotation.NonNull;
 import android.support.multidex.MultiDexApplication;
 
-import com.learningmachine.android.app.data.bitcoin.BitcoinManager;
+import com.learningmachine.android.app.data.CertificateManager;
+import com.learningmachine.android.app.data.IssuerManager;
 import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.data.inject.LMComponent;
 import com.learningmachine.android.app.data.inject.LMGraph;
+import com.learningmachine.android.app.data.preferences.SharedPreferencesManager;
 
 import javax.inject.Inject;
 
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
 public class LMApplication extends MultiDexApplication {
@@ -17,7 +22,9 @@ public class LMApplication extends MultiDexApplication {
     protected LMGraph mGraph;
 
     @Inject Timber.Tree mTree;
-    @Inject BitcoinManager mBitcoinManager;
+    @Inject SharedPreferencesManager mPreferencesManager;
+    @Inject IssuerManager mIssuerManager;
+    @Inject CertificateManager mCertificateManager;
 
     @Override
     public void onCreate() {
@@ -25,6 +32,7 @@ public class LMApplication extends MultiDexApplication {
 
         setupDagger();
         setupTimber();
+        loadSampleData();
     }
 
     @Override
@@ -42,5 +50,22 @@ public class LMApplication extends MultiDexApplication {
 
     private void setupTimber() {
         Timber.plant(mTree);
+    }
+
+    private void loadSampleData() {
+        if (!mPreferencesManager.isFirstLaunch()) {
+            return;
+        }
+
+        Observable.combineLatest(mIssuerManager.loadSampleIssuer(),
+                mCertificateManager.loadSampleCertificate(),
+                (aVoid, s) -> {
+                    mPreferencesManager.setFirstLaunch(false);
+                    return null;
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(o -> Timber.d("Sample data loaded"),
+                        throwable -> Timber.e(throwable, "Unable to load sample data"));
     }
 }

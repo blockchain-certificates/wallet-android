@@ -3,7 +3,6 @@ package com.learningmachine.android.app.util;
 import android.content.Context;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,9 +21,9 @@ public class FileUtils {
         return writeResponseBodyToDisk(file, buffer);
     }
 
-    public static boolean copyCertificate(Context context, File inputFile, String uuid){
+    public static boolean copyCertificateStream(Context context, InputStream inputStream, String uuid) {
         File outputFile = getCertificateFile(context, uuid, true);
-        return copyFile(inputFile, outputFile);
+        return copyInputStream(inputStream, outputFile);
     }
 
     public static boolean deleteCertificate(Context context, String uuid) {
@@ -60,9 +59,8 @@ public class FileUtils {
         }
     }
 
-    private static boolean copyFile(File inputFile, File outputFile) {
-        try (InputStream inputStream = new FileInputStream(inputFile);
-             OutputStream outputStream = new FileOutputStream(outputFile)) {
+    private static boolean copyInputStream(InputStream inputStream, File outputFile) {
+        try (OutputStream outputStream = new FileOutputStream(outputFile)) {
             return copyStreams(inputStream, outputStream);
         } catch (IOException e) {
             Timber.e(e, "Unable to copy certificate file");

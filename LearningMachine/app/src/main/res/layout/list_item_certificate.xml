@@ -26,6 +26,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/list_item_certificate_description_margin_top"
             android:text="@{viewModel.description}"
+            android:ellipsize="end"
+            android:maxLines="1"
             style="@style/Material.Light.Body1.Secondary"/>
 
     </FrameLayout>
