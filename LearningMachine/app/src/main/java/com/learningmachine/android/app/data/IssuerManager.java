@@ -28,7 +28,7 @@ public class IssuerManager {
         return Observable.just(mIssuerStore.loadIssuers());
     }
 
-    public Observable<Void> addIssuer(String url, String bitcoinAddress, String nonce) {
+    public Observable<String> addIssuer(String url, String bitcoinAddress, String nonce) {
         IssuerIntroductionRequest request = new IssuerIntroductionRequest(bitcoinAddress, nonce);
         return mIssuerService.getIssuer(url)
                 .flatMap(issuer -> Observable.combineLatest(Observable.just(issuer),
@@ -36,7 +36,7 @@ public class IssuerManager {
                         (issuer1, aVoid) -> issuer1))
                 .map(issuerResponse -> {
                     mIssuerStore.saveIssuerResponse(issuerResponse);
-                    return null;
+                    return issuerResponse.getUuid();
                 });
     }
 
