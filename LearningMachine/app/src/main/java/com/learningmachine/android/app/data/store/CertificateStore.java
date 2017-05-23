@@ -1,14 +1,10 @@
 package com.learningmachine.android.app.data.store;
 
 import android.content.ContentValues;
-import android.content.Context;
-import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.learningmachine.android.app.LMConstants;
 import com.learningmachine.android.app.data.model.Certificate;
-import com.learningmachine.android.app.data.model.Issuer;
 import com.learningmachine.android.app.data.model.LMAssertion;
 import com.learningmachine.android.app.data.model.LMDocument;
 import com.learningmachine.android.app.data.store.cursor.CertificateCursorWrapper;
@@ -16,18 +12,14 @@ import com.learningmachine.android.app.data.webservice.response.AddCertificateRe
 import com.learningmachine.android.app.data.webservice.response.CertificateResponse;
 import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 
-import java.io.File;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CertificateStore implements DataStore {
 
-    private Context mContext;
     private SQLiteDatabase mDatabase;
 
-    public CertificateStore(Context context, LMDatabaseHelper databaseHelper) {
-        mContext = context;
+    public CertificateStore(LMDatabaseHelper databaseHelper) {
         mDatabase = databaseHelper.getWritableDatabase();
     }
 

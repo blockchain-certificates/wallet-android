@@ -40,7 +40,8 @@ public class IssuerStore implements DataStore {
         saveIssuer(issuerResponse);
     }
 
-    private void saveIssuer(Issuer issuer) {
+    @VisibleForTesting
+    protected void saveIssuer(Issuer issuer) {
         ContentValues contentValues = new ContentValues();
 
         contentValues.put(LMDatabaseHelper.Column.Issuer.NAME, issuer.getName());

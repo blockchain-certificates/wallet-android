@@ -61,8 +61,8 @@ public class DataModule {
 
     @Provides
     @Singleton
-    CertificateStore providesCertificateStore(Context context, LMDatabaseHelper databaseHelper) {
-        return new CertificateStore(context, databaseHelper);
+    CertificateStore providesCertificateStore(LMDatabaseHelper databaseHelper) {
+        return new CertificateStore(databaseHelper);
     }
 
     @Provides
