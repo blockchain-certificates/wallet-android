@@ -42,6 +42,7 @@ public class LMDatabaseHelper extends SQLiteOpenHelper {
             public static final String UUID = "uuid";
             public static final String CERTS_URL = "certs_url";
             public static final String INTRO_URL = "intro_url";
+            public static final String INTRODUCED_ON = "introduced_on";
         }
 
         public static class KeyRotation {
@@ -70,6 +71,7 @@ public class LMDatabaseHelper extends SQLiteOpenHelper {
                 + ", " + Column.Issuer.UUID + " TEXT"
                 + ", " + Column.Issuer.CERTS_URL + " TEXT"
                 + ", " + Column.Issuer.INTRO_URL + " TEXT"
+                + ", " + Column.Issuer.INTRODUCED_ON + " TEXT"
                 + ");";
         sqLiteDatabase.execSQL(createTable);
     }
