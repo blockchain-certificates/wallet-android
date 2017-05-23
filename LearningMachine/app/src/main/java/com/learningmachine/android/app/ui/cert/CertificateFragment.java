@@ -17,6 +17,7 @@ import android.webkit.WebViewClient;
 
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.CertificateManager;
+import com.learningmachine.android.app.data.CertificateVerifier;
 import com.learningmachine.android.app.data.IssuerManager;
 import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.data.model.Certificate;
@@ -42,8 +43,10 @@ public class CertificateFragment extends LMFragment {
 
     @Inject protected CertificateManager mCertificateManager;
     @Inject protected IssuerManager mIssuerManager;
+    @Inject protected CertificateVerifier mCertificateVerifier;
 
     private FragmentCertificateBinding mBinding;
+    private String mCertUuid;
 
     public static CertificateFragment newInstance(String certificateUuid) {
         Bundle args = new Bundle();
@@ -61,6 +64,7 @@ public class CertificateFragment extends LMFragment {
         setHasOptionsMenu(true);
         Injector.obtain(getContext())
                 .inject(this);
+        mCertUuid = getArguments().getString(ARG_CERTIFICATE_UUID);
     }
 
     @Nullable
@@ -83,6 +87,7 @@ public class CertificateFragment extends LMFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.fragment_certificate_verify_menu_item:
+                verifyCertificate();
                 return true;
             case R.id.fragment_certificate_share_menu_item:
                 showShareTypeDialog();
@@ -99,7 +104,6 @@ public class CertificateFragment extends LMFragment {
         if (requestCode == REQUEST_SHARE_METHOD) {
             boolean shareFile = resultCode == AlertDialogFragment.RESULT_NEGATIVE;
             shareCertificate(shareFile);
-
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -133,8 +137,7 @@ public class CertificateFragment extends LMFragment {
 
         @Override
         public void onPageFinished(WebView view, String url) {
-            String certUuid = getArguments().getString(ARG_CERTIFICATE_UUID);
-            File certFile = FileUtils.getCertificateFile(getContext(), certUuid);
+            File certFile = FileUtils.getCertificateFile(getContext(), mCertUuid);
             String certFilePath = certFile.toString();
 
             String javascript = String.format(
@@ -165,7 +168,9 @@ public class CertificateFragment extends LMFragment {
                     }
                     Issuer issuer = holder.getIssuer();
                     String issuerName = issuer.getName();
-                    String sharingText = getString(R.string.fragment_certificate_share_format, issuerName, certUrlString);
+                    String sharingText = getString(R.string.fragment_certificate_share_format,
+                            issuerName,
+                            certUrlString);
                     Intent intent = new Intent(Intent.ACTION_SEND);
                     intent.putExtra(Intent.EXTRA_TEXT, sharingText);
                     intent.setType("text/plain");
@@ -195,5 +200,52 @@ public class CertificateFragment extends LMFragment {
         String certUuid = getArguments().getString(ARG_CERTIFICATE_UUID);
         Intent intent = CertificateInfoActivity.newIntent(getActivity(), certUuid);
         startActivity(intent);
+    }
+
+    private void verifyCertificate() {
+        mCertificateVerifier.loadCertificate(mCertUuid)
+                .compose(bindToMainThread())
+                .subscribe(certificateAndDocument -> {
+                    Timber.d("Successfully loaded certificate and document");
+                    verifyIssuer(certificateAndDocument.getCertificate(), certificateAndDocument.getDocument());
+                }, throwable -> {
+                    Timber.e(throwable, "Error!");
+                    displayErrors(throwable, R.string.error_title_message); // TODO: use correct error string
+                });
+    }
+
+    private void verifyIssuer(Certificate certificate, String serializedDoc) {
+        mCertificateVerifier.verifyIssuer(certificate)
+                .compose(bindToMainThread())
+                .subscribe(issuerKey -> {
+                    verifyBitcoinTransactionRecord(certificate, serializedDoc);
+                }, throwable -> {
+                    Timber.e(throwable, "Error! Couldn't verify issuer");
+                    displayErrors(throwable, R.string.error_title_message); // TODO: use correct error string
+                });
+    }
+
+    private void verifyBitcoinTransactionRecord(Certificate certificate, String serializedDoc) {
+        mCertificateVerifier.verifyBitcoinTransactionRecord(certificate)
+                .compose(bindToMainThread())
+                .subscribe(remoteHash -> {
+                    // TODO: success
+                    verifyJsonLd(remoteHash, serializedDoc);
+                }, throwable -> {
+                    Timber.e(throwable, "Error!");
+                    displayErrors(throwable, R.string.error_title_message); // TODO: use correct error string
+                });
+    }
+
+    private void verifyJsonLd(String remoteHash, String serializedDoc) {
+        mCertificateVerifier.verifyJsonLd(remoteHash, serializedDoc)
+                .compose(bindToMainThread())
+                .subscribe(localHash -> {
+                    Timber.d("Success!");
+                    showSnackbar(getView(), R.string.certificate_verification_success);
+                }, throwable -> {
+                    Timber.e(throwable, "Error!");
+                    displayErrors(throwable, R.string.error_title_message); // TODO: use correct error string
+                });
     }
 }

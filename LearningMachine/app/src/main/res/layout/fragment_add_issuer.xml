@@ -9,7 +9,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:focusableInTouchMode="true"
             android:orientation="vertical"
             android:paddingEnd="@dimen/fragment_add_issuer_linear_layout_padding_horizontal"
@@ -39,13 +39,13 @@
                     android:inputType="textUri"
                     android:maxLines="1"
                     android:nextFocusForward="@+id/add_issuer_identity_edit_text"
-                    android:paddingRight="@dimen/fragment_add_isser_edittext_padding_right"
+                    android:paddingEnd="@dimen/fragment_add_isser_edittext_padding_right"
                     style="@style/Material.Light.Subhead.Disabled"/>
 
             </android.support.design.widget.TextInputLayout>
 
             <TextView
-                android:id="@+id/add_issuer_identity_text_view"
+                android:id="@+id/add_issuer_nonce_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/fragment_add_issuer_identity_textview_bottom_padding"
@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@id/add_issuer_identity_edit_text"
+                    android:id="@+id/add_issuer_nonce_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/fragment_add_issuer_add_identity"
@@ -66,7 +66,7 @@
                     android:imeOptions="flagNoFullscreen|actionDone"
                     android:inputType="text"
                     android:maxLines="1"
-                    android:paddingRight="@dimen/fragment_add_isser_edittext_padding_right"
+                    android:paddingEnd="@dimen/fragment_add_isser_edittext_padding_right"
                     style="@style/Material.Light.Subhead.Disabled"/>
 
             </android.support.design.widget.TextInputLayout>

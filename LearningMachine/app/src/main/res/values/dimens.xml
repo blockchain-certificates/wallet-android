@@ -18,6 +18,7 @@
     <dimen name="fragment_add_issuer_textsize">14sp</dimen>
 
     <!--Add Certificate-->
+
     <dimen name="fragment_add_certificate_linear_layout_top_padding">20dp</dimen>
     <dimen name="fragment_add_certificate_linear_layout_start_padding">16dp</dimen>
     <dimen name="fragment_add_certificate_text_view_bottom_margin">31dp</dimen>
@@ -101,5 +102,9 @@
     <dimen name="material_light_body1_line_spacing_extra">6sp</dimen>
     <dimen name="material_light_caption_line_spacing_extra">4sp</dimen>
     <dimen name="fragment_settings_header_line_spacing_extra">10sp</dimen>
+
+    <!-- Cert file dialog -->
+
+    <dimen name="dialog_file_chooser_padding">8dp</dimen>
 
 </resources>
