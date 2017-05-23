@@ -22,6 +22,10 @@ public class Certificate implements Serializable {
     private String mDescription;
     @SerializedName("type")
     private String mType;
+    @SerializedName("receipt")
+    private Receipt mReceipt;
+    @SerializedName("document")
+    private Document mDocument;
 
     // Must be set manually
     private String mUuid;
@@ -97,6 +101,8 @@ public class Certificate implements Serializable {
             return mIssuerUuid;
         } else if (mIssuerResponse != null) {
             return mIssuerResponse.getUuid();
+        } else if (mDocument != null && mDocument.getInnerCertificate() != null) {
+            return mDocument.getInnerCertificate().getIssuerUuid();
         }
         return null;
     }
@@ -115,5 +121,17 @@ public class Certificate implements Serializable {
 
     public void setIssuedOn(String issuedOn) {
         mIssuedOn = issuedOn;
+    }
+
+    public Receipt getReceipt() {
+        return mReceipt;
+    }
+
+    public void setReceipt(Receipt receipt) {
+        mReceipt = receipt;
+    }
+
+    public Document getDocument() {
+        return mDocument;
     }
 }
