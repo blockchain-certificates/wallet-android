@@ -30,7 +30,7 @@ public class CertificateInfoViewModel extends BaseObservable {
         if (mCertificate == null) {
             return null;
         }
-        String dateString = mCertificate.getIssueOn();
+        String dateString = mCertificate.getIssuedOn();
         return DateUtils.formatDateString(dateString);
     }
 }

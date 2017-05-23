@@ -4,8 +4,6 @@ import com.google.gson.annotations.SerializedName;
 import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 import com.learningmachine.android.app.util.StringUtils;
 
-import org.joda.time.DateTime;
-
 import java.io.Serializable;
 
 public class Certificate implements Serializable {
@@ -31,13 +29,15 @@ public class Certificate implements Serializable {
     private String mUuid;
     private String mIssuerUuid;
     private String mIssuedOn;
+    private String mUrlString;
 
-    public Certificate(String uuid, String issuerUuid, String name, String description, String issuedOn) {
+    public Certificate(String uuid, String issuerUuid, String name, String description, String issuedOn, String urlString) {
         mUuid = uuid;
         mIssuerUuid = issuerUuid;
         mName = name;
         mDescription = description;
         mIssuedOn = issuedOn;
+        mUrlString = urlString;
     }
 
     public String getName() {
@@ -102,7 +102,8 @@ public class Certificate implements Serializable {
         } else if (mIssuerResponse != null) {
             return mIssuerResponse.getUuid();
         } else if (mDocument != null && mDocument.getInnerCertificate() != null) {
-            return mDocument.getInnerCertificate().getIssuerUuid();
+            return mDocument.getInnerCertificate()
+                    .getIssuerUuid();
         }
         return null;
     }
@@ -111,12 +112,20 @@ public class Certificate implements Serializable {
         mIssuerUuid = issuerUuid;
     }
 
-    public String getIssueOn() {
+    public String getIssuedOn() {
         return mIssuedOn;
     }
 
     public void setIssuedOn(String issuedOn) {
         mIssuedOn = issuedOn;
+    }
+
+    public String getUrlString() {
+        return mUrlString;
+    }
+
+    public void setUrlString(String urlString) {
+        mUrlString = urlString;
     }
 
     public Receipt getReceipt() {

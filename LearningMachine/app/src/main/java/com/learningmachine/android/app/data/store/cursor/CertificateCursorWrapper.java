@@ -18,7 +18,8 @@ public class CertificateCursorWrapper extends CursorWrapper {
         String name = getString(getColumnIndex(LMDatabaseHelper.Column.Certificate.NAME));
         String description = getString(getColumnIndex(LMDatabaseHelper.Column.Certificate.DESCRIPTION));
         String issueDate = getString(getColumnIndex(LMDatabaseHelper.Column.Certificate.ISSUE_DATE));
+        String urlString = getString(getColumnIndex(LMDatabaseHelper.Column.Certificate.URL));
 
-        return new Certificate(certUuid, issuerUuid, name, description, issueDate);
+        return new Certificate(certUuid, issuerUuid, name, description, issueDate, urlString);
     }
 }
