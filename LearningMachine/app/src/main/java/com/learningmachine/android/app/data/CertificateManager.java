@@ -121,7 +121,7 @@ public class CertificateManager {
             // Copy file
             String uuid = document.getLMAssertion()
                     .getUuid();
-            FileUtils.copyCerificate(mContext, certificateFile, uuid);
+            FileUtils.copyCertificate(mContext, certificateFile, uuid);
             return Observable.just(uuid);
         } catch (IOException e) {
             return Observable.error(e);

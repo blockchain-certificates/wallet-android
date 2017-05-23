@@ -22,7 +22,7 @@ public class FileUtils {
         return writeResponseBodyToDisk(file, buffer);
     }
 
-    public static boolean copyCerificate(Context context, File inputFile, String uuid){
+    public static boolean copyCertificate(Context context, File inputFile, String uuid){
         File outputFile = getCertificateFile(context, uuid, true);
         return copyFile(inputFile, outputFile);
     }
