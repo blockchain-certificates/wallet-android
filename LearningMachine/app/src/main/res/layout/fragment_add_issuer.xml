@@ -41,7 +41,7 @@
         </android.support.design.widget.TextInputLayout>
 
         <TextView
-            android:id="@+id/add_issuer_identity_text_view"
+            android:id="@+id/add_issuer_nonce_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/fragment_add_issuer_identity_textview_bottom_padding"
@@ -53,7 +53,7 @@
             android:layout_height="wrap_content">
 
             <EditText
-                android:id="@id/add_issuer_identity_edit_text"
+                android:id="@+id/add_issuer_nonce_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/fragment_add_issuer_add_identity"

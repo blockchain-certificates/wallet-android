@@ -21,7 +21,7 @@ import com.learningmachine.android.app.data.model.Certificate;
 import com.learningmachine.android.app.databinding.FragmentIssuerBinding;
 import com.learningmachine.android.app.databinding.ListItemCertificateBinding;
 import com.learningmachine.android.app.ui.LMFragment;
-import com.learningmachine.android.app.ui.cert.AddCertificatePagerActivity;
+import com.learningmachine.android.app.ui.cert.AddCertificateActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +67,7 @@ public class IssuerFragment extends LMFragment {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_issuer, container, false);
 
         mBinding.addCertificateFloatingActionButton.setOnClickListener(v -> {
-            Intent intent = AddCertificatePagerActivity.newIntent(getContext());
+            Intent intent = AddCertificateActivity.newIntent(getContext());
             startActivity(intent);
         });
 
