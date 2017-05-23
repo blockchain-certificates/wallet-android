@@ -1,5 +1,6 @@
 package com.learningmachine.android.app.ui.cert;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -81,6 +82,8 @@ public class AddCertificateURLFragment extends LMFragment {
                 .subscribe(uuid -> {
                     Timber.d("Cert downloaded");
                     hideProgressDialog();
+                    Intent intent = CertificateActivity.newIntent(getContext(), uuid);
+                    startActivity(intent);
                     getActivity().finish();
                 }, throwable -> displayErrors(throwable, R.string.error_title_message));
     }

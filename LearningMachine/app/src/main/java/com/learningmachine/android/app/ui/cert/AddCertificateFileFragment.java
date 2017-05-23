@@ -2,6 +2,7 @@ package com.learningmachine.android.app.ui.cert;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -108,10 +109,11 @@ public class AddCertificateFileFragment extends LMFragment {
                 .subscribe(uuid -> {
                     Timber.d("Cert copied");
                     hideProgressDialog();
+                    Intent intent = CertificateActivity.newIntent(getContext(), uuid);
+                    startActivity(intent);
                     getActivity().finish();
                 }, throwable -> displayErrors(throwable, R.string.error_title_message));
     }
-
 
     private void selectFile(File file) {
         if (file == null) {
