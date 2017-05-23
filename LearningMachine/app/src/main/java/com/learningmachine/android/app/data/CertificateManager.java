@@ -1,6 +1,7 @@
 package com.learningmachine.android.app.data;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -15,8 +16,10 @@ import com.learningmachine.android.app.data.webservice.response.AddCertificateRe
 import com.learningmachine.android.app.util.FileUtils;
 
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -36,6 +39,15 @@ public class CertificateManager {
         mCertificateStore = certificateStore;
         mCertificateService = certificateService;
         mBitcoinManager = bitcoinManager;
+    }
+
+    public Observable<String> loadSampleCertificate() {
+        AssetManager assetManager = mContext.getAssets();
+        try (InputStream inputStream = assetManager.open("sample-certificate.json")) {
+            return handleCertificateInputStream(inputStream, "sample-certificate");
+        } catch (IOException e) {
+            return Observable.error(e);
+        }
     }
 
     public Observable<Certificate> getCertificate(String certificateUuid) {
@@ -85,7 +97,10 @@ public class CertificateManager {
             String recipientKey = recipient.getPublicKey();
 
             // Reject on address mismatch
-            if (!bitcoinAddress.equals(recipientKey)) {
+            boolean isSampleCert = recipientKey.equals("sample-certificate");
+            boolean isCertOwner = bitcoinAddress.equals(recipientKey);
+
+            if (!isSampleCert && !isCertOwner) {
                 return Observable.error(new CertificateOwnershipException());
             }
 
@@ -103,29 +118,34 @@ public class CertificateManager {
     }
 
     private Observable<String> handleCertificateFile(File certificateFile, String bitcoinAddress) {
-        try (FileReader fileReader = new FileReader(certificateFile)) {
-            Gson gson = new Gson();
-            AddCertificateResponse addCertificateResponse = gson.fromJson(fileReader, AddCertificateResponse.class);
-            LMDocument document = addCertificateResponse.getDocument();
-            Recipient recipient = document.getRecipient();
-            String recipientKey = recipient.getPublicKey();
-
-            // Reject on address mismatch
-            if (!bitcoinAddress.equals(recipientKey)) {
-                return Observable.error(new CertificateOwnershipException());
-            }
-
-            // Save to DB
-            mCertificateStore.saveAddCertificateResponse(addCertificateResponse);
-
-            // Copy file
-            String uuid = document.getLMAssertion()
-                    .getUuid();
-            FileUtils.copyCerificate(mContext, certificateFile, uuid);
-            return Observable.just(uuid);
+        try (FileInputStream inputStream = new FileInputStream(certificateFile)) {
+            return handleCertificateInputStream(inputStream, bitcoinAddress);
         } catch (IOException e) {
             return Observable.error(e);
         }
+    }
+
+    private Observable<String> handleCertificateInputStream(InputStream certInputStream, String bitcoinAddress) {
+        Gson gson = new Gson();
+        InputStreamReader inputStreamReader = new InputStreamReader(certInputStream);
+        AddCertificateResponse addCertificateResponse = gson.fromJson(inputStreamReader, AddCertificateResponse.class);
+        LMDocument document = addCertificateResponse.getDocument();
+        Recipient recipient = document.getRecipient();
+        String recipientKey = recipient.getPublicKey();
+
+        // Reject on address mismatch
+        if (!bitcoinAddress.equals(recipientKey)) {
+            return Observable.error(new CertificateOwnershipException());
+        }
+
+        // Save to DB
+        mCertificateStore.saveAddCertificateResponse(addCertificateResponse);
+
+        // Copy file
+        String uuid = document.getLMAssertion()
+                .getUuid();
+        FileUtils.copyCertificateStream(mContext, certInputStream, uuid);
+        return Observable.just(uuid);
     }
 
     static class AddCertificateHolder {
@@ -144,5 +164,10 @@ public class CertificateManager {
         String getBitcoinAddress() {
             return mBitcoinAddress;
         }
+    }
+
+    public void purgeCertificates() {
+        mCertificateStore.reset();
+        loadSampleCertificate();
     }
 }
