@@ -23,6 +23,7 @@ public class UrlLaunchActivity extends LMActivity {
         String uriString = data.toString();
         if (StringUtils.isEmpty(uriString)) {
             Timber.e("Launch uri is empty");
+            finish();
             return;
         }
 
@@ -63,9 +64,9 @@ public class UrlLaunchActivity extends LMActivity {
         startActivity(intent);
     }
 
-    private String getPathSuffix(String uriString, String delimeter) {
-        String[] uriSplit = uriString.split(delimeter);
-        if (uriSplit.length < 1) {
+    private String getPathSuffix(String uriString, String delimiter) {
+        String[] uriSplit = uriString.split(delimiter);
+        if (uriSplit.length < 2) {
             return null;
         }
         return uriSplit[1];
