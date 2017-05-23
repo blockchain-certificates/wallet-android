@@ -10,4 +10,6 @@ public class LMConstants {
     public static final int WALLET_CREATION_TIME_SECONDS = 0;
 
     public static final String BASE_URL = "https://certificates.learningmachine.com";
+
+    public static final String BLOCKCHAIN_SERVICE_URL = "https://blockchain.info/";
 }
