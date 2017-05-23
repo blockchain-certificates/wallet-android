@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Certificates</string>
+    <string name="app_name">Blockcerts</string>
     <string name="home_issuers">Issuers</string>
     <string name="home_settings_menu_item_title">Settings</string>
 
