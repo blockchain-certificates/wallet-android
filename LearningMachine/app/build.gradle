@@ -34,16 +34,21 @@ android {
         }
     }
 
+    flavorDimensions "env"
+
     productFlavors {
         dev {
             applicationId "com.learningmachine.android.app.dev"
+            dimension "env"
         }
         staging {
             applicationId "com.learningmachine.android.app.staging"
+            dimension "env"
         }
-        production {}
+        production {
+            dimension "env"
+        }
     }
-
 
     buildTypes {
         release {
@@ -52,9 +57,8 @@ android {
             }
 
             applicationVariants.all { variant ->
-                variant.outputs.each { output ->
-                    def file = output.outputFile
-                    output.outputFile = new File(file.parent, file.name.replace(".apk", "-" + versionName + ".apk"))
+                variant.outputs.all {
+                    outputFileName = "${variant.name}-${versionName}.apk"
                 }
             }
 
