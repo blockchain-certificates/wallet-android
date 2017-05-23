@@ -145,6 +145,42 @@ public class IssuerStore implements DataStore {
         return issuer;
     }
 
+    public Issuer loadIssuerForCertificate(String certUuid) {
+        Issuer issuer = null;
+
+        String selectQuery = "SELECT "
+                + LMDatabaseHelper.Table.ISSUER + "." + LMDatabaseHelper.Column.Issuer.ID + ", "
+                + LMDatabaseHelper.Table.ISSUER + "." + LMDatabaseHelper.Column.Issuer.NAME + ", "
+                + LMDatabaseHelper.Table.ISSUER + "." + LMDatabaseHelper.Column.Issuer.EMAIL + ", "
+                + LMDatabaseHelper.Table.ISSUER + "." + LMDatabaseHelper.Column.Issuer.UUID + ", "
+                + LMDatabaseHelper.Table.ISSUER + "." + LMDatabaseHelper.Column.Issuer.CERTS_URL + ", "
+                + LMDatabaseHelper.Table.ISSUER + "." + LMDatabaseHelper.Column.Issuer.INTRO_URL
+                + " FROM "
+                + LMDatabaseHelper.Table.ISSUER
+                + " INNER JOIN " + LMDatabaseHelper.Table.CERTIFICATE
+                + " ON " + LMDatabaseHelper.Table.ISSUER + "." + LMDatabaseHelper.Column.Issuer.UUID
+                + " = " + LMDatabaseHelper.Table.CERTIFICATE + "." + LMDatabaseHelper.Column.Certificate.ISSUER_UUID
+                + " WHERE " + LMDatabaseHelper.Table.CERTIFICATE + "." + LMDatabaseHelper.Column.Certificate.UUID
+                + " = ?";
+
+        // TODO update to selectionArgs
+
+        Cursor cursor = mDatabase.rawQuery(selectQuery, new String[] { certUuid });
+
+        if (cursor.moveToFirst()) {
+            IssuerCursorWrapper cursorWrapper = new IssuerCursorWrapper(cursor);
+            issuer = cursorWrapper.getIssuer();
+            List<KeyRotation> issuerKeys = loadIssuerKeys(issuer.getUuid());
+            issuer.setIssuerKeys(issuerKeys);
+            List<KeyRotation> revocationKeys = loadRevocationKeys(issuer.getUuid());
+            issuer.setRevocationKeys(revocationKeys);
+        }
+
+        cursor.close();
+
+        return issuer;
+    }
+
     private void saveIssuerKeys(List<KeyRotation> keyRotationList, String issuerUuid) {
         saveKeyRotations(keyRotationList, issuerUuid, LMDatabaseHelper.Table.ISSUER_KEY);
     }

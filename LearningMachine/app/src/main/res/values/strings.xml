@@ -60,6 +60,7 @@
     <string name="fragment_issuer_info_description">Description</string>
 
     <!--Add Certificate-->
+
     <string name="add_certificate_by_file">BY FILE</string>
     <string name="add_certificate_by_url">BY URL</string>
     <string name="certificate_add_url_label">What is the URL of the certificate?</string>
@@ -72,7 +73,6 @@
     <string name="fragment_add_certificate_alert_dialog_success_message">This is a valid certificate.</string>
     <string name="fragment_add_certificate_alert_dialog_error_message">That doesn\'t appear to be a valid certificate. Please check the URL and try again.</string>
 
-
     <!-- Certificate Fragment -->
 
     <string name="fragment_certificate_title">\u00A0</string>
@@ -80,6 +80,10 @@
     <string name="certificate_share_menu_item_title">Share</string>
     <string name="certificate_info_menu_item_title">Info</string>
     <string name="fragment_certificate_progress_dialog_message">Loading Certificate…</string>
+    <string name="fragment_certificate_share_message">How would you like to share your certificate?</string>
+    <string name="fragment_certificate_share_url_button_title">URL</string>
+    <string name="fragment_certificate_share_file_button_title">File</string>
+    <string name="fragment_certificate_share_format">Check out my certificate from %1$s! %2$s</string>
 
     <!-- Certificate Info Fragment -->
 
