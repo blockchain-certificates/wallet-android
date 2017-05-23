@@ -20,12 +20,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class AddCertificatePagerActivity extends LMActivity {
+public class AddCertificateActivity extends LMActivity {
+
+    private static final String EXTRA_CERT_URL = "AddIssuerActivity.CertUrl";
 
     private ActivityAddCertificateBinding mBinding;
 
     public static Intent newIntent(Context context) {
-        return new Intent(context, AddCertificatePagerActivity.class);
+        return newIntent(context, null);
+    }
+
+    public static Intent newIntent(Context context, String certificateUrlString) {
+        Intent intent = new Intent(context, AddCertificateActivity.class);
+        intent.putExtra(EXTRA_CERT_URL, certificateUrlString);
+        return intent;
     }
 
     @Override
@@ -43,7 +51,9 @@ public class AddCertificatePagerActivity extends LMActivity {
         certificateTypes.add(CertificateType.URL);
         certificateTypes.add(CertificateType.FILE);
 
-        AddCertificateViewPagerAdapter adapter = new AddCertificateViewPagerAdapter(this, getSupportFragmentManager(), certificateTypes);
+        AddCertificateViewPagerAdapter adapter = new AddCertificateViewPagerAdapter(this,
+                getSupportFragmentManager(),
+                certificateTypes);
         viewPager.setAdapter(adapter);
     }
 
@@ -72,16 +82,6 @@ public class AddCertificatePagerActivity extends LMActivity {
         public int getTitleResId() {
             return mTitleResId;
         }
-
-        public Fragment createFragment() {
-            switch (this) {
-                case URL:
-                    return AddCertificateURLFragment.newInstance();
-                case FILE:
-                    return AddCertificateFileFragment.newInstance();
-            }
-            return null;
-        }
     }
 
     private class AddCertificateViewPagerAdapter extends FragmentStatePagerAdapter {
@@ -97,7 +97,14 @@ public class AddCertificatePagerActivity extends LMActivity {
         @Override
         public Fragment getItem(int position) {
             CertificateType certificateType = mCertificateTypes.get(position);
-            return certificateType.createFragment();
+            switch (certificateType) {
+                case URL:
+                    String certUrlString = getIntent().getStringExtra(EXTRA_CERT_URL);
+                    return AddCertificateURLFragment.newInstance(certUrlString);
+                case FILE:
+                    return AddCertificateFileFragment.newInstance();
+            }
+            return null;
         }
 
         @Override
