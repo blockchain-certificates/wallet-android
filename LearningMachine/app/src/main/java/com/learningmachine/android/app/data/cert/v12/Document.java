@@ -65,6 +65,10 @@ public class Document {
     @Expose
     private Recipient recipient;
 
+    @SerializedName("signature")
+    @Expose
+    private String signature;
+
     /**
      * A link to a valid JSON-LD context file, that maps term names to contexts. Blockchain Certificate contexts may also define JSON-schema to validate Blockchain Certificates against. In a Blockchain Certificate Object, this will almost always be a string:uri to a single context file, but might rarely be an array of links or context objects instead. This schema also allows direct mapping of terms to IRIs by using an object as an option within an array.
      * 
@@ -179,4 +183,11 @@ public class Document {
         this.recipient = recipient;
     }
 
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
+    }
 }

@@ -11,11 +11,11 @@ import android.webkit.WebViewClient;
 
 import com.google.gson.Gson;
 import com.learningmachine.android.app.R;
+import com.learningmachine.android.app.data.cert.v12.BlockchainCertificate;
+import com.learningmachine.android.app.data.cert.v12.Document;
+import com.learningmachine.android.app.data.cert.v12.Receipt;
 import com.learningmachine.android.app.data.error.ExceptionWithResourceString;
-import com.learningmachine.android.app.data.model.Certificate;
-import com.learningmachine.android.app.data.model.Document;
 import com.learningmachine.android.app.data.model.KeyRotation;
-import com.learningmachine.android.app.data.model.Receipt;
 import com.learningmachine.android.app.data.model.TxRecordOut;
 import com.learningmachine.android.app.data.webservice.BlockchainService;
 import com.learningmachine.android.app.data.webservice.IssuerService;
@@ -33,6 +33,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.math.BigInteger;
+import java.net.URI;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SignatureException;
@@ -81,8 +82,8 @@ public class CertificateVerifier {
         }
     }
 
-    private Observable<Certificate> parseCertificate(String string) {
-        return Observable.just(new Gson().fromJson(string, Certificate.class));
+    private Observable<BlockchainCertificate> parseCertificate(String string) {
+        return Observable.just(new Gson().fromJson(string, BlockchainCertificate.class));
     }
 
     private Observable<String> getCertificateDocument(String string) {
@@ -98,15 +99,15 @@ public class CertificateVerifier {
         }
     }
 
-    public Observable<String> verifyBitcoinTransactionRecord(Certificate certificate) {
+    public Observable<String> verifyBitcoinTransactionRecord(BlockchainCertificate certificate) {
         Receipt receipt = certificate.getReceipt();
-        if (receipt == null) {
+        if (receipt == null || ListUtils.isEmpty(receipt.getAnchors())) {
             // TODO: show an error
             Timber.d("Certificate receipt missing");
             Exception e = new ExceptionWithResourceString(R.string.error_invalid_certificate_json);
             return Observable.error(e);
         }
-        String sourceId = receipt.getFirstAnchorSourceId();
+        String sourceId = receipt.getAnchors().get(0).getSourceId();
         return getBitcoinTransactionRecordHash(sourceId)
                 .flatMap(remoteHash -> blockchainDownloaded(remoteHash, certificate));
     }
@@ -129,7 +130,7 @@ public class CertificateVerifier {
                 });
     }
 
-    private Observable<String> blockchainDownloaded(String remoteHash, Certificate certificate) {
+    private Observable<String> blockchainDownloaded(String remoteHash, BlockchainCertificate certificate) {
         Receipt receipt = certificate.getReceipt();
         if (receipt == null) {
             Timber.e("The receipt is missing from the certificate");
@@ -147,13 +148,13 @@ public class CertificateVerifier {
         return Observable.just(remoteHash);
     }
 
-    public Observable<String> verifyIssuer(Certificate certificate) {
-        String issuerUuid = certificate.getIssuerUuid();
+    public Observable<String> verifyIssuer(BlockchainCertificate certificate) {
+        URI issuerUuid = certificate.getDocument().getCertificate().getIssuer().getId();
         return mIssuerService.getIssuer(issuerUuid)
                 .flatMap(issuerResponse -> issuerDownloaded(issuerResponse, certificate));
     }
 
-    private Observable<String> issuerDownloaded(IssuerResponse issuerResponse, Certificate certificate) {
+    private Observable<String> issuerDownloaded(IssuerResponse issuerResponse, BlockchainCertificate certificate) {
         List<KeyRotation> issuerKeys = issuerResponse.getIssuerKeys();
         if (ListUtils.isEmpty(issuerKeys)) {
             // TODO: show an error
@@ -166,11 +167,11 @@ public class CertificateVerifier {
         Document document = certificate.getDocument();
         String signature = document.getSignature();
         // TODO: check if we could get UUID from the cert
-        String uuid = document.getAssertion().getUuid();
+        String uid = document.getAssertion().getUid();
 
         try {
-            ECKey ecKey = ECKey.signedMessageToKey(uuid, signature);
-            ecKey.verifyMessage(uuid, signature); // this is tautological
+            ECKey ecKey = ECKey.signedMessageToKey(uid, signature);
+            ecKey.verifyMessage(uid, signature); // this is tautological
             Address address = ecKey.toAddress(MainNetParams.get());
             if (!firstIssuerKey.getKey().equals(address.toBase58())) {
                 // TODO: show an error
@@ -219,15 +220,15 @@ public class CertificateVerifier {
     }
 
     public static class CertificateAndDocument {
-        Certificate mCertificate;
+        BlockchainCertificate mCertificate;
         String mDocument;
 
-        public CertificateAndDocument(Certificate certificate, String document) {
+        public CertificateAndDocument(BlockchainCertificate certificate, String document) {
             mCertificate = certificate;
             mDocument = document;
         }
 
-        public Certificate getCertificate() {
+        public BlockchainCertificate getCertificate() {
             return mCertificate;
         }
 
