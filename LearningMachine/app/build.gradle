@@ -117,12 +117,6 @@ configurations.all {
     }
 }
 
-repositories {
-    maven {
-        url 'https://maven.google.com'
-    }
-}
-
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile "com.android.support:appcompat-v7:$SUPPORT_VERSION"
