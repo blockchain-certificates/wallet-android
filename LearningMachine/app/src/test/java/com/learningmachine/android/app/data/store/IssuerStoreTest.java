@@ -50,8 +50,9 @@ public class IssuerStoreTest {
         String introUrl = "https://www.learningmachine.com/sample-issuer/intro/";
         String name = "Sample Issuer";
         String email = "sample-certificate@learningmachine.com";
+        String introducedOn = "2017-05-11T18:28:27.415+00:00";
 
-        Issuer issuerOrig = new Issuer(name, email, uuid, certsUrl, introUrl);
+        Issuer issuerOrig = new Issuer(name, email, uuid, certsUrl, introUrl, introducedOn);
         issuerOrig.setRevocationKeys(new ArrayList<>());
         issuerOrig.setIssuerKeys(new ArrayList<>());
         mIssuerStore.saveIssuer(issuerOrig);
@@ -64,6 +65,7 @@ public class IssuerStoreTest {
         assertEquals(uuid, issuerLoaded.getUuid());
         assertEquals(certsUrl, issuerLoaded.getCertsUrl());
         assertEquals(introUrl, issuerLoaded.getIntroUrl());
+        assertEquals(introducedOn, issuerLoaded.getIntroducedOn());
     }
 
     @Test

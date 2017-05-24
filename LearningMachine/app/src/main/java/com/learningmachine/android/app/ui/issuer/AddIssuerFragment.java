@@ -1,5 +1,6 @@
 package com.learningmachine.android.app.ui.issuer;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,19 +19,29 @@ import com.learningmachine.android.app.data.bitcoin.BitcoinManager;
 import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.databinding.FragmentAddIssuerBinding;
 import com.learningmachine.android.app.ui.LMFragment;
+import com.learningmachine.android.app.util.StringUtils;
 
 import javax.inject.Inject;
 
 public class AddIssuerFragment extends LMFragment {
 
-    private FragmentAddIssuerBinding mBinding;
+    private static final String ARG_ISSUER_URL = "AddIssuerFragment.IssuerUrl";
+    private static final String ARG_ISSUER_NONCE = "AddIssuerFragment.IssuerNonce";
 
     @Inject protected BitcoinManager mBitcoinManager;
     @Inject protected IssuerManager mIssuerManager;
 
+    private FragmentAddIssuerBinding mBinding;
 
-    public static AddIssuerFragment newInstance() {
-        return new AddIssuerFragment();
+    public static AddIssuerFragment newInstance(String issuerUrlString, String nonce) {
+        Bundle args = new Bundle();
+        args.putString(ARG_ISSUER_URL, issuerUrlString);
+        args.putString(ARG_ISSUER_NONCE, nonce);
+
+        AddIssuerFragment fragment = new AddIssuerFragment();
+        fragment.setArguments(args);
+
+        return fragment;
     }
 
     @Nullable
@@ -38,7 +49,9 @@ public class AddIssuerFragment extends LMFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_issuer, container, false);
 
-        mBinding.addIssuerIdentityEditText.setOnEditorActionListener(mActionListener);
+        handleArgs();
+
+        mBinding.addIssuerNonceEditText.setOnEditorActionListener(mActionListener);
 
         return mBinding.getRoot();
     }
@@ -56,23 +69,40 @@ public class AddIssuerFragment extends LMFragment {
         inflater.inflate(R.menu.fragment_add_issuer, menu);
     }
 
+    private void handleArgs() {
+        Bundle args = getArguments();
+        if (args == null) {
+            return;
+        }
+
+        String issuerUrlString = args.getString(ARG_ISSUER_URL);
+        if (!StringUtils.isEmpty(issuerUrlString)) {
+            mBinding.addIssuerUrlEditText.setText(issuerUrlString);
+        }
+
+        String issuerNonce = args.getString(ARG_ISSUER_NONCE);
+        if (!StringUtils.isEmpty(issuerNonce)) {
+            mBinding.addIssuerNonceEditText.setText(issuerNonce);
+        }
+    }
+
     private void startIssuerIntroduction() {
         hideKeyboard();
         String introUrl = mBinding.addIssuerUrlEditText.getText()
                 .toString();
-        String nonce = mBinding.addIssuerIdentityEditText.getText()
+        String nonce = mBinding.addIssuerNonceEditText.getText()
                 .toString();
 
         mBitcoinManager.getBitcoinAddress()
                 .doOnSubscribe(() -> displayProgressDialog(R.string.fragment_add_issuer_adding_issuer_progress_dialog_message))
                 .flatMap(bitcoinAddress -> mIssuerManager.addIssuer(introUrl, bitcoinAddress, nonce))
                 .compose(bindToMainThread())
-                .subscribe(aVoid -> {
+                .subscribe(uuid -> {
                     hideProgressDialog();
+                    Intent intent = IssuerActivity.newIntent(getContext(), uuid);
+                    startActivity(intent);
                     getActivity().finish();
-                }, throwable -> {
-                    displayErrors(throwable, R.string.error_title_message);
-                });
+                }, throwable -> displayErrors(throwable, R.string.error_title_message));
     }
 
     private TextView.OnEditorActionListener mActionListener = (v, actionId, event) -> {

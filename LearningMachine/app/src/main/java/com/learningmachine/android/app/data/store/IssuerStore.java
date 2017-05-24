@@ -14,6 +14,8 @@ import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 import com.learningmachine.android.app.util.GsonUtil;
 import com.learningmachine.android.app.util.ListUtils;
 
+import org.joda.time.DateTime;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +39,9 @@ public class IssuerStore implements DataStore {
         String imageData = issuerResponse.getImageData();
         mImageStore.saveImage(uuid, imageData);
 
+        String introducedOn = DateTime.now().toString();
+        issuerResponse.setIntroducedOn(introducedOn);
+
         saveIssuer(issuerResponse);
     }
 
@@ -49,6 +54,7 @@ public class IssuerStore implements DataStore {
         contentValues.put(LMDatabaseHelper.Column.Issuer.UUID, issuer.getUuid());
         contentValues.put(LMDatabaseHelper.Column.Issuer.CERTS_URL, issuer.getCertsUrl());
         contentValues.put(LMDatabaseHelper.Column.Issuer.INTRO_URL, issuer.getIntroUrl());
+        contentValues.put(LMDatabaseHelper.Column.Issuer.INTRODUCED_ON, issuer.getIntroducedOn());
 
         saveIssuerKeys(issuer.getIssuerKeys(), issuer.getUuid());
         saveRevocationKeys(issuer.getRevocationKeys(), issuer.getUuid());
@@ -106,6 +112,42 @@ public class IssuerStore implements DataStore {
                 null,
                 null,
                 null);
+
+        if (cursor.moveToFirst()) {
+            IssuerCursorWrapper cursorWrapper = new IssuerCursorWrapper(cursor);
+            issuer = cursorWrapper.getIssuer();
+            List<KeyRotation> issuerKeys = loadIssuerKeys(issuer.getUuid());
+            issuer.setIssuerKeys(issuerKeys);
+            List<KeyRotation> revocationKeys = loadRevocationKeys(issuer.getUuid());
+            issuer.setRevocationKeys(revocationKeys);
+        }
+
+        cursor.close();
+
+        return issuer;
+    }
+
+    public Issuer loadIssuerForCertificate(String certUuid) {
+        Issuer issuer = null;
+
+        String selectQuery = "SELECT "
+                + LMDatabaseHelper.Table.ISSUER + "." + LMDatabaseHelper.Column.Issuer.ID + ", "
+                + LMDatabaseHelper.Table.ISSUER + "." + LMDatabaseHelper.Column.Issuer.NAME + ", "
+                + LMDatabaseHelper.Table.ISSUER + "." + LMDatabaseHelper.Column.Issuer.EMAIL + ", "
+                + LMDatabaseHelper.Table.ISSUER + "." + LMDatabaseHelper.Column.Issuer.UUID + ", "
+                + LMDatabaseHelper.Table.ISSUER + "." + LMDatabaseHelper.Column.Issuer.CERTS_URL + ", "
+                + LMDatabaseHelper.Table.ISSUER + "." + LMDatabaseHelper.Column.Issuer.INTRO_URL
+                + " FROM "
+                + LMDatabaseHelper.Table.ISSUER
+                + " INNER JOIN " + LMDatabaseHelper.Table.CERTIFICATE
+                + " ON " + LMDatabaseHelper.Table.ISSUER + "." + LMDatabaseHelper.Column.Issuer.UUID
+                + " = " + LMDatabaseHelper.Table.CERTIFICATE + "." + LMDatabaseHelper.Column.Certificate.ISSUER_UUID
+                + " WHERE " + LMDatabaseHelper.Table.CERTIFICATE + "." + LMDatabaseHelper.Column.Certificate.UUID
+                + " = ?";
+
+        // TODO update to selectionArgs
+
+        Cursor cursor = mDatabase.rawQuery(selectQuery, new String[] { certUuid });
 
         if (cursor.moveToFirst()) {
             IssuerCursorWrapper cursorWrapper = new IssuerCursorWrapper(cursor);

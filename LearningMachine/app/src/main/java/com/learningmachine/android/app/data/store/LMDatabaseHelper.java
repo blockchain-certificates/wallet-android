@@ -42,6 +42,7 @@ public class LMDatabaseHelper extends SQLiteOpenHelper {
             public static final String UUID = "uuid";
             public static final String CERTS_URL = "certs_url";
             public static final String INTRO_URL = "intro_url";
+            public static final String INTRODUCED_ON = "introduced_on";
         }
 
         public static class KeyRotation {
@@ -58,6 +59,7 @@ public class LMDatabaseHelper extends SQLiteOpenHelper {
             public static final String NAME = "name";
             public static final String DESCRIPTION = "description";
             public static final String ISSUE_DATE = "issue_date";
+            public static final String URL = "url";
         }
     }
 
@@ -70,6 +72,7 @@ public class LMDatabaseHelper extends SQLiteOpenHelper {
                 + ", " + Column.Issuer.UUID + " TEXT"
                 + ", " + Column.Issuer.CERTS_URL + " TEXT"
                 + ", " + Column.Issuer.INTRO_URL + " TEXT"
+                + ", " + Column.Issuer.INTRODUCED_ON + " TEXT"
                 + ");";
         sqLiteDatabase.execSQL(createTable);
     }
@@ -102,6 +105,7 @@ public class LMDatabaseHelper extends SQLiteOpenHelper {
                 + ", " + Column.Certificate.NAME + " TEXT"
                 + ", " + Column.Certificate.DESCRIPTION + " TEXT"
                 + ", " + Column.Certificate.ISSUE_DATE + " TEXT"
+                + ", " + Column.Certificate.URL + " TEXT"
                 + ");";
         sqLiteDatabase.execSQL(createTable);
     }
