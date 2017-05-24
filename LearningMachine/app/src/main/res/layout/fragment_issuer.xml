@@ -18,7 +18,7 @@
             android:layout_gravity="bottom|right"
             android:layout_margin="16dp"
             android:src="@drawable/ic_action_add"
-            app:backgroundTint="@color/brand_green"/>
+            app:backgroundTint="?colorAccent"/>
 
     </FrameLayout>
 

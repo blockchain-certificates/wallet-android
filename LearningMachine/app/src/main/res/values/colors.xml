@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">@color/white</color>
-    <color name="colorPrimaryDark">@color/black</color>
-    <color name="colorAccent">@color/brand_green</color>
-
+    <color name="colorPrimaryDark">@color/transparent_gray</color>
+    <color name="colorAccent">@color/black</color>
     <!-- Brand -->
-    <color name="brand_green">#2ab27b</color>
-    <color name="certificate_dark_green">#1a895c</color>
+    <color name="transparent_gray">#1e000000</color>
     <color name="white">#ffffff</color>
     <color name="off_white_background">#f3f4f5</color>
     <color name="black">#000000</color>
