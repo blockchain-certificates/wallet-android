@@ -1,5 +1,6 @@
 package com.learningmachine.android.app.ui.issuer;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -42,6 +43,7 @@ public class AddIssuerFragment extends LMFragment {
 
         return fragment;
     }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -95,12 +97,12 @@ public class AddIssuerFragment extends LMFragment {
                 .doOnSubscribe(() -> displayProgressDialog(R.string.fragment_add_issuer_adding_issuer_progress_dialog_message))
                 .flatMap(bitcoinAddress -> mIssuerManager.addIssuer(introUrl, bitcoinAddress, nonce))
                 .compose(bindToMainThread())
-                .subscribe(aVoid -> {
+                .subscribe(uuid -> {
                     hideProgressDialog();
+                    Intent intent = IssuerActivity.newIntent(getContext(), uuid);
+                    startActivity(intent);
                     getActivity().finish();
-                }, throwable -> {
-                    displayErrors(throwable, R.string.error_title_message);
-                });
+                }, throwable -> displayErrors(throwable, R.string.error_title_message));
     }
 
     private TextView.OnEditorActionListener mActionListener = (v, actionId, event) -> {

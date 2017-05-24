@@ -22,31 +22,12 @@ import java.util.List;
 
 public class IssuerStore implements DataStore {
 
-    // Context can be removed when mock data is no longer necessary
-    private Context mContext;
     private SQLiteDatabase mDatabase;
     private ImageStore mImageStore;
 
-    public IssuerStore(Context context, LMDatabaseHelper databaseHelper, ImageStore imageStore) {
-        mContext = context;
+    public IssuerStore(LMDatabaseHelper databaseHelper, ImageStore imageStore) {
         mDatabase = databaseHelper.getWritableDatabase();
         mImageStore = imageStore;
-        loadSampleIssuer();
-    }
-
-    private void loadSampleIssuer() {
-        List<Issuer> issuerList = loadIssuers();
-        if (!issuerList.isEmpty()) {
-            return;
-        }
-
-        GsonUtil gsonUtil = new GsonUtil(mContext);
-        try {
-            IssuerResponse issuerResponse = gsonUtil.loadModelObject("sample-issuer", IssuerResponse.class);
-            saveIssuerResponse(issuerResponse);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public void saveIssuerResponse(IssuerResponse issuerResponse) {
@@ -64,7 +45,8 @@ public class IssuerStore implements DataStore {
         saveIssuer(issuerResponse);
     }
 
-    private void saveIssuer(Issuer issuer) {
+    @VisibleForTesting
+    protected void saveIssuer(Issuer issuer) {
         ContentValues contentValues = new ContentValues();
 
         contentValues.put(LMDatabaseHelper.Column.Issuer.NAME, issuer.getName());
@@ -130,6 +112,42 @@ public class IssuerStore implements DataStore {
                 null,
                 null,
                 null);
+
+        if (cursor.moveToFirst()) {
+            IssuerCursorWrapper cursorWrapper = new IssuerCursorWrapper(cursor);
+            issuer = cursorWrapper.getIssuer();
+            List<KeyRotation> issuerKeys = loadIssuerKeys(issuer.getUuid());
+            issuer.setIssuerKeys(issuerKeys);
+            List<KeyRotation> revocationKeys = loadRevocationKeys(issuer.getUuid());
+            issuer.setRevocationKeys(revocationKeys);
+        }
+
+        cursor.close();
+
+        return issuer;
+    }
+
+    public Issuer loadIssuerForCertificate(String certUuid) {
+        Issuer issuer = null;
+
+        String selectQuery = "SELECT "
+                + LMDatabaseHelper.Table.ISSUER + "." + LMDatabaseHelper.Column.Issuer.ID + ", "
+                + LMDatabaseHelper.Table.ISSUER + "." + LMDatabaseHelper.Column.Issuer.NAME + ", "
+                + LMDatabaseHelper.Table.ISSUER + "." + LMDatabaseHelper.Column.Issuer.EMAIL + ", "
+                + LMDatabaseHelper.Table.ISSUER + "." + LMDatabaseHelper.Column.Issuer.UUID + ", "
+                + LMDatabaseHelper.Table.ISSUER + "." + LMDatabaseHelper.Column.Issuer.CERTS_URL + ", "
+                + LMDatabaseHelper.Table.ISSUER + "." + LMDatabaseHelper.Column.Issuer.INTRO_URL
+                + " FROM "
+                + LMDatabaseHelper.Table.ISSUER
+                + " INNER JOIN " + LMDatabaseHelper.Table.CERTIFICATE
+                + " ON " + LMDatabaseHelper.Table.ISSUER + "." + LMDatabaseHelper.Column.Issuer.UUID
+                + " = " + LMDatabaseHelper.Table.CERTIFICATE + "." + LMDatabaseHelper.Column.Certificate.ISSUER_UUID
+                + " WHERE " + LMDatabaseHelper.Table.CERTIFICATE + "." + LMDatabaseHelper.Column.Certificate.UUID
+                + " = ?";
+
+        // TODO update to selectionArgs
+
+        Cursor cursor = mDatabase.rawQuery(selectQuery, new String[] { certUuid });
 
         if (cursor.moveToFirst()) {
             IssuerCursorWrapper cursorWrapper = new IssuerCursorWrapper(cursor);
@@ -221,6 +239,5 @@ public class IssuerStore implements DataStore {
         mDatabase.delete(LMDatabaseHelper.Table.ISSUER_KEY, null, null);
         mDatabase.delete(LMDatabaseHelper.Table.REVOCATION_KEY, null, null);
         mImageStore.reset();
-        loadSampleIssuer();
     }
 }

@@ -15,6 +15,7 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -39,13 +40,7 @@ public class IssuerStoreTest {
         Context context = RuntimeEnvironment.application;
         LMDatabaseHelper database = new LMDatabaseHelper(context);
 
-        context = mock(Context.class);
-        AssetManager assetManager = mock(AssetManager.class);
-        when(context.getAssets()).thenReturn(assetManager);
-        when(assetManager.open(any())).thenReturn(getClass().getClassLoader()
-                .getResourceAsStream("sample-issuer.json"));
-
-        mIssuerStore = new IssuerStore(context, database, imageStore);
+        mIssuerStore = new IssuerStore(database, imageStore);
     }
 
     @Test
@@ -55,15 +50,22 @@ public class IssuerStoreTest {
         String introUrl = "https://www.learningmachine.com/sample-issuer/intro/";
         String name = "Sample Issuer";
         String email = "sample-certificate@learningmachine.com";
+        String introducedOn = "2017-05-11T18:28:27.415+00:00";
 
-        Issuer issuer = mIssuerStore.loadIssuer(uuid);
+        Issuer issuerOrig = new Issuer(name, email, uuid, certsUrl, introUrl, introducedOn);
+        issuerOrig.setRevocationKeys(new ArrayList<>());
+        issuerOrig.setIssuerKeys(new ArrayList<>());
+        mIssuerStore.saveIssuer(issuerOrig);
 
-        assertNotNull(issuer);
-        assertEquals(name, issuer.getName());
-        assertEquals(email, issuer.getEmail());
-        assertEquals(uuid, issuer.getUuid());
-        assertEquals(certsUrl, issuer.getCertsUrl());
-        assertEquals(introUrl, issuer.getIntroUrl());
+        Issuer issuerLoaded = mIssuerStore.loadIssuer(uuid);
+
+        assertNotNull(issuerLoaded);
+        assertEquals(name, issuerLoaded.getName());
+        assertEquals(email, issuerLoaded.getEmail());
+        assertEquals(uuid, issuerLoaded.getUuid());
+        assertEquals(certsUrl, issuerLoaded.getCertsUrl());
+        assertEquals(introUrl, issuerLoaded.getIntroUrl());
+        assertEquals(introducedOn, issuerLoaded.getIntroducedOn());
     }
 
     @Test
@@ -75,6 +77,7 @@ public class IssuerStoreTest {
 
         String tableName = LMDatabaseHelper.Table.ISSUER_KEY;
         mIssuerStore.saveKeyRotation(keyRotation, issuerUuid, tableName);
+
         List<KeyRotation> keyRotationList = mIssuerStore.loadKeyRotations(issuerUuid, tableName);
 
         assertFalse(ListUtils.isEmpty(keyRotationList));

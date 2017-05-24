@@ -5,6 +5,7 @@ import android.content.Context;
 import com.learningmachine.android.app.data.CertificateManager;
 import com.learningmachine.android.app.data.IssuerManager;
 import com.learningmachine.android.app.data.bitcoin.BitcoinManager;
+import com.learningmachine.android.app.data.preferences.SharedPreferencesManager;
 import com.learningmachine.android.app.data.store.CertificateStore;
 import com.learningmachine.android.app.data.store.ImageStore;
 import com.learningmachine.android.app.data.store.IssuerStore;
@@ -24,8 +25,8 @@ public class DataModule {
 
     @Provides
     @Singleton
-    BitcoinManager providesBitcoinManager(Context context, NetworkParameters networkParameters, IssuerManager issuerManager) {
-        return new BitcoinManager(context, networkParameters, issuerManager);
+    BitcoinManager providesBitcoinManager(Context context, NetworkParameters networkParameters, IssuerStore issuerStore, CertificateStore certificateStore) {
+        return new BitcoinManager(context, networkParameters, issuerStore, certificateStore);
     }
 
     @Provides
@@ -42,8 +43,8 @@ public class DataModule {
 
     @Provides
     @Singleton
-    IssuerStore providesIssuerStore(Context context, LMDatabaseHelper databaseHelper, ImageStore imageStore) {
-        return new IssuerStore(context, databaseHelper, imageStore);
+    IssuerStore providesIssuerStore(LMDatabaseHelper databaseHelper, ImageStore imageStore) {
+        return new IssuerStore(databaseHelper, imageStore);
     }
 
     @Provides
@@ -62,5 +63,11 @@ public class DataModule {
     @Singleton
     CertificateStore providesCertificateStore(LMDatabaseHelper databaseHelper) {
         return new CertificateStore(databaseHelper);
+    }
+
+    @Provides
+    @Singleton
+    SharedPreferencesManager providesSharedPreferencesManager(Context context) {
+        return new SharedPreferencesManager(context);
     }
 }

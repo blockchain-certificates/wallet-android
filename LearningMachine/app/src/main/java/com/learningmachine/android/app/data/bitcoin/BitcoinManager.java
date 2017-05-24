@@ -5,6 +5,8 @@ import android.support.annotation.VisibleForTesting;
 
 import com.learningmachine.android.app.LMConstants;
 import com.learningmachine.android.app.data.IssuerManager;
+import com.learningmachine.android.app.data.store.CertificateStore;
+import com.learningmachine.android.app.data.store.IssuerStore;
 import com.learningmachine.android.app.util.ListUtils;
 import com.learningmachine.android.app.util.StringUtils;
 
@@ -35,13 +37,15 @@ public class BitcoinManager {
 
     private final Context mContext;
     private final NetworkParameters mNetworkParameters;
-    private final IssuerManager mIssuerManager;
+    private final IssuerStore mIssuerStore;
+    private final CertificateStore mCertificateStore;
     private Wallet mWallet;
 
-    public BitcoinManager(Context context, NetworkParameters networkParameters, IssuerManager issuerManager) {
+    public BitcoinManager(Context context, NetworkParameters networkParameters, IssuerStore issuerStore, CertificateStore certificateStore) {
         mContext = context;
         mNetworkParameters = networkParameters;
-        mIssuerManager = issuerManager;
+        mIssuerStore = issuerStore;
+        mCertificateStore = certificateStore;
     }
 
     private Observable<Wallet> getWallet() {
@@ -140,7 +144,8 @@ public class BitcoinManager {
             return Observable.error(new Exception("Passphrase cannot be empty"));
         }
         List<String> newPassphraseList = StringUtils.split(newPassphrase, PASSPHRASE_DELIMETER);
-        mIssuerManager.purgeIssuers();
+        mIssuerStore.reset();
+        mCertificateStore.reset();
         return buildWallet(newPassphraseList, null);
     }
 

@@ -24,7 +24,6 @@ public class CertificateStore implements DataStore {
     }
 
     public Certificate loadCertificate(String certUuid) {
-
         Certificate certificate = null;
         Cursor cursor = mDatabase.query(
                 LMDatabaseHelper.Table.CERTIFICATE,
