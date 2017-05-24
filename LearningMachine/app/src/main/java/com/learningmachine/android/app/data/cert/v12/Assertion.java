@@ -1,9 +1,10 @@
 
 package com.learningmachine.android.app.data.cert.v12;
 
-import java.net.URI;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.net.URI;
 
 
 /**
@@ -52,7 +53,7 @@ public class Assertion {
      */
     @SerializedName("issuedOn")
     @Expose
-    private Object issuedOn;
+    private String issuedOn;
     /**
      * URL of the work that the recipient did to earn the achievement. This can be a page that links out to other pages if linking directly to the work is infeasible. V1.2 made this field optional, which is consistent with OBI spec.
      * 
@@ -146,7 +147,7 @@ public class Assertion {
      * (Required)
      * 
      */
-    public Object getIssuedOn() {
+    public String getIssuedOn() {
         return issuedOn;
     }
 
@@ -155,7 +156,7 @@ public class Assertion {
      * (Required)
      * 
      */
-    public void setIssuedOn(Object issuedOn) {
+    public void setIssuedOn(String issuedOn) {
         this.issuedOn = issuedOn;
     }
 

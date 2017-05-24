@@ -80,7 +80,7 @@ public class CertificateStore implements DataStore {
         Issuer issuer = certificate.getIssuer();
         String issuerId = issuer.getId().toString();
 
-        String issueDate = (String) assertion.getIssuedOn();
+        String issueDate = assertion.getIssuedOn();
 
         ContentValues contentValues = new ContentValues();
 
