@@ -3,6 +3,10 @@ package com.learningmachine.android.app.data.store;
 import android.content.Context;
 
 import com.learningmachine.android.app.BuildConfig;
+import com.learningmachine.android.app.data.cert.v12.Assertion;
+import com.learningmachine.android.app.data.cert.v12.BlockchainCertificate;
+import com.learningmachine.android.app.data.cert.v12.Document;
+import com.learningmachine.android.app.data.cert.v12.Issuer;
 import com.learningmachine.android.app.data.model.Certificate;
 
 import org.junit.Before;
@@ -12,9 +16,11 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.mock;
 
 @RunWith(RobolectricTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = 23)
@@ -30,7 +36,7 @@ public class CertificateStoreTest {
     }
 
     @Test
-    public void testCertificate_save_andLoad() {
+    public void testCertificate_save_andLoad() throws URISyntaxException {
         String certUuid = "certUuid";
         String issuerUuid = "issuerUuid";
         String name = "Sample Certificate 1";
@@ -38,8 +44,25 @@ public class CertificateStoreTest {
         String issuedDate = "2017-05-11T18:28:27.415+00:00";
         String urlString = "https://certificates.learningmachine.com/certificate/sampelcertificate";
 
-        Certificate certificate = new Certificate(certUuid, issuerUuid, name, description, issuedDate, urlString);
-        mCertificateStore.saveCertificate(certificate);
+        BlockchainCertificate blockchainCertificate = new BlockchainCertificate();
+        Assertion assertion = new Assertion();
+        assertion.setUid(certUuid);
+        assertion.setIssuedOn(issuedDate);
+        assertion.setId(new URI(urlString));
+        Issuer issuer = new Issuer();
+        issuer.setId(new URI(issuerUuid));
+
+        com.learningmachine.android.app.data.cert.v12.Certificate certificate = new com.learningmachine.android.app.data.cert.v12.Certificate();
+        certificate.setIssuer(issuer);
+        certificate.setName(name);
+        certificate.setDescription(description);
+
+        Document document = new Document();
+        document.setAssertion(assertion);
+        document.setCertificate(certificate);
+        blockchainCertificate.setDocument(document);
+
+        mCertificateStore.saveBlockchainCertificate(blockchainCertificate);
 
         Certificate actualCertificate = mCertificateStore.loadCertificate(certUuid);
 

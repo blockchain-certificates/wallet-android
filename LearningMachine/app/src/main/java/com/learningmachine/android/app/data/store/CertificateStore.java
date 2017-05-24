@@ -4,13 +4,12 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.learningmachine.android.app.data.cert.v12.Assertion;
+import com.learningmachine.android.app.data.cert.v12.BlockchainCertificate;
+import com.learningmachine.android.app.data.cert.v12.Document;
+import com.learningmachine.android.app.data.cert.v12.Issuer;
 import com.learningmachine.android.app.data.model.Certificate;
-import com.learningmachine.android.app.data.model.LMAssertion;
-import com.learningmachine.android.app.data.model.LMDocument;
 import com.learningmachine.android.app.data.store.cursor.CertificateCursorWrapper;
-import com.learningmachine.android.app.data.webservice.response.AddCertificateResponse;
-import com.learningmachine.android.app.data.webservice.response.CertificateResponse;
-import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,42 +69,29 @@ public class CertificateStore implements DataStore {
         return certificateList;
     }
 
-    public void saveAddCertificateResponse(AddCertificateResponse response) {
-        LMDocument document = response.getDocument();
-        CertificateResponse certificateResponse = document.getCertificateResponse();
+    public void saveBlockchainCertificate(BlockchainCertificate blockchainCertificate) {
+        Document document = blockchainCertificate.getDocument();
+        com.learningmachine.android.app.data.cert.v12.Certificate certificate = document.getCertificate();
 
-        LMAssertion assertion = document.getLMAssertion();
-        String uuid = assertion.getUuid();
-        certificateResponse.setUuid(uuid);
-        String urlString = assertion.getId();
-        certificateResponse.setUrlString(urlString);
+        Assertion assertion = document.getAssertion();
+        String certUid = assertion.getUid();
+        String urlString = assertion.getId().toString();
 
-        IssuerResponse issuerResponse = certificateResponse.getIssuerResponse();
-        String issuerUuid = issuerResponse.getUuid();
-        certificateResponse.setIssuerUuid(issuerUuid);
+        Issuer issuer = certificate.getIssuer();
+        String issuerId = issuer.getId().toString();
 
         String issueDate = assertion.getIssuedOn();
-        certificateResponse.setIssuedOn(issueDate);
 
-        saveCertificate(certificateResponse);
-    }
-
-    public void saveCertificate(Certificate certificate) {
         ContentValues contentValues = new ContentValues();
 
-        String certUuid = certificate.getUuid();
-        String issuerUuid = certificate.getIssuerUuid();
-        String issueDate = certificate.getIssuedOn();
-        String urlString = certificate.getUrlString();
-
-        contentValues.put(LMDatabaseHelper.Column.Certificate.UUID, certUuid);
+        contentValues.put(LMDatabaseHelper.Column.Certificate.UUID, certUid);
         contentValues.put(LMDatabaseHelper.Column.Certificate.NAME, certificate.getName());
         contentValues.put(LMDatabaseHelper.Column.Certificate.DESCRIPTION, certificate.getDescription());
-        contentValues.put(LMDatabaseHelper.Column.Certificate.ISSUER_UUID, issuerUuid);
+        contentValues.put(LMDatabaseHelper.Column.Certificate.ISSUER_UUID, issuerId);
         contentValues.put(LMDatabaseHelper.Column.Certificate.ISSUE_DATE, issueDate);
         contentValues.put(LMDatabaseHelper.Column.Certificate.URL, urlString);
 
-        if (loadCertificate(certUuid) == null) {
+        if (loadCertificate(certUid) == null) {
             mDatabase.insert(LMDatabaseHelper.Table.CERTIFICATE,
                     null,
                     contentValues);
@@ -113,7 +99,7 @@ public class CertificateStore implements DataStore {
             mDatabase.update(LMDatabaseHelper.Table.CERTIFICATE,
                     contentValues,
                     LMDatabaseHelper.Column.Certificate.UUID + " = ? ",
-                    new String[] { certUuid });
+                    new String[] { certUid });
         }
     }
 

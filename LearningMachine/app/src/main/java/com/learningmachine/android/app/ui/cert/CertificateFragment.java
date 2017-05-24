@@ -19,6 +19,7 @@ import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.CertificateManager;
 import com.learningmachine.android.app.data.CertificateVerifier;
 import com.learningmachine.android.app.data.IssuerManager;
+import com.learningmachine.android.app.data.cert.v12.BlockchainCertificate;
 import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.data.model.Certificate;
 import com.learningmachine.android.app.data.model.Issuer;
@@ -214,7 +215,7 @@ public class CertificateFragment extends LMFragment {
                 });
     }
 
-    private void verifyIssuer(Certificate certificate, String serializedDoc) {
+    private void verifyIssuer(BlockchainCertificate certificate, String serializedDoc) {
         mCertificateVerifier.verifyIssuer(certificate)
                 .compose(bindToMainThread())
                 .subscribe(issuerKey -> {
@@ -225,7 +226,7 @@ public class CertificateFragment extends LMFragment {
                 });
     }
 
-    private void verifyBitcoinTransactionRecord(Certificate certificate, String serializedDoc) {
+    private void verifyBitcoinTransactionRecord(BlockchainCertificate certificate, String serializedDoc) {
         mCertificateVerifier.verifyBitcoinTransactionRecord(certificate)
                 .compose(bindToMainThread())
                 .subscribe(remoteHash -> {

@@ -10,7 +10,6 @@ import retrofit2.http.Url;
 import rx.Observable;
 
 public interface IssuerService {
-
     @GET
     Observable<IssuerResponse> getIssuer(@Url String url);
 
