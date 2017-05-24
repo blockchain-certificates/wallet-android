@@ -57,7 +57,7 @@ public class LMApplication extends MultiDexApplication {
             return;
         }
 
-        Observable.combineLatest(mIssuerManager.loadSampleIssuer(),
+        Observable.combineLatest(mIssuerManager.loadSampleIssuer(getApplicationContext()),
                 mCertificateManager.loadSampleCertificate(),
                 (aVoid, s) -> {
                     mPreferencesManager.setFirstLaunch(false);
