@@ -4,10 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.learningmachine.android.app.data.cert.v12.Assertion;
-import com.learningmachine.android.app.data.cert.v12.BlockchainCertificate;
-import com.learningmachine.android.app.data.cert.v12.Document;
-import com.learningmachine.android.app.data.cert.v12.Issuer;
+import com.learningmachine.android.app.data.cert.BlockCert;
 import com.learningmachine.android.app.data.model.CertificateRecord;
 import com.learningmachine.android.app.data.store.cursor.CertificateCursorWrapper;
 
@@ -69,24 +66,19 @@ public class CertificateStore implements DataStore {
         return certificateList;
     }
 
-    public void saveBlockchainCertificate(BlockchainCertificate blockchainCertificate) {
-        Document document = blockchainCertificate.getDocument();
-        com.learningmachine.android.app.data.cert.v12.Certificate certificate = document.getCertificate();
-
-        Assertion assertion = document.getAssertion();
-        String certUid = assertion.getUid();
-        String urlString = assertion.getId().toString();
-
-        Issuer issuer = certificate.getIssuer();
-        String issuerId = issuer.getId().toString();
-
-        String issueDate = assertion.getIssuedOn();
+    public void saveBlockchainCertificate(BlockCert blockCert) {
+        String certUid = blockCert.getCertUid();
+        String urlString = blockCert.getUrl();
+        String issuerId = blockCert.getIssuerId();
+        String certName = blockCert.getCertName();
+        String certDescription = blockCert.getCertDescription();
+        String issueDate = blockCert.getIssueDate();
 
         ContentValues contentValues = new ContentValues();
 
         contentValues.put(LMDatabaseHelper.Column.Certificate.UUID, certUid);
-        contentValues.put(LMDatabaseHelper.Column.Certificate.NAME, certificate.getName());
-        contentValues.put(LMDatabaseHelper.Column.Certificate.DESCRIPTION, certificate.getDescription());
+        contentValues.put(LMDatabaseHelper.Column.Certificate.NAME, certName);
+        contentValues.put(LMDatabaseHelper.Column.Certificate.DESCRIPTION, certDescription);
         contentValues.put(LMDatabaseHelper.Column.Certificate.ISSUER_UUID, issuerId);
         contentValues.put(LMDatabaseHelper.Column.Certificate.ISSUE_DATE, issueDate);
         contentValues.put(LMDatabaseHelper.Column.Certificate.URL, urlString);

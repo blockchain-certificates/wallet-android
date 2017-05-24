@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.learningmachine.android.app.BuildConfig;
 import com.learningmachine.android.app.data.cert.v12.Assertion;
-import com.learningmachine.android.app.data.cert.v12.BlockchainCertificate;
+import com.learningmachine.android.app.data.cert.v12.BlockCertV12;
 import com.learningmachine.android.app.data.cert.v12.Document;
 import com.learningmachine.android.app.data.cert.v12.Issuer;
 import com.learningmachine.android.app.data.model.CertificateRecord;
@@ -44,7 +44,7 @@ public class CertificateStoreTest {
         String issuedDate = "2017-05-11T18:28:27.415+00:00";
         String urlString = "https://certificates.learningmachine.com/certificate/sampelcertificate";
 
-        BlockchainCertificate blockchainCertificate = new BlockchainCertificate();
+        BlockCertV12 blockchainCertificate = new BlockCertV12();
         Assertion assertion = new Assertion();
         assertion.setUid(certUuid);
         assertion.setIssuedOn(issuedDate);
