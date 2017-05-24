@@ -4,10 +4,11 @@ import android.content.Context;
 import android.content.res.AssetManager;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import com.learningmachine.android.app.data.bitcoin.BitcoinManager;
 import com.learningmachine.android.app.data.cert.BlockCert;
-import com.learningmachine.android.app.data.cert.v12.BlockCertV12;
+import com.learningmachine.android.app.data.cert.BlockCertAdapter;
 import com.learningmachine.android.app.data.error.CertificateOwnershipException;
 import com.learningmachine.android.app.data.model.CertificateRecord;
 import com.learningmachine.android.app.data.store.CertificateStore;
@@ -88,8 +89,10 @@ public class CertificateManager {
                     .clone();
 
             // Parse
-            Gson gson = new Gson();
-            BlockCert blockCert = gson.fromJson(responseBody.string(), BlockCertV12.class);
+            Gson gson = new GsonBuilder()
+                    .registerTypeAdapter(BlockCert.class, new BlockCertAdapter())
+                    .create();
+            BlockCert blockCert = gson.fromJson(responseBody.string(), BlockCert.class);
             String recipientKey = blockCert.getRecipientPublicKey();
 
             // Reject on address mismatch
@@ -121,9 +124,11 @@ public class CertificateManager {
     }
 
     private Observable<String> handleCertificateInputStream(InputStream certInputStream, String bitcoinAddress) {
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(BlockCert.class, new BlockCertAdapter())
+                .create();
         InputStreamReader inputStreamReader = new InputStreamReader(certInputStream);
-        BlockCert blockCert = gson.fromJson(inputStreamReader, BlockCertV12.class);
+        BlockCert blockCert = gson.fromJson(inputStreamReader, BlockCert.class);
         String recipientKey = blockCert.getRecipientPublicKey();
 
         // Reject on address mismatch

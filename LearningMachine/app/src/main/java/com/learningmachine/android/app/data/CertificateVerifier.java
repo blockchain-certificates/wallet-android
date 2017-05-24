@@ -10,9 +10,10 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.cert.BlockCert;
-import com.learningmachine.android.app.data.cert.v12.BlockCertV12;
+import com.learningmachine.android.app.data.cert.BlockCertAdapter;
 import com.learningmachine.android.app.data.error.ExceptionWithResourceString;
 import com.learningmachine.android.app.data.model.KeyRotation;
 import com.learningmachine.android.app.data.model.TxRecordOut;
@@ -80,8 +81,10 @@ public class CertificateVerifier {
     }
 
     private Observable<BlockCert> parseCertificate(String string) {
-        // TODO: use Gson that understands how to handle BlockCert v1.2 and v2.0
-        return Observable.just(new Gson().fromJson(string, BlockCertV12.class));
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(BlockCert.class, new BlockCertAdapter())
+                .create();
+        return Observable.just(gson.fromJson(string, BlockCert.class));
     }
 
     private Observable<String> getCertificateDocument(String string) {
