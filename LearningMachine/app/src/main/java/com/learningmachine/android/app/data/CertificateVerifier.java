@@ -150,7 +150,7 @@ public class CertificateVerifier {
 
     public Observable<String> verifyIssuer(BlockchainCertificate certificate) {
         URI issuerUuid = certificate.getDocument().getCertificate().getIssuer().getId();
-        return mIssuerService.getIssuer(issuerUuid)
+        return mIssuerService.getIssuer(issuerUuid.toString())
                 .flatMap(issuerResponse -> issuerDownloaded(issuerResponse, certificate));
     }
 

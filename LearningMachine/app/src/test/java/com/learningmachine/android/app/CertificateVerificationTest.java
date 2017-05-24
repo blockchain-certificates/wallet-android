@@ -26,7 +26,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.net.URI;
 import java.security.SignatureException;
 import java.util.List;
 
@@ -71,7 +70,7 @@ public class CertificateVerificationTest {
 
         IssuerService issuerService = mock(IssuerService.class);
         mIssuer = gson.fromJson(getResourceAsReader(ISSUER_FILENAME), IssuerResponse.class);
-        when(issuerService.getIssuer(any(URI.class))).thenReturn(Observable.just(mIssuer));
+        when(issuerService.getIssuer(any())).thenReturn(Observable.just(mIssuer));
 
         subject = new CertificateVerifier(context, blockchainService, issuerService);
 

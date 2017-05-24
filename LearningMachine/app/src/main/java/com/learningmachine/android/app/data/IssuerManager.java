@@ -10,8 +10,6 @@ import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 import com.learningmachine.android.app.util.GsonUtil;
 
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 
 import rx.Observable;
@@ -53,14 +51,7 @@ public class IssuerManager {
 
     public Observable<String> addIssuer(String url, String bitcoinAddress, String nonce) {
         IssuerIntroductionRequest request = new IssuerIntroductionRequest(bitcoinAddress, nonce);
-        URI uri = null;
-        try {
-            uri = new URI(url);
-        } catch (URISyntaxException e) {
-            Timber.e(e, "Failed to convert url string to URI");
-            return Observable.error(e);
-        }
-        return mIssuerService.getIssuer(uri)
+        return mIssuerService.getIssuer(url)
                 .flatMap(issuer -> Observable.combineLatest(Observable.just(issuer),
                         mIssuerService.postIntroduction(issuer.getIntroUrl(), request),
                         (issuer1, aVoid) -> issuer1))
