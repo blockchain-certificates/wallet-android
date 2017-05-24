@@ -74,24 +74,24 @@ public class CertificateStore implements DataStore {
         com.learningmachine.android.app.data.cert.v12.Certificate certificate = document.getCertificate();
 
         Assertion assertion = document.getAssertion();
-        String certUuid = assertion.getUid();
+        String certUid = assertion.getUid();
         String urlString = assertion.getId().toString();
 
         Issuer issuer = certificate.getIssuer();
-        String issuerUuid = issuer.getId().toString();
+        String issuerId = issuer.getId().toString();
 
         String issueDate = (String) assertion.getIssuedOn();
 
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put(LMDatabaseHelper.Column.Certificate.UUID, certUuid);
+        contentValues.put(LMDatabaseHelper.Column.Certificate.UUID, certUid);
         contentValues.put(LMDatabaseHelper.Column.Certificate.NAME, certificate.getName());
         contentValues.put(LMDatabaseHelper.Column.Certificate.DESCRIPTION, certificate.getDescription());
-        contentValues.put(LMDatabaseHelper.Column.Certificate.ISSUER_UUID, issuerUuid);
+        contentValues.put(LMDatabaseHelper.Column.Certificate.ISSUER_UUID, issuerId);
         contentValues.put(LMDatabaseHelper.Column.Certificate.ISSUE_DATE, issueDate);
         contentValues.put(LMDatabaseHelper.Column.Certificate.URL, urlString);
 
-        if (loadCertificate(certUuid) == null) {
+        if (loadCertificate(certUid) == null) {
             mDatabase.insert(LMDatabaseHelper.Table.CERTIFICATE,
                     null,
                     contentValues);
@@ -99,7 +99,7 @@ public class CertificateStore implements DataStore {
             mDatabase.update(LMDatabaseHelper.Table.CERTIFICATE,
                     contentValues,
                     LMDatabaseHelper.Column.Certificate.UUID + " = ? ",
-                    new String[] { certUuid });
+                    new String[] { certUid });
         }
     }
 
