@@ -10,7 +10,7 @@ import com.learningmachine.android.app.data.cert.v12.BlockchainCertificate;
 import com.learningmachine.android.app.data.cert.v12.Document;
 import com.learningmachine.android.app.data.cert.v12.Recipient;
 import com.learningmachine.android.app.data.error.CertificateOwnershipException;
-import com.learningmachine.android.app.data.model.Certificate;
+import com.learningmachine.android.app.data.model.CertificateRecord;
 import com.learningmachine.android.app.data.store.CertificateStore;
 import com.learningmachine.android.app.data.webservice.CertificateService;
 import com.learningmachine.android.app.util.FileUtils;
@@ -50,11 +50,11 @@ public class CertificateManager {
         }
     }
 
-    public Observable<Certificate> getCertificate(String certificateUuid) {
+    public Observable<CertificateRecord> getCertificate(String certificateUuid) {
         return Observable.just(mCertificateStore.loadCertificate(certificateUuid));
     }
 
-    public Observable<List<Certificate>> getCertificatesForIssuer(String issuerUuid) {
+    public Observable<List<CertificateRecord>> getCertificatesForIssuer(String issuerUuid) {
         return Observable.just(mCertificateStore.loadCertificatesForIssuer(issuerUuid));
     }
 

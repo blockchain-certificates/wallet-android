@@ -3,16 +3,16 @@ package com.learningmachine.android.app.ui.cert;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
-import com.learningmachine.android.app.data.model.Certificate;
+import com.learningmachine.android.app.data.model.CertificateRecord;
 import com.learningmachine.android.app.data.model.Issuer;
 import com.learningmachine.android.app.util.DateUtils;
 
 public class CertificateInfoViewModel extends BaseObservable {
 
-    private Certificate mCertificate;
+    private CertificateRecord mCertificate;
     private Issuer mIssuer;
 
-    public CertificateInfoViewModel(Certificate certificate, Issuer issuer) {
+    public CertificateInfoViewModel(CertificateRecord certificate, Issuer issuer) {
         mCertificate = certificate;
         mIssuer = issuer;
     }

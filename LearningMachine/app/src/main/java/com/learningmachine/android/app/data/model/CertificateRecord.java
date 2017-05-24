@@ -6,7 +6,7 @@ import com.learningmachine.android.app.util.StringUtils;
 
 import java.io.Serializable;
 
-public class Certificate implements Serializable {
+public class CertificateRecord implements Serializable {
 
     @SerializedName("language")
     private String mLanguage;
@@ -27,7 +27,7 @@ public class Certificate implements Serializable {
     private String mIssuedOn;
     private String mUrlString;
 
-    public Certificate(String uuid, String issuerUuid, String name, String description, String issuedOn, String urlString) {
+    public CertificateRecord(String uuid, String issuerUuid, String name, String description, String issuedOn, String urlString) {
         mUuid = uuid;
         mIssuerUuid = issuerUuid;
         mName = name;

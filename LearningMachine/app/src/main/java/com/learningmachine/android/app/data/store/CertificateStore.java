@@ -8,7 +8,7 @@ import com.learningmachine.android.app.data.cert.v12.Assertion;
 import com.learningmachine.android.app.data.cert.v12.BlockchainCertificate;
 import com.learningmachine.android.app.data.cert.v12.Document;
 import com.learningmachine.android.app.data.cert.v12.Issuer;
-import com.learningmachine.android.app.data.model.Certificate;
+import com.learningmachine.android.app.data.model.CertificateRecord;
 import com.learningmachine.android.app.data.store.cursor.CertificateCursorWrapper;
 
 import java.util.ArrayList;
@@ -22,8 +22,8 @@ public class CertificateStore implements DataStore {
         mDatabase = databaseHelper.getWritableDatabase();
     }
 
-    public Certificate loadCertificate(String certUuid) {
-        Certificate certificate = null;
+    public CertificateRecord loadCertificate(String certUuid) {
+        CertificateRecord certificate = null;
         Cursor cursor = mDatabase.query(
                 LMDatabaseHelper.Table.CERTIFICATE,
                 null,
@@ -43,8 +43,8 @@ public class CertificateStore implements DataStore {
         return certificate;
     }
 
-    public List<Certificate> loadCertificatesForIssuer(String issuerUuid) {
-        List<Certificate> certificateList = new ArrayList<>();
+    public List<CertificateRecord> loadCertificatesForIssuer(String issuerUuid) {
+        List<CertificateRecord> certificateList = new ArrayList<>();
 
         Cursor cursor = mDatabase.query(
                 LMDatabaseHelper.Table.CERTIFICATE,
@@ -58,7 +58,7 @@ public class CertificateStore implements DataStore {
         if (cursor.moveToFirst()) {
             CertificateCursorWrapper cursorWrapper = new CertificateCursorWrapper(cursor);
             while (!cursorWrapper.isAfterLast()) {
-                Certificate certificate = cursorWrapper.getCertificate();
+                CertificateRecord certificate = cursorWrapper.getCertificate();
                 certificateList.add(certificate);
                 cursorWrapper.moveToNext();
             }

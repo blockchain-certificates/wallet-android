@@ -7,7 +7,7 @@ import com.learningmachine.android.app.data.cert.v12.Assertion;
 import com.learningmachine.android.app.data.cert.v12.BlockchainCertificate;
 import com.learningmachine.android.app.data.cert.v12.Document;
 import com.learningmachine.android.app.data.cert.v12.Issuer;
-import com.learningmachine.android.app.data.model.Certificate;
+import com.learningmachine.android.app.data.model.CertificateRecord;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -64,7 +64,7 @@ public class CertificateStoreTest {
 
         mCertificateStore.saveBlockchainCertificate(blockchainCertificate);
 
-        Certificate actualCertificate = mCertificateStore.loadCertificate(certUuid);
+        CertificateRecord actualCertificate = mCertificateStore.loadCertificate(certUuid);
 
         assertNotNull(actualCertificate);
         assertEquals(certUuid, actualCertificate.getUuid());
