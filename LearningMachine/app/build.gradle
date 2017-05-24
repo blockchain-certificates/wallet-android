@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion "25.0.3"
     defaultConfig {
         applicationId "com.learningmachine.android.app"
         minSdkVersion 19
@@ -34,12 +34,27 @@ android {
         }
     }
 
+    if (project.hasProperty("devBuild")) {
+        // disable PNG crunching
+        aaptOptions.cruncherEnabled = false
+
+        // we're not doing splits,  but in case we ever did:
+        splits.abi.enable = false
+        splits.density.enable = false
+    }
+
     flavorDimensions "env"
 
     productFlavors {
         dev {
             applicationId "com.learningmachine.android.app.dev"
             dimension "env"
+
+            // don't package all resources for dev builds
+            resConfigs("en", "xxhdpi")
+
+            // avoid legacy multidex
+            minSdkVersion 21
         }
         staging {
             applicationId "com.learningmachine.android.app.staging"
