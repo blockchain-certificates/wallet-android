@@ -5,6 +5,7 @@
     <color name="colorPrimaryDark">@color/transparent_gray</color>
     <color name="colorAccent">@color/black</color>
 
+    <color name="fab_color">#707070</color>
     <color name="transparent_gray">#1e000000</color>
     <color name="white">#ffffff</color>
     <color name="off_white_background">#f3f4f5</color>

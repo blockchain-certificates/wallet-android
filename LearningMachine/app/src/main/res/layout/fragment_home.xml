@@ -23,7 +23,7 @@
             android:layout_gravity="bottom|right"
             android:layout_margin="16dp"
             android:src="@drawable/ic_action_add"
-            app:backgroundTint="?colorAccent"/>
+            app:backgroundTint="@color/fab_color"/>
 
     </FrameLayout>
 
