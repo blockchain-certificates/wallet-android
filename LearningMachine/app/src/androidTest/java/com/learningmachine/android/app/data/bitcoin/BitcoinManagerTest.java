@@ -26,14 +26,14 @@ public class BitcoinManagerTest {
         TestNet3Params networkParameters = TestNet3Params.get();
 
         StringHolder stringHolder = new StringHolder();
-        BitcoinManager firstBitcoinManager = new BitcoinManager(context, networkParameters, null);
+        BitcoinManager firstBitcoinManager = new BitcoinManager(context, networkParameters, null, null);
         firstBitcoinManager.getPassphrase().subscribe(firstPassphrase -> {
             assertTrue(firstBitcoinManager.getWalletFile().exists());
             assertThat(firstPassphrase, not(isEmptyOrNullString()));
             stringHolder.string = firstPassphrase;
         });
 
-        BitcoinManager secondBitcoinManager = new BitcoinManager(context, networkParameters, null);
+        BitcoinManager secondBitcoinManager = new BitcoinManager(context, networkParameters, null, null);
         secondBitcoinManager.getPassphrase().subscribe(secondPassphrase -> {
             assertTrue(secondBitcoinManager.getWalletFile().exists());
             assertEquals(stringHolder.string, secondPassphrase);
