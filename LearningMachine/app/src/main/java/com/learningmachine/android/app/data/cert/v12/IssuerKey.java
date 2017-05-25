@@ -5,7 +5,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import org.joda.time.DateTime;
 
-public class IssuerKey {
+class IssuerKey {
 
     /**
      * ISO-8601 formatted date time the key was activated.

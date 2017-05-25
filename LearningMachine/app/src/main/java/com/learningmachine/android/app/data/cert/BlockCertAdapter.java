@@ -9,6 +9,7 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import com.learningmachine.android.app.data.cert.v11.BlockCertV11;
 import com.learningmachine.android.app.data.cert.v12.BlockCertV12;
+import com.learningmachine.android.app.data.cert.v20.BlockCertV20;
 
 import java.lang.reflect.Type;
 
@@ -25,7 +26,9 @@ public class BlockCertAdapter implements JsonSerializer<BlockCert>, JsonDeserial
 
     @Override
     public BlockCert deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        if (isV12(json)) {
+        if (isV20(json)) {
+            return context.deserialize(json, BlockCertV20.class);
+        } else if (isV12(json)) {
             return context.deserialize(json, BlockCertV12.class);
         } else if (isV11(json)) {
             return context.deserialize(json, BlockCertV11.class);
@@ -52,6 +55,17 @@ public class BlockCertAdapter implements JsonSerializer<BlockCert>, JsonDeserial
                 && jsonObject.get("type") != null
                 && jsonObject.get("document") != null
                 && jsonObject.get("receipt") != null) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isV20(JsonElement json) {
+        JsonObject jsonObject = json.getAsJsonObject();
+        if (jsonObject.get("type") != null
+                && jsonObject.get("badge") != null
+                && jsonObject.get("signature") != null
+                && jsonObject.get("recipient") != null) {
             return true;
         }
         return false;

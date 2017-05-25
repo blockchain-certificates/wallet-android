@@ -12,7 +12,7 @@ import com.google.gson.annotations.SerializedName;
  * V1.2 notice: the Blockchain Certificates VerificationObject will change in the next schema version to be consistent with OBI VerificationObjects. This work is in progress.
  * 
  */
-public class Verify {
+class Verify {
 
     /**
      * Name of the attribute in the json that is signed by the issuer's private key. Default is 'uid', referring to the uid attribute.
