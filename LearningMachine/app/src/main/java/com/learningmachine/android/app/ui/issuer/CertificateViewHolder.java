@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.learningmachine.android.app.data.model.Certificate;
+import com.learningmachine.android.app.data.model.CertificateRecord;
 import com.learningmachine.android.app.databinding.ListItemCertificateBinding;
 import com.learningmachine.android.app.ui.cert.CertificateActivity;
 
@@ -27,7 +27,7 @@ public class CertificateViewHolder extends RecyclerView.ViewHolder implements Vi
 
     @Override
     public void onClick(View v) {
-        Certificate certificate = mViewModel.getCertificate();
+        CertificateRecord certificate = mViewModel.getCertificate();
         Context context = mBinding.getRoot()
                 .getContext();
         String certUuid = certificate.getUuid();
@@ -35,7 +35,7 @@ public class CertificateViewHolder extends RecyclerView.ViewHolder implements Vi
         context.startActivity(intent);
     }
 
-    public void bind(Certificate certificate) {
+    public void bind(CertificateRecord certificate) {
         mViewModel.bindCertificate(certificate);
         mBinding.executePendingBindings();
     }

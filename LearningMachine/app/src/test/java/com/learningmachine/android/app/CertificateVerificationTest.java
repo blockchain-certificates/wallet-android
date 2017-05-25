@@ -5,8 +5,8 @@ import android.content.Context;
 import com.google.common.io.ByteStreams;
 import com.google.gson.Gson;
 import com.learningmachine.android.app.data.CertificateVerifier;
-import com.learningmachine.android.app.data.cert.v12.BlockchainCertificate;
-import com.learningmachine.android.app.data.cert.v12.Document;
+import com.learningmachine.android.app.data.cert.BlockCert;
+import com.learningmachine.android.app.data.cert.BlockCertParser;
 import com.learningmachine.android.app.data.model.KeyRotation;
 import com.learningmachine.android.app.data.model.TxRecord;
 import com.learningmachine.android.app.data.model.TxRecordOut;
@@ -55,8 +55,8 @@ public class CertificateVerificationTest {
     private CertificateVerifier subject;
     private TxRecord mTxRecord;
     private IssuerResponse mIssuer;
-    private BlockchainCertificate validCertificate;
-    private BlockchainCertificate forgedCertificate;
+    private BlockCert validCertificate;
+    private BlockCert forgedCertificate;
 
     @Before
     public void setup() {
@@ -72,10 +72,11 @@ public class CertificateVerificationTest {
         mIssuer = gson.fromJson(getResourceAsReader(ISSUER_FILENAME), IssuerResponse.class);
         when(issuerService.getIssuer(any())).thenReturn(Observable.just(mIssuer));
 
-        subject = new CertificateVerifier(context, blockchainService, issuerService);
+        subject = new CertificateVerifier(context, blockchainService, issuerService, MainNetParams.get());
 
-        validCertificate = gson.fromJson(getResourceAsReader(CERT_FILENAME), BlockchainCertificate.class);
-        forgedCertificate = gson.fromJson(getResourceAsReader(FORGED_CERT_FILENAME), BlockchainCertificate.class);
+        BlockCertParser blockCertParser = new BlockCertParser();
+        validCertificate = blockCertParser.fromJson(getResourceAsStream(CERT_FILENAME));
+        forgedCertificate = blockCertParser.fromJson(getResourceAsStream(FORGED_CERT_FILENAME));
     }
 
     @Test
@@ -116,7 +117,7 @@ public class CertificateVerificationTest {
 
         // Blockchain Transaction
         // get blockchain transaction record ID from certificate.signature.anchors[0].sourceId
-        String txId = validCertificate.getReceipt().getAnchors().get(0).getSourceId();
+        String txId = validCertificate.getSourceId();
 
         // txId would now be used to download the blockchain transaction record
         assertThat(txId, equalTo(BLOCKCHAIN_TX_RECORD_ID));
@@ -134,7 +135,7 @@ public class CertificateVerificationTest {
         // strip out 6a20 prefix, if present
         remoteHash = remoteHash.startsWith("6a20") ? remoteHash.substring(4) : remoteHash;
 
-        assertThat(remoteHash, equalTo(validCertificate.getReceipt().getMerkleRoot()));
+        assertThat(remoteHash, equalTo(validCertificate.getMerkleRoot()));
 
         // Issuer
         // get issuer from URL in certificate.badge.issuer.id
@@ -143,15 +144,8 @@ public class CertificateVerificationTest {
 
         KeyRotation firstIssuerKey = mIssuer.getIssuerKeys().get(0);
 
-        Document document = validCertificate.getDocument();
-        String signature = document.getSignature();
-        String uid = document.getAssertion().getUid();
-
-        ECKey ecKey = ECKey.signedMessageToKey(uid, signature);
-        ecKey.verifyMessage(uid, signature); // this is tautological
-
-        Address address = ecKey.toAddress(MainNetParams.get());
-        assertEquals(firstIssuerKey.getKey(), address.toBase58());
+        String address = validCertificate.getAddress(MainNetParams.get());
+        assertEquals(firstIssuerKey.getKey(), address);
 
         // Revocation
         List<KeyRotation> revocationKeys = mIssuer.getRevocationKeys();

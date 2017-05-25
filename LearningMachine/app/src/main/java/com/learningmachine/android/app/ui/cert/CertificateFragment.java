@@ -19,9 +19,9 @@ import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.CertificateManager;
 import com.learningmachine.android.app.data.CertificateVerifier;
 import com.learningmachine.android.app.data.IssuerManager;
-import com.learningmachine.android.app.data.cert.v12.BlockchainCertificate;
+import com.learningmachine.android.app.data.cert.BlockCert;
 import com.learningmachine.android.app.data.inject.Injector;
-import com.learningmachine.android.app.data.model.Certificate;
+import com.learningmachine.android.app.data.model.CertificateRecord;
 import com.learningmachine.android.app.data.model.Issuer;
 import com.learningmachine.android.app.databinding.FragmentCertificateBinding;
 import com.learningmachine.android.app.dialog.AlertDialogFragment;
@@ -162,7 +162,7 @@ public class CertificateFragment extends LMFragment {
                 CertificateIssuerHolder::new)
                 .compose(bindToMainThread())
                 .subscribe(holder -> {
-                    Certificate cert = holder.getCertificate();
+                    CertificateRecord cert = holder.getCertificate();
                     String certUrlString = cert.getUrlString();
                     if (shareFile) {
                         certUrlString += QUERY_PARAM_JSON;
@@ -180,15 +180,15 @@ public class CertificateFragment extends LMFragment {
     }
 
     private class CertificateIssuerHolder {
-        private Certificate mCertificate;
+        private CertificateRecord mCertificate;
         private Issuer mIssuer;
 
-        public CertificateIssuerHolder(Certificate certificate, Issuer issuer) {
+        public CertificateIssuerHolder(CertificateRecord certificate, Issuer issuer) {
             mCertificate = certificate;
             mIssuer = issuer;
         }
 
-        public Certificate getCertificate() {
+        public CertificateRecord getCertificate() {
             return mCertificate;
         }
 
@@ -215,7 +215,7 @@ public class CertificateFragment extends LMFragment {
                 });
     }
 
-    private void verifyIssuer(BlockchainCertificate certificate, String serializedDoc) {
+    private void verifyIssuer(BlockCert certificate, String serializedDoc) {
         mCertificateVerifier.verifyIssuer(certificate)
                 .compose(bindToMainThread())
                 .subscribe(issuerKey -> {
@@ -226,7 +226,7 @@ public class CertificateFragment extends LMFragment {
                 });
     }
 
-    private void verifyBitcoinTransactionRecord(BlockchainCertificate certificate, String serializedDoc) {
+    private void verifyBitcoinTransactionRecord(BlockCert certificate, String serializedDoc) {
         mCertificateVerifier.verifyBitcoinTransactionRecord(certificate)
                 .compose(bindToMainThread())
                 .subscribe(remoteHash -> {

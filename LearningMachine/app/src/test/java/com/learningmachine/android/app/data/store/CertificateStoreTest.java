@@ -4,10 +4,11 @@ import android.content.Context;
 
 import com.learningmachine.android.app.BuildConfig;
 import com.learningmachine.android.app.data.cert.v12.Assertion;
-import com.learningmachine.android.app.data.cert.v12.BlockchainCertificate;
+import com.learningmachine.android.app.data.cert.v12.BlockCertV12;
+import com.learningmachine.android.app.data.cert.v12.Certificate;
 import com.learningmachine.android.app.data.cert.v12.Document;
 import com.learningmachine.android.app.data.cert.v12.Issuer;
-import com.learningmachine.android.app.data.model.Certificate;
+import com.learningmachine.android.app.data.model.CertificateRecord;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -44,7 +45,7 @@ public class CertificateStoreTest {
         String issuedDate = "2017-05-11T18:28:27.415+00:00";
         String urlString = "https://certificates.learningmachine.com/certificate/sampelcertificate";
 
-        BlockchainCertificate blockchainCertificate = new BlockchainCertificate();
+        BlockCertV12 blockchainCertificate = new BlockCertV12();
         Assertion assertion = new Assertion();
         assertion.setUid(certUuid);
         assertion.setIssuedOn(issuedDate);
@@ -52,7 +53,7 @@ public class CertificateStoreTest {
         Issuer issuer = new Issuer();
         issuer.setId(new URI(issuerUuid));
 
-        com.learningmachine.android.app.data.cert.v12.Certificate certificate = new com.learningmachine.android.app.data.cert.v12.Certificate();
+        Certificate certificate = new com.learningmachine.android.app.data.cert.v12.Certificate();
         certificate.setIssuer(issuer);
         certificate.setName(name);
         certificate.setDescription(description);
@@ -64,7 +65,7 @@ public class CertificateStoreTest {
 
         mCertificateStore.saveBlockchainCertificate(blockchainCertificate);
 
-        Certificate actualCertificate = mCertificateStore.loadCertificate(certUuid);
+        CertificateRecord actualCertificate = mCertificateStore.loadCertificate(certUuid);
 
         assertNotNull(actualCertificate);
         assertEquals(certUuid, actualCertificate.getUuid());

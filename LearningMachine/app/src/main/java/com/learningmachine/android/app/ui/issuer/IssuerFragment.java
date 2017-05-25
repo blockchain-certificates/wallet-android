@@ -17,7 +17,7 @@ import android.view.ViewGroup;
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.CertificateManager;
 import com.learningmachine.android.app.data.inject.Injector;
-import com.learningmachine.android.app.data.model.Certificate;
+import com.learningmachine.android.app.data.model.CertificateRecord;
 import com.learningmachine.android.app.databinding.FragmentIssuerBinding;
 import com.learningmachine.android.app.databinding.ListItemCertificateBinding;
 import com.learningmachine.android.app.ui.LMFragment;
@@ -38,7 +38,7 @@ public class IssuerFragment extends LMFragment {
 
     private String mIssuerUuid;
     private FragmentIssuerBinding mBinding;
-    private List<Certificate> mCertificateList;
+    private List<CertificateRecord> mCertificateList;
 
     public static IssuerFragment newInstance(String issuerUuid) {
         Bundle args = new Bundle();
@@ -111,7 +111,7 @@ public class IssuerFragment extends LMFragment {
         mBinding.certificateRecyclerView.setLayoutManager(layoutManager);
     }
 
-    private void updateRecyclerView(List<Certificate> certificateList) {
+    private void updateRecyclerView(List<CertificateRecord> certificateList) {
         mCertificateList.clear();
         mCertificateList.addAll(certificateList);
         mBinding.certificateRecyclerView.getAdapter()
@@ -120,9 +120,9 @@ public class IssuerFragment extends LMFragment {
 
     private class CertificateAdapter extends RecyclerView.Adapter<CertificateViewHolder> {
 
-        private List<Certificate> mCertificateList;
+        private List<CertificateRecord> mCertificateList;
 
-        CertificateAdapter(List<Certificate> certificateList) {
+        CertificateAdapter(List<CertificateRecord> certificateList) {
             mCertificateList = certificateList;
         }
 
@@ -139,7 +139,7 @@ public class IssuerFragment extends LMFragment {
 
         @Override
         public void onBindViewHolder(CertificateViewHolder holder, int position) {
-            Certificate certificate = mCertificateList.get(position);
+            CertificateRecord certificate = mCertificateList.get(position);
             holder.bind(certificate);
         }
 

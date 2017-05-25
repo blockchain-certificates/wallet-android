@@ -15,7 +15,7 @@ import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.CertificateManager;
 import com.learningmachine.android.app.data.IssuerManager;
 import com.learningmachine.android.app.data.inject.Injector;
-import com.learningmachine.android.app.data.model.Certificate;
+import com.learningmachine.android.app.data.model.CertificateRecord;
 import com.learningmachine.android.app.databinding.FragmentCertificateInfoBinding;
 import com.learningmachine.android.app.dialog.AlertDialogFragment;
 import com.learningmachine.android.app.ui.LMFragment;
@@ -34,7 +34,7 @@ public class CertificateInfoFragment extends LMFragment {
     @Inject IssuerManager mIssuerManager;
 
     private FragmentCertificateInfoBinding mBinding;
-    private Certificate mCertificate;
+    private CertificateRecord mCertificate;
 
     public static CertificateInfoFragment newInstance(String certificateUuid) {
         Bundle args = new Bundle();

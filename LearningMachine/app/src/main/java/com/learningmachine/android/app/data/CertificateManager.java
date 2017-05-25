@@ -3,14 +3,12 @@ package com.learningmachine.android.app.data;
 import android.content.Context;
 import android.content.res.AssetManager;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.learningmachine.android.app.data.bitcoin.BitcoinManager;
-import com.learningmachine.android.app.data.cert.v12.BlockchainCertificate;
-import com.learningmachine.android.app.data.cert.v12.Document;
-import com.learningmachine.android.app.data.cert.v12.Recipient;
+import com.learningmachine.android.app.data.cert.BlockCert;
+import com.learningmachine.android.app.data.cert.BlockCertParser;
 import com.learningmachine.android.app.data.error.CertificateOwnershipException;
-import com.learningmachine.android.app.data.model.Certificate;
+import com.learningmachine.android.app.data.model.CertificateRecord;
 import com.learningmachine.android.app.data.store.CertificateStore;
 import com.learningmachine.android.app.data.webservice.CertificateService;
 import com.learningmachine.android.app.util.FileUtils;
@@ -19,7 +17,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -50,11 +47,11 @@ public class CertificateManager {
         }
     }
 
-    public Observable<Certificate> getCertificate(String certificateUuid) {
+    public Observable<CertificateRecord> getCertificate(String certificateUuid) {
         return Observable.just(mCertificateStore.loadCertificate(certificateUuid));
     }
 
-    public Observable<List<Certificate>> getCertificatesForIssuer(String issuerUuid) {
+    public Observable<List<CertificateRecord>> getCertificatesForIssuer(String issuerUuid) {
         return Observable.just(mCertificateStore.loadCertificatesForIssuer(issuerUuid));
     }
 
@@ -89,11 +86,9 @@ public class CertificateManager {
                     .clone();
 
             // Parse
-            Gson gson = new Gson();
-            BlockchainCertificate certificate = gson.fromJson(responseBody.string(), BlockchainCertificate.class);
-            Document document = certificate.getDocument();
-            Recipient recipient = document.getRecipient();
-            String recipientKey = recipient.getPublicKey();
+            BlockCertParser blockCertParser = new BlockCertParser();
+            BlockCert blockCert = blockCertParser.fromJson(responseBody.string());
+            String recipientKey = blockCert.getRecipientPublicKey();
 
             // Reject on address mismatch
             boolean isSampleCert = recipientKey.equals("sample-certificate");
@@ -104,12 +99,12 @@ public class CertificateManager {
             }
 
             // Save to DB
-            mCertificateStore.saveBlockchainCertificate(certificate);
+            mCertificateStore.saveBlockchainCertificate(blockCert);
 
             // Write response to file
-            String uuid = document.getAssertion().getUid();
-            FileUtils.saveCertificate(mContext, buffer, uuid);
-            return Observable.just(uuid);
+            String certUid = blockCert.getCertUid();
+            FileUtils.saveCertificate(mContext, buffer, certUid);
+            return Observable.just(certUid);
         } catch (JsonSyntaxException | IOException e) {
             return Observable.error(e);
         }
@@ -124,12 +119,9 @@ public class CertificateManager {
     }
 
     private Observable<String> handleCertificateInputStream(InputStream certInputStream, String bitcoinAddress) {
-        Gson gson = new Gson();
-        InputStreamReader inputStreamReader = new InputStreamReader(certInputStream);
-        BlockchainCertificate blockchainCertificate = gson.fromJson(inputStreamReader, BlockchainCertificate.class);
-        Document document = blockchainCertificate.getDocument();
-        Recipient recipient = document.getRecipient();
-        String recipientKey = recipient.getPublicKey();
+        BlockCertParser blockCertParser = new BlockCertParser();
+        BlockCert blockCert = blockCertParser.fromJson(certInputStream);
+        String recipientKey = blockCert.getRecipientPublicKey();
 
         // Reject on address mismatch
         if (!bitcoinAddress.equals(recipientKey)) {
@@ -137,12 +129,12 @@ public class CertificateManager {
         }
 
         // Save to DB
-        mCertificateStore.saveBlockchainCertificate(blockchainCertificate);
+        mCertificateStore.saveBlockchainCertificate(blockCert);
 
         // Copy file
-        String uuid = document.getAssertion().getUid();
-        FileUtils.copyCertificateStream(mContext, certInputStream, uuid);
-        return Observable.just(uuid);
+        String certUid = blockCert.getCertUid();
+        FileUtils.copyCertificateStream(mContext, certInputStream, certUid);
+        return Observable.just(certUid);
     }
 
     static class AddCertificateHolder {

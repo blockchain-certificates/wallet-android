@@ -9,11 +9,9 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.google.gson.Gson;
 import com.learningmachine.android.app.R;
-import com.learningmachine.android.app.data.cert.v12.BlockchainCertificate;
-import com.learningmachine.android.app.data.cert.v12.Document;
-import com.learningmachine.android.app.data.cert.v12.Receipt;
+import com.learningmachine.android.app.data.cert.BlockCert;
+import com.learningmachine.android.app.data.cert.BlockCertParser;
 import com.learningmachine.android.app.data.error.ExceptionWithResourceString;
 import com.learningmachine.android.app.data.model.KeyRotation;
 import com.learningmachine.android.app.data.model.TxRecordOut;
@@ -23,9 +21,7 @@ import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 import com.learningmachine.android.app.util.FileUtils;
 import com.learningmachine.android.app.util.ListUtils;
 
-import org.bitcoinj.core.Address;
-import org.bitcoinj.core.ECKey;
-import org.bitcoinj.params.MainNetParams;
+import org.bitcoinj.core.NetworkParameters;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -33,10 +29,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.math.BigInteger;
-import java.net.URI;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.SignatureException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -54,12 +48,14 @@ public class CertificateVerifier {
     private Context mContext;
     private BlockchainService mBlockchainService;
     private IssuerService mIssuerService;
+    private final NetworkParameters mNetworkParameters;
 
     @Inject
-    public CertificateVerifier(Context context, BlockchainService blockchainService, IssuerService issuerService) {
+    public CertificateVerifier(Context context, BlockchainService blockchainService, IssuerService issuerService, NetworkParameters networkParameters) {
         mContext = context;
         mBlockchainService = blockchainService;
         mIssuerService = issuerService;
+        mNetworkParameters = networkParameters;
         mWebView = new WebView(mContext);
     }
 
@@ -82,8 +78,10 @@ public class CertificateVerifier {
         }
     }
 
-    private Observable<BlockchainCertificate> parseCertificate(String string) {
-        return Observable.just(new Gson().fromJson(string, BlockchainCertificate.class));
+    private Observable<BlockCert> parseCertificate(String string) {
+        BlockCertParser blockCertParser = new BlockCertParser();
+        BlockCert blockCert = blockCertParser.fromJson(string);
+        return Observable.just(blockCert);
     }
 
     private Observable<String> getCertificateDocument(String string) {
@@ -99,15 +97,8 @@ public class CertificateVerifier {
         }
     }
 
-    public Observable<String> verifyBitcoinTransactionRecord(BlockchainCertificate certificate) {
-        Receipt receipt = certificate.getReceipt();
-        if (receipt == null || ListUtils.isEmpty(receipt.getAnchors())) {
-            // TODO: show an error
-            Timber.d("Certificate receipt missing");
-            Exception e = new ExceptionWithResourceString(R.string.error_invalid_certificate_json);
-            return Observable.error(e);
-        }
-        String sourceId = receipt.getAnchors().get(0).getSourceId();
+    public Observable<String> verifyBitcoinTransactionRecord(BlockCert certificate) {
+        String sourceId = certificate.getSourceId();
         return getBitcoinTransactionRecordHash(sourceId)
                 .flatMap(remoteHash -> blockchainDownloaded(remoteHash, certificate));
     }
@@ -130,17 +121,12 @@ public class CertificateVerifier {
                 });
     }
 
-    private Observable<String> blockchainDownloaded(String remoteHash, BlockchainCertificate certificate) {
-        Receipt receipt = certificate.getReceipt();
-        if (receipt == null) {
-            Timber.e("The receipt is missing from the certificate");
-            return Observable.error(new ExceptionWithResourceString(R.string.error_invalid_certificate_json));
-        }
-        String merkleRoot = receipt.getMerkleRoot();
+    private Observable<String> blockchainDownloaded(String remoteHash, BlockCert certificate) {
+        String merkleRoot = certificate.getMerkleRoot();
 
         if (!remoteHash.equals(merkleRoot)) {
             // TODO: show an error
-            Timber.d("The transaction record hash doesn't match the certificate's Merkle root");
+            Timber.e("The transaction record hash doesn't match the certificate's Merkle root");
             return Observable.error(new ExceptionWithResourceString(R.string.error_invalid_certificate_json));
         }
 
@@ -148,44 +134,28 @@ public class CertificateVerifier {
         return Observable.just(remoteHash);
     }
 
-    public Observable<String> verifyIssuer(BlockchainCertificate certificate) {
-        URI issuerUuid = certificate.getDocument().getCertificate().getIssuer().getId();
-        return mIssuerService.getIssuer(issuerUuid.toString())
+    public Observable<String> verifyIssuer(BlockCert certificate) {
+        String issuerId = certificate.getIssuerId();
+        return mIssuerService.getIssuer(issuerId)
                 .flatMap(issuerResponse -> issuerDownloaded(issuerResponse, certificate));
     }
 
-    private Observable<String> issuerDownloaded(IssuerResponse issuerResponse, BlockchainCertificate certificate) {
+    private Observable<String> issuerDownloaded(IssuerResponse issuerResponse, BlockCert certificate) {
         List<KeyRotation> issuerKeys = issuerResponse.getIssuerKeys();
         if (ListUtils.isEmpty(issuerKeys)) {
             // TODO: show an error
-            Timber.d("Issuer is missing keys");
+            Timber.e("Issuer is missing keys");
             return Observable.error(new ExceptionWithResourceString(R.string.error_invalid_certificate_json));
         }
 
         KeyRotation firstIssuerKey = issuerKeys.get(0);
-
-        Document document = certificate.getDocument();
-        String signature = document.getSignature();
-        // TODO: check if we could get UUID from the cert
-        String uid = document.getAssertion().getUid();
-
-        try {
-            ECKey ecKey = ECKey.signedMessageToKey(uid, signature);
-            ecKey.verifyMessage(uid, signature); // this is tautological
-            Address address = ecKey.toAddress(MainNetParams.get());
-            if (!firstIssuerKey.getKey().equals(address.toBase58())) {
-                // TODO: show an error
-                Timber.d("The issuer key doesn't match the certificate address");
-                return Observable.error(new ExceptionWithResourceString(R.string.error_invalid_certificate_json));
-            }
-
-            Timber.d("Issuer matches certificate");
-            return Observable.just(firstIssuerKey.getKey());
-        } catch (SignatureException e) {
+        String address = certificate.getAddress(mNetworkParameters);
+        if (address == null || !firstIssuerKey.getKey().equals(address)) {
             // TODO: show an error
-            Timber.e(e, "The document signature is invalid");
+            Timber.e("The issuer key doesn't match the certificate address");
             return Observable.error(new ExceptionWithResourceString(R.string.error_invalid_certificate_json));
         }
+        return Observable.just(firstIssuerKey.getKey());
     }
 
     public Observable<String> verifyJsonLd(String remoteHash, String serializedDoc) {
@@ -220,15 +190,15 @@ public class CertificateVerifier {
     }
 
     public static class CertificateAndDocument {
-        BlockchainCertificate mCertificate;
+        BlockCert mCertificate;
         String mDocument;
 
-        public CertificateAndDocument(BlockchainCertificate certificate, String document) {
+        public CertificateAndDocument(BlockCert certificate, String document) {
             mCertificate = certificate;
             mDocument = document;
         }
 
-        public BlockchainCertificate getCertificate() {
+        public BlockCert getCertificate() {
             return mCertificate;
         }
 

@@ -3,11 +3,11 @@ package com.learningmachine.android.app.ui.issuer;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
-import com.learningmachine.android.app.data.model.Certificate;
+import com.learningmachine.android.app.data.model.CertificateRecord;
 
 public class CertificateListItemViewModel extends BaseObservable {
 
-    private Certificate mCertificate;
+    private CertificateRecord mCertificate;
 
     @Bindable
     public String getTitle() {
@@ -25,12 +25,12 @@ public class CertificateListItemViewModel extends BaseObservable {
         return mCertificate.getDescription();
     }
 
-    public void bindCertificate(Certificate certificate) {
+    public void bindCertificate(CertificateRecord certificate) {
         mCertificate = certificate;
         notifyChange();
     }
 
-    public Certificate getCertificate() {
+    public CertificateRecord getCertificate() {
         return mCertificate;
     }
 }

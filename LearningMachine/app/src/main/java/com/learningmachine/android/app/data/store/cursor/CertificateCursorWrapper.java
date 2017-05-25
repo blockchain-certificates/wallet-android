@@ -3,7 +3,7 @@ package com.learningmachine.android.app.data.store.cursor;
 import android.database.Cursor;
 import android.database.CursorWrapper;
 
-import com.learningmachine.android.app.data.model.Certificate;
+import com.learningmachine.android.app.data.model.CertificateRecord;
 import com.learningmachine.android.app.data.store.LMDatabaseHelper;
 
 public class CertificateCursorWrapper extends CursorWrapper {
@@ -12,7 +12,7 @@ public class CertificateCursorWrapper extends CursorWrapper {
         super(cursor);
     }
 
-    public Certificate getCertificate() {
+    public CertificateRecord getCertificate() {
         String certUuid = getString(getColumnIndex(LMDatabaseHelper.Column.Certificate.UUID));
         String issuerUuid = getString(getColumnIndex(LMDatabaseHelper.Column.Certificate.ISSUER_UUID));
         String name = getString(getColumnIndex(LMDatabaseHelper.Column.Certificate.NAME));
@@ -20,6 +20,6 @@ public class CertificateCursorWrapper extends CursorWrapper {
         String issueDate = getString(getColumnIndex(LMDatabaseHelper.Column.Certificate.ISSUE_DATE));
         String urlString = getString(getColumnIndex(LMDatabaseHelper.Column.Certificate.URL));
 
-        return new Certificate(certUuid, issuerUuid, name, description, issueDate, urlString);
+        return new CertificateRecord(certUuid, issuerUuid, name, description, issueDate, urlString);
     }
 }
