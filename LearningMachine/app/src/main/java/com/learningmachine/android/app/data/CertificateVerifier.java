@@ -9,11 +9,9 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.cert.BlockCert;
-import com.learningmachine.android.app.data.cert.BlockCertAdapter;
+import com.learningmachine.android.app.data.cert.BlockCertParser;
 import com.learningmachine.android.app.data.error.ExceptionWithResourceString;
 import com.learningmachine.android.app.data.model.KeyRotation;
 import com.learningmachine.android.app.data.model.TxRecordOut;
@@ -81,10 +79,9 @@ public class CertificateVerifier {
     }
 
     private Observable<BlockCert> parseCertificate(String string) {
-        Gson gson = new GsonBuilder()
-                .registerTypeAdapter(BlockCert.class, new BlockCertAdapter())
-                .create();
-        return Observable.just(gson.fromJson(string, BlockCert.class));
+        BlockCertParser blockCertParser = new BlockCertParser();
+        BlockCert blockCert = blockCertParser.fromJson(string);
+        return Observable.just(blockCert);
     }
 
     private Observable<String> getCertificateDocument(String string) {
@@ -129,7 +126,7 @@ public class CertificateVerifier {
 
         if (!remoteHash.equals(merkleRoot)) {
             // TODO: show an error
-            Timber.d("The transaction record hash doesn't match the certificate's Merkle root");
+            Timber.e("The transaction record hash doesn't match the certificate's Merkle root");
             return Observable.error(new ExceptionWithResourceString(R.string.error_invalid_certificate_json));
         }
 
@@ -147,7 +144,7 @@ public class CertificateVerifier {
         List<KeyRotation> issuerKeys = issuerResponse.getIssuerKeys();
         if (ListUtils.isEmpty(issuerKeys)) {
             // TODO: show an error
-            Timber.d("Issuer is missing keys");
+            Timber.e("Issuer is missing keys");
             return Observable.error(new ExceptionWithResourceString(R.string.error_invalid_certificate_json));
         }
 
@@ -155,7 +152,7 @@ public class CertificateVerifier {
         String address = certificate.getAddress(mNetworkParameters);
         if (address == null || !firstIssuerKey.getKey().equals(address)) {
             // TODO: show an error
-            Timber.d("The issuer key doesn't match the certificate address");
+            Timber.e("The issuer key doesn't match the certificate address");
             return Observable.error(new ExceptionWithResourceString(R.string.error_invalid_certificate_json));
         }
         return Observable.just(firstIssuerKey.getKey());

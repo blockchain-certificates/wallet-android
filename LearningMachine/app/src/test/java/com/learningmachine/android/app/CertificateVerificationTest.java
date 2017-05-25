@@ -4,10 +4,9 @@ import android.content.Context;
 
 import com.google.common.io.ByteStreams;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.learningmachine.android.app.data.CertificateVerifier;
 import com.learningmachine.android.app.data.cert.BlockCert;
-import com.learningmachine.android.app.data.cert.BlockCertAdapter;
+import com.learningmachine.android.app.data.cert.BlockCertParser;
 import com.learningmachine.android.app.data.model.KeyRotation;
 import com.learningmachine.android.app.data.model.TxRecord;
 import com.learningmachine.android.app.data.model.TxRecordOut;
@@ -63,9 +62,7 @@ public class CertificateVerificationTest {
     public void setup() {
         Context context = Mockito.mock(Context.class);
 
-        Gson gson = new GsonBuilder()
-                .registerTypeAdapter(BlockCert.class, new BlockCertAdapter())
-                .create();
+        Gson gson = new Gson();
 
         BlockchainService blockchainService = mock(BlockchainService.class);
         mTxRecord = gson.fromJson(getResourceAsReader(BLOCKCHAIN_TX_RECORD_FILENAME), TxRecord.class);
@@ -77,8 +74,9 @@ public class CertificateVerificationTest {
 
         subject = new CertificateVerifier(context, blockchainService, issuerService, MainNetParams.get());
 
-        validCertificate = gson.fromJson(getResourceAsReader(CERT_FILENAME), BlockCert.class);
-        forgedCertificate = gson.fromJson(getResourceAsReader(FORGED_CERT_FILENAME), BlockCert.class);
+        BlockCertParser blockCertParser = new BlockCertParser();
+        validCertificate = blockCertParser.fromJson(getResourceAsStream(CERT_FILENAME));
+        forgedCertificate = blockCertParser.fromJson(getResourceAsStream(FORGED_CERT_FILENAME));
     }
 
     @Test

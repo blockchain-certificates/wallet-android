@@ -5,6 +5,7 @@ import android.content.Context;
 import com.learningmachine.android.app.BuildConfig;
 import com.learningmachine.android.app.data.cert.v12.Assertion;
 import com.learningmachine.android.app.data.cert.v12.BlockCertV12;
+import com.learningmachine.android.app.data.cert.v12.Certificate;
 import com.learningmachine.android.app.data.cert.v12.Document;
 import com.learningmachine.android.app.data.cert.v12.Issuer;
 import com.learningmachine.android.app.data.model.CertificateRecord;
@@ -52,7 +53,7 @@ public class CertificateStoreTest {
         Issuer issuer = new Issuer();
         issuer.setId(new URI(issuerUuid));
 
-        com.learningmachine.android.app.data.cert.v12.Certificate certificate = new com.learningmachine.android.app.data.cert.v12.Certificate();
+        Certificate certificate = new com.learningmachine.android.app.data.cert.v12.Certificate();
         certificate.setIssuer(issuer);
         certificate.setName(name);
         certificate.setDescription(description);
