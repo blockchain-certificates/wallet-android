@@ -10,7 +10,7 @@ import org.joda.time.DateTime;
 import java.io.Serializable;
 import java.util.List;
 
-public class Issuer implements Serializable {
+public class IssuerRecord implements Serializable {
 
     /** The name of the issuer. */
     @SerializedName("name")
@@ -47,7 +47,7 @@ public class Issuer implements Serializable {
     // created when added to DB
     private String mIntroducedOn;
 
-    public Issuer(String name, String email, String uuid, String certsUrl, String introUrl, String introducedOn) {
+    public IssuerRecord(String name, String email, String uuid, String certsUrl, String introUrl, String introducedOn) {
         mName = name;
         mEmail = email;
         mUuid = uuid;

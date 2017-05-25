@@ -2,7 +2,7 @@ package com.learningmachine.android.app.data;
 
 import android.content.Context;
 
-import com.learningmachine.android.app.data.model.Issuer;
+import com.learningmachine.android.app.data.model.IssuerRecord;
 import com.learningmachine.android.app.data.store.IssuerStore;
 import com.learningmachine.android.app.data.webservice.IssuerService;
 import com.learningmachine.android.app.data.webservice.request.IssuerIntroductionRequest;
@@ -37,15 +37,15 @@ public class IssuerManager {
         }
     }
 
-    public Observable<Issuer> getIssuer(String issuerUuid) {
+    public Observable<IssuerRecord> getIssuer(String issuerUuid) {
         return Observable.just(mIssuerStore.loadIssuer(issuerUuid));
     }
 
-    public Observable<Issuer> getIssuerForCertificate(String certUuid) {
+    public Observable<IssuerRecord> getIssuerForCertificate(String certUuid) {
         return Observable.just(mIssuerStore.loadIssuerForCertificate(certUuid));
     }
 
-    public Observable<List<Issuer>> getIssuers() {
+    public Observable<List<IssuerRecord>> getIssuers() {
         return Observable.just(mIssuerStore.loadIssuers());
     }
 

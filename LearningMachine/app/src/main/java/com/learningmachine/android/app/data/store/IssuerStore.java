@@ -1,22 +1,19 @@
 package com.learningmachine.android.app.data.store;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.VisibleForTesting;
 
-import com.learningmachine.android.app.data.model.Issuer;
+import com.learningmachine.android.app.data.model.IssuerRecord;
 import com.learningmachine.android.app.data.model.KeyRotation;
 import com.learningmachine.android.app.data.store.cursor.IssuerCursorWrapper;
 import com.learningmachine.android.app.data.store.cursor.KeyRotationCursorWrapper;
 import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
-import com.learningmachine.android.app.util.GsonUtil;
 import com.learningmachine.android.app.util.ListUtils;
 
 import org.joda.time.DateTime;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +43,7 @@ public class IssuerStore implements DataStore {
     }
 
     @VisibleForTesting
-    protected void saveIssuer(Issuer issuer) {
+    protected void saveIssuer(IssuerRecord issuer) {
         ContentValues contentValues = new ContentValues();
 
         contentValues.put(LMDatabaseHelper.Column.Issuer.NAME, issuer.getName());
@@ -70,8 +67,8 @@ public class IssuerStore implements DataStore {
         }
     }
 
-    public List<Issuer> loadIssuers() {
-        List<Issuer> issuerList = new ArrayList<>();
+    public List<IssuerRecord> loadIssuers() {
+        List<IssuerRecord> issuerList = new ArrayList<>();
 
         Cursor cursor = mDatabase.query(
                 LMDatabaseHelper.Table.ISSUER,
@@ -85,7 +82,7 @@ public class IssuerStore implements DataStore {
         if (cursor.moveToFirst()) {
             IssuerCursorWrapper cursorWrapper = new IssuerCursorWrapper(cursor);
             while (!cursorWrapper.isAfterLast()) {
-                Issuer issuer = cursorWrapper.getIssuer();
+                IssuerRecord issuer = cursorWrapper.getIssuer();
 
                 List<KeyRotation> issuerKeys = loadIssuerKeys(issuer.getUuid());
                 issuer.setIssuerKeys(issuerKeys);
@@ -102,8 +99,8 @@ public class IssuerStore implements DataStore {
         return issuerList;
     }
 
-    public Issuer loadIssuer(String uuid) {
-        Issuer issuer = null;
+    public IssuerRecord loadIssuer(String uuid) {
+        IssuerRecord issuer = null;
         Cursor cursor = mDatabase.query(
                 LMDatabaseHelper.Table.ISSUER,
                 null,
@@ -127,8 +124,8 @@ public class IssuerStore implements DataStore {
         return issuer;
     }
 
-    public Issuer loadIssuerForCertificate(String certUuid) {
-        Issuer issuer = null;
+    public IssuerRecord loadIssuerForCertificate(String certUuid) {
+        IssuerRecord issuer = null;
 
         String selectQuery = "SELECT "
                 + LMDatabaseHelper.Table.ISSUER + "." + LMDatabaseHelper.Column.Issuer.ID + ", "

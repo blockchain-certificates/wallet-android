@@ -1,9 +1,9 @@
 package com.learningmachine.android.app.data.webservice.response;
 
 import com.google.gson.annotations.SerializedName;
-import com.learningmachine.android.app.data.model.Issuer;
+import com.learningmachine.android.app.data.model.IssuerRecord;
 
-public class IssuerResponse extends Issuer {
+public class IssuerResponse extends IssuerRecord {
 
     @SerializedName("image")
     private String mImageData;
