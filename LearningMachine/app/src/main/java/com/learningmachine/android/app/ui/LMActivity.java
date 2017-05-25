@@ -105,7 +105,6 @@ public abstract class LMActivity extends AppCompatActivity implements LifecycleP
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                navigateBack();
                 finish();
                 return true;
         }
@@ -132,7 +131,6 @@ public abstract class LMActivity extends AppCompatActivity implements LifecycleP
         actionBar.setDisplayShowTitleEnabled(true);
         String title = getActionBarTitle();
         if (!TextUtils.isEmpty(title)) {
-            title = getActionBarTitle();
             actionBar.setTitle(title);
         }
 
@@ -152,7 +150,4 @@ public abstract class LMActivity extends AppCompatActivity implements LifecycleP
         return false;
     }
 
-    protected void navigateBack() {
-        // do nothing
-    }
 }
