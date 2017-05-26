@@ -52,9 +52,6 @@ android {
 
             // don't package all resources for dev builds
             resConfigs("en", "xxhdpi")
-
-            // avoid legacy multidex
-            minSdkVersion 21
         }
         staging {
             applicationId "com.learningmachine.android.app.staging"
