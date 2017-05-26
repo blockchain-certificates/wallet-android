@@ -11,8 +11,8 @@ elif [[ "$TRAVIS_BRANCH" != "master" && "$TRAVIS_BRANCH" != release/* ]]; then
   exit $?
 else
 
-    APP_NAME_PRODUCTION=app-production-release-1.0-
-    APP_NAME_STAGING=app-staging-release-1.0-
+    APP_NAME_PRODUCTION=productionRelease-1.0-
+    APP_NAME_STAGING=stagingRelease-1.0-
     OUTPUTDIR=$PWD/app/build/outputs/apk
     BUILD_NUMBER=$TRAVIS_BUILD_NUMBER
     RELEASE_NOTES="($TRAVIS_BRANCH): $BUILD_NUMBER"
@@ -26,7 +26,7 @@ else
 
     # Upload Stage
     FULL_APP_NAME_STAGING="$APP_NAME_STAGING$BUILD_NUMBER.apk"
-    FULL_APP_PATH_STAGING="$OUTPUTDIR/$FULL_APP_NAME_STAGING"
+    FULL_APP_PATH_STAGING="$OUTPUTDIR/staging/release/$FULL_APP_NAME_STAGING"
     if [ -e "$FULL_APP_PATH_STAGING" ]
     then
       echo "Uploading $FULL_APP_NAME_STAGING to Hockeyapp."
@@ -42,7 +42,7 @@ else
 
     # Upload Prod
     FULL_APP_NAME_PRODUCTION="$APP_NAME_PRODUCTION$BUILD_NUMBER.apk"
-    FULL_APP_PATH_PRODUCTION="$OUTPUTDIR/$FULL_APP_NAME_PRODUCTION"
+    FULL_APP_PATH_PRODUCTION="$OUTPUTDIR/production/release/$FULL_APP_NAME_PRODUCTION"
     if [ -e "$FULL_APP_PATH_PRODUCTION" ]
     then
       echo "Uploading $FULL_APP_NAME_PRODUCTION to Hockeyapp."
