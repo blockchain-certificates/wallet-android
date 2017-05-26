@@ -52,8 +52,12 @@ public class IssuerStore implements DataStore {
         contentValues.put(LMDatabaseHelper.Column.Issuer.INTRO_URL, issuer.getIntroUrl());
         contentValues.put(LMDatabaseHelper.Column.Issuer.INTRODUCED_ON, issuer.getIntroducedOn());
 
-        saveIssuerKeys(issuer.getIssuerKeys(), issuer.getUuid());
-        saveRevocationKeys(issuer.getRevocationKeys(), issuer.getUuid());
+        if (!ListUtils.isEmpty(issuer.getIssuerKeys())) {
+            saveIssuerKeys(issuer.getIssuerKeys(), issuer.getUuid());
+        }
+        if (!ListUtils.isEmpty(issuer.getRevocationKeys())) {
+            saveRevocationKeys(issuer.getRevocationKeys(), issuer.getUuid());
+        }
 
         if (loadIssuer(issuer.getUuid()) == null) {
             mDatabase.insert(LMDatabaseHelper.Table.ISSUER,

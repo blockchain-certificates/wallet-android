@@ -140,7 +140,13 @@ public class BlockCertV12 extends BlockchainCertificate implements BlockCert {
             return null;
         }
         Issuer issuer = getDocument().getCertificate().getIssuer();
-        IssuerRecord issuerRecord = new IssuerRecord(issuer.getName(), issuer.getEmail(), issuer.getId().toString(), issuer.getUrl().toString(), issuer.getUrl().toString(), DateTime.now().toString());
+        String name = issuer.getName();
+        String email = issuer.getEmail();
+        String certUuid = issuer.getId().toString();
+        String certUrl = getUrl();
+        String introUrl = null;
+        String introducedOn = DateTime.now().toString();
+        IssuerRecord issuerRecord = new IssuerRecord(name, email, certUuid, certUrl, introUrl, introducedOn);
         return issuerRecord;
 
     }

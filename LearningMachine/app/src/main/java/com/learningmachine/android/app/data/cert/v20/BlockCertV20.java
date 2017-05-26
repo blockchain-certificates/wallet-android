@@ -8,13 +8,19 @@ import org.bitcoinj.core.NetworkParameters;
 import org.joda.time.DateTime;
 
 public class BlockCertV20 extends CertSchemaV20 implements BlockCert {
+    private static final String URN_PREFIX = "urn:uuid:";
+
     @Override
     public String getCertUid() {
         if (getBadge() == null
                 || getBadge().getId() == null) {
             return null;
         }
-        return getBadge().getId().toString();
+        String idString = getBadge().getId().toString();
+        if (idString.startsWith(URN_PREFIX)) {
+            idString = idString.substring(URN_PREFIX.length());
+        }
+        return idString;
     }
 
     @Override
@@ -67,7 +73,11 @@ public class BlockCertV20 extends CertSchemaV20 implements BlockCert {
                 || getRecipient().getRecipientProfile().getPublicKey() == null) {
             return null;
         }
-        return getRecipient().getRecipientProfile().getPublicKey().toString();
+        String keyString = getRecipient().getRecipientProfile().getPublicKey().toString();
+        if (keyString.startsWith(ECDSA_KOBLITZ_PUBKEY_PREFIX)) {
+            keyString = keyString.substring(ECDSA_KOBLITZ_PUBKEY_PREFIX.length());
+        }
+        return keyString;
     }
 
     @Override
@@ -96,7 +106,13 @@ public class BlockCertV20 extends CertSchemaV20 implements BlockCert {
     @Override
     public IssuerRecord getIssuer() {
         Issuer issuer = getBadge().getIssuer();
-        IssuerRecord issuerRecord = new IssuerRecord(issuer.getName(), issuer.getEmail(), issuer.getId().toString(), issuer.getUrl().toString(), issuer.getUrl().toString(), DateTime.now().toString());
+        String name = issuer.getName();
+        String email = issuer.getEmail();
+        String certUuid = issuer.getId().toString();
+        String certUrl = getUrl();
+        String introUrl = null;
+        String introducedOn = DateTime.now().toString();
+        IssuerRecord issuerRecord = new IssuerRecord(name, email, certUuid, certUrl, introUrl, introducedOn);
         return issuerRecord;
     }
 }
