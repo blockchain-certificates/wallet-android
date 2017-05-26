@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.annotation.VisibleForTesting;
 
 import com.learningmachine.android.app.LMConstants;
-import com.learningmachine.android.app.data.IssuerManager;
 import com.learningmachine.android.app.data.store.CertificateStore;
 import com.learningmachine.android.app.data.store.IssuerStore;
 import com.learningmachine.android.app.util.ListUtils;
@@ -133,7 +132,7 @@ public class BitcoinManager {
 
     public Observable<String> getPassphrase() {
         return getWallet().map(wallet -> {
-            DeterministicSeed seed = mWallet.getKeyChainSeed();
+            DeterministicSeed seed = wallet.getKeyChainSeed();
             List<String> mnemonicCode = seed.getMnemonicCode();
             return StringUtils.join(PASSPHRASE_DELIMETER, mnemonicCode);
         });
