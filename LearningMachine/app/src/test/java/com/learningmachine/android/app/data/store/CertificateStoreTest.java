@@ -3,11 +3,8 @@ package com.learningmachine.android.app.data.store;
 import android.content.Context;
 
 import com.learningmachine.android.app.BuildConfig;
-import com.learningmachine.android.app.data.cert.v12.Assertion;
+import com.learningmachine.android.app.data.cert.BlockCert;
 import com.learningmachine.android.app.data.cert.v12.BlockCertV12;
-import com.learningmachine.android.app.data.cert.v12.Certificate;
-import com.learningmachine.android.app.data.cert.v12.Document;
-import com.learningmachine.android.app.data.cert.v12.Issuer;
 import com.learningmachine.android.app.data.model.CertificateRecord;
 
 import org.junit.Before;
@@ -17,7 +14,6 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
-import java.net.URI;
 import java.net.URISyntaxException;
 
 import static org.junit.Assert.assertEquals;
@@ -45,25 +41,9 @@ public class CertificateStoreTest {
         String issuedDate = "2017-05-11T18:28:27.415+00:00";
         String urlString = "https://certificates.learningmachine.com/certificate/sampelcertificate";
 
-        BlockCertV12 blockchainCertificate = new BlockCertV12();
-        Assertion assertion = new Assertion();
-        assertion.setUid(certUuid);
-        assertion.setIssuedOn(issuedDate);
-        assertion.setId(new URI(urlString));
-        Issuer issuer = new Issuer();
-        issuer.setId(new URI(issuerUuid));
+        BlockCert blockCert = BlockCertV12.createInstance(certUuid, issuerUuid, name, description, issuedDate, urlString);
 
-        Certificate certificate = new com.learningmachine.android.app.data.cert.v12.Certificate();
-        certificate.setIssuer(issuer);
-        certificate.setName(name);
-        certificate.setDescription(description);
-
-        Document document = new Document();
-        document.setAssertion(assertion);
-        document.setCertificate(certificate);
-        blockchainCertificate.setDocument(document);
-
-        mCertificateStore.saveBlockchainCertificate(blockchainCertificate);
+        mCertificateStore.saveBlockchainCertificate(blockCert);
 
         CertificateRecord actualCertificate = mCertificateStore.loadCertificate(certUuid);
 

@@ -3,11 +3,11 @@ package com.learningmachine.android.app.ui.home;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
-import com.learningmachine.android.app.data.model.Issuer;
+import com.learningmachine.android.app.data.model.IssuerRecord;
 
 public class IssuerListItemViewModel extends BaseObservable {
 
-    private Issuer mIssuer;
+    private IssuerRecord mIssuer;
 
     public IssuerListItemViewModel() {
     }
@@ -20,12 +20,12 @@ public class IssuerListItemViewModel extends BaseObservable {
         return mIssuer.getName();
     }
 
-    public void bindIssuer(Issuer issuer) {
+    public void bindIssuer(IssuerRecord issuer) {
         mIssuer = issuer;
         notifyChange();
     }
 
-    public Issuer getIssuer() {
+    public IssuerRecord getIssuer() {
         return mIssuer;
     }
 }

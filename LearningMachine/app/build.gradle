@@ -49,9 +49,13 @@ android {
         dev {
             applicationId "com.learningmachine.android.app.dev"
             dimension "env"
+            if (project.hasProperty("devBuild")) {
+                // don't package all resources for dev builds
+                resConfigs("en", "xxhdpi")
 
-            // don't package all resources for dev builds
-            resConfigs("en", "xxhdpi")
+                // avoid legacy multidex
+                minSdkVersion 21
+            }
         }
         staging {
             applicationId "com.learningmachine.android.app.staging"

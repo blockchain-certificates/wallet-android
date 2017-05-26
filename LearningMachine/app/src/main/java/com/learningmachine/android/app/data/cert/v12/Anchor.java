@@ -4,7 +4,7 @@ package com.learningmachine.android.app.data.cert.v12;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Anchor {
+class Anchor {
 
     /**
      * type of anchor, e.g. BTCOpReturn. Currently the only supported value is BTCOpReturn.

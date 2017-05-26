@@ -13,7 +13,7 @@ import com.google.gson.annotations.SerializedName;
  * Provides evidence of the certificate on the blockchain, using the chainpoint v2 standard
  * 
  */
-public class Receipt {
+class Receipt {
 
     /**
      * This should always be chainpoint v2 JSON LD context
