@@ -14,7 +14,7 @@ import java.util.List;
  * Provides evidence of the certificate on the blockchain, using the chainpoint v2 standard
  * 
  */
-public class BlockchainReceipt {
+class BlockchainReceipt {
 
     /**
      * This should always be chainpoint v2 JSON LD context

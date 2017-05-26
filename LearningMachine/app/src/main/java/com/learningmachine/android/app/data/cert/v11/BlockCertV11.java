@@ -1,10 +1,12 @@
 package com.learningmachine.android.app.data.cert.v11;
 
 import com.learningmachine.android.app.data.cert.BlockCert;
+import com.learningmachine.android.app.data.model.IssuerRecord;
 
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.ECKey;
 import org.bitcoinj.core.NetworkParameters;
+import org.joda.time.DateTime;
 
 import java.security.SignatureException;
 
@@ -73,5 +75,22 @@ public class BlockCertV11 extends CertificateSchemaV11 implements BlockCert {
             Timber.e(e, "The document signature is invalid");
             return null;
         }
+    }
+
+    @Override
+    public IssuerRecord getIssuer() {
+        if (getCertificate() == null
+                || getCertificate().getIssuer() == null) {
+            return null;
+        }
+        Issuer issuer = getCertificate().getIssuer();
+        String name = issuer.getName();
+        String email = issuer.getEmail();
+        String certUuid = issuer.getId().toString();
+        String certUrl = getUrl();
+        String introUrl = null;
+        String introducedOn = DateTime.now().toString();
+        IssuerRecord issuerRecord = new IssuerRecord(name, email, certUuid, certUrl, introUrl, introducedOn);
+        return issuerRecord;
     }
 }

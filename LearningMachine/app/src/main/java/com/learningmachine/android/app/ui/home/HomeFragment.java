@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -20,7 +19,7 @@ import android.view.ViewGroup;
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.IssuerManager;
 import com.learningmachine.android.app.data.inject.Injector;
-import com.learningmachine.android.app.data.model.Issuer;
+import com.learningmachine.android.app.data.model.IssuerRecord;
 import com.learningmachine.android.app.databinding.FragmentHomeBinding;
 import com.learningmachine.android.app.databinding.ListItemIssuerBinding;
 import com.learningmachine.android.app.ui.LMFragment;
@@ -39,7 +38,7 @@ public class HomeFragment extends LMFragment {
     @Inject IssuerManager mIssuerManager;
 
     private FragmentHomeBinding mBinding;
-    private List<Issuer> mIssuerList;
+    private List<IssuerRecord> mIssuerList;
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
@@ -112,7 +111,7 @@ public class HomeFragment extends LMFragment {
         return displayMetrics.widthPixels / itemWidth;
     }
 
-    private void updateRecyclerView(List<Issuer> issuerList) {
+    private void updateRecyclerView(List<IssuerRecord> issuerList) {
         mIssuerList.clear();
         mIssuerList.addAll(issuerList);
         mBinding.issuerRecyclerview.getAdapter()
@@ -121,9 +120,9 @@ public class HomeFragment extends LMFragment {
 
     private class IssuerAdapter extends RecyclerView.Adapter<IssuerViewHolder> {
 
-        private List<Issuer> mIssuerList;
+        private List<IssuerRecord> mIssuerList;
 
-        IssuerAdapter(List<Issuer> issuerList) {
+        IssuerAdapter(List<IssuerRecord> issuerList) {
             mIssuerList = issuerList;
         }
 
@@ -137,7 +136,7 @@ public class HomeFragment extends LMFragment {
 
         @Override
         public void onBindViewHolder(IssuerViewHolder holder, int position) {
-            Issuer issuer = mIssuerList.get(position);
+            IssuerRecord issuer = mIssuerList.get(position);
             holder.bind(issuer);
         }
 

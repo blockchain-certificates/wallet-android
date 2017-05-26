@@ -22,7 +22,7 @@ import com.learningmachine.android.app.data.IssuerManager;
 import com.learningmachine.android.app.data.cert.BlockCert;
 import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.data.model.CertificateRecord;
-import com.learningmachine.android.app.data.model.Issuer;
+import com.learningmachine.android.app.data.model.IssuerRecord;
 import com.learningmachine.android.app.databinding.FragmentCertificateBinding;
 import com.learningmachine.android.app.dialog.AlertDialogFragment;
 import com.learningmachine.android.app.ui.LMFragment;
@@ -167,7 +167,7 @@ public class CertificateFragment extends LMFragment {
                     if (shareFile) {
                         certUrlString += QUERY_PARAM_JSON;
                     }
-                    Issuer issuer = holder.getIssuer();
+                    IssuerRecord issuer = holder.getIssuer();
                     String issuerName = issuer.getName();
                     String sharingText = getString(R.string.fragment_certificate_share_format,
                             issuerName,
@@ -181,9 +181,9 @@ public class CertificateFragment extends LMFragment {
 
     private class CertificateIssuerHolder {
         private CertificateRecord mCertificate;
-        private Issuer mIssuer;
+        private IssuerRecord mIssuer;
 
-        public CertificateIssuerHolder(CertificateRecord certificate, Issuer issuer) {
+        public CertificateIssuerHolder(CertificateRecord certificate, IssuerRecord issuer) {
             mCertificate = certificate;
             mIssuer = issuer;
         }
@@ -192,7 +192,7 @@ public class CertificateFragment extends LMFragment {
             return mCertificate;
         }
 
-        public Issuer getIssuer() {
+        public IssuerRecord getIssuer() {
             return mIssuer;
         }
     }

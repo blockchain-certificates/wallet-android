@@ -3,7 +3,7 @@ package com.learningmachine.android.app.data.store.cursor;
 import android.database.Cursor;
 import android.database.CursorWrapper;
 
-import com.learningmachine.android.app.data.model.Issuer;
+import com.learningmachine.android.app.data.model.IssuerRecord;
 import com.learningmachine.android.app.data.store.LMDatabaseHelper;
 
 public class IssuerCursorWrapper extends CursorWrapper {
@@ -12,7 +12,7 @@ public class IssuerCursorWrapper extends CursorWrapper {
         super(cursor);
     }
 
-    public Issuer getIssuer() {
+    public IssuerRecord getIssuer() {
         String name = getString(getColumnIndex(LMDatabaseHelper.Column.Issuer.NAME));
         String email = getString(getColumnIndex(LMDatabaseHelper.Column.Issuer.EMAIL));
         String uuid = getString(getColumnIndex(LMDatabaseHelper.Column.Issuer.UUID));
@@ -20,6 +20,6 @@ public class IssuerCursorWrapper extends CursorWrapper {
         String introUrl = getString(getColumnIndex(LMDatabaseHelper.Column.Issuer.INTRO_URL));
         String introducedOn = getString(getColumnIndex(LMDatabaseHelper.Column.Issuer.INTRODUCED_ON));
 
-        return new Issuer(name, email, uuid, certsUrl, introUrl, introducedOn);
+        return new IssuerRecord(name, email, uuid, certsUrl, introUrl, introducedOn);
     }
 }

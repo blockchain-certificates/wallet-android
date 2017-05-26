@@ -36,6 +36,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -45,17 +46,22 @@ import static org.mockito.Mockito.when;
  */
 public class CertificateVerificationTest {
 
-    public static final String BLOCKCHAIN_TX_RECORD_ID = "d3f042497b1469446e95a9e289f26c551083a3a94c10fbb9c848be327ebf620d";
-    public static final String BLOCKCHAIN_TX_RECORD_FILENAME = "txrecord-" + BLOCKCHAIN_TX_RECORD_ID + ".json";
+    public static final String BTC_TX_RECORD_ID_D3F042 = "d3f042497b1469446e95a9e289f26c551083a3a94c10fbb9c848be327ebf620d";
+    public static final String BTC_TX_RECORD_D3F042_FILENAME = "txrecord-" + BTC_TX_RECORD_ID_D3F042 + ".json";
+    public static final String BTC_TX_RECORD_ID_C7667D = "c7667d47db19423952005df21474045af2bef675de2c13bf7f34bc64cfa3c114";
+    public static final String BTC_TX_RECORD_C7667D_FILENAME = "txrecord-" + BTC_TX_RECORD_ID_C7667D + ".json";
     public static final String CERT_ID = "8e02c2c4499e4e108b07ff5504438f4d";
     public static final String CERT_FILENAME = "certificate-" + CERT_ID + ".json";
+    public static final String CERT_V20_FILENAME = "bolot_lm02_cert_v20.json";
     public static final String FORGED_CERT_FILENAME = "forged-cert-" + CERT_ID + ".json";
-    public static final String ISSUER_FILENAME = "issuer-58ffaf130456e116107f68e6.json";
+    public static final String ISSUER_FILENAME = "issuer-v2.json";
 
     private CertificateVerifier subject;
-    private TxRecord mTxRecord;
+    private TxRecord mTxRecordD3F042;
+    private TxRecord mTxRecordC7667D;
     private IssuerResponse mIssuer;
-    private BlockCert validCertificate;
+    private BlockCert validCertV12;
+    private BlockCert validCertV20;
     private BlockCert forgedCertificate;
 
     @Before
@@ -65,8 +71,10 @@ public class CertificateVerificationTest {
         Gson gson = new Gson();
 
         BlockchainService blockchainService = mock(BlockchainService.class);
-        mTxRecord = gson.fromJson(getResourceAsReader(BLOCKCHAIN_TX_RECORD_FILENAME), TxRecord.class);
-        when(blockchainService.getBlockchain(any())).thenReturn(Observable.just(mTxRecord));
+        mTxRecordC7667D = gson.fromJson(getResourceAsReader(BTC_TX_RECORD_C7667D_FILENAME), TxRecord.class);
+        mTxRecordD3F042 = gson.fromJson(getResourceAsReader(BTC_TX_RECORD_D3F042_FILENAME), TxRecord.class);
+        when(blockchainService.getBlockchain(BTC_TX_RECORD_ID_C7667D)).thenReturn(Observable.just(mTxRecordC7667D));
+        when(blockchainService.getBlockchain(BTC_TX_RECORD_ID_D3F042)).thenReturn(Observable.just(mTxRecordD3F042));
 
         IssuerService issuerService = mock(IssuerService.class);
         mIssuer = gson.fromJson(getResourceAsReader(ISSUER_FILENAME), IssuerResponse.class);
@@ -75,19 +83,32 @@ public class CertificateVerificationTest {
         subject = new CertificateVerifier(context, blockchainService, issuerService, MainNetParams.get());
 
         BlockCertParser blockCertParser = new BlockCertParser();
-        validCertificate = blockCertParser.fromJson(getResourceAsStream(CERT_FILENAME));
+        validCertV12 = blockCertParser.fromJson(getResourceAsStream(CERT_FILENAME));
+        validCertV20 = blockCertParser.fromJson(getResourceAsStream(CERT_V20_FILENAME));
         forgedCertificate = blockCertParser.fromJson(getResourceAsStream(FORGED_CERT_FILENAME));
     }
 
     @Test
-    public void validCertificateShouldVerifyIssuer() {
-        subject.verifyIssuer(validCertificate)
+    public void validCertV12ShouldVerifyIssuer() {
+        subject.verifyIssuer(validCertV12)
                 .subscribe(issuerKey -> assertEquals(issuerKey, issuerKey));
     }
 
     @Test
-    public void validCertificateShouldVerifyBitcoinTransaction() {
-        subject.verifyBitcoinTransactionRecord(validCertificate)
+    public void validCertV12ShouldVerifyBitcoinTransaction() {
+        subject.verifyBitcoinTransactionRecord(validCertV12)
+                .subscribe(remoteHash -> assertEquals(remoteHash, remoteHash));
+    }
+
+    @Test
+    public void validCertV20ShouldVerifyIssuer() {
+        subject.verifyIssuer(validCertV20)
+                .subscribe(issuerKey -> assertEquals(issuerKey, issuerKey));
+    }
+
+    @Test
+    public void validCertV20ShouldVerifyBitcoinTransaction() {
+        subject.verifyBitcoinTransactionRecord(validCertV20)
                 .subscribe(remoteHash -> assertEquals(remoteHash, remoteHash));
     }
 
@@ -117,16 +138,16 @@ public class CertificateVerificationTest {
 
         // Blockchain Transaction
         // get blockchain transaction record ID from certificate.signature.anchors[0].sourceId
-        String txId = validCertificate.getSourceId();
+        String txId = validCertV12.getSourceId();
 
         // txId would now be used to download the blockchain transaction record
-        assertThat(txId, equalTo(BLOCKCHAIN_TX_RECORD_ID));
+        assertThat(txId, equalTo(BTC_TX_RECORD_ID_D3F042));
 
         Sha256Hash localHash = Sha256Hash.of(ByteStreams.toByteArray(getResourceAsStream(CERT_FILENAME)));
 
         // download blockchain transaction record from https://blockchain.info/rawtx/<transaction_id>
 
-        TxRecordOut lastOut = mTxRecord.getLastOut();
+        TxRecordOut lastOut = mTxRecordD3F042.getLastOut();
         int value = lastOut.getValue();
         String remoteHash = lastOut.getScript();
 
@@ -135,17 +156,15 @@ public class CertificateVerificationTest {
         // strip out 6a20 prefix, if present
         remoteHash = remoteHash.startsWith("6a20") ? remoteHash.substring(4) : remoteHash;
 
-        assertThat(remoteHash, equalTo(validCertificate.getMerkleRoot()));
+        assertThat(remoteHash, equalTo(validCertV12.getMerkleRoot()));
 
         // Issuer
         // get issuer from URL in certificate.badge.issuer.id
 
         assertThat(mIssuer.getIssuerKeys(), not(empty()));
 
-        KeyRotation firstIssuerKey = mIssuer.getIssuerKeys().get(0);
-
-        String address = validCertificate.getAddress(MainNetParams.get());
-        assertEquals(firstIssuerKey.getKey(), address);
+        String address = validCertV12.getAddress(MainNetParams.get());
+        assertTrue("Address is supposed to match the issuer", mIssuer.verifyAddress(address));
 
         // Revocation
         List<KeyRotation> revocationKeys = mIssuer.getRevocationKeys();
