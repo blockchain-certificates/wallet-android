@@ -84,7 +84,17 @@ public class CertificateVerifier {
     private Observable<String> getCertificateDocument(String string) {
         try {
             JSONObject jsonObject = new JSONObject(string);
-            JSONObject document = jsonObject.getJSONObject("document");
+            JSONObject document;
+            if (jsonObject.has("document")) {
+                // v1.2
+                document = jsonObject.getJSONObject("document");
+            } else if (jsonObject.has("badge")) {
+                // v2.0
+                document = jsonObject.getJSONObject("badge");
+            } else {
+                // missing document or badge
+                return Observable.error(new ExceptionWithResourceString(R.string.error_invalid_certificate_json));
+            }
             String serializedDoc = document.toString();
 
             return Observable.just(serializedDoc);
