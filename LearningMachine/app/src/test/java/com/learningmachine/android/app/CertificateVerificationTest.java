@@ -36,6 +36,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -53,7 +54,7 @@ public class CertificateVerificationTest {
     public static final String CERT_FILENAME = "certificate-" + CERT_ID + ".json";
     public static final String CERT_V20_FILENAME = "bolot_lm02_cert_v20.json";
     public static final String FORGED_CERT_FILENAME = "forged-cert-" + CERT_ID + ".json";
-    public static final String ISSUER_FILENAME = "issuer-58ffaf130456e116107f68e6.json";
+    public static final String ISSUER_FILENAME = "issuer-v2.json";
 
     private CertificateVerifier subject;
     private TxRecord mTxRecordD3F042;
@@ -162,10 +163,8 @@ public class CertificateVerificationTest {
 
         assertThat(mIssuer.getIssuerKeys(), not(empty()));
 
-        KeyRotation firstIssuerKey = mIssuer.getIssuerKeys().get(0);
-
         String address = validCertV12.getAddress(MainNetParams.get());
-        assertEquals(firstIssuerKey.getKey(), address);
+        assertTrue("Address is supposed to match the issuer", mIssuer.verifyAddress(address));
 
         // Revocation
         List<KeyRotation> revocationKeys = mIssuer.getRevocationKeys();
