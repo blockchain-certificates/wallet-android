@@ -1,9 +1,11 @@
 package com.learningmachine.android.app.data.cert.v20;
 
 import com.learningmachine.android.app.data.cert.BlockCert;
+import com.learningmachine.android.app.data.model.IssuerRecord;
 import com.learningmachine.android.app.util.ListUtils;
 
 import org.bitcoinj.core.NetworkParameters;
+import org.joda.time.DateTime;
 
 public class BlockCertV20 extends CertSchemaV20 implements BlockCert {
     @Override
@@ -89,5 +91,12 @@ public class BlockCertV20 extends CertSchemaV20 implements BlockCert {
     public String getAddress(NetworkParameters networkParameters) {
         // FIXME: find it
         return "14X3Xvw6kQA8iA2GZQKo4ZquBLNNamLcpQ";
+    }
+
+    @Override
+    public IssuerRecord getIssuer() {
+        Issuer issuer = getBadge().getIssuer();
+        IssuerRecord issuerRecord = new IssuerRecord(issuer.getName(), issuer.getEmail(), issuer.getId().toString(), issuer.getUrl().toString(), issuer.getUrl().toString(), DateTime.now().toString());
+        return issuerRecord;
     }
 }
