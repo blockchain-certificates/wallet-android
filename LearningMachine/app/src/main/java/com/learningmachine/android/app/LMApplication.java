@@ -10,6 +10,10 @@ import com.learningmachine.android.app.data.inject.LMComponent;
 import com.learningmachine.android.app.data.inject.LMGraph;
 import com.learningmachine.android.app.data.preferences.SharedPreferencesManager;
 
+import net.danlew.android.joda.JodaTimeAndroid;
+
+import org.joda.time.DateTime;
+
 import javax.inject.Inject;
 
 import rx.Observable;
@@ -32,6 +36,7 @@ public class LMApplication extends MultiDexApplication {
 
         setupDagger();
         setupTimber();
+        setupJodaTime();
         loadSampleData();
     }
 
@@ -50,6 +55,10 @@ public class LMApplication extends MultiDexApplication {
 
     private void setupTimber() {
         Timber.plant(mTree);
+    }
+
+    protected void setupJodaTime() {
+        JodaTimeAndroid.init(getApplicationContext());
     }
 
     private void loadSampleData() {
