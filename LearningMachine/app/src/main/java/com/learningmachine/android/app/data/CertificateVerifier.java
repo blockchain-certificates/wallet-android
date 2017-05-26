@@ -141,21 +141,36 @@ public class CertificateVerifier {
     }
 
     private Observable<String> issuerDownloaded(IssuerResponse issuerResponse, BlockCert certificate) {
-        List<KeyRotation> issuerKeys = issuerResponse.getIssuerKeys();
-        if (ListUtils.isEmpty(issuerKeys)) {
+        String firstIssuerKey = getFirstIssuerKey(issuerResponse);
+        if (firstIssuerKey == null) {
             // TODO: show an error
-            Timber.e("Issuer is missing keys");
             return Observable.error(new ExceptionWithResourceString(R.string.error_invalid_certificate_json));
         }
-
-        KeyRotation firstIssuerKey = issuerKeys.get(0);
         String address = certificate.getAddress(mNetworkParameters);
-        if (address == null || !firstIssuerKey.getKey().equals(address)) {
+        if (address == null || !firstIssuerKey.equals(address)) {
             // TODO: show an error
             Timber.e("The issuer key doesn't match the certificate address");
             return Observable.error(new ExceptionWithResourceString(R.string.error_invalid_certificate_json));
         }
-        return Observable.just(firstIssuerKey.getKey());
+        return Observable.just(firstIssuerKey);
+    }
+
+    private String getFirstIssuerKey(IssuerResponse issuerResponse) {
+        List<KeyRotation> issuerKeys = issuerResponse.getIssuerKeys();
+        if (ListUtils.isEmpty(issuerKeys)) {
+            Timber.e("Issuer is missing keys");
+            return null;
+        }
+
+        KeyRotation firstIssuerKey = issuerKeys.get(0);
+
+        // normalize the key string
+        // TODO: abstract away from the specific key format
+        String keyString = firstIssuerKey.getKey();
+        if (keyString.startsWith("ecdsa-koblitz-pubkey:")) {
+            keyString = keyString.substring("ecdsa-koblitz-pubkey:".length());
+        }
+        return keyString;
     }
 
     public Observable<String> verifyJsonLd(String remoteHash, String serializedDoc) {

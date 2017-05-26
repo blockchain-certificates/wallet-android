@@ -8,9 +8,9 @@ import java.io.Serializable;
 
 public class KeyRotation implements Serializable {
 
-    @SerializedName("date")
+    @SerializedName("created")
     private String mCreatedDate;
-    @SerializedName("key")
+    @SerializedName("publicKey")
     private String mKey;
 
     public KeyRotation(String createdDate, String key) {

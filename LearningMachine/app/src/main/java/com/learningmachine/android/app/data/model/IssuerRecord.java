@@ -1,11 +1,8 @@
 package com.learningmachine.android.app.data.model;
 
 import com.google.gson.annotations.SerializedName;
-import com.learningmachine.android.app.util.DateUtils;
 import com.learningmachine.android.app.util.ImageUtils;
 import com.learningmachine.android.app.util.ListUtils;
-
-import org.joda.time.DateTime;
 
 import java.io.Serializable;
 import java.util.List;
@@ -36,7 +33,7 @@ public class IssuerRecord implements Serializable {
 
     /** An ordered list of KeyRotation objects, with the most recent key rotation first.
      * These represent the keys used to issue certificates during specific date ranges */
-    @SerializedName("issuerKeys")
+    @SerializedName("publicKeys")
     private List<KeyRotation> mIssuerKeys;
 
     /** An ordered list of KeyRotation objects, with the most recent key rotation first.
