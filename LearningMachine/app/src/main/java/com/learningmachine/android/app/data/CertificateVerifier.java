@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import javax.inject.Inject;
@@ -69,7 +70,7 @@ public class CertificateVerifier {
             scanner.close();
 
             return Observable.just(jsonString);
-        } catch (IOException e) {
+        } catch (IOException | NoSuchElementException e) {
             Timber.e(e, "Could not read certificate file");
             return Observable.error(e);
         }
