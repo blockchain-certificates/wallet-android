@@ -25,10 +25,7 @@ public class IssuerInfoViewModel extends BaseObservable {
 
     @Bindable
     public String getSharedAddress() {
-        if (mIssuer == null) {
-            return null;
-        }
-        return mIssuer.getPublicKey().getKey();
+        return mIssuer.getPublicKeyAddress();
     }
 
     @Bindable

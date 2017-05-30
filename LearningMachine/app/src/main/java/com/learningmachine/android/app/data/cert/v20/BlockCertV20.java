@@ -1,5 +1,6 @@
 package com.learningmachine.android.app.data.cert.v20;
 
+import com.learningmachine.android.app.LMConstants;
 import com.learningmachine.android.app.data.cert.BlockCert;
 import com.learningmachine.android.app.data.model.IssuerRecord;
 import com.learningmachine.android.app.util.ListUtils;
@@ -74,8 +75,8 @@ public class BlockCertV20 extends CertSchemaV20 implements BlockCert {
             return null;
         }
         String keyString = getRecipient().getRecipientProfile().getPublicKey().toString();
-        if (keyString.startsWith(ECDSA_KOBLITZ_PUBKEY_PREFIX)) {
-            keyString = keyString.substring(ECDSA_KOBLITZ_PUBKEY_PREFIX.length());
+        if (keyString.startsWith(LMConstants.ECDSA_KOBLITZ_PUBKEY_PREFIX)) {
+            keyString = keyString.substring(LMConstants.ECDSA_KOBLITZ_PUBKEY_PREFIX.length());
         }
         return keyString;
     }
