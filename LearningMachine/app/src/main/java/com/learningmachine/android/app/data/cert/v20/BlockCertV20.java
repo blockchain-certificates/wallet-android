@@ -2,7 +2,7 @@ package com.learningmachine.android.app.data.cert.v20;
 
 import com.learningmachine.android.app.LMConstants;
 import com.learningmachine.android.app.data.cert.BlockCert;
-import com.learningmachine.android.app.data.model.IssuerRecord;
+import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 import com.learningmachine.android.app.util.ListUtils;
 
 import org.bitcoinj.core.NetworkParameters;
@@ -105,7 +105,7 @@ public class BlockCertV20 extends CertSchemaV20 implements BlockCert {
     }
 
     @Override
-    public IssuerRecord getIssuer() {
+    public IssuerResponse getIssuer() {
         Issuer issuer = getBadge().getIssuer();
         String name = issuer.getName();
         String email = issuer.getEmail();
@@ -113,7 +113,8 @@ public class BlockCertV20 extends CertSchemaV20 implements BlockCert {
         String certUrl = null;
         String introUrl = null;
         String introducedOn = DateTime.now().toString();
-        IssuerRecord issuerRecord = new IssuerRecord(name, email, certUuid, certUrl, introUrl, introducedOn);
-        return issuerRecord;
+        String imageData = issuer.getImage();
+        IssuerResponse issuerResponse = new IssuerResponse(name, email, certUuid, certUrl, introUrl, introducedOn, imageData);
+        return issuerResponse;
     }
 }

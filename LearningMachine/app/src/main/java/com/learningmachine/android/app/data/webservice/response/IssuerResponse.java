@@ -9,8 +9,9 @@ public class IssuerResponse extends IssuerRecord {
     @SerializedName("image")
     private String mImageData;
 
-    public IssuerResponse(String name, String email, String uuid, String certsUrl, String introUrl, String introducedOn) {
+    public IssuerResponse(String name, String email, String uuid, String certsUrl, String introUrl, String introducedOn, String imageData) {
         super(name, email, uuid, certsUrl, introUrl, introducedOn);
+        mImageData = imageData;
     }
 
     public String getImageData() {
