@@ -5,7 +5,7 @@ import com.learningmachine.android.app.data.model.IssuerRecord;
 import org.bitcoinj.core.NetworkParameters;
 
 public interface BlockCert {
-    String ECDSA_KOBLITZ_PUBKEY_PREFIX = "ecdsa-koblitz-pubkey:";
+
 
     String getCertUid();
     String getCertName();

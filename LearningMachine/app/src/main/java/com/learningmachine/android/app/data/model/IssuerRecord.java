@@ -1,11 +1,14 @@
 package com.learningmachine.android.app.data.model;
 
 import com.google.gson.annotations.SerializedName;
+import com.learningmachine.android.app.LMConstants;
 import com.learningmachine.android.app.util.ImageUtils;
 import com.learningmachine.android.app.util.ListUtils;
 
 import java.io.Serializable;
 import java.util.List;
+
+import timber.log.Timber;
 
 public class IssuerRecord implements Serializable {
 
@@ -98,9 +101,23 @@ public class IssuerRecord implements Serializable {
     /** A convenience method for the most recent (and theoretically only valid) issuerKey. */
     public KeyRotation getPublicKey() {
         if (!ListUtils.isEmpty(mIssuerKeys)) {
-            return mIssuerKeys.get(0);
+           return mIssuerKeys.get(0);
         }
         return null;
+    }
+
+    public String getPublicKeyAddress() {
+        try {
+            KeyRotation publicKey = getPublicKey();
+            String key = publicKey.getKey();
+            if (key.startsWith(LMConstants.ECDSA_KOBLITZ_PUBKEY_PREFIX)) {
+                key = key.substring(LMConstants.ECDSA_KOBLITZ_PUBKEY_PREFIX.length());
+            }
+            return key;
+        } catch (NullPointerException e) {
+            Timber.e(e, "Unable to retrieve public key address");
+            return null;
+        }
     }
 
     public String getIntroducedOn() {
