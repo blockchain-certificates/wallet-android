@@ -42,12 +42,14 @@ public class BlockCertV11 extends CertificateSchemaV11 implements BlockCert {
 
     @Override
     public String getIssueDate() {
-        return getAssertion().getIssuedOn().toString();
+        return getAssertion().getIssuedOn()
+                .toString();
     }
 
     @Override
     public String getUrl() {
-        return getAssertion().getId().toString();
+        return getAssertion().getId()
+                .toString();
     }
 
     @Override
@@ -79,18 +81,21 @@ public class BlockCertV11 extends CertificateSchemaV11 implements BlockCert {
 
     @Override
     public IssuerRecord getIssuer() {
-        if (getCertificate() == null
-                || getCertificate().getIssuer() == null) {
+        if (getCertificate() == null || getCertificate().getIssuer() == null) {
             return null;
         }
         Issuer issuer = getCertificate().getIssuer();
         String name = issuer.getName();
         String email = issuer.getEmail();
-        String certUuid = issuer.getId().toString();
+        String certUuid = issuer.getId()
+                .toString();
         String certUrl = getUrl();
         String introUrl = null;
-        String introducedOn = DateTime.now().toString();
-        IssuerRecord issuerRecord = new IssuerRecord(name, email, certUuid, certUrl, introUrl, introducedOn);
+        String introducedOn = DateTime.now()
+                .toString();
+        String analytics = null;
+
+        IssuerRecord issuerRecord = new IssuerRecord(name, email, certUuid, certUrl, introUrl, introducedOn, analytics);
         return issuerRecord;
     }
 }

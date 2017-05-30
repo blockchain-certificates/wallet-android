@@ -1,5 +1,6 @@
 package com.learningmachine.android.app.data.webservice;
 
+import com.learningmachine.android.app.data.webservice.request.IssuerAnalytic;
 import com.learningmachine.android.app.data.webservice.request.IssuerIntroductionRequest;
 import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 
@@ -15,4 +16,7 @@ public interface IssuerService {
 
     @POST
     Observable<Void> postIntroduction(@Url String url, @Body IssuerIntroductionRequest request);
+
+    @POST
+    Observable<Void> postIssuerAnalytics(@Url String url, @Body IssuerAnalytic issuerAnalytic);
 }

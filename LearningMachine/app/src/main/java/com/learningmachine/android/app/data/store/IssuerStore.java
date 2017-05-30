@@ -51,6 +51,7 @@ public class IssuerStore implements DataStore {
         contentValues.put(LMDatabaseHelper.Column.Issuer.CERTS_URL, issuer.getCertsUrl());
         contentValues.put(LMDatabaseHelper.Column.Issuer.INTRO_URL, issuer.getIntroUrl());
         contentValues.put(LMDatabaseHelper.Column.Issuer.INTRODUCED_ON, issuer.getIntroducedOn());
+        contentValues.put(LMDatabaseHelper.Column.Issuer.ANALYTICS, issuer.getAnalyticsUrlString());
 
         if (!ListUtils.isEmpty(issuer.getIssuerKeys())) {
             saveIssuerKeys(issuer.getIssuerKeys(), issuer.getUuid());
@@ -137,7 +138,8 @@ public class IssuerStore implements DataStore {
                 + LMDatabaseHelper.Table.ISSUER + "." + LMDatabaseHelper.Column.Issuer.UUID + ", "
                 + LMDatabaseHelper.Table.ISSUER + "." + LMDatabaseHelper.Column.Issuer.CERTS_URL + ", "
                 + LMDatabaseHelper.Table.ISSUER + "." + LMDatabaseHelper.Column.Issuer.INTRO_URL + ", "
-                + LMDatabaseHelper.Table.ISSUER + "." + LMDatabaseHelper.Column.Issuer.INTRODUCED_ON
+                + LMDatabaseHelper.Table.ISSUER + "." + LMDatabaseHelper.Column.Issuer.INTRODUCED_ON + ", "
+                + LMDatabaseHelper.Table.ISSUER + "." + LMDatabaseHelper.Column.Issuer.ANALYTICS
                 + " FROM "
                 + LMDatabaseHelper.Table.ISSUER
                 + " INNER JOIN " + LMDatabaseHelper.Table.CERTIFICATE
@@ -145,8 +147,6 @@ public class IssuerStore implements DataStore {
                 + " = " + LMDatabaseHelper.Table.CERTIFICATE + "." + LMDatabaseHelper.Column.Certificate.ISSUER_UUID
                 + " WHERE " + LMDatabaseHelper.Table.CERTIFICATE + "." + LMDatabaseHelper.Column.Certificate.UUID
                 + " = ?";
-
-        // TODO update to selectionArgs
 
         Cursor cursor = mDatabase.rawQuery(selectQuery, new String[] { certUuid });
 

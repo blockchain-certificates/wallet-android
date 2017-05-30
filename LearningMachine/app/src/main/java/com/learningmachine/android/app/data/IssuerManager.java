@@ -2,12 +2,15 @@ package com.learningmachine.android.app.data;
 
 import android.content.Context;
 
+import com.learningmachine.android.app.data.error.IssuerAnalyticsException;
 import com.learningmachine.android.app.data.model.IssuerRecord;
 import com.learningmachine.android.app.data.store.IssuerStore;
 import com.learningmachine.android.app.data.webservice.IssuerService;
+import com.learningmachine.android.app.data.webservice.request.IssuerAnalytic;
 import com.learningmachine.android.app.data.webservice.request.IssuerIntroductionRequest;
 import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 import com.learningmachine.android.app.util.GsonUtil;
+import com.learningmachine.android.app.util.StringUtils;
 
 import java.io.IOException;
 import java.util.List;
@@ -59,5 +62,28 @@ public class IssuerManager {
                     mIssuerStore.saveIssuerResponse(issuerResponse);
                     return issuerResponse.getUuid();
                 });
+    }
+
+    public Observable<Void> certificateViewed(String certUuid) {
+        return sendAnalytics(certUuid, IssuerAnalytic.Action.VIEWED);
+    }
+
+    public Observable<Void> certificateVerified(String certUuid) {
+        return sendAnalytics(certUuid, IssuerAnalytic.Action.VERIFIED);
+    }
+
+    public Observable<Void> certificateShared(String certUuid) {
+        return sendAnalytics(certUuid, IssuerAnalytic.Action.SHARED);
+    }
+
+    private Observable<Void> sendAnalytics(String certUuid, IssuerAnalytic.Action action) {
+        return getIssuerForCertificate(certUuid).flatMap(issuer -> {
+            String issuerAnalyticsUrlString = issuer.getAnalyticsUrlString();
+            if (StringUtils.isEmpty(issuerAnalyticsUrlString)) {
+                return Observable.error(new IssuerAnalyticsException());
+            }
+            IssuerAnalytic issuerAnalytic = new IssuerAnalytic(certUuid, action);
+            return mIssuerService.postIssuerAnalytics(issuerAnalyticsUrlString, issuerAnalytic);
+        });
     }
 }

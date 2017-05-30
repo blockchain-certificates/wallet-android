@@ -49,8 +49,9 @@ public class IssuerStoreTest {
         String name = "Sample Issuer";
         String email = "sample-certificate@learningmachine.com";
         String introducedOn = "2017-05-11T18:28:27.415+00:00";
+        String analytics = "https://www.learningmachine.com/analytics";
 
-        IssuerRecord issuerOrig = new IssuerRecord(name, email, uuid, certsUrl, introUrl, introducedOn);
+        IssuerRecord issuerOrig = new IssuerRecord(name, email, uuid, certsUrl, introUrl, introducedOn, analytics);
         issuerOrig.setRevocationKeys(new ArrayList<>());
         issuerOrig.setIssuerKeys(new ArrayList<>());
         mIssuerStore.saveIssuer(issuerOrig);
