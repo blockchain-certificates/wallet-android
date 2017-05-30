@@ -87,7 +87,7 @@ public class BlockCertV11 extends CertificateSchemaV11 implements BlockCert {
         String name = issuer.getName();
         String email = issuer.getEmail();
         String certUuid = issuer.getId().toString();
-        String certUrl = getUrl();
+        String certUrl = null;
         String introUrl = null;
         String introducedOn = DateTime.now().toString();
         IssuerRecord issuerRecord = new IssuerRecord(name, email, certUuid, certUrl, introUrl, introducedOn);
