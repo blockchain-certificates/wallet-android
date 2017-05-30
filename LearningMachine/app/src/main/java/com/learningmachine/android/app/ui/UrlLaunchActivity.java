@@ -8,6 +8,9 @@ import com.learningmachine.android.app.ui.cert.AddCertificateActivity;
 import com.learningmachine.android.app.ui.issuer.AddIssuerActivity;
 import com.learningmachine.android.app.util.StringUtils;
 
+import java.io.IOException;
+import java.net.URLDecoder;
+
 import timber.log.Timber;
 
 public class UrlLaunchActivity extends LMActivity {
@@ -49,8 +52,15 @@ public class UrlLaunchActivity extends LMActivity {
             Timber.e("Launch uri missing issuer path parts");
             return;
         }
-        Intent intent = AddIssuerActivity.newIntent(this, issuerParts[0], issuerParts[1]);
-        startActivity(intent);
+
+        try {
+            String introUrl = URLDecoder.decode(issuerParts[0], "UTF-8");
+            String nonce = URLDecoder.decode(issuerParts[1], "UTF-8");
+            Intent intent = AddIssuerActivity.newIntent(this, introUrl, nonce);
+            startActivity(intent);
+        } catch (IOException e) {
+            Timber.e(e, "Unable to decode Urls.");
+        }
     }
 
     private void handleAddCertificateUri(String uriString) {
@@ -59,9 +69,13 @@ public class UrlLaunchActivity extends LMActivity {
             Timber.e("Launch uri missing the cert path suffix");
             return;
         }
-
-        Intent intent = AddCertificateActivity.newIntent(this, pathSuffix);
-        startActivity(intent);
+        try {
+            String certUrl = URLDecoder.decode(pathSuffix, "UTF-8");
+            Intent intent = AddCertificateActivity.newIntent(this, certUrl);
+            startActivity(intent);
+        } catch (IOException e) {
+            Timber.e(e, "Unable to decode Urls.");
+        }
     }
 
     private String getPathSuffix(String uriString, String delimiter) {
