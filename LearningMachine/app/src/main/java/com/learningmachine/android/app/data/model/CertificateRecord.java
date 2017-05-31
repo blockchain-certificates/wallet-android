@@ -4,9 +4,7 @@ import com.google.gson.annotations.SerializedName;
 import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 import com.learningmachine.android.app.util.StringUtils;
 
-import java.io.Serializable;
-
-public class CertificateRecord implements Serializable {
+public class CertificateRecord {
 
     @SerializedName("language")
     private String mLanguage;

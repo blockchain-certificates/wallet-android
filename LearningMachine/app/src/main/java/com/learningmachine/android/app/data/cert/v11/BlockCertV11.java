@@ -1,7 +1,7 @@
 package com.learningmachine.android.app.data.cert.v11;
 
 import com.learningmachine.android.app.data.cert.BlockCert;
-import com.learningmachine.android.app.data.model.IssuerRecord;
+import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.ECKey;
@@ -80,7 +80,7 @@ public class BlockCertV11 extends CertificateSchemaV11 implements BlockCert {
     }
 
     @Override
-    public IssuerRecord getIssuer() {
+    public IssuerResponse getIssuer() {
         if (getCertificate() == null || getCertificate().getIssuer() == null) {
             return null;
         }
@@ -93,9 +93,8 @@ public class BlockCertV11 extends CertificateSchemaV11 implements BlockCert {
         String introUrl = null;
         String introducedOn = DateTime.now()
                 .toString();
+        String imageData = issuer.getImage();
         String analytics = null;
-
-        IssuerRecord issuerRecord = new IssuerRecord(name, email, certUuid, certUrl, introUrl, introducedOn, analytics);
-        return issuerRecord;
+        return new IssuerResponse(name, email, certUuid, certUrl, introUrl, introducedOn, imageData, analytics);
     }
 }

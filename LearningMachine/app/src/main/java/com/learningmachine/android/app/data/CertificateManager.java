@@ -9,10 +9,10 @@ import com.learningmachine.android.app.data.cert.BlockCert;
 import com.learningmachine.android.app.data.cert.BlockCertParser;
 import com.learningmachine.android.app.data.error.CertificateOwnershipException;
 import com.learningmachine.android.app.data.model.CertificateRecord;
-import com.learningmachine.android.app.data.model.IssuerRecord;
 import com.learningmachine.android.app.data.store.CertificateStore;
 import com.learningmachine.android.app.data.store.IssuerStore;
 import com.learningmachine.android.app.data.webservice.CertificateService;
+import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 import com.learningmachine.android.app.util.FileUtils;
 
 import java.io.File;
@@ -143,8 +143,8 @@ public class CertificateManager {
 
     private void saveBlockCert(BlockCert blockCert) {
         mCertificateStore.saveBlockchainCertificate(blockCert);
-        IssuerRecord issuer = blockCert.getIssuer();
-        mIssuerStore.saveIssuer(issuer);
+        IssuerResponse issuer = blockCert.getIssuer();
+        mIssuerStore.saveIssuerResponse(issuer);
     }
 
     static class AddCertificateHolder {

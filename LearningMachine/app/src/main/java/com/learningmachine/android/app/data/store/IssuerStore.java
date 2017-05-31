@@ -47,27 +47,35 @@ public class IssuerStore implements DataStore {
 
         contentValues.put(LMDatabaseHelper.Column.Issuer.NAME, issuer.getName());
         contentValues.put(LMDatabaseHelper.Column.Issuer.EMAIL, issuer.getEmail());
-        contentValues.put(LMDatabaseHelper.Column.Issuer.UUID, issuer.getUuid());
-        contentValues.put(LMDatabaseHelper.Column.Issuer.CERTS_URL, issuer.getCertsUrl());
-        contentValues.put(LMDatabaseHelper.Column.Issuer.INTRO_URL, issuer.getIntroUrl());
+        // Issuers in certificates are incomplete, do not overwrite data if it was there before
+        String certsUrl = issuer.getCertsUrl();
+        if (certsUrl != null) {
+            contentValues.put(LMDatabaseHelper.Column.Issuer.CERTS_URL, certsUrl);
+        }
+        String introUrl = issuer.getIntroUrl();
+        if (introUrl != null) {
+            contentValues.put(LMDatabaseHelper.Column.Issuer.INTRO_URL, introUrl);
+        }
         contentValues.put(LMDatabaseHelper.Column.Issuer.INTRODUCED_ON, issuer.getIntroducedOn());
         contentValues.put(LMDatabaseHelper.Column.Issuer.ANALYTICS, issuer.getAnalyticsUrlString());
 
+        String issuerUuid = issuer.getUuid();
         if (!ListUtils.isEmpty(issuer.getIssuerKeys())) {
-            saveIssuerKeys(issuer.getIssuerKeys(), issuer.getUuid());
+            saveIssuerKeys(issuer.getIssuerKeys(), issuerUuid);
         }
         if (!ListUtils.isEmpty(issuer.getRevocationKeys())) {
-            saveRevocationKeys(issuer.getRevocationKeys(), issuer.getUuid());
+            saveRevocationKeys(issuer.getRevocationKeys(), issuerUuid);
         }
 
-        if (loadIssuer(issuer.getUuid()) == null) {
+        if (loadIssuer(issuerUuid) == null) {
+            contentValues.put(LMDatabaseHelper.Column.Issuer.UUID, issuerUuid);
             mDatabase.insert(LMDatabaseHelper.Table.ISSUER,
                     null,
                     contentValues);
         } else {
             mDatabase.update(LMDatabaseHelper.Table.ISSUER,
                     contentValues, LMDatabaseHelper.Column.Issuer.UUID + " = ?",
-                    new String[] { issuer.getUuid() });
+                    new String[] {issuerUuid});
         }
     }
 

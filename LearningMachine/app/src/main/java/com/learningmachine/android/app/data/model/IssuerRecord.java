@@ -5,12 +5,11 @@ import com.learningmachine.android.app.LMConstants;
 import com.learningmachine.android.app.util.ImageUtils;
 import com.learningmachine.android.app.util.ListUtils;
 
-import java.io.Serializable;
 import java.util.List;
 
 import timber.log.Timber;
 
-public class IssuerRecord implements Serializable {
+public class IssuerRecord {
 
     /** The name of the issuer. */
     @SerializedName("name")
