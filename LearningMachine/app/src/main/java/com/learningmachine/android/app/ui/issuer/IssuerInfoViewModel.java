@@ -3,14 +3,14 @@ package com.learningmachine.android.app.ui.issuer;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
-import com.learningmachine.android.app.data.model.Issuer;
+import com.learningmachine.android.app.data.model.IssuerRecord;
 import com.learningmachine.android.app.util.DateUtils;
 
 public class IssuerInfoViewModel extends BaseObservable {
 
-    private Issuer mIssuer;
+    private IssuerRecord mIssuer;
 
-    public IssuerInfoViewModel(Issuer issuer) {
+    public IssuerInfoViewModel(IssuerRecord issuer) {
         mIssuer = issuer;
     }
 
@@ -25,10 +25,7 @@ public class IssuerInfoViewModel extends BaseObservable {
 
     @Bindable
     public String getSharedAddress() {
-        if (mIssuer == null) {
-            return null;
-        }
-        return mIssuer.getPublicKey().getKey();
+        return mIssuer.getPublicKeyAddress();
     }
 
     @Bindable

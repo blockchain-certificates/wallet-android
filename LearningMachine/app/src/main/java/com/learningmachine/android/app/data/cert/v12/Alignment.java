@@ -1,16 +1,17 @@
 
 package com.learningmachine.android.app.data.cert.v12;
 
-import java.net.URI;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.net.URI;
 
 
 /**
  * Each object in an alignment array is an object that describes a particular standard or standard element and provides an appropriate link
  * 
  */
-public class Alignment {
+class Alignment {
 
     /**
      * 

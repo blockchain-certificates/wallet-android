@@ -1,8 +1,12 @@
 package com.learningmachine.android.app.data.cert;
 
+import com.learningmachine.android.app.data.model.IssuerRecord;
+
 import org.bitcoinj.core.NetworkParameters;
 
 public interface BlockCert {
+
+
     String getCertUid();
     String getCertName();
     String getCertDescription();
@@ -13,4 +17,5 @@ public interface BlockCert {
     String getSourceId();
     String getMerkleRoot();
     String getAddress(NetworkParameters networkParameters);
+    IssuerRecord getIssuer();
 }

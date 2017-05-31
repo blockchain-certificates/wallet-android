@@ -4,7 +4,7 @@ package com.learningmachine.android.app.data.cert.v12;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Recipient {
+class Recipient {
 
     /**
      * Family name of the recipient. http://schema.org/Person#familyName

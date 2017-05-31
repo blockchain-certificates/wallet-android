@@ -9,7 +9,9 @@ import com.learningmachine.android.app.data.cert.BlockCert;
 import com.learningmachine.android.app.data.cert.BlockCertParser;
 import com.learningmachine.android.app.data.error.CertificateOwnershipException;
 import com.learningmachine.android.app.data.model.CertificateRecord;
+import com.learningmachine.android.app.data.model.IssuerRecord;
 import com.learningmachine.android.app.data.store.CertificateStore;
+import com.learningmachine.android.app.data.store.IssuerStore;
 import com.learningmachine.android.app.data.webservice.CertificateService;
 import com.learningmachine.android.app.util.FileUtils;
 
@@ -26,14 +28,16 @@ import rx.Observable;
 
 public class CertificateManager {
 
-    private Context mContext;
-    private CertificateStore mCertificateStore;
-    private CertificateService mCertificateService;
-    private BitcoinManager mBitcoinManager;
+    private final Context mContext;
+    private final CertificateStore mCertificateStore;
+    private final IssuerStore mIssuerStore;
+    private final CertificateService mCertificateService;
+    private final BitcoinManager mBitcoinManager;
 
-    public CertificateManager(Context context, CertificateStore certificateStore, CertificateService certificateService, BitcoinManager bitcoinManager) {
+    public CertificateManager(Context context, CertificateStore certificateStore, IssuerStore issuerStore, CertificateService certificateService, BitcoinManager bitcoinManager) {
         mContext = context;
         mCertificateStore = certificateStore;
+        mIssuerStore = issuerStore;
         mCertificateService = certificateService;
         mBitcoinManager = bitcoinManager;
     }
@@ -99,7 +103,7 @@ public class CertificateManager {
             }
 
             // Save to DB
-            mCertificateStore.saveBlockchainCertificate(blockCert);
+            saveBlockCert(blockCert);
 
             // Write response to file
             String certUid = blockCert.getCertUid();
@@ -129,12 +133,18 @@ public class CertificateManager {
         }
 
         // Save to DB
-        mCertificateStore.saveBlockchainCertificate(blockCert);
+        saveBlockCert(blockCert);
 
         // Copy file
         String certUid = blockCert.getCertUid();
         FileUtils.copyCertificateStream(mContext, certInputStream, certUid);
         return Observable.just(certUid);
+    }
+
+    private void saveBlockCert(BlockCert blockCert) {
+        mCertificateStore.saveBlockchainCertificate(blockCert);
+        IssuerRecord issuer = blockCert.getIssuer();
+        mIssuerStore.saveIssuer(issuer);
     }
 
     static class AddCertificateHolder {
@@ -153,10 +163,5 @@ public class CertificateManager {
         String getBitcoinAddress() {
             return mBitcoinAddress;
         }
-    }
-
-    public void purgeCertificates() {
-        mCertificateStore.reset();
-        loadSampleCertificate();
     }
 }

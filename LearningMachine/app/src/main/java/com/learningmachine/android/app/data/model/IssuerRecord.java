@@ -1,16 +1,16 @@
 package com.learningmachine.android.app.data.model;
 
 import com.google.gson.annotations.SerializedName;
-import com.learningmachine.android.app.util.DateUtils;
+import com.learningmachine.android.app.LMConstants;
 import com.learningmachine.android.app.util.ImageUtils;
 import com.learningmachine.android.app.util.ListUtils;
-
-import org.joda.time.DateTime;
 
 import java.io.Serializable;
 import java.util.List;
 
-public class Issuer implements Serializable {
+import timber.log.Timber;
+
+public class IssuerRecord implements Serializable {
 
     /** The name of the issuer. */
     @SerializedName("name")
@@ -36,7 +36,7 @@ public class Issuer implements Serializable {
 
     /** An ordered list of KeyRotation objects, with the most recent key rotation first.
      * These represent the keys used to issue certificates during specific date ranges */
-    @SerializedName("issuerKeys")
+    @SerializedName("publicKeys")
     private List<KeyRotation> mIssuerKeys;
 
     /** An ordered list of KeyRotation objects, with the most recent key rotation first.
@@ -47,7 +47,7 @@ public class Issuer implements Serializable {
     // created when added to DB
     private String mIntroducedOn;
 
-    public Issuer(String name, String email, String uuid, String certsUrl, String introUrl, String introducedOn) {
+    public IssuerRecord(String name, String email, String uuid, String certsUrl, String introUrl, String introducedOn) {
         mName = name;
         mEmail = email;
         mUuid = uuid;
@@ -101,9 +101,23 @@ public class Issuer implements Serializable {
     /** A convenience method for the most recent (and theoretically only valid) issuerKey. */
     public KeyRotation getPublicKey() {
         if (!ListUtils.isEmpty(mIssuerKeys)) {
-            return mIssuerKeys.get(0);
+           return mIssuerKeys.get(0);
         }
         return null;
+    }
+
+    public String getPublicKeyAddress() {
+        try {
+            KeyRotation publicKey = getPublicKey();
+            String key = publicKey.getKey();
+            if (key.startsWith(LMConstants.ECDSA_KOBLITZ_PUBKEY_PREFIX)) {
+                key = key.substring(LMConstants.ECDSA_KOBLITZ_PUBKEY_PREFIX.length());
+            }
+            return key;
+        } catch (NullPointerException e) {
+            Timber.e(e, "Unable to retrieve public key address");
+            return null;
+        }
     }
 
     public String getIntroducedOn() {

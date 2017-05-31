@@ -1,10 +1,9 @@
 package com.learningmachine.android.app.data.store;
 
 import android.content.Context;
-import android.content.res.AssetManager;
 
 import com.learningmachine.android.app.BuildConfig;
-import com.learningmachine.android.app.data.model.Issuer;
+import com.learningmachine.android.app.data.model.IssuerRecord;
 import com.learningmachine.android.app.data.model.KeyRotation;
 import com.learningmachine.android.app.util.ListUtils;
 
@@ -23,7 +22,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 /**
  * Currently only tests saving and loading since users cannot modify Issuer or KeyRotations
@@ -52,12 +50,12 @@ public class IssuerStoreTest {
         String email = "sample-certificate@learningmachine.com";
         String introducedOn = "2017-05-11T18:28:27.415+00:00";
 
-        Issuer issuerOrig = new Issuer(name, email, uuid, certsUrl, introUrl, introducedOn);
+        IssuerRecord issuerOrig = new IssuerRecord(name, email, uuid, certsUrl, introUrl, introducedOn);
         issuerOrig.setRevocationKeys(new ArrayList<>());
         issuerOrig.setIssuerKeys(new ArrayList<>());
         mIssuerStore.saveIssuer(issuerOrig);
 
-        Issuer issuerLoaded = mIssuerStore.loadIssuer(uuid);
+        IssuerRecord issuerLoaded = mIssuerStore.loadIssuer(uuid);
 
         assertNotNull(issuerLoaded);
         assertEquals(name, issuerLoaded.getName());

@@ -1,9 +1,10 @@
 package com.learningmachine.android.app.data.webservice.response;
 
 import com.google.gson.annotations.SerializedName;
-import com.learningmachine.android.app.data.model.Issuer;
+import com.learningmachine.android.app.data.model.IssuerRecord;
+import com.learningmachine.android.app.util.ListUtils;
 
-public class IssuerResponse extends Issuer {
+public class IssuerResponse extends IssuerRecord {
 
     @SerializedName("image")
     private String mImageData;
@@ -14,5 +15,12 @@ public class IssuerResponse extends Issuer {
 
     public String getImageData() {
         return mImageData;
+    }
+
+    public boolean verifyAddress(String address) {
+        if (ListUtils.isEmpty(getIssuerKeys())) {
+            return false;
+        }
+        return getIssuerKeys().get(0).verifyAddress(address);
     }
 }
