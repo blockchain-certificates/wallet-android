@@ -9,19 +9,18 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.google.gson.JsonObject;
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.cert.BlockCert;
 import com.learningmachine.android.app.data.cert.BlockCertParser;
 import com.learningmachine.android.app.data.error.ExceptionWithResourceString;
-import com.learningmachine.android.app.data.model.TxRecordOut;
+import com.learningmachine.android.app.data.model.TxRecord;
 import com.learningmachine.android.app.data.webservice.BlockchainService;
 import com.learningmachine.android.app.data.webservice.IssuerService;
 import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 import com.learningmachine.android.app.util.FileUtils;
 
 import org.bitcoinj.core.NetworkParameters;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,7 +29,6 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.NoSuchElementException;
-import java.util.Scanner;
 
 import javax.inject.Inject;
 
@@ -39,9 +37,6 @@ import rx.Observable;
 import timber.log.Timber;
 
 public class CertificateVerifier {
-    private static final String BEGINNING_OF_INPUT = "\\A"; // see Pattern docs
-    private static final String OP_RETURN_PREFIX = "6a20";
-
     private final WebView mWebView;
     private Context mContext;
     private BlockchainService mBlockchainService;
@@ -57,109 +52,65 @@ public class CertificateVerifier {
         mWebView = new WebView(mContext);
     }
 
-    public Observable<CertificateAndDocument> loadCertificate(String certificateUuid) {
-        return getCertificateFileContents(mContext, certificateUuid)
-                .flatMap(string -> Observable.combineLatest(parseCertificate(string), getCertificateDocument(string), CertificateAndDocument::new));
+    public Observable<BlockCert> loadCertificate(String certificateUuid) {
+        return getCertificate(mContext, certificateUuid);
     }
 
-    private Observable<String> getCertificateFileContents(Context context, String certificateUuid) {
+    private Observable<BlockCert> getCertificate(Context context, String certificateUuid) {
         File file = FileUtils.getCertificateFile(context, certificateUuid);
         try (FileInputStream inputStream = new FileInputStream(file)) {
-            Scanner scanner = new Scanner(inputStream);
-            String jsonString = scanner.useDelimiter(BEGINNING_OF_INPUT).next();
-            scanner.close();
-
-            return Observable.just(jsonString);
+            BlockCertParser blockCertParser = new BlockCertParser();
+            BlockCert blockCert = blockCertParser.fromJson(inputStream);
+            return Observable.just(blockCert);
         } catch (IOException | NoSuchElementException e) {
             Timber.e(e, "Could not read certificate file");
             return Observable.error(new ExceptionWithResourceString(e, R.string.error_cannot_load_certificate_json));
         }
     }
 
-    private Observable<BlockCert> parseCertificate(String string) {
-        BlockCertParser blockCertParser = new BlockCertParser();
-        BlockCert blockCert = blockCertParser.fromJson(string);
-        return Observable.just(blockCert);
-    }
-
-    private Observable<String> getCertificateDocument(String string) {
-        try {
-            JSONObject jsonObject = new JSONObject(string);
-            JSONObject document;
-            if (jsonObject.has("document")) {
-                // v1.2
-                document = jsonObject.getJSONObject("document");
-            } else if (jsonObject.has("badge")) {
-                // v2.0
-                document = jsonObject.getJSONObject("badge");
-            } else {
-                // missing document or badge
-                return Observable.error(new ExceptionWithResourceString(R.string.error_invalid_certificate_json));
-            }
-            String serializedDoc = document.toString();
-
-            return Observable.just(serializedDoc);
-        } catch (JSONException e) {
-            Timber.e(e, "Couldn't parse certificate JSON");
-            return Observable.error(e);
-        }
-    }
-
-    public Observable<String> verifyBitcoinTransactionRecord(BlockCert certificate) {
+    public Observable<TxRecord> verifyBitcoinTransactionRecord(BlockCert certificate) {
         String sourceId = certificate.getSourceId();
-        return getBitcoinTransactionRecordHash(sourceId)
-                .flatMap(remoteHash -> blockchainDownloaded(remoteHash, certificate));
-    }
-
-    private Observable<String> getBitcoinTransactionRecordHash(String sourceId) {
         return mBlockchainService.getBlockchain(sourceId)
-                .flatMap(txRecord -> {
-                    TxRecordOut txRecordOut = txRecord.getLastOut();
-                    if (txRecordOut == null) {
-                        return Observable.error(new ExceptionWithResourceString(R.string.error_invalid_certificate_json));
-                    }
-                    int value = txRecordOut.getValue();
-                    if (value != 0) {
-                        return Observable.error(new ExceptionWithResourceString(R.string.error_invalid_certificate_json));
-                    }
-                    String remoteHash = txRecordOut.getScript();
-                    // strip out 6a20 prefix, if present
-                    remoteHash = remoteHash.startsWith(OP_RETURN_PREFIX) ? remoteHash.substring(4) : remoteHash;
-                    return Observable.just(remoteHash);
-                });
+                .flatMap(txRecord -> verifyBitcoinTransactionRecord(certificate, txRecord));
     }
 
-    private Observable<String> blockchainDownloaded(String remoteHash, BlockCert certificate) {
+    private Observable<TxRecord> verifyBitcoinTransactionRecord(BlockCert certificate, TxRecord txRecord) {
         String merkleRoot = certificate.getMerkleRoot();
+        String remoteHash = txRecord.getRemoteHash();
 
-        if (!remoteHash.equals(merkleRoot)) {
+        if (remoteHash == null || !remoteHash.equals(merkleRoot)) {
             // TODO: show an error
             Timber.e("The transaction record hash doesn't match the certificate's Merkle root");
             return Observable.error(new ExceptionWithResourceString(R.string.error_invalid_certificate_json));
         }
 
         Timber.d("Blockchain transaction is downloaded successfully");
-        return Observable.just(remoteHash);
+        return Observable.just(txRecord);
     }
 
-    public Observable<String> verifyIssuer(BlockCert certificate) {
+    public Observable<IssuerResponse> verifyIssuer(BlockCert certificate, TxRecord txRecord) {
         String issuerId = certificate.getIssuerId();
         return mIssuerService.getIssuer(issuerId)
-                .flatMap(issuerResponse -> issuerDownloaded(issuerResponse, certificate));
+                .flatMap(issuerResponse -> verifyIssuer(certificate, issuerResponse, txRecord));
     }
 
-    private Observable<String> issuerDownloaded(IssuerResponse issuerResponse, BlockCert certificate) {
-        String address = certificate.getAddress(mNetworkParameters);
-        boolean addressVerified = issuerResponse.verifyAddress(address);
+    private Observable<IssuerResponse> verifyIssuer(BlockCert certificate, IssuerResponse issuerResponse, TxRecord txRecord) {
+        boolean addressVerified = issuerResponse.verifyTransaction(txRecord);
         if (!addressVerified) {
             // TODO: show an error
             Timber.e("The issuer key doesn't match the certificate address");
             return Observable.error(new ExceptionWithResourceString(R.string.error_invalid_certificate_json));
         }
-        return Observable.just(address);
+        return Observable.just(issuerResponse);
     }
 
-    public Observable<String> verifyJsonLd(String remoteHash, String serializedDoc) {
+    public Observable<String> verifyJsonLd(BlockCert certificate, TxRecord txRecord) {
+        String remoteHash = txRecord.getRemoteHash();
+        JsonObject canonicalizedJson = certificate.getCanonicalizedJson();
+        if (canonicalizedJson == null) {
+            return Observable.error(new ExceptionWithResourceString(R.string.error_invalid_certificate_json));
+        }
+        String serializedDoc = canonicalizedJson.toString();
         Handler handler = new Handler(Looper.getMainLooper());
         return Observable.fromEmitter(emitter -> {
             HashComparison jsonldCallback = new HashComparison(emitter, remoteHash);
@@ -188,24 +139,6 @@ public class CertificateVerifier {
             }
         });
         mWebView.loadData(html, "text/html", "UTF-8");
-    }
-
-    public static class CertificateAndDocument {
-        BlockCert mCertificate;
-        String mDocument;
-
-        public CertificateAndDocument(BlockCert certificate, String document) {
-            mCertificate = certificate;
-            mDocument = document;
-        }
-
-        public BlockCert getCertificate() {
-            return mCertificate;
-        }
-
-        public String getDocument() {
-            return mDocument;
-        }
     }
 
     private static class HashComparison {

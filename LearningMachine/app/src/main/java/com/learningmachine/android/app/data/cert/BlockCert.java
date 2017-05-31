@@ -1,8 +1,7 @@
 package com.learningmachine.android.app.data.cert;
 
+import com.google.gson.JsonObject;
 import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
-
-import org.bitcoinj.core.NetworkParameters;
 
 public interface BlockCert {
 
@@ -16,6 +15,7 @@ public interface BlockCert {
     String getRecipientPublicKey();
     String getSourceId();
     String getMerkleRoot();
-    String getAddress(NetworkParameters networkParameters);
+    JsonObject getCanonicalizedJson();
+    void setCanonicalizedJson(JsonObject canonicalizedJson);
     IssuerResponse getIssuer();
 }

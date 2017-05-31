@@ -1,15 +1,17 @@
 package com.learningmachine.android.app.data.cert.v20;
 
+import com.google.gson.JsonObject;
 import com.learningmachine.android.app.LMConstants;
 import com.learningmachine.android.app.data.cert.BlockCert;
 import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 import com.learningmachine.android.app.util.ListUtils;
 
-import org.bitcoinj.core.NetworkParameters;
 import org.joda.time.DateTime;
 
 public class BlockCertV20 extends CertSchemaV20 implements BlockCert {
     private static final String URN_PREFIX = "urn:uuid:";
+
+    private JsonObject mCanonicalizedJson;
 
     @Override
     public String getCertUid() {
@@ -99,12 +101,6 @@ public class BlockCertV20 extends CertSchemaV20 implements BlockCert {
     }
 
     @Override
-    public String getAddress(NetworkParameters networkParameters) {
-        // FIXME: find it
-        return "14X3Xvw6kQA8iA2GZQKo4ZquBLNNamLcpQ";
-    }
-
-    @Override
     public IssuerResponse getIssuer() {
         Issuer issuer = getBadge().getIssuer();
         String name = issuer.getName();
@@ -116,5 +112,14 @@ public class BlockCertV20 extends CertSchemaV20 implements BlockCert {
         String imageData = issuer.getImage();
         IssuerResponse issuerResponse = new IssuerResponse(name, email, certUuid, certUrl, introUrl, introducedOn, imageData);
         return issuerResponse;
+    }
+
+    @Override
+    public JsonObject getCanonicalizedJson() {
+        return mCanonicalizedJson;
+    }
+
+    public void setCanonicalizedJson(JsonObject canonicalizedJson) {
+        mCanonicalizedJson = canonicalizedJson;
     }
 }

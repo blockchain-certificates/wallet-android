@@ -26,18 +26,23 @@ public class BlockCertAdapter implements JsonSerializer<BlockCert>, JsonDeserial
 
     @Override
     public BlockCert deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        if (isV20(json)) {
-            return context.deserialize(json, BlockCertV20.class);
-        } else if (isV12(json)) {
-            return context.deserialize(json, BlockCertV12.class);
-        } else if (isV11(json)) {
-            return context.deserialize(json, BlockCertV11.class);
+        BlockCert blockCert = null;
+        JsonObject jsonObject = json.getAsJsonObject();
+        if (isV20(jsonObject)) {
+            blockCert = context.deserialize(json, BlockCertV20.class);
+            jsonObject.remove("signature");
+            blockCert.setCanonicalizedJson(jsonObject);
+        } else if (isV12(jsonObject)) {
+            blockCert = context.deserialize(json, BlockCertV12.class);
+            blockCert.setCanonicalizedJson(jsonObject.getAsJsonObject("document"));
+        } else if (isV11(jsonObject)) {
+            blockCert = context.deserialize(json, BlockCertV11.class);
+            blockCert.setCanonicalizedJson(jsonObject);
         }
-        return null;
+        return blockCert;
     }
 
-    private boolean isV11(JsonElement json) {
-        JsonObject jsonObject = json.getAsJsonObject();
+    private boolean isV11(JsonObject jsonObject) {
         if (jsonObject.get("certificate") != null
                 && jsonObject.get("assertion") != null
                 && jsonObject.get("verify") != null
@@ -49,8 +54,7 @@ public class BlockCertAdapter implements JsonSerializer<BlockCert>, JsonDeserial
         return false;
     }
 
-    private boolean isV12(JsonElement json) {
-        JsonObject jsonObject = json.getAsJsonObject();
+    private boolean isV12(JsonObject jsonObject) {
         if (jsonObject.get("@context") != null
                 && jsonObject.get("type") != null
                 && jsonObject.get("document") != null
@@ -60,8 +64,7 @@ public class BlockCertAdapter implements JsonSerializer<BlockCert>, JsonDeserial
         return false;
     }
 
-    private boolean isV20(JsonElement json) {
-        JsonObject jsonObject = json.getAsJsonObject();
+    private boolean isV20(JsonObject jsonObject) {
         if (jsonObject.get("type") != null
                 && jsonObject.get("badge") != null
                 && jsonObject.get("signature") != null

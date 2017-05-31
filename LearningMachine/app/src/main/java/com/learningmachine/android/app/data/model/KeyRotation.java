@@ -2,13 +2,12 @@ package com.learningmachine.android.app.data.model;
 
 import com.google.gson.annotations.SerializedName;
 import com.learningmachine.android.app.LMConstants;
-import com.learningmachine.android.app.data.cert.BlockCert;
 
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.ISODateTimeFormat;
 
-import java.io.Serializable;
-
-public class KeyRotation implements Serializable {
+public class KeyRotation {
 
     @SerializedName("created")
     private String mCreatedDate;
@@ -44,7 +43,9 @@ public class KeyRotation implements Serializable {
         return mRevokedDate;
     }
 
-    public boolean verifyAddress(String address) {
+    public boolean verifyTransaction(TxRecord txRecord) {
+        TxRecordOut previousOut = txRecord.getPreviousOut();
+        String address = previousOut.getAddress();
         String keyString = getKey();
         if (address == null || keyString == null) {
             return false;
@@ -54,7 +55,29 @@ public class KeyRotation implements Serializable {
         if (keyString.startsWith(LMConstants.ECDSA_KOBLITZ_PUBKEY_PREFIX)) {
             keyString = keyString.substring(LMConstants.ECDSA_KOBLITZ_PUBKEY_PREFIX.length());
         }
-        // TODO: check expiration and revocation
-        return address.equals(keyString);
+        if (!address.equals(keyString)) {
+            return false;
+        }
+
+        // check validity dates
+        DateTimeFormatter dateTimeFormatter = ISODateTimeFormat.dateTime();
+        DateTime createdDate = dateTimeFormatter.parseDateTime(mCreatedDate);
+        DateTime txRecordTimestamp = new DateTime(txRecord.getTimestamp() * 1000);
+        if (createdDate.isAfter(txRecordTimestamp)) {
+            return false;
+        }
+        if (mExpiresDate != null) {
+            DateTime expiresDate = dateTimeFormatter.parseDateTime(mExpiresDate);
+            if (expiresDate.isBefore(txRecordTimestamp)) {
+                return false;
+            }
+        }
+        if (mRevokedDate != null) {
+            DateTime revokedDate = dateTimeFormatter.parseDateTime(mRevokedDate);
+            if (revokedDate.isBefore(txRecordTimestamp)) {
+                return false;
+            }
+        }
+        return true;
     }
 }

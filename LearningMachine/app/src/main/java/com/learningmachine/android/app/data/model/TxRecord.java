@@ -8,10 +8,20 @@ import java.util.Collections;
 import java.util.List;
 
 public class TxRecord {
+    private static final String OP_RETURN_PREFIX = "6a20";
+
     @SerializedName("ver")
     private int mVersion;
+    @SerializedName("inputs")
+    private List<TxRecordInput> mInputs;
     @SerializedName("out")
     private List<TxRecordOut> mOut;
+    @SerializedName("time")
+    private long mTimestamp;
+
+    public TxRecordOut getPreviousOut() {
+        return ListUtils.isEmpty(mInputs) ? null : mInputs.get(0).getPreviousOut();
+    }
 
     public TxRecordOut getLastOut() {
         return ListUtils.isEmpty(mOut) ? null : mOut.get(mOut.size() - 1);
@@ -29,5 +39,24 @@ public class TxRecord {
             }
         }
         return revoked;
+    }
+
+    public long getTimestamp() {
+        return mTimestamp;
+    }
+
+    public String getRemoteHash() {
+        TxRecordOut txRecordOut = getLastOut();
+        if (txRecordOut == null) {
+            return null;
+        }
+        int value = txRecordOut.getValue();
+        if (value != 0) {
+            return null;
+        }
+        String remoteHash = txRecordOut.getScript();
+        // strip out 6a20 prefix, if present
+        remoteHash = remoteHash.startsWith(OP_RETURN_PREFIX) ? remoteHash.substring(4) : remoteHash;
+        return remoteHash;
     }
 }

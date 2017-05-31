@@ -1,22 +1,14 @@
 package com.learningmachine.android.app.data.cert.v11;
 
+import com.google.gson.JsonObject;
 import com.learningmachine.android.app.data.cert.BlockCert;
 import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 
-import org.bitcoinj.core.Address;
-import org.bitcoinj.core.ECKey;
-import org.bitcoinj.core.NetworkParameters;
 import org.joda.time.DateTime;
 
-import java.security.SignatureException;
-
-import timber.log.Timber;
-
-/**
- * Created by bolot on 5/24/17.
- */
-
 public class BlockCertV11 extends CertificateSchemaV11 implements BlockCert {
+    private JsonObject mCanonicalizedJson;
+
     @Override
     public String getCertUid() {
         if (getAssertion() == null) {
@@ -66,18 +58,6 @@ public class BlockCertV11 extends CertificateSchemaV11 implements BlockCert {
     }
 
     @Override
-    public String getAddress(NetworkParameters networkParameters) {
-        try {
-            ECKey ecKey = ECKey.signedMessageToKey(getCertUid(), getSignature());
-            Address address = ecKey.toAddress(networkParameters);
-            return address.toBase58();
-        } catch (SignatureException e) {
-            Timber.e(e, "The document signature is invalid");
-            return null;
-        }
-    }
-
-    @Override
     public IssuerResponse getIssuer() {
         if (getCertificate() == null
                 || getCertificate().getIssuer() == null) {
@@ -93,5 +73,14 @@ public class BlockCertV11 extends CertificateSchemaV11 implements BlockCert {
         String imageData = issuer.getImage();
         IssuerResponse issuerResponse = new IssuerResponse(name, email, certUuid, certUrl, introUrl, introducedOn, imageData);
         return issuerResponse;
+    }
+
+    @Override
+    public JsonObject getCanonicalizedJson() {
+        return mCanonicalizedJson;
+    }
+
+    public void setCanonicalizedJson(JsonObject canonicalizedJson) {
+        mCanonicalizedJson = canonicalizedJson;
     }
 }
