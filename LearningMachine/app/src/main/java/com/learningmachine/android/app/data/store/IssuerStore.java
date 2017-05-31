@@ -11,6 +11,7 @@ import com.learningmachine.android.app.data.store.cursor.IssuerCursorWrapper;
 import com.learningmachine.android.app.data.store.cursor.KeyRotationCursorWrapper;
 import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 import com.learningmachine.android.app.util.ListUtils;
+import com.learningmachine.android.app.util.StringUtils;
 
 import org.joda.time.DateTime;
 
@@ -47,18 +48,21 @@ public class IssuerStore implements DataStore {
 
         contentValues.put(LMDatabaseHelper.Column.Issuer.NAME, issuer.getName());
         contentValues.put(LMDatabaseHelper.Column.Issuer.EMAIL, issuer.getEmail());
+        contentValues.put(LMDatabaseHelper.Column.Issuer.INTRODUCED_ON, issuer.getIntroducedOn());
+
         // Issuers in certificates are incomplete, do not overwrite data if it was there before
         String certsUrl = issuer.getCertsUrl();
-        if (certsUrl != null) {
+        if (!StringUtils.isEmpty(certsUrl)) {
             contentValues.put(LMDatabaseHelper.Column.Issuer.CERTS_URL, certsUrl);
         }
         String introUrl = issuer.getIntroUrl();
-        if (introUrl != null) {
+        if (!StringUtils.isEmpty(introUrl)) {
             contentValues.put(LMDatabaseHelper.Column.Issuer.INTRO_URL, introUrl);
         }
-        contentValues.put(LMDatabaseHelper.Column.Issuer.INTRODUCED_ON, issuer.getIntroducedOn());
-        contentValues.put(LMDatabaseHelper.Column.Issuer.ANALYTICS, issuer.getAnalyticsUrlString());
-
+        String analyticsUrlString = issuer.getAnalyticsUrlString();
+        if (!StringUtils.isEmpty(analyticsUrlString)) {
+            contentValues.put(LMDatabaseHelper.Column.Issuer.ANALYTICS, analyticsUrlString);
+        }
         String issuerUuid = issuer.getUuid();
         if (!ListUtils.isEmpty(issuer.getIssuerKeys())) {
             saveIssuerKeys(issuer.getIssuerKeys(), issuerUuid);
