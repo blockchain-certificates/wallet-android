@@ -1,6 +1,10 @@
 package com.learningmachine.android.app.data.webservice.request;
 
+import android.annotation.SuppressLint;
+import android.os.Build;
+
 import com.google.gson.annotations.SerializedName;
+import com.learningmachine.android.app.BuildConfig;
 
 public class IssuerAnalytic {
 
@@ -14,7 +18,7 @@ public class IssuerAnalytic {
     public IssuerAnalytic(String key, Action action) {
         mKey = key;
         mAction = action;
-        mMetadata = new Metadata("42" ,"Android");
+        mMetadata = new Metadata();
     }
 
     private class Metadata {
@@ -23,18 +27,23 @@ public class IssuerAnalytic {
         @SerializedName("platform")
         private String mPlatformString;
 
-        public Metadata(String applicationString, String platformString) {
-            mApplicationString = applicationString;
-            mPlatformString = platformString;
+        Metadata() {
+            mApplicationString = BuildConfig.VERSION_NAME;
+            mPlatformString = currentVersion();
+        }
+
+        @SuppressLint("DefaultLocale")
+        private String currentVersion() {
+            double release = Double.parseDouble(Build.VERSION.RELEASE);
+            int apiLevel = Build.VERSION.SDK_INT;
+            return String.format("Android %1$f, API %2$d", release, apiLevel);
         }
     }
 
     public enum Action {
         @SerializedName("viewed")
-        VIEWED,
-        @SerializedName("verified")
-        VERIFIED,
-        @SerializedName("shared")
+        VIEWED, @SerializedName("verified")
+        VERIFIED, @SerializedName("shared")
         SHARED,
     }
 }
