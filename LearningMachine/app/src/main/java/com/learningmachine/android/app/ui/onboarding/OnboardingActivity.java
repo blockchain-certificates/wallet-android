@@ -12,11 +12,11 @@ import com.learningmachine.android.app.ui.onboarding.OnboardingFlow.FlowType;
 public class OnboardingActivity extends LMActivity implements AccountChooserFragment.Callback,
     GeneratePassphraseFragment.Callback {
 
-    public static final String SAVED_FLOW = "onboardingFlow";
+    private static final String SAVED_FLOW = "onboardingFlow";
 
     private OnboardingFlow mOnboardingFlow;
-    private ActivityOnboardingBinding mBinding;
     private OnboardingAdapter mAdapter;
+    private ActivityOnboardingBinding mBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,12 +38,6 @@ public class OnboardingActivity extends LMActivity implements AccountChooserFrag
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putSerializable(SAVED_FLOW, mOnboardingFlow);
-    }
-
-    private void setupAdapter() {
-        mAdapter = new OnboardingAdapter(getSupportFragmentManager(), mOnboardingFlow.getScreens());
-        mBinding.onboardingViewpager.setAdapter(mAdapter);
-        mBinding.onboardingViewpager.setCurrentItem(mOnboardingFlow.getPosition());
     }
 
     @Override
@@ -83,6 +77,12 @@ public class OnboardingActivity extends LMActivity implements AccountChooserFrag
         int position = mOnboardingFlow.getPosition() + 1;
         mBinding.onboardingViewpager.setCurrentItem(position);
         mOnboardingFlow.setPosition(position);
+    }
+
+    private void setupAdapter() {
+        mAdapter = new OnboardingAdapter(getSupportFragmentManager(), mOnboardingFlow.getScreens());
+        mBinding.onboardingViewpager.setAdapter(mAdapter);
+        mBinding.onboardingViewpager.setCurrentItem(mOnboardingFlow.getPosition());
     }
 
     private ViewPager.OnPageChangeListener mOnPageChangeListener = new ViewPager.OnPageChangeListener() {
