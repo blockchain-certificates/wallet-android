@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|center_horizontal"
+            android:layout_marginTop="@dimen/onboarding_logo_margin_top"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_splash"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/Material.Title.Light"
+                android:layout_width="282dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/onboarding_paste_passphrase_title"
+                android:textAllCaps="true"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="27dp"
+                android:gravity="center"
+                android:hint="@string/onboarding_paste_passphrase_hint"
+                android:paddingBottom="30dp"
+                android:paddingEnd="15dp"
+                android:paddingStart="15dp"
+                android:paddingTop="30dp"/>
+
+            <Button
+                android:id="@+id/accept"
+                style="@style/OnboardingButton.Light"
+                android:layout_width="282dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="29dp"
+                android:paddingBottom="8dp"
+                android:paddingEnd="48dp"
+                android:paddingStart="48dp"
+                android:paddingTop="8dp"
+                android:text="@string/onboarding_paste_passphrase_done_button"/>
+
+        </LinearLayout>
+    </FrameLayout>
+</layout>

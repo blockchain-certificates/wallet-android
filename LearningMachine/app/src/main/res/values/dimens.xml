@@ -6,7 +6,11 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="add_identity_top_padding">13dp</dimen>
 
-    <!--Add Issuer -->
+    <!--Onboarding-->
+
+    <dimen name="onboarding_logo_margin_top">30dp</dimen>
+
+    <!--Add Issuer-->
 
     <dimen name="fragment_add_issuer_linear_layout_top_padding">22dp</dimen>
     <dimen name="fragment_add_issuer_linear_layout_padding_horizontal">16dp</dimen>
@@ -35,7 +39,6 @@
     <dimen name="fragment_reveal_passphrase_padding_top">15dp</dimen>
     <dimen name="fragment_reveal_passphrase_padding_start">15dp</dimen>
     <dimen name="fragment_reveal_passphrase_padding_end">10dp</dimen>
-
 
     <dimen name="fragment_reveal_passphrase_instructional_message_margin">16dp</dimen>
     <dimen name="fragment_reveal_passphrase_current_passphrase_title_bottom_margin">16dp</dimen>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--Onboarding-->
+
+    <dimen name="onboarding_logo_margin_top">100dp</dimen>
+
+</resources>
