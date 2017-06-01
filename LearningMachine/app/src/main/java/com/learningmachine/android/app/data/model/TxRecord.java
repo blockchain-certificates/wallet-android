@@ -57,8 +57,7 @@ public class TxRecord {
         if (txRecordOut == null) {
             return null;
         }
-        int value = txRecordOut.getValue();
-        if (value != 0) {
+        if (txRecordOut.getValue() != 0) {
             return null;
         }
         String remoteHash = txRecordOut.getScript();
