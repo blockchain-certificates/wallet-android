@@ -3,8 +3,20 @@
     <string name="home_issuers">Issuers</string>
     <string name="home_settings_menu_item_title">Settings</string>
 
-    <!-- Settings -->
+    <!-- Onboarding -->
+    <string name="onboarding_new_account">New Account</string>
+    <string name="onboarding_existing_account">I already have one</string>
+    <string name="onboarding_generate_password_title">New Account</string>
+    <string name="onboarding_generate_password_description">If you ever lose your phone, you will need this passphrase to recover your records.</string>
+    <string name="onboarding_generate_password_button">Generate Passphrase</string>
+    <string name="onboarding_passphrase_title">Passphrase</string>
+    <string name="onboarding_passphrase_description">Write this down as a backup.</string>
+    <string name="onboarding_passphrase_done_button">Done</string>
+    <string name="onboarding_paste_passphrase_title">Paste your passphrase</string>
+    <string name="onboarding_paste_passphrase_hint">Paste your passphrase</string>
+    <string name="onboarding_paste_passphrase_done_button">Done</string>
 
+    <!-- Settings -->
     <string name="settings">settings</string>
     <string name="settings_fragment">Settings</string>
 
@@ -97,6 +109,7 @@
     <string name="certificate_verification_success">Certificate Verified!</string>
     <string name="error_invalid_certificate_json">The certificate file is invalid</string>
     <string name="error_cannot_load_certificate_json">Could not load the certificate file</string>
+    <string name="error_remote_and_local_hash_mismatch">Local hash doesn\'t match remote hash</string>
 
     <!-- Dialog Error Messages -->
 

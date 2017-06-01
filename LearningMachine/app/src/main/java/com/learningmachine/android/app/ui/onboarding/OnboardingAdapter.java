@@ -1,0 +1,53 @@
+package com.learningmachine.android.app.ui.onboarding;
+
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+
+import java.util.List;
+
+class OnboardingAdapter extends FragmentStatePagerAdapter {
+
+    private List<OnboardingScreen> mScreens;
+
+    OnboardingAdapter(FragmentManager fm, List<OnboardingScreen> screens) {
+        super(fm);
+        mScreens = screens;
+    }
+
+    @Override
+    public Fragment getItem(int i) {
+
+        switch (mScreens.get(i)) {
+            case ACCOUNT_CHOOSER:
+                return AccountChooserFragment.newInstance();
+
+            case GENERATE_PASSPHRASE:
+                return GeneratePassphraseFragment.newInstance();
+
+            case VIEW_PASSPHRASE:
+                return ViewPassphraseFragment.newInstance();
+
+            case PASTE_PASSPHRASE:
+                return PastePassphraseFragment.newInstance();
+        }
+
+        return null;
+    }
+
+    @Override
+    public int getCount() {
+        return mScreens.size();
+    }
+
+    @Override
+    public int getItemPosition(Object object) {
+        // Workaround for ViewPager's Caching of objects after notifyDataSetChanged is called.
+        // We want to reload everything because we are replacing the flow.
+        return POSITION_NONE;
+    }
+
+    void setScreens(List<OnboardingScreen> screens) {
+        mScreens = screens;
+    }
+}

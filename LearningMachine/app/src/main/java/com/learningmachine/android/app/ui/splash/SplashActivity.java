@@ -1,11 +1,13 @@
-package com.learningmachine.android.app.ui;
+package com.learningmachine.android.app.ui.splash;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import com.learningmachine.android.app.ui.LMActivity;
 import com.learningmachine.android.app.ui.cert.AddCertificateActivity;
 import com.learningmachine.android.app.ui.issuer.AddIssuerActivity;
+import com.learningmachine.android.app.ui.onboarding.OnboardingActivity;
 import com.learningmachine.android.app.util.StringUtils;
 
 import java.io.IOException;
@@ -13,7 +15,7 @@ import java.net.URLDecoder;
 
 import timber.log.Timber;
 
-public class UrlLaunchActivity extends LMActivity {
+public class SplashActivity extends LMActivity {
 
     private static final String ADD_ISSUER_PATH = "introduce-recipient/";
     private static final String ADD_CERT_PATH = "import-certificate/";
@@ -23,10 +25,11 @@ public class UrlLaunchActivity extends LMActivity {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         Uri data = intent.getData();
-        String uriString = data.toString();
+        String uriString = (data == null)? null : data.toString();
+
         if (StringUtils.isEmpty(uriString)) {
-            Timber.e("Launch uri is empty");
-            finish();
+            // Normal launch. No uriString
+            navigateToNextActivity();
             return;
         }
 
@@ -37,6 +40,7 @@ public class UrlLaunchActivity extends LMActivity {
         } else {
             Timber.e("Launch uri has unknown issuer / certificate format");
         }
+
         finish();
     }
 
@@ -84,5 +88,10 @@ public class UrlLaunchActivity extends LMActivity {
             return null;
         }
         return uriSplit[1];
+    }
+
+    private void navigateToNextActivity() {
+        startActivity(new Intent(this, OnboardingActivity.class));
+        finish();
     }
 }

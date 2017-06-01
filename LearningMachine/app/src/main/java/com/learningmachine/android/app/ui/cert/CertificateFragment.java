@@ -23,6 +23,7 @@ import com.learningmachine.android.app.data.cert.BlockCert;
 import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.data.model.CertificateRecord;
 import com.learningmachine.android.app.data.model.IssuerRecord;
+import com.learningmachine.android.app.data.model.TxRecord;
 import com.learningmachine.android.app.databinding.FragmentCertificateBinding;
 import com.learningmachine.android.app.dialog.AlertDialogFragment;
 import com.learningmachine.android.app.ui.LMFragment;
@@ -218,40 +219,40 @@ public class CertificateFragment extends LMFragment {
                         throwable -> Timber.e(throwable, "Issuer has no analytics url."));
         mCertificateVerifier.loadCertificate(mCertUuid)
                 .compose(bindToMainThread())
-                .subscribe(certificateAndDocument -> {
-                    Timber.d("Successfully loaded certificate and document");
-                    verifyIssuer(certificateAndDocument.getCertificate(), certificateAndDocument.getDocument());
+                .subscribe(certificate -> {
+                    Timber.d("Successfully loaded certificate");
+                    verifyBitcoinTransactionRecord(certificate);
                 }, throwable -> {
                     Timber.e(throwable, "Error!");
                     displayErrors(throwable, R.string.error_title_message); // TODO: use correct error string
                 });
     }
 
-    private void verifyIssuer(BlockCert certificate, String serializedDoc) {
-        mCertificateVerifier.verifyIssuer(certificate)
+    private void verifyBitcoinTransactionRecord(BlockCert certificate) {
+        mCertificateVerifier.verifyBitcoinTransactionRecord(certificate)
                 .compose(bindToMainThread())
-                .subscribe(issuerKey -> {
-                    verifyBitcoinTransactionRecord(certificate, serializedDoc);
+                .subscribe(txRecord -> {
+                    // TODO: success
+                    verifyIssuer(certificate, txRecord);
+                }, throwable -> {
+                    Timber.e(throwable, "Error! Merkle roots do not match");
+                    displayErrors(throwable, R.string.error_title_message); // TODO: use correct error string
+                });
+    }
+
+    private void verifyIssuer(BlockCert certificate, TxRecord txRecord) {
+        mCertificateVerifier.verifyIssuer(certificate, txRecord)
+                .compose(bindToMainThread())
+                .subscribe(issuerResponse -> {
+                    verifyJsonLd(certificate, txRecord);
                 }, throwable -> {
                     Timber.e(throwable, "Error! Couldn't verify issuer");
                     displayErrors(throwable, R.string.error_title_message); // TODO: use correct error string
                 });
     }
 
-    private void verifyBitcoinTransactionRecord(BlockCert certificate, String serializedDoc) {
-        mCertificateVerifier.verifyBitcoinTransactionRecord(certificate)
-                .compose(bindToMainThread())
-                .subscribe(remoteHash -> {
-                    // TODO: success
-                    verifyJsonLd(remoteHash, serializedDoc);
-                }, throwable -> {
-                    Timber.e(throwable, "Error!");
-                    displayErrors(throwable, R.string.error_title_message); // TODO: use correct error string
-                });
-    }
-
-    private void verifyJsonLd(String remoteHash, String serializedDoc) {
-        mCertificateVerifier.verifyJsonLd(remoteHash, serializedDoc)
+    private void verifyJsonLd(BlockCert certificate, TxRecord txRecord) {
+        mCertificateVerifier.verifyJsonLd(certificate, txRecord)
                 .compose(bindToMainThread())
                 .subscribe(localHash -> {
                     Timber.d("Success!");
