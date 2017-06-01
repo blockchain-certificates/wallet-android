@@ -43,7 +43,7 @@ class Issuer {
      */
     @SerializedName("image")
     @Expose
-    private Object image;
+    private String image;
     /**
      * Human-readable name of the issuing entity
      * (Required)
@@ -132,7 +132,7 @@ class Issuer {
      * An image representative of the entity. This overrides BadgeImage from OBI because oneOf, compared to anyOf, was failing validation
      * 
      */
-    public Object getImage() {
+    public String getImage() {
         return image;
     }
 
@@ -140,7 +140,7 @@ class Issuer {
      * An image representative of the entity. This overrides BadgeImage from OBI because oneOf, compared to anyOf, was failing validation
      * 
      */
-    public void setImage(Object image) {
+    public void setImage(String image) {
         this.image = image;
     }
 

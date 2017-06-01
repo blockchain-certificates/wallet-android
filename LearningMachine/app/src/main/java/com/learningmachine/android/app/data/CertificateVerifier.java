@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import javax.inject.Inject;
@@ -69,9 +70,9 @@ public class CertificateVerifier {
             scanner.close();
 
             return Observable.just(jsonString);
-        } catch (IOException e) {
+        } catch (IOException | NoSuchElementException e) {
             Timber.e(e, "Could not read certificate file");
-            return Observable.error(e);
+            return Observable.error(new ExceptionWithResourceString(e, R.string.error_cannot_load_certificate_json));
         }
     }
 
@@ -239,6 +240,7 @@ public class CertificateVerifier {
                 mEmitter.onNext(localHash);
             } else {
                 Exception e = new ExceptionWithResourceString(R.string.error_invalid_certificate_json);
+                Timber.e(e, String.format("Remote hash [%s] does not match local hash [%s]", mRemoteHash, localHash));
                 mEmitter.onError(e);
             }
         }
