@@ -79,7 +79,7 @@ public class CertificateVerificationTest {
         mIssuer = gson.fromJson(getResourceAsReader(ISSUER_FILENAME), IssuerResponse.class);
         when(issuerService.getIssuer(any())).thenReturn(Observable.just(mIssuer));
 
-        subject = new CertificateVerifier(context, blockchainService, issuerService, MainNetParams.get());
+        subject = new CertificateVerifier(context, blockchainService, issuerService);
 
         BlockCertParser blockCertParser = new BlockCertParser();
         validCertV12 = blockCertParser.fromJson(getResourceAsStream(CERT_FILENAME));

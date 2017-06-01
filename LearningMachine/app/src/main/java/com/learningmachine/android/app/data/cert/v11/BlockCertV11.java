@@ -7,7 +7,7 @@ import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 import org.joda.time.DateTime;
 
 public class BlockCertV11 extends CertificateSchemaV11 implements BlockCert {
-    private JsonObject mCanonicalizedJson;
+    private JsonObject mDocumentNode;
 
     @Override
     public String getCertUid() {
@@ -76,11 +76,11 @@ public class BlockCertV11 extends CertificateSchemaV11 implements BlockCert {
     }
 
     @Override
-    public JsonObject getCanonicalizedJson() {
-        return mCanonicalizedJson;
+    public JsonObject getDocumentNode() {
+        return mDocumentNode;
     }
 
-    public void setCanonicalizedJson(JsonObject canonicalizedJson) {
-        mCanonicalizedJson = canonicalizedJson;
+    public void setDocumentNode(JsonObject documentNode) {
+        mDocumentNode = documentNode;
     }
 }

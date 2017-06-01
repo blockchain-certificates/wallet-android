@@ -31,13 +31,13 @@ public class BlockCertAdapter implements JsonSerializer<BlockCert>, JsonDeserial
         if (isV20(jsonObject)) {
             blockCert = context.deserialize(json, BlockCertV20.class);
             jsonObject.remove("signature");
-            blockCert.setCanonicalizedJson(jsonObject);
+            blockCert.setDocumentNode(jsonObject);
         } else if (isV12(jsonObject)) {
             blockCert = context.deserialize(json, BlockCertV12.class);
-            blockCert.setCanonicalizedJson(jsonObject.getAsJsonObject("document"));
+            blockCert.setDocumentNode(jsonObject.getAsJsonObject("document"));
         } else if (isV11(jsonObject)) {
             blockCert = context.deserialize(json, BlockCertV11.class);
-            blockCert.setCanonicalizedJson(jsonObject);
+            blockCert.setDocumentNode(jsonObject);
         }
         return blockCert;
     }

@@ -232,14 +232,14 @@ public class CertificateFragment extends LMFragment {
         mCertificateVerifier.verifyIssuer(certificate, txRecord)
                 .compose(bindToMainThread())
                 .subscribe(issuerResponse -> {
-                    verifyJsonLd(txRecord, certificate);
+                    verifyJsonLd(certificate, txRecord);
                 }, throwable -> {
                     Timber.e(throwable, "Error! Couldn't verify issuer");
                     displayErrors(throwable, R.string.error_title_message); // TODO: use correct error string
                 });
     }
 
-    private void verifyJsonLd(TxRecord txRecord, BlockCert certificate) {
+    private void verifyJsonLd(BlockCert certificate, TxRecord txRecord) {
         mCertificateVerifier.verifyJsonLd(certificate, txRecord)
                 .compose(bindToMainThread())
                 .subscribe(localHash -> {

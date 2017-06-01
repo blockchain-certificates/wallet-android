@@ -11,7 +11,7 @@ import org.joda.time.DateTime;
 public class BlockCertV20 extends CertSchemaV20 implements BlockCert {
     private static final String URN_PREFIX = "urn:uuid:";
 
-    private JsonObject mCanonicalizedJson;
+    private JsonObject mDocumentNode;
 
     @Override
     public String getCertUid() {
@@ -115,11 +115,11 @@ public class BlockCertV20 extends CertSchemaV20 implements BlockCert {
     }
 
     @Override
-    public JsonObject getCanonicalizedJson() {
-        return mCanonicalizedJson;
+    public JsonObject getDocumentNode() {
+        return mDocumentNode;
     }
 
-    public void setCanonicalizedJson(JsonObject canonicalizedJson) {
-        mCanonicalizedJson = canonicalizedJson;
+    public void setDocumentNode(JsonObject documentNode) {
+        mDocumentNode = documentNode;
     }
 }

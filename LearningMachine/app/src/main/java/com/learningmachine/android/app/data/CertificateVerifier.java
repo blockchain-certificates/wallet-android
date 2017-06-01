@@ -20,8 +20,6 @@ import com.learningmachine.android.app.data.webservice.IssuerService;
 import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 import com.learningmachine.android.app.util.FileUtils;
 
-import org.bitcoinj.core.NetworkParameters;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -41,14 +39,12 @@ public class CertificateVerifier {
     private Context mContext;
     private BlockchainService mBlockchainService;
     private IssuerService mIssuerService;
-    private final NetworkParameters mNetworkParameters;
 
     @Inject
-    public CertificateVerifier(Context context, BlockchainService blockchainService, IssuerService issuerService, NetworkParameters networkParameters) {
+    public CertificateVerifier(Context context, BlockchainService blockchainService, IssuerService issuerService) {
         mContext = context;
         mBlockchainService = blockchainService;
         mIssuerService = issuerService;
-        mNetworkParameters = networkParameters;
         mWebView = new WebView(mContext);
     }
 
@@ -91,10 +87,10 @@ public class CertificateVerifier {
     public Observable<IssuerResponse> verifyIssuer(BlockCert certificate, TxRecord txRecord) {
         String issuerId = certificate.getIssuerId();
         return mIssuerService.getIssuer(issuerId)
-                .flatMap(issuerResponse -> verifyIssuer(certificate, issuerResponse, txRecord));
+                .flatMap(issuerResponse -> verifyIssuer(issuerResponse, txRecord));
     }
 
-    private Observable<IssuerResponse> verifyIssuer(BlockCert certificate, IssuerResponse issuerResponse, TxRecord txRecord) {
+    private Observable<IssuerResponse> verifyIssuer(IssuerResponse issuerResponse, TxRecord txRecord) {
         boolean addressVerified = issuerResponse.verifyTransaction(txRecord);
         if (!addressVerified) {
             // TODO: show an error
@@ -106,11 +102,11 @@ public class CertificateVerifier {
 
     public Observable<String> verifyJsonLd(BlockCert certificate, TxRecord txRecord) {
         String remoteHash = txRecord.getRemoteHash();
-        JsonObject canonicalizedJson = certificate.getCanonicalizedJson();
-        if (canonicalizedJson == null) {
+        JsonObject documentNode = certificate.getDocumentNode();
+        if (documentNode == null) {
             return Observable.error(new ExceptionWithResourceString(R.string.error_invalid_certificate_json));
         }
-        String serializedDoc = canonicalizedJson.toString();
+        String serializedDoc = documentNode.toString();
         Handler handler = new Handler(Looper.getMainLooper());
         return Observable.fromEmitter(emitter -> {
             HashComparison jsonldCallback = new HashComparison(emitter, remoteHash);
@@ -172,7 +168,7 @@ public class CertificateVerifier {
             if (localHash.equals(mRemoteHash)) {
                 mEmitter.onNext(localHash);
             } else {
-                Exception e = new ExceptionWithResourceString(R.string.error_invalid_certificate_json);
+                Exception e = new ExceptionWithResourceString(R.string.error_remote_and_local_hash_mismatch);
                 Timber.e(e, String.format("Remote hash [%s] does not match local hash [%s]", mRemoteHash, localHash));
                 mEmitter.onError(e);
             }

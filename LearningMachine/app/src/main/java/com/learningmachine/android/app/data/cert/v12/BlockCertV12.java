@@ -11,7 +11,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 public class BlockCertV12 extends BlockchainCertificate implements BlockCert {
-    private JsonObject mCanonicalizedJson;
+    private JsonObject mDocumentNode;
 
     public static BlockCertV12 createInstance(String certUuid, String issuerUuid, String name, String description, String issuedDate, String urlString) throws URISyntaxException {
         BlockCertV12 blockCert = new BlockCertV12();
@@ -138,11 +138,11 @@ public class BlockCertV12 extends BlockchainCertificate implements BlockCert {
     }
 
     @Override
-    public JsonObject getCanonicalizedJson() {
-        return mCanonicalizedJson;
+    public JsonObject getDocumentNode() {
+        return mDocumentNode;
     }
 
-    public void setCanonicalizedJson(JsonObject canonicalizedJson) {
-        mCanonicalizedJson = canonicalizedJson;
+    public void setDocumentNode(JsonObject documentNode) {
+        mDocumentNode = documentNode;
     }
 }
