@@ -19,13 +19,6 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-        </activity>
-
-        <activity
-            android:name=".ui.UrlLaunchActivity"
-            android:label="@string/app_name"
-            android:parentActivityName=".ui.home.HomeActivity"
-            android:theme="@style/NoToolbarTheme.Splash">
             <intent-filter>
                 <data
                     android:host="certificates.learningmachine.com"
