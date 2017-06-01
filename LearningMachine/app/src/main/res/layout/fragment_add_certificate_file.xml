@@ -26,7 +26,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="@string/framgent_add_certificate_file_choose_file_button_title"/>
+            android:paddingBottom="8dp"
+            android:paddingEnd="48dp"
+            android:paddingStart="48dp"
+            android:paddingTop="8dp"
+            android:text="@string/framgent_add_certificate_file_choose_file_button_title"
+            style="@style/OnboardingButton.Light"/>
 
     </LinearLayout>
 

@@ -22,7 +22,6 @@
 
             <Button
                 android:id="@+id/new_account_button"
-                style="@style/OnboardingButton.Light"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -30,7 +29,8 @@
                 android:paddingEnd="48dp"
                 android:paddingStart="48dp"
                 android:paddingTop="8dp"
-                android:text="@string/onboarding_new_account"/>
+                android:text="@string/onboarding_new_account"
+                style="@style/OnboardingButton.Light"/>
 
             <Button
                 android:id="@+id/existing_account_button"
@@ -41,6 +41,9 @@
                 android:paddingStart="48dp"
                 android:paddingTop="8dp"
                 android:text="@string/onboarding_existing_account"/>
+
         </LinearLayout>
+
     </FrameLayout>
+
 </layout>
