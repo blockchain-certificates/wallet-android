@@ -20,6 +20,7 @@ import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.IssuerManager;
 import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.data.model.IssuerRecord;
+import com.learningmachine.android.app.data.preferences.SharedPreferencesManager;
 import com.learningmachine.android.app.databinding.FragmentHomeBinding;
 import com.learningmachine.android.app.databinding.ListItemIssuerBinding;
 import com.learningmachine.android.app.ui.LMFragment;
@@ -36,6 +37,7 @@ import timber.log.Timber;
 public class HomeFragment extends LMFragment {
 
     @Inject IssuerManager mIssuerManager;
+    @Inject SharedPreferencesManager mSharedPreferencesManager;
 
     private FragmentHomeBinding mBinding;
     private List<IssuerRecord> mIssuerList;
@@ -50,6 +52,9 @@ public class HomeFragment extends LMFragment {
         setHasOptionsMenu(true);
         Injector.obtain(getContext())
                 .inject(this);
+
+        mSharedPreferencesManager.setFirstLaunch(false);
+
         mIssuerList = new ArrayList<>();
     }
 

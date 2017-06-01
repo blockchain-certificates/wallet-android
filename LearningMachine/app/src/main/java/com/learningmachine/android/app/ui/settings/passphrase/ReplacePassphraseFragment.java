@@ -21,8 +21,7 @@ import javax.inject.Inject;
 
 public class ReplacePassphraseFragment extends LMFragment {
 
-    @Inject
-    protected BitcoinManager mBitcoinManager;
+    @Inject protected BitcoinManager mBitcoinManager;
 
     private FragmentReplacePassphraseBinding mBinding;
 
