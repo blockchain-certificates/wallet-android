@@ -15,7 +15,7 @@ public class BlockCertV20 extends CertSchemaV20 implements BlockCert {
 
     private JsonObject mDocumentNode;
 
-    @SerializedName("metadata")
+    @SerializedName("metadataJson")
     @Expose
     private String mMetaData;
 

@@ -50,6 +50,9 @@ public class MetaDataTypeAdapter implements JsonDeserializer<MetaData> {
         JsonObject schema = jsonObject.get("schema").getAsJsonObject();
         JsonObject schemaProperties = schema.get("properties").getAsJsonObject();
         for (Map.Entry<String, JsonElement> entry : schemaProperties.entrySet()) {
+            if (!entry.getValue().getAsJsonObject().has("properties")) {
+                continue;
+            }
             GroupDef groupDef = new GroupDef();
             groupDef.key = entry.getKey();
             groupDef.properties = new HashMap<>();
