@@ -1,6 +1,8 @@
 package com.learningmachine.android.app.data.cert.v20;
 
 import com.google.gson.JsonObject;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 import com.learningmachine.android.app.LMConstants;
 import com.learningmachine.android.app.data.cert.BlockCert;
 import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
@@ -12,6 +14,10 @@ public class BlockCertV20 extends CertSchemaV20 implements BlockCert {
     private static final String URN_PREFIX = "urn:uuid:";
 
     private JsonObject mDocumentNode;
+
+    @SerializedName("metadata")
+    @Expose
+    private String mMetaData;
 
     @Override
     public String getCertUid() {
@@ -98,6 +104,11 @@ public class BlockCertV20 extends CertSchemaV20 implements BlockCert {
             return null;
         }
         return getSignature().getMerkleRoot();
+    }
+
+    @Override
+    public String getMetaData() {
+        return mMetaData;
     }
 
     @Override
