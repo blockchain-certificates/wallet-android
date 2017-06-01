@@ -1,5 +1,8 @@
 package com.learningmachine.android.app.ui.onboarding;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -47,8 +50,23 @@ public class ViewPassphraseFragment extends OnboardingFragment {
         super.onUserVisible();
 
         mBitcoinManager.getPassphrase().subscribe(passphrase -> {
-            mBinding.onboardingPassphraseEditText.setText(passphrase);
+            configurePassphraseTextView(passphrase);
             mBinding.onboardingDoneButton.setEnabled(true);
+        });
+
+    }
+
+    private void configurePassphraseTextView(String passphrase) {
+        if (mBinding == null) {
+            return;
+        }
+        mBinding.onboardingPassphraseTextView.setText(passphrase);
+        mBinding.onboardingPassphraseTextView.setOnLongClickListener(v -> {
+            ClipboardManager clipboardManager = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clipData = ClipData.newPlainText("text", passphrase);
+            clipboardManager.setPrimaryClip(clipData);
+            showSnackbar(mBinding.getRoot(), R.string.reveal_passphrase_text_copied);
+            return true;
         });
     }
 
