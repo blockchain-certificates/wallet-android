@@ -11,6 +11,7 @@ import com.learningmachine.android.app.ui.issuer.IssuerActivity;
 import com.learningmachine.android.app.ui.issuer.IssuerFragment;
 import com.learningmachine.android.app.ui.issuer.IssuerInfoActivity;
 import com.learningmachine.android.app.ui.issuer.IssuerInfoFragment;
+import com.learningmachine.android.app.ui.onboarding.ViewPassphraseFragment;
 import com.learningmachine.android.app.ui.settings.passphrase.ReplacePassphraseFragment;
 import com.learningmachine.android.app.ui.settings.passphrase.RevealPassphraseFragment;
 
@@ -22,6 +23,7 @@ public interface LMGraph {
     void inject(IssuerInfoActivity activity);
 
     // Fragments
+    void inject(ViewPassphraseFragment fragment);
     void inject(HomeFragment fragment);
     void inject(RevealPassphraseFragment fragment);
     void inject(ReplacePassphraseFragment fragment);

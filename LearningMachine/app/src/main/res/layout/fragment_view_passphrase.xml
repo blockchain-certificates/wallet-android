@@ -38,6 +38,7 @@
 
             <EditText
                 style="@style/OnboardingPasswordField"
+                android:id="@+id/onboarding_passphrase_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="27dp"
@@ -45,11 +46,10 @@
                 android:paddingBottom="30dp"
                 android:paddingStart="15dp"
                 android:paddingEnd="15dp"
-                android:gravity="center"
-                android:text="lion planet tribe drive sauce chaos fox twice network must jump river dawn"/>
+                android:gravity="center"/>
 
             <Button
-                android:id="@+id/generate_passphrase"
+                android:id="@+id/onboarding_done_button"
                 style="@style/OnboardingButton.Light"
                 android:layout_width="@dimen/onboarding_container_width"
                 android:layout_height="wrap_content"

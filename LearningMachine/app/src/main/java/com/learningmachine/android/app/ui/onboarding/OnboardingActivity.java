@@ -91,6 +91,12 @@ public class OnboardingActivity extends LMActivity implements AccountChooserFrag
             return false;
         }
 
+        OnboardingFragment currentFragment = mAdapter.getCurrentFragment();
+        if (currentFragment != null && !currentFragment.isBackAllowed()) {
+            // disallow back if the fragment requests it
+            return true;
+        }
+
         mOnboardingFlow.setPosition(position - 1);
         mBinding.onboardingViewPager.setCurrentItem(mOnboardingFlow.getPosition());
         return true;
@@ -103,6 +109,11 @@ public class OnboardingActivity extends LMActivity implements AccountChooserFrag
         @Override
         public void onPageSelected(int position) {
             mOnboardingFlow.setPosition(position);
+
+            OnboardingFragment currentFragment = mAdapter.getCurrentFragment();
+            if (currentFragment != null) {
+                currentFragment.onUserVisible();
+            }
         }
 
         @Override

@@ -9,10 +9,9 @@ import android.view.ViewGroup;
 
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.databinding.FragmentPastePassphraseBinding;
-import com.learningmachine.android.app.ui.LMFragment;
 import com.learningmachine.android.app.ui.home.HomeActivity;
 
-public class PastePassphraseFragment extends LMFragment {
+public class PastePassphraseFragment extends OnboardingFragment {
 
     private FragmentPastePassphraseBinding mBinding;
 
