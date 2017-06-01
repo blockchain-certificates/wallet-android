@@ -1,21 +1,18 @@
 package com.learningmachine.android.app.data.cert.v12;
 
+import com.google.gson.JsonObject;
 import com.learningmachine.android.app.data.cert.BlockCert;
 import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 import com.learningmachine.android.app.util.ListUtils;
 
-import org.bitcoinj.core.Address;
-import org.bitcoinj.core.ECKey;
-import org.bitcoinj.core.NetworkParameters;
 import org.joda.time.DateTime;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.security.SignatureException;
-
-import timber.log.Timber;
 
 public class BlockCertV12 extends BlockchainCertificate implements BlockCert {
+    private JsonObject mDocumentNode;
+
     public static BlockCertV12 createInstance(String certUuid, String issuerUuid, String name, String description, String issuedDate, String urlString) throws URISyntaxException {
         BlockCertV12 blockCert = new BlockCertV12();
         Assertion assertion = new Assertion();
@@ -121,18 +118,6 @@ public class BlockCertV12 extends BlockchainCertificate implements BlockCert {
     }
 
     @Override
-    public String getAddress(NetworkParameters networkParameters) {
-        try {
-            ECKey ecKey = ECKey.signedMessageToKey(getCertUid(), getDocument().getSignature());
-            Address address = ecKey.toAddress(networkParameters);
-            return address.toBase58();
-        } catch (SignatureException e) {
-            Timber.e(e, "The document signature is invalid");
-            return null;
-        }
-    }
-
-    @Override
     public IssuerResponse getIssuer() {
         if (getDocument() == null
                 || getDocument().getCertificate() == null
@@ -150,5 +135,14 @@ public class BlockCertV12 extends BlockchainCertificate implements BlockCert {
         IssuerResponse issuerResponse = new IssuerResponse(name, email, certUuid, certUrl, introUrl, introducedOn, imageData);
         return issuerResponse;
 
+    }
+
+    @Override
+    public JsonObject getDocumentNode() {
+        return mDocumentNode;
+    }
+
+    public void setDocumentNode(JsonObject documentNode) {
+        mDocumentNode = documentNode;
     }
 }
