@@ -44,7 +44,10 @@ public class KeyRotation {
     }
 
     public boolean verifyTransaction(TxRecord txRecord) {
-        TxRecordOut previousOut = txRecord.getPreviousOut();
+        TxRecordOut previousOut = txRecord.getInputsPreviousOut();
+        if (previousOut == null) {
+            return false;
+        }
         String address = previousOut.getAddress();
         String keyString = getKey();
         if (address == null || keyString == null) {
@@ -62,7 +65,7 @@ public class KeyRotation {
         // check validity dates
         DateTimeFormatter dateTimeFormatter = ISODateTimeFormat.dateTime();
         DateTime createdDate = dateTimeFormatter.parseDateTime(mCreatedDate);
-        DateTime txRecordTimestamp = new DateTime(txRecord.getTimestamp() * 1000);
+        DateTime txRecordTimestamp = txRecord.getDateTime();
         if (createdDate.isAfter(txRecordTimestamp)) {
             return false;
         }

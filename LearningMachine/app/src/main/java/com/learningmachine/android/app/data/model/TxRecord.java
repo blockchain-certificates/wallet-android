@@ -3,6 +3,8 @@ package com.learningmachine.android.app.data.model;
 import com.google.gson.annotations.SerializedName;
 import com.learningmachine.android.app.util.ListUtils;
 
+import org.joda.time.DateTime;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -19,7 +21,7 @@ public class TxRecord {
     @SerializedName("time")
     private long mTimestamp;
 
-    public TxRecordOut getPreviousOut() {
+    public TxRecordOut getInputsPreviousOut() {
         return ListUtils.isEmpty(mInputs) ? null : mInputs.get(0).getPreviousOut();
     }
 
@@ -43,6 +45,11 @@ public class TxRecord {
 
     public long getTimestamp() {
         return mTimestamp;
+    }
+
+    public DateTime getDateTime() {
+        // mTimestamp is in seconds, DateTime expects milliseconds
+        return new DateTime(mTimestamp * 1000);
     }
 
     public String getRemoteHash() {

@@ -15,7 +15,22 @@ public interface BlockCert {
     String getRecipientPublicKey();
     String getSourceId();
     String getMerkleRoot();
+
+    /**
+     * @return The portion of the certificate whose hash needs to be compared against the
+     *         hash stored in the blockchain transaction
+     */
     JsonObject getCanonicalizedJson();
+
+    /**
+     * Different versions of the Blockchain certificates use different rules for verifying
+     * the integrity of the certificate. In v1.2, the certificate.document's hash is checked
+     * against the hash in the blockchain transaction. In v2.0, the hash is calculated on the
+     * entire certificate sans its certificate.signature.
+     *
+     * @param canonicalizedJson The portion of the certificate that is used to calculate the hash
+     */
     void setCanonicalizedJson(JsonObject canonicalizedJson);
+
     IssuerResponse getIssuer();
 }

@@ -27,6 +27,11 @@ public class IssuerResponse extends IssuerRecord {
         if (ListUtils.isEmpty(issuerKeys)) {
             return false;
         }
+        /*
+         * Only one public key is active at any given time. The keys may expire or be revoked.
+         * Need to find the one that is active and covers the period of the `txRecord` to validate.
+         * Thus, need to go over all of them and find a matching one.
+         */
         for (KeyRotation issuerKey : issuerKeys) {
             if (issuerKey.verifyTransaction(txRecord)) {
                 return true;
