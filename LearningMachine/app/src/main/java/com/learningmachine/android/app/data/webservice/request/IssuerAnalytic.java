@@ -12,32 +12,23 @@ public class IssuerAnalytic {
     private String mKey;
     @SerializedName("action")
     private Action mAction;
-    @SerializedName("metadata")
-    private Metadata mMetadata;
+    @SerializedName("application")
+    private String mApplicationString;
+    @SerializedName("platform")
+    private String mPlatformString;
 
     public IssuerAnalytic(String key, Action action) {
         mKey = key;
         mAction = action;
-        mMetadata = new Metadata();
+        mApplicationString = BuildConfig.VERSION_NAME;
+        mPlatformString = currentVersion();
     }
 
-    private class Metadata {
-        @SerializedName("application")
-        private String mApplicationString;
-        @SerializedName("platform")
-        private String mPlatformString;
-
-        Metadata() {
-            mApplicationString = BuildConfig.VERSION_NAME;
-            mPlatformString = currentVersion();
-        }
-
-        @SuppressLint("DefaultLocale")
-        private String currentVersion() {
-            String release = Build.VERSION.RELEASE;
-            int apiLevel = Build.VERSION.SDK_INT;
-            return String.format("Android %1$s, API %2$d", release, apiLevel);
-        }
+    @SuppressLint("DefaultLocale")
+    private String currentVersion() {
+        String release = Build.VERSION.RELEASE;
+        int apiLevel = Build.VERSION.SDK_INT;
+        return String.format("Android %1$s, API %2$d", release, apiLevel);
     }
 
     public enum Action {
