@@ -34,9 +34,9 @@ public class IssuerAnalytic {
 
         @SuppressLint("DefaultLocale")
         private String currentVersion() {
-            double release = Double.parseDouble(Build.VERSION.RELEASE);
+            String release = Build.VERSION.RELEASE;
             int apiLevel = Build.VERSION.SDK_INT;
-            return String.format("Android %1$f, API %2$d", release, apiLevel);
+            return String.format("Android %1$s, API %2$d", release, apiLevel);
         }
     }
 
