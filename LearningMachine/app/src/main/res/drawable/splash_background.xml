@@ -5,8 +5,13 @@
 
     <item
         android:gravity="top|center"
-        android:top="120dp"
-        android:drawable="@drawable/ic_splash">
+        android:top="120dp">
+
+        <bitmap
+            android:gravity="center_horizontal|top"
+            android:src="@drawable/ic_splash"
+            android:tileMode="disabled"/>
+
     </item>
 
 </layer-list>

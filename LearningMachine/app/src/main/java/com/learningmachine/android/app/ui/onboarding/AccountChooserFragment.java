@@ -35,8 +35,8 @@ public class AccountChooserFragment extends LMFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_account_chooser, container, false);
 
-        mBinding.newAccount.setOnClickListener(view -> mCallback.onNewAccount());
-        mBinding.existingAccount.setOnClickListener(view -> mCallback.onExistingAccount());
+        mBinding.newAccountButton.setOnClickListener(view -> mCallback.onNewAccount());
+        mBinding.existingAccountButton.setOnClickListener(view -> mCallback.onExistingAccount());
 
         return mBinding.getRoot();
     }

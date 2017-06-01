@@ -23,7 +23,7 @@ public class OnboardingActivity extends LMActivity implements AccountChooserFrag
         super.onCreate(savedInstanceState);
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_onboarding);
-        mBinding.onboardingViewpager.addOnPageChangeListener(mOnPageChangeListener);
+        mBinding.onboardingViewPager.addOnPageChangeListener(mOnPageChangeListener);
 
         if (savedInstanceState == null) {
             mOnboardingFlow = new OnboardingFlow(FlowType.UNKNOWN);
@@ -42,10 +42,7 @@ public class OnboardingActivity extends LMActivity implements AccountChooserFrag
 
     @Override
     public void onBackPressed() {
-        int position = mOnboardingFlow.getPosition();
-        if (position > 0) {
-            mOnboardingFlow.setPosition(position - 1);
-            mBinding.onboardingViewpager.setCurrentItem(mOnboardingFlow.getPosition());
+        if (navigateBackward()) {
             return;
         }
 
@@ -54,35 +51,49 @@ public class OnboardingActivity extends LMActivity implements AccountChooserFrag
 
     @Override
     public void onNewAccount() {
-        mOnboardingFlow = new OnboardingFlow(FlowType.NEW_ACCOUNT);
-        mOnboardingFlow.setPosition(1);
-
-        mAdapter.setScreens(mOnboardingFlow.getScreens());
-        mBinding.onboardingViewpager.getAdapter().notifyDataSetChanged();
-        mBinding.onboardingViewpager.setCurrentItem(mOnboardingFlow.getPosition());
+        replaceScreens(FlowType.NEW_ACCOUNT);
     }
 
     @Override
     public void onExistingAccount() {
-        mOnboardingFlow = new OnboardingFlow(FlowType.EXISTING_ACCOUNT);
-        mOnboardingFlow.setPosition(1);
-
-        mAdapter.setScreens(mOnboardingFlow.getScreens());
-        mBinding.onboardingViewpager.getAdapter().notifyDataSetChanged();
-        mBinding.onboardingViewpager.setCurrentItem(mOnboardingFlow.getPosition());
+        replaceScreens(FlowType.EXISTING_ACCOUNT);
     }
 
     @Override
     public void onGeneratePassphraseClick() {
-        int position = mOnboardingFlow.getPosition() + 1;
-        mBinding.onboardingViewpager.setCurrentItem(position);
-        mOnboardingFlow.setPosition(position);
+        navigateForward();
     }
 
     private void setupAdapter() {
         mAdapter = new OnboardingAdapter(getSupportFragmentManager(), mOnboardingFlow.getScreens());
-        mBinding.onboardingViewpager.setAdapter(mAdapter);
-        mBinding.onboardingViewpager.setCurrentItem(mOnboardingFlow.getPosition());
+        mBinding.onboardingViewPager.setAdapter(mAdapter);
+        mBinding.onboardingViewPager.setCurrentItem(mOnboardingFlow.getPosition());
+    }
+
+    private void replaceScreens(FlowType flowType) {
+        mOnboardingFlow = new OnboardingFlow(flowType);
+        mOnboardingFlow.setPosition(1);
+
+        mAdapter.setScreens(mOnboardingFlow.getScreens());
+        mBinding.onboardingViewPager.getAdapter().notifyDataSetChanged();
+        mBinding.onboardingViewPager.setCurrentItem(mOnboardingFlow.getPosition());
+    }
+
+    private void navigateForward() {
+        int position = mOnboardingFlow.getPosition() + 1;
+        mBinding.onboardingViewPager.setCurrentItem(position);
+        mOnboardingFlow.setPosition(position);
+    }
+
+    private boolean navigateBackward() {
+        int position = mOnboardingFlow.getPosition();
+        if (position <= 0) {
+            return false;
+        }
+
+        mOnboardingFlow.setPosition(position - 1);
+        mBinding.onboardingViewPager.setCurrentItem(mOnboardingFlow.getPosition());
+        return true;
     }
 
     private ViewPager.OnPageChangeListener mOnPageChangeListener = new ViewPager.OnPageChangeListener() {

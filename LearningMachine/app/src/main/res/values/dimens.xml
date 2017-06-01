@@ -9,6 +9,8 @@
     <!--Onboarding-->
 
     <dimen name="onboarding_logo_margin_top">30dp</dimen>
+    <dimen name="onboarding_button_border_width">1dp</dimen>
+    <dimen name="onboarding_container_width">282dp</dimen>
 
     <!--Add Issuer-->
 
