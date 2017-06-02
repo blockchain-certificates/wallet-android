@@ -15,7 +15,8 @@ public class BlockCertV20 extends CertSchemaV20 implements BlockCert {
 
     @Override
     public String getCertUid() {
-        if (getBadge() == null || getBadge().getId() == null) {
+        if (getBadge() == null
+                || getBadge().getId() == null) {
             return null;
         }
         String idString = getBadge().getId()
@@ -44,8 +45,9 @@ public class BlockCertV20 extends CertSchemaV20 implements BlockCert {
 
     @Override
     public String getIssuerId() {
-        if (getBadge() == null || getBadge().getIssuer() == null || getBadge().getIssuer()
-                .getId() == null) {
+        if (getBadge() == null
+                || getBadge().getIssuer() == null
+                || getBadge().getIssuer().getId() == null) {
             return null;
         }
         return getBadge().getIssuer()
@@ -63,7 +65,8 @@ public class BlockCertV20 extends CertSchemaV20 implements BlockCert {
 
     @Override
     public String getUrl() {
-        if (getBadge() == null || getBadge().getId() == null) {
+        if (getBadge() == null
+                || getBadge().getId() == null) {
             return null;
         }
         return getBadge().getId()
@@ -72,8 +75,9 @@ public class BlockCertV20 extends CertSchemaV20 implements BlockCert {
 
     @Override
     public String getRecipientPublicKey() {
-        if (getRecipient() == null || getRecipient().getRecipientProfile() == null || getRecipient().getRecipientProfile()
-                .getPublicKey() == null) {
+        if (getRecipient() == null
+                || getRecipient().getRecipientProfile() == null
+                || getRecipient().getRecipientProfile().getPublicKey() == null) {
             return null;
         }
         String keyString = getRecipient().getRecipientProfile()
@@ -87,7 +91,8 @@ public class BlockCertV20 extends CertSchemaV20 implements BlockCert {
 
     @Override
     public String getSourceId() {
-        if (getSignature() == null || ListUtils.isEmpty(getSignature().getAnchors())) {
+        if (getSignature() == null
+                || ListUtils.isEmpty(getSignature().getAnchors())) {
             return null;
         }
         return getSignature().getAnchors()
@@ -108,15 +113,14 @@ public class BlockCertV20 extends CertSchemaV20 implements BlockCert {
         Issuer issuer = getBadge().getIssuer();
         String name = issuer.getName();
         String email = issuer.getEmail();
-        String certUuid = issuer.getId()
-                .toString();
-        String certUrl = null;
+        String certUuid = issuer.getId().toString();
+        String certsUrl = null;
         String introUrl = null;
-        String introducedOn = DateTime.now()
-                .toString();
+        String introducedOn = DateTime.now().toString();
         String imageData = issuer.getImage();
         String analytics = null;
-        return new IssuerResponse(name, email, certUuid, certUrl, introUrl, introducedOn, imageData, analytics);
+
+        return new IssuerResponse(name, email, certUuid, certsUrl, introUrl, introducedOn, imageData, analytics);
     }
 
     @Override

@@ -61,21 +61,22 @@ public class BlockCertV11 extends CertificateSchemaV11 implements BlockCert {
 
     @Override
     public IssuerResponse getIssuer() {
-        if (getCertificate() == null || getCertificate().getIssuer() == null) {
+        if (getCertificate() == null
+                || getCertificate().getIssuer() == null) {
             return null;
         }
+
         Issuer issuer = getCertificate().getIssuer();
         String name = issuer.getName();
         String email = issuer.getEmail();
-        String certUuid = issuer.getId()
-                .toString();
-        String certUrl = getUrl();
+        String certUuid = issuer.getId().toString();
+        String certsUrl = null;
         String introUrl = null;
-        String introducedOn = DateTime.now()
-                .toString();
+        String introducedOn = DateTime.now().toString();
         String imageData = issuer.getImage();
         String analytics = null;
-        return new IssuerResponse(name, email, certUuid, certUrl, introUrl, introducedOn, imageData, analytics);
+
+        return new IssuerResponse(name, email, certUuid, certsUrl, introUrl, introducedOn, imageData, analytics);
     }
 
     @Override

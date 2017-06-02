@@ -65,18 +65,18 @@ public class IssuerManager {
     }
 
     public Observable<Void> certificateViewed(String certUuid) {
-        return sendAnalytics(certUuid, IssuerAnalytic.Action.VIEWED);
+        return sendAnalyticsAction(certUuid, IssuerAnalytic.Action.VIEWED);
     }
 
     public Observable<Void> certificateVerified(String certUuid) {
-        return sendAnalytics(certUuid, IssuerAnalytic.Action.VERIFIED);
+        return sendAnalyticsAction(certUuid, IssuerAnalytic.Action.VERIFIED);
     }
 
     public Observable<Void> certificateShared(String certUuid) {
-        return sendAnalytics(certUuid, IssuerAnalytic.Action.SHARED);
+        return sendAnalyticsAction(certUuid, IssuerAnalytic.Action.SHARED);
     }
 
-    private Observable<Void> sendAnalytics(String certUuid, IssuerAnalytic.Action action) {
+    private Observable<Void> sendAnalyticsAction(String certUuid, IssuerAnalytic.Action action) {
         return getIssuerForCertificate(certUuid).flatMap(issuer -> {
             String issuerAnalyticsUrlString = issuer.getAnalyticsUrlString();
             if (StringUtils.isEmpty(issuerAnalyticsUrlString)) {

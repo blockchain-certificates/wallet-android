@@ -36,7 +36,8 @@ public class BlockCertV12 extends BlockchainCertificate implements BlockCert {
 
     @Override
     public String getCertUid() {
-        if (getDocument() == null || getDocument().getAssertion() == null) {
+        if (getDocument() == null
+                || getDocument().getAssertion() == null) {
             return null;
         }
         return getDocument().getAssertion()
@@ -45,7 +46,8 @@ public class BlockCertV12 extends BlockchainCertificate implements BlockCert {
 
     @Override
     public String getCertName() {
-        if (getDocument() == null || getDocument().getCertificate() == null) {
+        if (getDocument() == null
+                || getDocument().getCertificate() == null) {
             return null;
         }
         return getDocument().getCertificate()
@@ -54,7 +56,8 @@ public class BlockCertV12 extends BlockchainCertificate implements BlockCert {
 
     @Override
     public String getCertDescription() {
-        if (getDocument() == null || getDocument().getCertificate() == null) {
+        if (getDocument() == null
+                || getDocument().getCertificate() == null) {
             return null;
         }
         return getDocument().getCertificate()
@@ -63,10 +66,10 @@ public class BlockCertV12 extends BlockchainCertificate implements BlockCert {
 
     @Override
     public String getIssuerId() {
-        if (getDocument() == null || getDocument().getCertificate() == null || getDocument().getCertificate()
-                .getIssuer() == null || getDocument().getCertificate()
-                .getIssuer()
-                .getId() == null) {
+        if (getDocument() == null
+                || getDocument().getCertificate() == null
+                || getDocument().getCertificate().getIssuer() == null
+                || getDocument().getCertificate().getIssuer().getId() == null) {
             return null;
         }
         return getDocument().getCertificate()
@@ -77,7 +80,8 @@ public class BlockCertV12 extends BlockchainCertificate implements BlockCert {
 
     @Override
     public String getIssueDate() {
-        if (getDocument() == null || getDocument().getAssertion() == null) {
+        if (getDocument() == null
+                || getDocument().getAssertion() == null) {
             return null;
         }
         return getDocument().getAssertion()
@@ -86,8 +90,9 @@ public class BlockCertV12 extends BlockchainCertificate implements BlockCert {
 
     @Override
     public String getUrl() {
-        if (getDocument() == null || getDocument().getAssertion() == null || getDocument().getAssertion()
-                .getId() == null) {
+        if (getDocument() == null
+                || getDocument().getAssertion() == null
+                || getDocument().getAssertion().getId() == null) {
             return null;
         }
         return getDocument().getAssertion()
@@ -97,7 +102,8 @@ public class BlockCertV12 extends BlockchainCertificate implements BlockCert {
 
     @Override
     public String getRecipientPublicKey() {
-        if (getDocument() == null || getDocument().getRecipient() == null) {
+        if (getDocument() == null
+                || getDocument().getRecipient() == null) {
             return null;
         }
         return getDocument().getRecipient()
@@ -106,7 +112,8 @@ public class BlockCertV12 extends BlockchainCertificate implements BlockCert {
 
     @Override
     public String getSourceId() {
-        if (getReceipt() == null || ListUtils.isEmpty(getReceipt().getAnchors())) {
+        if (getReceipt() == null
+                || ListUtils.isEmpty(getReceipt().getAnchors())) {
             return null;
         }
         return getReceipt().getAnchors()
@@ -124,23 +131,23 @@ public class BlockCertV12 extends BlockchainCertificate implements BlockCert {
 
     @Override
     public IssuerResponse getIssuer() {
-        if (getDocument() == null || getDocument().getCertificate() == null || getDocument().getCertificate()
-                .getIssuer() == null) {
+        if (getDocument() == null
+                || getDocument().getCertificate() == null
+                || getDocument().getCertificate().getIssuer() == null) {
             return null;
         }
-        Issuer issuer = getDocument().getCertificate()
-                .getIssuer();
+
+        Issuer issuer = getDocument().getCertificate().getIssuer();
         String name = issuer.getName();
         String email = issuer.getEmail();
-        String certUuid = issuer.getId()
-                .toString();
-        String certUrl = getUrl();
+        String certUuid = issuer.getId().toString();
+        String certsUrl = null;
         String introUrl = null;
-        String introducedOn = DateTime.now()
-                .toString();
+        String introducedOn = DateTime.now().toString();
         String analytics = null;
         String imageData = issuer.getImage();
-        return new IssuerResponse(name, email, certUuid, certUrl, introUrl, introducedOn, imageData, analytics);
+
+        return new IssuerResponse(name, email, certUuid, certsUrl, introUrl, introducedOn, imageData, analytics);
 
     }
 

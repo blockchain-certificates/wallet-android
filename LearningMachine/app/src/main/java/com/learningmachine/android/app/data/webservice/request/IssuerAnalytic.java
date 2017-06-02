@@ -33,8 +33,10 @@ public class IssuerAnalytic {
 
     public enum Action {
         @SerializedName("viewed")
-        VIEWED, @SerializedName("verified")
-        VERIFIED, @SerializedName("shared")
+        VIEWED,
+        @SerializedName("verified")
+        VERIFIED,
+        @SerializedName("shared")
         SHARED,
     }
 }
