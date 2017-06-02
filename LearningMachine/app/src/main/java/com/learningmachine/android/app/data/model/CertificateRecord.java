@@ -24,14 +24,16 @@ public class CertificateRecord {
     private String mIssuerUuid;
     private String mIssuedOn;
     private String mUrlString;
+    private String mMetadata;
 
-    public CertificateRecord(String uuid, String issuerUuid, String name, String description, String issuedOn, String urlString) {
+    public CertificateRecord(String uuid, String issuerUuid, String name, String description, String issuedOn, String urlString, String metadata) {
         mUuid = uuid;
         mIssuerUuid = issuerUuid;
         mName = name;
         mDescription = description;
         mIssuedOn = issuedOn;
         mUrlString = urlString;
+        mMetadata = metadata;
     }
 
     public String getName() {
@@ -117,5 +119,9 @@ public class CertificateRecord {
 
     public void setUrlString(String urlString) {
         mUrlString = urlString;
+    }
+
+    public String getMetadata() {
+        return mMetadata;
     }
 }
