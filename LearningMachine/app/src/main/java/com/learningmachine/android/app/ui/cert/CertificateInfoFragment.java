@@ -15,15 +15,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParseException;
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.CertificateManager;
 import com.learningmachine.android.app.data.IssuerManager;
 import com.learningmachine.android.app.data.cert.metadata.Field;
 import com.learningmachine.android.app.data.cert.metadata.Metadata;
-import com.learningmachine.android.app.data.cert.metadata.MetadataTypeAdapter;
+import com.learningmachine.android.app.data.cert.metadata.MetadataParser;
 import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.data.model.CertificateRecord;
 import com.learningmachine.android.app.data.model.IssuerRecord;
@@ -35,7 +33,6 @@ import com.learningmachine.android.app.ui.issuer.IssuerActivity;
 import com.learningmachine.android.app.util.DateUtils;
 import com.learningmachine.android.app.util.StringUtils;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -165,14 +162,9 @@ public class CertificateInfoFragment extends LMFragment {
             if (StringUtils.isEmpty(metadataString)) {
                 return viewModels;
             }
-            NumberFormat numberFormat = NumberFormat.getInstance();
-            NumberFormat integerFormat = NumberFormat.getIntegerInstance();
-            MetadataTypeAdapter typeAdapter = new MetadataTypeAdapter(numberFormat, integerFormat, "True", "False");
-            Gson gson = new GsonBuilder()
-                    .registerTypeAdapter(Metadata.class, typeAdapter)
-                    .create();
+            MetadataParser metadataParser = new MetadataParser(getContext());
             try {
-                Metadata metadata = gson.fromJson(metadataString, Metadata.class);
+                Metadata metadata = metadataParser.fromJson(metadataString);
                 for (Field field : metadata.getFields()) {
                     viewModels.add(new CertificateInfoItemViewModel(field.getTitle(), field.getValue()));
                 }
