@@ -3,12 +3,14 @@ package com.learningmachine.android.app.ui.onboarding;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.view.ViewGroup;
 
 import java.util.List;
 
 class OnboardingAdapter extends FragmentStatePagerAdapter {
 
     private List<OnboardingScreen> mScreens;
+    private OnboardingFragment mCurrentFragment;
 
     OnboardingAdapter(FragmentManager fm, List<OnboardingScreen> screens) {
         super(fm);
@@ -47,7 +49,17 @@ class OnboardingAdapter extends FragmentStatePagerAdapter {
         return POSITION_NONE;
     }
 
+    @Override
+    public void setPrimaryItem(ViewGroup container, int position, Object object) {
+        super.setPrimaryItem(container, position, object);
+        mCurrentFragment = (OnboardingFragment) object;
+    }
+
     void setScreens(List<OnboardingScreen> screens) {
         mScreens = screens;
+    }
+
+    public OnboardingFragment getCurrentFragment() {
+        return mCurrentFragment;
     }
 }

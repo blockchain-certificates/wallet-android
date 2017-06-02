@@ -37,7 +37,6 @@ public class LMApplication extends MultiDexApplication {
         setupDagger();
         setupTimber();
         setupJodaTime();
-        loadSampleData();
     }
 
     @Override
@@ -59,22 +58,5 @@ public class LMApplication extends MultiDexApplication {
 
     protected void setupJodaTime() {
         JodaTimeAndroid.init(getApplicationContext());
-    }
-
-    private void loadSampleData() {
-        if (!mPreferencesManager.isFirstLaunch()) {
-            return;
-        }
-
-        Observable.combineLatest(mIssuerManager.loadSampleIssuer(getApplicationContext()),
-                mCertificateManager.loadSampleCertificate(),
-                (aVoid, s) -> {
-                    mPreferencesManager.setFirstLaunch(false);
-                    return null;
-                })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(o -> Timber.d("Sample data loaded"),
-                        throwable -> Timber.e(throwable, "Unable to load sample data"));
     }
 }

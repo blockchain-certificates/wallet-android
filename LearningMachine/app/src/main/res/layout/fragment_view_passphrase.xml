@@ -22,35 +22,35 @@
             android:orientation="vertical">
 
             <TextView
-                style="@style/Material.Title.Light"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/onboarding_passphrase_title"
-                android:textAllCaps="true"/>
+                android:textAllCaps="true"
+                style="@style/Material.Title.Light"/>
 
             <TextView
-                style="@style/Material.Light.Body1"
                 android:layout_width="@dimen/onboarding_container_width"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="21dp"
                 android:gravity="center"
-                android:text="@string/onboarding_passphrase_description"/>
+                android:text="@string/onboarding_passphrase_description"
+                style="@style/Material.Light.Body1"/>
 
-            <EditText
-                style="@style/OnboardingPasswordField"
+            <TextView
+                android:id="@+id/onboarding_passphrase_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="27dp"
-                android:paddingTop="30dp"
-                android:paddingBottom="30dp"
-                android:paddingStart="15dp"
-                android:paddingEnd="15dp"
                 android:gravity="center"
-                android:text="lion planet tribe drive sauce chaos fox twice network must jump river dawn"/>
+                android:paddingBottom="30dp"
+                android:paddingEnd="15dp"
+                android:paddingStart="15dp"
+                android:paddingTop="30dp"
+                android:textIsSelectable="true"
+                style="@style/OnboardingPasswordField"/>
 
             <Button
-                android:id="@+id/generate_passphrase"
-                style="@style/OnboardingButton.Light"
+                android:id="@+id/onboarding_done_button"
                 android:layout_width="@dimen/onboarding_container_width"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="29dp"
@@ -58,7 +58,8 @@
                 android:paddingEnd="48dp"
                 android:paddingStart="48dp"
                 android:paddingTop="8dp"
-                android:text="@string/onboarding_passphrase_done_button"/>
+                android:text="@string/onboarding_passphrase_done_button"
+                style="@style/OnboardingButton.Light"/>
 
         </LinearLayout>
     </FrameLayout>

@@ -9,9 +9,8 @@ import android.view.ViewGroup;
 
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.databinding.FragmentAccountChooserBinding;
-import com.learningmachine.android.app.ui.LMFragment;
 
-public class AccountChooserFragment extends LMFragment {
+public class AccountChooserFragment extends OnboardingFragment {
 
     private Callback mCallback;
     private FragmentAccountChooserBinding mBinding;

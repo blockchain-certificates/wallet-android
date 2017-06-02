@@ -9,9 +9,8 @@ import android.view.ViewGroup;
 
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.databinding.FragmentGeneratePasswordBinding;
-import com.learningmachine.android.app.ui.LMFragment;
 
-public class GeneratePassphraseFragment extends LMFragment {
+public class GeneratePassphraseFragment extends OnboardingFragment {
 
     private Callback mCallback;
     private FragmentGeneratePasswordBinding mBinding;
@@ -44,4 +43,5 @@ public class GeneratePassphraseFragment extends LMFragment {
         super.onDetach();
         mCallback = null;
     }
+
 }

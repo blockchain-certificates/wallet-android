@@ -22,19 +22,19 @@
             android:orientation="vertical">
 
             <TextView
-                style="@style/Material.Title.Light"
                 android:layout_width="@dimen/onboarding_container_width"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/onboarding_paste_passphrase_title"
-                android:textAllCaps="true"/>
+                android:textAllCaps="true"
+                style="@style/Material.Title.Light"/>
 
             <EditText
+                android:id="@+id/paste_passphrase_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="27dp"
                 android:gravity="center"
-                android:hint="@string/onboarding_paste_passphrase_hint"
                 android:paddingBottom="30dp"
                 android:paddingEnd="15dp"
                 android:paddingStart="15dp"
@@ -42,7 +42,6 @@
 
             <Button
                 android:id="@+id/accept"
-                style="@style/OnboardingButton.Light"
                 android:layout_width="@dimen/onboarding_container_width"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="29dp"
@@ -50,8 +49,11 @@
                 android:paddingEnd="48dp"
                 android:paddingStart="48dp"
                 android:paddingTop="8dp"
-                android:text="@string/onboarding_paste_passphrase_done_button"/>
+                android:text="@string/onboarding_paste_passphrase_done_button"
+                style="@style/OnboardingButton.Light"/>
 
         </LinearLayout>
+
     </FrameLayout>
+
 </layout>
