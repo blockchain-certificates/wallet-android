@@ -9,6 +9,7 @@ import com.learningmachine.android.app.util.ListUtils;
 import java.util.List;
 
 public class IssuerResponse extends IssuerRecord {
+    private static final String WEB_AUTH_METHOD = "web";
 
     @SerializedName("image")
     private String mImageData;
@@ -44,5 +45,9 @@ public class IssuerResponse extends IssuerRecord {
             }
         }
         return false;
+    }
+
+    public boolean usesWebAuth() {
+        return WEB_AUTH_METHOD.equals(mIntroductionMethod);
     }
 }
