@@ -83,6 +83,9 @@ public class MetadataTypeAdapter implements JsonDeserializer<Metadata> {
         List<Field> fields = new ArrayList<>();
         for (String fieldRef : displayOrder) {
             String[] split = fieldRef.split("\\.");
+            if (split.length != 2) {
+                continue;
+            }
             String groupName = split[0];
             String fieldName = split[1];
             JsonObject group = groups.get(groupName);

@@ -134,8 +134,8 @@ public class CertificateInfoFragment extends LMFragment {
 
         CertificateInfoAdapter(CertificateRecord certificate, IssuerRecord issuer) {
             List<CertificateInfoItemViewModel> viewModels = getHeaderData(certificate, issuer);
-            List<CertificateInfoItemViewModel> metadata = getMetadata(certificate);
-            viewModels.addAll(metadata);
+            List<CertificateInfoItemViewModel> metadataViewModels = getMetadata(certificate);
+            viewModels.addAll(metadataViewModels);
             this.mViewModels = viewModels;
         }
 
