@@ -67,6 +67,10 @@ public class CertificateFragment extends LMFragment {
         Injector.obtain(getContext())
                 .inject(this);
         mCertUuid = getArguments().getString(ARG_CERTIFICATE_UUID);
+        mIssuerManager.certificateViewed(mCertUuid)
+                .compose(bindToMainThread())
+                .subscribe(aVoid -> Timber.d("Issuer analytics: Certificate viewed"),
+                        throwable -> Timber.e(throwable, "Issuer has no analytics url."));
     }
 
     @Nullable
@@ -157,6 +161,10 @@ public class CertificateFragment extends LMFragment {
     }
 
     private void shareCertificate(boolean shareFile) {
+        mIssuerManager.certificateShared(mCertUuid)
+                .compose(bindToMainThread())
+                .subscribe(aVoid -> Timber.d("Issuer analytics: Certificate shared"),
+                        throwable -> Timber.e(throwable, "Issuer has no analytics url."));
         String certUuid = getArguments().getString(ARG_CERTIFICATE_UUID);
         Observable.combineLatest(mCertificateManager.getCertificate(certUuid),
                 mIssuerManager.getIssuerForCertificate(certUuid),
@@ -205,6 +213,10 @@ public class CertificateFragment extends LMFragment {
     }
 
     private void verifyCertificate() {
+        mIssuerManager.certificateVerified(mCertUuid)
+                .compose(bindToMainThread())
+                .subscribe(aVoid -> Timber.d("Issuer analytics: Certificate verified"),
+                        throwable -> Timber.e(throwable, "Issuer has no analytics url."));
         mCertificateVerifier.loadCertificate(mCertUuid)
                 .compose(bindToMainThread())
                 .subscribe(certificate -> {

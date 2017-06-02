@@ -40,7 +40,8 @@ public class BlockCertV12 extends BlockchainCertificate implements BlockCert {
                 || getDocument().getAssertion() == null) {
             return null;
         }
-        return getDocument().getAssertion().getUid();
+        return getDocument().getAssertion()
+                .getUid();
     }
 
     @Override
@@ -49,7 +50,8 @@ public class BlockCertV12 extends BlockchainCertificate implements BlockCert {
                 || getDocument().getCertificate() == null) {
             return null;
         }
-        return getDocument().getCertificate().getName();
+        return getDocument().getCertificate()
+                .getName();
     }
 
     @Override
@@ -58,7 +60,8 @@ public class BlockCertV12 extends BlockchainCertificate implements BlockCert {
                 || getDocument().getCertificate() == null) {
             return null;
         }
-        return getDocument().getCertificate().getDescription();
+        return getDocument().getCertificate()
+                .getDescription();
     }
 
     @Override
@@ -69,7 +72,10 @@ public class BlockCertV12 extends BlockchainCertificate implements BlockCert {
                 || getDocument().getCertificate().getIssuer().getId() == null) {
             return null;
         }
-        return getDocument().getCertificate().getIssuer().getId().toString();
+        return getDocument().getCertificate()
+                .getIssuer()
+                .getId()
+                .toString();
     }
 
     @Override
@@ -78,7 +84,8 @@ public class BlockCertV12 extends BlockchainCertificate implements BlockCert {
                 || getDocument().getAssertion() == null) {
             return null;
         }
-        return getDocument().getAssertion().getIssuedOn();
+        return getDocument().getAssertion()
+                .getIssuedOn();
     }
 
     @Override
@@ -88,7 +95,9 @@ public class BlockCertV12 extends BlockchainCertificate implements BlockCert {
                 || getDocument().getAssertion().getId() == null) {
             return null;
         }
-        return getDocument().getAssertion().getId().toString();
+        return getDocument().getAssertion()
+                .getId()
+                .toString();
     }
 
     @Override
@@ -97,7 +106,8 @@ public class BlockCertV12 extends BlockchainCertificate implements BlockCert {
                 || getDocument().getRecipient() == null) {
             return null;
         }
-        return getDocument().getRecipient().getPublicKey();
+        return getDocument().getRecipient()
+                .getPublicKey();
     }
 
     @Override
@@ -106,7 +116,9 @@ public class BlockCertV12 extends BlockchainCertificate implements BlockCert {
                 || ListUtils.isEmpty(getReceipt().getAnchors())) {
             return null;
         }
-        return getReceipt().getAnchors().get(0).getSourceId();
+        return getReceipt().getAnchors()
+                .get(0)
+                .getSourceId();
     }
 
     @Override
@@ -124,16 +136,18 @@ public class BlockCertV12 extends BlockchainCertificate implements BlockCert {
                 || getDocument().getCertificate().getIssuer() == null) {
             return null;
         }
+
         Issuer issuer = getDocument().getCertificate().getIssuer();
         String name = issuer.getName();
         String email = issuer.getEmail();
         String certUuid = issuer.getId().toString();
-        String certUrl = null;
+        String certsUrl = null;
         String introUrl = null;
         String introducedOn = DateTime.now().toString();
+        String analytics = null;
         String imageData = issuer.getImage();
-        IssuerResponse issuerResponse = new IssuerResponse(name, email, certUuid, certUrl, introUrl, introducedOn, imageData);
-        return issuerResponse;
+
+        return new IssuerResponse(name, email, certUuid, certsUrl, introUrl, introducedOn, imageData, analytics);
 
     }
 

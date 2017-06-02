@@ -12,9 +12,15 @@ public class IssuerResponse extends IssuerRecord {
 
     @SerializedName("image")
     private String mImageData;
+    @SerializedName("introductionAuthenticationMethod")
+    private String mIntroductionMethod;
+    @SerializedName("introductionSuccessURL")
+    private String mIntroductionSuccessUrlString;
+    @SerializedName("introductionErrorURL")
+    private String mIntroductionErrorUrlString;
 
-    public IssuerResponse(String name, String email, String uuid, String certsUrl, String introUrl, String introducedOn, String imageData) {
-        super(name, email, uuid, certsUrl, introUrl, introducedOn);
+    public IssuerResponse(String name, String email, String uuid, String certsUrl, String introUrl, String introducedOn, String imageData, String analyticsUrlString) {
+        super(name, email, uuid, certsUrl, introUrl, introducedOn, analyticsUrlString);
         mImageData = imageData;
     }
 

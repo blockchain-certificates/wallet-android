@@ -19,7 +19,8 @@ public class BlockCertV20 extends CertSchemaV20 implements BlockCert {
                 || getBadge().getId() == null) {
             return null;
         }
-        String idString = getBadge().getId().toString();
+        String idString = getBadge().getId()
+                .toString();
         if (idString.startsWith(URN_PREFIX)) {
             idString = idString.substring(URN_PREFIX.length());
         }
@@ -49,7 +50,9 @@ public class BlockCertV20 extends CertSchemaV20 implements BlockCert {
                 || getBadge().getIssuer().getId() == null) {
             return null;
         }
-        return getBadge().getIssuer().getId().toString();
+        return getBadge().getIssuer()
+                .getId()
+                .toString();
     }
 
     @Override
@@ -66,7 +69,8 @@ public class BlockCertV20 extends CertSchemaV20 implements BlockCert {
                 || getBadge().getId() == null) {
             return null;
         }
-        return getBadge().getId().toString();
+        return getBadge().getId()
+                .toString();
     }
 
     @Override
@@ -76,7 +80,9 @@ public class BlockCertV20 extends CertSchemaV20 implements BlockCert {
                 || getRecipient().getRecipientProfile().getPublicKey() == null) {
             return null;
         }
-        String keyString = getRecipient().getRecipientProfile().getPublicKey().toString();
+        String keyString = getRecipient().getRecipientProfile()
+                .getPublicKey()
+                .toString();
         if (keyString.startsWith(LMConstants.ECDSA_KOBLITZ_PUBKEY_PREFIX)) {
             keyString = keyString.substring(LMConstants.ECDSA_KOBLITZ_PUBKEY_PREFIX.length());
         }
@@ -89,7 +95,9 @@ public class BlockCertV20 extends CertSchemaV20 implements BlockCert {
                 || ListUtils.isEmpty(getSignature().getAnchors())) {
             return null;
         }
-        return getSignature().getAnchors().get(0).getSourceId();
+        return getSignature().getAnchors()
+                .get(0)
+                .getSourceId();
     }
 
     @Override
@@ -106,12 +114,13 @@ public class BlockCertV20 extends CertSchemaV20 implements BlockCert {
         String name = issuer.getName();
         String email = issuer.getEmail();
         String certUuid = issuer.getId().toString();
-        String certUrl = null;
+        String certsUrl = null;
         String introUrl = null;
         String introducedOn = DateTime.now().toString();
         String imageData = issuer.getImage();
-        IssuerResponse issuerResponse = new IssuerResponse(name, email, certUuid, certUrl, introUrl, introducedOn, imageData);
-        return issuerResponse;
+        String analytics = null;
+
+        return new IssuerResponse(name, email, certUuid, certsUrl, introUrl, introducedOn, imageData, analytics);
     }
 
     @Override
