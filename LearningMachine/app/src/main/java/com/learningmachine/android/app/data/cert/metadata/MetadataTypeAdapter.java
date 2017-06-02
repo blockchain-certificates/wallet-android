@@ -10,6 +10,7 @@ import java.lang.reflect.Type;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -100,10 +101,20 @@ public class MetadataTypeAdapter implements JsonDeserializer<Metadata> {
                     value = mIntegerFormat.format(fieldValueElement.getAsInt());
                     break;
                 case ARRAY:
-                    // TODO: possibly do number formatting on elements
-                    // TODO: concatenate elements of the array
-                    value = fieldValueElement.getAsJsonArray().toString();
-                    break;
+                    // This is the same algorithm as TextUtils.join and StringUtils.join
+                    StringBuilder sb = new StringBuilder();
+                    Iterator<JsonElement> it = fieldValueElement.getAsJsonArray().iterator();
+                    if (it.hasNext()) {
+                        JsonElement jsonElement = it.next();
+                        String string = jsonElement.toString();
+                        sb.append(string);
+                        while (it.hasNext()) {
+                            sb.append(", ");
+                            sb.append(string);
+                        }
+                    }
+                    value = sb.toString();
+                break;
                 case BOOLEAN:
                     value = fieldValueElement.getAsBoolean() ? mTrueString : mFalseString;
                     break;
