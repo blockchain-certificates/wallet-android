@@ -60,6 +60,11 @@ public class BlockCertV11 extends CertificateSchemaV11 implements BlockCert {
     }
 
     @Override
+    public String getMetadata() {
+        return null;
+    }
+
+    @Override
     public IssuerResponse getIssuer() {
         if (getCertificate() == null
                 || getCertificate().getIssuer() == null) {

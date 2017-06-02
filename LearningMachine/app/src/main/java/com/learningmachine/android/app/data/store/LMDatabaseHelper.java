@@ -61,6 +61,7 @@ public class LMDatabaseHelper extends SQLiteOpenHelper {
             public static final String DESCRIPTION = "description";
             public static final String ISSUE_DATE = "issue_date";
             public static final String URL = "url";
+            public static final String METADATA = "metadata";
         }
     }
 
@@ -108,6 +109,7 @@ public class LMDatabaseHelper extends SQLiteOpenHelper {
                 + ", " + Column.Certificate.DESCRIPTION + " TEXT"
                 + ", " + Column.Certificate.ISSUE_DATE + " TEXT"
                 + ", " + Column.Certificate.URL + " TEXT"
+                + ", " + Column.Certificate.METADATA + " TEXT"
                 + ");";
         sqLiteDatabase.execSQL(createTable);
     }
