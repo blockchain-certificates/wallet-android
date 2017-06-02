@@ -17,7 +17,7 @@ public class BlockCertV20 extends CertSchemaV20 implements BlockCert {
 
     @SerializedName("metadataJson")
     @Expose
-    private String mMetaData;
+    private String mMetadata;
 
     @Override
     public String getCertUid() {
@@ -107,8 +107,8 @@ public class BlockCertV20 extends CertSchemaV20 implements BlockCert {
     }
 
     @Override
-    public String getMetaData() {
-        return mMetaData;
+    public String getMetadata() {
+        return mMetadata;
     }
 
     @Override

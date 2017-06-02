@@ -5,14 +5,14 @@ import com.google.gson.JsonObject;
 import java.util.List;
 import java.util.Map;
 
-public class MetaData {
+public class Metadata {
 
     private final List<String> mDisplayOrder;
     private final Map<String, JsonObject> mGroups;
     private final Map<String, GroupDef> mGroupDefinitions;
     private final List<Field> mFields;
 
-    public MetaData(List<String> displayOrder, Map<String, JsonObject> groups, Map<String, GroupDef> groupDefinitions, List<Field> fields) {
+    public Metadata(List<String> displayOrder, Map<String, JsonObject> groups, Map<String, GroupDef> groupDefinitions, List<Field> fields) {
         mDisplayOrder = displayOrder;
         mGroups = groups;
         mGroupDefinitions = groupDefinitions;

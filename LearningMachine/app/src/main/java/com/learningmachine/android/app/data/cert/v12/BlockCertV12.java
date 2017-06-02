@@ -118,7 +118,7 @@ public class BlockCertV12 extends BlockchainCertificate implements BlockCert {
     }
 
     @Override
-    public String getMetaData() {
+    public String getMetadata() {
         return null;
     }
 

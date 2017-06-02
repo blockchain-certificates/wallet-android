@@ -73,7 +73,7 @@ public class CertificateStore implements DataStore {
         String certName = blockCert.getCertName();
         String certDescription = blockCert.getCertDescription();
         String issueDate = blockCert.getIssueDate();
-        String metadata = blockCert.getMetaData();
+        String metadata = blockCert.getMetadata();
 
         ContentValues contentValues = new ContentValues();
 

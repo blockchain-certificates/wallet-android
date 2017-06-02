@@ -13,21 +13,21 @@ import java.text.NumberFormat;
 
 import static org.junit.Assert.assertEquals;
 
-public class MetaDataTest {
+public class MetadataTest {
 
-    private MetaData subject;
+    private Metadata subject;
 
     @Before
     public void setup() {
         NumberFormat numberFormat = NumberFormat.getInstance();
         NumberFormat integerFormat = NumberFormat.getIntegerInstance();
-        MetaDataTypeAdapter typeAdapter = new MetaDataTypeAdapter(numberFormat, integerFormat, "True", "False");
+        MetadataTypeAdapter typeAdapter = new MetadataTypeAdapter(numberFormat, integerFormat, "True", "False");
         Gson gson = new GsonBuilder()
-                .registerTypeAdapter(MetaData.class, typeAdapter)
+                .registerTypeAdapter(Metadata.class, typeAdapter)
                 .create();
         Reader reader = getResourceAsReader("cert-meta-data-01.json");
 
-        subject = gson.fromJson(reader, MetaData.class);
+        subject = gson.fromJson(reader, Metadata.class);
     }
 
     @Test

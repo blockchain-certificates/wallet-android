@@ -22,8 +22,8 @@ import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.CertificateManager;
 import com.learningmachine.android.app.data.IssuerManager;
 import com.learningmachine.android.app.data.cert.metadata.Field;
-import com.learningmachine.android.app.data.cert.metadata.MetaData;
-import com.learningmachine.android.app.data.cert.metadata.MetaDataTypeAdapter;
+import com.learningmachine.android.app.data.cert.metadata.Metadata;
+import com.learningmachine.android.app.data.cert.metadata.MetadataTypeAdapter;
 import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.data.model.CertificateRecord;
 import com.learningmachine.android.app.data.model.IssuerRecord;
@@ -167,13 +167,13 @@ public class CertificateInfoFragment extends LMFragment {
             }
             NumberFormat numberFormat = NumberFormat.getInstance();
             NumberFormat integerFormat = NumberFormat.getIntegerInstance();
-            MetaDataTypeAdapter typeAdapter = new MetaDataTypeAdapter(numberFormat, integerFormat, "True", "False");
+            MetadataTypeAdapter typeAdapter = new MetadataTypeAdapter(numberFormat, integerFormat, "True", "False");
             Gson gson = new GsonBuilder()
-                    .registerTypeAdapter(MetaData.class, typeAdapter)
+                    .registerTypeAdapter(Metadata.class, typeAdapter)
                     .create();
             try {
-                MetaData metaData = gson.fromJson(metadataString, MetaData.class);
-                for (Field field : metaData.getFields()) {
+                Metadata metadata = gson.fromJson(metadataString, Metadata.class);
+                for (Field field : metadata.getFields()) {
                     viewModels.add(new CertificateInfoItemViewModel(field.getTitle(), field.getValue()));
                 }
             } catch (JsonParseException e) {

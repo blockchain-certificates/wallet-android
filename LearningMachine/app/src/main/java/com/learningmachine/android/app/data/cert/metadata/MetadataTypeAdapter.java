@@ -13,13 +13,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MetaDataTypeAdapter implements JsonDeserializer<MetaData> {
+public class MetadataTypeAdapter implements JsonDeserializer<Metadata> {
     private NumberFormat mNumberFormat;
     private NumberFormat mIntegerFormat;
     private String mTrueString;
     private String mFalseString;
 
-    public MetaDataTypeAdapter(NumberFormat numberFormat, NumberFormat integerFormat, String trueString, String falseString) {
+    public MetadataTypeAdapter(NumberFormat numberFormat, NumberFormat integerFormat, String trueString, String falseString) {
         mNumberFormat = numberFormat;
         mIntegerFormat = integerFormat;
         mTrueString = trueString;
@@ -27,14 +27,14 @@ public class MetaDataTypeAdapter implements JsonDeserializer<MetaData> {
     }
 
     @Override
-    public MetaData deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+    public Metadata deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonObject jsonObject = json.getAsJsonObject();
         List<String> displayOrder = getDisplayOrder(jsonObject);
         Map<String, JsonObject> groups = getGroups(jsonObject);
         Map<String, GroupDef> groupDefinitions = getGroupDefinitions(jsonObject, context);
         List<Field> fields = getFields(displayOrder, groups, groupDefinitions);
 
-        return new MetaData(displayOrder, groups, groupDefinitions, fields);
+        return new Metadata(displayOrder, groups, groupDefinitions, fields);
     }
 
     private List<String> getDisplayOrder(JsonObject jsonObject) {
