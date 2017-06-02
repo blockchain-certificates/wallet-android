@@ -1,7 +1,8 @@
 package com.learningmachine.android.app.data.cert.metadata;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import android.content.Context;
+
+import com.learningmachine.android.app.R;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -9,9 +10,10 @@ import org.junit.Test;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.text.NumberFormat;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class MetadataTest {
 
@@ -19,15 +21,13 @@ public class MetadataTest {
 
     @Before
     public void setup() {
-        NumberFormat numberFormat = NumberFormat.getInstance();
-        NumberFormat integerFormat = NumberFormat.getIntegerInstance();
-        MetadataTypeAdapter typeAdapter = new MetadataTypeAdapter(numberFormat, integerFormat, "True", "False");
-        Gson gson = new GsonBuilder()
-                .registerTypeAdapter(Metadata.class, typeAdapter)
-                .create();
         Reader reader = getResourceAsReader("cert-meta-data-01.json");
+        Context context = mock(Context.class);
+        when(context.getString(R.string.cert_metadata_boolean_true)).thenReturn("True");
+        when(context.getString(R.string.cert_metadata_boolean_false)).thenReturn("False");
+        MetadataParser metadataParser = new MetadataParser(context);
 
-        subject = gson.fromJson(reader, Metadata.class);
+        subject = metadataParser.fromJson(reader);
     }
 
     @Test

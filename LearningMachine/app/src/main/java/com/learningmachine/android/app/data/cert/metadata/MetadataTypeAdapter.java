@@ -105,12 +105,10 @@ public class MetadataTypeAdapter implements JsonDeserializer<Metadata> {
                     StringBuilder sb = new StringBuilder();
                     Iterator<JsonElement> it = fieldValueElement.getAsJsonArray().iterator();
                     if (it.hasNext()) {
-                        JsonElement jsonElement = it.next();
-                        String string = jsonElement.toString();
-                        sb.append(string);
+                        sb.append(it.next().toString());
                         while (it.hasNext()) {
                             sb.append(", ");
-                            sb.append(string);
+                            sb.append(it.next().toString());
                         }
                     }
                     value = sb.toString();

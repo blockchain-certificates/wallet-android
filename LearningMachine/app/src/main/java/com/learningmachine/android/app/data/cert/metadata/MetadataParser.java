@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.learningmachine.android.app.R;
 
+import java.io.Reader;
 import java.text.NumberFormat;
 
 public class MetadataParser {
@@ -24,5 +25,9 @@ public class MetadataParser {
 
     public Metadata fromJson(String string) {
         return mGson.fromJson(string, Metadata.class);
+    }
+
+    public Metadata fromJson(Reader reader) {
+        return mGson.fromJson(reader, Metadata.class);
     }
 }
