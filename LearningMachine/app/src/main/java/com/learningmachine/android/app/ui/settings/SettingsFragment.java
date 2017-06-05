@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.learningmachine.android.app.BuildConfig;
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.databinding.FragmentSettingsBinding;
 import com.learningmachine.android.app.ui.LMFragment;
@@ -35,10 +36,7 @@ public class SettingsFragment extends LMFragment {
             startActivity(intent);
         });
 
-        binding.settingsReplacePassphraseTextView.setOnClickListener(v -> {
-            Intent intent = ReplacePassphraseActivity.newIntent(getContext());
-            startActivity(intent);
-        });
+        setupReplacePassphrase(binding);
 
         binding.settingsAboutPassphraseTextView.setOnClickListener(v -> {
             String actionBarTitle = getString(R.string.about_passphrases_title);
@@ -55,6 +53,19 @@ public class SettingsFragment extends LMFragment {
         });
 
         return binding.getRoot();
+    }
+
+    private void setupReplacePassphrase(FragmentSettingsBinding binding) {
+        if (!BuildConfig.DEBUG) {
+            binding.settingsReplacePassphraseTextView.setVisibility(View.GONE);
+            return;
+        }
+
+        binding.settingsReplacePassphraseTextView.setVisibility(View.VISIBLE);
+        binding.settingsReplacePassphraseTextView.setOnClickListener(v -> {
+            Intent intent = ReplacePassphraseActivity.newIntent(getContext());
+            startActivity(intent);
+        });
     }
 }
 
