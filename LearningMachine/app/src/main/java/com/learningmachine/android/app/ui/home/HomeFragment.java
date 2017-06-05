@@ -121,6 +121,10 @@ public class HomeFragment extends LMFragment {
         mIssuerList.addAll(issuerList);
         mBinding.issuerRecyclerview.getAdapter()
                 .notifyDataSetChanged();
+
+        boolean emptyIssuers = issuerList.isEmpty();
+        mBinding.issuerMainContent.setVisibility(emptyIssuers? View.GONE : View.VISIBLE);
+        mBinding.issuerEmptyContent.setVisibility(emptyIssuers? View.VISIBLE : View.GONE);
     }
 
     private class IssuerAdapter extends RecyclerView.Adapter<IssuerViewHolder> {

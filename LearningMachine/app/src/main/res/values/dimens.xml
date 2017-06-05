@@ -12,6 +12,13 @@
     <dimen name="onboarding_button_border_width">1dp</dimen>
     <dimen name="onboarding_container_width">282dp</dimen>
 
+    <!-- Home -->
+    <dimen name="fragment_home_empty_title_margin">32dp</dimen>
+    <dimen name="fragment_home_empty_description_margin">22dp</dimen>
+    <dimen name="fragment_home_empty_description_width">282dp</dimen>
+    <dimen name="fragment_home_empty_button_margin">39dp</dimen>
+    <dimen name="fragment_home_empty_button_width">260dp</dimen>
+
     <!--Add Issuer-->
 
     <dimen name="fragment_add_issuer_linear_layout_top_padding">22dp</dimen>
