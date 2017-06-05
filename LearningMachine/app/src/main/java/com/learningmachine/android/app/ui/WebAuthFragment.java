@@ -1,0 +1,129 @@
+package com.learningmachine.android.app.ui;
+
+import android.content.Context;
+import android.databinding.DataBindingUtil;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+
+import com.google.gson.Gson;
+import com.learningmachine.android.app.R;
+import com.learningmachine.android.app.data.webservice.request.IssuerIntroductionRequest;
+import com.learningmachine.android.app.databinding.FragmentWebBinding;
+import com.learningmachine.android.app.util.StringUtils;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
+public class WebAuthFragment extends LMFragment {
+
+    private static final String ARG_END_POINT = "WebAuthFragment.EndPoint";
+    private static final String ARG_NONCE = "WebAuthFragment.Nonce";
+    private static final String ARG_BITCOIN_ADDRESS = "WebAuthFragment.BitcoinAddress";
+    private static final String ARG_SUCCESS_URL = "WebAuthFragment.SuccessURL";
+    private static final String ARG_ERROR_URL = "WebAuthFragment.ErrorURL";
+
+    protected FragmentWebBinding mBinding;
+    private String mEndPoint;
+    private String mNonce;
+    private String mBitcoinAddress;
+    private String mSuccessURL;
+    private String mErrorURL;
+    private WebAuthCallbacks mCallbacks;
+
+    public interface WebAuthCallbacks {
+        void onSuccess();
+        void onError();
+    }
+
+    public static WebAuthFragment newInstance(String endPoint, String nonce, String bitcoinAddress, String successURL, String errorURL) {
+        Bundle args = new Bundle();
+        args.putString(ARG_END_POINT, endPoint);
+        args.putString(ARG_NONCE, nonce);
+        args.putString(ARG_BITCOIN_ADDRESS, bitcoinAddress);
+        args.putString(ARG_SUCCESS_URL, successURL);
+        args.putString(ARG_ERROR_URL, errorURL);
+        WebAuthFragment fragment = new WebAuthFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mEndPoint = getArguments().getString(ARG_END_POINT);
+        mNonce = getArguments().getString(ARG_NONCE);
+        mBitcoinAddress = getArguments().getString(ARG_BITCOIN_ADDRESS);
+        mSuccessURL = getArguments().getString(ARG_SUCCESS_URL);
+        mErrorURL = getArguments().getString(ARG_ERROR_URL);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof WebAuthCallbacks) {
+            mCallbacks = (WebAuthCallbacks) context;
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallbacks = null;
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_web, container, false);
+        setupWebView();
+        loadWebsite();
+
+        return mBinding.getRoot();
+    }
+
+    protected void setupWebView() {
+        WebViewClient webViewClient = new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                if (mCallbacks != null && url.equals(mSuccessURL)) {
+                    mCallbacks.onSuccess();
+                    return true;
+                } else if (mCallbacks != null && url.equals(mErrorURL)) {
+                    mCallbacks.onError();
+                    return true;
+                }
+                return super.shouldOverrideUrlLoading(view, url);
+            }
+        };
+        mBinding.webViewController.setWebViewClient(webViewClient);
+        mBinding.webViewController.getSettings()
+                .setJavaScriptEnabled(true);
+    }
+
+    public void backPressed() {
+        if (mBinding.webViewController.canGoBack()) {
+            mBinding.webViewController.goBack();
+        } else {
+            getActivity().finish();
+        }
+    }
+
+    private void loadWebsite() {
+        if (!StringUtils.isEmpty(mEndPoint)) {
+            IssuerIntroductionRequest request = new IssuerIntroductionRequest(mBitcoinAddress, mNonce);
+            Gson gson = new Gson();
+            String json = gson.toJson(request);
+            try {
+                String formPost = "bitcoinAddress=" + URLEncoder.encode(mBitcoinAddress, "UTF-8") + "&nonce=" + URLEncoder.encode(mNonce, "UTF-8");
+                mBinding.webViewController.postUrl(mEndPoint, formPost.getBytes("UTF-8"));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}

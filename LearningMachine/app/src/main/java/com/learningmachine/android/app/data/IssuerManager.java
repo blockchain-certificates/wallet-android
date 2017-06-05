@@ -52,16 +52,20 @@ public class IssuerManager {
         return Observable.just(mIssuerStore.loadIssuers());
     }
 
-    public Observable<String> addIssuer(String url, String bitcoinAddress, String nonce) {
-        IssuerIntroductionRequest request = new IssuerIntroductionRequest(bitcoinAddress, nonce);
-        return mIssuerService.getIssuer(url)
-                .flatMap(issuer -> Observable.combineLatest(Observable.just(issuer),
-                        mIssuerService.postIntroduction(issuer.getIntroUrl(), request),
-                        (issuer1, aVoid) -> issuer1))
-                .map(issuerResponse -> {
-                    mIssuerStore.saveIssuerResponse(issuerResponse);
-                    return issuerResponse.getUuid();
-                });
+    public Observable<IssuerResponse> fetchIssuer(String url) {
+        return mIssuerService.getIssuer(url);
+    }
+
+    public Observable<String> addIssuer(IssuerResponse issuer, Observable<String> bitcoinAddressObservable, String nonce) {
+        return bitcoinAddressObservable.flatMap(bitcoinAddress -> {
+            IssuerIntroductionRequest request = new IssuerIntroductionRequest(bitcoinAddress, nonce);
+            return mIssuerService.postIntroduction(issuer.getIntroUrl(), request);
+        }).map(issuerResponse -> saveIssuer(issuer));
+    }
+
+    public String saveIssuer(IssuerResponse issuer) {
+        mIssuerStore.saveIssuerResponse(issuer);
+        return issuer.getUuid();
     }
 
     public Observable<Void> certificateViewed(String certUuid) {

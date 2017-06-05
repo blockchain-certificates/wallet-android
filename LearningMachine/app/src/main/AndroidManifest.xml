@@ -71,6 +71,7 @@
 
         <activity
             android:name=".ui.cert.CertificateInfoActivity"/>
+        <activity android:name=".ui.WebAuthActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

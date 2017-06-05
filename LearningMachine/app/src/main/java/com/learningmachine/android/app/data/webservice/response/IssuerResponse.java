@@ -50,4 +50,12 @@ public class IssuerResponse extends IssuerRecord {
     public boolean usesWebAuth() {
         return WEB_AUTH_METHOD.equals(mIntroductionMethod);
     }
+
+    public String getIntroductionSuccessUrlString() {
+        return mIntroductionSuccessUrlString;
+    }
+
+    public String getIntroductionErrorUrlString() {
+        return mIntroductionErrorUrlString;
+    }
 }
