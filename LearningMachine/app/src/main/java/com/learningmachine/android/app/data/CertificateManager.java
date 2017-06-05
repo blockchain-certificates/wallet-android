@@ -7,6 +7,7 @@ import com.google.gson.JsonSyntaxException;
 import com.learningmachine.android.app.data.bitcoin.BitcoinManager;
 import com.learningmachine.android.app.data.cert.BlockCert;
 import com.learningmachine.android.app.data.cert.BlockCertParser;
+import com.learningmachine.android.app.data.error.CertificateFileImportException;
 import com.learningmachine.android.app.data.error.CertificateOwnershipException;
 import com.learningmachine.android.app.data.model.CertificateRecord;
 import com.learningmachine.android.app.data.store.CertificateStore;
@@ -15,8 +16,12 @@ import com.learningmachine.android.app.data.webservice.CertificateService;
 import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 import com.learningmachine.android.app.util.FileUtils;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -25,6 +30,7 @@ import okhttp3.ResponseBody;
 import okio.Buffer;
 import okio.BufferedSource;
 import rx.Observable;
+import timber.log.Timber;
 
 public class CertificateManager {
 
@@ -123,21 +129,40 @@ public class CertificateManager {
     }
 
     private Observable<String> handleCertificateInputStream(InputStream certInputStream, String bitcoinAddress) {
-        BlockCertParser blockCertParser = new BlockCertParser();
-        BlockCert blockCert = blockCertParser.fromJson(certInputStream);
+        // copy to temp file
+        String tempFilename = "temp-cert";
+        FileUtils.copyCertificateStream(mContext, certInputStream, tempFilename);
+
+        BlockCert blockCert;
+        File tempFile = FileUtils.getCertificateFile(mContext, tempFilename);
+        try(FileInputStream fileInputStream = new FileInputStream(tempFile)) {
+            BlockCertParser blockCertParser = new BlockCertParser();
+            blockCert = blockCertParser.fromJson(fileInputStream);
+        } catch (IOException e) {
+            Timber.e(e, "Unable to parse temp cert file");
+            FileUtils.deleteCertificate(mContext, tempFilename);
+            return Observable.error(e);
+        }
+
+        if (blockCert == null) {
+            return Observable.error(new CertificateFileImportException());
+        }
+
         String recipientKey = blockCert.getRecipientPublicKey();
 
         // Reject on address mismatch
         if (!bitcoinAddress.equals(recipientKey)) {
+            FileUtils.deleteCertificate(mContext, tempFilename);
             return Observable.error(new CertificateOwnershipException());
         }
 
         // Save to DB
         saveBlockCert(blockCert);
 
-        // Copy file
+        // Rename / move temp file
         String certUid = blockCert.getCertUid();
-        FileUtils.copyCertificateStream(mContext, certInputStream, certUid);
+        FileUtils.renameCertificateFile(mContext, tempFilename, certUid);
+
         return Observable.just(certUid);
     }
 

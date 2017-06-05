@@ -2,6 +2,8 @@ package com.learningmachine.android.app.util;
 
 import android.content.Context;
 
+import com.google.common.io.Files;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -29,6 +31,16 @@ public class FileUtils {
     public static boolean deleteCertificate(Context context, String uuid) {
         File file = getCertificateFile(context, uuid);
         return file.delete();
+    }
+
+    public static void renameCertificateFile(Context context, String oldName, String newName) {
+        File oldFile = getCertificateFile(context, oldName);
+        File newFile = getCertificateFile(context, newName);
+        try {
+            Files.move(oldFile, newFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static File getCertificateFile(Context context, String uuid) {
