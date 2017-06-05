@@ -5,6 +5,7 @@ import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.FileProvider;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -40,8 +41,9 @@ public class CertificateFragment extends LMFragment {
 
     private static final String ARG_CERTIFICATE_UUID = "CertificateFragment.CertificateUuid";
     private static final String INDEX_FILE_PATH = "file:///android_asset/www/index.html";
+    private static final String FILE_PROVIDER_AUTHORITY = "com.learningmachine.android.app.fileprovider";
+    private static final String TEXT_MIME_TYPE = "text/plain";
     private static final int REQUEST_SHARE_METHOD = 234;
-    private static final String QUERY_PARAM_JSON = "?format=json";
 
     @Inject protected CertificateManager mCertificateManager;
     @Inject protected IssuerManager mIssuerManager;
@@ -172,18 +174,33 @@ public class CertificateFragment extends LMFragment {
                 .compose(bindToMainThread())
                 .subscribe(holder -> {
                     CertificateRecord cert = holder.getCertificate();
-                    String certUrlString = cert.getUrlString();
-                    if (shareFile) {
-                        certUrlString += QUERY_PARAM_JSON;
-                    }
+
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+
                     IssuerRecord issuer = holder.getIssuer();
                     String issuerName = issuer.getName();
-                    String sharingText = getString(R.string.fragment_certificate_share_format,
-                            issuerName,
-                            certUrlString);
-                    Intent intent = new Intent(Intent.ACTION_SEND);
+
+                    String sharingText;
+
+                    if (shareFile) {
+                        File certFile = FileUtils.getCertificateFile(getContext(), certUuid);
+                        Uri uri = FileProvider.getUriForFile(getContext(),
+                                FILE_PROVIDER_AUTHORITY,
+                                certFile);
+                        String type = getContext().getContentResolver().getType(uri);
+                        intent.setType(type);
+                        intent.putExtra(Intent.EXTRA_STREAM, uri);
+                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                        sharingText = getString(R.string.fragment_certificate_share_file_format, issuerName);
+                    } else {
+                        intent.setType(TEXT_MIME_TYPE);
+                        String certUrlString = cert.getUrlString();
+                        sharingText = getString(R.string.fragment_certificate_share_url_format,
+                                issuerName,
+                                certUrlString);
+                    }
+
                     intent.putExtra(Intent.EXTRA_TEXT, sharingText);
-                    intent.setType("text/plain");
                     startActivity(intent);
                 }, throwable -> Timber.e(throwable, "Unable to share certificate"));
     }
