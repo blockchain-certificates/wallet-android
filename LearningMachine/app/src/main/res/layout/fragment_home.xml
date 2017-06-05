@@ -4,27 +4,70 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/off_white_background">
+        android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/issuer_recyclerview"
+
+        <FrameLayout
+            android:id="@+id/issuer_main_content"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/off_white_background"
-            android:paddingEnd="@dimen/fragment_home_recyclerview_spacing"
-            android:paddingStart="@dimen/fragment_home_recyclerview_spacing"
-            android:paddingTop="@dimen/fragment_home_recyclerview_spacing"/>
+            android:layout_height="match_parent"
+            android:background="@color/off_white_background">
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/issuer_floating_action_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:layout_margin="16dp"
-            android:src="@drawable/ic_action_add"
-            app:backgroundTint="@color/fab_color"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/issuer_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingEnd="@dimen/fragment_home_recyclerview_spacing"
+                android:paddingStart="@dimen/fragment_home_recyclerview_spacing"
+                android:paddingTop="@dimen/fragment_home_recyclerview_spacing"/>
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/issuer_floating_action_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right"
+                android:layout_margin="16dp"
+                android:src="@drawable/ic_action_add"
+                app:backgroundTint="@color/fab_color"/>
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/issuer_empty_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal|top"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/Material.Title.Light"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fragment_home_empty_title_margin"
+                android:text="@string/fragment_home_empty_title"
+                android:textAllCaps="true"/>
+
+            <TextView
+                style="@style/Material.Light.Body1"
+                android:layout_width="@dimen/fragment_home_empty_description_width"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fragment_home_empty_description_margin"
+                android:gravity="center"
+                android:text="@string/fragment_home_empty_description"/>
+
+            <Button
+                android:id="@+id/issuer_add_button"
+                style="@style/OnboardingButton.Light"
+                android:layout_width="@dimen/fragment_home_empty_button_width"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fragment_home_empty_button_margin"
+                android:paddingBottom="8dp"
+                android:paddingEnd="48dp"
+                android:paddingStart="48dp"
+                android:paddingTop="8dp"
+                android:text="@string/fragment_home_empty_action"/>
+
+        </LinearLayout>
 
     </FrameLayout>
-
 </layout>
