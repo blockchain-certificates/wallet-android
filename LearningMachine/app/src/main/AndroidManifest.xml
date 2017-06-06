@@ -13,8 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".ui.splash.SplashActivity"
-                  android:theme="@style/NoToolbarTheme.Splash">
+        <activity
+            android:name=".ui.splash.SplashActivity"
+            android:theme="@style/NoToolbarTheme.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -34,7 +35,7 @@
             android:name=".ui.onboarding.OnboardingActivity"
             android:theme="@style/NoToolbarTheme.Onboarding"/>
 
-        <activity android:name=".ui.home.HomeActivity" />
+        <activity android:name=".ui.home.HomeActivity"/>
 
         <activity
             android:name=".ui.settings.SettingsActivity"
@@ -70,6 +71,16 @@
 
         <activity
             android:name=".ui.cert.CertificateInfoActivity"/>
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.learningmachine.android.app.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/files"/>
+        </provider>
 
     </application>
 
