@@ -17,8 +17,8 @@ import android.widget.TextView;
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.IssuerManager;
 import com.learningmachine.android.app.data.bitcoin.BitcoinManager;
-import com.learningmachine.android.app.data.error.DoWebAuthInstead;
 import com.learningmachine.android.app.data.inject.Injector;
+import com.learningmachine.android.app.data.webservice.request.IssuerIntroductionRequest;
 import com.learningmachine.android.app.databinding.FragmentAddIssuerBinding;
 import com.learningmachine.android.app.ui.LMFragment;
 import com.learningmachine.android.app.ui.WebAuthActivity;
@@ -99,34 +99,35 @@ public class AddIssuerFragment extends LMFragment {
         String nonce = mBinding.addIssuerNonceEditText.getText()
                 .toString();
 
-        mIssuerManager.fetchIssuer(introUrl)
+        Observable.combineLatest(
+                mBitcoinManager.getBitcoinAddress(),
+                Observable.just(nonce),
+                mIssuerManager.fetchIssuer(introUrl),
+                IssuerIntroductionRequest::new)
                 .doOnSubscribe(() -> displayProgressDialog(R.string.fragment_add_issuer_adding_issuer_progress_dialog_message))
-                .flatMap(issuer -> issuer.usesWebAuth()
-                        ? Observable.error(new DoWebAuthInstead(issuer.getIntroUrl(), issuer.getIntroductionSuccessUrlString(), issuer.getIntroductionErrorUrlString()))
-                        : mIssuerManager.addIssuer(issuer, mBitcoinManager.getBitcoinAddress(), nonce))
                 .compose(bindToMainThread())
-                .subscribe(uuid -> {
-                    viewIssuer(uuid);
-                }, throwable -> {
-                    if (throwable instanceof DoWebAuthInstead) {
-                        hideProgressDialog();
-                        performWebAuth(nonce, (DoWebAuthInstead) throwable);
+                .subscribe(request -> {
+                    if (request.getIssuerResponse().usesWebAuth()) {
+                        performWebAuth(request);
                     } else {
-                        displayErrors(throwable, R.string.error_title_message);
+                        performStandardIssuerIntroduction(request);
                     }
-                });
+                }, throwable -> displayErrors(throwable, R.string.error_title_message));
     }
 
-    private void performWebAuth(String nonce, DoWebAuthInstead webAuthInstead) {
+    private void performStandardIssuerIntroduction(IssuerIntroductionRequest request) {
+        mIssuerManager.addIssuer(request)
+                .compose(bindToMainThread())
+                .subscribe(uuid -> viewIssuer(uuid), throwable -> displayErrors(throwable, R.string.error_title_message));
+    }
+
+    private void performWebAuth(IssuerIntroductionRequest request) {
         mBitcoinManager.getBitcoinAddress()
                 .doOnSubscribe(() -> displayProgressDialog(R.string.fragment_add_issuer_adding_issuer_progress_dialog_message))
                 .compose(bindToMainThread())
                 .subscribe(bitcoinAddress -> {
                     hideProgressDialog();
-                    String webIntroUrl = webAuthInstead.getIntroUrl();
-                    String successUrl = webAuthInstead.getSuccessUrl();
-                    String errorUrl = webAuthInstead.getErrorUrl();
-                    Intent intent = WebAuthActivity.newIntent(getContext(), webIntroUrl, nonce, bitcoinAddress, successUrl, errorUrl);
+                    Intent intent = WebAuthActivity.newIntent(getContext(), request);
                     startActivityForResult(intent, REQUEST_WEB_AUTH);
                 }, throwable -> displayErrors(throwable, R.string.error_title_message));
     }
@@ -145,7 +146,6 @@ public class AddIssuerFragment extends LMFragment {
                     .subscribe(uuid -> {
                         viewIssuer(uuid);
                     }, throwable -> displayErrors(throwable, R.string.error_title_message));
-
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }

@@ -56,11 +56,10 @@ public class IssuerManager {
         return mIssuerService.getIssuer(url);
     }
 
-    public Observable<String> addIssuer(IssuerResponse issuer, Observable<String> bitcoinAddressObservable, String nonce) {
-        return bitcoinAddressObservable.flatMap(bitcoinAddress -> {
-            IssuerIntroductionRequest request = new IssuerIntroductionRequest(bitcoinAddress, nonce);
-            return mIssuerService.postIntroduction(issuer.getIntroUrl(), request);
-        }).map(issuerResponse -> saveIssuer(issuer));
+    public Observable<String> addIssuer(IssuerIntroductionRequest request) {
+        IssuerResponse issuer = request.getIssuerResponse();
+        return mIssuerService.postIntroduction(issuer.getIntroUrl(), request)
+                .map(aVoid -> saveIssuer(issuer));
     }
 
     public String saveIssuer(IssuerResponse issuer) {

@@ -5,47 +5,55 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
 
+import com.learningmachine.android.app.data.webservice.request.IssuerIntroductionRequest;
+import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
+import timber.log.Timber;
+
 public class WebAuthActivity extends LMSingleFragmentActivity implements WebAuthFragment.WebAuthCallbacks {
     private static final String WEB_AUTH_SUCCESS = "WebAuthActivity.WebAuthSuccess";
+
     protected WebAuthFragment mWebAuthFragment;
 
     private static final String EXTRA_END_POINT = "WebAuthActivity.EndPoint";
-    private static final String EXTRA_NONCE = "WebAuthActivity.Nonce";
-    private static final String EXTRA_BITCOIN_ADDRESS = "WebAuthActivity.BitcoinAddress";
     private static final String EXTRA_SUCCESS_URL = "WebAuthActivity.SuccessURL";
     private static final String EXTRA_ERROR_URL = "WebAuthActivity.ErrorURL";
 
-    public static Intent newIntent(Context context, String endPoint, String nonce, String bitcoinAddress, String successURL, String errorURL) {
+    public static Intent newIntent(Context context, IssuerIntroductionRequest request) {
+        IssuerResponse issuer = request.getIssuerResponse();
+        String endPoint = issuer.getIntroUrl();
+        String successUrl = issuer.getIntroductionSuccessUrlString();
+        String errorUrl = issuer.getIntroductionErrorUrlString();
+        String bitcoinAddress = request.getBitcoinAddress();
+        String nonce = request.getNonce();
+
         Intent intent = new Intent(context, WebAuthActivity.class);
-        intent.putExtra(EXTRA_END_POINT, endPoint);
-        intent.putExtra(EXTRA_NONCE, nonce);
-        intent.putExtra(EXTRA_BITCOIN_ADDRESS, bitcoinAddress);
-        intent.putExtra(EXTRA_SUCCESS_URL, successURL);
-        intent.putExtra(EXTRA_ERROR_URL, errorURL);
+        intent.putExtra(EXTRA_SUCCESS_URL, successUrl);
+        intent.putExtra(EXTRA_ERROR_URL, errorUrl);
+        try {
+            String url = endPoint + "?bitcoinAddress=" + URLEncoder.encode(bitcoinAddress, "UTF-8") + "&nonce=" + URLEncoder.encode(nonce, "UTF-8");
+            intent.putExtra(EXTRA_END_POINT, url);
+        } catch (UnsupportedEncodingException e) {
+            Timber.e(e, "Could not create the web auth request for issuer introduction");
+        }
+
         return intent;
     }
 
     @Override
     protected Fragment createFragment() {
         String endPoint = getEndpoint();
-        String nonce = getNonce();
-        String bitcoinAddress = getBitcoinAddress();
         String successURL = getSuccessURL();
         String errorURL = getErrorURL();
-        mWebAuthFragment = WebAuthFragment.newInstance(endPoint, nonce, bitcoinAddress, successURL, errorURL);
+        mWebAuthFragment = WebAuthFragment.newInstance(endPoint, successURL, errorURL);
         return mWebAuthFragment;
     }
 
     private String getEndpoint() {
         return getIntent().getStringExtra(EXTRA_END_POINT);
-    }
-
-    private String getNonce() {
-        return getIntent().getStringExtra(EXTRA_NONCE);
-    }
-
-    private String getBitcoinAddress() {
-        return getIntent().getStringExtra(EXTRA_BITCOIN_ADDRESS);
     }
 
     private String getSuccessURL() {

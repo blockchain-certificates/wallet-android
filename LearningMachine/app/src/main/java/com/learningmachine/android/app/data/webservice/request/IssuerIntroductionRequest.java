@@ -1,6 +1,7 @@
 package com.learningmachine.android.app.data.webservice.request;
 
 import com.google.gson.annotations.SerializedName;
+import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 
 public class IssuerIntroductionRequest {
     @SerializedName("bitcoinAddress")
@@ -8,9 +9,12 @@ public class IssuerIntroductionRequest {
     @SerializedName("nonce")
     private String mNonce;
 
-    public IssuerIntroductionRequest(String bitcoinAddress, String nonce) {
+    private transient IssuerResponse mIssuerResponse;
+
+    public IssuerIntroductionRequest(String bitcoinAddress, String nonce, IssuerResponse issuerResponse) {
         mBitcoinAddress = bitcoinAddress;
         mNonce = nonce;
+        mIssuerResponse = issuerResponse;
     }
 
     public void setBitcoinAddress(String bitcoinAddress) {
@@ -29,4 +33,7 @@ public class IssuerIntroductionRequest {
         return mNonce;
     }
 
+    public IssuerResponse getIssuerResponse() {
+        return mIssuerResponse;
+    }
 }
