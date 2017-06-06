@@ -22,8 +22,8 @@ public class WebAuthFragment extends LMFragment {
 
     protected FragmentWebBinding mBinding;
     private String mEndPoint;
-    private String mSuccessURL;
-    private String mErrorURL;
+    private String mSuccessUrlString;
+    private String mErrorUrlString;
     private WebAuthCallbacks mCallbacks;
 
     public interface WebAuthCallbacks {
@@ -31,11 +31,11 @@ public class WebAuthFragment extends LMFragment {
         void onError();
     }
 
-    public static WebAuthFragment newInstance(String endPoint, String successURL, String errorURL) {
+    public static WebAuthFragment newInstance(String endPoint, String successUrlString, String errorUrlString) {
         Bundle args = new Bundle();
         args.putString(ARG_END_POINT, endPoint);
-        args.putString(ARG_SUCCESS_URL, successURL);
-        args.putString(ARG_ERROR_URL, errorURL);
+        args.putString(ARG_SUCCESS_URL, successUrlString);
+        args.putString(ARG_ERROR_URL, errorUrlString);
         WebAuthFragment fragment = new WebAuthFragment();
         fragment.setArguments(args);
         return fragment;
@@ -45,8 +45,8 @@ public class WebAuthFragment extends LMFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mEndPoint = getArguments().getString(ARG_END_POINT);
-        mSuccessURL = getArguments().getString(ARG_SUCCESS_URL);
-        mErrorURL = getArguments().getString(ARG_ERROR_URL);
+        mSuccessUrlString = getArguments().getString(ARG_SUCCESS_URL);
+        mErrorUrlString = getArguments().getString(ARG_ERROR_URL);
     }
 
     @Override
@@ -77,10 +77,10 @@ public class WebAuthFragment extends LMFragment {
         WebViewClient webViewClient = new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                if (mCallbacks != null && url.equals(mSuccessURL)) {
+                if (mCallbacks != null && url.equals(mSuccessUrlString)) {
                     mCallbacks.onSuccess();
                     return true;
-                } else if (mCallbacks != null && url.equals(mErrorURL)) {
+                } else if (mCallbacks != null && url.equals(mErrorUrlString)) {
                     mCallbacks.onError();
                     return true;
                 }

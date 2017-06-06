@@ -46,9 +46,9 @@ public class WebAuthActivity extends LMSingleFragmentActivity implements WebAuth
     @Override
     protected Fragment createFragment() {
         String endPoint = getEndpoint();
-        String successURL = getSuccessURL();
-        String errorURL = getErrorURL();
-        mWebAuthFragment = WebAuthFragment.newInstance(endPoint, successURL, errorURL);
+        String successUrlString = getSuccessUrlString();
+        String errorUrlString = getErrorUrlString();
+        mWebAuthFragment = WebAuthFragment.newInstance(endPoint, successUrlString, errorUrlString);
         return mWebAuthFragment;
     }
 
@@ -56,11 +56,11 @@ public class WebAuthActivity extends LMSingleFragmentActivity implements WebAuth
         return getIntent().getStringExtra(EXTRA_END_POINT);
     }
 
-    private String getSuccessURL() {
+    private String getSuccessUrlString() {
         return getIntent().getStringExtra(EXTRA_SUCCESS_URL);
     }
 
-    private String getErrorURL() {
+    private String getErrorUrlString() {
         return getIntent().getStringExtra(EXTRA_ERROR_URL);
     }
 
