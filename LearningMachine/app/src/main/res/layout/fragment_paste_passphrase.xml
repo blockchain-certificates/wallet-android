@@ -41,7 +41,7 @@
                 android:paddingTop="30dp"/>
 
             <Button
-                android:id="@+id/accept"
+                android:id="@+id/doneButton"
                 android:layout_width="@dimen/onboarding_container_width"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="29dp"
