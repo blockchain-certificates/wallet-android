@@ -122,14 +122,9 @@ public class AddIssuerFragment extends LMFragment {
     }
 
     private void performWebAuth(IssuerIntroductionRequest request) {
-        mBitcoinManager.getBitcoinAddress()
-                .doOnSubscribe(() -> displayProgressDialog(R.string.fragment_add_issuer_adding_issuer_progress_dialog_message))
-                .compose(bindToMainThread())
-                .subscribe(bitcoinAddress -> {
-                    hideProgressDialog();
-                    Intent intent = WebAuthActivity.newIntent(getContext(), request);
-                    startActivityForResult(intent, REQUEST_WEB_AUTH);
-                }, throwable -> displayErrors(throwable, R.string.error_title_message));
+        hideProgressDialog();
+        Intent intent = WebAuthActivity.newIntent(getContext(), request);
+        startActivityForResult(intent, REQUEST_WEB_AUTH);
     }
 
     @Override
