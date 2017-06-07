@@ -22,10 +22,8 @@ public class BitcoinUtils {
             return mnemonicCode.toMnemonic(seedData);
         } catch (IOException e) {
             Timber.e(e, "Unable to read word list.");
-            e.printStackTrace();
         } catch (MnemonicException.MnemonicLengthException e) {
             Timber.e(e, "Unable to create mnemonic from word list");
-            e.printStackTrace();
         }
         return null;
     }
