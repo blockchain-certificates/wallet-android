@@ -17,9 +17,9 @@
     <string name="onboarding_paste_passphrase_done_button">Done</string>
 
     <!-- Home -->
-    <string name="fragment_home_empty_title">YOU ARE READY!</string>
-    <string name="fragment_home_empty_description">Issuers will send you email with a link to add them. This will send a special code that represents you. If you already have their information, continue.</string>
-    <string name="fragment_home_empty_action">ADD ISSUER</string>
+    <string name="fragment_home_empty_title">You are ready!</string>
+    <string name="fragment_home_empty_description">Issuers will send you an email with a link to add them. This will send a special code that represents you. If you already have their information, continue.</string>
+    <string name="fragment_home_empty_action">Add Issuer</string>
 
     <!-- Settings -->
     <string name="settings">settings</string>
