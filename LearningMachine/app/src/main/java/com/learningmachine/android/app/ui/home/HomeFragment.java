@@ -65,6 +65,11 @@ public class HomeFragment extends LMFragment {
 
         setupRecyclerView();
 
+        mBinding.issuerAddButton.setOnClickListener(v -> {
+            Intent intent = AddIssuerActivity.newIntent(getContext());
+            startActivity(intent);
+        } );
+
         mBinding.issuerFloatingActionButton.setOnClickListener(v -> {
             Intent intent = AddIssuerActivity.newIntent(getContext());
             startActivity(intent);
