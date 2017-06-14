@@ -34,6 +34,10 @@ android {
         }
     }
 
+    packagingOptions {
+        exclude 'lib/x86_64/darwin/libscrypt.dylib'
+    }
+
     if (project.hasProperty("devBuild")) {
         // disable PNG crunching
         aaptOptions.cruncherEnabled = false
