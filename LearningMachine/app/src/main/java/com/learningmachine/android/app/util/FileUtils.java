@@ -39,7 +39,7 @@ public class FileUtils {
         try {
             Files.move(oldFile, newFile);
         } catch (IOException e) {
-            e.printStackTrace();
+            Timber.e(e, "Failed to rename the certificate file");
         }
     }
 
