@@ -38,8 +38,8 @@
                 android:paddingBottom="@dimen/list_item_issuer_textview_padding_bottom"
                 android:text="@{viewModel.title}"
                 android:textAlignment="center"
-                android:paddingLeft="4dp"
-                android:paddingRight="4dp"
+                android:paddingLeft="@dimen/list_item_issuer_textview_padding_left"
+                android:paddingRight="@dimen/list_item_issuer_textview_padding_right"
                 style="@style/Material.Light.Body1"/>
 
         </LinearLayout>
