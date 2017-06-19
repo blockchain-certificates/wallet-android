@@ -72,8 +72,6 @@ public class ViewPassphraseFragment extends OnboardingFragment {
 
     @Override
     public boolean isBackAllowed() {
-        // TODO uncomment
-//        return false;
         return true;
     }
 

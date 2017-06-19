@@ -35,11 +35,10 @@ public class SplashActivity extends LMActivity {
         switch (launchData.getLaunchType()) {
 
             case ONBOARDING:
-                // TODO uncomment
-//                if (mSharedPreferencesManager.isFirstLaunch()) {
+                if (mSharedPreferencesManager.isFirstLaunch()) {
                     startActivityAndFinish(new Intent(this, OnboardingActivity.class));
                     break;
-//                }
+                }
 
             case MAIN:
                 startActivityAndFinish(new Intent(this, HomeActivity.class));
