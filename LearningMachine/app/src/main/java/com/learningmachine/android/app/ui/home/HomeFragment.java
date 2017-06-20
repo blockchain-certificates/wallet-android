@@ -65,10 +65,9 @@ public class HomeFragment extends LMFragment {
 
         setupRecyclerView();
 
-        mBinding.issuerFloatingActionButton.setOnClickListener(v -> {
-            Intent intent = AddIssuerActivity.newIntent(getContext());
-            startActivity(intent);
-        });
+        mBinding.issuerAddButton.setOnClickListener(v -> addIssuer());
+
+        mBinding.issuerFloatingActionButton.setOnClickListener(v -> addIssuer());
 
         return mBinding.getRoot();
     }
@@ -99,6 +98,11 @@ public class HomeFragment extends LMFragment {
         return super.onOptionsItemSelected(item);
     }
 
+    private void addIssuer() {
+        Intent intent = AddIssuerActivity.newIntent(getContext());
+        startActivity(intent);
+    }
+
     private void setupRecyclerView() {
         IssuerAdapter adapter = new IssuerAdapter(mIssuerList);
         mBinding.issuerRecyclerview.setAdapter(adapter);
@@ -123,8 +127,8 @@ public class HomeFragment extends LMFragment {
                 .notifyDataSetChanged();
 
         boolean emptyIssuers = issuerList.isEmpty();
-        mBinding.issuerMainContent.setVisibility(emptyIssuers? View.GONE : View.VISIBLE);
-        mBinding.issuerEmptyContent.setVisibility(emptyIssuers? View.VISIBLE : View.GONE);
+        mBinding.issuerMainContent.setVisibility(emptyIssuers ? View.GONE : View.VISIBLE);
+        mBinding.issuerEmptyContent.setVisibility(emptyIssuers ? View.VISIBLE : View.GONE);
     }
 
     private class IssuerAdapter extends RecyclerView.Adapter<IssuerViewHolder> {

@@ -10,6 +10,8 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import timber.log.Timber;
+
 public class StringUtils {
 
     /**
@@ -66,7 +68,7 @@ public class StringUtils {
             messageDigest.update(string.getBytes(), 0, string.length());
             return new BigInteger(1, messageDigest.digest()).toString(16);
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            Timber.e(e, "Unexpectedly could not instantiate the MD5 digest");
         }
         return null;
     }

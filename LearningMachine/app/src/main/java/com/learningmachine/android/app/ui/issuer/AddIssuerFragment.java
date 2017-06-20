@@ -1,5 +1,6 @@
 package com.learningmachine.android.app.ui.issuer;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -17,16 +18,21 @@ import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.IssuerManager;
 import com.learningmachine.android.app.data.bitcoin.BitcoinManager;
 import com.learningmachine.android.app.data.inject.Injector;
+import com.learningmachine.android.app.data.webservice.request.IssuerIntroductionRequest;
 import com.learningmachine.android.app.databinding.FragmentAddIssuerBinding;
 import com.learningmachine.android.app.ui.LMFragment;
+import com.learningmachine.android.app.ui.WebAuthActivity;
 import com.learningmachine.android.app.util.StringUtils;
 
 import javax.inject.Inject;
+
+import rx.Observable;
 
 public class AddIssuerFragment extends LMFragment {
 
     private static final String ARG_ISSUER_URL = "AddIssuerFragment.IssuerUrl";
     private static final String ARG_ISSUER_NONCE = "AddIssuerFragment.IssuerNonce";
+    private static final int REQUEST_WEB_AUTH = 1;
 
     @Inject protected BitcoinManager mBitcoinManager;
     @Inject protected IssuerManager mIssuerManager;
@@ -93,16 +99,58 @@ public class AddIssuerFragment extends LMFragment {
         String nonce = mBinding.addIssuerNonceEditText.getText()
                 .toString();
 
-        mBitcoinManager.getBitcoinAddress()
+        Observable.combineLatest(
+                mBitcoinManager.getBitcoinAddress(),
+                Observable.just(nonce),
+                mIssuerManager.fetchIssuer(introUrl),
+                IssuerIntroductionRequest::new)
                 .doOnSubscribe(() -> displayProgressDialog(R.string.fragment_add_issuer_adding_issuer_progress_dialog_message))
-                .flatMap(bitcoinAddress -> mIssuerManager.addIssuer(introUrl, bitcoinAddress, nonce))
                 .compose(bindToMainThread())
-                .subscribe(uuid -> {
-                    hideProgressDialog();
-                    Intent intent = IssuerActivity.newIntent(getContext(), uuid);
-                    startActivity(intent);
-                    getActivity().finish();
+                .subscribe(request -> {
+                    if (request.getIssuerResponse().usesWebAuth()) {
+                        performWebAuth(request);
+                    } else {
+                        performStandardIssuerIntroduction(request);
+                    }
                 }, throwable -> displayErrors(throwable, R.string.error_title_message));
+    }
+
+    private void performStandardIssuerIntroduction(IssuerIntroductionRequest request) {
+        mIssuerManager.addIssuer(request)
+                .compose(bindToMainThread())
+                .subscribe(uuid -> viewIssuer(uuid), throwable -> displayErrors(throwable, R.string.error_title_message));
+    }
+
+    private void performWebAuth(IssuerIntroductionRequest request) {
+        hideProgressDialog();
+        Intent intent = WebAuthActivity.newIntent(getContext(), request);
+        startActivityForResult(intent, REQUEST_WEB_AUTH);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_WEB_AUTH) {
+            if (!WebAuthActivity.isWebAuthSuccess(data) || resultCode != Activity.RESULT_OK) {
+                return;
+            }
+            String introUrl = mBinding.addIssuerUrlEditText.getText().toString();
+            mIssuerManager.fetchIssuer(introUrl)
+                    .doOnSubscribe(() -> displayProgressDialog(R.string.fragment_add_issuer_adding_issuer_progress_dialog_message))
+                    .compose(bindToMainThread())
+                    .map(issuer -> mIssuerManager.saveIssuer(issuer))
+                    .subscribe(uuid -> {
+                        viewIssuer(uuid);
+                    }, throwable -> displayErrors(throwable, R.string.error_title_message));
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    private void viewIssuer(String uuid) {
+        hideProgressDialog();
+        Intent intent = IssuerActivity.newIntent(getContext(), uuid);
+        startActivity(intent);
+        getActivity().finish();
     }
 
     private TextView.OnEditorActionListener mActionListener = (v, actionId, event) -> {

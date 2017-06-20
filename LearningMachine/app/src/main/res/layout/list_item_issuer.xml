@@ -37,6 +37,9 @@
                 android:layout_height="wrap_content"
                 android:paddingBottom="@dimen/list_item_issuer_textview_padding_bottom"
                 android:text="@{viewModel.title}"
+                android:textAlignment="center"
+                android:paddingLeft="@dimen/list_item_issuer_textview_padding_left"
+                android:paddingRight="@dimen/list_item_issuer_textview_padding_right"
                 style="@style/Material.Light.Body1"/>
 
         </LinearLayout>
