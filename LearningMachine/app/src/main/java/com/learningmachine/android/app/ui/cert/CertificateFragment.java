@@ -98,7 +98,7 @@ public class CertificateFragment extends LMFragment {
                 verifyCertificate();
                 return true;
             case R.id.fragment_certificate_share_menu_item:
-                showShareTypeDialog();
+                shareCertificate();
                 return true;
             case R.id.fragment_certificate_info_menu_item:
                 viewCertificateInfo();
@@ -111,7 +111,7 @@ public class CertificateFragment extends LMFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_SHARE_METHOD) {
             boolean shareFile = resultCode == AlertDialogFragment.RESULT_NEGATIVE;
-            shareCertificate(shareFile);
+            shareCertificateTypeResult(shareFile);
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -155,6 +155,19 @@ public class CertificateFragment extends LMFragment {
         }
     }
 
+    private void shareCertificate() {
+        String certUuid = getArguments().getString(ARG_CERTIFICATE_UUID);
+        mCertificateManager.getCertificate(certUuid)
+                .compose(bindToMainThread())
+                .subscribe(certificateRecord -> {
+                    if (certificateRecord.urlStringContainsUrl()) {
+                        showShareTypeDialog();
+                    } else {
+                        shareCertificateTypeResult(true);
+                    }
+                }, throwable -> Timber.e(throwable, "Unable to share certificate"));
+    }
+
     private void showShareTypeDialog() {
         displayAlert(REQUEST_SHARE_METHOD,
                 R.string.fragment_certificate_share_message,
@@ -162,7 +175,7 @@ public class CertificateFragment extends LMFragment {
                 R.string.fragment_certificate_share_file_button_title);
     }
 
-    private void shareCertificate(boolean shareFile) {
+    private void shareCertificateTypeResult(boolean shareFile) {
         mIssuerManager.certificateShared(mCertUuid)
                 .compose(bindToMainThread())
                 .subscribe(aVoid -> Timber.d("Issuer analytics: Certificate shared"),
@@ -184,10 +197,9 @@ public class CertificateFragment extends LMFragment {
 
                     if (shareFile) {
                         File certFile = FileUtils.getCertificateFile(getContext(), certUuid);
-                        Uri uri = FileProvider.getUriForFile(getContext(),
-                                FILE_PROVIDER_AUTHORITY,
-                                certFile);
-                        String type = getContext().getContentResolver().getType(uri);
+                        Uri uri = FileProvider.getUriForFile(getContext(), FILE_PROVIDER_AUTHORITY, certFile);
+                        String type = getContext().getContentResolver()
+                                .getType(uri);
                         intent.setType(type);
                         intent.putExtra(Intent.EXTRA_STREAM, uri);
                         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);

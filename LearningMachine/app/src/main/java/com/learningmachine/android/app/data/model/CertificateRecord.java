@@ -1,23 +1,20 @@
 package com.learningmachine.android.app.data.model;
 
+import android.util.Patterns;
+import android.webkit.URLUtil;
+
 import com.google.gson.annotations.SerializedName;
 import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 import com.learningmachine.android.app.util.StringUtils;
 
 public class CertificateRecord {
 
-    @SerializedName("language")
-    private String mLanguage;
-    @SerializedName("name")
-    private String mName;
-    @SerializedName("subtitle")
-    private String mSubtitle;
-    @SerializedName("issuer")
-    private IssuerResponse mIssuerResponse;
-    @SerializedName("description")
-    private String mDescription;
-    @SerializedName("type")
-    private String mType;
+    @SerializedName("language") private String mLanguage;
+    @SerializedName("name") private String mName;
+    @SerializedName("subtitle") private String mSubtitle;
+    @SerializedName("issuer") private IssuerResponse mIssuerResponse;
+    @SerializedName("description") private String mDescription;
+    @SerializedName("type") private String mType;
 
     // Must be set manually
     private String mUuid;
@@ -123,5 +120,11 @@ public class CertificateRecord {
 
     public String getMetadata() {
         return mMetadata;
+    }
+
+    public boolean urlStringContainsUrl() {
+        return !StringUtils.isEmpty(mUrlString)
+                && URLUtil.isValidUrl(mUrlString)
+                && Patterns.WEB_URL.matcher(mUrlString).matches();
     }
 }
