@@ -8,12 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.learningmachine.android.app.R;
-import com.learningmachine.android.app.databinding.FragmentGeneratePasswordBinding;
+import com.learningmachine.android.app.databinding.FragmentGeneratePassphraseBinding;
 
 public class GeneratePassphraseFragment extends OnboardingFragment {
 
     private Callback mCallback;
-    private FragmentGeneratePasswordBinding mBinding;
+    private FragmentGeneratePassphraseBinding mBinding;
 
     public interface Callback {
         void onGeneratePassphraseClick();
@@ -31,7 +31,7 @@ public class GeneratePassphraseFragment extends OnboardingFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_generate_password, container, false);
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_generate_passphrase, container, false);
 
         mBinding.generatePassphrase.setOnClickListener(view -> mCallback.onGeneratePassphraseClick());
 

@@ -6,20 +6,51 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="add_identity_top_padding">13dp</dimen>
 
-    <!--Onboarding-->
+    <!-- Splash -->
+
+    <dimen name="splash_logo_margin_top">124dp</dimen>
+
+    <!-- Onboarding -->
 
     <dimen name="onboarding_logo_margin_top">30dp</dimen>
+
+    <dimen name="onboarding_button_padding_vertical">8dp</dimen>
+    <dimen name="onboarding_button_padding_horizontal">48dp</dimen>
     <dimen name="onboarding_button_border_width">1dp</dimen>
-    <dimen name="onboarding_container_width">282dp</dimen>
+    <dimen name="onboarding_button_width">260dp</dimen>
+
+    <dimen name="onboarding_choose_new_account_margin_top">104dp</dimen>
+    <dimen name="onboarding_choose_button_margin_bottom">22dp</dimen>
+
+    <dimen name="onboarding_generate_passphrase_textive_width">282dp</dimen>
+    <dimen name="onboarding_generate_container_margin_top">66dp</dimen>
+    <dimen name="onboarding_generate_title_margin_top">21dp</dimen>
+    <dimen name="onboarding_generate_passphrase_button_margin_top">29dp</dimen>
+
+    <dimen name="onboarding_view_passphrase_imageview_size">150dp</dimen>
+    <dimen name="onboarding_view_passphrase_imageview_margin_top">56dp</dimen>
+    <dimen name="onboarding_view_passphrase_title_margin_vertical">21dp</dimen>
+    <dimen name="onboarding_view_passphrase_textview_margin_top">27dp</dimen>
+    <dimen name="onboarding_view_passphrase_textview_padding_veritical">24dp</dimen>
+    <dimen name="onboarding_view_passphrase_textview_padding_horizontal">12dp</dimen>
+    <dimen name="onboarding_view_passphrase_button_margin_top">29dp</dimen>
+
+    <dimen name="onboarding_paste_passphrase_title_margin_top">66dp</dimen>
+    <dimen name="onboarding_paste_passphrase_edittext_margin_top">28dp</dimen>
+    <dimen name="onboarding_paste_passphrase_edittext_padding_horizontal">12dp</dimen>
+    <dimen name="onboarding_paste_passphrase_edittext_padding_vertical">24dp</dimen>
+    <dimen name="onboarding_paste_passphrase_button_margin_top">29dp</dimen>
 
     <!-- Home -->
+
     <dimen name="fragment_home_empty_title_margin">32dp</dimen>
     <dimen name="fragment_home_empty_description_margin">22dp</dimen>
     <dimen name="fragment_home_empty_description_width">282dp</dimen>
     <dimen name="fragment_home_empty_button_margin">39dp</dimen>
     <dimen name="fragment_home_empty_button_width">260dp</dimen>
+    <dimen name="fragment_home_fab_margin">16dp</dimen>
 
-    <!--Add Issuer-->
+    <!-- Add Issuer -->
 
     <dimen name="fragment_add_issuer_linear_layout_top_padding">22dp</dimen>
     <dimen name="fragment_add_issuer_linear_layout_padding_horizontal">16dp</dimen>
@@ -30,7 +61,7 @@
     <dimen name="fragment_add_issuer_identity_textview_bottom_padding">23dp</dimen>
     <dimen name="fragment_add_issuer_textsize">14sp</dimen>
 
-    <!--Add Certificate-->
+    <!-- Add Certificate -->
 
     <dimen name="fragment_add_certificate_linear_layout_top_padding">20dp</dimen>
     <dimen name="fragment_add_certificate_linear_layout_start_padding">16dp</dimen>

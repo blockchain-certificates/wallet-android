@@ -2,65 +2,64 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <ImageView
+            android:layout_width="@dimen/onboarding_view_passphrase_imageview_size"
+            android:layout_height="@dimen/onboarding_view_passphrase_imageview_size"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/onboarding_view_passphrase_imageview_margin_top"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_generate_passphrase_success"/>
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="top|center_horizontal"
-            android:layout_marginTop="@dimen/onboarding_logo_margin_top"
-            android:contentDescription="@null"
-            android:src="@drawable/ic_splash"/>
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/onboarding_view_passphrase_title_margin_vertical"
+            android:layout_marginTop="@dimen/onboarding_view_passphrase_title_margin_vertical"
+            android:text="@string/onboarding_passphrase_title"
+            android:textAllCaps="true"
+            style="@style/Material.Title.Light"/>
 
-        <LinearLayout
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:text="@string/onboarding_passphrase_description"
+            style="@style/Material.Light.Body1"/>
+
+        <TextView
+            android:id="@+id/onboarding_passphrase_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/onboarding_view_passphrase_textview_margin_top"
             android:gravity="center"
-            android:orientation="vertical">
+            android:paddingBottom="@dimen/onboarding_view_passphrase_textview_padding_veritical"
+            android:paddingEnd="@dimen/onboarding_view_passphrase_textview_padding_horizontal"
+            android:paddingStart="@dimen/onboarding_view_passphrase_textview_padding_horizontal"
+            android:paddingTop="@dimen/onboarding_view_passphrase_textview_padding_veritical"
+            android:textIsSelectable="true"
+            style="@style/Material.Light.Body1.OnboardingPassphraseField"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/onboarding_passphrase_title"
-                android:textAllCaps="true"
-                style="@style/Material.Title.Light"/>
+        <Button
+            android:id="@+id/onboarding_done_button"
+            android:layout_width="@dimen/onboarding_button_width"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/onboarding_view_passphrase_button_margin_top"
+            android:paddingBottom="@dimen/onboarding_button_padding_vertical"
+            android:paddingEnd="@dimen/onboarding_button_padding_horizontal"
+            android:paddingStart="@dimen/onboarding_button_padding_horizontal"
+            android:paddingTop="@dimen/onboarding_button_padding_vertical"
+            android:text="@string/onboarding_passphrase_done_button"
+            style="@style/OnboardingButton.Light"/>
 
-            <TextView
-                android:layout_width="@dimen/onboarding_container_width"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="21dp"
-                android:gravity="center"
-                android:text="@string/onboarding_passphrase_description"
-                style="@style/Material.Light.Body1"/>
+    </LinearLayout>
 
-            <TextView
-                android:id="@+id/onboarding_passphrase_text_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="27dp"
-                android:gravity="center"
-                android:paddingBottom="30dp"
-                android:paddingEnd="15dp"
-                android:paddingStart="15dp"
-                android:paddingTop="30dp"
-                android:textIsSelectable="true"
-                style="@style/OnboardingPasswordField"/>
-
-            <Button
-                android:id="@+id/onboarding_done_button"
-                android:layout_width="@dimen/onboarding_container_width"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="29dp"
-                android:paddingBottom="8dp"
-                android:paddingEnd="48dp"
-                android:paddingStart="48dp"
-                android:paddingTop="8dp"
-                android:text="@string/onboarding_passphrase_done_button"
-                style="@style/OnboardingButton.Light"/>
-
-        </LinearLayout>
-    </FrameLayout>
 </layout>

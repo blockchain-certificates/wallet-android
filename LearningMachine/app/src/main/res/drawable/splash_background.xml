@@ -5,7 +5,7 @@
 
     <item
         android:gravity="top|center"
-        android:top="120dp">
+        android:top="@dimen/splash_logo_margin_top">
 
         <bitmap
             android:gravity="center_horizontal|top"

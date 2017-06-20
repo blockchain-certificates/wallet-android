@@ -26,7 +26,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|right"
-                android:layout_margin="16dp"
+                android:layout_margin="@dimen/fragment_home_fab_margin"
                 android:src="@drawable/ic_action_add"
                 app:backgroundTint="@color/fab_color"/>
 
@@ -40,34 +40,35 @@
             android:orientation="vertical">
 
             <TextView
-                style="@style/Material.Title.Light"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/fragment_home_empty_title_margin"
                 android:text="@string/fragment_home_empty_title"
-                android:textAllCaps="true"/>
+                android:textAllCaps="true"
+                style="@style/Material.Title.Light"/>
 
             <TextView
-                style="@style/Material.Light.Body1"
                 android:layout_width="@dimen/fragment_home_empty_description_width"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/fragment_home_empty_description_margin"
                 android:gravity="center"
-                android:text="@string/fragment_home_empty_description"/>
+                android:text="@string/fragment_home_empty_description"
+                style="@style/Material.Light.Body1"/>
 
             <Button
                 android:id="@+id/issuer_add_button"
-                style="@style/OnboardingButton.Light"
                 android:layout_width="@dimen/fragment_home_empty_button_width"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/fragment_home_empty_button_margin"
-                android:paddingBottom="8dp"
-                android:paddingEnd="48dp"
-                android:paddingStart="48dp"
-                android:paddingTop="8dp"
-                android:text="@string/fragment_home_empty_action"/>
+                android:paddingBottom="@dimen/onboarding_button_padding_vertical"
+                android:paddingEnd="@dimen/onboarding_button_padding_horizontal"
+                android:paddingStart="@dimen/onboarding_button_padding_horizontal"
+                android:paddingTop="@dimen/onboarding_button_padding_vertical"
+                android:text="@string/fragment_home_empty_action"
+                style="@style/OnboardingButton.Light"/>
 
         </LinearLayout>
 
     </FrameLayout>
+
 </layout>
