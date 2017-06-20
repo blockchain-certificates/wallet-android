@@ -72,7 +72,7 @@ public class ViewPassphraseFragment extends OnboardingFragment {
 
     @Override
     public boolean isBackAllowed() {
-        return true;
+        return false;
     }
 
     private void onDone() {
