@@ -70,6 +70,8 @@
     <dimen name="list_item_issuer_imageview_margin_bottom">25dp</dimen>
     <dimen name="list_item_issuer_imageview_margin_horizontal">37dp</dimen>
     <dimen name="list_item_issuer_textview_padding_bottom">12dp</dimen>
+    <dimen name="list_item_issuer_textview_padding_left">4dp</dimen>
+    <dimen name="list_item_issuer_textview_padding_right">4dp</dimen>
 
     <!-- Issuer -->
 
