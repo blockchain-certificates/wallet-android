@@ -9,9 +9,11 @@ import com.learningmachine.android.app.util.DateUtils;
 public class IssuerInfoViewModel extends BaseObservable {
 
     private IssuerRecord mIssuer;
+    private String mBitcoinAddress;
 
-    public IssuerInfoViewModel(IssuerRecord issuer) {
+    public IssuerInfoViewModel(IssuerRecord issuer, String bitcoinAddress) {
         mIssuer = issuer;
+        mBitcoinAddress = bitcoinAddress;
     }
 
     @Bindable
@@ -25,7 +27,7 @@ public class IssuerInfoViewModel extends BaseObservable {
 
     @Bindable
     public String getSharedAddress() {
-        return mIssuer.getPublicKeyAddress();
+        return mBitcoinAddress;
     }
 
     @Bindable
