@@ -37,6 +37,7 @@
             android:paddingEnd="@dimen/onboarding_paste_passphrase_edittext_padding_horizontal"
             android:paddingStart="@dimen/onboarding_paste_passphrase_edittext_padding_horizontal"
             android:paddingTop="@dimen/onboarding_paste_passphrase_edittext_padding_vertical"
+            android:privateImeOptions="nm"
             android:scrollHorizontally="false"
             style="@style/Material.Light.Body1"/>
 
