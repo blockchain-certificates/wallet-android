@@ -77,10 +77,10 @@ public class WebAuthFragment extends LMFragment {
         WebViewClient webViewClient = new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                if (mCallbacks != null && url.equals(mSuccessUrlString)) {
+                if (mCallbacks != null && url.contains(mSuccessUrlString)) {
                     mCallbacks.onSuccess();
                     return true;
-                } else if (mCallbacks != null && url.equals(mErrorUrlString)) {
+                } else if (mCallbacks != null && url.contains(mErrorUrlString)) {
                     mCallbacks.onError();
                     return true;
                 }
