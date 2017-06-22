@@ -3,24 +3,28 @@ package com.learningmachine.android.app.ui.issuer;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.IssuerManager;
+import com.learningmachine.android.app.data.bitcoin.BitcoinManager;
 import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.databinding.FragmentIssuerInfoBinding;
 import com.learningmachine.android.app.ui.LMFragment;
 
 import javax.inject.Inject;
 
+import rx.Observable;
 
 public class IssuerInfoFragment extends LMFragment {
 
     private static final String ARG_ISSUER_UUID = "IssuerInfoFragment.IssuerUuid";
 
     @Inject protected IssuerManager mIssuerManager;
+    @Inject protected BitcoinManager mBitcoinManager;
 
     private FragmentIssuerInfoBinding mBinding;
 
@@ -47,10 +51,10 @@ public class IssuerInfoFragment extends LMFragment {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_issuer_info, container, false);
 
         String issuerUuid = getArguments().getString(ARG_ISSUER_UUID);
-        mIssuerManager.getIssuer(issuerUuid)
+        Observable.combineLatest(mIssuerManager.getIssuer(issuerUuid), mBitcoinManager.getBitcoinAddress(), Pair::new)
                 .compose(bindToMainThread())
-                .subscribe(issuer -> {
-                    IssuerInfoViewModel viewModel = new IssuerInfoViewModel(issuer);
+                .subscribe(pair -> {
+                    IssuerInfoViewModel viewModel = new IssuerInfoViewModel(pair.first, pair.second);
                     mBinding.setIssuerInfo(viewModel);
                 });
 
