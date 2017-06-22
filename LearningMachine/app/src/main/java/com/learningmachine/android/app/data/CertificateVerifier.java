@@ -36,11 +36,12 @@ import rx.subjects.BehaviorSubject;
 import timber.log.Timber;
 
 public class CertificateVerifier {
+    private static final String JSONLD_FILE_PATH = "file:///android_asset/www/jsonld.html";
 
     private final WebView mWebView;
-    private Context mContext;
-    private BlockchainService mBlockchainService;
-    private IssuerService mIssuerService;
+    private final Context mContext;
+    private final BlockchainService mBlockchainService;
+    private final IssuerService mIssuerService;
 
     private BehaviorSubject<CertificateVerificationStatus> mUpdates;
 
@@ -127,7 +128,6 @@ public class CertificateVerifier {
     }
 
     private void configureWebView(String serializedDoc, HashComparison jsonldCallback) {
-        String html = "<html><head><script src=\"https://cdnjs.cloudflare.com/ajax/libs/jsonld/0.4.12/jsonld.js\"></script></head></html>";
         mWebView.addJavascriptInterface(jsonldCallback, "jsonldCallback");
         WebSettings webSettings = mWebView.getSettings();
         // Enable JavaScript
@@ -146,7 +146,7 @@ public class CertificateVerifier {
                 view.loadUrl("javascript:" + jsString);
             }
         });
-        mWebView.loadData(html, "text/html", "UTF-8");
+        mWebView.loadUrl(JSONLD_FILE_PATH);
     }
 
     private static class HashComparison {
