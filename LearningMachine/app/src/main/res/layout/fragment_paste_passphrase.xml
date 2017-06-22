@@ -32,10 +32,13 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/onboarding_paste_passphrase_edittext_margin_top"
             android:gravity="center"
+            android:inputType="textMultiLine|textNoSuggestions|textVisiblePassword"
             android:paddingBottom="@dimen/onboarding_paste_passphrase_edittext_padding_vertical"
             android:paddingEnd="@dimen/onboarding_paste_passphrase_edittext_padding_horizontal"
             android:paddingStart="@dimen/onboarding_paste_passphrase_edittext_padding_horizontal"
             android:paddingTop="@dimen/onboarding_paste_passphrase_edittext_padding_vertical"
+            android:privateImeOptions="nm"
+            android:scrollHorizontally="false"
             style="@style/Material.Light.Body1"/>
 
         <Button
