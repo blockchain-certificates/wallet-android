@@ -1,5 +1,6 @@
 package com.learningmachine.android.app.ui;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -73,14 +74,15 @@ public class WebAuthFragment extends LMFragment {
         return mBinding.getRoot();
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     protected void setupWebView() {
         WebViewClient webViewClient = new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                if (mCallbacks != null && url.equals(mSuccessUrlString)) {
+                if (mCallbacks != null && url.startsWith(mSuccessUrlString)) {
                     mCallbacks.onSuccess();
                     return true;
-                } else if (mCallbacks != null && url.equals(mErrorUrlString)) {
+                } else if (mCallbacks != null && url.startsWith(mErrorUrlString)) {
                     mCallbacks.onError();
                     return true;
                 }

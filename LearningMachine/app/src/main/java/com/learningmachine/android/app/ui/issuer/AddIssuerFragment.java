@@ -138,9 +138,7 @@ public class AddIssuerFragment extends LMFragment {
                     .doOnSubscribe(() -> displayProgressDialog(R.string.fragment_add_issuer_adding_issuer_progress_dialog_message))
                     .compose(bindToMainThread())
                     .map(issuer -> mIssuerManager.saveIssuer(issuer))
-                    .subscribe(uuid -> {
-                        viewIssuer(uuid);
-                    }, throwable -> displayErrors(throwable, R.string.error_title_message));
+                    .subscribe(this::viewIssuer, throwable -> displayErrors(throwable, R.string.error_title_message));
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
