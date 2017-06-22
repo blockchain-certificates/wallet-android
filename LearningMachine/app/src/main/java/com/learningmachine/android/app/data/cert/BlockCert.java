@@ -5,7 +5,6 @@ import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 
 public interface BlockCert {
 
-
     String getCertUid();
     String getCertName();
     String getCertDescription();

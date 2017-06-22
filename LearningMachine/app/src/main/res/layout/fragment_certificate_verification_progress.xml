@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="@dimen/fragment_certificate_verification_width"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/fragment_certificate_verification_bottom_padding"
+            android:paddingEnd="@dimen/fragment_certificate_verification_right_padding"
+            android:paddingStart="@dimen/fragment_certificate_verification_left_padding"
+            android:paddingTop="@dimen/fragment_certificate_verification_top_padding">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:paddingBottom="@dimen/fragment_certificate_verification_title_padding_bottom"
+                android:text="@string/fragment_verify_cert_title"
+                android:textColor="@color/black_de"
+                style="@style/Material.Title"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ProgressBar
+                    android:id="@+id/progress_bar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:paddingEnd="@dimen/fragment_certificate_verification_progress_padding_right"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:gravity="start"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/title_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/Material.Light.Subhead.Secondary"/>
+
+                    <TextView
+                        android:id="@+id/message_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:lineSpacingExtra="0dp"
+                        style="@style/Material.Light.Subhead.Secondary"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/cancel_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:fontFamily="sans-serif-medium"
+                android:paddingTop="@dimen/fragment_certificate_verification_cancel_padding_top"
+                android:text="@string/fragment_verify_cert_cancel_text_view_title"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fragment_certificate_verification_cancel_text_view_size"/>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+</layout>
