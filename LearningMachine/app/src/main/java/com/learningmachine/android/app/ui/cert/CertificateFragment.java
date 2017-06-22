@@ -21,6 +21,7 @@ import android.webkit.WebViewClient;
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.CertificateManager;
 import com.learningmachine.android.app.data.CertificateVerifier;
+import com.learningmachine.android.app.data.CertificateVerifier.CertificateVerificationResult;
 import com.learningmachine.android.app.data.CertificateVerifier.CertificateVerificationStatus;
 import com.learningmachine.android.app.data.IssuerManager;
 import com.learningmachine.android.app.data.cert.BlockCert;
@@ -254,7 +255,7 @@ public class CertificateFragment extends LMFragment implements VerficationCancel
         }
     }
 
-    private void showVerificationResultDialog(CertificateVerificationStatus status) {
+    private void showVerificationResultDialog(CertificateVerificationResult status) {
         displayAlert(0,
                 status.getTitleResId(),
                 status.getMessageResId(),
@@ -329,9 +330,9 @@ public class CertificateFragment extends LMFragment implements VerficationCancel
                 .subscribe(localHash -> {
                     Timber.d("Success!");
                     hideVerificationProgressDialog();
-                    showVerificationResultDialog(CertificateVerificationStatus.VALID_CERT);
+                    showVerificationResultDialog(CertificateVerificationResult.VALID_CERT);
                 }, throwable -> {
-                    showVerificationResultDialog(CertificateVerificationStatus.INVALID_CERT);
+                    showVerificationResultDialog(CertificateVerificationResult.INVALID_CERT);
                     Timber.e(throwable, "Error!");
                     displayErrors(throwable, R.string.error_title_message); // TODO: use correct error string
                 });

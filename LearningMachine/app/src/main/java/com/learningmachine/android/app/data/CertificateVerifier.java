@@ -36,6 +36,7 @@ import rx.subjects.BehaviorSubject;
 import timber.log.Timber;
 
 public class CertificateVerifier {
+
     private final WebView mWebView;
     private Context mContext;
     private BlockchainService mBlockchainService;
@@ -187,30 +188,48 @@ public class CertificateVerifier {
     }
 
     public enum CertificateVerificationStatus {
-        CHECKING_MERKLE(1, 0, R.string.cert_verification_step_checking_merkle),
-        CHECKING_AUTHENTICITY(2, 0, R.string.cert_verification_step_checking_authenticity),
-        COMPARING_HASHES(3, 0, R.string.cert_verification_step_comparing_hashes),
         // unused for now
-//        COMPUTING_LOCAL_HASH(1, 0, R.string.cert_verification_step_computing_local_hash),
-//        FETCHING_REMOTE_HASH(2, 0, R.string.cert_verification_step_fetching_remote_hash),
-//        CHECKING_RECEIPT(5, 0, R.string.cert_verification_step_checking_receipt),
-//        CHECKING_ISSUER_SIGNATURE(7, 0, R.string.cert_verification_step_checking_issuer_signature),
-//        CHECKING_CERT_STATUS(8, 0, R.string.cert_verification_step_checking_cert_status),
-        VALID_CERT(9, R.string.cert_verification_success_title, R.string.cert_verification_step_valid_cert),
-        INVALID_CERT(9, R.string.cert_verification_failure_title, R.string.cert_verification_step_invalid_cert);
+//        COMPUTING_LOCAL_HASH(1, R.string.cert_verification_step_computing_local_hash),
+//        FETCHING_REMOTE_HASH(2, R.string.cert_verification_step_fetching_remote_hash),
+//        CHECKING_RECEIPT(5, R.string.cert_verification_step_checking_receipt),
+//        CHECKING_ISSUER_SIGNATURE(7, R.string.cert_verification_step_checking_issuer_signature),
+//        CHECKING_CERT_STATUS(8, R.string.cert_verification_step_checking_cert_status),
+        CHECKING_MERKLE(1, R.string.cert_verification_step_checking_merkle),
+        CHECKING_AUTHENTICITY(2, R.string.cert_verification_step_checking_authenticity),
+        COMPARING_HASHES(3, R.string.cert_verification_step_comparing_hashes);
 
         private int mStepNumber;
-        private int mTitleResId;
         private int mMessageResId;
 
-        CertificateVerificationStatus(int stepNumber, int titleResId, int messageResId) {
+        CertificateVerificationStatus(int stepNumber, int messageResId) {
             mStepNumber = stepNumber;
-            mTitleResId = titleResId;
             mMessageResId = messageResId;
         }
 
         public int getStepNumber() {
             return mStepNumber;
+        }
+
+        public int getMessageResId() {
+            return mMessageResId;
+        }
+
+        public static int getTotalSteps() {
+            return CertificateVerificationStatus.values().length;
+        }
+    }
+
+    public enum CertificateVerificationResult {
+
+        VALID_CERT(R.string.cert_verification_success_title, R.string.cert_verification_step_valid_cert),
+        INVALID_CERT(R.string.cert_verification_failure_title, R.string.cert_verification_step_invalid_cert);
+
+        private int mTitleResId;
+        private int mMessageResId;
+
+        CertificateVerificationResult(int titleResId, int messageResId) {
+            mTitleResId = titleResId;
+            mMessageResId = messageResId;
         }
 
         public int getTitleResId() {
@@ -219,10 +238,6 @@ public class CertificateVerifier {
 
         public int getMessageResId() {
             return mMessageResId;
-        }
-
-        public static int getTotalSteps() {
-            return 3;
         }
     }
 }
