@@ -1,7 +1,10 @@
 package com.learningmachine.android.app;
 
+import android.content.pm.ApplicationInfo;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.multidex.MultiDexApplication;
+import android.webkit.WebView;
 
 import com.learningmachine.android.app.data.CertificateManager;
 import com.learningmachine.android.app.data.IssuerManager;
@@ -37,6 +40,7 @@ public class LMApplication extends MultiDexApplication {
         setupDagger();
         setupTimber();
         setupJodaTime();
+        enableWebDebugging();
     }
 
     @Override
@@ -58,5 +62,14 @@ public class LMApplication extends MultiDexApplication {
 
     protected void setupJodaTime() {
         JodaTimeAndroid.init(getApplicationContext());
+    }
+
+    // From https://developers.google.com/web/tools/chrome-devtools/remote-debugging/webviews
+    // This enables all WebViews to be inspected by chrome on debuggable builds.
+    private void enableWebDebugging() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            if (0 != (getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE))
+            { WebView.setWebContentsDebuggingEnabled(true); }
+        }
     }
 }
