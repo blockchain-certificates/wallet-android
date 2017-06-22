@@ -5,6 +5,8 @@ import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,6 +21,8 @@ import android.webkit.WebViewClient;
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.CertificateManager;
 import com.learningmachine.android.app.data.CertificateVerifier;
+import com.learningmachine.android.app.data.CertificateVerifier.CertificateVerificationResult;
+import com.learningmachine.android.app.data.CertificateVerifier.CertificateVerificationStatus;
 import com.learningmachine.android.app.data.IssuerManager;
 import com.learningmachine.android.app.data.cert.BlockCert;
 import com.learningmachine.android.app.data.inject.Injector;
@@ -27,6 +31,7 @@ import com.learningmachine.android.app.data.model.IssuerRecord;
 import com.learningmachine.android.app.data.model.TxRecord;
 import com.learningmachine.android.app.databinding.FragmentCertificateBinding;
 import com.learningmachine.android.app.dialog.AlertDialogFragment;
+import com.learningmachine.android.app.dialog.CertificateVerficationProgressFragment;
 import com.learningmachine.android.app.ui.LMFragment;
 import com.learningmachine.android.app.util.FileUtils;
 
@@ -37,9 +42,12 @@ import javax.inject.Inject;
 import rx.Observable;
 import timber.log.Timber;
 
-public class CertificateFragment extends LMFragment {
+import static com.learningmachine.android.app.dialog.CertificateVerficationProgressFragment.VerficationCancelListener;
+
+public class CertificateFragment extends LMFragment implements VerficationCancelListener {
 
     private static final String ARG_CERTIFICATE_UUID = "CertificateFragment.CertificateUuid";
+    private static final String TAG_VERIFICATION_PROGRESS_DIALOG = "CertificateFragment.CertificateVerficationProgressFragment";
     private static final String INDEX_FILE_PATH = "file:///android_asset/www/index.html";
     private static final String FILE_PROVIDER_AUTHORITY = "com.learningmachine.android.app.fileprovider";
     private static final String TEXT_MIME_TYPE = "text/plain";
@@ -51,6 +59,7 @@ public class CertificateFragment extends LMFragment {
 
     private FragmentCertificateBinding mBinding;
     private String mCertUuid;
+    private boolean mCancelVerification;
 
     public static CertificateFragment newInstance(String certificateUuid) {
         Bundle args = new Bundle();
@@ -180,9 +189,8 @@ public class CertificateFragment extends LMFragment {
                 .compose(bindToMainThread())
                 .subscribe(aVoid -> Timber.d("Issuer analytics: Certificate shared"),
                         throwable -> Timber.e(throwable, "Issuer has no analytics url."));
-        String certUuid = getArguments().getString(ARG_CERTIFICATE_UUID);
-        Observable.combineLatest(mCertificateManager.getCertificate(certUuid),
-                mIssuerManager.getIssuerForCertificate(certUuid),
+        Observable.combineLatest(mCertificateManager.getCertificate(mCertUuid),
+                mIssuerManager.getIssuerForCertificate(mCertUuid),
                 CertificateIssuerHolder::new)
                 .compose(bindToMainThread())
                 .subscribe(holder -> {
@@ -196,7 +204,7 @@ public class CertificateFragment extends LMFragment {
                     String sharingText;
 
                     if (shareFile) {
-                        File certFile = FileUtils.getCertificateFile(getContext(), certUuid);
+                        File certFile = FileUtils.getCertificateFile(getContext(), mCertUuid);
                         Uri uri = FileProvider.getUriForFile(getContext(), FILE_PROVIDER_AUTHORITY, certFile);
                         String type = getContext().getContentResolver()
                                 .getType(uri);
@@ -236,16 +244,55 @@ public class CertificateFragment extends LMFragment {
     }
 
     private void viewCertificateInfo() {
-        String certUuid = getArguments().getString(ARG_CERTIFICATE_UUID);
-        Intent intent = CertificateInfoActivity.newIntent(getActivity(), certUuid);
+        Intent intent = CertificateInfoActivity.newIntent(getActivity(), mCertUuid);
         startActivity(intent);
     }
 
+    private void showVerficationProgressDialog() {
+        CertificateVerficationProgressFragment fragment = CertificateVerficationProgressFragment.newInstance();
+        fragment.show(getFragmentManager(), TAG_VERIFICATION_PROGRESS_DIALOG);
+        fragment.setCancelClickListener(this);
+    }
+
+    private void updateVerficationProgressDialog(CertificateVerificationStatus status) {
+        Fragment fragment = getFragmentManager().findFragmentByTag(TAG_VERIFICATION_PROGRESS_DIALOG);
+        if (fragment instanceof CertificateVerficationProgressFragment) {
+            ((CertificateVerficationProgressFragment) fragment).updateVerificationStatus(status);
+        }
+    }
+
+    private void hideVerificationProgressDialog() {
+        Fragment fragment = getFragmentManager().findFragmentByTag(TAG_VERIFICATION_PROGRESS_DIALOG);
+        if (fragment instanceof DialogFragment) {
+            ((DialogFragment) fragment).dismissAllowingStateLoss();
+        }
+    }
+
+    private void showVerificationResultDialog(CertificateVerificationResult status) {
+        displayAlert(0,
+                status.getTitleResId(),
+                status.getMessageResId(),
+                R.string.dialog_verify_cert_result_positive_button_title,
+                0);
+    }
+
+    @Override
+    public void onVerificationCancelClick() {
+        mCancelVerification = true;
+    }
+
     private void verifyCertificate() {
+        mCancelVerification = false;
+        showVerficationProgressDialog();
+
+        mCertificateVerifier.getUpdates()
+                .subscribe(this::updateVerficationProgressDialog);
+
         mIssuerManager.certificateVerified(mCertUuid)
                 .compose(bindToMainThread())
                 .subscribe(aVoid -> Timber.d("Issuer analytics: Certificate verified"),
                         throwable -> Timber.e(throwable, "Issuer has no analytics url."));
+
         mCertificateVerifier.loadCertificate(mCertUuid)
                 .compose(bindToMainThread())
                 .subscribe(certificate -> {
@@ -258,6 +305,10 @@ public class CertificateFragment extends LMFragment {
     }
 
     private void verifyBitcoinTransactionRecord(BlockCert certificate) {
+        if (mCancelVerification) {
+            return;
+        }
+
         mCertificateVerifier.verifyBitcoinTransactionRecord(certificate)
                 .compose(bindToMainThread())
                 .subscribe(txRecord -> {
@@ -270,23 +321,31 @@ public class CertificateFragment extends LMFragment {
     }
 
     private void verifyIssuer(BlockCert certificate, TxRecord txRecord) {
+        if (mCancelVerification) {
+            return;
+        }
+
         mCertificateVerifier.verifyIssuer(certificate, txRecord)
                 .compose(bindToMainThread())
-                .subscribe(issuerResponse -> {
-                    verifyJsonLd(certificate, txRecord);
-                }, throwable -> {
+                .subscribe(issuerResponse -> verifyJsonLd(certificate, txRecord), throwable -> {
                     Timber.e(throwable, "Error! Couldn't verify issuer");
                     displayErrors(throwable, R.string.error_title_message); // TODO: use correct error string
                 });
     }
 
     private void verifyJsonLd(BlockCert certificate, TxRecord txRecord) {
+        if (mCancelVerification) {
+            return;
+        }
+
         mCertificateVerifier.verifyJsonLd(certificate, txRecord)
                 .compose(bindToMainThread())
                 .subscribe(localHash -> {
                     Timber.d("Success!");
-                    showSnackbar(getView(), R.string.certificate_verification_success);
+                    hideVerificationProgressDialog();
+                    showVerificationResultDialog(CertificateVerificationResult.VALID_CERT);
                 }, throwable -> {
+                    showVerificationResultDialog(CertificateVerificationResult.INVALID_CERT);
                     Timber.e(throwable, "Error!");
                     displayErrors(throwable, R.string.error_title_message); // TODO: use correct error string
                 });

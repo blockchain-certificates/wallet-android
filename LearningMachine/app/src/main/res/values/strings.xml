@@ -112,10 +112,26 @@
     <string name="fragment_certificate_info_delete_warning_negative_title">Cancel</string>
 
     <!-- Certificate Verification -->
-    <string name="certificate_verification_success">Certificate Verified!</string>
+
+    <string name="cert_verification_step_computing_local_hash">Computing local hash…</string>
+    <string name="cert_verification_step_fetching_remote_hash">Fetching remote hash…</string>
+    <string name="cert_verification_step_comparing_hashes">Comparing local and remote hashes…</string>
+    <string name="cert_verification_step_checking_merkle">Checking merkle root…</string>
+    <string name="cert_verification_step_checking_receipt">Checking receipt…</string>
+    <string name="cert_verification_step_checking_authenticity">Checking authenticity…</string>
+    <string name="cert_verification_step_checking_issuer_signature">Checking issuer\'s signature…</string>
+    <string name="cert_verification_step_checking_cert_status">Checking if the certificate has been revoked…</string>
+    <string name="cert_verification_step_valid_cert">Valid certificate</string>
+    <string name="cert_verification_step_invalid_cert">Not a valid certificate</string>
     <string name="error_invalid_certificate_json">The certificate file is invalid</string>
     <string name="error_cannot_load_certificate_json">Could not load the certificate file</string>
     <string name="error_remote_and_local_hash_mismatch">Local hash doesn\'t match remote hash</string>
+    <string name="fragment_verify_cert_title">Verifying</string>
+    <string name="fragment_verify_cert_step_format">Step %1$d of %2$d</string>
+    <string name="fragment_verify_cert_cancel_text_view_title">Cancel</string>
+    <string name="cert_verification_success_title">Success!</string>
+    <string name="cert_verification_failure_title">Failure</string>
+    <string name="dialog_verify_cert_result_positive_button_title">OK</string>
 
     <!-- Dialog Error Messages -->
 
@@ -125,6 +141,7 @@
     <string name="ime_action_done">Done</string>
 
     <!--Certificate Info Fragment-->
+
     <string name="fragment_certificate_info_issuer_title">Issuer</string>
     <string name="fragment_certificate_info_issuer_issue_date">Issue Date</string>
     <string name="cert_metadata_boolean_true">True</string>

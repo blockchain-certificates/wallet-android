@@ -32,13 +32,17 @@ import javax.inject.Inject;
 
 import rx.Emitter;
 import rx.Observable;
+import rx.subjects.BehaviorSubject;
 import timber.log.Timber;
 
 public class CertificateVerifier {
+
     private final WebView mWebView;
     private Context mContext;
     private BlockchainService mBlockchainService;
     private IssuerService mIssuerService;
+
+    private BehaviorSubject<CertificateVerificationStatus> mUpdates;
 
     @Inject
     public CertificateVerifier(Context context, BlockchainService blockchainService, IssuerService issuerService) {
@@ -46,6 +50,12 @@ public class CertificateVerifier {
         mBlockchainService = blockchainService;
         mIssuerService = issuerService;
         mWebView = new WebView(mContext);
+
+        mUpdates = BehaviorSubject.create();
+    }
+
+    public BehaviorSubject<CertificateVerificationStatus> getUpdates() {
+        return mUpdates;
     }
 
     public Observable<BlockCert> loadCertificate(String certificateUuid) {
@@ -65,6 +75,7 @@ public class CertificateVerifier {
     }
 
     public Observable<TxRecord> verifyBitcoinTransactionRecord(BlockCert certificate) {
+        mUpdates.onNext(CertificateVerificationStatus.CHECKING_MERKLE);
         String sourceId = certificate.getSourceId();
         return mBlockchainService.getBlockchain(sourceId)
                 .flatMap(txRecord -> verifyBitcoinTransactionRecord(certificate, txRecord));
@@ -73,7 +84,6 @@ public class CertificateVerifier {
     private Observable<TxRecord> verifyBitcoinTransactionRecord(BlockCert certificate, TxRecord txRecord) {
         String merkleRoot = certificate.getMerkleRoot();
         String remoteHash = txRecord.getRemoteHash();
-
         if (remoteHash == null || !remoteHash.equals(merkleRoot)) {
             // TODO: show an error
             Timber.e("The transaction record hash doesn't match the certificate's Merkle root");
@@ -85,6 +95,7 @@ public class CertificateVerifier {
     }
 
     public Observable<IssuerResponse> verifyIssuer(BlockCert certificate, TxRecord txRecord) {
+        mUpdates.onNext(CertificateVerificationStatus.CHECKING_AUTHENTICITY);
         String issuerId = certificate.getIssuerId();
         return mIssuerService.getIssuer(issuerId)
                 .flatMap(issuerResponse -> verifyIssuer(issuerResponse, txRecord));
@@ -101,6 +112,7 @@ public class CertificateVerifier {
     }
 
     public Observable<String> verifyJsonLd(BlockCert certificate, TxRecord txRecord) {
+        mUpdates.onNext(CertificateVerificationStatus.COMPARING_HASHES);
         String remoteHash = txRecord.getRemoteHash();
         JsonObject documentNode = certificate.getDocumentNode();
         if (documentNode == null) {
@@ -118,7 +130,7 @@ public class CertificateVerifier {
         String html = "<html><head><script src=\"https://cdnjs.cloudflare.com/ajax/libs/jsonld/0.4.12/jsonld.js\"></script></head></html>";
         mWebView.addJavascriptInterface(jsonldCallback, "jsonldCallback");
         WebSettings webSettings = mWebView.getSettings();
-        // Enable JavaScript.
+        // Enable JavaScript
         webSettings.setJavaScriptEnabled(true);
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
@@ -172,6 +184,60 @@ public class CertificateVerifier {
                 Timber.e(e, String.format("Remote hash [%s] does not match local hash [%s]", mRemoteHash, localHash));
                 mEmitter.onError(e);
             }
+        }
+    }
+
+    public enum CertificateVerificationStatus {
+        // unused for now
+//        COMPUTING_LOCAL_HASH(1, R.string.cert_verification_step_computing_local_hash),
+//        FETCHING_REMOTE_HASH(2, R.string.cert_verification_step_fetching_remote_hash),
+//        CHECKING_RECEIPT(5, R.string.cert_verification_step_checking_receipt),
+//        CHECKING_ISSUER_SIGNATURE(7, R.string.cert_verification_step_checking_issuer_signature),
+//        CHECKING_CERT_STATUS(8, R.string.cert_verification_step_checking_cert_status),
+        CHECKING_MERKLE(1, R.string.cert_verification_step_checking_merkle),
+        CHECKING_AUTHENTICITY(2, R.string.cert_verification_step_checking_authenticity),
+        COMPARING_HASHES(3, R.string.cert_verification_step_comparing_hashes);
+
+        private int mStepNumber;
+        private int mMessageResId;
+
+        CertificateVerificationStatus(int stepNumber, int messageResId) {
+            mStepNumber = stepNumber;
+            mMessageResId = messageResId;
+        }
+
+        public int getStepNumber() {
+            return mStepNumber;
+        }
+
+        public int getMessageResId() {
+            return mMessageResId;
+        }
+
+        public static int getTotalSteps() {
+            return CertificateVerificationStatus.values().length;
+        }
+    }
+
+    public enum CertificateVerificationResult {
+
+        VALID_CERT(R.string.cert_verification_success_title, R.string.cert_verification_step_valid_cert),
+        INVALID_CERT(R.string.cert_verification_failure_title, R.string.cert_verification_step_invalid_cert);
+
+        private int mTitleResId;
+        private int mMessageResId;
+
+        CertificateVerificationResult(int titleResId, int messageResId) {
+            mTitleResId = titleResId;
+            mMessageResId = messageResId;
+        }
+
+        public int getTitleResId() {
+            return mTitleResId;
+        }
+
+        public int getMessageResId() {
+            return mMessageResId;
         }
     }
 }

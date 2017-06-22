@@ -8,10 +8,10 @@ import android.support.annotation.StringRes;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.text.TextUtils;
+
+import com.learningmachine.android.app.util.StringUtils;
 
 public class AlertDialogFragment extends DialogFragment {
-
 
     public static final int RESULT_POSITIVE = 1;
     public static final int RESULT_NEGATIVE = 0;
@@ -83,16 +83,17 @@ public class AlertDialogFragment extends DialogFragment {
         String positiveButtonMessage = args.getString(ARG_POSITIVE_BUTTON_MESSAGE);
         String negativeButtonMessage = args.getString(ARG_NEGATIVE_BUTTON_MESSAGE);
 
-        if (TextUtils.isEmpty(positiveButtonMessage)) {
+        if (StringUtils.isEmpty(positiveButtonMessage)) {
             positiveButtonMessage = getString(android.R.string.ok);
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity()).setMessage(message)
                 .setPositiveButton(positiveButtonMessage, (dialog, which) -> onButtonTapped(RESULT_POSITIVE));
-        if (!TextUtils.isEmpty(title)) {
+
+        if (!StringUtils.isEmpty(title)) {
             builder.setTitle(title);
         }
-        if (!TextUtils.isEmpty(negativeButtonMessage)) {
+        if (!StringUtils.isEmpty(negativeButtonMessage)) {
             builder.setNegativeButton(negativeButtonMessage, (dialog, which) -> onButtonTapped(RESULT_NEGATIVE));
         }
 

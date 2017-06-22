@@ -119,6 +119,18 @@
     <dimen name="issuer_info_textview_padding_bottom">16dp</dimen>
     <dimen name="issuer_info_viewmodel_textview_bottom_padding">29dp</dimen>
 
+    <!-- Certificate Verification -->
+
+    <dimen name="fragment_certificate_verification_width">280dp</dimen>
+    <dimen name="fragment_certificate_verification_top_padding">21dp</dimen>
+    <dimen name="fragment_certificate_verification_left_padding">24dp</dimen>
+    <dimen name="fragment_certificate_verification_right_padding">17dp</dimen>
+    <dimen name="fragment_certificate_verification_bottom_padding">14dp</dimen>
+    <dimen name="fragment_certificate_verification_title_padding_bottom">12dp</dimen>
+    <dimen name="fragment_certificate_verification_progress_padding_right">13dp</dimen>
+    <dimen name="fragment_certificate_verification_cancel_padding_top">18dp</dimen>
+    <dimen name="fragment_certificate_verification_cancel_text_view_size">14sp</dimen>
+
     <!--Certificate Info-->
 
     <dimen name="certificate_info_viewmodel_textview_bottom_padding">29dp</dimen>
