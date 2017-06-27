@@ -12,16 +12,12 @@ import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.data.inject.LMComponent;
 import com.learningmachine.android.app.data.inject.LMGraph;
 import com.learningmachine.android.app.data.preferences.SharedPreferencesManager;
+import com.learningmachine.android.app.util.BitcoinUtils;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
-import org.joda.time.DateTime;
-
 import javax.inject.Inject;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
 public class LMApplication extends MultiDexApplication {
@@ -41,6 +37,7 @@ public class LMApplication extends MultiDexApplication {
         setupTimber();
         setupJodaTime();
         enableWebDebugging();
+        setupMnemonicCode();
     }
 
     @Override
@@ -68,8 +65,13 @@ public class LMApplication extends MultiDexApplication {
     // This enables all WebViews to be inspected by chrome on debuggable builds.
     private void enableWebDebugging() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            if (0 != (getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE))
-            { WebView.setWebContentsDebuggingEnabled(true); }
+            if (0 != (getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE)) {
+                WebView.setWebContentsDebuggingEnabled(true);
+            }
         }
+    }
+
+    private void setupMnemonicCode() {
+        BitcoinUtils.init(getApplicationContext());
     }
 }

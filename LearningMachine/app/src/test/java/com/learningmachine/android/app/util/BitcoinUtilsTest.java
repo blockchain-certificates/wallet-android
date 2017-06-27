@@ -8,7 +8,10 @@ import com.learningmachine.android.app.LMConstants;
 
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.NetworkParameters;
+import org.bitcoinj.core.Utils;
 import org.bitcoinj.crypto.ChildNumber;
+import org.bitcoinj.crypto.MnemonicCode;
+import org.bitcoinj.crypto.MnemonicException;
 import org.bitcoinj.params.MainNetParams;
 import org.bitcoinj.wallet.DeterministicKeyChain;
 import org.bitcoinj.wallet.DeterministicSeed;
@@ -53,27 +56,52 @@ public class BitcoinUtilsTest {
         String mnemonic = StringUtils.join(" ", seedPhrase);
 
         assertFalse("Mnemonic phrase should not be empty", mnemonic.isEmpty());
-        assertEquals("0-seed should generate simple mnemonic phrase", mnemonic, expectedMnemonic);
+        assertEquals("0-seed should generate simple mnemonic phrase", expectedMnemonic, mnemonic);
     }
 
     @Test
-    public void testKeychainAddressGeneration() throws UnreadableWalletException {
-        byte[] seedData = new byte[32]; // all zeros
+    public void testAbandonArt() throws MnemonicException.MnemonicLengthException, MnemonicException.MnemonicChecksumException, MnemonicException.MnemonicWordException {
+        String bip39seed = "408b285c123836004f4b8842c89324c1f01382450c0d439af345ba7fc49acf705489c6fc77dbd4e3dc1dd8cc6bc9f043db8ada1e243c4a0eafb290d399480840";
+        byte[] seedData = Utils.HEX.decode(bip39seed);
+
+        String expectedMnemonic = "abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon art";
+        List<String> seedPhrase = BitcoinUtils.generateMnemonic(mContext, seedData);
+        assertFalse(ListUtils.isEmpty(seedPhrase));
+
+        byte[] anotherSeedData = MnemonicCode.toSeed(Arrays.asList(expectedMnemonic.split(" ")), "");
+        String anotherSeedEncoded = Utils.HEX.encode(anotherSeedData);
+        seedPhrase = MnemonicCode.INSTANCE.toMnemonic(seedData);
+        byte[] entropy = MnemonicCode.INSTANCE.toEntropy(Arrays.asList(expectedMnemonic.split(" ")));
+        String entropyEncoded = Utils.HEX.encode(entropy);
+
+        String mnemonic = StringUtils.join(" ", seedPhrase);
+
+        assertFalse("Mnemonic phrase should not be empty", mnemonic.isEmpty());
+        assertEquals("0-seed should generate simple mnemonic phrase", expectedMnemonic, mnemonic);
+    }
+
+    @Test
+    public void testKeychainAddressGeneration() throws UnreadableWalletException, MnemonicException {
+        byte[] seedData = new byte[64]; // all zeros
+        String bip39seed = "408b285c123836004f4b8842c89324c1f01382450c0d439af345ba7fc49acf705489c6fc77dbd4e3dc1dd8cc6bc9f043db8ada1e243c4a0eafb290d399480840";
+        seedData = Utils.HEX.decode(bip39seed);
         String seedPhrase = "abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon art";
+        byte[] entropy = MnemonicCode.INSTANCE.toEntropy(Arrays.asList(seedPhrase.split(" ")));
         String englishWords = StringUtils.join(" ", Arrays.asList(ENGLISH_WORD_ARRAY));
-        DeterministicSeed deterministicSeed = new DeterministicSeed(englishWords,
-                seedData,
+        DeterministicSeed deterministicSeed = new DeterministicSeed(//englishWords,
+                entropy, // seedData
                 LMConstants.WALLET_PASSPHRASE,
                 LMConstants.WALLET_CREATION_TIME_SECONDS);
         NetworkParameters params = MainNetParams.get();
-//        KeyChainGroup keyChainGroup = new KeyChainGroup(params, deterministicSeed);
-        M44KeyChainGroup keyChainGroup = new M44KeyChainGroup(params, deterministicSeed);
+        KeyChainGroup keyChainGroup = new KeyChainGroup(params, deterministicSeed);
+        keyChainGroup.addAndActivateHDChain(new M44KeyChain(deterministicSeed));
+//        M44KeyChainGroup keyChainGroup = new M44KeyChainGroup(params, deterministicSeed);
         Wallet wallet = new Wallet(params, keyChainGroup);
 //        Address currentReceiveAddress = wallet.currentReceiveAddress();
         Address firstAddress = wallet.freshReceiveAddress();
         Address secondAddress = wallet.freshReceiveAddress();
-        assertEquals("1GJetgbaGvD3ztwF5bh8AKb2RCCkizxus", firstAddress);
-        assertEquals("14YGtBBBxGdxkGN1XYM5yNPFAhy7TzGCMW", secondAddress);
+        assertEquals("1KBdbBJRVYffWHWWZ1moECfdVBSEnDpLHi", firstAddress.toBase58());
+        assertEquals("1EiJMaaahrhpbhgaNzMeUe1ZoiXdbBhWhR", secondAddress.toBase58());
     }
 
     public static class M44KeyChain extends DeterministicKeyChain {
@@ -92,7 +120,7 @@ public class BitcoinUtilsTest {
 
         public M44KeyChainGroup(NetworkParameters params, DeterministicSeed seed) {
             super(params, seed);
-//            chains.clear();
+            chains.clear();
             addAndActivateHDChain(new M44KeyChain(seed));
 //            chains.push(new M44KeyChain(seed));
         }
