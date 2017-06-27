@@ -149,36 +149,36 @@ repositories {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile "com.android.support:appcompat-v7:$SUPPORT_VERSION"
-    compile "com.android.support:recyclerview-v7:$SUPPORT_VERSION"
-    compile "com.android.support:design:$SUPPORT_VERSION"
-    compile "com.android.support:multidex:$MULTIDEX_VERSION"
-    compile "org.bitcoinj:bitcoinj-core:$BITCOINJ_VERSION"
-    compile "com.google.dagger:dagger:$DAGGER_VERSION"
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "com.android.support:appcompat-v7:$SUPPORT_VERSION"
+    implementation "com.android.support:recyclerview-v7:$SUPPORT_VERSION"
+    implementation "com.android.support:design:$SUPPORT_VERSION"
+    implementation "com.android.support:multidex:$MULTIDEX_VERSION"
+    implementation "org.bitcoinj:bitcoinj-core:$BITCOINJ_VERSION"
+    implementation "com.google.dagger:dagger:$DAGGER_VERSION"
     annotationProcessor "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
-    compile "com.jakewharton.timber:timber:$TIMBER_VERSION"
-    compile "net.danlew:android.joda:$JODATIMEANDROID_VERSION"
-    compile "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
-    compile "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION"
-    compile "com.squareup.retrofit2:adapter-rxjava:$RETROFIT_VERSION"
-    compile "com.squareup.okhttp3:logging-interceptor:$LOGGINGINTERCEPTOR_VERSION"
-    compile "com.google.code.gson:gson:$GSON_VERSION"
-    compile "io.reactivex:rxjava:$RXJAVA_VERSION"
-    compile "io.reactivex:rxandroid:$RXANDROID_VERSION"
-    compile "com.trello:rxlifecycle:$RXLIFECYCLE_VERSION"
-    compile "com.trello:rxlifecycle-android:$RXLIFECYCLE_VERSION"
-    compile "nl.littlerobots.rxlint:rxlint:$RXLINT_VERSION"
-    compile "com.squareup.picasso:picasso:$PICASSO_VERSION"
+    implementation "com.jakewharton.timber:timber:$TIMBER_VERSION"
+    implementation "net.danlew:android.joda:$JODATIMEANDROID_VERSION"
+    implementation "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
+    implementation "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION"
+    implementation "com.squareup.retrofit2:adapter-rxjava:$RETROFIT_VERSION"
+    implementation "com.squareup.okhttp3:logging-interceptor:$LOGGINGINTERCEPTOR_VERSION"
+    implementation "com.google.code.gson:gson:$GSON_VERSION"
+    implementation "io.reactivex:rxjava:$RXJAVA_VERSION"
+    implementation "io.reactivex:rxandroid:$RXANDROID_VERSION"
+    implementation "com.trello:rxlifecycle:$RXLIFECYCLE_VERSION"
+    implementation "com.trello:rxlifecycle-android:$RXLIFECYCLE_VERSION"
+    implementation "nl.littlerobots.rxlint:rxlint:$RXLINT_VERSION"
+    implementation "com.squareup.picasso:picasso:$PICASSO_VERSION"
 
     androidTestCompile("com.android.support.test.espresso:espresso-core:$ESPRESSO_VERSION", {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    androidTestCompile "org.mockito:mockito-core:$MOCKITO_VERSION"
+    androidTestImplementation "org.mockito:mockito-core:$MOCKITO_VERSION"
 
-    testCompile "junit:junit:$JUNIT_VERSION"
-    testCompile "org.mockito:mockito-core:$MOCKITO_VERSION"
-    testCompile "org.robolectric:robolectric:$ROBOLECTRIC_VERSION"
-    testCompile "org.robolectric:shadows-multidex:$ROBOLECTRIC_VERSION"
-    testCompile "joda-time:joda-time:$JODATIME_VERSION"
+    testImplementation "junit:junit:$JUNIT_VERSION"
+    testImplementation "org.mockito:mockito-core:$MOCKITO_VERSION"
+    testImplementation "org.robolectric:robolectric:$ROBOLECTRIC_VERSION"
+    testImplementation "org.robolectric:shadows-multidex:$ROBOLECTRIC_VERSION"
+    testImplementation "joda-time:joda-time:$JODATIME_VERSION"
 }
