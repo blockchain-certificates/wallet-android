@@ -66,13 +66,13 @@ public class BitcoinManager {
 
     private Observable<Wallet> createWallet() {
         SecureRandom random = new SecureRandom();
-        byte[] seedData = random.generateSeed(LMConstants.WALLET_SEED_BYTE_SIZE);
-        buildWallet(seedData);
+        byte[] entropy = random.generateSeed(LMConstants.WALLET_SEED_BYTE_SIZE);
+        buildWallet(entropy);
         return Observable.just(mWallet);
     }
 
-    private Observable<Wallet> buildWallet(byte[] seedData) {
-        mWallet = BitcoinUtils.createWallet(mNetworkParameters, seedData);
+    private Observable<Wallet> buildWallet(byte[] entropy) {
+        mWallet = BitcoinUtils.createWallet(mNetworkParameters, entropy);
         return saveWallet();
     }
 
