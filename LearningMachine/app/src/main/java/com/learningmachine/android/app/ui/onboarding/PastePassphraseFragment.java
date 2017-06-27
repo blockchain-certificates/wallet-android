@@ -6,11 +6,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.bitcoin.BitcoinManager;
@@ -57,7 +55,7 @@ public class PastePassphraseFragment extends OnboardingFragment {
                 .subscribe(wallet -> {
                     startActivity(new Intent(getActivity(), HomeActivity.class));
                     getActivity().finish();
-                });
+                }, e -> displayErrors(e, R.string.error_title_message));
     }
 
     private class PastePassphraseTextWatcher implements TextWatcher {

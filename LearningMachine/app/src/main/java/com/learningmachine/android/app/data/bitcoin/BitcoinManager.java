@@ -4,6 +4,8 @@ import android.content.Context;
 import android.support.annotation.VisibleForTesting;
 
 import com.learningmachine.android.app.LMConstants;
+import com.learningmachine.android.app.R;
+import com.learningmachine.android.app.data.error.ExceptionWithResourceString;
 import com.learningmachine.android.app.data.store.CertificateStore;
 import com.learningmachine.android.app.data.store.IssuerStore;
 import com.learningmachine.android.app.util.BitcoinUtils;
@@ -131,10 +133,10 @@ public class BitcoinManager {
 
     public Observable<Wallet> setPassphrase(String newPassphrase) {
         if (StringUtils.isEmpty(newPassphrase)) {
-            return Observable.error(new Exception("Passphrase cannot be empty"));
+            return Observable.error(new ExceptionWithResourceString(R.string.error_invalid_passphrase_empty));
         }
         if (!BitcoinUtils.isValidPassphrase(newPassphrase)) {
-            return Observable.error(new Exception("Invalid passphrase"));
+            return Observable.error(new ExceptionWithResourceString(R.string.error_invalid_passphrase_malformed));
         }
         mIssuerStore.reset();
         mCertificateStore.reset();
