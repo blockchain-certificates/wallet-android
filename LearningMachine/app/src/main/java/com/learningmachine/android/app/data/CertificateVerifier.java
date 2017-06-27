@@ -121,7 +121,7 @@ public class CertificateVerifier {
         }
         String serializedDoc = documentNode.toString();
         Handler handler = new Handler(Looper.getMainLooper());
-        return Observable.fromEmitter(emitter -> {
+        return Observable.create(emitter -> {
             HashComparison jsonldCallback = new HashComparison(emitter, remoteHash);
             handler.post(() -> configureWebView(serializedDoc, jsonldCallback));
         }, Emitter.BackpressureMode.DROP);
