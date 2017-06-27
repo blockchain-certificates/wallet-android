@@ -18,6 +18,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 
 public class BitcoinUtilsTest {
@@ -81,5 +82,17 @@ public class BitcoinUtilsTest {
         byte[] seedBytes = keyChainSeed.getSeedBytes();
         String encodedSeedBytes = Utils.HEX.encode(seedBytes);
         assertEquals(bip39seed, encodedSeedBytes);
+    }
+
+    @Test
+    public void detectsValidPassphrases() {
+        String seedPhrase = "abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon art";
+        assertTrue("This should be a valid phrase", BitcoinUtils.isValidPassphrase(seedPhrase));
+    }
+
+    @Test
+    public void detectsInvalidPassphrases() {
+        String seedPhrase = "This phrase is too short and not random enough";
+        assertFalse("This should be an invalid phrase", BitcoinUtils.isValidPassphrase(seedPhrase));
     }
 }

@@ -133,8 +133,9 @@ public class BitcoinManager {
         if (StringUtils.isEmpty(newPassphrase)) {
             return Observable.error(new Exception("Passphrase cannot be empty"));
         }
-        // TODO: validate passphrase
-        List<String> newPassphraseList = StringUtils.split(newPassphrase, PASSPHRASE_DELIMETER);
+        if (!BitcoinUtils.isValidPassphrase(newPassphrase)) {
+            return Observable.error(new Exception("Invalid passphrase"));
+        }
         mIssuerStore.reset();
         mCertificateStore.reset();
         return buildWallet(newPassphrase);

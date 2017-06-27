@@ -68,4 +68,14 @@ public class BitcoinUtils {
         keyChainGroup.addAndActivateHDChain(new BIP44AccountZeroKeyChain(deterministicSeed));
         return new Wallet(params, keyChainGroup);
     }
+
+    public static boolean isValidPassphrase(String passphrase) {
+        try {
+            byte[] entropy = MnemonicCode.INSTANCE.toEntropy(Arrays.asList(passphrase.split(" ")));
+            return entropy.length > 0;
+        } catch (MnemonicException e) {
+            Timber.e(e, "Invalid passphrase");
+            return false;
+        }
+    }
 }
