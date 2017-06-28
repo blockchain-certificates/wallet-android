@@ -4,10 +4,8 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.webkit.JavascriptInterface;
-import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 
 import com.google.gson.JsonObject;
 import com.learningmachine.android.app.R;
@@ -22,6 +20,7 @@ import com.learningmachine.android.app.util.FileUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -119,34 +118,47 @@ public class CertificateVerifier {
         if (documentNode == null) {
             return Observable.error(new ExceptionWithResourceString(R.string.error_invalid_certificate_json));
         }
-        String serializedDoc = documentNode.toString();
         Handler handler = new Handler(Looper.getMainLooper());
         return Observable.create(emitter -> {
+            String serializedDoc = documentNode.toString();
+            File certsDir = new File(mContext.getFilesDir(), "certs");
+            File file = null;
+            try {
+                file = File.createTempFile("jsonld", "html", certsDir);
+            } catch (IOException e) {
+                Timber.e(e, "Couldn't create a temp file for JSONLD normalization");
+                emitter.onError(e);
+                return;
+            }
+            try (FileWriter out = new FileWriter(file)) {
+                String options = "{algorithm: 'URDNA2015', format: 'application/nquads'}";
+                String jsResultHandler = "function(err, result) { jsonldCallback.result(err, result); }";
+                out.write("<html><head><script src=\"https://cdnjs.cloudflare.com/ajax/libs/jsonld/0.4.12/jsonld.js\"></script><script><!--\n");
+                out.write("(function() { jsonld.normalize(");
+                out.write(serializedDoc);
+                out.write(", ");
+                out.write(options);
+                out.write(", ");
+                out.write(jsResultHandler);
+                out.write("); })()");
+                out.write("\n//--></script></head></html>");
+            } catch (Exception e) {
+                Timber.e(e, "Couldn't save the certificate document node");
+                emitter.onError(e);
+                return;
+            }
             HashComparison jsonldCallback = new HashComparison(emitter, remoteHash);
-            handler.post(() -> configureWebView(serializedDoc, jsonldCallback));
+            File finalFile = file;
+            handler.post(() -> configureWebView(serializedDoc, finalFile, jsonldCallback));
         }, Emitter.BackpressureMode.DROP);
     }
 
-    private void configureWebView(String serializedDoc, HashComparison jsonldCallback) {
+    private void configureWebView(String serializedDoc, File file, HashComparison jsonldCallback) {
         mWebView.addJavascriptInterface(jsonldCallback, "jsonldCallback");
         WebSettings webSettings = mWebView.getSettings();
         // Enable JavaScript
         webSettings.setJavaScriptEnabled(true);
-        mWebView.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                return false;
-            }
-
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                String options = "{algorithm: 'URDNA2015', format: 'application/nquads'}";
-                String jsResultHandler = "function(err, result) { jsonldCallback.result(err, result); }";
-                String jsString = "(function() {jsonld.normalize(" + serializedDoc + ", " + options + ", " + jsResultHandler + ")})()";
-                view.loadUrl("javascript:" + jsString);
-            }
-        });
-        mWebView.loadUrl(JSONLD_FILE_PATH);
+        mWebView.loadUrl("file:///" + file.getAbsolutePath());
     }
 
     private static class HashComparison {
