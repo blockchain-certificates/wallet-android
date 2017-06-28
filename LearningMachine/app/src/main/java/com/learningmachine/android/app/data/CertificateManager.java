@@ -16,12 +16,8 @@ import com.learningmachine.android.app.data.webservice.CertificateService;
 import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 import com.learningmachine.android.app.util.FileUtils;
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -51,7 +47,7 @@ public class CertificateManager {
     public Observable<String> loadSampleCertificate() {
         AssetManager assetManager = mContext.getAssets();
         try (InputStream inputStream = assetManager.open("sample-certificate.json")) {
-            return handleCertificateInputStream(inputStream, "sample-certificate");
+            return handleCertificateInputStream(inputStream);
         } catch (IOException e) {
             return Observable.error(e);
         }
@@ -66,15 +62,12 @@ public class CertificateManager {
     }
 
     public Observable<String> addCertificate(String url) {
-        return Observable.combineLatest(mCertificateService.getCertificate(url),
-                mBitcoinManager.getBitcoinAddress(),
-                AddCertificateHolder::new)
-                .flatMap(holder -> handleCertificateResponse(holder.getResponseBody(), holder.getBitcoinAddress()));
+        return mCertificateService.getCertificate(url)
+                .flatMap(responseBody -> handleCertificateResponse(responseBody));
     }
 
     public Observable<String> addCertificate(File file) {
-        return mBitcoinManager.getBitcoinAddress()
-                .flatMap(bitcoinAddress -> handleCertificateFile(file, bitcoinAddress));
+        return handleCertificateFile(file);
     }
 
     public Observable<Boolean> removeCertificate(String uuid) {
@@ -84,10 +77,9 @@ public class CertificateManager {
 
     /**
      * @param responseBody   Unparsed certificate response json
-     * @param bitcoinAddress Wallet receive address
      * @return Error if save was unsuccessful
      */
-    private Observable<String> handleCertificateResponse(ResponseBody responseBody, String bitcoinAddress) {
+    private Observable<String> handleCertificateResponse(ResponseBody responseBody) {
         try {
             // Copy the responseBody bytes before Gson consumes it
             BufferedSource source = responseBody.source();
@@ -101,10 +93,13 @@ public class CertificateManager {
             String recipientKey = blockCert.getRecipientPublicKey();
 
             // Reject on address mismatch
+            boolean performOwnershipCheck = false;
             boolean isSampleCert = recipientKey.equals("sample-certificate");
-            boolean isCertOwner = bitcoinAddress.equals(recipientKey);
+            // TODO: certificate ownership check must compare against all addresses
+            // recipient key must match one of the bitcoin addresses
+            boolean isCertOwner = mBitcoinManager.isMyKey(recipientKey);
 
-            if (!isSampleCert && !isCertOwner) {
+            if (performOwnershipCheck && !isSampleCert && !isCertOwner) {
                 return Observable.error(new CertificateOwnershipException());
             }
 
@@ -120,15 +115,15 @@ public class CertificateManager {
         }
     }
 
-    private Observable<String> handleCertificateFile(File certificateFile, String bitcoinAddress) {
+    private Observable<String> handleCertificateFile(File certificateFile) {
         try (FileInputStream inputStream = new FileInputStream(certificateFile)) {
-            return handleCertificateInputStream(inputStream, bitcoinAddress);
+            return handleCertificateInputStream(inputStream);
         } catch (IOException e) {
             return Observable.error(e);
         }
     }
 
-    private Observable<String> handleCertificateInputStream(InputStream certInputStream, String bitcoinAddress) {
+    private Observable<String> handleCertificateInputStream(InputStream certInputStream) {
         // copy to temp file
         String tempFilename = "temp-cert";
         FileUtils.copyCertificateStream(mContext, certInputStream, tempFilename);
@@ -151,7 +146,9 @@ public class CertificateManager {
         String recipientKey = blockCert.getRecipientPublicKey();
 
         // Reject on address mismatch
-        if (!bitcoinAddress.equals(recipientKey)) {
+        boolean performOwnershipCheck = false;
+        boolean isMyKey = mBitcoinManager.isMyKey(recipientKey);
+        if (performOwnershipCheck && !isMyKey) {
             FileUtils.deleteCertificate(mContext, tempFilename);
             return Observable.error(new CertificateOwnershipException());
         }
@@ -170,23 +167,5 @@ public class CertificateManager {
         mCertificateStore.saveBlockchainCertificate(blockCert);
         IssuerResponse issuer = blockCert.getIssuer();
         mIssuerStore.saveIssuerResponse(issuer);
-    }
-
-    static class AddCertificateHolder {
-        private final ResponseBody mResponseBody;
-        private final String mBitcoinAddress;
-
-        AddCertificateHolder(ResponseBody responseBody, String bitcoinAddress) {
-            mResponseBody = responseBody;
-            mBitcoinAddress = bitcoinAddress;
-        }
-
-        ResponseBody getResponseBody() {
-            return mResponseBody;
-        }
-
-        String getBitcoinAddress() {
-            return mBitcoinAddress;
-        }
     }
 }
