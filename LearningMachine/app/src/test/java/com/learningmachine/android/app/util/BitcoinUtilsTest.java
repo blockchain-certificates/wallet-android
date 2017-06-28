@@ -95,4 +95,24 @@ public class BitcoinUtilsTest {
         String seedPhrase = "This phrase is too short and not random enough";
         assertFalse("This should be an invalid phrase", BitcoinUtils.isValidPassphrase(seedPhrase));
     }
+
+    @Test
+    public void pubKeyOwnershipConfirmed() {
+        String pubKeyString = "03f5b5836e454ac540c912371d44b4bed1123be954644876a72571dc679f8e89d0";
+        byte[] pubKey = Utils.HEX.decode(pubKeyString);
+        String seedPhrase = "abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon art";
+        NetworkParameters params = MainNetParams.get();
+        Wallet wallet = BitcoinUtils.createWallet(params, seedPhrase);
+        assertTrue("Should be the owner of this pub key", wallet.isPubKeyMine(pubKey));
+    }
+
+    @Test
+    public void pubKeyNonOwnershipDetected() {
+        String pubKeyString = "444444444444444444444444444444444444444444444444444444444444444444";
+        byte[] pubKey = Utils.HEX.decode(pubKeyString);
+        String seedPhrase = "abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon art";
+        NetworkParameters params = MainNetParams.get();
+        Wallet wallet = BitcoinUtils.createWallet(params, seedPhrase);
+        assertFalse("Should not be the owner of this pub key", wallet.isPubKeyMine(pubKey));
+    }
 }
