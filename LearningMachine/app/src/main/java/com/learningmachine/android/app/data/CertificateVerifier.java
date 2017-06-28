@@ -142,6 +142,7 @@ public class CertificateVerifier {
                 out.write(jsResultHandler);
                 out.write("); })()");
                 out.write("\n//--></script></head></html>");
+                out.flush();
             } catch (Exception e) {
                 Timber.e(e, "Couldn't save the certificate document node");
                 emitter.onError(e);
