@@ -14,4 +14,6 @@ public class LMConstants {
     public static final String BLOCKCHAIN_SERVICE_URL = "https://blockchain.info/";
 
     public static final String ECDSA_KOBLITZ_PUBKEY_PREFIX = "ecdsa-koblitz-pubkey:";
+
+    public static final boolean SHOULD_PERFORM_OWNERSHIP_CHECK = false;
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.AssetManager;
 
 import com.google.gson.JsonSyntaxException;
+import com.learningmachine.android.app.LMConstants;
 import com.learningmachine.android.app.data.bitcoin.BitcoinManager;
 import com.learningmachine.android.app.data.cert.BlockCert;
 import com.learningmachine.android.app.data.cert.BlockCertParser;
@@ -93,13 +94,12 @@ public class CertificateManager {
             String recipientKey = blockCert.getRecipientPublicKey();
 
             // Reject on address mismatch
-            boolean performOwnershipCheck = false;
             boolean isSampleCert = recipientKey.equals("sample-certificate");
             // TODO: certificate ownership check must compare against all addresses
             // recipient key must match one of the bitcoin addresses
             boolean isCertOwner = mBitcoinManager.isMyIssuedAddress(recipientKey);
 
-            if (performOwnershipCheck && !isSampleCert && !isCertOwner) {
+            if (LMConstants.SHOULD_PERFORM_OWNERSHIP_CHECK && !isSampleCert && !isCertOwner) {
                 return Observable.error(new CertificateOwnershipException());
             }
 
@@ -146,9 +146,8 @@ public class CertificateManager {
         String recipientKey = blockCert.getRecipientPublicKey();
 
         // Reject on address mismatch
-        boolean performOwnershipCheck = false;
         boolean isMyKey = mBitcoinManager.isMyIssuedAddress(recipientKey);
-        if (performOwnershipCheck && !isMyKey) {
+        if (LMConstants.SHOULD_PERFORM_OWNERSHIP_CHECK && !isMyKey) {
             FileUtils.deleteCertificate(mContext, tempFilename);
             return Observable.error(new CertificateOwnershipException());
         }
