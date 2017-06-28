@@ -51,7 +51,8 @@ public class IssuerInfoFragment extends LMFragment {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_issuer_info, container, false);
 
         String issuerUuid = getArguments().getString(ARG_ISSUER_UUID);
-        Observable.combineLatest(mIssuerManager.getIssuer(issuerUuid), mBitcoinManager.getBitcoinAddress(), Pair::new)
+        // TODO: should find the bitcoin address that was sent to the issuer
+        Observable.combineLatest(mIssuerManager.getIssuer(issuerUuid), mBitcoinManager.getCurrentBitcoinAddress(), Pair::new)
                 .compose(bindToMainThread())
                 .subscribe(pair -> {
                     IssuerInfoViewModel viewModel = new IssuerInfoViewModel(pair.first, pair.second);

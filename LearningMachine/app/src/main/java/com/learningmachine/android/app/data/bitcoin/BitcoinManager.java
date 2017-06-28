@@ -144,9 +144,12 @@ public class BitcoinManager {
         return buildWallet(newPassphrase);
     }
 
-    public Observable<String> getBitcoinAddress() {
-        return getWallet().map(wallet -> wallet.currentReceiveAddress()
-                .toString());
+    public Observable<String> getCurrentBitcoinAddress() {
+        return getWallet().map(wallet -> wallet.currentReceiveAddress().toString());
+    }
+
+    public Observable<String> getFreshBitcoinAddress() {
+        return getWallet().map(wallet -> wallet.freshReceiveAddress().toString());
     }
 
     public boolean isMyKey(String key) {
