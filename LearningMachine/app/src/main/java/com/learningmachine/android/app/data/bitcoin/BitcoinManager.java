@@ -11,6 +11,7 @@ import com.learningmachine.android.app.data.store.IssuerStore;
 import com.learningmachine.android.app.util.BitcoinUtils;
 import com.learningmachine.android.app.util.StringUtils;
 
+import org.bitcoinj.core.Address;
 import org.bitcoinj.core.Base58;
 import org.bitcoinj.core.NetworkParameters;
 import org.bitcoinj.wallet.DeterministicSeed;
@@ -155,5 +156,10 @@ public class BitcoinManager {
     public boolean isMyKey(String key) {
         byte[] pubKey = Base58.decode(key);
         return mWallet.isPubKeyMine(pubKey);
+    }
+
+    public boolean isMyIssuedAddress(String addressString) {
+        Address address = Address.fromBase58(mNetworkParameters, addressString);
+        return mWallet.getIssuedReceiveAddresses().contains(address);
     }
 }
