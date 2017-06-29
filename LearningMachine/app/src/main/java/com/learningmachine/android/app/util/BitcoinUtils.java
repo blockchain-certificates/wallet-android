@@ -4,10 +4,12 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.support.annotation.NonNull;
 
+import com.google.common.collect.ImmutableList;
 import com.learningmachine.android.app.LMConstants;
 import com.learningmachine.android.app.data.bitcoin.BIP44AccountZeroKeyChain;
 
 import org.bitcoinj.core.NetworkParameters;
+import org.bitcoinj.crypto.ChildNumber;
 import org.bitcoinj.crypto.MnemonicCode;
 import org.bitcoinj.crypto.MnemonicException;
 import org.bitcoinj.wallet.DeterministicSeed;
@@ -61,12 +63,20 @@ public class BitcoinUtils {
 
     @NonNull
     public static Wallet createWallet(NetworkParameters params, byte[] entropy) {
+
         DeterministicSeed deterministicSeed = new DeterministicSeed(entropy,
                 LMConstants.WALLET_PASSPHRASE,
                 LMConstants.WALLET_CREATION_TIME_SECONDS);
         KeyChainGroup keyChainGroup = new KeyChainGroup(params, deterministicSeed);
         keyChainGroup.addAndActivateHDChain(new BIP44AccountZeroKeyChain(deterministicSeed));
-        return new Wallet(params, keyChainGroup);
+        // m/44'/0'/0'/0
+        ImmutableList BIP44_PATH = ImmutableList.of(new ChildNumber(44, true),
+                new ChildNumber(0, true),
+                new ChildNumber(0, false),
+                new ChildNumber(0, false));
+
+        return Wallet.fromSeed(params, deterministicSeed, BIP44_PATH);
+//        return new Wallet(params, keyChainGroup);
     }
 
     public static boolean isValidPassphrase(String passphrase) {
