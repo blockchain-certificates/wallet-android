@@ -12,6 +12,7 @@ import org.bitcoinj.core.NetworkParameters;
 import org.bitcoinj.crypto.ChildNumber;
 import org.bitcoinj.crypto.MnemonicCode;
 import org.bitcoinj.crypto.MnemonicException;
+import org.bitcoinj.wallet.DeterministicKeyChain;
 import org.bitcoinj.wallet.DeterministicSeed;
 import org.bitcoinj.wallet.KeyChainGroup;
 import org.bitcoinj.wallet.Wallet;
@@ -63,19 +64,11 @@ public class BitcoinUtils {
 
     @NonNull
     public static Wallet createWallet(NetworkParameters params, byte[] entropy) {
-
         DeterministicSeed deterministicSeed = new DeterministicSeed(entropy,
                 LMConstants.WALLET_PASSPHRASE,
                 LMConstants.WALLET_CREATION_TIME_SECONDS);
-        KeyChainGroup keyChainGroup = new KeyChainGroup(params, deterministicSeed);
-        keyChainGroup.addAndActivateHDChain(new BIP44AccountZeroKeyChain(deterministicSeed));
         // m/44'/0'/0'/0
-        ImmutableList BIP44_PATH = ImmutableList.of(new ChildNumber(44, true),
-                new ChildNumber(0, true),
-                new ChildNumber(0, false),
-                new ChildNumber(0, false));
-
-        return Wallet.fromSeed(params, deterministicSeed, BIP44_PATH);
+        return Wallet.fromSeed(params, deterministicSeed, DeterministicKeyChain.BIP44_ACCOUNT_ZERO_PATH);
     }
 
     public static boolean isValidPassphrase(String passphrase) {
