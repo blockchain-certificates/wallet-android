@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -191,14 +192,14 @@ public class CertificateFragment extends LMFragment implements VerficationCancel
                         throwable -> Timber.e(throwable, "Issuer has no analytics url."));
         Observable.combineLatest(mCertificateManager.getCertificate(mCertUuid),
                 mIssuerManager.getIssuerForCertificate(mCertUuid),
-                CertificateIssuerHolder::new)
+                Pair::new)
                 .compose(bindToMainThread())
-                .subscribe(holder -> {
-                    CertificateRecord cert = holder.getCertificate();
+                .subscribe(pair -> {
+                    CertificateRecord cert = pair.first;
 
                     Intent intent = new Intent(Intent.ACTION_SEND);
 
-                    IssuerRecord issuer = holder.getIssuer();
+                    IssuerRecord issuer = pair.second;
                     String issuerName = issuer.getName();
 
                     String sharingText;
@@ -223,24 +224,6 @@ public class CertificateFragment extends LMFragment implements VerficationCancel
                     intent.putExtra(Intent.EXTRA_TEXT, sharingText);
                     startActivity(intent);
                 }, throwable -> Timber.e(throwable, "Unable to share certificate"));
-    }
-
-    private class CertificateIssuerHolder {
-        private CertificateRecord mCertificate;
-        private IssuerRecord mIssuer;
-
-        public CertificateIssuerHolder(CertificateRecord certificate, IssuerRecord issuer) {
-            mCertificate = certificate;
-            mIssuer = issuer;
-        }
-
-        public CertificateRecord getCertificate() {
-            return mCertificate;
-        }
-
-        public IssuerRecord getIssuer() {
-            return mIssuer;
-        }
     }
 
     private void viewCertificateInfo() {

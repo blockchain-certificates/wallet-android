@@ -100,7 +100,7 @@ public class AddIssuerFragment extends LMFragment {
                 .toString();
 
         Observable.combineLatest(
-                mBitcoinManager.getBitcoinAddress(),
+                mBitcoinManager.getFreshBitcoinAddress(),
                 Observable.just(nonce),
                 mIssuerManager.fetchIssuer(introUrl),
                 IssuerIntroductionRequest::new)

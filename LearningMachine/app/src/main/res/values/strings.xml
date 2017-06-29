@@ -146,5 +146,7 @@
     <string name="fragment_certificate_info_issuer_issue_date">Issue Date</string>
     <string name="cert_metadata_boolean_true">True</string>
     <string name="cert_metadata_boolean_false">False</string>
+    <string name="error_invalid_passphrase_empty">Passphrase cannot be empty</string>
+    <string name="error_invalid_passphrase_malformed">Invalid passphrase</string>
 
 </resources>

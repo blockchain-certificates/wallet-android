@@ -66,7 +66,7 @@ public class ReplacePassphraseFragment extends LMFragment {
                 .toString();
         mBitcoinManager.setPassphrase(passphrase)
                 .compose(bindToMainThread())
-                .subscribe(wallet -> passphraseUpdated());
+                .subscribe(wallet -> passphraseUpdated(), e -> displayErrors(e, R.string.error_title_message));
     }
 
     private void passphraseUpdated() {

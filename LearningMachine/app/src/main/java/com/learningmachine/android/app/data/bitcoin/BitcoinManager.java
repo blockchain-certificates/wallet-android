@@ -4,14 +4,17 @@ import android.content.Context;
 import android.support.annotation.VisibleForTesting;
 
 import com.learningmachine.android.app.LMConstants;
+import com.learningmachine.android.app.R;
+import com.learningmachine.android.app.data.error.ExceptionWithResourceString;
 import com.learningmachine.android.app.data.store.CertificateStore;
 import com.learningmachine.android.app.data.store.IssuerStore;
-import com.learningmachine.android.app.util.ListUtils;
+import com.learningmachine.android.app.util.BitcoinUtils;
 import com.learningmachine.android.app.util.StringUtils;
 
+import org.bitcoinj.core.Address;
+import org.bitcoinj.core.Base58;
 import org.bitcoinj.core.NetworkParameters;
 import org.bitcoinj.wallet.DeterministicSeed;
-import org.bitcoinj.wallet.KeyChainGroup;
 import org.bitcoinj.wallet.Protos;
 import org.bitcoinj.wallet.UnreadableWalletException;
 import org.bitcoinj.wallet.Wallet;
@@ -27,8 +30,6 @@ import java.util.List;
 
 import rx.Observable;
 import timber.log.Timber;
-
-import static com.learningmachine.android.app.util.BitcoinUtils.generateMnemonic;
 
 public class BitcoinManager {
 
@@ -67,24 +68,18 @@ public class BitcoinManager {
 
     private Observable<Wallet> createWallet() {
         SecureRandom random = new SecureRandom();
-        byte[] seedData = random.generateSeed(LMConstants.WALLET_SEED_BYTE_SIZE);
-        List<String> mnemonic = generateMnemonic(mContext, seedData);
-        if (ListUtils.isEmpty(mnemonic)) {
-            Timber.e("No mnemonic, wallet creation failure");
-            return Observable.error(new Exception("Mnemonic cannot be empty"));
-        }
-
-        buildWallet(mnemonic, seedData);
+        byte[] entropy = random.generateSeed(LMConstants.WALLET_SEED_BYTE_SIZE);
+        buildWallet(entropy);
         return Observable.just(mWallet);
     }
 
-    private Observable<Wallet> buildWallet(List<String> mnemonic, byte[] seedData) {
-        DeterministicSeed deterministicSeed = new DeterministicSeed(mnemonic,
-                seedData,
-                LMConstants.WALLET_PASSPHRASE,
-                LMConstants.WALLET_CREATION_TIME_SECONDS);
-        KeyChainGroup keyChainGroup = new KeyChainGroup(mNetworkParameters, deterministicSeed);
-        mWallet = new Wallet(mNetworkParameters, keyChainGroup);
+    private Observable<Wallet> buildWallet(byte[] entropy) {
+        mWallet = BitcoinUtils.createWallet(mNetworkParameters, entropy);
+        return saveWallet();
+    }
+
+    private Observable<Wallet> buildWallet(String seedPhrase) {
+        mWallet = BitcoinUtils.createWallet(mNetworkParameters, seedPhrase);
         return saveWallet();
     }
 
@@ -140,16 +135,31 @@ public class BitcoinManager {
 
     public Observable<Wallet> setPassphrase(String newPassphrase) {
         if (StringUtils.isEmpty(newPassphrase)) {
-            return Observable.error(new Exception("Passphrase cannot be empty"));
+            return Observable.error(new ExceptionWithResourceString(R.string.error_invalid_passphrase_empty));
         }
-        List<String> newPassphraseList = StringUtils.split(newPassphrase, PASSPHRASE_DELIMETER);
+        if (!BitcoinUtils.isValidPassphrase(newPassphrase)) {
+            return Observable.error(new ExceptionWithResourceString(R.string.error_invalid_passphrase_malformed));
+        }
         mIssuerStore.reset();
         mCertificateStore.reset();
-        return buildWallet(newPassphraseList, null);
+        return buildWallet(newPassphrase);
     }
 
-    public Observable<String> getBitcoinAddress() {
-        return getWallet().map(wallet -> wallet.currentReceiveAddress()
-                .toString());
+    public Observable<String> getCurrentBitcoinAddress() {
+        return getWallet().map(wallet -> wallet.currentReceiveAddress().toString());
+    }
+
+    public Observable<String> getFreshBitcoinAddress() {
+        return getWallet().map(wallet -> wallet.freshReceiveAddress().toString());
+    }
+
+    public boolean isMyKey(String key) {
+        byte[] pubKey = Base58.decode(key);
+        return mWallet.isPubKeyMine(pubKey);
+    }
+
+    public boolean isMyIssuedAddress(String addressString) {
+        Address address = Address.fromBase58(mNetworkParameters, addressString);
+        return mWallet.getIssuedReceiveAddresses().contains(address);
     }
 }
