@@ -76,7 +76,6 @@ public class BitcoinUtils {
                 new ChildNumber(0, false));
 
         return Wallet.fromSeed(params, deterministicSeed, BIP44_PATH);
-//        return new Wallet(params, keyChainGroup);
     }
 
     public static boolean isValidPassphrase(String passphrase) {
