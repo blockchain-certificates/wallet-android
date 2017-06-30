@@ -37,7 +37,10 @@ import rx.subjects.BehaviorSubject;
 import timber.log.Timber;
 
 public class CertificateVerifier {
-    private static final String JSONLD_FILE_PATH = "file:///android_asset/www/jsonld.html";
+    private static final String JSONLD_TEMP_FILE_NAME= "jsonld";
+    private static final String JSONLD_TEMP_FILE_EXT= "html";
+    private static final String VIEW_CERTIFICATE_PREFIX_FILE = "view-certificate-prefix.html";
+    private static final String VIEW_CERTIFICATE_SUFFIX_FILE = "view-certificate-suffix.html";
 
     private final WebView mWebView;
     private final Context mContext;
@@ -126,15 +129,15 @@ public class CertificateVerifier {
             File certsDir = new File(mContext.getFilesDir(), "certs");
             File file = null;
             try {
-                file = File.createTempFile("jsonld", "html", certsDir);
+                file = File.createTempFile(JSONLD_TEMP_FILE_NAME, JSONLD_TEMP_FILE_EXT, certsDir);
             } catch (IOException e) {
                 Timber.e(e, "Couldn't create a temp file for JSONLD normalization");
                 emitter.onError(e);
                 return;
             }
 
-            try (InputStream prefixInputStream = mContext.getAssets().open("view-certificate-prefix.html");
-                 InputStream suffixInputStream = mContext.getAssets().open("view-certificate-suffix.html");
+            try (InputStream prefixInputStream = mContext.getAssets().open(VIEW_CERTIFICATE_PREFIX_FILE);
+                 InputStream suffixInputStream = mContext.getAssets().open(VIEW_CERTIFICATE_SUFFIX_FILE);
                  OutputStream outputStream = new FileOutputStream(file)) {
                 copyInputStream(prefixInputStream, outputStream);
                 outputStream.write(serializedDoc.getBytes());
