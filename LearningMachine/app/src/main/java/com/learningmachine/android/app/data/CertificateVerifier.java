@@ -20,8 +20,10 @@ import com.learningmachine.android.app.util.FileUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -130,19 +132,14 @@ public class CertificateVerifier {
                 emitter.onError(e);
                 return;
             }
-            try (FileWriter out = new FileWriter(file)) {
-                String options = "{algorithm: 'URDNA2015', format: 'application/nquads'}";
-                String jsResultHandler = "function(err, result) { jsonldCallback.result(err, result); }";
-                out.write("<html><head><script src=\"https://cdnjs.cloudflare.com/ajax/libs/jsonld/0.4.12/jsonld.js\"></script><script><!--\n");
-                out.write("(function() { jsonld.normalize(");
-                out.write(serializedDoc);
-                out.write(", ");
-                out.write(options);
-                out.write(", ");
-                out.write(jsResultHandler);
-                out.write("); })()");
-                out.write("\n//--></script></head></html>");
-                out.flush();
+
+            try (InputStream prefixInputStream = mContext.getAssets().open("view-certificate-prefix.html");
+                 InputStream suffixInputStream = mContext.getAssets().open("view-certificate-suffix.html");
+                 OutputStream outputStream = new FileOutputStream(file)) {
+                copyInputStream(prefixInputStream, outputStream);
+                outputStream.write(serializedDoc.getBytes());
+                copyInputStream(suffixInputStream, outputStream);
+                outputStream.flush();
             } catch (Exception e) {
                 Timber.e(e, "Couldn't save the certificate document node");
                 emitter.onError(e);
@@ -152,6 +149,17 @@ public class CertificateVerifier {
             File finalFile = file;
             handler.post(() -> configureWebView(serializedDoc, finalFile, jsonldCallback));
         }, Emitter.BackpressureMode.DROP);
+    }
+
+    private void copyInputStream(InputStream inputStream, OutputStream outputStream) throws IOException {
+        byte[] buffer = new byte[4096];
+        while (true) {
+            int read = inputStream.read(buffer);
+            if (read == -1) {
+                break;
+            }
+            outputStream.write(buffer, 0, read);
+        }
     }
 
     private void configureWebView(String serializedDoc, File file, HashComparison jsonldCallback) {
