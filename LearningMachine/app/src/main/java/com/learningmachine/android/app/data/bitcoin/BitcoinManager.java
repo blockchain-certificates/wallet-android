@@ -2,6 +2,7 @@ package com.learningmachine.android.app.data.bitcoin;
 
 import android.content.Context;
 import android.support.annotation.VisibleForTesting;
+import android.util.Pair;
 
 import com.learningmachine.android.app.LMConstants;
 import com.learningmachine.android.app.R;
@@ -150,7 +151,9 @@ public class BitcoinManager {
     }
 
     public Observable<String> getFreshBitcoinAddress() {
-        return getWallet().map(wallet -> wallet.freshReceiveAddress().toString());
+        return getWallet().map(wallet -> wallet.freshReceiveAddress().toString())
+                .flatMap(address -> Observable.combineLatest(Observable.just(address), saveWallet(), Pair::new))
+                .map(pair -> pair.first);
     }
 
     public boolean isMyKey(String key) {
