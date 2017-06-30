@@ -14,6 +14,7 @@ import org.junit.runner.RunWith;
 import static org.hamcrest.Matchers.isEmptyOrNullString;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
@@ -38,6 +39,24 @@ public class BitcoinManagerTest {
         secondBitcoinManager.getPassphrase().subscribe(secondPassphrase -> {
             assertTrue(secondBitcoinManager.getWalletFile().exists());
             assertEquals(stringHolder.string, secondPassphrase);
+        });
+    }
+
+    @Test
+    public void walletShouldIssueNewReceiveAddressesAfterReload() {
+        Context context = InstrumentationRegistry.getTargetContext();
+        NetworkParameters networkParameters = MainNetParams.get();
+
+        StringHolder stringHolder = new StringHolder();
+        BitcoinManager firstBitcoinManager = new BitcoinManager(context, networkParameters, null, null);
+        firstBitcoinManager.getFreshBitcoinAddress().subscribe(firstReceiveAddress -> {
+            assertThat(firstReceiveAddress, not(isEmptyOrNullString()));
+            stringHolder.string = firstReceiveAddress;
+        });
+
+        BitcoinManager secondBitcoinManager = new BitcoinManager(context, networkParameters, null, null);
+        secondBitcoinManager.getFreshBitcoinAddress().subscribe(secondReceiveAddress -> {
+            assertNotEquals("Fresh receive address expected", stringHolder.string, secondReceiveAddress);
         });
     }
 
