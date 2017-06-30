@@ -8,11 +8,14 @@ import org.bitcoinj.core.NetworkParameters;
 import org.bitcoinj.core.Utils;
 import org.bitcoinj.params.MainNetParams;
 import org.bitcoinj.wallet.DeterministicSeed;
+import org.bitcoinj.wallet.UnreadableWalletException;
 import org.bitcoinj.wallet.Wallet;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
@@ -23,6 +26,7 @@ import static org.mockito.ArgumentMatchers.any;
 
 public class BitcoinUtilsTest {
 
+    private static final String ABANDON_ABANDON_ART = "abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon art";
     private Context mContext;
 
     @Before
@@ -40,7 +44,7 @@ public class BitcoinUtilsTest {
     @Test
     public void testGenerateMnemonic() throws Exception {
         byte[] seedData = new byte[32]; // all zeros
-        String expectedMnemonic = "abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon art";
+        String expectedMnemonic = ABANDON_ABANDON_ART;
         List<String> seedPhrase = BitcoinUtils.generateMnemonic(seedData);
         assertFalse(ListUtils.isEmpty(seedPhrase));
 
@@ -52,7 +56,7 @@ public class BitcoinUtilsTest {
 
     @Test
     public void createWalletFromSeedPhrase() {
-        String seedPhrase = "abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon art";
+        String seedPhrase = ABANDON_ABANDON_ART;
         NetworkParameters params = MainNetParams.get();
         Wallet wallet = BitcoinUtils.createWallet(params, seedPhrase);
         Address firstAddress = wallet.freshReceiveAddress();
@@ -86,7 +90,7 @@ public class BitcoinUtilsTest {
 
     @Test
     public void detectsValidPassphrases() {
-        String seedPhrase = "abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon art";
+        String seedPhrase = ABANDON_ABANDON_ART;
         assertTrue("This should be a valid phrase", BitcoinUtils.isValidPassphrase(seedPhrase));
     }
 
@@ -100,7 +104,7 @@ public class BitcoinUtilsTest {
     public void pubKeyOwnershipConfirmed() {
         String pubKeyString = "03f5b5836e454ac540c912371d44b4bed1123be954644876a72571dc679f8e89d0";
         byte[] pubKey = Utils.HEX.decode(pubKeyString);
-        String seedPhrase = "abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon art";
+        String seedPhrase = ABANDON_ABANDON_ART;
         NetworkParameters params = MainNetParams.get();
         Wallet wallet = BitcoinUtils.createWallet(params, seedPhrase);
         assertTrue("Should be the owner of this pub key", wallet.isPubKeyMine(pubKey));
@@ -110,9 +114,41 @@ public class BitcoinUtilsTest {
     public void pubKeyNonOwnershipDetected() {
         String pubKeyString = "444444444444444444444444444444444444444444444444444444444444444444";
         byte[] pubKey = Utils.HEX.decode(pubKeyString);
-        String seedPhrase = "abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon art";
+        String seedPhrase = ABANDON_ABANDON_ART;
         NetworkParameters params = MainNetParams.get();
         Wallet wallet = BitcoinUtils.createWallet(params, seedPhrase);
         assertFalse("Should not be the owner of this pub key", wallet.isPubKeyMine(pubKey));
+    }
+
+    @Test
+    public void previousReceiveAddressesOwnershipVerified() {
+        String seedPhrase = ABANDON_ABANDON_ART;
+        NetworkParameters params = MainNetParams.get();
+        Wallet wallet = BitcoinUtils.createWallet(params, seedPhrase);
+        Address address1 = wallet.freshReceiveAddress();
+        Address address2 = wallet.freshReceiveAddress();
+        Address address3 = wallet.freshReceiveAddress();
+        Address address = Address.fromBase58(params, "1H13uL5vSVvgPcJm16WjA6TPqGmouQaKtn");
+        assertFalse("Should not contain the non-issued address", wallet.getIssuedReceiveAddresses().contains(address));
+        Address address4 = wallet.freshReceiveAddress();
+        assertTrue("Should contain the issued address", wallet.getIssuedReceiveAddresses().contains(address));
+    }
+
+    @Test
+    public void savedWalletResumesFreshReceiveAddresses() throws IOException, UnreadableWalletException {
+        String seedPhrase = ABANDON_ABANDON_ART;
+        NetworkParameters params = MainNetParams.get();
+        Wallet wallet = BitcoinUtils.createWallet(params, seedPhrase);
+        File tempFile = File.createTempFile("temp", "wallet");
+        Address address1 = wallet.freshReceiveAddress();
+        Address address2 = wallet.freshReceiveAddress();
+        wallet.saveToFile(tempFile);
+        Wallet walletFromFile = Wallet.loadFromFile(tempFile, null);
+        Address address3 = walletFromFile.freshReceiveAddress();
+        Address address4 = walletFromFile.freshReceiveAddress();
+        assertEquals("1KBdbBJRVYffWHWWZ1moECfdVBSEnDpLHi", address1.toBase58());
+        assertEquals("1EiJMaaahrhpbhgaNzMeUe1ZoiXdbBhWhR", address2.toBase58());
+        assertEquals("1AxcesYVBs6ddjcuXDLLBMkgYwjkh8mora", address3.toBase58());
+        assertEquals("1H13uL5vSVvgPcJm16WjA6TPqGmouQaKtn", address4.toBase58());
     }
 }
