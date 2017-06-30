@@ -80,7 +80,7 @@ public class FileUtils {
         }
     }
 
-    private static boolean copyStreams(InputStream inputStream, OutputStream outputStream) throws IOException {
+    public static boolean copyStreams(InputStream inputStream, OutputStream outputStream) throws IOException {
         byte[] buffer = new byte[4096];
         while (true) {
             int read = inputStream.read(buffer);

@@ -139,9 +139,9 @@ public class CertificateVerifier {
             try (InputStream prefixInputStream = mContext.getAssets().open(VIEW_CERTIFICATE_PREFIX_FILE);
                  InputStream suffixInputStream = mContext.getAssets().open(VIEW_CERTIFICATE_SUFFIX_FILE);
                  OutputStream outputStream = new FileOutputStream(file)) {
-                copyInputStream(prefixInputStream, outputStream);
+                FileUtils.copyStreams(prefixInputStream, outputStream);
                 outputStream.write(serializedDoc.getBytes());
-                copyInputStream(suffixInputStream, outputStream);
+                FileUtils.copyStreams(suffixInputStream, outputStream);
                 outputStream.flush();
             } catch (Exception e) {
                 Timber.e(e, "Couldn't save the certificate document node");
@@ -152,17 +152,6 @@ public class CertificateVerifier {
             File finalFile = file;
             handler.post(() -> configureWebView(serializedDoc, finalFile, jsonldCallback));
         }, Emitter.BackpressureMode.DROP);
-    }
-
-    private void copyInputStream(InputStream inputStream, OutputStream outputStream) throws IOException {
-        byte[] buffer = new byte[4096];
-        while (true) {
-            int read = inputStream.read(buffer);
-            if (read == -1) {
-                break;
-            }
-            outputStream.write(buffer, 0, read);
-        }
     }
 
     private void configureWebView(String serializedDoc, File file, HashComparison jsonldCallback) {
