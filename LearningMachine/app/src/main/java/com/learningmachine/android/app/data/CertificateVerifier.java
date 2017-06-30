@@ -20,8 +20,10 @@ import com.learningmachine.android.app.util.FileUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -35,7 +37,10 @@ import rx.subjects.BehaviorSubject;
 import timber.log.Timber;
 
 public class CertificateVerifier {
-    private static final String JSONLD_FILE_PATH = "file:///android_asset/www/jsonld.html";
+    private static final String JSONLD_TEMP_FILE_NAME= "jsonld";
+    private static final String JSONLD_TEMP_FILE_EXT= "html";
+    private static final String VIEW_CERTIFICATE_PREFIX_FILE = "view-certificate-prefix.html";
+    private static final String VIEW_CERTIFICATE_SUFFIX_FILE = "view-certificate-suffix.html";
 
     private final WebView mWebView;
     private final Context mContext;
@@ -124,25 +129,20 @@ public class CertificateVerifier {
             File certsDir = new File(mContext.getFilesDir(), "certs");
             File file = null;
             try {
-                file = File.createTempFile("jsonld", "html", certsDir);
+                file = File.createTempFile(JSONLD_TEMP_FILE_NAME, JSONLD_TEMP_FILE_EXT, certsDir);
             } catch (IOException e) {
                 Timber.e(e, "Couldn't create a temp file for JSONLD normalization");
                 emitter.onError(e);
                 return;
             }
-            try (FileWriter out = new FileWriter(file)) {
-                String options = "{algorithm: 'URDNA2015', format: 'application/nquads'}";
-                String jsResultHandler = "function(err, result) { jsonldCallback.result(err, result); }";
-                out.write("<html><head><script src=\"https://cdnjs.cloudflare.com/ajax/libs/jsonld/0.4.12/jsonld.js\"></script><script><!--\n");
-                out.write("(function() { jsonld.normalize(");
-                out.write(serializedDoc);
-                out.write(", ");
-                out.write(options);
-                out.write(", ");
-                out.write(jsResultHandler);
-                out.write("); })()");
-                out.write("\n//--></script></head></html>");
-                out.flush();
+
+            try (InputStream prefixInputStream = mContext.getAssets().open(VIEW_CERTIFICATE_PREFIX_FILE);
+                 InputStream suffixInputStream = mContext.getAssets().open(VIEW_CERTIFICATE_SUFFIX_FILE);
+                 OutputStream outputStream = new FileOutputStream(file)) {
+                FileUtils.copyStreams(prefixInputStream, outputStream);
+                outputStream.write(serializedDoc.getBytes());
+                FileUtils.copyStreams(suffixInputStream, outputStream);
+                outputStream.flush();
             } catch (Exception e) {
                 Timber.e(e, "Couldn't save the certificate document node");
                 emitter.onError(e);
