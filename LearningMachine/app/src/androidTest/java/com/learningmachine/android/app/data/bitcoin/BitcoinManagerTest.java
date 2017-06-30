@@ -6,7 +6,8 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
 
-import org.bitcoinj.params.TestNet3Params;
+import org.bitcoinj.core.NetworkParameters;
+import org.bitcoinj.params.MainNetParams;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -23,7 +24,7 @@ public class BitcoinManagerTest {
     @Test
     public void walletShouldBeSaved_andLoaded() {
         Context context = InstrumentationRegistry.getTargetContext();
-        TestNet3Params networkParameters = TestNet3Params.get();
+        NetworkParameters networkParameters = MainNetParams.get();
 
         StringHolder stringHolder = new StringHolder();
         BitcoinManager firstBitcoinManager = new BitcoinManager(context, networkParameters, null, null);
