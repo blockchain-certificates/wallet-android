@@ -1,6 +1,6 @@
 # learning-machine-android
 
-Blockcert application for Learning Machine
+[Blockcert](https://www.blockcerts.org) Android application by Learning Machine
 
 ## Build variants
 
@@ -161,22 +161,25 @@ We suggest the following method orgainization:
 ### [BitcoinJ](https://bitcoinj.github.io/)
 
 * Java implementation of the Bitcoin protocol
-* [Forked](https://github.com/uniquid/bitcoinj/tree/master-uniquid) by uniquid to allow creattion of wallets with arbitrary path (e.g m/44'/0'/0/0) 
-* Apache
+* [Forked](https://github.com/uniquid/bitcoinj/tree/master-uniquid) by uniquid to allow creation of wallets with arbitrary path (e.g m/44'/0'/0/0) 
+* Apache License
 
 ### [SLF4J](https://www.slf4j.org/)
 
 * Simple Logging Facade for Java
+* Required by BitcoinJ
 * MIT
 
 ### [Spongy Castle](https://rtyley.github.io/spongycastle/)
 
 * Repackage of Bouncy Castle for Android
+* Required by BitcoinJ
 * MIT X11
 
 ### [Protobuf](https://developers.google.com/protocol-buffers/)
 
 * Google's language-neutral, platform-neutral, extensible mechanism for serializing structured data
+* Required by BitcoinJ
 * [License](https://github.com/google/protobuf/blob/master/LICENSE)
 
 ### [Dagger 2](https://google.github.io/dagger/)
@@ -252,4 +255,5 @@ We suggest the following method orgainization:
 ### [JodaTime](http://www.joda.org/joda-time/)
 
 * A quality replacement for the Java date and time classes
+* Required for unit tests
 * Apache 2.0
