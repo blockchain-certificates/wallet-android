@@ -42,6 +42,15 @@ class CertSchemaV20 {
     @Expose
     private Recipient recipient;
     /**
+     * RecipientProfile schema
+     * <p>
+     * A Blockcerts extension allowing inclusion of additional recipient details, including recipient publicKey and name. Inclusion of the recipient publicKey allows the recipient to make a strong claim of ownership over the key, and hence the badge being awarded. In the future, publicKey will be deprecated in favor of a decentralized id (DID) in the `id` field.
+     *
+     */
+    @SerializedName("recipientProfile")
+    @Expose
+    private RecipientProfile recipientProfile;
+    /**
      * From https://w3id.org/openbadges#BadgeClass
      * (Required)
      * 
@@ -149,6 +158,15 @@ class CertSchemaV20 {
      */
     public void setRecipient(Recipient recipient) {
         this.recipient = recipient;
+    }
+
+    public RecipientProfile getRecipientProfile() {
+        return recipientProfile != null ? recipientProfile
+                : (recipient != null ? recipient.getRecipientProfile() : null);
+    }
+
+    public void setRecipientProfile(RecipientProfile recipientProfile) {
+        this.recipientProfile = recipientProfile;
     }
 
     /**

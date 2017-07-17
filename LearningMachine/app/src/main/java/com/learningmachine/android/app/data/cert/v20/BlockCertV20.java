@@ -81,12 +81,11 @@ public class BlockCertV20 extends CertSchemaV20 implements BlockCert {
 
     @Override
     public String getRecipientPublicKey() {
-        if (getRecipient() == null
-                || getRecipient().getRecipientProfile() == null
-                || getRecipient().getRecipientProfile().getPublicKey() == null) {
+        if (getRecipientProfile() == null
+                || getRecipientProfile().getPublicKey() == null) {
             return null;
         }
-        String keyString = getRecipient().getRecipientProfile()
+        String keyString = getRecipientProfile()
                 .getPublicKey()
                 .toString();
         if (keyString.startsWith(LMConstants.ECDSA_KOBLITZ_PUBKEY_PREFIX)) {
