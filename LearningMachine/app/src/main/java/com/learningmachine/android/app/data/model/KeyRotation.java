@@ -15,7 +15,7 @@ public class KeyRotation {
     private String mExpiresDate;
     @SerializedName("revoked")
     private String mRevokedDate;
-    @SerializedName("publicKey")
+    @SerializedName(value = "id", alternate = {"publicKey"})
     private String mKey;
 
     public KeyRotation(String createdDate, String key) {

@@ -35,7 +35,7 @@ public class IssuerRecord {
 
     /** An ordered list of KeyRotation objects, with the most recent key rotation first.
      * These represent the keys used to issue certificates during specific date ranges */
-    @SerializedName("publicKeys")
+    @SerializedName(value = "publicKey", alternate = {"publicKeys"})
     private List<KeyRotation> mIssuerKeys;
 
     /** An ordered list of KeyRotation objects, with the most recent key rotation first.
