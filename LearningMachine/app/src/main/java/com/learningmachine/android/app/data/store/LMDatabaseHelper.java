@@ -35,14 +35,14 @@ public class LMDatabaseHelper extends SQLiteOpenHelper {
         for (int version = oldVersion; version < newVersion; version++) {
             Migration migration = getMigration(oldVersion);
             if (migration != null) {
-                migration.onUpgrade(sqLiteDatabase, oldVersion, newVersion);
+                migration.onUpgrade(sqLiteDatabase, oldVersion);
             }
         }
     }
 
-    private Migration getMigration(int fromVersion) {
+    private Migration getMigration(int baseVersion) {
         for (Migration migration : mMigrations) {
-            if (migration.getFromVersion() == fromVersion) {
+            if (migration.getBaseVersion() == baseVersion) {
                 return migration;
             }
         }
