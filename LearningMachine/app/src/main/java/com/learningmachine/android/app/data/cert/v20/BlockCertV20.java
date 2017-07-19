@@ -7,6 +7,7 @@ import com.learningmachine.android.app.LMConstants;
 import com.learningmachine.android.app.data.cert.BlockCert;
 import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 import com.learningmachine.android.app.util.ListUtils;
+import com.learningmachine.android.app.util.StringUtils;
 
 import org.joda.time.DateTime;
 
@@ -71,6 +72,9 @@ public class BlockCertV20 extends CertSchemaV20 implements BlockCert {
 
     @Override
     public String getUrl() {
+        if (StringUtils.isWebUrl(getId())) {
+            return getId();
+        }
         if (getBadge() == null
                 || getBadge().getId() == null) {
             return null;
@@ -81,12 +85,11 @@ public class BlockCertV20 extends CertSchemaV20 implements BlockCert {
 
     @Override
     public String getRecipientPublicKey() {
-        if (getRecipient() == null
-                || getRecipient().getRecipientProfile() == null
-                || getRecipient().getRecipientProfile().getPublicKey() == null) {
+        if (getRecipientProfile() == null
+                || getRecipientProfile().getPublicKey() == null) {
             return null;
         }
-        String keyString = getRecipient().getRecipientProfile()
+        String keyString = getRecipientProfile()
                 .getPublicKey()
                 .toString();
         if (keyString.startsWith(LMConstants.ECDSA_KOBLITZ_PUBKEY_PREFIX)) {

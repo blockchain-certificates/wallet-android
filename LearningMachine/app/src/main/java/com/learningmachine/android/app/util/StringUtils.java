@@ -1,5 +1,8 @@
 package com.learningmachine.android.app.util;
 
+import android.util.Patterns;
+import android.webkit.URLUtil;
+
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -60,6 +63,12 @@ public class StringUtils {
      */
     public static boolean isEmpty(@Nullable CharSequence str) {
         return str == null || str.length() == 0;
+    }
+
+    public static boolean isWebUrl(String maybeUrl) {
+        return !StringUtils.isEmpty(maybeUrl)
+                && URLUtil.isValidUrl(maybeUrl)
+                && Patterns.WEB_URL.matcher(maybeUrl).matches();
     }
 
     public static String md5(String string) {

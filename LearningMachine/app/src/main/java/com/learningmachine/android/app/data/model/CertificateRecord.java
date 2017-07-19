@@ -1,8 +1,5 @@
 package com.learningmachine.android.app.data.model;
 
-import android.util.Patterns;
-import android.webkit.URLUtil;
-
 import com.google.gson.annotations.SerializedName;
 import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 import com.learningmachine.android.app.util.StringUtils;
@@ -123,8 +120,6 @@ public class CertificateRecord {
     }
 
     public boolean urlStringContainsUrl() {
-        return !StringUtils.isEmpty(mUrlString)
-                && URLUtil.isValidUrl(mUrlString)
-                && Patterns.WEB_URL.matcher(mUrlString).matches();
+        return StringUtils.isWebUrl(mUrlString);
     }
 }
