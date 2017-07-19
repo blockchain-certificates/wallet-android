@@ -93,14 +93,16 @@ public class CertificateManager {
             BlockCert blockCert = blockCertParser.fromJson(responseBody.string());
             String recipientKey = blockCert.getRecipientPublicKey();
 
-            // Reject on address mismatch
-            boolean isSampleCert = recipientKey.equals("sample-certificate");
-            // TODO: certificate ownership check must compare against all addresses
-            // recipient key must match one of the bitcoin addresses
-            boolean isCertOwner = mBitcoinManager.isMyIssuedAddress(recipientKey);
+            if (LMConstants.SHOULD_PERFORM_OWNERSHIP_CHECK) {
+                // Reject on address mismatch
+                boolean isSampleCert = recipientKey.equals("sample-certificate");
+                // TODO: certificate ownership check must compare against all addresses
+                // recipient key must match one of the bitcoin addresses
+                boolean isCertOwner = mBitcoinManager.isMyIssuedAddress(recipientKey);
 
-            if (LMConstants.SHOULD_PERFORM_OWNERSHIP_CHECK && !isSampleCert && !isCertOwner) {
-                return Observable.error(new CertificateOwnershipException());
+                if (!isSampleCert && !isCertOwner) {
+                    return Observable.error(new CertificateOwnershipException());
+                }
             }
 
             // Save to DB
@@ -145,11 +147,13 @@ public class CertificateManager {
 
         String recipientKey = blockCert.getRecipientPublicKey();
 
-        // Reject on address mismatch
-        boolean isMyKey = mBitcoinManager.isMyIssuedAddress(recipientKey);
-        if (LMConstants.SHOULD_PERFORM_OWNERSHIP_CHECK && !isMyKey) {
-            FileUtils.deleteCertificate(mContext, tempFilename);
-            return Observable.error(new CertificateOwnershipException());
+        if (LMConstants.SHOULD_PERFORM_OWNERSHIP_CHECK) {
+            // Reject on address mismatch
+            boolean isMyKey = mBitcoinManager.isMyIssuedAddress(recipientKey);
+            if (!isMyKey) {
+                FileUtils.deleteCertificate(mContext, tempFilename);
+                return Observable.error(new CertificateOwnershipException());
+            }
         }
 
         // Save to DB
