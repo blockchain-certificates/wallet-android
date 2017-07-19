@@ -33,9 +33,9 @@ public class LMDatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
         for (int version = oldVersion; version < newVersion; version++) {
-            Migration migration = getMigration(oldVersion);
+            Migration migration = getMigration(version);
             if (migration != null) {
-                migration.onUpgrade(sqLiteDatabase, oldVersion);
+                migration.onUpgrade(sqLiteDatabase, version);
             }
         }
     }
