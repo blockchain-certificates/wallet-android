@@ -161,8 +161,13 @@ class CertSchemaV20 {
     }
 
     public RecipientProfile getRecipientProfile() {
-        return recipientProfile != null ? recipientProfile
-                : (recipient != null ? recipient.getRecipientProfile() : null);
+        if (recipientProfile != null) {
+            return recipientProfile;
+        } else if (recipient != null) {
+            return recipient.getRecipientProfile();
+        } else {
+            return null;
+        }
     }
 
     public void setRecipientProfile(RecipientProfile recipientProfile) {
