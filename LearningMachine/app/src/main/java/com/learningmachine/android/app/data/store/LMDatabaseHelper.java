@@ -5,11 +5,18 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.VisibleForTesting;
 
+import com.learningmachine.android.app.data.store.db.Migration;
+import com.learningmachine.android.app.data.store.db.TrackPubKeySentToIssuer;
+
 public class LMDatabaseHelper extends SQLiteOpenHelper {
 
     @VisibleForTesting static final String DB_NAME = "com.learningmachine.android.app.sqlite";
 
-    private static final int DB_VERSION = 1;
+    private static final int DB_VERSION = 2;
+
+    private Migration[] mMigrations = {
+            new TrackPubKeySentToIssuer()
+    };
 
     public LMDatabaseHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -25,13 +32,28 @@ public class LMDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
+        for (int version = oldVersion; version < newVersion; version++) {
+            Migration migration = getMigration(oldVersion);
+            if (migration != null) {
+                migration.onUpgrade(sqLiteDatabase, oldVersion, newVersion);
+            }
+        }
     }
 
-    static class Table {
-        static final String ISSUER = "Issuer";
-        static final String ISSUER_KEY = "IssuerKey";
-        static final String REVOCATION_KEY = "RevocationKey";
-        static final String CERTIFICATE = "Certificate";
+    private Migration getMigration(int fromVersion) {
+        for (Migration migration : mMigrations) {
+            if (migration.getFromVersion() == fromVersion) {
+                return migration;
+            }
+        }
+        return null;
+    }
+
+    public static class Table {
+        public static final String ISSUER = "Issuer";
+        public static final String ISSUER_KEY = "IssuerKey";
+        public static final String REVOCATION_KEY = "RevocationKey";
+        public static final String CERTIFICATE = "Certificate";
     }
 
     public static class Column {
@@ -44,6 +66,7 @@ public class LMDatabaseHelper extends SQLiteOpenHelper {
             public static final String INTRO_URL = "intro_url";
             public static final String INTRODUCED_ON = "introduced_on";
             public static final String ANALYTICS = "analytics";
+            public static final String RECIPIENT_PUB_KEY = "recipient_pub_key";
         }
 
         public static class KeyRotation {
@@ -76,6 +99,7 @@ public class LMDatabaseHelper extends SQLiteOpenHelper {
                 + ", " + Column.Issuer.INTRO_URL + " TEXT"
                 + ", " + Column.Issuer.INTRODUCED_ON + " TEXT"
                 + ", " + Column.Issuer.ANALYTICS + " TEXT"
+                + ", " + Column.Issuer.RECIPIENT_PUB_KEY + " TEXT"
                 + ");";
         sqLiteDatabase.execSQL(createTable);
     }

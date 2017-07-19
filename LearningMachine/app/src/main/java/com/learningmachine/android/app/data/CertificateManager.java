@@ -165,6 +165,7 @@ public class CertificateManager {
     private void saveBlockCert(BlockCert blockCert) {
         mCertificateStore.saveBlockchainCertificate(blockCert);
         IssuerResponse issuer = blockCert.getIssuer();
-        mIssuerStore.saveIssuerResponse(issuer);
+        String recipientPublicKey = blockCert.getRecipientPublicKey();
+        mIssuerStore.saveIssuerResponse(issuer, recipientPublicKey);
     }
 }

@@ -46,12 +46,13 @@ public class InnerJoinTest {
         String email = "sample-certificate@learningmachine.com";
         String introducedOn = "2017-05-11T18:28:27.415+00:00";
         String analytics = "https://www.learningmachine.com/analytics";
+        String recipientPubKey = "aaaabbbbcccc";
 
-        IssuerRecord issuerOrig = new IssuerRecord(name, email, issuerUuid, certsUrl, introUrl, introducedOn, analytics);
+        IssuerRecord issuerOrig = new IssuerRecord(name, email, issuerUuid, certsUrl, introUrl, introducedOn, analytics, recipientPubKey);
         issuerOrig.setRevocationKeys(new ArrayList<>());
         issuerOrig.setIssuerKeys(new ArrayList<>());
 
-        mIssuerStore.saveIssuer(issuerOrig);
+        mIssuerStore.saveIssuer(issuerOrig, recipientPubKey);
 
         String certUuid = "certUuid";
         String certName = "Sample Certificate 1";

@@ -28,7 +28,7 @@ public class IssuerStore implements DataStore {
         mImageStore = imageStore;
     }
 
-    public void saveIssuerResponse(IssuerResponse issuerResponse) {
+    public void saveIssuerResponse(IssuerResponse issuerResponse, String recipientPubKey) {
         if (issuerResponse == null) {
             return;
         }
@@ -40,15 +40,16 @@ public class IssuerStore implements DataStore {
         String introducedOn = DateTime.now().toString();
         issuerResponse.setIntroducedOn(introducedOn);
 
-        saveIssuer(issuerResponse);
+        saveIssuer(issuerResponse, recipientPubKey);
     }
 
-    public void saveIssuer(IssuerRecord issuer) {
+    public void saveIssuer(IssuerRecord issuer, String recipientPubKey) {
         ContentValues contentValues = new ContentValues();
 
         contentValues.put(LMDatabaseHelper.Column.Issuer.NAME, issuer.getName());
         contentValues.put(LMDatabaseHelper.Column.Issuer.EMAIL, issuer.getEmail());
         contentValues.put(LMDatabaseHelper.Column.Issuer.INTRODUCED_ON, issuer.getIntroducedOn());
+        contentValues.put(LMDatabaseHelper.Column.Issuer.RECIPIENT_PUB_KEY, recipientPubKey);
 
         // Issuers in certificates are incomplete, do not overwrite data if it was there before
         String certsUrl = issuer.getCertsUrl();
@@ -151,7 +152,8 @@ public class IssuerStore implements DataStore {
                 + LMDatabaseHelper.Table.ISSUER + "." + LMDatabaseHelper.Column.Issuer.CERTS_URL + ", "
                 + LMDatabaseHelper.Table.ISSUER + "." + LMDatabaseHelper.Column.Issuer.INTRO_URL + ", "
                 + LMDatabaseHelper.Table.ISSUER + "." + LMDatabaseHelper.Column.Issuer.INTRODUCED_ON + ", "
-                + LMDatabaseHelper.Table.ISSUER + "." + LMDatabaseHelper.Column.Issuer.ANALYTICS
+                + LMDatabaseHelper.Table.ISSUER + "." + LMDatabaseHelper.Column.Issuer.ANALYTICS + ", "
+                + LMDatabaseHelper.Table.ISSUER + "." + LMDatabaseHelper.Column.Issuer.RECIPIENT_PUB_KEY
                 + " FROM "
                 + LMDatabaseHelper.Table.ISSUER
                 + " INNER JOIN " + LMDatabaseHelper.Table.CERTIFICATE
