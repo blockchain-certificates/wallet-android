@@ -16,11 +16,8 @@ import org.bitcoinj.core.Address;
 import org.bitcoinj.core.Base58;
 import org.bitcoinj.core.NetworkParameters;
 import org.bitcoinj.wallet.DeterministicSeed;
-import org.bitcoinj.wallet.Protos;
 import org.bitcoinj.wallet.UnreadableWalletException;
 import org.bitcoinj.wallet.Wallet;
-import org.bitcoinj.wallet.WalletExtension;
-import org.bitcoinj.wallet.WalletProtobufSerializer;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -89,10 +86,7 @@ public class BitcoinManager {
      */
     private Observable<Wallet> loadWallet() {
         try (FileInputStream walletStream = new FileInputStream(getWalletFile())) {
-            WalletExtension[] extensions = {};
-            Protos.Wallet proto = WalletProtobufSerializer.parseToProto(walletStream);
-            WalletProtobufSerializer serializer = new WalletProtobufSerializer();
-            mWallet = serializer.readWallet(mNetworkParameters, extensions, proto);
+            mWallet = BitcoinUtils.loadWallet(walletStream, mNetworkParameters);
             mWallet = BitcoinUtils.updateWallet(mWallet);
             Timber.d("Wallet successfully loaded");
             return Observable.just(mWallet);

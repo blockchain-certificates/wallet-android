@@ -11,7 +11,11 @@ import org.bitcoinj.crypto.MnemonicCode;
 import org.bitcoinj.crypto.MnemonicException;
 import org.bitcoinj.wallet.DeterministicKeyChain;
 import org.bitcoinj.wallet.DeterministicSeed;
+import org.bitcoinj.wallet.Protos;
+import org.bitcoinj.wallet.UnreadableWalletException;
 import org.bitcoinj.wallet.Wallet;
+import org.bitcoinj.wallet.WalletExtension;
+import org.bitcoinj.wallet.WalletProtobufSerializer;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -68,6 +72,13 @@ public class BitcoinUtils {
         Wallet wallet = Wallet.fromSeed(params, deterministicSeed, DeterministicKeyChain.BIP44_ACCOUNT_ZERO_PATH);
         wallet.setVersion(WALLET_VERSION);
         return wallet;
+    }
+
+    public static Wallet loadWallet(InputStream walletStream, NetworkParameters networkParameters) throws IOException, UnreadableWalletException {
+        WalletExtension[] extensions = {};
+        Protos.Wallet proto = WalletProtobufSerializer.parseToProto(walletStream);
+        WalletProtobufSerializer serializer = new WalletProtobufSerializer();
+        return serializer.readWallet(networkParameters, extensions, proto);
     }
 
     public static Wallet updateWallet(Wallet wallet) {
