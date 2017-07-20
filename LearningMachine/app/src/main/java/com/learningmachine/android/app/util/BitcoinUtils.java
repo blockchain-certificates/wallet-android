@@ -4,17 +4,13 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.support.annotation.NonNull;
 
-import com.google.common.collect.ImmutableList;
 import com.learningmachine.android.app.LMConstants;
-import com.learningmachine.android.app.data.bitcoin.BIP44AccountZeroKeyChain;
 
 import org.bitcoinj.core.NetworkParameters;
-import org.bitcoinj.crypto.ChildNumber;
 import org.bitcoinj.crypto.MnemonicCode;
 import org.bitcoinj.crypto.MnemonicException;
 import org.bitcoinj.wallet.DeterministicKeyChain;
 import org.bitcoinj.wallet.DeterministicSeed;
-import org.bitcoinj.wallet.KeyChainGroup;
 import org.bitcoinj.wallet.Wallet;
 
 import java.io.IOException;
@@ -26,6 +22,7 @@ import timber.log.Timber;
 
 public class BitcoinUtils {
     private static final String BIP39_ENGLISH_SHA256 = "ad90bf3beb7b0eb7e5acd74727dc0da96e0a280a258354e7293fb7e211ac03db";
+    private static final int WALLET_VERSION = 1;
 
     public static void init(Context context) {
         if (MnemonicCode.INSTANCE == null) {
@@ -68,7 +65,19 @@ public class BitcoinUtils {
                 LMConstants.WALLET_PASSPHRASE,
                 LMConstants.WALLET_CREATION_TIME_SECONDS);
         // m/44'/0'/0'/0
-        return Wallet.fromSeed(params, deterministicSeed, DeterministicKeyChain.BIP44_ACCOUNT_ZERO_PATH);
+        Wallet wallet = Wallet.fromSeed(params, deterministicSeed, DeterministicKeyChain.BIP44_ACCOUNT_ZERO_PATH);
+        wallet.setVersion(WALLET_VERSION);
+        return wallet;
+    }
+
+    public static Wallet updateWallet(Wallet wallet) {
+        if (wallet.getVersion() < WALLET_VERSION) {
+            // Apply version 1 changes
+            DeterministicSeed keyChainSeed = wallet.getKeyChainSeed();
+            NetworkParameters networkParameters = wallet.getNetworkParameters();
+            return Wallet.fromSeed(networkParameters, keyChainSeed, DeterministicKeyChain.BIP44_ACCOUNT_ZERO_PATH);
+        }
+        return wallet;
     }
 
     public static boolean isValidPassphrase(String passphrase) {

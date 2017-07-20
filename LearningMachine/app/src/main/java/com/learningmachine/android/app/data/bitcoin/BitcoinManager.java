@@ -93,6 +93,7 @@ public class BitcoinManager {
             Protos.Wallet proto = WalletProtobufSerializer.parseToProto(walletStream);
             WalletProtobufSerializer serializer = new WalletProtobufSerializer();
             mWallet = serializer.readWallet(mNetworkParameters, extensions, proto);
+            mWallet = BitcoinUtils.updateWallet(mWallet);
             Timber.d("Wallet successfully loaded");
             return Observable.just(mWallet);
         } catch (UnreadableWalletException e) {
