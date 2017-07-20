@@ -25,8 +25,8 @@ public class DataModule {
 
     @Provides
     @Singleton
-    BitcoinManager providesBitcoinManager(Context context, NetworkParameters networkParameters, IssuerStore issuerStore, CertificateStore certificateStore) {
-        return new BitcoinManager(context, networkParameters, issuerStore, certificateStore);
+    BitcoinManager providesBitcoinManager(Context context, NetworkParameters networkParameters, IssuerStore issuerStore, CertificateStore certificateStore, SharedPreferencesManager sharedPreferencesManager) {
+        return new BitcoinManager(context, networkParameters, issuerStore, certificateStore, sharedPreferencesManager);
     }
 
     @Provides

@@ -32,7 +32,7 @@ public class IssuerManager {
         try {
             GsonUtil gsonUtil = new GsonUtil(context);
             IssuerResponse issuerResponse = gsonUtil.loadModelObject("sample-issuer", IssuerResponse.class);
-            mIssuerStore.saveIssuerResponse(issuerResponse);
+            mIssuerStore.saveIssuerResponse(issuerResponse, null);
             return Observable.just(null);
         } catch (IOException e) {
             Timber.e(e, "Unable to load Sample Issuer");
@@ -59,11 +59,11 @@ public class IssuerManager {
     public Observable<String> addIssuer(IssuerIntroductionRequest request) {
         IssuerResponse issuer = request.getIssuerResponse();
         return mIssuerService.postIntroduction(issuer.getIntroUrl(), request)
-                .map(aVoid -> saveIssuer(issuer));
+                .map(aVoid -> saveIssuer(issuer, request.getBitcoinAddress()));
     }
 
-    public String saveIssuer(IssuerResponse issuer) {
-        mIssuerStore.saveIssuerResponse(issuer);
+    public String saveIssuer(IssuerResponse issuer, String recipientPubKey) {
+        mIssuerStore.saveIssuerResponse(issuer, recipientPubKey);
         return issuer.getUuid();
     }
 

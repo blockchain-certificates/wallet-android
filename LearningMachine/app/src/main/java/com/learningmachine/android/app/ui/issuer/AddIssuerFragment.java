@@ -133,11 +133,12 @@ public class AddIssuerFragment extends LMFragment {
             if (!WebAuthActivity.isWebAuthSuccess(data) || resultCode != Activity.RESULT_OK) {
                 return;
             }
+            String bitcoinAddress = WebAuthActivity.getWebAuthBitcoinAddress(data);
             String introUrl = mBinding.addIssuerUrlEditText.getText().toString();
             mIssuerManager.fetchIssuer(introUrl)
                     .doOnSubscribe(() -> displayProgressDialog(R.string.fragment_add_issuer_adding_issuer_progress_dialog_message))
                     .compose(bindToMainThread())
-                    .map(issuer -> mIssuerManager.saveIssuer(issuer))
+                    .map(issuer -> mIssuerManager.saveIssuer(issuer, bitcoinAddress))
                     .subscribe(this::viewIssuer, throwable -> displayErrors(throwable, R.string.error_title_message));
         } else {
             super.onActivityResult(requestCode, resultCode, data);
