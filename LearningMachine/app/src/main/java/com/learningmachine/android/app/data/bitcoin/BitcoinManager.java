@@ -87,7 +87,6 @@ public class BitcoinManager {
     private Observable<Wallet> loadWallet() {
         try (FileInputStream walletStream = new FileInputStream(getWalletFile())) {
             mWallet = BitcoinUtils.loadWallet(walletStream, mNetworkParameters);
-            mWallet = BitcoinUtils.updateWallet(mWallet);
             Timber.d("Wallet successfully loaded");
             return Observable.just(mWallet);
         } catch (UnreadableWalletException e) {
