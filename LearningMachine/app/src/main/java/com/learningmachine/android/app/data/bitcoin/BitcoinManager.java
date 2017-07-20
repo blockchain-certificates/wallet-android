@@ -7,6 +7,7 @@ import android.util.Pair;
 import com.learningmachine.android.app.LMConstants;
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.error.ExceptionWithResourceString;
+import com.learningmachine.android.app.data.preferences.SharedPreferencesManager;
 import com.learningmachine.android.app.data.store.CertificateStore;
 import com.learningmachine.android.app.data.store.IssuerStore;
 import com.learningmachine.android.app.util.BitcoinUtils;
@@ -37,13 +38,15 @@ public class BitcoinManager {
     private final NetworkParameters mNetworkParameters;
     private final IssuerStore mIssuerStore;
     private final CertificateStore mCertificateStore;
+    private final SharedPreferencesManager mSharedPreferencesManager;
     private Wallet mWallet;
 
-    public BitcoinManager(Context context, NetworkParameters networkParameters, IssuerStore issuerStore, CertificateStore certificateStore) {
+    public BitcoinManager(Context context, NetworkParameters networkParameters, IssuerStore issuerStore, CertificateStore certificateStore, SharedPreferencesManager sharedPreferencesManager) {
         mContext = context;
         mNetworkParameters = networkParameters;
         mIssuerStore = issuerStore;
         mCertificateStore = certificateStore;
+        mSharedPreferencesManager = sharedPreferencesManager;
     }
 
     private Observable<Wallet> getWallet() {
@@ -86,7 +89,15 @@ public class BitcoinManager {
      */
     private Observable<Wallet> loadWallet() {
         try (FileInputStream walletStream = new FileInputStream(getWalletFile())) {
-            mWallet = BitcoinUtils.loadWallet(walletStream, mNetworkParameters);
+            Wallet wallet = BitcoinUtils.loadWallet(walletStream, mNetworkParameters);
+            if (BitcoinUtils.updateRequired(wallet)) {
+                Address currentReceiveAddress = wallet.currentReceiveAddress();
+                mSharedPreferencesManager.setLegacyReceiveAddress(currentReceiveAddress.toString());
+                wallet = BitcoinUtils.updateWallet(wallet);
+                wallet.saveToFile(getWalletFile());
+                Timber.d("Wallet successfully updated");
+            }
+            mWallet = wallet;
             Timber.d("Wallet successfully loaded");
             return Observable.just(mWallet);
         } catch (UnreadableWalletException e) {

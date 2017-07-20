@@ -75,23 +75,24 @@ public class BitcoinUtils {
     }
 
     public static Wallet loadWallet(InputStream walletStream, NetworkParameters networkParameters) throws IOException, UnreadableWalletException {
-        Wallet wallet = readWallet(walletStream, networkParameters);
-        return updateWallet(wallet);
-    }
-
-    private static Wallet readWallet(InputStream walletStream, NetworkParameters networkParameters) throws IOException, UnreadableWalletException {
         WalletExtension[] extensions = {};
         Protos.Wallet proto = WalletProtobufSerializer.parseToProto(walletStream);
         WalletProtobufSerializer serializer = new WalletProtobufSerializer();
         return serializer.readWallet(networkParameters, extensions, proto);
     }
 
-    private static Wallet updateWallet(Wallet wallet) {
-        if (wallet.getVersion() < WALLET_VERSION) {
-            // Apply version 1 changes
+    public static boolean updateRequired(Wallet wallet) {
+        return wallet.getVersion() < WALLET_VERSION;
+    }
+
+    public static Wallet updateWallet(Wallet wallet) {
+        if (updateRequired(wallet)) {
+            // Apply version 0 to version 1 changes
             DeterministicSeed keyChainSeed = wallet.getKeyChainSeed();
             NetworkParameters networkParameters = wallet.getNetworkParameters();
-            return Wallet.fromSeed(networkParameters, keyChainSeed, DeterministicKeyChain.BIP44_ACCOUNT_ZERO_PATH);
+            Wallet updatedWallet = Wallet.fromSeed(networkParameters, keyChainSeed, DeterministicKeyChain.BIP44_ACCOUNT_ZERO_PATH);
+            updatedWallet.setVersion(WALLET_VERSION);
+            return updatedWallet;
         }
         return wallet;
     }
