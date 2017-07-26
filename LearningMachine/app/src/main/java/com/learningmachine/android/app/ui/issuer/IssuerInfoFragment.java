@@ -3,7 +3,6 @@ package com.learningmachine.android.app.ui.issuer;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +15,6 @@ import com.learningmachine.android.app.databinding.FragmentIssuerInfoBinding;
 import com.learningmachine.android.app.ui.LMFragment;
 
 import javax.inject.Inject;
-
-import rx.Observable;
 
 public class IssuerInfoFragment extends LMFragment {
 
@@ -52,10 +49,10 @@ public class IssuerInfoFragment extends LMFragment {
 
         String issuerUuid = getArguments().getString(ARG_ISSUER_UUID);
         // TODO: should find the bitcoin address that was sent to the issuer
-        Observable.combineLatest(mIssuerManager.getIssuer(issuerUuid), mBitcoinManager.getCurrentBitcoinAddress(), Pair::new)
+        mIssuerManager.getIssuer(issuerUuid)
                 .compose(bindToMainThread())
-                .subscribe(pair -> {
-                    IssuerInfoViewModel viewModel = new IssuerInfoViewModel(pair.first, pair.second);
+                .subscribe(issuer -> {
+                    IssuerInfoViewModel viewModel = new IssuerInfoViewModel(issuer);
                     mBinding.setIssuerInfo(viewModel);
                 });
 

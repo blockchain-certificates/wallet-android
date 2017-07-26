@@ -25,9 +25,9 @@ class Verification {
      * Blockcerts extension: the expected blockchain address for the signer of the transaction containing the merkle proof. In Blockcerts `creator` IRIs are typically represented with a `<scheme>:` prefix. For Bitcoin transactions, this would be the issuer public Bitcoin address prefixed with `ecdsa-koblitz-pubkey:`; e.g. `ecdsa-koblitz-pubkey:14RZvYazz9H2DC2skBfpPVxax54g4yabxe`
      * 
      */
-    @SerializedName("creator")
+    @SerializedName(value = "publicKey", alternate = {"creator"})
     @Expose
-    private String creator;
+    private String publicKey;
     /**
      * Defined by `verificationProperty` property of https://w3id.org/openbadges#VerificationObject
      * 
@@ -72,16 +72,16 @@ class Verification {
      * Blockcerts extension: the expected blockchain address for the signer of the transaction containing the merkle proof. In Blockcerts `creator` IRIs are typically represented with a `<scheme>:` prefix. For Bitcoin transactions, this would be the issuer public Bitcoin address prefixed with `ecdsa-koblitz-pubkey:`; e.g. `ecdsa-koblitz-pubkey:14RZvYazz9H2DC2skBfpPVxax54g4yabxe`
      * 
      */
-    public String getCreator() {
-        return creator;
+    public String getPublicKey() {
+        return publicKey;
     }
 
     /**
      * Blockcerts extension: the expected blockchain address for the signer of the transaction containing the merkle proof. In Blockcerts `creator` IRIs are typically represented with a `<scheme>:` prefix. For Bitcoin transactions, this would be the issuer public Bitcoin address prefixed with `ecdsa-koblitz-pubkey:`; e.g. `ecdsa-koblitz-pubkey:14RZvYazz9H2DC2skBfpPVxax54g4yabxe`
      * 
      */
-    public void setCreator(String creator) {
-        this.creator = creator;
+    public void setPublicKey(String publicKey) {
+        this.publicKey = publicKey;
     }
 
     /**

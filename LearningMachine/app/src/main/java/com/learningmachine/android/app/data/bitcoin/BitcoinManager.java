@@ -7,20 +7,17 @@ import android.util.Pair;
 import com.learningmachine.android.app.LMConstants;
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.error.ExceptionWithResourceString;
+import com.learningmachine.android.app.data.preferences.SharedPreferencesManager;
 import com.learningmachine.android.app.data.store.CertificateStore;
 import com.learningmachine.android.app.data.store.IssuerStore;
 import com.learningmachine.android.app.util.BitcoinUtils;
 import com.learningmachine.android.app.util.StringUtils;
 
 import org.bitcoinj.core.Address;
-import org.bitcoinj.core.Base58;
 import org.bitcoinj.core.NetworkParameters;
 import org.bitcoinj.wallet.DeterministicSeed;
-import org.bitcoinj.wallet.Protos;
 import org.bitcoinj.wallet.UnreadableWalletException;
 import org.bitcoinj.wallet.Wallet;
-import org.bitcoinj.wallet.WalletExtension;
-import org.bitcoinj.wallet.WalletProtobufSerializer;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -40,13 +37,15 @@ public class BitcoinManager {
     private final NetworkParameters mNetworkParameters;
     private final IssuerStore mIssuerStore;
     private final CertificateStore mCertificateStore;
+    private final SharedPreferencesManager mSharedPreferencesManager;
     private Wallet mWallet;
 
-    public BitcoinManager(Context context, NetworkParameters networkParameters, IssuerStore issuerStore, CertificateStore certificateStore) {
+    public BitcoinManager(Context context, NetworkParameters networkParameters, IssuerStore issuerStore, CertificateStore certificateStore, SharedPreferencesManager sharedPreferencesManager) {
         mContext = context;
         mNetworkParameters = networkParameters;
         mIssuerStore = issuerStore;
         mCertificateStore = certificateStore;
+        mSharedPreferencesManager = sharedPreferencesManager;
     }
 
     private Observable<Wallet> getWallet() {
@@ -89,10 +88,15 @@ public class BitcoinManager {
      */
     private Observable<Wallet> loadWallet() {
         try (FileInputStream walletStream = new FileInputStream(getWalletFile())) {
-            WalletExtension[] extensions = {};
-            Protos.Wallet proto = WalletProtobufSerializer.parseToProto(walletStream);
-            WalletProtobufSerializer serializer = new WalletProtobufSerializer();
-            mWallet = serializer.readWallet(mNetworkParameters, extensions, proto);
+            Wallet wallet = BitcoinUtils.loadWallet(walletStream, mNetworkParameters);
+            if (BitcoinUtils.updateRequired(wallet)) {
+                Address currentReceiveAddress = wallet.currentReceiveAddress();
+                mSharedPreferencesManager.setLegacyReceiveAddress(currentReceiveAddress.toString());
+                wallet = BitcoinUtils.updateWallet(wallet);
+                wallet.saveToFile(getWalletFile());
+                Timber.d("Wallet successfully updated");
+            }
+            mWallet = wallet;
             Timber.d("Wallet successfully loaded");
             return Observable.just(mWallet);
         } catch (UnreadableWalletException e) {
@@ -156,12 +160,13 @@ public class BitcoinManager {
                 .map(pair -> pair.first);
     }
 
-    public boolean isMyKey(String key) {
-        byte[] pubKey = Base58.decode(key);
-        return mWallet.isPubKeyMine(pubKey);
-    }
-
     public boolean isMyIssuedAddress(String addressString) {
+        String legacyReceiveAddress = mSharedPreferencesManager.getLegacyReceiveAddress();
+        if (legacyReceiveAddress != null) {
+            if (legacyReceiveAddress.equals(addressString)) {
+                return true;
+            }
+        }
         Address address = Address.fromBase58(mNetworkParameters, addressString);
         return mWallet.getIssuedReceiveAddresses().contains(address);
     }

@@ -15,7 +15,7 @@ import java.util.Set;
  * From https://w3id.org/openbadges#BadgeClass
  * 
  */
-class Badge {
+public class Badge {
 
     /**
      * Defined by `id` property of https://w3id.org/openbadges#BadgeClass. This field is required in Open Badges but currently optional in Blockcerts for compatibility. This may be an HTTP IRI, but only if the issuer plans to host the BadgeClass definitions on a long-term basis, or (at least) until expiration of certificates referencing this BadgeClass. Otherwise it is recommended to use a `urn:uuid:<UUID>`-formatted IRI.

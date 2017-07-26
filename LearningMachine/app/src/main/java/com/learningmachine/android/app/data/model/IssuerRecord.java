@@ -35,7 +35,7 @@ public class IssuerRecord {
 
     /** An ordered list of KeyRotation objects, with the most recent key rotation first.
      * These represent the keys used to issue certificates during specific date ranges */
-    @SerializedName("publicKeys")
+    @SerializedName(value = "publicKey", alternate = {"publicKeys"})
     private List<KeyRotation> mIssuerKeys;
 
     /** An ordered list of KeyRotation objects, with the most recent key rotation first.
@@ -49,7 +49,9 @@ public class IssuerRecord {
     // created when added to DB
     private String mIntroducedOn;
 
-    public IssuerRecord(String name, String email, String uuid, String certsUrl, String introUrl, String introducedOn, String analyticsUrlString) {
+    private String mRecipientPubKey;
+
+    public IssuerRecord(String name, String email, String uuid, String certsUrl, String introUrl, String introducedOn, String analyticsUrlString, String recipientPubKey) {
         mName = name;
         mEmail = email;
         mUuid = uuid;
@@ -57,6 +59,7 @@ public class IssuerRecord {
         mIntroUrl = introUrl;
         mIntroducedOn = introducedOn;
         mAnalyticsUrlString = analyticsUrlString;
+        mRecipientPubKey = recipientPubKey;
     }
 
     public String getName() {
@@ -133,5 +136,13 @@ public class IssuerRecord {
 
     public String getAnalyticsUrlString() {
         return mAnalyticsUrlString;
+    }
+
+    public String getRecipientPubKey() {
+        return mRecipientPubKey;
+    }
+
+    public void setRecipientPubKey(String recipientPubKey) {
+        this.mRecipientPubKey = recipientPubKey;
     }
 }

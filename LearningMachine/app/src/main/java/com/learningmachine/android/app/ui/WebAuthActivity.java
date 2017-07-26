@@ -21,6 +21,7 @@ public class WebAuthActivity extends LMSingleFragmentActivity implements WebAuth
     private static final String EXTRA_END_POINT = "WebAuthActivity.EndPoint";
     private static final String EXTRA_SUCCESS_URL = "WebAuthActivity.SuccessURL";
     private static final String EXTRA_ERROR_URL = "WebAuthActivity.ErrorURL";
+    private static final String EXTRA_BITCOIN_ADDRESS = "WebAuthActivity.BitcoinAddress";
 
     public static Intent newIntent(Context context, IssuerIntroductionRequest request) {
         IssuerResponse issuer = request.getIssuerResponse();
@@ -64,6 +65,10 @@ public class WebAuthActivity extends LMSingleFragmentActivity implements WebAuth
         return getIntent().getStringExtra(EXTRA_ERROR_URL);
     }
 
+    private String getBitcoinAddress() {
+        return getIntent().getStringExtra(EXTRA_BITCOIN_ADDRESS);
+    }
+
     public String getActionBarTitle() {
         return "Web Auth";
     }
@@ -92,6 +97,7 @@ public class WebAuthActivity extends LMSingleFragmentActivity implements WebAuth
     public void onSuccess() {
         Intent result = new Intent();
         result.putExtra(WEB_AUTH_SUCCESS, true);
+        result.putExtra(EXTRA_BITCOIN_ADDRESS, getBitcoinAddress());
         setResult(RESULT_OK, result);
         finish();
     }
@@ -100,11 +106,16 @@ public class WebAuthActivity extends LMSingleFragmentActivity implements WebAuth
     public void onError() {
         Intent result = new Intent();
         result.putExtra(WEB_AUTH_SUCCESS, false);
+        result.putExtra(EXTRA_BITCOIN_ADDRESS, getBitcoinAddress());
         setResult(RESULT_OK);
         finish();
     }
 
     public static boolean isWebAuthSuccess(Intent result) {
         return result != null && result.getBooleanExtra(WEB_AUTH_SUCCESS, false);
+    }
+
+    public static String getWebAuthBitcoinAddress(Intent result) {
+        return result != null ? result.getStringExtra(EXTRA_BITCOIN_ADDRESS) : null;
     }
 }

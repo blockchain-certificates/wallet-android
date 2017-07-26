@@ -10,7 +10,7 @@ import com.google.gson.annotations.SerializedName;
  * Defined by https://w3id.org/openbadges#Profile. This type is used in certificates, and in the issuer-hosted identification page. The minimal set of properties required in the certificate are `id` and `type`. In this case, additional issuer-identification properties are assumed to be available at the issuer-hosted identification page.
  * 
  */
-class Issuer {
+public class Issuer {
 
     /**
      * Defined by `id` property of https://w3id.org/openbadges#Profile
