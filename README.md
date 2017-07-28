@@ -1,4 +1,5 @@
 # learning-machine-android
+[![Build Status](https://travis-ci.org/blockchain-certificates/wallet-android.svg?branch=master)](https://travis-ci.org/blockchain-certificates/wallet-android)
 
 [Blockcerts](https://www.blockcerts.org) Android application by Learning Machine
 
