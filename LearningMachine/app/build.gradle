@@ -76,9 +76,9 @@ android {
 
     buildTypes {
         release {
-            if (System.getenv("BUILD_NUMBER") == null) {
-                versionNameSuffix "-nontravis"
-            }
+//            if (System.getenv("BUILD_NUMBER") == null) {
+//                versionNameSuffix "-nontravis"
+//            }
 
             applicationVariants.all { variant ->
                 variant.outputs.all {
