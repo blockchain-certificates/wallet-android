@@ -259,3 +259,7 @@ We suggest the following method orgainization:
 * A quality replacement for the Java date and time classes
 * Required for unit tests
 * Apache 2.0
+
+## Contact
+
+Contact us at [the Blockcerts community forum](http://community.blockcerts.org/).
