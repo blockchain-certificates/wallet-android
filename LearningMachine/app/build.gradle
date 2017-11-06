@@ -176,7 +176,7 @@ dependencies {
     implementation "com.squareup.picasso:picasso:$PICASSO_VERSION"
     implementation "com.google.guava:guava:$GUAVA_VERSION"
 
-    androidTestCompile("com.android.support.test.espresso:espresso-core:$ESPRESSO_VERSION", {
+    androidTestImplementation("com.android.support.test.espresso:espresso-core:$ESPRESSO_VERSION", {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     androidTestImplementation "org.mockito:mockito-core:$MOCKITO_VERSION"
