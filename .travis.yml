@@ -14,7 +14,7 @@ android:
     - platform-tools
     - tools
     # The BuildTools version used by your project
-    - build-tools-25.0.3
+    - build-tools-26.0.2
     # The SDK version used to compile your project
     - android-25
     # Additional components
@@ -25,6 +25,3 @@ script:
     - ./scripts/build.sh
 after_success:
     - ./scripts/deliver.sh
-notifications:
-  slack:
-    secure: eXq25+uxkbZFqNEqQ3y+NAyIFNH0+R/hl/KCgJwemH83l7X04nyTv+1G13nHzibHIKf2OAsVM5Tqjoc9QNlWa7p7phfdzuuKH6kOXpvQCsQlxNVhT3uKyrw1/dMwKgb9ZHxxklHLQLfHZp3tqvgpUOSUaV61Wh/pQ5iysFNzhC4sFtv2nSkHbs+bkvlcRBgP3RzeDYgA1xWuxFD5m2RrH8JjsN2nGohLKPUSaThIHGc2LVnOTPNfop4UBygPY6TriTUd8vhsEaRBfF2iIrisMJFnYKUQpxhZzYGftxGAix9gZGwK5JYhg8s3Eb62v8m1CQE2EsPCdAVZRf8HmeZXbVZwxTNClyOgx7uHLt3Ily8073g2TQ9tKd/nAGDR3o+JqWFa3JWmyHXYWh09QQXzG1IMhyaF4T9Izx8FbPMcRV4oEmMvFHzYqde7XEFCukwjfjd3TYJnWblXWmCWZkDBZ1LqEzennx6EIxBpeeZ+M/CxQqNPzcU1mieQyp1klvu5kt06aDhAi/+jg6FgHtEsMqjDpKR/RXprK4j1bUgiLwxayn6vcoXzs1fb7YyIpHWVD+rTzRUEBZRz2pZJAqpaQ2mIWsQMM93aiNq6aasKRNLtpfeQm3iy/Bwpc8QGJfnBbf9cLetFOgQ2qbqjSXSHSz0/55uE+AbRAy+vwCwQL7s=
