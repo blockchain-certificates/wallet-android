@@ -3,6 +3,7 @@ package com.learningmachine.android.app.data.webservice;
 import com.learningmachine.android.app.data.webservice.request.IssuerAnalytic;
 import com.learningmachine.android.app.data.webservice.request.IssuerIntroductionRequest;
 import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
+import com.learningmachine.android.app.data.webservice.response.IssuingEstimateResponse;
 
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -19,4 +20,7 @@ public interface IssuerService {
 
     @POST
     Observable<Void> postIssuerAnalytics(@Url String url, @Body IssuerAnalytic issuerAnalytic);
+
+    @GET
+    Observable<IssuingEstimateResponse> getIssuingEstimate(@Url String url);
 }
