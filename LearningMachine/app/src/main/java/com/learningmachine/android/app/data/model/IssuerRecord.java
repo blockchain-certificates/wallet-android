@@ -46,12 +46,26 @@ public class IssuerRecord {
     @SerializedName("analyticsURL")
     private String mAnalyticsUrlString;
 
+    // This is the right place for this, but I'm leaving it in the response for now to save me time.
+//    @SerializedName("issuingEstimateURL")
+//    private String mIssuingEstimateUrlString;
+//
+//    @SerializedName("issuingEstimateAuth")
+//    private String mIssuingEstimateAuth;
+
     // created when added to DB
     private String mIntroducedOn;
 
     private String mRecipientPubKey;
 
-    public IssuerRecord(String name, String email, String uuid, String certsUrl, String introUrl, String introducedOn, String analyticsUrlString, String recipientPubKey) {
+    public IssuerRecord(String name,
+                        String email,
+                        String uuid,
+                        String certsUrl,
+                        String introUrl,
+                        String introducedOn,
+                        String analyticsUrlString,
+                        String recipientPubKey/*, String issuingEstimateUrlString, String issuingEstimateAuth */) {
         mName = name;
         mEmail = email;
         mUuid = uuid;
@@ -60,6 +74,8 @@ public class IssuerRecord {
         mIntroducedOn = introducedOn;
         mAnalyticsUrlString = analyticsUrlString;
         mRecipientPubKey = recipientPubKey;
+//        mIssuingEstimateUrlString = issuingEstimateUrlString;
+//        mIssuingEstimateAuth = issuingEstimateAuth;
     }
 
     public String getName() {
@@ -97,7 +113,6 @@ public class IssuerRecord {
     public void setRevocationKeys(List<KeyRotation> revocationKeys) {
         mRevocationKeys = revocationKeys;
     }
-
 
     /** Image filename, created with the md5 of mUuid*/
     public String getImageFilename() {
@@ -145,4 +160,12 @@ public class IssuerRecord {
     public void setRecipientPubKey(String recipientPubKey) {
         this.mRecipientPubKey = recipientPubKey;
     }
+
+//    public String getIssuingEstimateUrlString() {
+//        return mIssuingEstimateUrlString;
+//    }
+//
+//    public String getIssuingEstimateAuth() {
+//        return mIssuingEstimateAuth;
+//    }
 }
