@@ -10,6 +10,7 @@ import java.util.List;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 import retrofit2.http.Url;
 import rx.Observable;
 
@@ -24,5 +25,5 @@ public interface IssuerService {
     Observable<Void> postIssuerAnalytics(@Url String url, @Body IssuerAnalytic issuerAnalytic);
 
     @GET
-    Observable<List<IssuingEstimate>> getIssuingEstimates(@Url String url, @Body );
+    Observable<List<IssuingEstimate>> getIssuingEstimates(@Url String url, @Query("key") String key);
 }

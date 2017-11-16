@@ -1,7 +1,6 @@
 package com.learningmachine.android.app.data;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.learningmachine.android.app.data.error.IssuerAnalyticsException;
 import com.learningmachine.android.app.data.model.IssuerRecord;
@@ -11,7 +10,6 @@ import com.learningmachine.android.app.data.webservice.IssuerService;
 import com.learningmachine.android.app.data.webservice.request.IssuerAnalytic;
 import com.learningmachine.android.app.data.webservice.request.IssuerIntroductionRequest;
 import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
-import com.learningmachine.android.app.data.webservice.response.IssuingEstimateResponse;
 import com.learningmachine.android.app.util.GsonUtil;
 import com.learningmachine.android.app.util.StringUtils;
 
@@ -59,8 +57,8 @@ public class IssuerManager {
         return mIssuerService.getIssuer(url);
     }
 
-    public Observable<List<IssuingEstimate>> getIssuingEstimates(String issuingEstimateURL) {
-        return mIssuerService.getIssuingEstimates(issuingEstimateURL);
+    public Observable<List<IssuingEstimate>> getIssuingEstimates(String issuingEstimateURL, String key) {
+        return mIssuerService.getIssuingEstimates(issuingEstimateURL, key);
 ////        return this.getIssuer(issuerUuid).subscribe({record -> record.ge})
 ////        IssuerResponse response = this.fetchIssuer(issuerUrl);
 ////        return Observable.just(mIssuerService.getIssuingEstimate(response.getIssuingEstimateUrlString()));
