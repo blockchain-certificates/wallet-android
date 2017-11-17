@@ -45,7 +45,9 @@ public class IssuerFragment extends LMFragment {
 
     private String mIssuerUuid;
     private FragmentIssuerBinding mBinding;
+
     private List<CertificateRecord> mCertificateList;
+    private List<IssuingEstimate> mEstimateList;
 
     public static IssuerFragment newInstance(String issuerUuid) {
         Bundle args = new Bundle();
@@ -66,6 +68,7 @@ public class IssuerFragment extends LMFragment {
 
         mIssuerUuid = getArguments().getString(ARG_ISSUER_UUID);
         mCertificateList = new ArrayList<>();
+        mEstimateList = new ArrayList<>();
     }
 
     @Nullable
@@ -137,7 +140,7 @@ public class IssuerFragment extends LMFragment {
     }
 
     private void setupRecyclerView() {
-        CertificateAdapter adapter = new CertificateAdapter(mCertificateList);
+        CertificateAdapter adapter = new CertificateAdapter(mCertificateList, mEstimateList);
         mBinding.certificateRecyclerView.setAdapter(adapter);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -152,15 +155,18 @@ public class IssuerFragment extends LMFragment {
     }
 
     private void updateRecyclerViewWithEstimates(List<IssuingEstimate> estimateList) {
-        Log.d("What", "updaterecyclerview called");
+        mEstimateList.clear();
+        mEstimateList.addAll(estimateList);
+        mBinding.certificateRecyclerView.getAdapter().notifyDataSetChanged();
     }
 
     private class CertificateAdapter extends RecyclerView.Adapter<CertificateViewHolder> {
-
         private List<CertificateRecord> mCertificateList;
+        private List<IssuingEstimate> mEstimateList;
 
-        CertificateAdapter(List<CertificateRecord> certificateList) {
+        CertificateAdapter(List<CertificateRecord> certificateList, List<IssuingEstimate> estimateList) {
             mCertificateList = certificateList;
+            mEstimateList = estimateList;
         }
 
         @Override
@@ -176,13 +182,19 @@ public class IssuerFragment extends LMFragment {
 
         @Override
         public void onBindViewHolder(CertificateViewHolder holder, int position) {
-            CertificateRecord certificate = mCertificateList.get(position);
-            holder.bind(certificate);
+            if (position < mEstimateList.size()) {
+                IssuingEstimate estimate = mEstimateList.get(position);
+                holder.bind(estimate);
+            } else {
+                position -= mEstimateList.size();
+                CertificateRecord certificate = mCertificateList.get(position);
+                holder.bind(certificate);
+            }
         }
 
         @Override
         public int getItemCount() {
-            return mCertificateList.size();
+            return mEstimateList.size() + mCertificateList.size();
         }
     }
 }

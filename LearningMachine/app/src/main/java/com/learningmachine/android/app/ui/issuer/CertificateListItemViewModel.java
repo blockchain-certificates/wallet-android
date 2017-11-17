@@ -14,7 +14,10 @@ public class CertificateListItemViewModel extends BaseObservable {
     @Bindable
     public String getTitle() {
         if (mCertificate == null) {
-            return null;
+            if (mEstimate == null) {
+                return null;
+            }
+            return mEstimate.getTitle();
         }
         return mCertificate.getName();
     }
@@ -22,7 +25,10 @@ public class CertificateListItemViewModel extends BaseObservable {
     @Bindable
     public String getDescription() {
         if (mCertificate == null) {
-            return null;
+            if (mEstimate == null) {
+                return null;
+            }
+            return mEstimate.getWillIssueOn();
         }
         return mCertificate.getDescription();
     }
