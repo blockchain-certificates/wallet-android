@@ -28,7 +28,7 @@ public class CertificateListItemViewModel extends BaseObservable {
             if (mEstimate == null) {
                 return null;
             }
-            return mEstimate.getWillIssueOn();
+            return mEstimate.getEstimateDescription();
         }
         return mCertificate.getDescription();
     }
