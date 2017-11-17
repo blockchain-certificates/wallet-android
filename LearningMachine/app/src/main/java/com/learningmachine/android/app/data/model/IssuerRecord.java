@@ -58,7 +58,7 @@ public class IssuerRecord {
                         String introUrl,
                         String introducedOn,
                         String analyticsUrlString,
-                        String recipientPubKey/*, String issuingEstimateUrlString, String issuingEstimateAuth */) {
+                        String recipientPubKey) {
         mName = name;
         mEmail = email;
         mUuid = uuid;
