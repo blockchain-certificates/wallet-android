@@ -119,20 +119,8 @@ public class IssuerFragment extends LMFragment {
                     return response;
                 })
                 .subscribe(this::fetchIssuingEstimates);
-
-//        mIssuerManager.fetchIssuer(mIssuerUuid)
-//                .compose(bindToMainThread())
-//                .subscribe(this::fetchIssuingEstimates);
-//        mIssuerManager.getIssuer(mIssuerUuid)
-//                .compose(bindToMainThread())
-//                .subscribe(this::alt_fetchIE);
     }
 
-//    private void alt_fetchIE(IssuerRecord record) {
-//        mIssuerManager.getIssuingEstimates("http://10.0.1.8:1234/issuer/accepting-estimate-unsigned/issuing-estimate", record.getRecipientPubKey())
-//                .compose(bindToMainThread())
-//                .subscribe(this::updateRecyclerViewWithEstimates);
-//    }
     private void fetchIssuingEstimates(IssuerResponse issuerResponse) {
         mIssuerManager.getIssuingEstimates(issuerResponse.getIssuingEstimateUrlString(), issuerResponse.getRecipientPubKey())
                 .compose(bindToMainThread())

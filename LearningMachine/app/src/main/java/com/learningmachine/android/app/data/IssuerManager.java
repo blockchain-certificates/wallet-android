@@ -59,9 +59,6 @@ public class IssuerManager {
 
     public Observable<List<IssuingEstimate>> getIssuingEstimates(String issuingEstimateURL, String key) {
         return mIssuerService.getIssuingEstimates(issuingEstimateURL, key);
-////        return this.getIssuer(issuerUuid).subscribe({record -> record.ge})
-////        IssuerResponse response = this.fetchIssuer(issuerUrl);
-////        return Observable.just(mIssuerService.getIssuingEstimate(response.getIssuingEstimateUrlString()));
     }
 
     public Observable<String> addIssuer(IssuerIntroductionRequest request) {
