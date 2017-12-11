@@ -180,7 +180,7 @@
 	                              });
 	          }
 	          // call the underlining documentLoader using the callback API.
-	          nodeDocumentLoader(url, callback);
+	          return nodeDocumentLoader(url, callback);
 	          /* Note: By default, the node.js document loader uses a callback, but
 	           browser-based document loaders (xhr or jquery) return promises if they
 	           are supported (or polyfilled) in the browser. This behavior can be
