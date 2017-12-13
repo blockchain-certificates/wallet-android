@@ -148,12 +148,6 @@ public class CertificateVerifier {
                 FileUtils.appendCharactersToFile(prefixInputStream, file);
                 FileUtils.appendStringToFile(serializedDoc, file);
                 FileUtils.appendCharactersToFile(suffixInputStream, file);
-
-
-//                FileUtils.copyStreams(prefixInputStream, outputStream);
-//                outputStream.write(serializedDoc.getBytes());
-//                FileUtils.copyStreams(suffixInputStream, outputStream);
-//                outputStream.flush();
             } catch (Exception e) {
                 Timber.e(e, "Couldn't save the certificate document node");
                 emitter.onError(e);
@@ -209,11 +203,6 @@ public class CertificateVerifier {
                 Timber.e(e, String.format("Remote hash [%s] does not match local hash [%s]", mRemoteHash, localHash));
                 mEmitter.onError(e);
             }
-        }
-
-        @JavascriptInterface
-        public void test(String string) {
-            Timber.i("String is: " + string + " which is " + (string.contentEquals("í") ? "good" : "bad"));
         }
     }
 
