@@ -142,6 +142,11 @@ public class BlockCertV20 extends CertSchemaV20 implements BlockCert {
         return mDocumentNode;
     }
 
+    @Override
+    public String getReceiptHash() {
+        return getSignature().getTargetHash();
+    }
+
     public void setDocumentNode(JsonObject documentNode) {
         mDocumentNode = documentNode;
     }

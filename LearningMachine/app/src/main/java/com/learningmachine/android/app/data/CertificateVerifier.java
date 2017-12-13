@@ -123,7 +123,11 @@ public class CertificateVerifier {
 
     public Observable<String> verifyJsonLd(BlockCert certificate, TxRecord txRecord) {
         mUpdates.onNext(CertificateVerificationStatus.COMPARING_HASHES);
-        String remoteHash = txRecord.getRemoteHash();
+        String possibleHash = certificate.getReceiptHash();
+        if (possibleHash == null) {
+            possibleHash = txRecord.getRemoteHash();
+        }
+        final String remoteHash = possibleHash;
         JsonObject documentNode = certificate.getDocumentNode();
         if (documentNode == null) {
             return Observable.error(new ExceptionWithResourceString(R.string.error_invalid_certificate_json));

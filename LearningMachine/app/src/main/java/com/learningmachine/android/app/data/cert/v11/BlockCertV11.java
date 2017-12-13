@@ -89,6 +89,11 @@ public class BlockCertV11 extends CertificateSchemaV11 implements BlockCert {
         return mDocumentNode;
     }
 
+    @Override
+    public String getReceiptHash() {
+        return null;
+    }
+
     public void setDocumentNode(JsonObject documentNode) {
         mDocumentNode = documentNode;
     }

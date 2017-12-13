@@ -15,6 +15,7 @@ public interface BlockCert {
     String getSourceId();
     String getMerkleRoot();
     String getMetadata();
+    String getReceiptHash();
 
     /**
      * @return The portion of the certificate whose hash needs to be compared against the
