@@ -143,8 +143,7 @@ public class CertificateVerifier {
             }
 
             try (InputStream prefixInputStream = mContext.getAssets().open(VIEW_CERTIFICATE_PREFIX_FILE);
-                 InputStream suffixInputStream = mContext.getAssets().open(VIEW_CERTIFICATE_SUFFIX_FILE);
-                 OutputStreamWriter outputWriter = new FileWriter(file)) {
+                 InputStream suffixInputStream = mContext.getAssets().open(VIEW_CERTIFICATE_SUFFIX_FILE)) {
                 FileUtils.appendCharactersToFile(prefixInputStream, file);
                 FileUtils.appendStringToFile(serializedDoc, file);
                 FileUtils.appendCharactersToFile(suffixInputStream, file);
