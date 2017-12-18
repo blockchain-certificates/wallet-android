@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.learningmachine.android.app.data.error.IssuerAnalyticsException;
 import com.learningmachine.android.app.data.model.IssuerRecord;
+import com.learningmachine.android.app.data.model.IssuingEstimate;
 import com.learningmachine.android.app.data.store.IssuerStore;
 import com.learningmachine.android.app.data.webservice.IssuerService;
 import com.learningmachine.android.app.data.webservice.request.IssuerAnalytic;
@@ -54,6 +55,10 @@ public class IssuerManager {
 
     public Observable<IssuerResponse> fetchIssuer(String url) {
         return mIssuerService.getIssuer(url);
+    }
+
+    public Observable<List<IssuingEstimate>> getIssuingEstimates(String issuingEstimateURL, String key) {
+        return mIssuerService.getIssuingEstimates(issuingEstimateURL, key);
     }
 
     public Observable<String> addIssuer(IssuerIntroductionRequest request) {

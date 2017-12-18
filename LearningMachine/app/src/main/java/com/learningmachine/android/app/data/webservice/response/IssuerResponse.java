@@ -10,6 +10,7 @@ import java.util.List;
 
 public class IssuerResponse extends IssuerRecord {
     private static final String WEB_AUTH_METHOD = "web";
+    private static final String ISSUING_ESTIMATE_UNSIGNED = "unsigned";
 
     @SerializedName("image")
     private String mImageData;
@@ -19,6 +20,11 @@ public class IssuerResponse extends IssuerRecord {
     private String mIntroductionSuccessUrlString;
     @SerializedName("introductionErrorURL")
     private String mIntroductionErrorUrlString;
+
+    @SerializedName("issuingEstimateURL")
+    private String mIssuingEstimateUrlString;
+    @SerializedName("issuingEstimateAuth")
+    private String mIssuingEstimateAuth;
 
     public IssuerResponse(String name, String email, String uuid, String certsUrl, String introUrl, String introducedOn, String imageData, String analyticsUrlString) {
         super(name, email, uuid, certsUrl, introUrl, introducedOn, analyticsUrlString, null);
@@ -58,4 +64,8 @@ public class IssuerResponse extends IssuerRecord {
     public String getIntroductionErrorUrlString() {
         return mIntroductionErrorUrlString;
     }
+
+    public String getIssuingEstimateUrlString() { return mIssuingEstimateUrlString; }
+
+    public boolean usesUnsignedIssuingEstimateRequests() { return ISSUING_ESTIMATE_UNSIGNED.equals(mIssuingEstimateAuth); }
 }
