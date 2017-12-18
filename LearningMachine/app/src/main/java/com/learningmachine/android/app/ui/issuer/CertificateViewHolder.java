@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.learningmachine.android.app.data.model.CertificateRecord;
-import com.learningmachine.android.app.data.model.IssuingEstimate;
 import com.learningmachine.android.app.databinding.ListItemCertificateBinding;
 import com.learningmachine.android.app.ui.cert.CertificateActivity;
 
@@ -29,10 +28,6 @@ public class CertificateViewHolder extends RecyclerView.ViewHolder implements Vi
     @Override
     public void onClick(View v) {
         CertificateRecord certificate = mViewModel.getCertificate();
-        if (certificate == null) {
-            return;
-        }
-
         Context context = mBinding.getRoot()
                 .getContext();
         String certUuid = certificate.getUuid();
@@ -42,11 +37,6 @@ public class CertificateViewHolder extends RecyclerView.ViewHolder implements Vi
 
     public void bind(CertificateRecord certificate) {
         mViewModel.bindCertificate(certificate);
-        mBinding.executePendingBindings();
-    }
-
-    public void bind(IssuingEstimate estimate) {
-        mViewModel.bindEstimate(estimate);
         mBinding.executePendingBindings();
     }
 }

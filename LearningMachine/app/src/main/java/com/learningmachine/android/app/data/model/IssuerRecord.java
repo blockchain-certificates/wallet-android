@@ -51,14 +51,7 @@ public class IssuerRecord {
 
     private String mRecipientPubKey;
 
-    public IssuerRecord(String name,
-                        String email,
-                        String uuid,
-                        String certsUrl,
-                        String introUrl,
-                        String introducedOn,
-                        String analyticsUrlString,
-                        String recipientPubKey) {
+    public IssuerRecord(String name, String email, String uuid, String certsUrl, String introUrl, String introducedOn, String analyticsUrlString, String recipientPubKey) {
         mName = name;
         mEmail = email;
         mUuid = uuid;
@@ -104,6 +97,7 @@ public class IssuerRecord {
     public void setRevocationKeys(List<KeyRotation> revocationKeys) {
         mRevocationKeys = revocationKeys;
     }
+
 
     /** Image filename, created with the md5 of mUuid*/
     public String getImageFilename() {
