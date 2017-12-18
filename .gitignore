@@ -31,6 +31,9 @@ proguard/
 # Android Studio captures folder
 captures/
 
+# Android Studio development products
+LearningMachine/app/production
+
 .idea/
 *.iml
 .DS_Store
