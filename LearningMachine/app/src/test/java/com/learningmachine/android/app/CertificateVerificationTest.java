@@ -44,13 +44,13 @@ import static org.mockito.Mockito.when;
  * Example of certificate test. Should be renamed or moved to the correct class test.
  */
 public class CertificateVerificationTest {
-
+    public static final String COMMON_CERTIFICATE_PATH = "common/Certificates";
     public static final String BTC_TX_RECORD_ID_D3F042 = "d3f042497b1469446e95a9e289f26c551083a3a94c10fbb9c848be327ebf620d";
     public static final String BTC_TX_RECORD_D3F042_FILENAME = "txrecord-" + BTC_TX_RECORD_ID_D3F042 + ".json";
     public static final String BTC_TX_RECORD_ID_C7667D = "c7667d47db19423952005df21474045af2bef675de2c13bf7f34bc64cfa3c114";
     public static final String BTC_TX_RECORD_C7667D_FILENAME = "txrecord-" + BTC_TX_RECORD_ID_C7667D + ".json";
     public static final String CERT_ID = "8e02c2c4499e4e108b07ff5504438f4d";
-    public static final String CERT_FILENAME = "certificate-" + CERT_ID + ".json";
+    public static final String CERT_FILENAME = COMMON_CERTIFICATE_PATH + "/v2.0-alpha/" + "certificate-" + CERT_ID + ".json";
     public static final String CERT_V20_FILENAME = "bolot_lm02_cert_v20.json";
     public static final String FORGED_CERT_FILENAME = "forged-cert-" + CERT_ID + ".json";
     public static final String ISSUER_FILENAME = "issuer-v2.json";
