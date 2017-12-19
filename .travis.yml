@@ -26,6 +26,7 @@ git:
 before_install:
     - pwd
     - ls -a
+    - man sed | cat
     - sed -i "" -e "s/git@github.com:/https:\/\/github.com\//" ".gitmodules"
     - git submodule update --init --recursive
 script:
