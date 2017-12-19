@@ -328,6 +328,7 @@ public class CertificateFragment extends LMFragment implements VerficationCancel
                     hideVerificationProgressDialog();
                     showVerificationResultDialog(CertificateVerificationResult.VALID_CERT);
                 }, throwable -> {
+                    hideVerificationProgressDialog();
                     showVerificationResultDialog(CertificateVerificationResult.INVALID_CERT);
                     Timber.e(throwable, "Error!");
                     displayErrors(throwable, R.string.error_title_message); // TODO: use correct error string

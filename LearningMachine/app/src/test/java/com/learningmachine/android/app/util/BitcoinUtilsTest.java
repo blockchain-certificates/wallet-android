@@ -143,7 +143,7 @@ public class BitcoinUtilsTest {
         Address address1 = wallet.freshReceiveAddress();
         Address address2 = wallet.freshReceiveAddress();
         wallet.saveToFile(tempFile);
-        Wallet walletFromFile = Wallet.loadFromFile(tempFile, null);
+        Wallet walletFromFile = Wallet.loadFromFile(tempFile);
         Address address3 = walletFromFile.freshReceiveAddress();
         Address address4 = walletFromFile.freshReceiveAddress();
         assertEquals("1KBdbBJRVYffWHWWZ1moECfdVBSEnDpLHi", address1.toBase58());

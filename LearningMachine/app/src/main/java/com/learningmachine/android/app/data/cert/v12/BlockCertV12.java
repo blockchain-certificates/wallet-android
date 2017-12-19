@@ -161,6 +161,11 @@ public class BlockCertV12 extends BlockchainCertificate implements BlockCert {
         return mDocumentNode;
     }
 
+    @Override
+    public String getReceiptHash() {
+        return getReceipt().getTargetHash();
+    }
+
     public void setDocumentNode(JsonObject documentNode) {
         mDocumentNode = documentNode;
     }

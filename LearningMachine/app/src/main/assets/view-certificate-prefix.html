@@ -1,5 +1,6 @@
 <html>
 <head>
+	<meta charset="utf-8" />
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jsonld/0.4.12/jsonld.js"></script>
 	<script type="text/javascript">
 	      var OBI_CONTEXT = {
@@ -180,7 +181,7 @@
 	                              });
 	          }
 	          // call the underlining documentLoader using the callback API.
-	          nodeDocumentLoader(url, callback);
+	          return nodeDocumentLoader(url, callback);
 	          /* Note: By default, the node.js document loader uses a callback, but
 	           browser-based document loaders (xhr or jquery) return promises if they
 	           are supported (or polyfilled) in the browser. This behavior can be
