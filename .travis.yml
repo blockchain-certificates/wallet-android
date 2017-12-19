@@ -21,10 +21,12 @@ android:
     - extra-android-support
     - extra-google-m2repository
     - extra-android-m2repository
-script:
-    - ./scripts/build.sh
+git:
+    submodules: false
 before_install:
     - sed -i '' 's/git@github.com:/https:\/\/github.com\//' '.gitmodules'
     - git submodule update --init --recursive
+script:
+    - ./scripts/build.sh
 after_success:
     - ./scripts/deliver.sh
