@@ -52,18 +52,24 @@ public class CertificateVerificationTest {
     public static final String BTC_TX_RECORD_D3F042_FILENAME = "txrecord-" + BTC_TX_RECORD_ID_D3F042 + ".json";
     public static final String BTC_TX_RECORD_ID_C7667D = "c7667d47db19423952005df21474045af2bef675de2c13bf7f34bc64cfa3c114";
     public static final String BTC_TX_RECORD_C7667D_FILENAME = "txrecord-" + BTC_TX_RECORD_ID_C7667D + ".json";
+    public static final String BTC_TX_RECORD_ID_A05E8B = "a05e8b7998c14820036fae46eb3c4e698433db8036114ef62fcc8ab5850b5dea";
+    public static final String BTC_TX_RECORD_MAINNET_20_FILENAME = "txrecord-" + BTC_TX_RECORD_ID_A05E8B + ".json";
     public static final String CERT_ID = "8e02c2c4499e4e108b07ff5504438f4d";
     public static final String CERT_FILENAME = V20_ALPHA_CERTIFICATE_PATH + "/certificate-" + CERT_ID + ".json";
     public static final String CERT_V20_ALPHA_FILENAME = V20_ALPHA_CERTIFICATE_PATH + "/mainnet-bolot.json";
+    public static final String CERT_V20_FILENAME = V20_CERTIFICATE_PATH + "/mainnet.json";
     public static final String FORGED_CERT_FILENAME = "forged-cert-" + CERT_ID + ".json";
+
     public static final String ISSUER_FILENAME = "issuer-v2.json";
 
     private CertificateVerifier subject;
     private TxRecord mTxRecordD3F042;
     private TxRecord mTxRecordC7667D;
+    private TxRecord mTxRecordA05E8B;
     private IssuerResponse mIssuer;
     private BlockCert validCertV12;
     private BlockCert validCertV20alpha;
+    private BlockCert validCertV20;
     private BlockCert forgedCertificate;
 
     @Before
@@ -75,8 +81,10 @@ public class CertificateVerificationTest {
         BlockchainService blockchainService = mock(BlockchainService.class);
         mTxRecordC7667D = gson.fromJson(getResourceAsReader(BTC_TX_RECORD_C7667D_FILENAME), TxRecord.class);
         mTxRecordD3F042 = gson.fromJson(getResourceAsReader(BTC_TX_RECORD_D3F042_FILENAME), TxRecord.class);
+        mTxRecordA05E8B = gson.fromJson(getResourceAsReader(BTC_TX_RECORD_MAINNET_20_FILENAME), TxRecord.class);
         when(blockchainService.getBlockchain(BTC_TX_RECORD_ID_C7667D)).thenReturn(Observable.just(mTxRecordC7667D));
         when(blockchainService.getBlockchain(BTC_TX_RECORD_ID_D3F042)).thenReturn(Observable.just(mTxRecordD3F042));
+        when(blockchainService.getBlockchain(BTC_TX_RECORD_ID_A05E8B)).thenReturn(Observable.just(mTxRecordA05E8B));
 
         IssuerService issuerService = mock(IssuerService.class);
         mIssuer = gson.fromJson(getResourceAsReader(ISSUER_FILENAME), IssuerResponse.class);
@@ -87,6 +95,7 @@ public class CertificateVerificationTest {
         BlockCertParser blockCertParser = new BlockCertParser();
         validCertV12 = blockCertParser.fromJson(getResourceAsStream(CERT_FILENAME));
         validCertV20alpha = blockCertParser.fromJson(getResourceAsStream(CERT_V20_ALPHA_FILENAME));
+        validCertV20 = blockCertParser.fromJson(getResourceAsStream(CERT_V20_FILENAME));
         forgedCertificate = blockCertParser.fromJson(getResourceAsStream(FORGED_CERT_FILENAME));
     }
 
@@ -112,6 +121,20 @@ public class CertificateVerificationTest {
     public void validCertV20AlphaShouldVerifyBitcoinTransaction() {
         subject.verifyBitcoinTransactionRecord(validCertV20alpha)
                 .subscribe(remoteHash -> assertEquals(remoteHash, remoteHash));
+    }
+
+    @Test
+    public void validCertV20ShouldVerifyIssuer() {
+        subject.verifyIssuer(validCertV20, mTxRecordD3F042)
+                .subscribe(issuerKey -> assertEquals(issuerKey, issuerKey));
+    }
+
+    @Test
+    public void validCertV20ShouldVerifyBitcoinTransaction() {
+        subject.verifyBitcoinTransactionRecord(validCertV20)
+                .subscribe(remoteHash -> {
+                    assertEquals(remoteHash, remoteHash);
+                });
     }
 
     @Test
