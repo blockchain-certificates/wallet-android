@@ -46,13 +46,15 @@ import static org.mockito.Mockito.when;
 public class CertificateVerificationTest {
     public static final String COMMON_CERTIFICATE_PATH = "common/Certificates";
     public static final String V20_ALPHA_CERTIFICATE_PATH = COMMON_CERTIFICATE_PATH + "/v2.0-alpha";
+    public static final String V20_CERTIFICATE_PATH = COMMON_CERTIFICATE_PATH + "/v2.0";
+
     public static final String BTC_TX_RECORD_ID_D3F042 = "d3f042497b1469446e95a9e289f26c551083a3a94c10fbb9c848be327ebf620d";
     public static final String BTC_TX_RECORD_D3F042_FILENAME = "txrecord-" + BTC_TX_RECORD_ID_D3F042 + ".json";
     public static final String BTC_TX_RECORD_ID_C7667D = "c7667d47db19423952005df21474045af2bef675de2c13bf7f34bc64cfa3c114";
     public static final String BTC_TX_RECORD_C7667D_FILENAME = "txrecord-" + BTC_TX_RECORD_ID_C7667D + ".json";
     public static final String CERT_ID = "8e02c2c4499e4e108b07ff5504438f4d";
     public static final String CERT_FILENAME = V20_ALPHA_CERTIFICATE_PATH + "/certificate-" + CERT_ID + ".json";
-    public static final String CERT_V20_FILENAME = V20_ALPHA_CERTIFICATE_PATH + "/mainnet-bolot.json";
+    public static final String CERT_V20_ALPHA_FILENAME = V20_ALPHA_CERTIFICATE_PATH + "/mainnet-bolot.json";
     public static final String FORGED_CERT_FILENAME = "forged-cert-" + CERT_ID + ".json";
     public static final String ISSUER_FILENAME = "issuer-v2.json";
 
@@ -61,7 +63,7 @@ public class CertificateVerificationTest {
     private TxRecord mTxRecordC7667D;
     private IssuerResponse mIssuer;
     private BlockCert validCertV12;
-    private BlockCert validCertV20;
+    private BlockCert validCertV20alpha;
     private BlockCert forgedCertificate;
 
     @Before
@@ -84,7 +86,7 @@ public class CertificateVerificationTest {
 
         BlockCertParser blockCertParser = new BlockCertParser();
         validCertV12 = blockCertParser.fromJson(getResourceAsStream(CERT_FILENAME));
-        validCertV20 = blockCertParser.fromJson(getResourceAsStream(CERT_V20_FILENAME));
+        validCertV20alpha = blockCertParser.fromJson(getResourceAsStream(CERT_V20_ALPHA_FILENAME));
         forgedCertificate = blockCertParser.fromJson(getResourceAsStream(FORGED_CERT_FILENAME));
     }
 
@@ -101,14 +103,14 @@ public class CertificateVerificationTest {
     }
 
     @Test
-    public void validCertV20ShouldVerifyIssuer() {
-        subject.verifyIssuer(validCertV20, mTxRecordD3F042)
+    public void validCertV20AlphaShouldVerifyIssuer() {
+        subject.verifyIssuer(validCertV20alpha, mTxRecordD3F042)
                 .subscribe(issuerKey -> assertEquals(issuerKey, issuerKey));
     }
 
     @Test
-    public void validCertV20ShouldVerifyBitcoinTransaction() {
-        subject.verifyBitcoinTransactionRecord(validCertV20)
+    public void validCertV20AlphaShouldVerifyBitcoinTransaction() {
+        subject.verifyBitcoinTransactionRecord(validCertV20alpha)
                 .subscribe(remoteHash -> assertEquals(remoteHash, remoteHash));
     }
 
