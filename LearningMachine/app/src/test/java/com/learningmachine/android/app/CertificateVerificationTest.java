@@ -36,6 +36,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -102,39 +103,37 @@ public class CertificateVerificationTest {
     @Test
     public void validCertV12ShouldVerifyIssuer() {
         subject.verifyIssuer(validCertV12, mTxRecordC7667D)
-                .subscribe(issuerKey -> assertEquals(issuerKey, issuerKey));
+                .subscribe(issuerKey -> assertTrue(true));
     }
 
     @Test
     public void validCertV12ShouldVerifyBitcoinTransaction() {
         subject.verifyBitcoinTransactionRecord(validCertV12)
-                .subscribe(txRecord -> assertEquals(txRecord.getRemoteHash(), txRecord.getRemoteHash()));
+                .subscribe(txRecord -> assertTrue(true));
     }
 
     @Test
     public void validCertV20AlphaShouldVerifyIssuer() {
         subject.verifyIssuer(validCertV20alpha, mTxRecordD3F042)
-                .subscribe(issuerKey -> assertEquals(issuerKey, issuerKey));
+                .subscribe(issuerKey -> assertTrue(true));
     }
 
     @Test
     public void validCertV20AlphaShouldVerifyBitcoinTransaction() {
         subject.verifyBitcoinTransactionRecord(validCertV20alpha)
-                .subscribe(remoteHash -> assertEquals(remoteHash, remoteHash));
+                .subscribe(remoteHash -> assertTrue(true));
     }
 
     @Test
     public void validCertV20ShouldVerifyIssuer() {
         subject.verifyIssuer(validCertV20, mTxRecordD3F042)
-                .subscribe(issuerKey -> assertEquals(issuerKey, issuerKey));
+                .subscribe(issuerKey -> assertTrue(true));
     }
 
     @Test
     public void validCertV20ShouldVerifyBitcoinTransaction() {
         subject.verifyBitcoinTransactionRecord(validCertV20)
-                .subscribe(remoteHash -> {
-                    assertEquals(remoteHash, remoteHash);
-                });
+                .subscribe(remoteHash -> assertTrue(true));
     }
 
     @Test
