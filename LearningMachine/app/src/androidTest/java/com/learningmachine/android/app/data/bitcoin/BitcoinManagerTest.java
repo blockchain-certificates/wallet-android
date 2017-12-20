@@ -28,14 +28,14 @@ public class BitcoinManagerTest {
         NetworkParameters networkParameters = MainNetParams.get();
 
         StringHolder stringHolder = new StringHolder();
-        BitcoinManager firstBitcoinManager = new BitcoinManager(context, networkParameters, null, null);
+        BitcoinManager firstBitcoinManager = new BitcoinManager(context, networkParameters, null, null, null);
         firstBitcoinManager.getPassphrase().subscribe(firstPassphrase -> {
             assertTrue(firstBitcoinManager.getWalletFile().exists());
             assertThat(firstPassphrase, not(isEmptyOrNullString()));
             stringHolder.string = firstPassphrase;
         });
 
-        BitcoinManager secondBitcoinManager = new BitcoinManager(context, networkParameters, null, null);
+        BitcoinManager secondBitcoinManager = new BitcoinManager(context, networkParameters, null, null, null);
         secondBitcoinManager.getPassphrase().subscribe(secondPassphrase -> {
             assertTrue(secondBitcoinManager.getWalletFile().exists());
             assertEquals(stringHolder.string, secondPassphrase);
@@ -48,13 +48,13 @@ public class BitcoinManagerTest {
         NetworkParameters networkParameters = MainNetParams.get();
 
         StringHolder stringHolder = new StringHolder();
-        BitcoinManager firstBitcoinManager = new BitcoinManager(context, networkParameters, null, null);
+        BitcoinManager firstBitcoinManager = new BitcoinManager(context, networkParameters, null, null, null);
         firstBitcoinManager.getFreshBitcoinAddress().subscribe(firstReceiveAddress -> {
             assertThat(firstReceiveAddress, not(isEmptyOrNullString()));
             stringHolder.string = firstReceiveAddress;
         });
 
-        BitcoinManager secondBitcoinManager = new BitcoinManager(context, networkParameters, null, null);
+        BitcoinManager secondBitcoinManager = new BitcoinManager(context, networkParameters, null, null, null);
         secondBitcoinManager.getFreshBitcoinAddress().subscribe(secondReceiveAddress -> {
             assertNotEquals("Fresh receive address expected", stringHolder.string, secondReceiveAddress);
         });
