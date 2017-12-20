@@ -6,8 +6,10 @@ import com.google.common.io.Files;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 
 import okio.Buffer;
@@ -91,6 +93,36 @@ public class FileUtils {
         }
 
         outputStream.flush();
+        return true;
+    }
+
+    public static boolean appendCharactersToFile(InputStream inputStream, File outputFile) throws IOException {
+        try (FileWriter writer = new FileWriter(outputFile, true);
+             InputStreamReader reader = new InputStreamReader(inputStream)) {
+            int characterCount = 4096;
+            char[] buffer = new char[characterCount];
+            while (true) {
+                int read = reader.read(buffer, 0, characterCount);
+                if (read == -1) {
+                    break;
+                }
+                writer.write(buffer, 0, read);
+            }
+
+            writer.flush();
+            return true;
+        } catch (IOException ioe) {
+            Timber.e("Failed to append to file " + outputFile.getName());
+            throw ioe;
+        }
+    }
+
+    public static boolean appendStringToFile(String string, File outputFile) throws IOException {
+        Timber.i("Last 5 characters are" + string.substring(string.length()-5));
+        FileWriter writer = new FileWriter(outputFile, true);
+        writer.write(string);
+
+        writer.flush();
         return true;
     }
 }

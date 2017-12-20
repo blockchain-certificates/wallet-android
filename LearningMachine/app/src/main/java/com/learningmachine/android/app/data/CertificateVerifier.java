@@ -21,10 +21,15 @@ import com.learningmachine.android.app.util.FileUtils;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
+import java.net.URLDecoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.NoSuchElementException;
@@ -118,7 +123,11 @@ public class CertificateVerifier {
 
     public Observable<String> verifyJsonLd(BlockCert certificate, TxRecord txRecord) {
         mUpdates.onNext(CertificateVerificationStatus.COMPARING_HASHES);
-        String remoteHash = txRecord.getRemoteHash();
+        String possibleHash = certificate.getReceiptHash();
+        if (possibleHash == null) {
+            possibleHash = txRecord.getRemoteHash();
+        }
+        final String remoteHash = possibleHash;
         JsonObject documentNode = certificate.getDocumentNode();
         if (documentNode == null) {
             return Observable.error(new ExceptionWithResourceString(R.string.error_invalid_certificate_json));
@@ -126,6 +135,7 @@ public class CertificateVerifier {
         Handler handler = new Handler(Looper.getMainLooper());
         return Observable.create(emitter -> {
             String serializedDoc = documentNode.toString();
+            Timber.i(serializedDoc);
             File certsDir = new File(mContext.getFilesDir(), "certs");
             File file = null;
             try {
@@ -137,12 +147,10 @@ public class CertificateVerifier {
             }
 
             try (InputStream prefixInputStream = mContext.getAssets().open(VIEW_CERTIFICATE_PREFIX_FILE);
-                 InputStream suffixInputStream = mContext.getAssets().open(VIEW_CERTIFICATE_SUFFIX_FILE);
-                 OutputStream outputStream = new FileOutputStream(file)) {
-                FileUtils.copyStreams(prefixInputStream, outputStream);
-                outputStream.write(serializedDoc.getBytes());
-                FileUtils.copyStreams(suffixInputStream, outputStream);
-                outputStream.flush();
+                 InputStream suffixInputStream = mContext.getAssets().open(VIEW_CERTIFICATE_SUFFIX_FILE)) {
+                FileUtils.appendCharactersToFile(prefixInputStream, file);
+                FileUtils.appendStringToFile(serializedDoc, file);
+                FileUtils.appendCharactersToFile(suffixInputStream, file);
             } catch (Exception e) {
                 Timber.e(e, "Couldn't save the certificate document node");
                 emitter.onError(e);
@@ -180,6 +188,7 @@ public class CertificateVerifier {
                 return;
             }
             Timber.d("Got the callback!");
+            Timber.d(normalizedJsonld);
             MessageDigest sha256 = null;
             try {
                 sha256 = MessageDigest.getInstance("SHA-256");
