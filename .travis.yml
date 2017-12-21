@@ -31,7 +31,7 @@ before_install:
     - git submodule update --init --recursive
     # Start the Android emulator https://docs.travis-ci.com/user/languages/android/#How-to-Create-and-Start-an-Emulator
     - android list targets
-    - sdkmanager --help
+    - sdkmanager --help || true
     - sdkmanager --verbose --list
     - echo no | android create avd --force -n test -t android-25 --abi armeabi-v7a
     - emulator -avd test -no-audio -no-window &
