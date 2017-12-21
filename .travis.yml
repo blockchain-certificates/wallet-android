@@ -28,6 +28,7 @@ before_install:
     - sed --in-place -e "s/git@github.com:/https:\/\/github.com\//" ".gitmodules"
     - git submodule update --init --recursive
     # Start the Android emulator https://docs.travis-ci.com/user/languages/android/#How-to-Create-and-Start-an-Emulator
+    - android list targets
     - sdkmanager --list --verbose
     - echo no | android create avd --force -n test -t android-25 --abi arm64-v8a
     - emulator -avd test -no-audio -no-window &
