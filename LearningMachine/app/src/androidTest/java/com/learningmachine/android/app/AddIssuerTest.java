@@ -1,5 +1,7 @@
 package com.learningmachine.android.app;
 
+import android.databinding.adapters.ViewBindingAdapter;
+import android.support.test.espresso.ViewAssertion;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -16,7 +18,9 @@ import timber.log.Timber;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
 /**
@@ -47,9 +51,13 @@ public class AddIssuerTest {
 
     @Test
     public void addIssuer_fromRecyclerViewState() {
-        Timber.i("And we're running this test!");
-
+        // Click the first issuer tile
         onView(withId(R.id.issuer_recyclerview))
                 .perform(actionOnItemAtPosition(0, click()));
+
+        // Check that the "Add Certificate" button is displayed
+        onView(withId(R.id.add_certificate_floating_action_button)).check(matches(isDisplayed()));
+
+        Timber.i("And we're running this test!");
     }
 }
