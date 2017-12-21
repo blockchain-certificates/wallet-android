@@ -30,13 +30,31 @@ before_install:
     - sed --in-place -e "s/git@github.com:/https:\/\/github.com\//" ".gitmodules"
     - git submodule update --init --recursive
     # Start the Android emulator https://docs.travis-ci.com/user/languages/android/#How-to-Create-and-Start-an-Emulator
-    - android list targets
-    - sdkmanager --help || true
-    - sdkmanager --verbose --list
-    - echo no | android create avd --force -n test -t android-25 --abi armeabi-v7a
-    - emulator -avd test -no-audio -no-window &
+    # - android list targets
+    # - sdkmanager --help || true
+    # - sdkmanager --verbose --list
+    # - echo no | android create avd --force -n test -t android-25 --abi armeabi-v7a
+    # - emulator -avd test -no-audio -no-window &
+    # - android-wait-for-emulator
+    # - adb shell input keyevent 82 &
+install:
+    - sdkmanager --list || true
+    - echo yes | sdkmanager "tools"
+    - echo yes | sdkmanager "platforms;android-25"
+    - echo no | avdmanager create avd -n test -k "system-images;android-25;google_apis;armeabi-v7a" -f --abi "armeabi-v7a" --tag "google_apis"
+    - emulator -avd acib -engine classic -no-window -camera-back none -camera-front none -selinux permissive -verbose -qemu -m 512 &
+    - adb wait-for-device get-serialno
+    - ./gradlew --version
+    - ./gradlew clean
+    - sdkmanager --list || true
+before_script:
     - android-wait-for-emulator
+    - adb shell settings put global window_animation_scale 0 &
+    - adb shell settings put global transition_animation_scale 0 &
+    - adb shell settings put global animator_duration_scale 0 &
+    - sleep 30
     - adb shell input keyevent 82 &
+    - sleep 15
 script:
     - ./scripts/build.sh
 after_success:
