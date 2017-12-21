@@ -14,6 +14,11 @@ import org.junit.runner.RunWith;
 
 import timber.log.Timber;
 
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+
 /**
  * Created by chris on 12/20/17.
  */
@@ -36,7 +41,15 @@ public class AddIssuerTest {
     }
 
     @Test
-    public void addIssuer() {
+    public void addIssuer_fromEmptyState() {
         Timber.i("And we're running this test!");
+    }
+
+    @Test
+    public void addIssuer_fromRecyclerViewState() {
+        Timber.i("And we're running this test!");
+
+        onView(withId(R.id.issuer_recyclerview))
+                .perform(actionOnItemAtPosition(0, click()));
     }
 }
