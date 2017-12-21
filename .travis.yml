@@ -45,8 +45,8 @@ install:
     - echo no | avdmanager create avd -n test -k "system-images;android-25;google_apis;armeabi-v7a" -f --abi "armeabi-v7a" --tag "google_apis"
     - emulator -avd acib -engine classic -no-window -camera-back none -camera-front none -selinux permissive -verbose -qemu -m 512 &
     # - adb wait-for-device get-serialno
-    - ./gradlew --version
-    - ./gradlew clean
+    # - ./gradlew --version
+    # - ./gradlew clean
     - sdkmanager --list || true
 before_script:
     - android-wait-for-emulator
