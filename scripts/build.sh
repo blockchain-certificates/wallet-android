@@ -18,5 +18,5 @@ cd LearningMachine
 # fi
 
 echo "This is just building to test. No deployment will be done."
-./gradlew clean testDevDebug connectedDevDebugAndroidTest -PdisablePreDex -PdevBuild
+./gradlew clean testDevDebug -PdisablePreDex -PdevBuild
 exit $?

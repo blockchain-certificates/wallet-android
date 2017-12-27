@@ -22,7 +22,7 @@ android:
     - extra-google-m2repository
     - extra-android-m2repository
     # Emulator ABIs for testing
-    - sys-img-armeabi-v7a-android-25
+    # - sys-img-armeabi-v7a-android-25
 git:
     submodules: false
 before_install:
@@ -39,26 +39,26 @@ before_install:
     # - android-wait-for-emulator
     # - adb shell input keyevent 82 &
 install:
-    - sdkmanager --list || true
-    - echo yes | sdkmanager "tools"
-    - echo yes | sdkmanager "platforms;android-25"
-    - echo yes | sdkmanager "extras;android;m2repository"
-    - echo yes | sdkmanager "extras;google;m2repository"
-    - echo yes | sdkmanager "system-images;android-25;google_apis;armeabi-v7a"
-    - echo no | avdmanager create avd -n test -k "system-images;android-25;google_apis;armeabi-v7a" -f --abi "armeabi-v7a" --tag "google_apis"
-    - emulator -avd test -engine classic -no-window -camera-back none -camera-front none -selinux permissive -verbose -qemu -m 512 &
-    - adb wait-for-device get-serialno
+    # - sdkmanager --list || true
+    # - echo yes | sdkmanager "tools"
+    # - echo yes | sdkmanager "platforms;android-25"
+    # - echo yes | sdkmanager "extras;android;m2repository"
+    # - echo yes | sdkmanager "extras;google;m2repository"
+    # - echo yes | sdkmanager "system-images;android-25;google_apis;armeabi-v7a"
+    # - echo no | avdmanager create avd -n test -k "system-images;android-25;google_apis;armeabi-v7a" -f --abi "armeabi-v7a" --tag "google_apis"
+    # - emulator -avd test -engine classic -no-window -camera-back none -camera-front none -selinux permissive -verbose -qemu -m 512 &
+    # - adb wait-for-device get-serialno
     # - ./gradlew --version
     # - ./gradlew clean
-    - sdkmanager --list || true
+    # - sdkmanager --list || true
 before_script:
-    - android-wait-for-emulator
-    - adb shell settings put global window_animation_scale 0 &
-    - adb shell settings put global transition_animation_scale 0 &
-    - adb shell settings put global animator_duration_scale 0 &
-    - sleep 30
-    - adb shell input keyevent 82 &
-    - sleep 15
+    # - android-wait-for-emulator
+    # - adb shell settings put global window_animation_scale 0 &
+    # - adb shell settings put global transition_animation_scale 0 &
+    # - adb shell settings put global animator_duration_scale 0 &
+    # - sleep 30
+    # - adb shell input keyevent 82 &
+    # - sleep 15
 script:
     - ./scripts/build.sh
 after_success:
