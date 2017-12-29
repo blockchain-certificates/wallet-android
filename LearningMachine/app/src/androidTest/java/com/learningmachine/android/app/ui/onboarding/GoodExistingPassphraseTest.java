@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.ui.splash;
+package com.learningmachine.android.app.ui.onboarding;
 
 
 import android.support.test.espresso.ViewInteraction;
@@ -19,12 +19,15 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import timber.log.Timber;
+
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.action.ViewActions.swipeLeft;
+import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -33,7 +36,8 @@ import static org.hamcrest.Matchers.allOf;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class BadExistingPassphraseTest {
+public class GoodExistingPassphraseTest {
+    private static final String passphrase = "view virtual ice oven upon material humor vague vessel jacket aim clarify moral gesture canvas wing shoot average charge section issue inmate waste large";
 
     @Rule
     public ActivityTestRule<OnboardingActivity> mActivityTestRule = new ActivityTestRule<>(OnboardingActivity.class);
@@ -79,7 +83,7 @@ public class BadExistingPassphraseTest {
                                         1),
                                 2),
                         isDisplayed()));
-        appCompatEditText2.perform(replaceText("dafe"), closeSoftKeyboard());
+        appCompatEditText2.perform(replaceText(passphrase), closeSoftKeyboard());
 
         ViewInteraction appCompatButton2 = onView(
                 allOf(withId(R.id.doneButton), withText("Done"),
@@ -91,7 +95,8 @@ public class BadExistingPassphraseTest {
                         isDisplayed()));
         appCompatButton2.perform(click());
 
-        onView(withText("Invalid passphrase")).check(matches(isDisplayed()));
+        onView(withText("Invalid passphrase")).check(doesNotExist());
+        onView(withText("Issuers")).check(matches(isDisplayed()));
     }
 
     private static Matcher<View> childAtPosition(
