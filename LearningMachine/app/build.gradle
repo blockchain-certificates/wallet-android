@@ -179,6 +179,12 @@ dependencies {
     androidTestImplementation("com.android.support.test.espresso:espresso-core:$ESPRESSO_VERSION", {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+//    androidTestImplementation "com.android.support.test:testing-support-lib:0.1"
+    androidTestImplementation("com.android.support.test.espresso:espresso-contrib:2.0") {
+        exclude group: 'com.android.support', module: 'appcompat'
+        exclude group: 'com.android.support', module: 'support-v4'
+        exclude module: 'recyclerview-v7'
+    }
     androidTestImplementation "org.mockito:mockito-core:$MOCKITO_VERSION"
 
     testImplementation "junit:junit:$JUNIT_VERSION"
