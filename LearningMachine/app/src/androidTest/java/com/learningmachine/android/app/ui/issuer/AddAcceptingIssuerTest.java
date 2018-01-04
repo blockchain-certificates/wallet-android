@@ -2,7 +2,6 @@ package com.learningmachine.android.app.ui.issuer;
 
 import android.support.test.rule.ActivityTestRule;
 
-//import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import com.learningmachine.android.app.R;
 
 import org.junit.Rule;
@@ -14,6 +13,8 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.replaceText;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
 /**
@@ -21,19 +22,16 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
  */
 
 public class AddAcceptingIssuerTest {
+    public static final String WIREMOCK_SERVER = "http://10.0.2.2:1234";
 
     @Rule
     public ActivityTestRule<AddIssuerActivity> mActivityTestRule = new ActivityTestRule<>(AddIssuerActivity.class);
 
-    // TODO: Configure this with options to load the root directory.
-//    @Rule
-//    public WireMockRule wireMockRule = new WireMockRule();
-
     @Test
     public void addAcceptingIssuerTest() {
-        onView(withId(R.id.add_issuer_url_edit_text)).perform(replaceText("http://localhost:8080/issuer/accepting"), closeSoftKeyboard());
+        onView(withId(R.id.add_issuer_url_edit_text)).perform(replaceText(WIREMOCK_SERVER + "/issuer/accepting-estimate-unsigned"), closeSoftKeyboard());
         onView(withId(R.id.add_issuer_nonce_edit_text)).perform(replaceText("1234"), closeSoftKeyboard());
         Timber.i("Testing this out");
-//        onView(withId(R.id.fragment_add_issuer_verify)).perform(click())
+        onView(withId(R.id.fragment_add_issuer_verify)).perform(click());
     }
 }
