@@ -186,12 +186,16 @@ dependencies {
         exclude module: 'recyclerview-v7'
     }
     androidTestImplementation "org.mockito:mockito-core:$MOCKITO_VERSION"
-//    androidTestImplementation("com.github.tomakehurst:wiremock:2.13.0") {
-//        exclude group: 'com.android.support', module: 'appcompat'
-//        exclude group: 'com.android.support', module: 'support-v4'
+    androidTestImplementation("com.github.tomakehurst:wiremock:2.13.0") {
+        exclude group: 'org.apache.commons', module: 'commons-lang3'
 //    }
+//
+        //Version conflict with our app's slf4j version
+        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+        exclude group: 'org.google.guava', module: 'guava'
+    }
 
-    testImplementation "junit:junit:$JUNIT_VERSION"
+    testImplementation("junit:junit:$JUNIT_VERSION")
     testImplementation "org.mockito:mockito-core:$MOCKITO_VERSION"
     testImplementation "org.robolectric:robolectric:$ROBOLECTRIC_VERSION"
     testImplementation "org.robolectric:shadows-multidex:$ROBOLECTRIC_VERSION"
