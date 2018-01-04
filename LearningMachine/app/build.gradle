@@ -186,6 +186,10 @@ dependencies {
         exclude module: 'recyclerview-v7'
     }
     androidTestImplementation "org.mockito:mockito-core:$MOCKITO_VERSION"
+//    androidTestImplementation("com.github.tomakehurst:wiremock:2.13.0") {
+//        exclude group: 'com.android.support', module: 'appcompat'
+//        exclude group: 'com.android.support', module: 'support-v4'
+//    }
 
     testImplementation "junit:junit:$JUNIT_VERSION"
     testImplementation "org.mockito:mockito-core:$MOCKITO_VERSION"
