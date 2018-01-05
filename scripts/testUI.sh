@@ -1,7 +1,12 @@
 #!/bin/bash
 
 set +x
-cd LearningMachine
+
+echo "Launching wiremock..."
+cd External/wallet-test-resources/wiremock
+./run.sh
+
+cd ../../../LearningMachine
 
 #### BUILD
 # if [[ "$TRAVIS_PULL_REQUEST" != "false" || ( "$TRAVIS_BRANCH" != "master" && "$TRAVIS_BRANCH" != hotfix/* ) ]]; then
