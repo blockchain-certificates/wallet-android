@@ -4,7 +4,7 @@ set +x
 
 echo "Launching wiremock..."
 cd External/wallet-test-resources/wiremock
-./run.sh
+./run.sh &
 
 cd ../../../LearningMachine
 
