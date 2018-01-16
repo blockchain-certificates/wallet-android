@@ -72,6 +72,15 @@ public class IssuerStore implements DataStore {
             saveRevocationKeys(issuer.getRevocationKeys(), issuerUuid);
         }
 
+        String issuingEstimateUrlString = issuer.getIssuingEstimateUrlString();
+        if (!StringUtils.isEmpty(issuingEstimateUrlString)) {
+            contentValues.put(LMDatabaseHelper.Column.Issuer.ISSUING_ESTIMATE_URL, issuingEstimateUrlString);
+        }
+        String issuingEstimateAuthString = issuer.getIssuingEstimateAuth();
+        if (!StringUtils.isEmpty(issuingEstimateAuthString)) {
+            contentValues.put(LMDatabaseHelper.Column.Issuer.ISSUING_ESTIMATE_AUTH, issuingEstimateAuthString);
+        }
+
         if (loadIssuer(issuerUuid) == null) {
             contentValues.put(LMDatabaseHelper.Column.Issuer.UUID, issuerUuid);
             mDatabase.insert(LMDatabaseHelper.Table.ISSUER,
@@ -153,7 +162,9 @@ public class IssuerStore implements DataStore {
                 + LMDatabaseHelper.Table.ISSUER + "." + LMDatabaseHelper.Column.Issuer.INTRO_URL + ", "
                 + LMDatabaseHelper.Table.ISSUER + "." + LMDatabaseHelper.Column.Issuer.INTRODUCED_ON + ", "
                 + LMDatabaseHelper.Table.ISSUER + "." + LMDatabaseHelper.Column.Issuer.ANALYTICS + ", "
-                + LMDatabaseHelper.Table.ISSUER + "." + LMDatabaseHelper.Column.Issuer.RECIPIENT_PUB_KEY
+                + LMDatabaseHelper.Table.ISSUER + "." + LMDatabaseHelper.Column.Issuer.RECIPIENT_PUB_KEY + ", "
+                + LMDatabaseHelper.Table.ISSUER + "." + LMDatabaseHelper.Column.Issuer.ISSUING_ESTIMATE_URL + ", "
+                + LMDatabaseHelper.Table.ISSUER + "." + LMDatabaseHelper.Column.Issuer.ISSUING_ESTIMATE_AUTH
                 + " FROM "
                 + LMDatabaseHelper.Table.ISSUER
                 + " INNER JOIN " + LMDatabaseHelper.Table.CERTIFICATE

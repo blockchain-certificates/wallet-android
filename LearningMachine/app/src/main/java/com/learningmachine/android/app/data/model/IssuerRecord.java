@@ -46,6 +46,14 @@ public class IssuerRecord {
     @SerializedName("analyticsURL")
     private String mAnalyticsUrlString;
 
+    /**
+     * The URL & auth method for getting issuing estimates.
+     */
+    @SerializedName("issuingEstimateURL")
+    private String mIssuingEstimateUrlString;
+    @SerializedName("issuingEstimateAuth")
+    private String mIssuingEstimateAuth;
+
     // created when added to DB
     private String mIntroducedOn;
 
@@ -58,7 +66,9 @@ public class IssuerRecord {
                         String introUrl,
                         String introducedOn,
                         String analyticsUrlString,
-                        String recipientPubKey) {
+                        String recipientPubKey,
+                        String issuingEstimateUrlString,
+                        String issuingEstimateAuth) {
         mName = name;
         mEmail = email;
         mUuid = uuid;
@@ -67,6 +77,8 @@ public class IssuerRecord {
         mIntroducedOn = introducedOn;
         mAnalyticsUrlString = analyticsUrlString;
         mRecipientPubKey = recipientPubKey;
+        mIssuingEstimateUrlString = issuingEstimateUrlString;
+        mIssuingEstimateAuth = issuingEstimateAuth;
     }
 
     public String getName() {
@@ -150,5 +162,13 @@ public class IssuerRecord {
 
     public void setRecipientPubKey(String recipientPubKey) {
         this.mRecipientPubKey = recipientPubKey;
+    }
+
+    public String getIssuingEstimateUrlString() {
+        return mIssuingEstimateUrlString;
+    }
+
+    public String getIssuingEstimateAuth() {
+        return mIssuingEstimateAuth;
     }
 }

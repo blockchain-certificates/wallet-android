@@ -6,16 +6,18 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.VisibleForTesting;
 
 import com.learningmachine.android.app.data.store.db.Migration;
+import com.learningmachine.android.app.data.store.db.TrackIssuingEstimateData;
 import com.learningmachine.android.app.data.store.db.TrackPubKeySentToIssuer;
 
 public class LMDatabaseHelper extends SQLiteOpenHelper {
 
     @VisibleForTesting static final String DB_NAME = "com.learningmachine.android.app.sqlite";
 
-    private static final int DB_VERSION = 2;
+    private static final int DB_VERSION = 3;
 
     private Migration[] mMigrations = {
-            new TrackPubKeySentToIssuer()
+            new TrackPubKeySentToIssuer(),
+            new TrackIssuingEstimateData()
     };
 
     public LMDatabaseHelper(Context context) {
@@ -67,6 +69,8 @@ public class LMDatabaseHelper extends SQLiteOpenHelper {
             public static final String INTRODUCED_ON = "introduced_on";
             public static final String ANALYTICS = "analytics";
             public static final String RECIPIENT_PUB_KEY = "recipient_pub_key";
+            public static final String ISSUING_ESTIMATE_URL = "issuing_estimate_url";
+            public static final String ISSUING_ESTIMATE_AUTH = "issuing_estimate_auth";
         }
 
         public static class KeyRotation {
@@ -100,6 +104,8 @@ public class LMDatabaseHelper extends SQLiteOpenHelper {
                 + ", " + Column.Issuer.INTRODUCED_ON + " TEXT"
                 + ", " + Column.Issuer.ANALYTICS + " TEXT"
                 + ", " + Column.Issuer.RECIPIENT_PUB_KEY + " TEXT"
+                + ", " + Column.Issuer.ISSUING_ESTIMATE_URL+ " TEXT"
+                + ", " + Column.Issuer.ISSUING_ESTIMATE_AUTH + " TEXT"
                 + ");";
         sqLiteDatabase.execSQL(createTable);
     }

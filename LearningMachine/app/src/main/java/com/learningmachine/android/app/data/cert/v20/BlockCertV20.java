@@ -133,8 +133,11 @@ public class BlockCertV20 extends CertSchemaV20 implements BlockCert {
         String introducedOn = DateTime.now().toString();
         String imageData = issuer.getImage();
         String analytics = null;
+        // TODO: Actually get these values
+        String issuingEstimateUrl = null;
+        String issuingEstimateAuth = null;
 
-        return new IssuerResponse(name, email, certUuid, certsUrl, introUrl, introducedOn, imageData, analytics);
+        return new IssuerResponse(name, email, certUuid, certsUrl, introUrl, introducedOn, imageData, analytics, issuingEstimateUrl, issuingEstimateAuth);
     }
 
     @Override

@@ -21,13 +21,17 @@ public class IssuerResponse extends IssuerRecord {
     @SerializedName("introductionErrorURL")
     private String mIntroductionErrorUrlString;
 
-    @SerializedName("issuingEstimateURL")
-    private String mIssuingEstimateUrlString;
-    @SerializedName("issuingEstimateAuth")
-    private String mIssuingEstimateAuth;
-
-    public IssuerResponse(String name, String email, String uuid, String certsUrl, String introUrl, String introducedOn, String imageData, String analyticsUrlString) {
-        super(name, email, uuid, certsUrl, introUrl, introducedOn, analyticsUrlString, null);
+    public IssuerResponse(String name,
+                          String email,
+                          String uuid,
+                          String certsUrl,
+                          String introUrl,
+                          String introducedOn,
+                          String imageData,
+                          String analyticsUrlString,
+                          String issuingEstimateUrl,
+                          String issuingEstimateAuth) {
+        super(name, email, uuid, certsUrl, introUrl, introducedOn, analyticsUrlString, null, issuingEstimateUrl, issuingEstimateAuth);
         mImageData = imageData;
     }
 
@@ -64,8 +68,4 @@ public class IssuerResponse extends IssuerRecord {
     public String getIntroductionErrorUrlString() {
         return mIntroductionErrorUrlString;
     }
-
-    public String getIssuingEstimateUrlString() { return mIssuingEstimateUrlString; }
-
-    public boolean usesUnsignedIssuingEstimateRequests() { return ISSUING_ESTIMATE_UNSIGNED.equals(mIssuingEstimateAuth); }
 }

@@ -21,7 +21,9 @@ public class IssuerCursorWrapper extends CursorWrapper {
         String introducedOn = getString(getColumnIndex(LMDatabaseHelper.Column.Issuer.INTRODUCED_ON));
         String analytics = getString(getColumnIndex(LMDatabaseHelper.Column.Issuer.ANALYTICS));
         String recipientPubKey = getString(getColumnIndex(LMDatabaseHelper.Column.Issuer.RECIPIENT_PUB_KEY));
+        String issuingEstimateUrl = getString(getColumnIndex(LMDatabaseHelper.Column.Issuer.ISSUING_ESTIMATE_URL));
+        String issuingEstimateAuth = getString(getColumnIndex(LMDatabaseHelper.Column.Issuer.ISSUING_ESTIMATE_AUTH));
 
-        return new IssuerRecord(name, email, uuid, certsUrl, introUrl, introducedOn, analytics, recipientPubKey);
+        return new IssuerRecord(name, email, uuid, certsUrl, introUrl, introducedOn, analytics, recipientPubKey, issuingEstimateUrl, issuingEstimateAuth);
     }
 }
