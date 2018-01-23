@@ -122,9 +122,12 @@ public class IssuerFragment extends LMFragment {
     }
 
     private void fetchIssuingEstimates(IssuerResponse issuerResponse) {
-        mIssuerManager.getIssuingEstimates(issuerResponse.getIssuingEstimateUrlString(), issuerResponse.getRecipientPubKey())
-                .compose(bindToMainThread())
-                .subscribe(this::updateRecyclerViewWithEstimates);
+        String issuingEstimateURLString = issuerResponse.getIssuingEstimateUrlString();
+        if (issuingEstimateURLString != null) {
+            mIssuerManager.getIssuingEstimates(issuerResponse.getIssuingEstimateUrlString(), issuerResponse.getRecipientPubKey())
+                    .compose(bindToMainThread())
+                    .subscribe(this::updateRecyclerViewWithEstimates);
+        }
     }
 
     private void setupRecyclerView() {
