@@ -51,7 +51,7 @@ public class IssuerStoreTest {
         String analytics = "https://www.learningmachine.com/analytics";
         String recipientPubKey = "aaaabbbbcccc";
 
-        IssuerRecord issuerOrig = new IssuerRecord(name, email, uuid, certsUrl, introUrl, introducedOn, analytics, recipientPubKey);
+        IssuerRecord issuerOrig = new IssuerRecord(name, email, uuid, certsUrl, introUrl, introducedOn, analytics, recipientPubKey, null, null);
         issuerOrig.setRevocationKeys(new ArrayList<>());
         issuerOrig.setIssuerKeys(new ArrayList<>());
         mIssuerStore.saveIssuer(issuerOrig, recipientPubKey);
