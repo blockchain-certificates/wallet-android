@@ -4,8 +4,12 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +20,11 @@ import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.databinding.FragmentViewPassphraseBinding;
 import com.learningmachine.android.app.ui.home.HomeActivity;
 
+import java.io.PrintWriter;
+
 import javax.inject.Inject;
+
+import static android.content.ContentValues.TAG;
 
 public class ViewPassphraseFragment extends OnboardingFragment {
 
@@ -50,6 +58,9 @@ public class ViewPassphraseFragment extends OnboardingFragment {
         super.onUserVisible();
 
         mBitcoinManager.getPassphrase().subscribe(passphrase -> {
+
+            ((OnboardingActivity)getActivity()).askToSavePassphraseToDevice(passphrase);
+
             configurePassphraseTextView(passphrase);
             mBinding.onboardingDoneButton.setEnabled(true);
         });

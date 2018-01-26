@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,12 +41,21 @@ public class PastePassphraseFragment extends OnboardingFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_paste_passphrase, container, false);
 
+        ((OnboardingActivity)getActivity()).askToGetPassphraseFromDevice(this);
+
         mBinding.pastePassphraseEditText.addTextChangedListener(new PastePassphraseTextWatcher());
         mBinding.doneButton.setEnabled(false);
         mBinding.doneButton.setOnClickListener(view -> onDone());
 
         return mBinding.getRoot();
     }
+
+    public void didFindSavedPassphrase(String passphrase) {
+        mBinding.pastePassphraseEditText.setText(passphrase);
+        Log.d("DEBUG", "**** RESTORED PASSPHRASE: " + passphrase);
+
+    }
+
 
     private void onDone() {
         String passphrase = mBinding.pastePassphraseEditText.getText()
