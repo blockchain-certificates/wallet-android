@@ -137,23 +137,6 @@ public class ViewPassphraseFragment extends OnboardingFragment {
 
     }
 
-    private void configurePassphraseTextView(String passphrase) {
-        if (mBinding == null) {
-            return;
-        }
-
-        /*
-        mBinding.onboardingPassphraseTextView.setText(passphrase);
-        mBinding.onboardingPassphraseTextView.setOnLongClickListener(v -> {
-            ClipboardManager clipboardManager = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
-            ClipData clipData = ClipData.newPlainText("text", passphrase);
-            clipboardManager.setPrimaryClip(clipData);
-            showSnackbar(mBinding.getRoot(), R.string.reveal_passphrase_text_copied);
-            return true;
-        });
-        */
-    }
-
     @Override
     public boolean isBackAllowed() {
         return false;

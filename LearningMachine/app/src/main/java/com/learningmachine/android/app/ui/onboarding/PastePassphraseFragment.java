@@ -50,10 +50,10 @@ public class PastePassphraseFragment extends OnboardingFragment {
         return mBinding.getRoot();
     }
 
+    @Override
     public void didFindSavedPassphrase(String passphrase) {
         mBinding.pastePassphraseEditText.setText(passphrase);
-        Log.d("DEBUG", "**** RESTORED PASSPHRASE: " + passphrase);
-
+        onDone();
     }
 
 

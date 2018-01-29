@@ -33,7 +33,7 @@ public class OnboardingActivity extends LMActivity implements AccountChooserFrag
     private ActivityOnboardingBinding mBinding;
 
     private String tempPassphrase = null;
-    private PastePassphraseFragment passphraseFragment = null;
+    private OnboardingFragment passphraseFragment = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -177,10 +177,10 @@ public class OnboardingActivity extends LMActivity implements AccountChooserFrag
         }
     }
 
-    public void askToGetPassphraseFromDevice(PastePassphraseFragment fragment) {
+    public void askToGetPassphraseFromDevice(OnboardingFragment fragment) {
+
         if (Build.VERSION.SDK_INT >= 23) {
-            if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
-                    checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                 getSavedPassphraseFromDevice(fragment);
             } else {
                 passphraseFragment = fragment;
@@ -191,7 +191,7 @@ public class OnboardingActivity extends LMActivity implements AccountChooserFrag
         }
     }
 
-    private void getSavedPassphraseFromDevice(PastePassphraseFragment fragment) {
+    private boolean getSavedPassphraseFromDevice(OnboardingFragment fragment) {
         String passphraseFile = OnboardingActivity.pathToSavedPassphraseFile();
         try {
             String encryptedMsg = new Scanner(new File(passphraseFile)).useDelimiter("\\Z").next();
@@ -200,6 +200,7 @@ public class OnboardingActivity extends LMActivity implements AccountChooserFrag
                 String content = AESCrypt.decrypt(encryptionKey, encryptedMsg);
                 if (content.startsWith("mneumonic:")) {
                     fragment.didFindSavedPassphrase(content.substring(10).trim());
+                    return true;
                 }
             }catch (GeneralSecurityException e){
 
@@ -207,6 +208,8 @@ public class OnboardingActivity extends LMActivity implements AccountChooserFrag
         } catch(Exception e) {
             // note: this is a non-critical feature, so if this fails nbd
         }
+
+        return false;
     }
 
     @Override

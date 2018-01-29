@@ -12,4 +12,8 @@ public class OnboardingFragment extends LMFragment {
         return true;
     }
 
+    public void didFindSavedPassphrase(String passphrase) {
+
+    }
+
 }
