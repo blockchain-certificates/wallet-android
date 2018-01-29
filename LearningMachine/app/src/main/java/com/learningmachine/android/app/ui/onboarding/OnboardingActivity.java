@@ -7,17 +7,21 @@ import android.databinding.DataBindingUtil;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.databinding.ActivityOnboardingBinding;
 import com.learningmachine.android.app.ui.LMActivity;
 import com.learningmachine.android.app.ui.onboarding.OnboardingFlow.FlowType;
+import com.learningmachine.android.app.util.AESCrypt;
 
 import java.io.File;
 import java.io.PrintWriter;
+import java.security.GeneralSecurityException;
 import java.util.Scanner;
 
 public class OnboardingActivity extends LMActivity implements AccountChooserFragment.Callback,
@@ -139,13 +143,25 @@ public class OnboardingActivity extends LMActivity implements AccountChooserFrag
         return Environment.getExternalStorageDirectory() + "/learningmachine.dat";
     }
 
+    private String getDeviceId(Context context) {
+        final String deviceId = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+        if(deviceId == null || deviceId.length() == 0) {
+            return "NOT_IDEAL_KEY";
+        }
+        return deviceId;
+    }
+
     private void savePassphraseToDevice(String passphrase) {
         String passphraseFile = pathToSavedPassphraseFile();
         try( PrintWriter out = new PrintWriter(passphraseFile) ) {
-            // TODO: encrypt the string
-            String mneumonicString = EncryptionUtils.encrypt();
-
-            out.println("mneumonic:"+passphrase);
+            String encryptionKey= getDeviceId(getApplicationContext());
+            String mneumonicString = "mneumonic:"+passphrase;
+            try {
+                String encryptedMsg = AESCrypt.encrypt(encryptionKey, mneumonicString);
+                out.println(encryptedMsg);
+            }catch (GeneralSecurityException e){
+                //handle error
+            }
         } catch(Exception e) {
             // note: we don't truly care if this fails. this feature is a nice to have, and if it works
             // then the user gets to enjoy their passphrase magically showing up again if they
@@ -184,10 +200,15 @@ public class OnboardingActivity extends LMActivity implements AccountChooserFrag
     private void getSavedPassphraseFromDevice(PastePassphraseFragment fragment) {
         String passphraseFile = OnboardingActivity.pathToSavedPassphraseFile();
         try {
-            String content = new Scanner(new File(passphraseFile)).useDelimiter("\\Z").next();
-            // TODO: decrypt to file
-            if (content.startsWith("mneumonic:")) {
-                fragment.didFindSavedPassphrase(content.substring(10).trim());
+            String encryptedMsg = new Scanner(new File(passphraseFile)).useDelimiter("\\Z").next();
+            String encryptionKey = getDeviceId(getApplicationContext());
+            try {
+                String content = AESCrypt.decrypt(encryptionKey, encryptedMsg);
+                if (content.startsWith("mneumonic:")) {
+                    fragment.didFindSavedPassphrase(content.substring(10).trim());
+                }
+            }catch (GeneralSecurityException e){
+
             }
         } catch(Exception e) {
             // note: this is a non-critical feature, so if this fails nbd
