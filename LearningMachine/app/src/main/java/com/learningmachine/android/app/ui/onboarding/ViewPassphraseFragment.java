@@ -129,9 +129,6 @@ public class ViewPassphraseFragment extends OnboardingFragment {
                             mBinding.onboardingEmailButton.setEnabled(true);
                             mBinding.onboardingSaveButton.setEnabled(true);
                             mBinding.onboardingWriteButton.setEnabled(true);
-
-                            mBinding.onboardingDoneButton.setAlpha(1.0f);
-                            mBinding.onboardingDoneButton.setEnabled(true);
                         }
                     });
                 });
@@ -169,29 +166,59 @@ public class ViewPassphraseFragment extends OnboardingFragment {
 
     private void onSave() {
         ((OnboardingActivity)getActivity()).askToSavePassphraseToDevice(mPassphrase);
+
+        displayAlert(0,
+                R.string.onboarding_passphrase_complete_title,
+                R.string.onboarding_passphrase_save_complete,
+                R.string.onboarding_passphrase_ok,
+                R.string.onboarding_passphrase_cancel);
+
+        mBinding.onboardingDoneButton.setAlpha(1.0f);
+        mBinding.onboardingDoneButton.setEnabled(true);
     }
 
     private void onEmail() {
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_SUBJECT, "BlockCerts Backup");
-        intent.putExtra(Intent.EXTRA_TEXT, mPassphrase);
-        Intent mailer = Intent.createChooser(intent, null);
-        startActivity(mailer);
+        AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+        alertDialog.setTitle(getResources().getString(R.string.onboarding_passphrase_email_before_title));
+        alertDialog.setMessage(getResources().getString(R.string.onboarding_passphrase_email_before));
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getResources().getString(
+                R.string.onboarding_passphrase_ok),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
 
-        mBinding.onboardingDoneButton.setEnabled(true);
+                        Intent intent = new Intent(Intent.ACTION_SEND);
+                        intent.setType("text/plain");
+                        intent.putExtra(Intent.EXTRA_SUBJECT, "BlockCerts Backup");
+                        intent.putExtra(Intent.EXTRA_TEXT, mPassphrase);
+                        Intent mailer = Intent.createChooser(intent, null);
+                        startActivity(mailer);
+
+                        mBinding.onboardingDoneButton.setAlpha(1.0f);
+                        mBinding.onboardingDoneButton.setEnabled(true);
+                    }
+                });
+        alertDialog.show();
     }
 
     private void onWrite() {
 
         AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
-        alertDialog.setTitle("Write This Down!");
+        alertDialog.setTitle(getResources().getString(R.string.onboarding_passphrase_write_title));
         alertDialog.setMessage(mPassphrase);
-        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "I have written the passphrase down",
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getResources().getString(R.string.onboarding_passphrase_write_confirmation),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
+
+                        mBinding.onboardingDoneButton.setAlpha(1.0f);
                         mBinding.onboardingDoneButton.setEnabled(true);
+
+                        displayAlert(0,
+                                R.string.onboarding_passphrase_complete_title,
+                                R.string.onboarding_passphrase_write_complete,
+                                R.string.onboarding_passphrase_ok,
+                                R.string.onboarding_passphrase_cancel);
                     }
                 });
         alertDialog.show();

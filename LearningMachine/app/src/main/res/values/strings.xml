@@ -14,6 +14,19 @@
     <string name="onboarding_passphrase_write_button">Write It Down</string>
     <string name="onboarding_passphrase_done_button">All Done!</string>
 
+    <string name="onboarding_passphrase_write_title">Write this down!</string>
+    <string name="onboarding_passphrase_write_confirmation">Yes, I have written down my passphrase!</string>
+
+    <string name="onboarding_passphrase_email_before_title">Save your Passphrase!</string>
+    <string name="onboarding_passphrase_email_before">Email yourself the passphrase so you can access your certificates in the future.</string>
+
+    <string name="onboarding_passphrase_complete_title">Passphrase Saved!</string>
+    <string name="onboarding_passphrase_save_complete">Your passphrase has been saved to your device. If you uninstall and reinstall BlockCerts we will use the passphrase stored there.</string>
+    <string name="onboarding_passphrase_write_complete">Save your passphrase in a secure location so you can access your certificates in the future.</string>
+    <string name="onboarding_passphrase_cancel">Cancel</string>
+    <string name="onboarding_passphrase_ok">OK</string>
+
+
     <string name="onboarding_passphrase_status_0">Generating your new passphrase...</string>
     <string name="onboarding_passphrase_status_1">Your passphrase has been generated.\nSave your passphrase now!</string>
 
