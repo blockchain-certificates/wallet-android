@@ -34,6 +34,11 @@
     <string name="onboarding_paste_passphrase_hint">Paste your passphrase</string>
     <string name="onboarding_paste_passphrase_done_button">Done</string>
 
+
+    <string name="onboarding_passphrase_load_0">Looking for passphrase...</string>
+    <string name="onboarding_passphrase_load_1">Passphrase found, loading...</string>
+    <string name="onboarding_passphrase_load_2">Enter Your Passphrase</string>
+
     <!-- Home -->
     <string name="fragment_home_empty_title">You are ready!</string>
     <string name="fragment_home_empty_description">Issuers will send you an email with a link to add them. This will send a special code that represents you. If you already have their information, continue.</string>

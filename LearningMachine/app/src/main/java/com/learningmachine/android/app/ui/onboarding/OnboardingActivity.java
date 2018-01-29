@@ -209,6 +209,7 @@ public class OnboardingActivity extends LMActivity implements AccountChooserFrag
             // note: this is a non-critical feature, so if this fails nbd
         }
 
+        fragment.didFindSavedPassphrase(null);
         return false;
     }
 

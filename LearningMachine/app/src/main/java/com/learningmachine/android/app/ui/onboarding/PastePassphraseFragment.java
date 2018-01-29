@@ -1,22 +1,33 @@
 package com.learningmachine.android.app.ui.onboarding;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.bitcoin.BitcoinManager;
 import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.databinding.FragmentPastePassphraseBinding;
 import com.learningmachine.android.app.ui.home.HomeActivity;
+import com.learningmachine.android.app.util.DialogUtils;
 import com.learningmachine.android.app.util.StringUtils;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.inject.Inject;
 
@@ -25,6 +36,38 @@ public class PastePassphraseFragment extends OnboardingFragment {
     @Inject protected BitcoinManager mBitcoinManager;
 
     private FragmentPastePassphraseBinding mBinding;
+
+
+    private Timer countingTimer;
+    private int countingSeconds = 1;
+
+    public void startCountingTimer() {
+        if(countingTimer != null) {
+            return;
+        }
+
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mBinding.passphraseLabel.setText(getResources().getString(R.string.onboarding_passphrase_load_1) + " " + countingSeconds + "s");
+                        countingSeconds++;
+                    }
+                });
+            }
+        };
+
+        countingTimer = new Timer();
+        countingTimer.scheduleAtFixedRate(timerTask, 0, 1000);
+    }
+
+    public void stopCountingTimer() {
+        countingTimer.cancel();
+        countingTimer = null;
+    }
+
 
     public static PastePassphraseFragment newInstance() {
         return new PastePassphraseFragment();
@@ -43,6 +86,8 @@ public class PastePassphraseFragment extends OnboardingFragment {
 
         ((OnboardingActivity)getActivity()).askToGetPassphraseFromDevice(this);
 
+        mBinding.passphraseLabel.setText(R.string.onboarding_passphrase_load_0);
+
         mBinding.pastePassphraseEditText.addTextChangedListener(new PastePassphraseTextWatcher());
         mBinding.doneButton.setEnabled(false);
         mBinding.doneButton.setOnClickListener(view -> onDone());
@@ -52,21 +97,56 @@ public class PastePassphraseFragment extends OnboardingFragment {
 
     @Override
     public void didFindSavedPassphrase(String passphrase) {
-        mBinding.pastePassphraseEditText.setText(passphrase);
-        onDone();
+        if (passphrase != null) {
+            mBinding.pastePassphraseEditText.setText(passphrase);
+            onDone();
+        } else {
+            mBinding.passphraseLabel.setText(R.string.onboarding_passphrase_load_2);
+            mBinding.passphraseLabel.requestFocus();
+        }
     }
 
 
     private void onDone() {
-        String passphrase = mBinding.pastePassphraseEditText.getText()
-                .toString();
-        mBitcoinManager.setPassphrase(passphrase)
-                .compose(bindToMainThread())
-                .subscribe(wallet -> {
-                    startActivity(new Intent(getActivity(), HomeActivity.class));
-                    getActivity().finish();
-                }, e -> displayErrors(e, R.string.error_title_message));
+
+        String passphrase = mBinding.pastePassphraseEditText.getText().toString();
+        Activity activity = getActivity();
+
+        startCountingTimer();
+
+        mBinding.doneButton.setEnabled(false);
+        mBinding.pastePassphraseEditText.setEnabled(false);
+
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                mBitcoinManager.setPassphrase(passphrase)
+                        .compose(bindToMainThread())
+                        .subscribe(wallet -> {
+
+                            activity.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    stopCountingTimer();
+
+                                    startActivity(new Intent(getActivity(), HomeActivity.class));
+                                    getActivity().finish();
+                                }
+                            });
+                        }, e -> displayErrorsLocal(e, R.string.error_title_message));
+            }
+        });
     }
+
+
+    protected void displayErrorsLocal(Throwable throwable, @StringRes int errorTitleResId) {
+        stopCountingTimer();
+        mBinding.passphraseLabel.setText(R.string.onboarding_passphrase_load_2);
+        mBinding.pastePassphraseEditText.setEnabled(true);
+        mBinding.pastePassphraseEditText.setText("");
+        displayErrors(throwable, errorTitleResId);
+    }
+
 
     private class PastePassphraseTextWatcher implements TextWatcher {
         @Override

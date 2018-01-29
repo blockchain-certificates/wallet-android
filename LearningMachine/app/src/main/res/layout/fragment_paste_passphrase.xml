@@ -16,13 +16,13 @@
             android:src="@drawable/ic_splash"/>
 
         <TextView
+            android:id="@+id/passphrase_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/onboarding_paste_passphrase_title_margin_top"
             android:gravity="center"
             android:text="@string/onboarding_paste_passphrase_title"
-            android:textAllCaps="true"
             style="@style/Material.Title.Light"/>
 
         <EditText
