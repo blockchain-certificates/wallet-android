@@ -16,7 +16,7 @@ public class OnboardingFlow implements Serializable {
 
     public enum FlowType {
         UNKNOWN(Arrays.asList(ACCOUNT_CHOOSER)),
-        NEW_ACCOUNT(Arrays.asList(ACCOUNT_CHOOSER, GENERATE_PASSPHRASE, VIEW_PASSPHRASE)),
+        NEW_ACCOUNT(Arrays.asList(ACCOUNT_CHOOSER, VIEW_PASSPHRASE)),
         EXISTING_ACCOUNT(Arrays.asList(ACCOUNT_CHOOSER, PASTE_PASSPHRASE));
 
         private List<OnboardingScreen> mScreens;

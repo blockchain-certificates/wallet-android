@@ -24,9 +24,6 @@ class OnboardingAdapter extends FragmentStatePagerAdapter {
             case ACCOUNT_CHOOSER:
                 return AccountChooserFragment.newInstance();
 
-            case GENERATE_PASSPHRASE:
-                return GeneratePassphraseFragment.newInstance();
-
             case VIEW_PASSPHRASE:
                 return ViewPassphraseFragment.newInstance();
 

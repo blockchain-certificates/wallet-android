@@ -105,6 +105,13 @@
         <item name="android:textColor">@color/black_de</item>
     </style>
 
+    <style name="Material.Bold.TextButton" parent="LearningMachineTextView">
+        <item name="android:textSize">@dimen/material_light_body1_text_size</item>
+        <item name="android:lineSpacingExtra">@dimen/material_light_body1_line_spacing_extra</item>
+        <item name="android:textColor">@color/link</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <!-- Custom -->
 
     <style name="Settings.Header" parent="LearningMachineTextView.Medium">

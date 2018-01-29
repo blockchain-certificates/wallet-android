@@ -15,24 +15,18 @@
             android:contentDescription="@null"
             android:src="@drawable/ic_generate_passphrase_success"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="@dimen/onboarding_view_passphrase_title_margin_vertical"
-            android:layout_marginTop="@dimen/onboarding_view_passphrase_title_margin_vertical"
-            android:text="@string/onboarding_passphrase_title"
-            android:textAllCaps="true"
-            style="@style/Material.Title.Light"/>
 
         <TextView
+            android:id="@+id/onboarding_status_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/onboarding_view_passphrase_title_margin_vertical"
             android:gravity="center"
-            android:text="@string/onboarding_passphrase_description"
+            android:text="@string/onboarding_passphrase_status_0"
             style="@style/Material.Light.Body1"/>
 
+        <!--
         <TextView
             android:id="@+id/onboarding_passphrase_text_view"
             android:layout_width="match_parent"
@@ -46,9 +40,10 @@
             android:paddingTop="@dimen/onboarding_view_passphrase_textview_padding_veritical"
             android:textIsSelectable="true"
             style="@style/Material.Light.Body1.OnboardingPassphraseField"/>
+        -->
 
         <Button
-            android:id="@+id/onboarding_done_button"
+            android:id="@+id/onboarding_save_button"
             android:layout_width="@dimen/onboarding_button_width"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -57,8 +52,51 @@
             android:paddingEnd="@dimen/onboarding_button_padding_horizontal"
             android:paddingStart="@dimen/onboarding_button_padding_horizontal"
             android:paddingTop="@dimen/onboarding_button_padding_vertical"
-            android:text="@string/onboarding_passphrase_done_button"
+            android:text="@string/onboarding_passphrase_save_button"
             style="@style/OnboardingButton.Light"/>
+
+        <Button
+            android:id="@+id/onboarding_email_button"
+            android:layout_width="@dimen/onboarding_button_width"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/onboarding_view_passphrase_button_margin_top"
+            android:paddingBottom="@dimen/onboarding_button_padding_vertical"
+            android:paddingEnd="@dimen/onboarding_button_padding_horizontal"
+            android:paddingStart="@dimen/onboarding_button_padding_horizontal"
+            android:paddingTop="@dimen/onboarding_button_padding_vertical"
+            android:text="@string/onboarding_passphrase_email_button"
+            style="@style/OnboardingButton.Light"/>
+
+        <Button
+            android:id="@+id/onboarding_write_button"
+            android:layout_width="@dimen/onboarding_button_width"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/onboarding_view_passphrase_button_margin_top"
+            android:paddingBottom="@dimen/onboarding_button_padding_vertical"
+            android:paddingEnd="@dimen/onboarding_button_padding_horizontal"
+            android:paddingStart="@dimen/onboarding_button_padding_horizontal"
+            android:paddingTop="@dimen/onboarding_button_padding_vertical"
+            android:text="@string/onboarding_passphrase_write_button"
+            style="@style/OnboardingButton.Light"/>
+
+
+        <TextView
+            android:id="@+id/onboarding_done_button"
+            android:clickable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/onboarding_view_passphrase_button_margin_top"
+            android:gravity="center"
+            android:paddingBottom="@dimen/onboarding_button_padding_vertical"
+            android:paddingEnd="@dimen/onboarding_button_padding_horizontal"
+            android:paddingStart="@dimen/onboarding_button_padding_horizontal"
+            android:paddingTop="@dimen/onboarding_button_padding_vertical"
+            android:text="@string/onboarding_passphrase_done_button"
+            style="@style/Material.Bold.TextButton"/>
+
 
     </LinearLayout>
 

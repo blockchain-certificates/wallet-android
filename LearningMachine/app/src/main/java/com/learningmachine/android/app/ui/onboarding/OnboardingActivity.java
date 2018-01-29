@@ -24,8 +24,7 @@ import java.io.PrintWriter;
 import java.security.GeneralSecurityException;
 import java.util.Scanner;
 
-public class OnboardingActivity extends LMActivity implements AccountChooserFragment.Callback,
-    GeneratePassphraseFragment.Callback {
+public class OnboardingActivity extends LMActivity implements AccountChooserFragment.Callback {
 
     private static final String SAVED_FLOW = "onboardingFlow";
 
@@ -75,11 +74,6 @@ public class OnboardingActivity extends LMActivity implements AccountChooserFrag
     @Override
     public void onExistingAccount() {
         replaceScreens(FlowType.EXISTING_ACCOUNT);
-    }
-
-    @Override
-    public void onGeneratePassphraseClick() {
-        navigateForward();
     }
 
     private void setupAdapter() {

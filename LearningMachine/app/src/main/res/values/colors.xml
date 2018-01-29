@@ -14,5 +14,6 @@
     <color name="black_8b">#8b000000</color>
     <color name="black_de">#de000000</color>
     <color name="black_61">#61000000</color>
+    <color name="link">#ff288dff</color>
 
 </resources>

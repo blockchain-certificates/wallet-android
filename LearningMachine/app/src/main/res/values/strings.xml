@@ -9,9 +9,14 @@
     <string name="onboarding_generate_password_title">New Account</string>
     <string name="onboarding_generate_password_description">If you ever lose your phone, you will need this passphrase to recover your records.</string>
     <string name="onboarding_generate_password_button">Generate Passphrase</string>
-    <string name="onboarding_passphrase_title">Passphrase</string>
-    <string name="onboarding_passphrase_description">Write this down as a backup.</string>
-    <string name="onboarding_passphrase_done_button">Done</string>
+    <string name="onboarding_passphrase_save_button">Save To Disk</string>
+    <string name="onboarding_passphrase_email_button">Email Yourself</string>
+    <string name="onboarding_passphrase_write_button">Write It Down</string>
+    <string name="onboarding_passphrase_done_button">All Done!</string>
+
+    <string name="onboarding_passphrase_status_0">Generating your new passphrase...</string>
+    <string name="onboarding_passphrase_status_1">Your passphrase has been generated.\nSave your passphrase now!</string>
+
     <string name="onboarding_paste_passphrase_title">Paste your passphrase</string>
     <string name="onboarding_paste_passphrase_hint">Paste your passphrase</string>
     <string name="onboarding_paste_passphrase_done_button">Done</string>
