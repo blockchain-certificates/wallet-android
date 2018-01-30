@@ -66,6 +66,9 @@
     <string name="settings_privacy_policy">Privacy Policy</string>
     <string name="settings_privacy_policy_endpoint">http://www.learningmachine.com/mobile-privacy/</string>
 
+    <string name="settings_troubleshooting_header">Troubleshooting</string>
+    <string name="settings_email_logs">Email Logs</string>
+
     <!-- Add Issuer -->
     <string name="fragment_add_issuer_title">Add Issuer</string>
     <string name="fragment_add_issuer_info_url_text">Add the URL you were given by your Issuer.</string>

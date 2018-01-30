@@ -3,6 +3,7 @@ package com.learningmachine.android.app.ui.settings;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,11 @@ import com.learningmachine.android.app.ui.LMWebActivity;
 import com.learningmachine.android.app.ui.issuer.AddIssuerActivity;
 import com.learningmachine.android.app.ui.settings.passphrase.ReplacePassphraseActivity;
 import com.learningmachine.android.app.ui.settings.passphrase.RevealPassphraseActivity;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 
 public class SettingsFragment extends LMFragment {
@@ -42,6 +48,36 @@ public class SettingsFragment extends LMFragment {
         binding.settingsAddIssuerTextView.setOnClickListener(v -> {
             Intent intent = AddIssuerActivity.newIntent(getContext());
             startActivity(intent);
+        });
+
+        binding.settingsEmailLogsTextView.setOnClickListener(v -> {
+            String emailData="";
+            try {
+                Process process = Runtime.getRuntime().exec("logcat -d");
+                BufferedReader bufferedReader = new BufferedReader(
+                        new InputStreamReader(process.getInputStream()));
+
+                StringBuilder sb=new StringBuilder();
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    sb.append(line + "\n");
+                }
+                emailData=sb.toString();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+            //send file using email
+            Intent emailIntent = new Intent(Intent.ACTION_SEND);
+            String to[] = {"logs@smallplanet.com"};
+            emailIntent .putExtra(Intent.EXTRA_EMAIL, to);
+            // the attachment
+            emailIntent .putExtra(Intent.EXTRA_TEXT, emailData);
+            // the mail subject
+            emailIntent .putExtra(Intent.EXTRA_SUBJECT, "Logcat content for BlockCerts");
+            emailIntent.setType("message/rfc822");
+            startActivity(Intent.createChooser(emailIntent , "Send email..."));
         });
 
         binding.settingsAboutPassphraseTextView.setOnClickListener(v -> {

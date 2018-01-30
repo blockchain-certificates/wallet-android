@@ -80,6 +80,25 @@
                 android:text="@string/settings_privacy_policy"
                 style="@style/Settings.TextView"/>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/off_white_background"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/fragment_settings_about_padding_top"
+                android:text="@string/settings_troubleshooting_header"
+                style="@style/Settings.Header"/>
+
+            <TextView
+                android:id="@+id/settings_email_logs_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_email_logs"
+                style="@style/Settings.TextView"/>
+
         </LinearLayout>
 
     </ScrollView>
