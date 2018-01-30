@@ -22,6 +22,7 @@ import com.learningmachine.android.app.data.webservice.request.IssuerIntroductio
 import com.learningmachine.android.app.databinding.FragmentAddIssuerBinding;
 import com.learningmachine.android.app.ui.LMFragment;
 import com.learningmachine.android.app.ui.WebAuthActivity;
+import com.learningmachine.android.app.ui.home.HomeActivity;
 import com.learningmachine.android.app.util.DialogUtils;
 import com.learningmachine.android.app.util.StringUtils;
 
@@ -119,7 +120,7 @@ public class AddIssuerFragment extends LMFragment {
     private void performStandardIssuerIntroduction(IssuerIntroductionRequest request) {
         mIssuerManager.addIssuer(request)
                 .compose(bindToMainThread())
-                .subscribe(uuid -> viewIssuer(uuid), throwable -> displayErrors(throwable, DialogUtils.ErrorCategory.ISSUER, R.string.error_title_message));
+                .subscribe(uuid -> didAddIssuer(uuid), throwable -> displayErrors(throwable, DialogUtils.ErrorCategory.ISSUER, R.string.error_title_message));
     }
 
     private void performWebAuth(IssuerIntroductionRequest request) {
@@ -140,10 +141,18 @@ public class AddIssuerFragment extends LMFragment {
                     .doOnSubscribe(() -> displayProgressDialog(R.string.fragment_add_issuer_adding_issuer_progress_dialog_message))
                     .compose(bindToMainThread())
                     .map(issuer -> mIssuerManager.saveIssuer(issuer, bitcoinAddress))
-                    .subscribe(this::viewIssuer, throwable -> displayErrors(throwable, DialogUtils.ErrorCategory.ISSUER, R.string.error_title_message));
+                    .subscribe(this::didAddIssuer, throwable -> displayErrors(throwable, DialogUtils.ErrorCategory.ISSUER, R.string.error_title_message));
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    private void didAddIssuer(String uuid) {
+        hideProgressDialog();
+
+        // Go back to the issuer's listing
+        startActivity(new Intent(getActivity(), HomeActivity.class));
+        getActivity().finish();
     }
 
     private void viewIssuer(String uuid) {
