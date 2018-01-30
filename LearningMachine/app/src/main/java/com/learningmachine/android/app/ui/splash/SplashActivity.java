@@ -59,13 +59,17 @@ public class SplashActivity extends LMActivity {
                 break;
 
             case ADD_ISSUER:
-                startActivityAndFinish(AddIssuerActivity.newIntent(this,
+                Intent issuerIntent = AddIssuerActivity.newIntent(this,
                         launchData.getIntroUrl(),
-                        launchData.getNonce()));
+                        launchData.getNonce());
+                issuerIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_TASK_ON_HOME);
+                startActivityAndFinish(issuerIntent);
                 break;
 
             case ADD_CERTIFICATE:
-                startActivityAndFinish(AddCertificateActivity.newIntent(this, launchData.getCertUrl()));
+                Intent certificateIntent = AddCertificateActivity.newIntent(this, launchData.getCertUrl());
+                certificateIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_TASK_ON_HOME);
+                startActivityAndFinish(certificateIntent);
                 break;
         }
 

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -77,17 +78,24 @@ public class AddIssuerFragment extends LMFragment {
         inflater.inflate(R.menu.fragment_add_issuer, menu);
     }
 
+    public void updateArgs(String issuerUrlString, String issuerNonce) {
+        if (!StringUtils.isEmpty(issuerUrlString)) {
+            mBinding.addIssuerUrlEditText.setText(issuerUrlString);
+        }
+        if (!StringUtils.isEmpty(issuerNonce)) {
+            mBinding.addIssuerNonceEditText.setText(issuerNonce);
+        }
+    }
+
     private void handleArgs() {
         Bundle args = getArguments();
         if (args == null) {
             return;
         }
-
         String issuerUrlString = args.getString(ARG_ISSUER_URL);
         if (!StringUtils.isEmpty(issuerUrlString)) {
             mBinding.addIssuerUrlEditText.setText(issuerUrlString);
         }
-
         String issuerNonce = args.getString(ARG_ISSUER_NONCE);
         if (!StringUtils.isEmpty(issuerNonce)) {
             mBinding.addIssuerNonceEditText.setText(issuerNonce);
