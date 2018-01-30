@@ -53,6 +53,9 @@
     <string name="settings">settings</string>
     <string name="settings_fragment">Settings</string>
 
+    <string name="settings_issuer_header">Issuers</string>
+    <string name="settings_add_issuer">Add Issuer</string>
+
     <string name="settings_passphrase_header">Passphrase</string>
     <string name="settings_reveal_passphrase">Reveal Passphrase</string>
     <string name="settings_replace_passphrase">Replace Passphrase</string>

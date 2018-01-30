@@ -21,6 +21,7 @@
                 android:paddingStart="@dimen/fragment_home_recyclerview_spacing"
                 android:paddingTop="@dimen/fragment_home_recyclerview_spacing"/>
 
+            <!--
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/issuer_floating_action_button"
                 android:layout_width="wrap_content"
@@ -29,6 +30,7 @@
                 android:layout_margin="@dimen/fragment_home_fab_margin"
                 android:src="@drawable/ic_action_add"
                 app:backgroundTint="@color/fab_color"/>
+                -->
 
         </FrameLayout>
 
@@ -54,6 +56,7 @@
                 android:gravity="center"
                 android:text="@string/fragment_home_empty_description"
                 style="@style/Material.Light.Body1"/>
+
 
             <Button
                 android:id="@+id/issuer_add_button"

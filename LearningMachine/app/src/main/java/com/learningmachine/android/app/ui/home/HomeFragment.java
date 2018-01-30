@@ -65,8 +65,6 @@ public class HomeFragment extends LMFragment {
 
         mBinding.issuerAddButton.setOnClickListener(v -> addIssuer());
 
-        mBinding.issuerFloatingActionButton.setOnClickListener(v -> addIssuer());
-
         return mBinding.getRoot();
     }
 

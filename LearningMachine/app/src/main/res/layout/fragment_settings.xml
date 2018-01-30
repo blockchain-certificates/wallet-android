@@ -17,6 +17,26 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingTop="@dimen/fragment_settings_about_padding_top"
+                android:text="@string/settings_issuer_header"
+                style="@style/Settings.Header"/>
+
+            <TextView
+                android:id="@+id/settings_add_issuer_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_add_issuer"
+                style="@style/Settings.TextView"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/off_white_background"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/fragment_settings_about_padding_top"
                 android:text="@string/settings_passphrase_header"
                 style="@style/Settings.Header"/>
 
