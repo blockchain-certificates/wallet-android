@@ -129,8 +129,12 @@ public class PastePassphraseFragment extends OnboardingFragment {
                                 public void run() {
                                     stopCountingTimer();
 
-                                    startActivity(new Intent(getActivity(), HomeActivity.class));
-                                    getActivity().finish();
+
+                                    mSharedPreferencesManager.setFirstLaunch(false);
+                                    if (continueDelayedURLsFromDeepLinking() == false) {
+                                        startActivity(new Intent(getActivity(), HomeActivity.class));
+                                        getActivity().finish();
+                                    }
                                 }
                             });
                         }, e -> displayErrorsLocal(e, DialogUtils.ErrorCategory.GENERIC, R.string.error_title_message));

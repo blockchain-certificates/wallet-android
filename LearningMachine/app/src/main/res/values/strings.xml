@@ -4,6 +4,8 @@
     <string name="home_settings_menu_item_title">Settings</string>
 
     <!-- Onboarding -->
+    <string name="onboarding_no_account">Account Does Not Exist</string>
+
     <string name="onboarding_new_account">New Account</string>
     <string name="onboarding_existing_account">I already have one</string>
     <string name="onboarding_generate_password_title">New Account</string>
@@ -172,6 +174,10 @@
 
     <string name="http_not_found_generic">This does not appear to be a valid URL. Please check the URL and try again.</string>
     <string name="http_bad_request_generic">An invalid URL was entered. Please check the URL and try again.</string>
+
+
+    <string name="wallet_does_not_exist_and_want_to_add_issuer">Before you may add an issuer you must log in to an account.\n\nGo ahead and log in, we will try to add the issuer after you are finished.</string>
+    <string name="wallet_does_not_exist_and_want_to_add_certificate">Before you may add a certificate you must log in to an account.\n\nGo ahead and log in, we will try to add the certificate after you are finished.</string>
 
 
     <!--Certificate Info Fragment-->

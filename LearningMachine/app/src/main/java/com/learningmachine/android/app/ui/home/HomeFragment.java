@@ -53,8 +53,6 @@ public class HomeFragment extends LMFragment {
         Injector.obtain(getContext())
                 .inject(this);
 
-        mSharedPreferencesManager.setFirstLaunch(false);
-
         mIssuerList = new ArrayList<>();
     }
 

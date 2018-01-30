@@ -18,7 +18,7 @@
             android:name=".ui.splash.SplashActivity"
             android:theme="@style/NoToolbarTheme.Splash"
             android:screenOrientation="portrait"
-            android:launchMode="singleInstance">
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -47,69 +47,69 @@
             android:name=".ui.onboarding.OnboardingActivity"
             android:theme="@style/NoToolbarTheme.Onboarding"
             android:screenOrientation="portrait"
-            android:launchMode="singleInstance"/>
+            android:launchMode="singleTask"/>
 
         <activity android:name=".ui.home.HomeActivity"
             android:screenOrientation="portrait"
-            android:launchMode="singleInstance"/>
+            android:launchMode="singleTask"/>
 
         <activity
             android:name=".ui.settings.SettingsActivity"
             android:label="@string/settings_fragment"
             android:screenOrientation="portrait"
-            android:launchMode="singleInstance"/>
+            android:launchMode="singleTask"/>
 
         <activity
             android:name=".ui.issuer.IssuerActivity"
             android:windowSoftInputMode="stateHidden"
             android:screenOrientation="portrait"
-            android:launchMode="singleInstance"/>
+            android:launchMode="singleTask"/>
 
         <activity
             android:name=".ui.issuer.AddIssuerActivity"
             android:label="@string/fragment_add_issuer_title"
             android:screenOrientation="portrait"
-            android:launchMode="singleInstance"/>
+            android:launchMode="singleTask"/>
 
         <activity android:name=".ui.LMWebActivity"
             android:screenOrientation="portrait"
-            android:launchMode="singleInstance"/>
+            android:launchMode="singleTask"/>
 
         <activity
             android:name=".ui.settings.passphrase.RevealPassphraseActivity"
             android:label="@string/reveal_passphrase_title"
             android:screenOrientation="portrait"
-            android:launchMode="singleInstance"/>
+            android:launchMode="singleTask"/>
 
         <activity
             android:name=".ui.settings.passphrase.ReplacePassphraseActivity"
             android:label="@string/replace_passphrase_title"
             android:screenOrientation="portrait"
-            android:launchMode="singleInstance"/>
+            android:launchMode="singleTask"/>
 
         <activity
             android:name=".ui.cert.CertificateActivity"
             android:screenOrientation="portrait"
-            android:launchMode="singleInstance"/>
+            android:launchMode="singleTask"/>
 
         <activity android:name=".ui.issuer.IssuerInfoActivity"
             android:screenOrientation="portrait"
-            android:launchMode="singleInstance"/>
+            android:launchMode="singleTask"/>
 
         <activity
             android:name=".ui.cert.AddCertificateActivity"
             android:label="@string/fragment_add_certificate_title"
             android:theme="@style/NoToolbarTheme"
             android:screenOrientation="portrait"
-            android:launchMode="singleInstance"/>
+            android:launchMode="singleTask"/>
 
         <activity
             android:name=".ui.cert.CertificateInfoActivity"
             android:screenOrientation="portrait"
-            android:launchMode="singleInstance"/>
+            android:launchMode="singleTask"/>
         <activity android:name=".ui.WebAuthActivity"
             android:screenOrientation="portrait"
-            android:launchMode="singleInstance"/>
+            android:launchMode="singleTask"/>
 
         <provider
             android:name="android.support.v4.content.FileProvider"

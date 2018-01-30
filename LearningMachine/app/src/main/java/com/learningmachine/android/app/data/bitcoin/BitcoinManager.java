@@ -66,6 +66,10 @@ public class BitcoinManager {
         return new File(mContext.getFilesDir(), LMConstants.WALLET_FILE);
     }
 
+    public SharedPreferencesManager getSharedPreferences() {
+        return mSharedPreferencesManager;
+    }
+
     private Observable<Wallet> createWallet() {
         SecureRandom random = new SecureRandom();
         byte[] entropy = random.generateSeed(LMConstants.WALLET_SEED_BYTE_SIZE);

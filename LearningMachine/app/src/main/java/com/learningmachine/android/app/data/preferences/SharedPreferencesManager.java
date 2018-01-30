@@ -9,10 +9,39 @@ public class SharedPreferencesManager {
     private static final String PREF_FIRST_LAUNCH = "SharedPreferencesManager.FirstLaunch";
     private static final String PREF_LEGACY_RECEIVE_ADDRESS = "SharedPreferencesManager.LegacyReceiveAddress";
 
+    private static final String DELAYED_ISSUER_URL = "SharedPreferencesManager.DelayedIssuer.URL";
+    private static final String DELAYED_ISSUER_NONCE = "SharedPreferencesManager.DelayedIssuer.Nonce";
+
+    private static final String DELAYED_CERTIFICATE_URL = "SharedPreferencesManager.DelayedCertificate.URL";
+
     private SharedPreferences mPrefs;
 
     public SharedPreferencesManager(Context context) {
         mPrefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+    }
+
+    public String getDelayedIssuerURL() {
+        return mPrefs.getString(DELAYED_ISSUER_URL, "");
+    }
+    public String getDelayedIssuerNonce() {
+        return mPrefs.getString(DELAYED_ISSUER_NONCE, "");
+    }
+
+    public void setDelayedIssuerURL(String issuerURL, String issuerNonce) {
+        mPrefs.edit()
+                .putString(DELAYED_ISSUER_URL, issuerURL)
+                .putString(DELAYED_ISSUER_NONCE, issuerNonce)
+                .apply();
+    }
+
+    public String getDelayedCertificateURL() {
+        return mPrefs.getString(DELAYED_CERTIFICATE_URL, "");
+    }
+
+    public void setDelayedCertificateURL(String certificateURL) {
+        mPrefs.edit()
+                .putString(DELAYED_CERTIFICATE_URL, certificateURL)
+                .apply();
     }
 
     public boolean isFirstLaunch() {

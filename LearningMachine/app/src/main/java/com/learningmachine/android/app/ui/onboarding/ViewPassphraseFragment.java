@@ -143,8 +143,12 @@ public class ViewPassphraseFragment extends OnboardingFragment {
     }
 
     private void onDone() {
-        startActivity(new Intent(getActivity(), HomeActivity.class));
-        getActivity().finish();
+
+        mSharedPreferencesManager.setFirstLaunch(false);
+        if (continueDelayedURLsFromDeepLinking() == false) {
+            startActivity(new Intent(getActivity(), HomeActivity.class));
+            getActivity().finish();
+        }
     }
 
     private void onSave() {

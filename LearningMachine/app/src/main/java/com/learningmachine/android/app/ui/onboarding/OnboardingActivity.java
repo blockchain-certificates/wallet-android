@@ -232,9 +232,12 @@ public class OnboardingActivity extends LMActivity implements AccountChooserFrag
         didSucceedInPermissionsRequest = grantResults[0] == PackageManager.PERMISSION_GRANTED;
     }
 
+    public boolean isOnAccountsScreen() {
+        return mOnboardingFlow.getPosition() == 0;
+    }
+
     protected void onResume() {
         super.onResume();
-
 
         if(didReceivePermissionsCallback){
             if(tempPassphrase != null && passphraseFragment != null) {
