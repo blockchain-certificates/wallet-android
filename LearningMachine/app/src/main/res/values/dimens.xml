@@ -18,6 +18,7 @@
     <dimen name="onboarding_button_padding_horizontal">48dp</dimen>
     <dimen name="onboarding_button_border_width">1dp</dimen>
     <dimen name="onboarding_button_width">260dp</dimen>
+    <dimen name="onboarding_button_height">50dp</dimen>
 
     <dimen name="onboarding_choose_new_account_margin_top">104dp</dimen>
     <dimen name="onboarding_choose_button_margin_bottom">22dp</dimen>

@@ -31,7 +31,7 @@
 
 
     <string name="onboarding_passphrase_status_0">Generating your new passphrase...</string>
-    <string name="onboarding_passphrase_status_1">Your passphrase has been generated.\nSave your passphrase now!</string>
+    <string name="onboarding_passphrase_status_1">Your passphrase has been generated.\nChoose one of the options below to save your passphrase!</string>
 
     <string name="onboarding_paste_passphrase_title">Paste your passphrase</string>
     <string name="onboarding_paste_passphrase_hint">Paste your passphrase</string>
