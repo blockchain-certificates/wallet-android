@@ -148,7 +148,19 @@ public class ViewPassphraseFragment extends OnboardingFragment {
     }
 
     private void onSave() {
-        ((OnboardingActivity)getActivity()).askToSavePassphraseToDevice(mPassphrase);
+        ((OnboardingActivity)getActivity()).askToSavePassphraseToDevice(mPassphrase, this);
+    }
+
+    @Override
+    public void didSavePassphraseToDevice(String passphrase) {
+        if(passphrase == null) {
+            displayAlert(0,
+                    R.string.onboarding_passphrase_permissions_error_title,
+                    R.string.onboarding_passphrase_permissions_error,
+                    R.string.onboarding_passphrase_ok,
+                    R.string.onboarding_passphrase_cancel);
+            return;
+        }
 
         displayAlert(0,
                 R.string.onboarding_passphrase_complete_title,

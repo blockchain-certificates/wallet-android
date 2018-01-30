@@ -145,7 +145,12 @@ public class OnboardingActivity extends LMActivity implements AccountChooserFrag
         return deviceId;
     }
 
-    private void savePassphraseToDevice(String passphrase) {
+    private void savePassphraseToDevice(String passphrase, OnboardingFragment fragment) {
+        if (passphrase == null) {
+            fragment.didSavePassphraseToDevice(null);
+            return;
+        }
+
         String passphraseFile = pathToSavedPassphraseFile();
         try( PrintWriter out = new PrintWriter(passphraseFile) ) {
             String encryptionKey= getDeviceId(getApplicationContext());
@@ -153,27 +158,27 @@ public class OnboardingActivity extends LMActivity implements AccountChooserFrag
             try {
                 String encryptedMsg = AESCrypt.encrypt(encryptionKey, mneumonicString);
                 out.println(encryptedMsg);
+                fragment.didSavePassphraseToDevice(passphrase);
             }catch (GeneralSecurityException e){
-                //handle error
+                fragment.didSavePassphraseToDevice(null);
             }
         } catch(Exception e) {
-            // note: we don't truly care if this fails. this feature is a nice to have, and if it works
-            // then the user gets to enjoy their passphrase magically showing up again if they
-            // uninstall and re-install the app.
+            fragment.didSavePassphraseToDevice(null);
         }
     }
 
-    public void askToSavePassphraseToDevice(String passphrase) {
+    public void askToSavePassphraseToDevice(String passphrase, OnboardingFragment fragment) {
         if (Build.VERSION.SDK_INT >= 23) {
             if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
                     checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                savePassphraseToDevice(passphrase);
+                savePassphraseToDevice(passphrase, fragment);
             } else {
                 tempPassphrase = passphrase;
+                passphraseFragment = fragment;
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
             }
         } else {
-            savePassphraseToDevice(passphrase);
+            savePassphraseToDevice(passphrase, fragment);
         }
     }
 
@@ -213,22 +218,46 @@ public class OnboardingActivity extends LMActivity implements AccountChooserFrag
         return false;
     }
 
+
+
+    private boolean didReceivePermissionsCallback = false;
+    private boolean didSucceedInPermissionsRequest = false;
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if(tempPassphrase != null) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                savePassphraseToDevice(tempPassphrase);
-            }
-            tempPassphrase = null;
-        }
+        // Note: this really sucks, but android will crash if we try and display dialogs in the permissions
+        // result callback.  So we delay this until onResume is called on the activity
+        didReceivePermissionsCallback = true;
+        didSucceedInPermissionsRequest = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+    }
 
-        if(passphraseFragment != null) {
-            if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                getSavedPassphraseFromDevice(passphraseFragment);
+    protected void onResume() {
+        super.onResume();
+
+
+        if(didReceivePermissionsCallback){
+            if(tempPassphrase != null && passphraseFragment != null) {
+                if (didSucceedInPermissionsRequest) {
+                    savePassphraseToDevice(tempPassphrase, passphraseFragment);
+                } else {
+                    savePassphraseToDevice(null, passphraseFragment);
+                }
+                tempPassphrase = null;
+                passphraseFragment = null;
             }
-            passphraseFragment = null;
+
+            if(passphraseFragment != null) {
+                if(didSucceedInPermissionsRequest){
+                    getSavedPassphraseFromDevice(passphraseFragment);
+                } else {
+                    getSavedPassphraseFromDevice(null);
+                }
+                passphraseFragment = null;
+            }
+
+            didReceivePermissionsCallback = false;
+            didSucceedInPermissionsRequest = false;
         }
     }
 
