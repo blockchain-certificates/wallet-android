@@ -34,6 +34,7 @@ import com.learningmachine.android.app.databinding.FragmentCertificateBinding;
 import com.learningmachine.android.app.dialog.AlertDialogFragment;
 import com.learningmachine.android.app.dialog.CertificateVerficationProgressFragment;
 import com.learningmachine.android.app.ui.LMFragment;
+import com.learningmachine.android.app.util.DialogUtils;
 import com.learningmachine.android.app.util.FileUtils;
 
 import java.io.File;
@@ -268,6 +269,8 @@ public class CertificateFragment extends LMFragment implements VerficationCancel
         mCancelVerification = false;
         showVerficationProgressDialog();
 
+
+
         mCertificateVerifier.getUpdates()
                 .subscribe(this::updateVerficationProgressDialog);
 
@@ -283,7 +286,7 @@ public class CertificateFragment extends LMFragment implements VerficationCancel
                     verifyBitcoinTransactionRecord(certificate);
                 }, throwable -> {
                     Timber.e(throwable, "Error!");
-                    displayErrors(throwable, R.string.error_title_message); // TODO: use correct error string
+                    displayErrors(throwable, DialogUtils.ErrorCategory.CERTIFICATE, R.string.error_title_message); // TODO: use correct error string
                 });
     }
 
@@ -299,7 +302,7 @@ public class CertificateFragment extends LMFragment implements VerficationCancel
                     verifyIssuer(certificate, txRecord);
                 }, throwable -> {
                     Timber.e(throwable, "Error! Merkle roots do not match");
-                    displayErrors(throwable, R.string.error_title_message); // TODO: use correct error string
+                    displayErrors(throwable, DialogUtils.ErrorCategory.ISSUER, R.string.error_title_message); // TODO: use correct error string
                 });
     }
 
@@ -312,7 +315,7 @@ public class CertificateFragment extends LMFragment implements VerficationCancel
                 .compose(bindToMainThread())
                 .subscribe(issuerResponse -> verifyJsonLd(certificate, txRecord), throwable -> {
                     Timber.e(throwable, "Error! Couldn't verify issuer");
-                    displayErrors(throwable, R.string.error_title_message); // TODO: use correct error string
+                    displayErrors(throwable, DialogUtils.ErrorCategory.ISSUER, R.string.error_title_message); // TODO: use correct error string
                 });
     }
 
@@ -331,7 +334,7 @@ public class CertificateFragment extends LMFragment implements VerficationCancel
                     hideVerificationProgressDialog();
                     showVerificationResultDialog(CertificateVerificationResult.INVALID_CERT);
                     Timber.e(throwable, "Error!");
-                    displayErrors(throwable, R.string.error_title_message); // TODO: use correct error string
+                    displayErrors(throwable, DialogUtils.ErrorCategory.ISSUER, R.string.error_title_message); // TODO: use correct error string
                 });
     }
 }

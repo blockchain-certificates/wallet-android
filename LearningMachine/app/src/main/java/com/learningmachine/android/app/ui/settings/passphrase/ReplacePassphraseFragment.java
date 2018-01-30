@@ -16,6 +16,7 @@ import com.learningmachine.android.app.data.bitcoin.BitcoinManager;
 import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.databinding.FragmentReplacePassphraseBinding;
 import com.learningmachine.android.app.ui.LMFragment;
+import com.learningmachine.android.app.util.DialogUtils;
 
 import javax.inject.Inject;
 
@@ -66,7 +67,7 @@ public class ReplacePassphraseFragment extends LMFragment {
                 .toString();
         mBitcoinManager.setPassphrase(passphrase)
                 .compose(bindToMainThread())
-                .subscribe(wallet -> passphraseUpdated(), e -> displayErrors(e, R.string.error_title_message));
+                .subscribe(wallet -> passphraseUpdated(), e -> displayErrors(e, DialogUtils.ErrorCategory.GENERIC, R.string.error_title_message));
     }
 
     private void passphraseUpdated() {

@@ -16,6 +16,7 @@ import com.learningmachine.android.app.data.CertificateManager;
 import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.databinding.FragmentAddCertificateUrlBinding;
 import com.learningmachine.android.app.ui.LMFragment;
+import com.learningmachine.android.app.util.DialogUtils;
 import com.learningmachine.android.app.util.StringUtils;
 
 import javax.inject.Inject;
@@ -85,7 +86,7 @@ public class AddCertificateURLFragment extends LMFragment {
                     Intent intent = CertificateActivity.newIntent(getContext(), uuid);
                     startActivity(intent);
                     getActivity().finish();
-                }, throwable -> displayErrors(throwable, R.string.error_title_message));
+                }, throwable -> displayErrors(throwable, DialogUtils.ErrorCategory.CERTIFICATE, R.string.error_title_message));
     }
 
     private TextView.OnEditorActionListener mActionListener = (v, actionId, event) -> {

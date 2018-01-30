@@ -24,6 +24,7 @@ import com.learningmachine.android.app.data.CertificateManager;
 import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.databinding.FragmentAddCertificateFileBinding;
 import com.learningmachine.android.app.ui.LMFragment;
+import com.learningmachine.android.app.util.DialogUtils;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -112,7 +113,7 @@ public class AddCertificateFileFragment extends LMFragment {
                     Intent intent = CertificateActivity.newIntent(getContext(), uuid);
                     startActivity(intent);
                     getActivity().finish();
-                }, throwable -> displayErrors(throwable, R.string.error_title_message));
+                }, throwable -> displayErrors(throwable, DialogUtils.ErrorCategory.CERTIFICATE, R.string.error_title_message));
     }
 
     private void selectFile(File file) {

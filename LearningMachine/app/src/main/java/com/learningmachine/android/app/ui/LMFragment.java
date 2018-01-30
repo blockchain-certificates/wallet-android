@@ -135,9 +135,9 @@ public class LMFragment extends Fragment implements LifecycleProvider<FragmentEv
                 negativeButtonResId);
     }
 
-    protected void displayErrors(Throwable throwable, @StringRes int errorTitleResId) {
+    protected void displayErrors(Throwable throwable, DialogUtils.ErrorCategory errorCategory, @StringRes int errorTitleResId) {
         hideProgressDialog();
-        DialogUtils.showErrorAlertDialog(getContext(), getFragmentManager(), errorTitleResId, throwable);
+        DialogUtils.showErrorAlertDialog(getContext(), getFragmentManager(), errorTitleResId, throwable, errorCategory);
     }
 
     protected void displayProgressDialog(@StringRes int progressMessageResId) {

@@ -133,18 +133,18 @@ public class PastePassphraseFragment extends OnboardingFragment {
                                     getActivity().finish();
                                 }
                             });
-                        }, e -> displayErrorsLocal(e, R.string.error_title_message));
+                        }, e -> displayErrorsLocal(e, DialogUtils.ErrorCategory.GENERIC, R.string.error_title_message));
             }
         });
     }
 
 
-    protected void displayErrorsLocal(Throwable throwable, @StringRes int errorTitleResId) {
+    protected void displayErrorsLocal(Throwable throwable, DialogUtils.ErrorCategory errorCategory, @StringRes int errorTitleResId) {
         stopCountingTimer();
         mBinding.passphraseLabel.setText(R.string.onboarding_passphrase_load_2);
         mBinding.pastePassphraseEditText.setEnabled(true);
         mBinding.pastePassphraseEditText.setText("");
-        displayErrors(throwable, errorTitleResId);
+        displayErrors(throwable, errorCategory, errorTitleResId);
     }
 
 

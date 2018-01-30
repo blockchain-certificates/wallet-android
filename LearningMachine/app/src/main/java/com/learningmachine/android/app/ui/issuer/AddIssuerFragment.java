@@ -22,6 +22,7 @@ import com.learningmachine.android.app.data.webservice.request.IssuerIntroductio
 import com.learningmachine.android.app.databinding.FragmentAddIssuerBinding;
 import com.learningmachine.android.app.ui.LMFragment;
 import com.learningmachine.android.app.ui.WebAuthActivity;
+import com.learningmachine.android.app.util.DialogUtils;
 import com.learningmachine.android.app.util.StringUtils;
 
 import javax.inject.Inject;
@@ -112,13 +113,13 @@ public class AddIssuerFragment extends LMFragment {
                     } else {
                         performStandardIssuerIntroduction(request);
                     }
-                }, throwable -> displayErrors(throwable, R.string.error_title_message));
+                }, throwable -> displayErrors(throwable, DialogUtils.ErrorCategory.ISSUER, R.string.error_title_message));
     }
 
     private void performStandardIssuerIntroduction(IssuerIntroductionRequest request) {
         mIssuerManager.addIssuer(request)
                 .compose(bindToMainThread())
-                .subscribe(uuid -> viewIssuer(uuid), throwable -> displayErrors(throwable, R.string.error_title_message));
+                .subscribe(uuid -> viewIssuer(uuid), throwable -> displayErrors(throwable, DialogUtils.ErrorCategory.ISSUER, R.string.error_title_message));
     }
 
     private void performWebAuth(IssuerIntroductionRequest request) {
@@ -139,7 +140,7 @@ public class AddIssuerFragment extends LMFragment {
                     .doOnSubscribe(() -> displayProgressDialog(R.string.fragment_add_issuer_adding_issuer_progress_dialog_message))
                     .compose(bindToMainThread())
                     .map(issuer -> mIssuerManager.saveIssuer(issuer, bitcoinAddress))
-                    .subscribe(this::viewIssuer, throwable -> displayErrors(throwable, R.string.error_title_message));
+                    .subscribe(this::viewIssuer, throwable -> displayErrors(throwable, DialogUtils.ErrorCategory.ISSUER, R.string.error_title_message));
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
