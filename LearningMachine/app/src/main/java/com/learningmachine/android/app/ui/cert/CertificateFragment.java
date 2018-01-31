@@ -5,6 +5,7 @@ import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
@@ -253,6 +254,8 @@ public class CertificateFragment extends LMFragment implements VerficationCancel
     }
 
     private void showVerificationResultDialog(CertificateVerificationResult status) {
+        hideVerificationProgressDialog();
+        
         displayAlert(0,
                 status.getTitleResId(),
                 status.getMessageResId(),
@@ -328,13 +331,17 @@ public class CertificateFragment extends LMFragment implements VerficationCancel
                 .compose(bindToMainThread())
                 .subscribe(localHash -> {
                     Timber.d("Success!");
-                    hideVerificationProgressDialog();
                     showVerificationResultDialog(CertificateVerificationResult.VALID_CERT);
                 }, throwable -> {
-                    hideVerificationProgressDialog();
                     showVerificationResultDialog(CertificateVerificationResult.INVALID_CERT);
                     Timber.e(throwable, "Error!");
                     displayErrors(throwable, DialogUtils.ErrorCategory.ISSUER, R.string.error_title_message); // TODO: use correct error string
                 });
+    }
+
+    @Override
+    protected void displayErrors(Throwable throwable, DialogUtils.ErrorCategory errorCategory, @StringRes int errorTitleResId) {
+        hideVerificationProgressDialog();
+        super.displayErrors(throwable, errorCategory, errorTitleResId);
     }
 }
