@@ -46,7 +46,7 @@
 
     <!-- Home -->
     <string name="fragment_home_empty_title">You are ready!</string>
-    <string name="fragment_home_empty_description">Issuers will send you an email with a link to add them. This will send a special code that represents you. If you already have their information, continue.</string>
+    <string name="fragment_home_empty_description">Check email inbox for invitation email from your issuing institution to add your certificate.</string>
     <string name="fragment_home_empty_action">Add Issuer</string>
 
     <!-- Settings -->
