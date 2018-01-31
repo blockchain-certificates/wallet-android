@@ -3,6 +3,7 @@ package com.learningmachine.android.app.data;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -85,6 +86,18 @@ public class CertificateVerifier {
     }
 
     public Observable<TxRecord> verifyBitcoinTransactionRecord(BlockCert certificate) {
+        String receiverKey = certificate.getRecipientPublicKey();
+        String issuerKey = certificate.getVerificationPublicKey();
+
+        // testnet check: if either the receiver or the issuer originated
+        // from testnet then we will not validate using the normal method
+        if(receiverKey != null && issuerKey != null) {
+            if(receiverKey.startsWith("m") || receiverKey.startsWith("n") || issuerKey.startsWith("m") || issuerKey.startsWith("n")) {
+                Timber.e("This is a testnet certificate and cannot be verified");
+                return Observable.error(new ExceptionWithResourceString(R.string.error_testnet_certificate_json));
+            }
+        }
+
         mUpdates.onNext(CertificateVerificationStatus.CHECKING_MERKLE);
         String sourceId = certificate.getSourceId();
         return mBlockchainService.getBlockchain(sourceId)

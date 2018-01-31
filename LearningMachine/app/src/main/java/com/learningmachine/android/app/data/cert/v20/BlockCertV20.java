@@ -99,6 +99,19 @@ public class BlockCertV20 extends CertSchemaV20 implements BlockCert {
     }
 
     @Override
+    public String getVerificationPublicKey() {
+        if( getVerification() == null || getVerification().getPublicKey() == null) {
+            return null;
+        }
+
+        String keyString = getVerification().getPublicKey().toString();
+        if (keyString.startsWith(LMConstants.ECDSA_KOBLITZ_PUBKEY_PREFIX)) {
+            keyString = keyString.substring(LMConstants.ECDSA_KOBLITZ_PUBKEY_PREFIX.length());
+        }
+        return keyString;
+    }
+
+    @Override
     public String getSourceId() {
         if (getSignature() == null
                 || ListUtils.isEmpty(getSignature().getAnchors())) {

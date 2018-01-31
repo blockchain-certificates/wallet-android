@@ -12,6 +12,7 @@ public interface BlockCert {
     String getIssueDate();
     String getUrl();
     String getRecipientPublicKey();
+    String getVerificationPublicKey();
     String getSourceId();
     String getMerkleRoot();
     String getMetadata();

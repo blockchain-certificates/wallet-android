@@ -1,5 +1,7 @@
 package com.learningmachine.android.app.ui.cert;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
@@ -27,6 +29,7 @@ import com.learningmachine.android.app.data.CertificateVerifier.CertificateVerif
 import com.learningmachine.android.app.data.CertificateVerifier.CertificateVerificationStatus;
 import com.learningmachine.android.app.data.IssuerManager;
 import com.learningmachine.android.app.data.cert.BlockCert;
+import com.learningmachine.android.app.data.error.ExceptionWithResourceString;
 import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.data.model.CertificateRecord;
 import com.learningmachine.android.app.data.model.IssuerRecord;
@@ -255,10 +258,18 @@ public class CertificateFragment extends LMFragment implements VerficationCancel
 
     private void showVerificationResultDialog(CertificateVerificationResult status) {
         hideVerificationProgressDialog();
-        
         displayAlert(0,
                 status.getTitleResId(),
                 status.getMessageResId(),
+                R.string.dialog_verify_cert_result_positive_button_title,
+                0);
+    }
+
+    private void showVerificationFailureDialog(int errorId) {
+        hideVerificationProgressDialog();
+        displayAlert(0,
+                R.string.cert_verification_failure_title,
+                errorId,
                 R.string.dialog_verify_cert_result_positive_button_title,
                 0);
     }
@@ -289,7 +300,9 @@ public class CertificateFragment extends LMFragment implements VerficationCancel
                     verifyBitcoinTransactionRecord(certificate);
                 }, throwable -> {
                     Timber.e(throwable, "Error!");
-                    displayErrors(throwable, DialogUtils.ErrorCategory.CERTIFICATE, R.string.error_title_message); // TODO: use correct error string
+
+                    ExceptionWithResourceString throwableRS = (ExceptionWithResourceString)throwable;
+                    showVerificationFailureDialog(throwableRS.getErrorMessageResId());
                 });
     }
 
@@ -305,7 +318,9 @@ public class CertificateFragment extends LMFragment implements VerficationCancel
                     verifyIssuer(certificate, txRecord);
                 }, throwable -> {
                     Timber.e(throwable, "Error! Merkle roots do not match");
-                    displayErrors(throwable, DialogUtils.ErrorCategory.ISSUER, R.string.error_title_message); // TODO: use correct error string
+
+                    ExceptionWithResourceString throwableRS = (ExceptionWithResourceString)throwable;
+                    showVerificationFailureDialog(throwableRS.getErrorMessageResId());
                 });
     }
 
@@ -318,7 +333,9 @@ public class CertificateFragment extends LMFragment implements VerficationCancel
                 .compose(bindToMainThread())
                 .subscribe(issuerResponse -> verifyJsonLd(certificate, txRecord), throwable -> {
                     Timber.e(throwable, "Error! Couldn't verify issuer");
-                    displayErrors(throwable, DialogUtils.ErrorCategory.ISSUER, R.string.error_title_message); // TODO: use correct error string
+
+                    ExceptionWithResourceString throwableRS = (ExceptionWithResourceString)throwable;
+                    showVerificationFailureDialog(throwableRS.getErrorMessageResId());
                 });
     }
 
@@ -335,7 +352,9 @@ public class CertificateFragment extends LMFragment implements VerficationCancel
                 }, throwable -> {
                     showVerificationResultDialog(CertificateVerificationResult.INVALID_CERT);
                     Timber.e(throwable, "Error!");
-                    displayErrors(throwable, DialogUtils.ErrorCategory.ISSUER, R.string.error_title_message); // TODO: use correct error string
+
+                    ExceptionWithResourceString throwableRS = (ExceptionWithResourceString)throwable;
+                    showVerificationFailureDialog(throwableRS.getErrorMessageResId());
                 });
     }
 

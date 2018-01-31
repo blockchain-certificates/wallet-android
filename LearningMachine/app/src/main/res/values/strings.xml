@@ -155,6 +155,7 @@
     <string name="cert_verification_step_checking_cert_status">Checking if the certificate has been revoked…</string>
     <string name="cert_verification_step_valid_cert">Valid certificate</string>
     <string name="cert_verification_step_invalid_cert">Not a valid certificate</string>
+    <string name="error_testnet_certificate_json">The certificate is NOT a real certificate, it is a testnet certificate</string>
     <string name="error_invalid_certificate_json">The certificate file is invalid</string>
     <string name="error_cannot_load_certificate_json">Could not load the certificate file</string>
     <string name="error_remote_and_local_hash_mismatch">Local hash doesn\'t match remote hash</string>

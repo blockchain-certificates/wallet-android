@@ -50,6 +50,11 @@ public class BlockCertV11 extends CertificateSchemaV11 implements BlockCert {
     }
 
     @Override
+    public String getVerificationPublicKey() {
+        return null;
+    }
+
+    @Override
     public String getSourceId() {
         return null;
     }

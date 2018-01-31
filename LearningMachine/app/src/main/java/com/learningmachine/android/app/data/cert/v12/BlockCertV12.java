@@ -111,6 +111,11 @@ public class BlockCertV12 extends BlockchainCertificate implements BlockCert {
     }
 
     @Override
+    public String getVerificationPublicKey() {
+        return null;
+    }
+
+    @Override
     public String getSourceId() {
         if (getReceipt() == null
                 || ListUtils.isEmpty(getReceipt().getAnchors())) {
