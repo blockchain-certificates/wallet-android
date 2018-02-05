@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="colorA">#062451</color>
+    <color name="colorB">#2AB27B</color>
+
+    <!-- vvv OLD vvv -->
     <color name="colorPrimary">@color/white</color>
     <color name="colorPrimaryDark">@color/transparent_gray</color>
     <color name="colorAccent">@color/black</color>

@@ -13,7 +13,7 @@
             android:layout_gravity="top|center_horizontal"
             android:layout_marginTop="@dimen/onboarding_logo_margin_top"
             android:contentDescription="@null"
-            android:src="@drawable/ic_splash"/>
+            android:src="@drawable/ic_splash_dark"/>
 
         <TextView
             android:id="@+id/passphrase_label"

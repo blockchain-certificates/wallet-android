@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <item android:drawable="@color/off_white_background"/>
-
-    <item
-        android:gravity="top|center"
-        android:top="@dimen/splash_logo_margin_top">
-
-        <bitmap
-            android:gravity="center_horizontal|top"
-            android:src="@drawable/ic_splash"
-            android:tileMode="disabled"/>
-
+    <item android:drawable="@color/colorA"/>
+    <item android:width="321dp"
+          android:height="45dp"
+          android:drawable="@drawable/ic_splash_white"
+          android:gravity="center">
     </item>
-
 </layer-list>

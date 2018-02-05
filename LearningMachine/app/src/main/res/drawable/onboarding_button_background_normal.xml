@@ -6,4 +6,6 @@
         android:width="@dimen/onboarding_button_border_width"
         android:color="@color/black"/>
 
+    <corners android:radius="8dp" />
+
 </shape>
