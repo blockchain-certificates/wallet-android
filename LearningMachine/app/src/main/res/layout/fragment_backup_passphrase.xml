@@ -9,18 +9,28 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <View
+            android:id="@+id/spreader1"
+            android:layout_width="65dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginStart="32dp"
+            app:layout_constraintBottom_toTopOf="@+id/imageView2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="105dp"
             android:layout_height="105dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginStart="32dp"
             android:src="@drawable/ic_backup_passphrase"
+            app:layout_constraintBottom_toTopOf="@+id/onboarding_backup_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/spreader1" />
 
 
         <TextView
@@ -30,8 +40,10 @@
             android:layout_height="38dp"
             android:layout_marginEnd="32dp"
             android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
             android:gravity="center"
             android:text="@string/onboarding_backup_methods"
+            app:layout_constraintBottom_toTopOf="@+id/onboarding_backup_description"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView2" />
@@ -41,11 +53,12 @@
             style="@style/Text.Body"
             android:layout_width="0dp"
             android:layout_height="64dp"
+            android:layout_marginBottom="16dp"
             android:layout_marginEnd="32dp"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
             android:gravity="center"
             android:text="@string/onboarding_backup_description"
+            app:layout_constraintBottom_toTopOf="@+id/onboarding_write_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/onboarding_backup_title" />
@@ -55,29 +68,26 @@
             style="@style/RoundedButton.Light"
             android:layout_width="0dp"
             android:layout_height="52dp"
+            android:layout_marginBottom="8dp"
             android:layout_marginEnd="32dp"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
             android:text="@string/onboarding_backup_write_button"
             app:layout_constraintBottom_toTopOf="@+id/onboarding_save_button"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/onboarding_backup_description"
-            app:layout_constraintVertical_chainStyle="packed" />
+            app:layout_constraintTop_toBottomOf="@+id/onboarding_backup_description" />
 
         <Button
             android:id="@+id/onboarding_save_button"
             style="@style/RoundedButton.Light"
             android:layout_width="0dp"
             android:layout_height="52dp"
+            android:layout_marginBottom="8dp"
             android:layout_marginEnd="32dp"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
             android:text="@string/onboarding_backup_save_button"
             app:layout_constraintBottom_toTopOf="@+id/onboarding_email_button"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/onboarding_write_button" />
 
@@ -87,15 +97,26 @@
             style="@style/RoundedButton.Light"
             android:layout_width="0dp"
             android:layout_height="52dp"
+            android:layout_marginBottom="8dp"
             android:layout_marginEnd="32dp"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
             android:text="@string/onboarding_backup_email_button"
-            app:layout_constraintBottom_toTopOf="@+id/onboarding_done_button"
+            app:layout_constraintBottom_toTopOf="@+id/spreader3"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/onboarding_save_button" />
+
+
+        <View
+            android:id="@+id/spreader3"
+            android:layout_width="65dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginStart="32dp"
+            app:layout_constraintBottom_toTopOf="@+id/onboarding_done_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/onboarding_email_button" />
 
 
         <Button
@@ -109,74 +130,11 @@
             android:text="@string/onboarding_backup_done_button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spreader3" />
 
 
     </android.support.constraint.ConstraintLayout>
 
-    <!--
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <Button
-            android:id="@+id/onboarding_save_button"
-            android:layout_width="@dimen/onboarding_button_width"
-            android:layout_height="@dimen/onboarding_button_height"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/onboarding_view_passphrase_button_margin_top"
-            android:paddingBottom="@dimen/onboarding_button_padding_vertical"
-            android:paddingEnd="@dimen/onboarding_button_padding_horizontal"
-            android:paddingStart="@dimen/onboarding_button_padding_horizontal"
-            android:paddingTop="@dimen/onboarding_button_padding_vertical"
-            android:text="@string/onboarding_passphrase_save_button"
-            style="@style/RoundedButton.Light"/>
-
-        <Button
-            android:id="@+id/onboarding_email_button"
-            android:layout_width="@dimen/onboarding_button_width"
-            android:layout_height="@dimen/onboarding_button_height"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/onboarding_view_passphrase_button_margin_top"
-            android:paddingBottom="@dimen/onboarding_button_padding_vertical"
-            android:paddingEnd="@dimen/onboarding_button_padding_horizontal"
-            android:paddingStart="@dimen/onboarding_button_padding_horizontal"
-            android:paddingTop="@dimen/onboarding_button_padding_vertical"
-            android:text="@string/onboarding_passphrase_email_button"
-            style="@style/RoundedButton.Light"/>
-
-        <Button
-            android:id="@+id/onboarding_write_button"
-            android:layout_width="@dimen/onboarding_button_width"
-            android:layout_height="@dimen/onboarding_button_height"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/onboarding_view_passphrase_button_margin_top"
-            android:paddingBottom="@dimen/onboarding_button_padding_vertical"
-            android:paddingEnd="@dimen/onboarding_button_padding_horizontal"
-            android:paddingStart="@dimen/onboarding_button_padding_horizontal"
-            android:paddingTop="@dimen/onboarding_button_padding_vertical"
-            android:text="@string/onboarding_passphrase_write_button"
-            style="@style/RoundedButton.Light"/>
-
-
-        <TextView
-            android:id="@+id/onboarding_done_button"
-            android:clickable="true"
-            android:layout_width="@dimen/onboarding_button_width"
-            android:layout_height="@dimen/onboarding_button_height"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/onboarding_view_passphrase_button_margin_top"
-            android:gravity="center"
-            android:paddingBottom="@dimen/onboarding_button_padding_vertical"
-            android:paddingEnd="@dimen/onboarding_button_padding_horizontal"
-            android:paddingStart="@dimen/onboarding_button_padding_horizontal"
-            android:paddingTop="@dimen/onboarding_button_padding_vertical"
-            android:text="@string/onboarding_passphrase_done_button"
-            style="@style/Material.Bold.TextButton"/>
-
-
-    </LinearLayout>
-    -->
 
 </layout>

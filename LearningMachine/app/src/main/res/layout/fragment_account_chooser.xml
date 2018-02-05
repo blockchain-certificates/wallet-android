@@ -30,7 +30,7 @@
             style="@style/RoundedButton.Dark"
             android:layout_width="0dp"
             android:layout_height="52dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="16dp"
             android:layout_marginEnd="32dp"
             android:layout_marginStart="32dp"
             android:text="@string/onboarding_new_user"
