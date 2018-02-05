@@ -77,6 +77,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/onboarding_backup_description" />
 
+        <ImageView
+            android:id="@+id/onboarding_write_checkmark"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_checkmark"
+            app:layout_constraintBottom_toBottomOf="@+id/onboarding_write_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.85"
+            app:layout_constraintRight_toRightOf="@+id/onboarding_write_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/onboarding_write_button" />
+
+
         <Button
             android:id="@+id/onboarding_save_button"
             style="@style/RoundedButton.Light"
@@ -90,6 +103,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/onboarding_write_button" />
+
+        <ImageView
+            android:id="@+id/onboarding_save_checkmark"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_checkmark"
+            app:layout_constraintBottom_toBottomOf="@+id/onboarding_save_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.85"
+            app:layout_constraintRight_toRightOf="@+id/onboarding_save_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/onboarding_save_button" />
 
 
         <Button
@@ -105,6 +130,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/onboarding_save_button" />
+
+        <ImageView
+            android:id="@+id/onboarding_email_checkmark"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_checkmark"
+            app:layout_constraintBottom_toBottomOf="@+id/onboarding_email_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.85"
+            app:layout_constraintRight_toRightOf="@+id/onboarding_email_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/onboarding_email_button" />
 
 
         <View

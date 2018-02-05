@@ -96,6 +96,8 @@ public class ViewPassphraseFragment extends OnboardingFragment {
         mBinding.onboardingDoneButton.setAlpha(0.3f);
         mBinding.onboardingDoneButton.setEnabled(false);
 
+        mBinding.onboardingPassphraseTitle.setVisibility(View.INVISIBLE);
+        mBinding.onboardingPassphraseContent.setVisibility(View.INVISIBLE);
 
         return mBinding.getRoot();
     }
@@ -116,6 +118,11 @@ public class ViewPassphraseFragment extends OnboardingFragment {
                         @Override
                         public void run() {
                             stopCountingTimer();
+
+
+                            mBinding.onboardingPassphraseTitle.setVisibility(View.VISIBLE);
+                            mBinding.onboardingPassphraseContent.setVisibility(View.VISIBLE);
+
                             mBinding.onboardingStatusText.setText(R.string.onboarding_passphrase_status_1);
                             mBinding.onboardingPassphraseContent.setText(passphrase);
 

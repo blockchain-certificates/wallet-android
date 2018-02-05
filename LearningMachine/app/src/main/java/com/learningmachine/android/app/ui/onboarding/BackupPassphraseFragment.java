@@ -45,6 +45,8 @@ public class BackupPassphraseFragment extends OnboardingFragment {
     private FragmentBackupPassphraseBinding mBinding;
     private String mPassphrase;
 
+    private int numberOfBackupOptionsUsed = 0;
+
     public static BackupPassphraseFragment newInstance() {
         return new BackupPassphraseFragment();
     }
@@ -67,6 +69,10 @@ public class BackupPassphraseFragment extends OnboardingFragment {
 
         mBinding.onboardingDoneButton.setAlpha(0.3f);
         mBinding.onboardingDoneButton.setEnabled(false);
+
+        mBinding.onboardingSaveCheckmark.setVisibility(View.INVISIBLE);
+        mBinding.onboardingEmailCheckmark.setVisibility(View.INVISIBLE);
+        mBinding.onboardingWriteCheckmark.setVisibility(View.INVISIBLE);
 
         return mBinding.getRoot();
     }
@@ -116,8 +122,8 @@ public class BackupPassphraseFragment extends OnboardingFragment {
                 R.string.onboarding_passphrase_ok,
                 R.string.onboarding_passphrase_cancel);
 
-        mBinding.onboardingDoneButton.setAlpha(1.0f);
-        mBinding.onboardingDoneButton.setEnabled(true);
+        mBinding.onboardingSaveCheckmark.setVisibility(View.VISIBLE);
+        confirmBackupOptionCompleted();
     }
 
     private void onEmail() {
@@ -137,8 +143,8 @@ public class BackupPassphraseFragment extends OnboardingFragment {
                         Intent mailer = Intent.createChooser(intent, null);
                         startActivity(mailer);
 
-                        mBinding.onboardingDoneButton.setAlpha(1.0f);
-                        mBinding.onboardingDoneButton.setEnabled(true);
+                        mBinding.onboardingEmailCheckmark.setVisibility(View.VISIBLE);
+                        confirmBackupOptionCompleted();
                     }
                 });
         alertDialog.show();
@@ -154,8 +160,8 @@ public class BackupPassphraseFragment extends OnboardingFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
 
-                        mBinding.onboardingDoneButton.setAlpha(1.0f);
-                        mBinding.onboardingDoneButton.setEnabled(true);
+                        mBinding.onboardingWriteCheckmark.setVisibility(View.VISIBLE);
+                        confirmBackupOptionCompleted();
 
                         displayAlert(0,
                                 R.string.onboarding_passphrase_complete_title,
@@ -165,5 +171,14 @@ public class BackupPassphraseFragment extends OnboardingFragment {
                     }
                 });
         alertDialog.show();
+    }
+
+    private void confirmBackupOptionCompleted() {
+        numberOfBackupOptionsUsed++;
+
+        if (numberOfBackupOptionsUsed >= 2){
+            mBinding.onboardingDoneButton.setAlpha(1.0f);
+            mBinding.onboardingDoneButton.setEnabled(true);
+        }
     }
 }
