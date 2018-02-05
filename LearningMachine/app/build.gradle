@@ -193,4 +193,5 @@ dependencies {
     testImplementation "org.robolectric:robolectric:$ROBOLECTRIC_VERSION"
     testImplementation "org.robolectric:shadows-multidex:$ROBOLECTRIC_VERSION"
     testImplementation "joda-time:joda-time:$JODATIME_VERSION"
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
 }

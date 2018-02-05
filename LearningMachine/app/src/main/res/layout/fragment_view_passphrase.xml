@@ -53,7 +53,7 @@
             android:paddingStart="@dimen/onboarding_button_padding_horizontal"
             android:paddingTop="@dimen/onboarding_button_padding_vertical"
             android:text="@string/onboarding_passphrase_save_button"
-            style="@style/OnboardingButton.Light"/>
+            style="@style/RoundedButton.Light"/>
 
         <Button
             android:id="@+id/onboarding_email_button"
@@ -66,7 +66,7 @@
             android:paddingStart="@dimen/onboarding_button_padding_horizontal"
             android:paddingTop="@dimen/onboarding_button_padding_vertical"
             android:text="@string/onboarding_passphrase_email_button"
-            style="@style/OnboardingButton.Light"/>
+            style="@style/RoundedButton.Light"/>
 
         <Button
             android:id="@+id/onboarding_write_button"
@@ -79,7 +79,7 @@
             android:paddingStart="@dimen/onboarding_button_padding_horizontal"
             android:paddingTop="@dimen/onboarding_button_padding_vertical"
             android:text="@string/onboarding_passphrase_write_button"
-            style="@style/OnboardingButton.Light"/>
+            style="@style/RoundedButton.Light"/>
 
 
         <TextView

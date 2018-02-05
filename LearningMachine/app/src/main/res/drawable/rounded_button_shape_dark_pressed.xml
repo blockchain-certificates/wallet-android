@@ -2,10 +2,9 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
        android:shape="rectangle">
 
-    <stroke
-        android:width="@dimen/onboarding_button_border_width"
-        android:color="@color/black"/>
-
     <corners android:radius="8dp" />
+
+    <solid
+        android:color="@color/primaryButtonPressed"/>
 
 </shape>

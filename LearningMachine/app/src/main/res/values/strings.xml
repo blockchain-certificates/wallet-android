@@ -4,6 +4,14 @@
     <string name="home_settings_menu_item_title">Settings</string>
 
     <!-- Onboarding -->
+
+    <string name="onboarding_welcome">Welcome message goes here</string>
+    <string name="onboarding_new_user">New User</string>
+    <string name="onboarding_returning_user">I\'m already a user</string>
+
+    <!-- vvv OLD vvv -->
+
+
     <string name="onboarding_no_account">Account Does Not Exist</string>
 
     <string name="onboarding_new_account">New Account</string>

@@ -44,7 +44,7 @@
             android:paddingStart="@dimen/onboarding_button_padding_horizontal"
             android:paddingTop="@dimen/onboarding_button_padding_vertical"
             android:text="@string/onboarding_generate_password_button"
-            style="@style/OnboardingButton.Light"/>
+            style="@style/RoundedButton.Light"/>
 
     </LinearLayout>
 

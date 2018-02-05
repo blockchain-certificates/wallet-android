@@ -1,5 +1,10 @@
 <resources>
 
+    <dimen name="rounded_button_stroke_width">2dp</dimen>
+
+    <!-- vvv OLD vvv -->
+
+
     <!-- Default screen margins, per the Android Design guidelines. -->
 
     <dimen name="activity_horizontal_margin">16dp</dimen>

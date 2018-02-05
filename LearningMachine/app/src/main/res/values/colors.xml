@@ -2,7 +2,12 @@
 <resources>
 
     <color name="colorA">#062451</color>
-    <color name="colorB">#2AB27B</color>
+
+    <color name="primaryButtonNormal">#2AB27B</color>
+    <color name="primaryButtonPressed">#1d7a54</color>
+
+    <color name="secondaryButtonNormal">#ffffff</color>
+    <color name="secondaryButtonPressed">#cccccc</color>
 
     <!-- vvv OLD vvv -->
     <color name="colorPrimary">@color/white</color>
