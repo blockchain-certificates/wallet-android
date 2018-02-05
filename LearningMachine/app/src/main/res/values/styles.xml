@@ -1,12 +1,31 @@
 <resources>
 
-    <style name="Text.Title" parent="LearningMachineTextView.Medium">
+    <style name="Text" >
         <item name="android:fontFamily">@font/lato_regular</item>
+    </style>
+
+    <style name="Text.Title" >
         <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/textGrey</item>
-        <!--
-        <item name="android:lineSpacingExtra">@dimen/material_title_line_spacing_extra</item>
-        -->
+        <item name="android:textColor">#062451</item>
+    </style>
+
+    <style name="Text.Title.1">
+        <item name="android:textSize">22sp</item>
+    </style>
+
+    <style name="Text.Title.2">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="Text.Body">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#333333</item>
+    </style>
+
+    <style name="Text.Passphrase">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#185fa8</item>
+        <item name="android:background">@drawable/rounded_passphrase_background</item>
     </style>
 
     <style name="RoundedButton" parent="@style/Widget.AppCompat.Button">

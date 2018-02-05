@@ -8,7 +8,4 @@
 
     <corners android:radius="8dp" />
 
-    <solid
-        android:color="@color/secondaryButtonPressed"/>
-
 </shape>

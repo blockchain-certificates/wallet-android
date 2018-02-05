@@ -66,6 +66,10 @@ public class OnboardingActivity extends LMActivity implements AccountChooserFrag
         super.onBackPressed();
     }
 
+    public void onBackupPassphrase() {
+        navigateForward();
+    }
+
     @Override
     public void onNewAccount() {
         replaceScreens(FlowType.NEW_ACCOUNT);

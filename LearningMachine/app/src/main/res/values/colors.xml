@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="colorA">#062451</color>
+    <color name="colorBackground">#062451</color>
 
     <color name="primaryButtonNormal">#2AB27B</color>
     <color name="primaryButtonPressed">#1d7a54</color>
@@ -9,7 +9,8 @@
     <color name="secondaryButtonNormal">#ffffff</color>
     <color name="secondaryButtonPressed">#cccccc</color>
 
-    <color name="textGrey">#505050</color>
+    <color name="passphraseBodyBackground">#ebeff7</color>
+
 
 
     <!-- vvv OLD vvv -->

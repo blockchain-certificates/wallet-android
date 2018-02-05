@@ -7,7 +7,25 @@
 
     <string name="onboarding_welcome">Welcome message goes here</string>
     <string name="onboarding_new_user">New User</string>
-    <string name="onboarding_returning_user">I\'m already a user</string>
+    <string name="onboarding_returning_user">Current User</string>
+
+
+    <string name="onboarding_passphrase_status_0">Generating your new passphrase...</string>
+    <string name="onboarding_passphrase_status_1">Passphrase Generated!</string>
+
+    <string name="onboarding_passphrase_description">This is the passphrase to your wallet. You must have a backup in case you reinstall or switch devices.</string>
+    <string name="onboarding_passphrase">Passphrase</string>
+    <string name="onboarding_passphrase_create_backup">Create a Backup</string>
+
+
+    <string name="onboarding_backup_methods">Select Backup Methods</string>
+    <string name="onboarding_backup_description">Please select at least two options from the choices below.</string>
+    <string name="onboarding_backup_write_button">Manual Hardcopy</string>
+    <string name="onboarding_backup_save_button">Save to Device</string>
+    <string name="onboarding_backup_email_button">Copy to E-Mail or Clipboard</string>
+    <string name="onboarding_backup_done_button">Done</string>
+
+
 
     <!-- vvv OLD vvv -->
 
@@ -19,9 +37,6 @@
     <string name="onboarding_generate_password_title">New Account</string>
     <string name="onboarding_generate_password_description">If you ever lose your phone, you will need this passphrase to recover your records.</string>
     <string name="onboarding_generate_password_button">Generate Passphrase</string>
-    <string name="onboarding_passphrase_save_button">Save To Disk</string>
-    <string name="onboarding_passphrase_email_button">Email Yourself</string>
-    <string name="onboarding_passphrase_write_button">Write It Down</string>
     <string name="onboarding_passphrase_done_button">All Done!</string>
 
     <string name="onboarding_passphrase_write_title">Write this down!</string>
@@ -39,9 +54,6 @@
     <string name="onboarding_passphrase_cancel">Cancel</string>
     <string name="onboarding_passphrase_ok">OK</string>
 
-
-    <string name="onboarding_passphrase_status_0">Generating your new passphrase...</string>
-    <string name="onboarding_passphrase_status_1">Your passphrase has been generated.\nChoose one of the options below to save your passphrase!</string>
 
     <string name="onboarding_paste_passphrase_title">Paste your passphrase</string>
     <string name="onboarding_paste_passphrase_hint">Paste your passphrase</string>

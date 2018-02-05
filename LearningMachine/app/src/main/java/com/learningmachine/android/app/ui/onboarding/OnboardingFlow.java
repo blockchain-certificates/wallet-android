@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static com.learningmachine.android.app.ui.onboarding.OnboardingScreen.ACCOUNT_CHOOSER;
-import static com.learningmachine.android.app.ui.onboarding.OnboardingScreen.GENERATE_PASSPHRASE;
+import static com.learningmachine.android.app.ui.onboarding.OnboardingScreen.BACKUP_PASSPHRASE;
 import static com.learningmachine.android.app.ui.onboarding.OnboardingScreen.VIEW_PASSPHRASE;
 import static com.learningmachine.android.app.ui.onboarding.OnboardingScreen.PASTE_PASSPHRASE;
 
@@ -16,7 +16,7 @@ public class OnboardingFlow implements Serializable {
 
     public enum FlowType {
         UNKNOWN(Arrays.asList(ACCOUNT_CHOOSER)),
-        NEW_ACCOUNT(Arrays.asList(ACCOUNT_CHOOSER, VIEW_PASSPHRASE)),
+        NEW_ACCOUNT(Arrays.asList(ACCOUNT_CHOOSER, VIEW_PASSPHRASE, BACKUP_PASSPHRASE)),
         EXISTING_ACCOUNT(Arrays.asList(ACCOUNT_CHOOSER, PASTE_PASSPHRASE));
 
         private List<OnboardingScreen> mScreens;

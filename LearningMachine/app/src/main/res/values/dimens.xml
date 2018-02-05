@@ -1,6 +1,6 @@
 <resources>
 
-    <dimen name="rounded_button_stroke_width">2dp</dimen>
+    <dimen name="rounded_button_stroke_width">1dp</dimen>
 
     <!-- vvv OLD vvv -->
 
