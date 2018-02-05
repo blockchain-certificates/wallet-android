@@ -25,7 +25,7 @@
 
         <TextView
             android:id="@+id/textView"
-            style="@style/Material.Title.Light"
+            style="@style/Text.Title"
             android:layout_width="539dp"
             android:layout_height="56dp"
             android:layout_gravity="center_horizontal"

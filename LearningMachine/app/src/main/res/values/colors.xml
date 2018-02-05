@@ -9,6 +9,9 @@
     <color name="secondaryButtonNormal">#ffffff</color>
     <color name="secondaryButtonPressed">#cccccc</color>
 
+    <color name="textGrey">#505050</color>
+
+
     <!-- vvv OLD vvv -->
     <color name="colorPrimary">@color/white</color>
     <color name="colorPrimaryDark">@color/transparent_gray</color>

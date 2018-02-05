@@ -1,5 +1,35 @@
 <resources>
 
+    <style name="Text.Title" parent="LearningMachineTextView.Medium">
+        <item name="android:fontFamily">@font/lato_regular</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/textGrey</item>
+        <!--
+        <item name="android:lineSpacingExtra">@dimen/material_title_line_spacing_extra</item>
+        -->
+    </style>
+
+    <style name="RoundedButton" parent="@style/Widget.AppCompat.Button">
+        <item name="android:background">@drawable/rounded_button_background_light</item>
+        <item name="android:fontFamily">@font/lato_regular</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="RoundedButton.Light">
+        <item name="android:background">@drawable/rounded_button_background_light</item>
+        <item name="android:textColor">@color/primaryButtonNormal</item>
+    </style>
+
+    <style name="RoundedButton.Dark">
+        <item name="android:background">@drawable/rounded_button_background_dark</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+
+    <!-- vvv OLD vvv -->
+
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light">
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -140,22 +170,6 @@
         <item name="android:textSize">@dimen/material_light_body1_text_size</item>
         <item name="android:textColor">?colorAccent</item>
         <item name="android:paddingBottom">@dimen/issuer_info_textview_padding_bottom</item>
-    </style>
-
-    <style name="RoundedButton" parent="@style/Widget.AppCompat.Button">
-        <item name="android:background">@drawable/rounded_button_background_light</item>
-        <item name="android:fontFamily">@font/lato_regular</item>
-        <item name="android:stateListAnimator">@null</item>
-    </style>
-
-    <style name="RoundedButton.Light">
-        <item name="android:background">@drawable/rounded_button_background_light</item>
-        <item name="android:textColor">@color/primaryButtonNormal</item>
-    </style>
-
-    <style name="RoundedButton.Dark">
-        <item name="android:background">@drawable/rounded_button_background_dark</item>
-        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="Material.Light.Body1.OnboardingPassphraseField">
