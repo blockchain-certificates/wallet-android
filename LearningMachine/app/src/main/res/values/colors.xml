@@ -2,6 +2,7 @@
 <resources>
 
     <color name="colorBackground">#062451</color>
+    <color name="colorBackgroundDark">#031126</color>
 
     <color name="primaryButtonNormal">#2AB27B</color>
     <color name="primaryButtonPressed">#1d7a54</color>
