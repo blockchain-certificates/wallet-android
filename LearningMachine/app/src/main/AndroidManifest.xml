@@ -46,6 +46,7 @@
         <activity
             android:name=".ui.onboarding.OnboardingActivity"
             android:theme="@style/NoToolbarTheme.Onboarding"
+            android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait"
             android:launchMode="singleTask"/>
 

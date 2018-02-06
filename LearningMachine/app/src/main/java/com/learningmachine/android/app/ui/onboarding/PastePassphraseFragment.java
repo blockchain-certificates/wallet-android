@@ -52,7 +52,7 @@ public class PastePassphraseFragment extends OnboardingFragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        mBinding.passphraseLabel.setText(getResources().getString(R.string.onboarding_passphrase_load_1) + " " + countingSeconds + "s");
+                        mBinding.passphraseLabel.setText(getResources().getString(R.string.onboarding_paste_passphrase_load_1) + " " + countingSeconds + "s");
                         countingSeconds++;
                     }
                 });
@@ -84,11 +84,12 @@ public class PastePassphraseFragment extends OnboardingFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_paste_passphrase, container, false);
 
+        mBinding.passphraseLabel.setText(R.string.onboarding_paste_passphrase_load_0);
+
         ((OnboardingActivity)getActivity()).askToGetPassphraseFromDevice(this);
 
-        mBinding.passphraseLabel.setText(R.string.onboarding_passphrase_load_0);
-
         mBinding.pastePassphraseEditText.addTextChangedListener(new PastePassphraseTextWatcher());
+        mBinding.doneButton.setAlpha(0.3f);
         mBinding.doneButton.setEnabled(false);
         mBinding.doneButton.setOnClickListener(view -> onDone());
 
@@ -101,7 +102,7 @@ public class PastePassphraseFragment extends OnboardingFragment {
             mBinding.pastePassphraseEditText.setText(passphrase);
             onDone();
         } else {
-            mBinding.passphraseLabel.setText(R.string.onboarding_passphrase_load_2);
+            mBinding.passphraseLabel.setText(R.string.onboarding_paste_passphrase_load_2);
             mBinding.passphraseLabel.requestFocus();
         }
     }
@@ -114,6 +115,7 @@ public class PastePassphraseFragment extends OnboardingFragment {
 
         startCountingTimer();
 
+        mBinding.doneButton.setAlpha(0.3f);
         mBinding.doneButton.setEnabled(false);
         mBinding.pastePassphraseEditText.setEnabled(false);
 
@@ -145,7 +147,7 @@ public class PastePassphraseFragment extends OnboardingFragment {
 
     protected void displayErrorsLocal(Throwable throwable, DialogUtils.ErrorCategory errorCategory, @StringRes int errorTitleResId) {
         stopCountingTimer();
-        mBinding.passphraseLabel.setText(R.string.onboarding_passphrase_load_2);
+        mBinding.passphraseLabel.setText(R.string.onboarding_paste_passphrase_load_2);
         mBinding.pastePassphraseEditText.setEnabled(true);
         mBinding.pastePassphraseEditText.setText("");
         displayErrors(throwable, errorCategory, errorTitleResId);
@@ -154,10 +156,12 @@ public class PastePassphraseFragment extends OnboardingFragment {
 
     private class PastePassphraseTextWatcher implements TextWatcher {
         @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
 
         @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        }
 
         @Override
         public void afterTextChanged(Editable s) {
@@ -165,6 +169,11 @@ public class PastePassphraseFragment extends OnboardingFragment {
                     .toString();
             boolean emptyPassphrase = StringUtils.isEmpty(passphrase);
             mBinding.doneButton.setEnabled(!emptyPassphrase);
+            if (mBinding.doneButton.isEnabled()) {
+                mBinding.doneButton.setAlpha(1.0f);
+            } else {
+                mBinding.doneButton.setAlpha(0.3f);
+            }
         }
     }
 }
