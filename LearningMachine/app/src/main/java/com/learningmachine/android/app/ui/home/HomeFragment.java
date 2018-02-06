@@ -7,8 +7,10 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -92,26 +94,14 @@ public class HomeFragment extends LMFragment {
         return super.onOptionsItemSelected(item);
     }
 
-    private void addIssuer() {
-        Intent intent = AddIssuerActivity.newIntent(getContext());
-        startActivity(intent);
-    }
-
     private void setupRecyclerView() {
         IssuerAdapter adapter = new IssuerAdapter(mIssuerList);
         mBinding.issuerRecyclerview.setAdapter(adapter);
 
-        int gridSize = calculateSpanCount();
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), gridSize);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+
         mBinding.issuerRecyclerview.setLayoutManager(layoutManager);
         mBinding.issuerRecyclerview.setHasFixedSize(true);
-    }
-
-    private int calculateSpanCount() {
-        Resources resources = getResources();
-        DisplayMetrics displayMetrics = resources.getDisplayMetrics();
-        int itemWidth = resources.getDimensionPixelSize(R.dimen.list_item_issuer_width_total);
-        return displayMetrics.widthPixels / itemWidth;
     }
 
     private void updateRecyclerView(List<IssuerRecord> issuerList) {
@@ -138,7 +128,12 @@ public class HomeFragment extends LMFragment {
             Context context = parent.getContext();
             LayoutInflater inflater = LayoutInflater.from(context);
             ListItemIssuerBinding binding = DataBindingUtil.inflate(inflater, R.layout.list_item_issuer, parent, false);
-            return new IssuerViewHolder(binding);
+
+            float height = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150, getResources().getDisplayMetrics());
+
+            IssuerViewHolder holder = new IssuerViewHolder(binding);
+            holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(mBinding.issuerRecyclerview.getWidth(), (int)height));
+            return holder;
         }
 
         @Override

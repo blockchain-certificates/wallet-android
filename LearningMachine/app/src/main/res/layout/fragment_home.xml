@@ -15,10 +15,7 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/issuer_recyclerview"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingEnd="@dimen/fragment_home_recyclerview_spacing"
-                android:paddingStart="@dimen/fragment_home_recyclerview_spacing"
-                android:paddingTop="@dimen/fragment_home_recyclerview_spacing"/>
+                android:layout_height="match_parent" />
 
         </android.support.constraint.ConstraintLayout>
 
@@ -103,7 +100,7 @@
 
             <TextView
                 android:id="@+id/onboarding_home_no_issuers_desc2"
-                style="@style/Text.Footer"
+                style="@style/Text.Footer.2"
                 android:layout_width="0dp"
                 android:layout_height="32dp"
                 android:layout_marginBottom="16dp"
