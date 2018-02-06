@@ -63,8 +63,6 @@ public class HomeFragment extends LMFragment {
 
         setupRecyclerView();
 
-        mBinding.issuerAddButton.setOnClickListener(v -> addIssuer());
-
         return mBinding.getRoot();
     }
 

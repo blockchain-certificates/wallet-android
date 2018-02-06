@@ -2,6 +2,130 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/issuer_main_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/off_white_background">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/issuer_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingEnd="@dimen/fragment_home_recyclerview_spacing"
+                android:paddingStart="@dimen/fragment_home_recyclerview_spacing"
+                android:paddingTop="@dimen/fragment_home_recyclerview_spacing"/>
+
+        </android.support.constraint.ConstraintLayout>
+
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/issuer_empty_content"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <View
+                android:id="@+id/spreader1"
+                android:layout_width="65dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginStart="32dp"
+                app:layout_constraintBottom_toTopOf="@+id/imageView2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="105dp"
+                android:layout_height="105dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:src="@drawable/ic_empty_issuers"
+                app:layout_constraintBottom_toTopOf="@+id/onboarding_home_no_issuers_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spreader1" />
+
+
+            <TextView
+                android:id="@+id/onboarding_home_no_issuers_title"
+                style="@style/Text.Title.1"
+                android:layout_width="0dp"
+                android:layout_height="38dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:text="@string/onboarding_home_no_issuers_title"
+                app:layout_constraintBottom_toTopOf="@+id/onboarding_home_no_issuers_desc"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+            <TextView
+                android:id="@+id/onboarding_home_no_issuers_desc"
+                style="@style/Text.Body"
+                android:layout_width="0dp"
+                android:layout_height="64dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="@string/onboarding_home_no_issuers_desc"
+                app:layout_constraintBottom_toTopOf="@+id/spreader2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/onboarding_home_no_issuers_title" />
+
+
+            <View
+                android:id="@+id/spreader2"
+                android:layout_width="65dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginStart="32dp"
+                app:layout_constraintBottom_toTopOf="@+id/onboarding_home_no_issuers_desc2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/onboarding_home_no_issuers_desc" />
+
+
+            <TextView
+                android:id="@+id/onboarding_home_no_issuers_desc2"
+                style="@style/Text.Footer"
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="@string/onboarding_home_no_issuers_desc2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spreader2" />
+
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
+
+
+    <!--
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -20,17 +144,6 @@
                 android:paddingEnd="@dimen/fragment_home_recyclerview_spacing"
                 android:paddingStart="@dimen/fragment_home_recyclerview_spacing"
                 android:paddingTop="@dimen/fragment_home_recyclerview_spacing"/>
-
-            <!--
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/issuer_floating_action_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|right"
-                android:layout_margin="@dimen/fragment_home_fab_margin"
-                android:src="@drawable/ic_action_add"
-                app:backgroundTint="@color/fab_color"/>
-                -->
 
         </FrameLayout>
 
@@ -73,5 +186,7 @@
         </LinearLayout>
 
     </FrameLayout>
+
+    -->
 
 </layout>
