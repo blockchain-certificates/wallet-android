@@ -44,6 +44,10 @@
     <string name="onboarding_home_no_issuers_desc2">You may add an issuer manually by visiting Settings and tapping Add an Issuer</string>
 
 
+    <!-- Issuer (Certificate List) -->
+    <string name="issuer_no_certificates_desc">No Credentials</string>
+    <string name="issuer_no_certificates_desc2">You will receive an email when a credential is issued. Follow the link in the email to complete the process.</string>
+
     <!-- vvv OLD vvv -->
 
 
