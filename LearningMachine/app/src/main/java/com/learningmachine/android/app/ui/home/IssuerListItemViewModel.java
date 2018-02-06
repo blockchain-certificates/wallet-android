@@ -20,6 +20,15 @@ public class IssuerListItemViewModel extends BaseObservable {
         return mIssuer.getName();
     }
 
+    @Bindable
+    public String getNumberOfCertificatesAsString() {
+        if (mIssuer == null) {
+            return null;
+        }
+
+        return String.format("%d Certificates", mIssuer.cachedNumberOfCertificatesForIssuer);
+    }
+
     public void bindIssuer(IssuerRecord issuer) {
         mIssuer = issuer;
         notifyChange();

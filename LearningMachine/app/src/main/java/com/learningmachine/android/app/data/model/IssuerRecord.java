@@ -145,4 +145,8 @@ public class IssuerRecord {
     public void setRecipientPubKey(String recipientPubKey) {
         this.mRecipientPubKey = recipientPubKey;
     }
+
+    // Note: Below are convenience variables to store information about an issuer which is
+    // generally expensive to calculate
+    public int cachedNumberOfCertificatesForIssuer = -1;
 }

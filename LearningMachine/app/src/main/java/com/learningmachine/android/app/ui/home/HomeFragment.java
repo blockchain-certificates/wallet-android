@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.learningmachine.android.app.R;
+import com.learningmachine.android.app.data.CertificateManager;
 import com.learningmachine.android.app.data.IssuerManager;
 import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.data.model.IssuerRecord;
@@ -39,6 +40,7 @@ import timber.log.Timber;
 public class HomeFragment extends LMFragment {
 
     @Inject IssuerManager mIssuerManager;
+    @Inject CertificateManager mCertificateManager;
     @Inject SharedPreferencesManager mSharedPreferencesManager;
 
     private FragmentHomeBinding mBinding;
@@ -104,15 +106,32 @@ public class HomeFragment extends LMFragment {
         mBinding.issuerRecyclerview.setHasFixedSize(true);
     }
 
+
+    private int totalIssuersCertificateCountCalculated = 0;
     private void updateRecyclerView(List<IssuerRecord> issuerList) {
         mIssuerList.clear();
         mIssuerList.addAll(issuerList);
-        mBinding.issuerRecyclerview.getAdapter()
-                .notifyDataSetChanged();
 
-        boolean emptyIssuers = issuerList.isEmpty();
-        mBinding.issuerMainContent.setVisibility(emptyIssuers ? View.GONE : View.VISIBLE);
-        mBinding.issuerEmptyContent.setVisibility(emptyIssuers ? View.VISIBLE : View.GONE);
+        // calculate the number of certificates per issuer
+        totalIssuersCertificateCountCalculated = mIssuerList.size();
+        for(IssuerRecord record : mIssuerList) {
+            mCertificateManager.getCertificatesForIssuer(record.getUuid())
+                    .compose(bindToMainThread())
+                    .subscribe((certificateRecords) -> {
+                            record.cachedNumberOfCertificatesForIssuer = certificateRecords.size();
+
+                        totalIssuersCertificateCountCalculated--;
+                        if(totalIssuersCertificateCountCalculated <= 0) {
+                            mBinding.issuerRecyclerview.getAdapter()
+                                    .notifyDataSetChanged();
+
+                            boolean emptyIssuers = issuerList.isEmpty();
+                            mBinding.issuerMainContent.setVisibility(emptyIssuers ? View.GONE : View.VISIBLE);
+                            mBinding.issuerEmptyContent.setVisibility(emptyIssuers ? View.VISIBLE : View.GONE);
+                        }
+
+                    }, throwable -> Timber.e(throwable, "Unable to load certificates"));
+        }
     }
 
     private class IssuerAdapter extends RecyclerView.Adapter<IssuerViewHolder> {
