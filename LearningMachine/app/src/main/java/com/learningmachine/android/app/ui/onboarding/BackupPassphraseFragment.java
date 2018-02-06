@@ -29,6 +29,7 @@ import com.learningmachine.android.app.databinding.FragmentViewPassphraseBinding
 import com.learningmachine.android.app.dialog.AlertDialogFragment;
 import com.learningmachine.android.app.ui.home.HomeActivity;
 import com.learningmachine.android.app.util.DialogUtils;
+import com.smallplanet.labalib.Laba;
 
 import java.io.PrintWriter;
 import java.util.Timer;
@@ -116,14 +117,13 @@ public class BackupPassphraseFragment extends OnboardingFragment {
             return;
         }
 
-        displayAlert(0,
+        displayAlert(1,
                 R.string.onboarding_passphrase_complete_title,
                 R.string.onboarding_passphrase_save_complete,
                 R.string.onboarding_passphrase_ok,
                 R.string.onboarding_passphrase_cancel);
 
-        mBinding.onboardingSaveCheckmark.setVisibility(View.VISIBLE);
-        confirmBackupOptionCompleted();
+
     }
 
     private void onEmail() {
@@ -143,8 +143,7 @@ public class BackupPassphraseFragment extends OnboardingFragment {
                         Intent mailer = Intent.createChooser(intent, null);
                         startActivity(mailer);
 
-                        mBinding.onboardingEmailCheckmark.setVisibility(View.VISIBLE);
-                        confirmBackupOptionCompleted();
+                        onActivityResult(2, 0, null);
                     }
                 });
         alertDialog.show();
@@ -160,10 +159,10 @@ public class BackupPassphraseFragment extends OnboardingFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
 
-                        mBinding.onboardingWriteCheckmark.setVisibility(View.VISIBLE);
-                        confirmBackupOptionCompleted();
 
-                        displayAlert(0,
+
+
+                        displayAlert(3,
                                 R.string.onboarding_passphrase_complete_title,
                                 R.string.onboarding_passphrase_write_complete,
                                 R.string.onboarding_passphrase_ok,
@@ -173,12 +172,32 @@ public class BackupPassphraseFragment extends OnboardingFragment {
         alertDialog.show();
     }
 
-    private void confirmBackupOptionCompleted() {
-        numberOfBackupOptionsUsed++;
 
-        if (numberOfBackupOptionsUsed >= 2){
-            mBinding.onboardingDoneButton.setAlpha(1.0f);
-            mBinding.onboardingDoneButton.setEnabled(true);
+    // We do this in order to perform the checkmark animation after the last user dialog is presented
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        View view = null;
+        if (requestCode == 1) {
+            view = mBinding.onboardingSaveCheckmark;
+        }
+        if (requestCode == 2) {
+            view = mBinding.onboardingEmailCheckmark;
+        }
+        if (requestCode == 3) {
+            view = mBinding.onboardingWriteCheckmark;
+        }
+
+        if(view != null) {
+
+            Laba.Animate(view, "!s!f!^", () -> { return null; });
+            view.setVisibility(View.VISIBLE);
+
+            numberOfBackupOptionsUsed++;
+
+            if (numberOfBackupOptionsUsed >= 2) {
+                mBinding.onboardingDoneButton.setAlpha(1.0f);
+                mBinding.onboardingDoneButton.setEnabled(true);
+            }
         }
     }
 }

@@ -45,15 +45,16 @@ import android.view.View;
 import android.view.animation.*;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
-public class Laba extends Object {
+public class Laba {
 
 	public String labaNotation;
 	public String initialLabaNotation;
 	public Boolean loop;
 
-	public static float timeScale = 1.0f;
+	private static float timeScale = 1.0f;
 
     @FunctionalInterface
     interface ValueAction <A, B, R> {
@@ -85,7 +86,7 @@ public class Laba extends Object {
         public R apply (A a, B b);
     }
 
-    public static class LabaTimer extends  Object {
+    public static class LabaTimer {
 
         long startTime;
         long endTime;
@@ -148,9 +149,10 @@ public class Laba extends Object {
             duration = dura;
             onComplete = complete;
 
+            action.apply(0.0f, true);
+
             v.post(new Runnable() {
                 public void run() {
-                    action.apply(0.0f, true);
                     Update();
                 }
             });
@@ -378,7 +380,7 @@ public class Laba extends Object {
 			// execute the action?
 			if (action != ' ') {
 				if (InitActions.containsKey (action)) {
-					//Log.d("LABA", String.format(" [%d,%d]   action: %c   value: %f   inverted: %b", currentPipeIdx, currentActionIdx, action, value, invertNextOperator));
+					//Log.d("LABA", String.format(Locale.US, " [%d,%d]   action: %c   value: %f   inverted: %b", currentPipeIdx, currentActionIdx, action, value, invertNextOperator));
 					combinedActions [currentPipeIdx][currentActionIdx] = new LabaAction (action, view, invertNextOperator, value, easingAction, easingName);
 					currentActionIdx++;
 				} else {
@@ -633,25 +635,25 @@ public class Laba extends Object {
 
 
 			if (looping > 1) {
-				sb.append (String.format(" %d repeating %d times, ", loopingRelative, looping));
+				sb.append (String.format(Locale.US, " %d repeating %d times, ", loopingRelative, looping));
 			} else if (looping == -1) {
-				sb.append (String.format(" %d repeating forever, ", loopingRelative));
+				sb.append (String.format(Locale.US, " %d repeating forever, ", loopingRelative));
 			}
 
 			if (stringLengthBefore != sb.length()) {
-				sb.append (String.format(" %s  ", actionList [0][0].easingName));
+				sb.append (String.format(Locale.US, " %s  ", actionList [0][0].easingName));
 
 				sb.setLength(sb.length() - 2);
 				if (duration == 0.0f) {
 					sb.append (" instantly.");
 				} else {
-					sb.append (String.format(" over %f seconds.", duration * timeScale));
+					sb.append (String.format(Locale.US, " over %f seconds.", duration * timeScale));
 				}
 			} else {
 				if (sb.length() > 2) {
                     sb.setLength(sb.length() - 2);
 				}
-				sb.append (String.format(" wait for %f seconds.", duration * timeScale));
+				sb.append (String.format(Locale.US, " wait for %f seconds.", duration * timeScale));
 			}
 
 		} else {
@@ -691,22 +693,22 @@ public class Laba extends Object {
 				}
 
 				if (loopingForPipe > 1) {
-					sb.append (String.format(" %s repeating %d times, ", loopingRelativeForPipe, loopingForPipe));
+					sb.append (String.format(Locale.US, " %s repeating %d times, ", loopingRelativeForPipe, loopingForPipe));
 				} else if (loopingForPipe == -1) {
-					sb.append (String.format(" %s repeating forever, ", loopingRelativeForPipe));
+					sb.append (String.format(Locale.US, " %s repeating forever, ", loopingRelativeForPipe));
 				}
 
 				if (stringLengthBefore != sb.length()) {
-					sb.append (String.format(" %s  ", actionList [idx][0].easingName));
+					sb.append (String.format(Locale.US, " %s  ", actionList [idx][0].easingName));
 
 					sb.setLength(sb.length() - 2);
 					if (durationForPipe == 0.0f) {
 						sb.append (" instantly.");
 					} else {
-						sb.append (String.format(" over %f seconds.", durationForPipe * timeScale));
+						sb.append (String.format(Locale.US, " over %f seconds.", durationForPipe * timeScale));
 					}
 				} else {
-					sb.append (String.format(" wait for %f seconds.", durationForPipe * timeScale));
+					sb.append (String.format(Locale.US, " wait for %f seconds.", durationForPipe * timeScale));
 				}
 
 				if (pipeIdx + 1 < numOfPipes) {
@@ -732,7 +734,7 @@ public class Laba extends Object {
 			sb.append ("Perform a series of animations at the same time.\n");
 			for (String part : parts) {
 				if (part.length() > 0) {
-					sb.append (String.format("Animation #%d will ", animNumber+1));
+					sb.append (String.format(Locale.US, "Animation #%d will ", animNumber+1));
 					DescribeOne (view, part, sb);
 					sb.append ("\n");
 					animNumber++;
@@ -868,7 +870,7 @@ public class Laba extends Object {
                             newAction.rawValue = 0.0f;
                         }
 
-                        if(newAction.inverse == false){
+                        if(!newAction.inverse){
                             newAction.fromValue = newAction.target.getX();
                             newAction.toValue = newAction.rawValue;
                         }else{
@@ -885,10 +887,10 @@ public class Laba extends Object {
                     (s, a) -> {
                         LabaAction action = (LabaAction)a;
                         StringBuilder sb = (StringBuilder)s;
-                        if(action.inverse == false) {
-                            sb.append(String.format("move to {0} x pos, ", action.rawValue));
+                        if(!action.inverse ) {
+                            sb.append(String.format(Locale.US, "move to {0} x pos, ", action.rawValue));
                         } else {
-                            sb.append(String.format("move from {0} x pos, ", action.rawValue));
+                            sb.append(String.format(Locale.US, "move from {0} x pos, ", action.rawValue));
                         }
                         return null;
                     }
@@ -902,7 +904,7 @@ public class Laba extends Object {
                             newAction.rawValue = 0.0f;
                         }
 
-                        if(newAction.inverse == false){
+                        if(!newAction.inverse){
                             newAction.fromValue = newAction.target.getY();
                             newAction.toValue = newAction.rawValue;
                         }else{
@@ -919,10 +921,10 @@ public class Laba extends Object {
                     (s, a) -> {
                         LabaAction action = (LabaAction)a;
                         StringBuilder sb = (StringBuilder)s;
-                        if(action.inverse == false) {
-                            sb.append(String.format("move to %f y pos, ", action.rawValue));
+                        if(!action.inverse ) {
+                            sb.append(String.format(Locale.US, "move to %f y pos, ", action.rawValue));
                         } else {
-                            sb.append(String.format("move from %f y pos, ", action.rawValue));
+                            sb.append(String.format(Locale.US, "move from %f y pos, ", action.rawValue));
                         }
                         return null;
                     }
@@ -933,9 +935,10 @@ public class Laba extends Object {
                     (v) -> {
                         LabaAction newAction = (LabaAction)v;
                         if (newAction.rawValue == LabaDefaultValue) {
+                            newAction.target.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
                             newAction.rawValue = (float)newAction.target.getMeasuredWidth();
                         }
-                        if(newAction.inverse == false){
+                        if(!newAction.inverse){
                             newAction.fromValue = newAction.target.getX();
                             newAction.toValue = newAction.target.getX() - newAction.rawValue;
                         }else{
@@ -952,10 +955,10 @@ public class Laba extends Object {
                     (s, a) -> {
                         LabaAction action = (LabaAction)a;
                         StringBuilder sb = (StringBuilder)s;
-                        if(action.inverse == false) {
-                            sb.append(String.format("move left %f units, ", action.rawValue));
+                        if(!action.inverse ) {
+                            sb.append(String.format(Locale.US, "move left %f units, ", action.rawValue));
                         } else {
-                            sb.append(String.format("move in from left %f units, ", action.rawValue));
+                            sb.append(String.format(Locale.US, "move in from left %f units, ", action.rawValue));
                         }
                         return null;
                     }
@@ -967,10 +970,11 @@ public class Laba extends Object {
                     (v) -> {
                         LabaAction newAction = (LabaAction)v;
                         if (newAction.rawValue == LabaDefaultValue) {
+                            newAction.target.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
                             newAction.rawValue = (float)newAction.target.getMeasuredWidth();
                         }
 
-                        if(newAction.inverse == false){
+                        if(!newAction.inverse){
                             newAction.fromValue = newAction.target.getX();
                             newAction.toValue = newAction.target.getX() + newAction.rawValue;
                         }else{
@@ -987,10 +991,10 @@ public class Laba extends Object {
                     (s, a) -> {
                         LabaAction action = (LabaAction)a;
                         StringBuilder sb = (StringBuilder)s;
-                        if(action.inverse == false) {
-                            sb.append(String.format("move right %f units, ", action.rawValue));
+                        if(!action.inverse) {
+                            sb.append(String.format(Locale.US, "move right %f units, ", action.rawValue));
                         } else {
-                            sb.append(String.format("move in from right %f units, ", action.rawValue));
+                            sb.append(String.format(Locale.US, "move in from right %f units, ", action.rawValue));
                         }
                         return null;
                     }
@@ -1001,10 +1005,11 @@ public class Laba extends Object {
                     (v) -> {
                         LabaAction newAction = (LabaAction)v;
                         if (newAction.rawValue == LabaDefaultValue) {
+                            newAction.target.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
                             newAction.rawValue = (float)newAction.target.getMeasuredHeight();
                         }
 
-                        if(newAction.inverse == false){
+                        if(!newAction.inverse){
                             newAction.fromValue = newAction.target.getY();
                             newAction.toValue = newAction.target.getY() + newAction.rawValue;
                         }else{
@@ -1021,10 +1026,10 @@ public class Laba extends Object {
                     (s, a) -> {
                         LabaAction action = (LabaAction)a;
                         StringBuilder sb = (StringBuilder)s;
-                        if(action.inverse == false) {
-                            sb.append(String.format("move up %f units, ", action.rawValue));
+                        if(!action.inverse ) {
+                            sb.append(String.format(Locale.US, "move up %f units, ", action.rawValue));
                         } else {
-                            sb.append(String.format("move in from above %f units, ", action.rawValue));
+                            sb.append(String.format(Locale.US, "move in from above %f units, ", action.rawValue));
                         }
                         return null;
                     }
@@ -1035,9 +1040,10 @@ public class Laba extends Object {
                     (v) -> {
                         LabaAction newAction = (LabaAction)v;
                         if (newAction.rawValue == LabaDefaultValue) {
+                            newAction.target.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
                             newAction.rawValue = (float)newAction.target.getMeasuredHeight();
                         }
-                        if(newAction.inverse == false){
+                        if(!newAction.inverse){
                             newAction.fromValue = newAction.target.getY();
                             newAction.toValue = newAction.target.getY() - newAction.rawValue;
                         }else{
@@ -1054,10 +1060,10 @@ public class Laba extends Object {
                     (s, a) -> {
                         LabaAction action = (LabaAction)a;
                         StringBuilder sb = (StringBuilder)s;
-                        if(action.inverse == false) {
-                            sb.append(String.format("move down %f units, ", action.rawValue));
+                        if(!action.inverse ) {
+                            sb.append(String.format(Locale.US, "move down %f units, ", action.rawValue));
                         } else {
-                            sb.append(String.format("move in from below %f units, ", action.rawValue));
+                            sb.append(String.format(Locale.US, "move in from below %f units, ", action.rawValue));
                         }
                         return null;
                     }
@@ -1069,9 +1075,10 @@ public class Laba extends Object {
                     (v) -> {
                         LabaAction newAction = (LabaAction)v;
                         if (newAction.rawValue == LabaDefaultValue) {
+                            newAction.target.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
                             newAction.rawValue = (newAction.target.getMeasuredHeight() + newAction.target.getMeasuredWidth()) * 0.5f;
                         }
-                        if(newAction.inverse == false){
+                        if(!newAction.inverse){
                             newAction.fromValue = newAction.target.getTranslationZ();
                             newAction.toValue = newAction.target.getTranslationZ() - newAction.rawValue;
                         }else{
@@ -1088,10 +1095,10 @@ public class Laba extends Object {
                     (s, a) -> {
                         LabaAction action = (LabaAction)a;
                         StringBuilder sb = (StringBuilder)s;
-                        if(action.inverse == false) {
-                            sb.append(String.format("move along z axis %f units, ", action.rawValue));
+                        if(!action.inverse ) {
+                            sb.append(String.format(Locale.US, "move along z axis %f units, ", action.rawValue));
                         } else {
-                            sb.append(String.format("move in from z axis %f units, ", action.rawValue));
+                            sb.append(String.format(Locale.US, "move in from z axis %f units, ", action.rawValue));
                         }
                         return null;
                     }
@@ -1105,7 +1112,7 @@ public class Laba extends Object {
                         if (newAction.rawValue == LabaDefaultValue) {
                             newAction.rawValue = 1.0f;
                         }
-                        if(newAction.inverse == false){
+                        if(!newAction.inverse){
                             newAction.fromValue = newAction.target.getScaleX();
                             newAction.toValue = newAction.rawValue;
                         }else{
@@ -1123,10 +1130,10 @@ public class Laba extends Object {
                     (s, a) -> {
                         LabaAction action = (LabaAction)a;
                         StringBuilder sb = (StringBuilder)s;
-                        if(action.inverse == false) {
-                            sb.append(String.format("scale to %d%%, ", (int)(action.rawValue * 100.0f)));
+                        if(!action.inverse ) {
+                            sb.append(String.format(Locale.US, "scale to %d%%, ", (int)(action.rawValue * 100.0f)));
                         } else {
-                            sb.append(String.format("scale in from %d%%, ", (int)(action.rawValue * 100.0f)));
+                            sb.append(String.format(Locale.US, "scale in from %d%%, ", (int)(action.rawValue * 100.0f)));
                         }
                         return null;
                     }
@@ -1139,7 +1146,7 @@ public class Laba extends Object {
                         if (newAction.rawValue == LabaDefaultValue) {
                             newAction.rawValue = 0.0f;
                         }
-                        if(newAction.inverse == false){
+                        if(!newAction.inverse){
                             newAction.fromValue = newAction.target.getRotation();
                             newAction.toValue = newAction.target.getRotation() - newAction.rawValue;
                         }else{
@@ -1156,10 +1163,10 @@ public class Laba extends Object {
                     (s, a) -> {
                         LabaAction action = (LabaAction)a;
                         StringBuilder sb = (StringBuilder)s;
-                        if(action.inverse == false) {
-                            sb.append(String.format("rotate around z by %f°, ", action.rawValue));
+                        if(!action.inverse ) {
+                            sb.append(String.format(Locale.US, "rotate around z by %f°, ", action.rawValue));
                         } else {
-                            sb.append(String.format("rotate in from around z by %f°, ", action.rawValue));
+                            sb.append(String.format(Locale.US, "rotate in from around z by %f°, ", action.rawValue));
                         }
                         return null;
                     }
@@ -1172,7 +1179,7 @@ public class Laba extends Object {
                         if (newAction.rawValue == LabaDefaultValue) {
                             newAction.rawValue = 0.0f;
                         }
-                        if(newAction.inverse == false){
+                        if(!newAction.inverse){
                             newAction.fromValue = newAction.target.getRotationX();
                             newAction.toValue = newAction.target.getRotationX() - newAction.rawValue;
                         }else{
@@ -1190,10 +1197,10 @@ public class Laba extends Object {
                     (s, a) -> {
                         LabaAction action = (LabaAction)a;
                         StringBuilder sb = (StringBuilder)s;
-                        if(action.inverse == false) {
-                            sb.append(String.format("rotate around x by %f°, ", action.rawValue));
+                        if(!action.inverse ) {
+                            sb.append(String.format(Locale.US, "rotate around x by %f°, ", action.rawValue));
                         } else {
-                            sb.append(String.format("rotate in from around x by %f°, ", action.rawValue));
+                            sb.append(String.format(Locale.US, "rotate in from around x by %f°, ", action.rawValue));
                         }
                         return null;
                     }
@@ -1206,7 +1213,7 @@ public class Laba extends Object {
                         if (newAction.rawValue == LabaDefaultValue) {
                             newAction.rawValue = 0.0f;
                         }
-                        if(newAction.inverse == false){
+                        if(!newAction.inverse){
                             newAction.fromValue = newAction.target.getRotationY();
                             newAction.toValue = newAction.target.getRotationY() - newAction.rawValue;
                         }else{
@@ -1223,10 +1230,10 @@ public class Laba extends Object {
                     (s, a) -> {
                         LabaAction action = (LabaAction)a;
                         StringBuilder sb = (StringBuilder)s;
-                        if(action.inverse == false) {
-                            sb.append(String.format("rotate around y by %f°, ", action.rawValue));
+                        if(!action.inverse ) {
+                            sb.append(String.format(Locale.US, "rotate around y by %f°, ", action.rawValue));
                         } else {
-                            sb.append(String.format("rotate in from around y by %f°, ", action.rawValue));
+                            sb.append(String.format(Locale.US, "rotate in from around y by %f°, ", action.rawValue));
                         }
                         return null;
                     }
@@ -1239,7 +1246,7 @@ public class Laba extends Object {
                         if (newAction.rawValue == LabaDefaultValue) {
                             newAction.rawValue = 1.0f;
                         }
-                        if(newAction.inverse == false){
+                        if(!newAction.inverse){
                             newAction.fromValue = newAction.target.getAlpha();
                             newAction.toValue = newAction.rawValue;
                         }else{
@@ -1256,10 +1263,10 @@ public class Laba extends Object {
                     (s, a) -> {
                         LabaAction action = (LabaAction)a;
                         StringBuilder sb = (StringBuilder)s;
-                        if(action.inverse == false) {
-                            sb.append(String.format("fade to %d%%, ", (int)(action.rawValue * 100.0f)));
+                        if(!action.inverse ) {
+                            sb.append(String.format(Locale.US, "fade to %d%%, ", (int)(action.rawValue * 100.0f)));
                         } else {
-                            sb.append(String.format("fade from %d%% to %d%%, ", (int)(action.fromValue * 100.0f),(int)(action.toValue * 100.0f)));
+                            sb.append(String.format(Locale.US, "fade from %d%% to %d%%, ", (int)(action.fromValue * 100.0f),(int)(action.toValue * 100.0f)));
                         }
                         return null;
                     }
