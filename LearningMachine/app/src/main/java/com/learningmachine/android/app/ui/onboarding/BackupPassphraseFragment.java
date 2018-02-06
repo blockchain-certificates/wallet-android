@@ -68,6 +68,7 @@ public class BackupPassphraseFragment extends OnboardingFragment {
         mBinding.onboardingSaveButton.setOnClickListener(view -> onSave());
         mBinding.onboardingWriteButton.setOnClickListener(view -> onWrite());
 
+        Laba.Animate(mBinding.onboardingDoneButton, "d0v200", () -> { return null; });
         mBinding.onboardingDoneButton.setAlpha(0.3f);
         mBinding.onboardingDoneButton.setEnabled(false);
 
@@ -159,9 +160,6 @@ public class BackupPassphraseFragment extends OnboardingFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
 
-
-
-
                         displayAlert(3,
                                 R.string.onboarding_passphrase_complete_title,
                                 R.string.onboarding_passphrase_write_complete,
@@ -189,12 +187,14 @@ public class BackupPassphraseFragment extends OnboardingFragment {
 
         if(view != null) {
 
-            Laba.Animate(view, "!s!f!^", () -> { return null; });
+            Laba.Animate(view, "!s!f!>", () -> { return null; });
             view.setVisibility(View.VISIBLE);
 
             numberOfBackupOptionsUsed++;
 
-            if (numberOfBackupOptionsUsed >= 2) {
+            if (numberOfBackupOptionsUsed >= 2 && mBinding.onboardingDoneButton.isEnabled() == false) {
+
+                Laba.Animate(mBinding.onboardingDoneButton, "^200", () -> { return null; });
                 mBinding.onboardingDoneButton.setAlpha(1.0f);
                 mBinding.onboardingDoneButton.setEnabled(true);
             }

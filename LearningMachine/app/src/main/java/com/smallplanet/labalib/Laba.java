@@ -31,6 +31,8 @@ package com.smallplanet.labalib;
  * e easing (we allow e# for shorthand or full easeInOutQuad)
  * 
  * | pipe animations (chain)
+ *
+ * , pipe animations with built in delay
  * 
  * ! invert an action (instead of move left, its move to current position from the right)
  * 
@@ -99,6 +101,9 @@ public class Laba {
         private void Update() {
             long currentTime = System.nanoTime();
             float t = (float) (currentTime - startTime) / (float) (endTime - startTime);
+            if(endTime == startTime) {
+                t = 1.0f;
+            }
 
             if (t >= 1.0f) {
                 action.apply(1.0f, false);
@@ -150,13 +155,7 @@ public class Laba {
             onComplete = complete;
 
             action.apply(0.0f, true);
-
-            v.post(new Runnable() {
-                public void run() {
-                    Update();
-                }
-            });
-
+            Update();
         }
     }
 
@@ -278,12 +277,12 @@ public class Laba {
 	private static Map<Character,DescribeAction> DescribeActions;
 
 
-	private static int kMaxPipes = 10;
-	private static int kMaxActions = 10;
+	private static int kMaxPipes = 40;
+	private static int kMaxActions = 40;
 	private static float kDefaultDuration = 0.87f;
 
 	private static boolean isOperator(char c) {
-        if (c == '|' || c == '!' || c == 'e') {
+        if (c == ',' || c == '|' || c == '!' || c == 'e') {
             return true;
         }
         return InitActions.containsKey (c);
@@ -318,7 +317,15 @@ public class Laba {
 					} else if (c == '|') {
 						currentPipeIdx++;
 						currentActionIdx = 0;
-					} else {
+                    } else if (c == ',') {
+					    if(currentActionIdx != 0) {
+                            currentPipeIdx++;
+                            currentActionIdx = 0;
+                        }
+                        combinedActions [currentPipeIdx][currentActionIdx] = new LabaAction ('d', view, false, kDefaultDuration * 0.26f, easingAction, easingName);
+                        currentPipeIdx++;
+                        currentActionIdx = 0;
+                    } else {
 						action = c;
 						idx++;
 						break;
@@ -871,17 +878,17 @@ public class Laba {
                         }
 
                         if(!newAction.inverse){
-                            newAction.fromValue = newAction.target.getX();
+                            newAction.fromValue = newAction.target.getTranslationX();
                             newAction.toValue = newAction.rawValue;
                         }else{
                             newAction.fromValue = newAction.rawValue;
-                            newAction.toValue = newAction.target.getX();
+                            newAction.toValue = newAction.target.getTranslationX();
                         }
                         return newAction;
                     },
                     (rt, v, action) -> {
                         View view = (View)rt;
-                        view.setX((float)v);
+                        view.setTranslationX((float)v);
                         return null;
                     },
                     (s, a) -> {
@@ -905,17 +912,17 @@ public class Laba {
                         }
 
                         if(!newAction.inverse){
-                            newAction.fromValue = newAction.target.getY();
+                            newAction.fromValue = newAction.target.getTranslationY();
                             newAction.toValue = newAction.rawValue;
                         }else{
                             newAction.fromValue = newAction.rawValue;
-                            newAction.toValue = newAction.target.getY();
+                            newAction.toValue = newAction.target.getTranslationY();
                         }
                         return newAction;
                     },
                     (rt, v, action) -> {
                         View view = (View)rt;
-                        view.setY((float)v);
+                        view.setTranslationY((float)v);
                         return null;
                     },
                     (s, a) -> {
@@ -939,17 +946,17 @@ public class Laba {
                             newAction.rawValue = (float)newAction.target.getMeasuredWidth();
                         }
                         if(!newAction.inverse){
-                            newAction.fromValue = newAction.target.getX();
-                            newAction.toValue = newAction.target.getX() - newAction.rawValue;
+                            newAction.fromValue = newAction.target.getTranslationX();
+                            newAction.toValue = newAction.target.getTranslationX() - newAction.rawValue;
                         }else{
-                            newAction.fromValue = newAction.target.getX() + newAction.rawValue;
-                            newAction.toValue = newAction.target.getX();
+                            newAction.fromValue = newAction.target.getTranslationX() + newAction.rawValue;
+                            newAction.toValue = newAction.target.getTranslationX();
                         }
                         return newAction;
                     },
                     (rt, v, action) -> {
                         View view = (View)rt;
-                        view.setX((float)v);
+                        view.setTranslationX((float)v);
                         return null;
                     },
                     (s, a) -> {
@@ -975,17 +982,17 @@ public class Laba {
                         }
 
                         if(!newAction.inverse){
-                            newAction.fromValue = newAction.target.getX();
-                            newAction.toValue = newAction.target.getX() + newAction.rawValue;
+                            newAction.fromValue = newAction.target.getTranslationX();
+                            newAction.toValue = newAction.target.getTranslationX() + newAction.rawValue;
                         }else{
-                            newAction.fromValue = newAction.target.getX() - newAction.rawValue;
-                            newAction.toValue = newAction.target.getX();
+                            newAction.fromValue = newAction.target.getTranslationX() - newAction.rawValue;
+                            newAction.toValue = newAction.target.getTranslationX();
                         }
                         return newAction;
                     },
                     (rt, v, action) -> {
                         View view = (View)rt;
-                        view.setX((float)v);
+                        view.setTranslationX((float)v);
                         return null;
                     },
                     (s, a) -> {
@@ -1010,17 +1017,17 @@ public class Laba {
                         }
 
                         if(!newAction.inverse){
-                            newAction.fromValue = newAction.target.getY();
-                            newAction.toValue = newAction.target.getY() + newAction.rawValue;
+                            newAction.fromValue = newAction.target.getTranslationY();
+                            newAction.toValue = newAction.target.getTranslationY() - newAction.rawValue;
                         }else{
-                            newAction.fromValue = newAction.target.getY() - newAction.rawValue;
-                            newAction.toValue = newAction.target.getY();
+                            newAction.fromValue = newAction.target.getTranslationY() + newAction.rawValue;
+                            newAction.toValue = newAction.target.getTranslationY();
                         }
                         return newAction;
                     },
                     (rt, v, action) -> {
                         View view = (View)rt;
-                        view.setY((float)v);
+                        view.setTranslationY((float)v);
                         return null;
                     },
                     (s, a) -> {
@@ -1044,17 +1051,17 @@ public class Laba {
                             newAction.rawValue = (float)newAction.target.getMeasuredHeight();
                         }
                         if(!newAction.inverse){
-                            newAction.fromValue = newAction.target.getY();
-                            newAction.toValue = newAction.target.getY() - newAction.rawValue;
+                            newAction.fromValue = newAction.target.getTranslationY();
+                            newAction.toValue = newAction.target.getTranslationY() + newAction.rawValue;
                         }else{
-                            newAction.fromValue = newAction.target.getY() + newAction.rawValue;
-                            newAction.toValue = newAction.target.getY() ;
+                            newAction.fromValue = newAction.target.getTranslationY() - newAction.rawValue;
+                            newAction.toValue = newAction.target.getTranslationY();
                         }
                         return newAction;
                     },
                     (rt, v, action) -> {
                         View view = (View)rt;
-                        view.setY((float)v);
+                        view.setTranslationY((float)v);
                         return null;
                     },
                     (s, a) -> {

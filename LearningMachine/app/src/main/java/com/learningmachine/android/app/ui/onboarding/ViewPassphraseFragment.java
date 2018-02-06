@@ -29,6 +29,7 @@ import com.learningmachine.android.app.databinding.FragmentViewPassphraseBinding
 import com.learningmachine.android.app.dialog.AlertDialogFragment;
 import com.learningmachine.android.app.ui.home.HomeActivity;
 import com.learningmachine.android.app.util.DialogUtils;
+import com.smallplanet.labalib.Laba;
 
 import java.io.PrintWriter;
 import java.util.Timer;
@@ -92,6 +93,7 @@ public class ViewPassphraseFragment extends OnboardingFragment {
         mBinding.onboardingStatusText.setText(R.string.onboarding_passphrase_status_0);
         startCountingTimer();
 
+        Laba.Animate(mBinding.onboardingDoneButton, "d0v200", () -> { return null; });
         mBinding.onboardingDoneButton.setOnClickListener(view -> onDone());
         mBinding.onboardingDoneButton.setAlpha(0.3f);
         mBinding.onboardingDoneButton.setEnabled(false);
@@ -120,12 +122,16 @@ public class ViewPassphraseFragment extends OnboardingFragment {
                             stopCountingTimer();
 
 
+                            Laba.Animate(mBinding.onboardingPassphraseTitle, "f0d0,!^!f", () -> { return null; });
+                            Laba.Animate(mBinding.onboardingPassphraseContent, "f0d0,,!^!f", () -> { return null; });
+
                             mBinding.onboardingPassphraseTitle.setVisibility(View.VISIBLE);
                             mBinding.onboardingPassphraseContent.setVisibility(View.VISIBLE);
 
                             mBinding.onboardingStatusText.setText(R.string.onboarding_passphrase_status_1);
                             mBinding.onboardingPassphraseContent.setText(passphrase);
 
+                            Laba.Animate(mBinding.onboardingDoneButton, ",,,^200", () -> { return null; });
                             mBinding.onboardingDoneButton.setAlpha(1.0f);
                             mBinding.onboardingDoneButton.setEnabled(true);
                         }
