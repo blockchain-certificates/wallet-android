@@ -116,6 +116,10 @@ public class IssuerFragment extends LMFragment {
         mCertificateList.addAll(certificateList);
         mBinding.certificateRecyclerView.getAdapter()
                 .notifyDataSetChanged();
+
+        //boolean emptyCertificates = certificateList.isEmpty();
+        //mBinding.certificateMainContent.setVisibility(emptyCertificates ? View.GONE : View.VISIBLE);
+        //mBinding.certificateEmptyContent.setVisibility(emptyCertificates ? View.VISIBLE : View.GONE);
     }
 
     private class CertificateAdapter extends RecyclerView.Adapter<CertificateViewHolder> {

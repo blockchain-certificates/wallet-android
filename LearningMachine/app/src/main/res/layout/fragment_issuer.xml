@@ -1,26 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <FrameLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/certificate_recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/certificate_main_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@color/off_white_background">
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/add_certificate_floating_action_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:layout_margin="16dp"
-            android:src="@drawable/ic_action_add"
-            app:backgroundTint="@color/fab_color"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/certificate_recycler_view"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
 
-    </FrameLayout>
+
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/add_certificate_floating_action_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:src="@drawable/ic_action_add"
+                app:backgroundTint="@color/fab_color"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
+
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/certificate_empty_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/white"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <View
+                android:id="@+id/spreader1"
+                android:layout_width="65dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginStart="32dp"
+                app:layout_constraintBottom_toTopOf="@+id/issuer_no_certificates_desc"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/issuer_no_certificates_desc"
+                style="@style/Text.Title.1"
+                android:layout_width="0dp"
+                android:layout_height="38dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:text="@string/issuer_no_certificates_desc"
+                app:layout_constraintBottom_toTopOf="@+id/onboarding_home_no_issuers_desc"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spreader1" />
+
+            <TextView
+                android:id="@+id/onboarding_home_no_issuers_desc"
+                style="@style/Text.Body"
+                android:layout_width="0dp"
+                android:layout_height="64dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="@string/issuer_no_certificates_desc2"
+                app:layout_constraintBottom_toTopOf="@+id/spreader2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/issuer_no_certificates_desc" />
+
+
+            <View
+                android:id="@+id/spreader2"
+                android:layout_width="65dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginStart="32dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/onboarding_home_no_issuers_desc" />
+
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.constraint.ConstraintLayout>
 
 
 </layout>
