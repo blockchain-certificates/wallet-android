@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.preferences.SharedPreferencesManager;
 import com.learningmachine.android.app.databinding.FragmentAccountChooserBinding;
+import com.smallplanet.labalib.Laba;
 
 import javax.inject.Inject;
 
@@ -38,6 +39,11 @@ public class AccountChooserFragment extends OnboardingFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_account_chooser, container, false);
+
+
+        Laba.Animate(mBinding.newAccountButton, "!^300", () -> { return null; });
+        Laba.Animate(mBinding.existingAccountButton, "!^300", () -> { return null; });
+
 
         mBinding.newAccountButton.setOnClickListener(view -> mCallback.onNewAccount());
         mBinding.existingAccountButton.setOnClickListener(view -> mCallback.onExistingAccount());
