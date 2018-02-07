@@ -54,7 +54,7 @@ public class IssuerViewHolder extends RecyclerView.ViewHolder implements View.On
 
         Picasso.with(mContext)
                 .load(file)
-                .placeholder(R.mipmap.ic_launcher)
+                .placeholder(R.mipmap.ic_placeholder)
                 .into(mBinding.imageView);
     }
 }

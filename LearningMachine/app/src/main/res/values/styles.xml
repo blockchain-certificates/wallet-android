@@ -69,6 +69,7 @@
         <item name="android:textViewStyle">@style/LearningMachineTextView</item>
         <item name="android:statusBarColor">@color/colorBackground</item>
         <item name="android:windowLightStatusBar">false</item>
+        <item name="colorControlNormal">@color/white</item>
     </style>
 
     <!--No Toolbar Theme-->
@@ -79,6 +80,7 @@
         <item name="android:textViewStyle">@style/LearningMachineTextView</item>
         <item name="android:statusBarColor">@color/colorBackground</item>
         <item name="android:windowLightStatusBar">false</item>
+        <item name="colorControlNormal">@color/white</item>
     </style>
 
     <style name="NoToolbarTheme.Splash">

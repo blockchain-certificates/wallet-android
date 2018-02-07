@@ -16,9 +16,12 @@ import android.view.ViewGroup;
 
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.CertificateManager;
+import com.learningmachine.android.app.data.IssuerManager;
 import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.data.model.CertificateRecord;
+import com.learningmachine.android.app.data.model.IssuerRecord;
 import com.learningmachine.android.app.databinding.FragmentIssuerBinding;
+import com.learningmachine.android.app.databinding.ListCertificateHeaderBinding;
 import com.learningmachine.android.app.databinding.ListItemCertificateBinding;
 import com.learningmachine.android.app.ui.LMFragment;
 import com.learningmachine.android.app.ui.cert.AddCertificateActivity;
@@ -34,9 +37,12 @@ public class IssuerFragment extends LMFragment {
 
     private static final String ARG_ISSUER_UUID = "IssuerFragment.IssuerUuid";
 
+    @Inject
+    IssuerManager mIssuerManager;
     @Inject protected CertificateManager mCertificateManager;
 
     private String mIssuerUuid;
+    private IssuerRecord mIssuer;
     private FragmentIssuerBinding mBinding;
     private List<CertificateRecord> mCertificateList;
 
@@ -58,6 +64,7 @@ public class IssuerFragment extends LMFragment {
                 .inject(this);
 
         mIssuerUuid = getArguments().getString(ARG_ISSUER_UUID);
+
         mCertificateList = new ArrayList<>();
     }
 
@@ -101,6 +108,12 @@ public class IssuerFragment extends LMFragment {
         mCertificateManager.getCertificatesForIssuer(mIssuerUuid)
                 .compose(bindToMainThread())
                 .subscribe(this::updateRecyclerView, throwable -> Timber.e(throwable, "Unable to load certificates"));
+
+        mIssuerManager.getIssuer(mIssuerUuid).compose(bindToMainThread())
+                .subscribe((issuerRecord) -> {
+                    this.mIssuer = issuerRecord;
+                    updateRecyclerView(null);
+                }, throwable -> Timber.e(throwable, "Unable to load certificates"));
     }
 
     private void setupRecyclerView() {
@@ -112,17 +125,22 @@ public class IssuerFragment extends LMFragment {
     }
 
     private void updateRecyclerView(List<CertificateRecord> certificateList) {
-        mCertificateList.clear();
-        mCertificateList.addAll(certificateList);
-        mBinding.certificateRecyclerView.getAdapter()
-                .notifyDataSetChanged();
+        if(certificateList != null) {
+            mCertificateList.clear();
+            mCertificateList.addAll(certificateList);
+        }
 
-        //boolean emptyCertificates = certificateList.isEmpty();
-        //mBinding.certificateMainContent.setVisibility(emptyCertificates ? View.GONE : View.VISIBLE);
-        //mBinding.certificateEmptyContent.setVisibility(emptyCertificates ? View.VISIBLE : View.GONE);
+        if(mIssuer != null) {
+            mBinding.certificateRecyclerView.getAdapter()
+                    .notifyDataSetChanged();
+
+            boolean emptyCertificates = mCertificateList.isEmpty();
+            mBinding.certificateMainContent.setVisibility(emptyCertificates ? View.GONE : View.VISIBLE);
+            mBinding.certificateEmptyContent.setVisibility(emptyCertificates ? View.VISIBLE : View.GONE);
+        }
     }
 
-    private class CertificateAdapter extends RecyclerView.Adapter<CertificateViewHolder> {
+    private class CertificateAdapter extends RecyclerView.Adapter {
 
         private List<CertificateRecord> mCertificateList;
 
@@ -131,7 +149,18 @@ public class IssuerFragment extends LMFragment {
         }
 
         @Override
-        public CertificateViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            if(viewType == 0) {
+                Context context = parent.getContext();
+                LayoutInflater inflater = LayoutInflater.from(context);
+                ListCertificateHeaderBinding binding = DataBindingUtil.inflate(inflater,
+                        R.layout.list_certificate_header,
+                        parent,
+                        false);
+                return new CertificateHeaderViewHolder(binding);
+
+            }
+
             Context context = parent.getContext();
             LayoutInflater inflater = LayoutInflater.from(context);
             ListItemCertificateBinding binding = DataBindingUtil.inflate(inflater,
@@ -142,14 +171,31 @@ public class IssuerFragment extends LMFragment {
         }
 
         @Override
-        public void onBindViewHolder(CertificateViewHolder holder, int position) {
-            CertificateRecord certificate = mCertificateList.get(position);
-            holder.bind(certificate);
+        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+            int viewType = holder.getItemViewType();
+            if (viewType == 0){
+                ((CertificateHeaderViewHolder)holder).bind(mIssuer);
+            }
+            if (viewType == 1){
+                CertificateRecord certificate = mCertificateList.get(position - 1);
+                ((CertificateViewHolder)holder).bind(certificate);
+            }
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+            if(position == 0) {
+                return 0;
+            }
+            return 1;
         }
 
         @Override
         public int getItemCount() {
-            return mCertificateList.size();
+            if(mCertificateList.size() == 0) {
+                return 0;
+            }
+            return mCertificateList.size() + 1;
         }
     }
 }
