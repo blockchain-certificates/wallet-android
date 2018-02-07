@@ -17,6 +17,22 @@ public class CertificateHeaderViewModel extends BaseObservable {
         return mIssuer.getName();
     }
 
+    @Bindable
+    public String getNumberOfCertificatesAsString() {
+        if (mIssuer == null) {
+            return null;
+        }
+
+        // TODO: Move these to the strings.xml
+        if(mIssuer.cachedNumberOfCertificatesForIssuer == 0){
+            return "You have no credentials:";
+        }
+        if(mIssuer.cachedNumberOfCertificatesForIssuer == 1){
+            return "You have 1 credential:";
+        }
+        return String.format("You have %d credentials:", mIssuer.cachedNumberOfCertificatesForIssuer);
+    }
+
     public void bindIssuer(IssuerRecord issuer) {
         mIssuer = issuer;
         notifyChange();

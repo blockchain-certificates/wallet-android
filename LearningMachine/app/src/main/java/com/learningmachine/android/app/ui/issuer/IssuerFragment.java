@@ -131,6 +131,9 @@ public class IssuerFragment extends LMFragment {
         }
 
         if(mIssuer != null) {
+
+            mIssuer.cachedNumberOfCertificatesForIssuer = mCertificateList.size();
+
             mBinding.certificateRecyclerView.getAdapter()
                     .notifyDataSetChanged();
 

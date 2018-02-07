@@ -22,6 +22,11 @@
         <item name="android:textColor">#333333</item>
     </style>
 
+    <style name="Text.ListHeader">
+        <item name="android:textColor">#1D6FBE</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
     <style name="Text.Footer">
         <item name="android:textColor">#919396</item>
     </style>
