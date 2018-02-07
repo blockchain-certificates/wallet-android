@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/fragment_add_certificate_text_view_bottom_margin"
             android:text="@string/certificate_add_url_label"
-            style="@style/Material.Light.Body1"/>
+            style="@style/Text.ListHeader"/>
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -28,14 +28,41 @@
             <EditText
                 android:id="@+id/certificate_url_edit_text"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:hint="@string/certificate_add_url_edit_text_hint"
                 android:imeOptions="flagNoFullscreen|actionDone"
                 android:imeActionLabel="@string/ime_action_done"
                 android:imeActionId="@integer/action_done"
                 android:inputType="textUri"
                 android:maxLines="1"
-                style="@style/Material.Light.Subhead.Disabled"/>
+                style="@style/Text.Passphrase"/>
+
+
+
+
+<!--
+            <EditText
+                android:id="@+id/paste_passphrase_edit_text"
+                style="@style/Text.Passphrase"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="24dp"
+                android:gravity="center"
+                android:padding="16dp"
+                android:hint="@string/onboarding_paste_passphrase_hint"
+                android:text=""
+                app:layout_constraintBottom_toTopOf="@+id/doneButton"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/passphrase_desc"
+                android:inputType="textMultiLine|textNoSuggestions|textVisiblePassword"
+                android:privateImeOptions="nm"
+                android:scrollHorizontally="false"
+                />
+                -->
+
 
         </android.support.design.widget.TextInputLayout>
 

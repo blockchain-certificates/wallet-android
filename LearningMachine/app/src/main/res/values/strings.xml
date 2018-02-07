@@ -154,7 +154,7 @@
 
     <string name="add_certificate_by_file">BY FILE</string>
     <string name="add_certificate_by_url">BY URL</string>
-    <string name="certificate_add_url_label">What is the URL of the credential?</string>
+    <string name="certificate_add_url_label">Copy and pase the credential URL:</string>
     <string name="certificate_add_url_edit_text_hint">Credential URL</string>
     <string name="fragment_add_certificate_file_label">What is the File of the credential?</string>
     <string name="framgent_add_certificate_file_choose_file_button_title">Choose File</string>
