@@ -56,7 +56,7 @@
             android:layout_marginStart="16dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="@{viewModel.description}"
+            android:text="@{viewModel.dateIssued}"
             app:layout_constraintBottom_toBottomOf="@+id/backgroundView"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="@+id/backgroundView"

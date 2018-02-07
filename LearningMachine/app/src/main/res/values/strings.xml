@@ -64,14 +64,14 @@
     <string name="onboarding_passphrase_write_confirmation">Yes, I have written down my passphrase!</string>
 
     <string name="onboarding_passphrase_email_before_title">Save your Passphrase!</string>
-    <string name="onboarding_passphrase_email_before">Email yourself the passphrase so you can access your certificates in the future.</string>
+    <string name="onboarding_passphrase_email_before">Email yourself the passphrase so you can access your credentials in the future.</string>
 
     <string name="onboarding_passphrase_permissions_error_title">Passphrase Not Saved!</string>
     <string name="onboarding_passphrase_permissions_error">Your passphrase could not be saved to your device, most likely because you did not allow the permissions necessary to store the passphrase.</string>
 
     <string name="onboarding_passphrase_complete_title">Passphrase Saved!</string>
     <string name="onboarding_passphrase_save_complete">Your passphrase has been saved to your device. If you uninstall and reinstall BlockCerts we will use the passphrase stored there.</string>
-    <string name="onboarding_passphrase_write_complete">Save your passphrase in a secure location so you can access your certificates in the future.</string>
+    <string name="onboarding_passphrase_write_complete">Save your passphrase in a secure location so you can access your credentials in the future.</string>
     <string name="onboarding_passphrase_cancel">Cancel</string>
     <string name="onboarding_passphrase_ok">OK</string>
 
@@ -81,7 +81,7 @@
 
     <!-- Home -->
     <string name="fragment_home_empty_title">You are ready!</string>
-    <string name="fragment_home_empty_description">Check email inbox for invitation email from your issuing institution to add your certificate.</string>
+    <string name="fragment_home_empty_description">Check email inbox for invitation email from your issuing institution to add your credential.</string>
     <string name="fragment_home_empty_action">Add Issuer</string>
 
     <!-- Settings -->
@@ -116,7 +116,7 @@
     <!-- Reveal Passphrase -->
 
     <string name="reveal_passphrase_title">Reveal Passphrase</string>
-    <string name="reveal_passphrase_instructional_message">This passphrase uniquely proves ownership of all your certificates. Write this down, keep it safe, and don’t reveal it to anyone else.</string>
+    <string name="reveal_passphrase_instructional_message">This passphrase uniquely proves ownership of all your credentials. Write this down, keep it safe, and don’t reveal it to anyone else.</string>
     <string name="reveal_passphrase_current_title">Current Passphrase</string>
     <string name="reveal_passphrase_text_copied">Passphrase has been copied.</string>
 
@@ -124,7 +124,7 @@
 
     <string name="replace_passphrase_title">Replace Passphrase</string>
     <string name="replace_passphrase_menu_item_title">Replace</string>
-    <string name="replace_passphrase_warning_message">Note that replacing your passphrase will remove all your issuers and certificates. Make sure this is what you want to do before proceeding.</string>
+    <string name="replace_passphrase_warning_message">Note that replacing your passphrase will remove all your issuers and credentials. Make sure this is what you want to do before proceeding.</string>
     <string name="replace_passphrase_hint">Paste Passphrase</string>
     <string name="replace_passphrase_success_message">Passphrase successfully replaced</string>
 
@@ -147,15 +147,15 @@
 
     <string name="add_certificate_by_file">BY FILE</string>
     <string name="add_certificate_by_url">BY URL</string>
-    <string name="certificate_add_url_label">What is the URL of the certificate?</string>
-    <string name="certificate_add_url_edit_text_hint">Certificate URL</string>
-    <string name="fragment_add_certificate_file_label">What is the File of the certificate?</string>
+    <string name="certificate_add_url_label">What is the URL of the credential?</string>
+    <string name="certificate_add_url_edit_text_hint">Credential URL</string>
+    <string name="fragment_add_certificate_file_label">What is the File of the credential?</string>
     <string name="framgent_add_certificate_file_choose_file_button_title">Choose File</string>
-    <string name="fragment_add_certificate_title">Add Certificate</string>
-    <string name="fragment_add_certificate_progress_dialog_message">Adding certificate…</string>
+    <string name="fragment_add_certificate_title">Add Credential</string>
+    <string name="fragment_add_certificate_progress_dialog_message">Adding credential…</string>
     <string name="fragment_add_certificate_alert_dialog_success_title">Success!</string>
-    <string name="fragment_add_certificate_alert_dialog_success_message">This is a valid certificate.</string>
-    <string name="fragment_add_certificate_alert_dialog_error_message">That doesn\'t appear to be a valid certificate. Please check the URL and try again.</string>
+    <string name="fragment_add_certificate_alert_dialog_success_message">This is a valid credential.</string>
+    <string name="fragment_add_certificate_alert_dialog_error_message">That doesn\'t appear to be a valid credential. Please check the URL and try again.</string>
 
     <!-- Certificate Fragment -->
 
@@ -163,18 +163,18 @@
     <string name="certificate_verify_menu_item_title">Verify</string>
     <string name="certificate_share_menu_item_title">Share</string>
     <string name="certificate_info_menu_item_title">Info</string>
-    <string name="fragment_certificate_progress_dialog_message">Loading Certificate…</string>
-    <string name="fragment_certificate_share_message">How would you like to share your certificate?</string>
+    <string name="fragment_certificate_progress_dialog_message">Loading Credential…</string>
+    <string name="fragment_certificate_share_message">How would you like to share your credential?</string>
     <string name="fragment_certificate_share_url_button_title">URL</string>
     <string name="fragment_certificate_share_file_button_title">File</string>
-    <string name="fragment_certificate_share_url_format">Check out my certificate from %1$s! %2$s</string>
-    <string name="fragment_certificate_share_file_format">Check out my certificate from %1$s!</string>
+    <string name="fragment_certificate_share_url_format">Check out my credential from %1$s! %2$s</string>
+    <string name="fragment_certificate_share_file_format">Check out my credential from %1$s!</string>
 
     <!-- Certificate Info Fragment -->
 
     <string name="fragment_certificate_info_delete_menu_item_title">Delete</string>
     <string name="fragment_certificate_info_delete_warning_title">Be careful</string>
-    <string name="fragment_certificate_info_delete_warning_message">If you delete this certificate and don\'t have a backup, then you\'ll have to ask the issuer to send it to you again if you want to recover it. Are you sure you want to delete this certificate?</string>
+    <string name="fragment_certificate_info_delete_warning_message">If you delete this credential and don\'t have a backup, then you\'ll have to ask the issuer to send it to you again if you want to recover it. Are you sure you want to delete this credential?</string>
     <string name="fragment_certificate_info_delete_warning_positive_title">Delete</string>
     <string name="fragment_certificate_info_delete_warning_negative_title">Cancel</string>
 
@@ -187,12 +187,12 @@
     <string name="cert_verification_step_checking_receipt">Checking receipt…</string>
     <string name="cert_verification_step_checking_authenticity">Checking authenticity…</string>
     <string name="cert_verification_step_checking_issuer_signature">Checking issuer\'s signature…</string>
-    <string name="cert_verification_step_checking_cert_status">Checking if the certificate has been revoked…</string>
-    <string name="cert_verification_step_valid_cert">Valid certificate</string>
-    <string name="cert_verification_step_invalid_cert">Not a valid certificate</string>
-    <string name="error_testnet_certificate_json">The certificate is NOT a real certificate, it is a testnet certificate</string>
-    <string name="error_invalid_certificate_json">The certificate file is invalid</string>
-    <string name="error_cannot_load_certificate_json">Could not load the certificate file</string>
+    <string name="cert_verification_step_checking_cert_status">Checking if the credential has been revoked…</string>
+    <string name="cert_verification_step_valid_cert">Valid credential</string>
+    <string name="cert_verification_step_invalid_cert">Not a valid credential</string>
+    <string name="error_testnet_certificate_json">The credential is NOT a real credential, it is a testnet credential</string>
+    <string name="error_invalid_certificate_json">The credential file is invalid</string>
+    <string name="error_cannot_load_certificate_json">Could not load the credential file</string>
     <string name="error_remote_and_local_hash_mismatch">Local hash doesn\'t match remote hash</string>
     <string name="fragment_verify_cert_title">Verifying</string>
     <string name="fragment_verify_cert_step_format">Step %1$d of %2$d</string>
@@ -211,15 +211,15 @@
     <string name="http_not_found_issuer">There does not appear to be a valid issuer at this URL. Please check the URL and try again.</string>
     <string name="http_bad_request_issuer">This issuer URL appears to be invalid. Please check the URL and try again.</string>
 
-    <string name="http_not_found_certificate">There does not appear to be a valid certificate at this URL. Please check the URL and try again.</string>
-    <string name="http_bad_request_certificate">This certificate URL appears to be invalid. This could be for a number of reasons, such as this the certificate having already been issued.</string>
+    <string name="http_not_found_certificate">There does not appear to be a valid credential at this URL. Please check the URL and try again.</string>
+    <string name="http_bad_request_certificate">This credential URL appears to be invalid. This could be for a number of reasons, such as this the credential having already been issued.</string>
 
     <string name="http_not_found_generic">This does not appear to be a valid URL. Please check the URL and try again.</string>
     <string name="http_bad_request_generic">An invalid URL was entered. Please check the URL and try again.</string>
 
 
     <string name="wallet_does_not_exist_and_want_to_add_issuer">Before you may add an issuer you must log in to an account.\n\nGo ahead and log in, we will try to add the issuer after you are finished.</string>
-    <string name="wallet_does_not_exist_and_want_to_add_certificate">Before you may add a certificate you must log in to an account.\n\nGo ahead and log in, we will try to add the certificate after you are finished.</string>
+    <string name="wallet_does_not_exist_and_want_to_add_certificate">Before you may add a credential you must log in to an account.\n\nGo ahead and log in, we will try to add the credential after you are finished.</string>
 
 
     <!--Certificate Info Fragment-->
