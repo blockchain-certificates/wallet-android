@@ -25,6 +25,7 @@ import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.data.model.IssuerRecord;
 import com.learningmachine.android.app.data.preferences.SharedPreferencesManager;
 import com.learningmachine.android.app.databinding.FragmentHomeBinding;
+import com.learningmachine.android.app.databinding.ListIssuerHeaderBinding;
 import com.learningmachine.android.app.databinding.ListItemIssuerBinding;
 import com.learningmachine.android.app.ui.LMFragment;
 import com.learningmachine.android.app.ui.issuer.AddIssuerActivity;
@@ -103,7 +104,6 @@ public class HomeFragment extends LMFragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
 
         mBinding.issuerRecyclerview.setLayoutManager(layoutManager);
-        mBinding.issuerRecyclerview.setHasFixedSize(true);
     }
 
 
@@ -134,7 +134,7 @@ public class HomeFragment extends LMFragment {
         }
     }
 
-    private class IssuerAdapter extends RecyclerView.Adapter<IssuerViewHolder> {
+    private class IssuerAdapter extends RecyclerView.Adapter {
 
         private List<IssuerRecord> mIssuerList;
 
@@ -143,27 +143,54 @@ public class HomeFragment extends LMFragment {
         }
 
         @Override
-        public IssuerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            Context context = parent.getContext();
-            LayoutInflater inflater = LayoutInflater.from(context);
-            ListItemIssuerBinding binding = DataBindingUtil.inflate(inflater, R.layout.list_item_issuer, parent, false);
+        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            if(viewType == 0) {
+                Context context = parent.getContext();
+                LayoutInflater inflater = LayoutInflater.from(context);
+                ListIssuerHeaderBinding binding = DataBindingUtil.inflate(inflater,
+                        R.layout.list_issuer_header,
+                        parent,
+                        false);
+                return new GenericViewHolder(binding);
+            }
 
-            float height = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150, getResources().getDisplayMetrics());
+            if(viewType == 1) {
+                Context context = parent.getContext();
+                LayoutInflater inflater = LayoutInflater.from(context);
+                ListItemIssuerBinding binding = DataBindingUtil.inflate(inflater, R.layout.list_item_issuer, parent, false);
 
-            IssuerViewHolder holder = new IssuerViewHolder(binding);
-            holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(mBinding.issuerRecyclerview.getWidth(), (int)height));
-            return holder;
+                float height = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150, getResources().getDisplayMetrics());
+
+                IssuerViewHolder holder = new IssuerViewHolder(binding);
+                holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(mBinding.issuerRecyclerview.getWidth(), (int) height));
+                return holder;
+            }
+
+            return null;
         }
 
         @Override
-        public void onBindViewHolder(IssuerViewHolder holder, int position) {
-            IssuerRecord issuer = mIssuerList.get(position);
-            holder.bind(issuer);
+        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+            if(position > 0) {
+                IssuerRecord issuer = mIssuerList.get(position - 1);
+                ((IssuerViewHolder)holder).bind(issuer);
+            }
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+            if(position == 0) {
+                return 0;
+            }
+            return 1;
         }
 
         @Override
         public int getItemCount() {
-            return mIssuerList.size();
+            if(mIssuerList.size() == 0) {
+                return 0;
+            }
+            return mIssuerList.size() + 1;
         }
     }
 }
