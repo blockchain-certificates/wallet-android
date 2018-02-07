@@ -15,6 +15,14 @@ public class IssuerInfoViewModel extends BaseObservable {
     }
 
     @Bindable
+    public String getTitle() {
+        if (mIssuer == null) {
+            return null;
+        }
+        return mIssuer.getName();
+    }
+
+    @Bindable
     public String getDate() {
         if (mIssuer == null) {
             return null;

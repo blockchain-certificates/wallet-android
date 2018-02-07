@@ -17,18 +17,25 @@
         android:paddingTop="@dimen/issuer_info_linear_layout_padding_top">
 
         <TextView
-            android:id="@+id/issuer_info_additional_info_textview"
+            android:id="@+id/issuer_info_issuer_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/fragment_issuer_info_additional_information"
-            style="@style/IssuerInfo.Header"/>
+            android:text="@string/fragment_issuer_info_title"
+            style="@style/Text.ListHeader"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/issuer_info_viewmodel_textview_bottom_padding"
+            android:text="@{issuerInfo.title}"
+            style="@style/Material.Light.Body1.Secondary"/>
 
         <TextView
             android:id="@+id/issuer_info_introduced_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/fragment_issuer_info_introduced_on"
-            style="@style/TextStyle"/>
+            style="@style/Text.ListHeader"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -42,7 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/fragment_issuer_info_shared_address"
-            style="@style/TextStyle"/>
+            style="@style/Text.ListHeader"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -56,7 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/fragment_issuer_info_url"
-            style="@style/TextStyle"/>
+            style="@style/Text.ListHeader"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -70,7 +77,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/fragment_issuer_info_email"
-            style="@style/TextStyle"/>
+            style="@style/Text.ListHeader"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -84,7 +91,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/fragment_issuer_info_description"
-            style="@style/TextStyle"/>
+            style="@style/Text.ListHeader"/>
 
         <TextView
             android:layout_width="wrap_content"

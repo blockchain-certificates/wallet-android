@@ -48,6 +48,19 @@
     <string name="issuer_no_certificates_desc">No Credentials</string>
     <string name="issuer_no_certificates_desc2">You will receive an email when a credential is issued. Follow the link in the email to complete the process.</string>
 
+
+    <!-- Issuer Info -->
+    <string name="issuer_info_title">Issuer Info</string>
+    <string name="issuer_info_menu_item_title">Info</string>
+    <string name="fragment_issuer_info_title">Issuer Name</string>
+    <string name="fragment_issuer_info_introduced_on">Introduced on</string>
+    <string name="fragment_issuer_info_shared_address">Shared Address</string>
+    <string name="fragment_issuer_info_url">URL</string>
+    <string name="fragment_issuer_info_email">Email</string>
+    <string name="fragment_issuer_info_description">Description</string>
+
+    <string name="fragment_issuer_info_additional_information">Additional Info</string>
+
     <!-- vvv OLD vvv -->
 
 
@@ -135,13 +148,7 @@
 
     <!-- Issuer Info Fragment -->
 
-    <string name="issuer_info_menu_item_title">Info</string>
-    <string name="fragment_issuer_info_additional_information">Additional Information</string>
-    <string name="fragment_issuer_info_introduced_on">Introduced on</string>
-    <string name="fragment_issuer_info_shared_address">Shared Address</string>
-    <string name="fragment_issuer_info_url">URL</string>
-    <string name="fragment_issuer_info_email">Email</string>
-    <string name="fragment_issuer_info_description">Description</string>
+
 
     <!--Add Certificate-->
 
