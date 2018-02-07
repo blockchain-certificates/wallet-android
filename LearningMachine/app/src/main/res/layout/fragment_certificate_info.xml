@@ -6,16 +6,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/certificate_info_additional_info_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingEnd="@dimen/certificate_info_linear_layout_padding_end"
-            android:paddingStart="@dimen/certificate_info_linear_layout_padding_start"
-            android:paddingTop="@dimen/certificate_info_linear_layout_padding_top"
-            android:text="@string/fragment_issuer_info_additional_information"
-            style="@style/CertificateInfo.Header"/>
-
         <android.support.v7.widget.RecyclerView
             android:id="@+id/certificate_info_recycler_view"
             android:layout_width="match_parent"

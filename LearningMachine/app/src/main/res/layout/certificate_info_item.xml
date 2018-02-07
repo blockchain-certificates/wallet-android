@@ -14,14 +14,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{item.title}"
-            style="@style/TextStyle"/>
+            style="@style/Text.ListHeader"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/certificate_info_viewmodel_textview_bottom_padding"
             android:text="@{item.value}"
-            style="@style/Material.Light.Body1.Secondary"/>
+            style="@style/Text.Info"/>
 
     </LinearLayout>
 </layout>

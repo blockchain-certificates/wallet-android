@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/issuer_info_viewmodel_textview_bottom_padding"
             android:text="@{issuerInfo.title}"
-            style="@style/Material.Light.Body1.Secondary"/>
+            style="@style/Text.Info"/>
 
         <TextView
             android:id="@+id/issuer_info_introduced_textview"
@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/issuer_info_viewmodel_textview_bottom_padding"
             android:text="@{issuerInfo.date}"
-            style="@style/Material.Light.Body1.Secondary"/>
+            style="@style/Text.Info"/>
 
         <TextView
             android:id="@+id/issuer_info_shared_address_textview"
@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/issuer_info_viewmodel_textview_bottom_padding"
             android:text="@{issuerInfo.sharedAddress}"
-            style="@style/Material.Light.Body1.Secondary"/>
+            style="@style/Text.Info"/>
 
         <TextView
             android:id="@+id/issuer_info_url_textview"
@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/issuer_info_viewmodel_textview_bottom_padding"
             android:text="@{issuerInfo.url}"
-            style="@style/Material.Light.Body1.Secondary"/>
+            style="@style/Text.Info"/>
 
         <TextView
             android:id="@+id/issuer_info_email_textview"
@@ -84,7 +84,7 @@
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/issuer_info_viewmodel_textview_bottom_padding"
             android:text="@{issuerInfo.email}"
-            style="@style/Material.Light.Body1.Secondary"/>
+            style="@style/Text.Info"/>
 
         <TextView
             android:id="@+id/issuer_info_description_textview"
@@ -98,7 +98,7 @@
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/issuer_info_viewmodel_textview_bottom_padding"
             android:text="@{issuerInfo.description}"
-            style="@style/Material.Light.Body1.Secondary"/>
+            style="@style/Text.Info"/>
     </LinearLayout>
 
 </layout>
