@@ -23,7 +23,7 @@
                 android:layout_marginBottom="@dimen/fragment_add_issuer_url_textview_bottom_padding"
                 android:layout_marginTop="@dimen/fragment_add_issuer_linear_layout_top_padding"
                 android:text="@string/fragment_add_issuer_info_url_text"
-                style="@style/Material.Light.Body1"/>
+                style="@style/Text.ListHeader"/>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -32,7 +32,7 @@
                 <EditText
                     android:id="@+id/add_issuer_url_edit_text"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="60dp"
                     android:layout_marginBottom="@dimen/fragment_add_isser_url_edittext_bottom_padding"
                     android:hint="@string/fragment_add_issuer_url"
                     android:imeOptions="flagNoFullscreen|actionNext"
@@ -40,7 +40,7 @@
                     android:maxLines="1"
                     android:nextFocusForward="@+id/add_issuer_identity_edit_text"
                     android:paddingEnd="@dimen/fragment_add_isser_edittext_padding_right"
-                    style="@style/Material.Light.Subhead.Disabled"/>
+                    style="@style/Text.Passphrase"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -50,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/fragment_add_issuer_identity_textview_bottom_padding"
                 android:text="@string/fragment_add_issuer_identity_text"
-                style="@style/Material.Light.Body1"/>
+                style="@style/Text.ListHeader"/>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -59,7 +59,7 @@
                 <EditText
                     android:id="@+id/add_issuer_nonce_edit_text"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="60dp"
                     android:hint="@string/fragment_add_issuer_add_identity"
                     android:imeActionId="@integer/action_done"
                     android:imeActionLabel="@string/ime_action_done"
@@ -67,7 +67,7 @@
                     android:inputType="text"
                     android:maxLines="1"
                     android:paddingEnd="@dimen/fragment_add_isser_edittext_padding_right"
-                    style="@style/Material.Light.Subhead.Disabled"/>
+                    style="@style/Text.Passphrase"/>
 
             </android.support.design.widget.TextInputLayout>
 

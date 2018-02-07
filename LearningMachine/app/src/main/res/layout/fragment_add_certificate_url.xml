@@ -37,33 +37,6 @@
                 android:maxLines="1"
                 style="@style/Text.Passphrase"/>
 
-
-
-
-<!--
-            <EditText
-                android:id="@+id/paste_passphrase_edit_text"
-                style="@style/Text.Passphrase"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="32dp"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="24dp"
-                android:gravity="center"
-                android:padding="16dp"
-                android:hint="@string/onboarding_paste_passphrase_hint"
-                android:text=""
-                app:layout_constraintBottom_toTopOf="@+id/doneButton"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/passphrase_desc"
-                android:inputType="textMultiLine|textNoSuggestions|textVisiblePassword"
-                android:privateImeOptions="nm"
-                android:scrollHorizontally="false"
-                />
-                -->
-
-
         </android.support.design.widget.TextInputLayout>
 
     </LinearLayout>
