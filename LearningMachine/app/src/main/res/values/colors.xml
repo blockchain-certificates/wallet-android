@@ -10,9 +10,13 @@
     <color name="secondaryButtonNormal">#ffffff</color>
     <color name="secondaryButtonPressed">#cccccc</color>
 
-    <color name="passphraseBodyBackground">#ebeff7</color>
+    <color name="passphraseBodyBackground">#ECF5FE</color>
+
+    <color name="headline">#1D6FBE</color>
 
     <color name="clear">#00000000</color>
+
+    <color name="off_white_background">#F0F3F5</color>
 
     <!-- vvv OLD vvv -->
     <color name="colorPrimary">@color/white</color>
@@ -22,7 +26,7 @@
     <color name="fab_color">#707070</color>
     <color name="transparent_gray">#1e000000</color>
     <color name="white">#ffffff</color>
-    <color name="off_white_background">#F2F5FA</color>
+
     <color name="black">#000000</color>
     <color name="black_8a">#8a000000</color>
     <color name="black_8b">#8b000000</color>
