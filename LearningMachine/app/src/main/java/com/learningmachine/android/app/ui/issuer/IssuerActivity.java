@@ -50,7 +50,7 @@ public class IssuerActivity extends LMSingleFragmentActivity {
 
     @Override
     public String getActionBarTitle() {
-        return mIssuerName;
+        return " ";
     }
 
     @Override
