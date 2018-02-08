@@ -109,8 +109,8 @@ public class Laba {
             long currentTime = System.nanoTime();
             float t = (float) (currentTime - startTime) / (float) (endTime - startTime);
             if(endTime == startTime) {
-                t = 1.0f;
-            }
+            	t = 1.0f;
+			}
 
             if (t >= 1.0f) {
                 action.apply(1.0f, false);
@@ -118,15 +118,15 @@ public class Laba {
                 if (loopCount == -1) {
                     action.apply(0.0f, true);
                     startTime = System.nanoTime();
-                    endTime = startTime + (long) (duration * 1000000000);
+                    endTime = startTime + (long) (duration * 1000000000.0f);
                     ScheduleNextUpdate();
                     return;
                 }
-                if (loopCount > 0) {
+                if (loopCount > 1) {
                     loopCount--;
                     action.apply(0.0f, true);
                     startTime = System.nanoTime();
-                    endTime = startTime + (long) (duration * 1000000000);
+                    endTime = startTime + (long) (duration * 1000000000.0f);
                     ScheduleNextUpdate();
                     return;
                 }
@@ -154,12 +154,12 @@ public class Laba {
         public LabaTimer(View v, ValueAction act, float startVal, float endVal, float dura, Callback complete, int loops) {
 
             view = v;
+			loopCount = loops;
+			action = act;
+			duration = dura;
+			onComplete = complete;
             startTime = System.nanoTime();
-            endTime = startTime + (long)(duration * 1000000000);
-            loopCount = loops;
-            action = act;
-            duration = dura;
-            onComplete = complete;
+            endTime = startTime + (long)(duration * 1000000000.0f);
 
             action.apply(0.0f, true);
             Update();
