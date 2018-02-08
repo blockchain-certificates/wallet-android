@@ -21,23 +21,18 @@
             android:text="@string/certificate_add_url_label"
             style="@style/Text.ListHeader"/>
 
-        <android.support.design.widget.TextInputLayout
+        <EditText
+            android:id="@+id/certificate_url_edit_text"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="60dp"
+            android:hint="@string/certificate_add_url_edit_text_hint"
+            android:imeOptions="flagNoFullscreen|actionDone"
+            android:imeActionLabel="@string/ime_action_done"
+            android:imeActionId="@integer/action_done"
+            android:inputType="textUri"
+            android:maxLines="1"
+            style="@style/Text.Passphrase"/>
 
-            <EditText
-                android:id="@+id/certificate_url_edit_text"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:hint="@string/certificate_add_url_edit_text_hint"
-                android:imeOptions="flagNoFullscreen|actionDone"
-                android:imeActionLabel="@string/ime_action_done"
-                android:imeActionId="@integer/action_done"
-                android:inputType="textUri"
-                android:maxLines="1"
-                style="@style/Text.Passphrase"/>
-
-        </android.support.design.widget.TextInputLayout>
 
     </LinearLayout>
 

@@ -22,22 +22,16 @@
             android:minHeight="@dimen/fragment_replace_passphrase_container_min_height"
             android:padding="@dimen/fragment_replace_passphrase_container_padding">
 
-            <android.support.design.widget.TextInputLayout
+            <EditText
+                android:id="@+id/replace_passphrase_edit_text"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/replace_passphrase_edit_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:hint="@string/replace_passphrase_hint"
-                    android:inputType="textMultiLine"
-                    android:scrollHorizontally="false"
-                    android:textIsSelectable="true"
-                    style="@style/Material.Light.Subhead.Secondary"/>
-
-            </android.support.design.widget.TextInputLayout>
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:hint="@string/replace_passphrase_hint"
+                android:inputType="textMultiLine"
+                android:scrollHorizontally="false"
+                android:textIsSelectable="true"
+                style="@style/Material.Light.Subhead.Secondary"/>
 
         </FrameLayout>
 
