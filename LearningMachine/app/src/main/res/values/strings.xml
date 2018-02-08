@@ -73,7 +73,7 @@
     <string name="onboarding_generate_password_button">Generate Passphrase</string>
     <string name="onboarding_passphrase_done_button">All Done!</string>
 
-    <string name="onboarding_passphrase_write_title">Write this down!</string>
+    <string name="onboarding_passphrase_write_title">Write your passphrase by hand on a piece of paper and store it in a secure location.</string>
     <string name="onboarding_passphrase_write_confirmation">Yes, I have written down my passphrase!</string>
 
     <string name="onboarding_passphrase_email_before_title">Save your Passphrase!</string>
