@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 
+import com.smallplanet.labalib.Laba;
 import com.trello.rxlifecycle.LifecycleProvider;
 import com.trello.rxlifecycle.LifecycleTransformer;
 import com.trello.rxlifecycle.RxLifecycle;
@@ -30,6 +31,7 @@ public abstract class LMActivity extends AppCompatActivity implements LifecycleP
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mLifecycleSubject.onNext(ActivityEvent.CREATE);
+        Laba.setContext(getBaseContext());
     }
 
     @Override
