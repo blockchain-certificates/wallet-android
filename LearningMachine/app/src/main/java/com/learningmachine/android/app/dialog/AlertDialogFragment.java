@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Point;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
@@ -19,12 +20,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.util.StringUtils;
+import com.smallplanet.labalib.Laba;
 
 public class AlertDialogFragment extends DialogFragment {
 
@@ -36,6 +39,13 @@ public class AlertDialogFragment extends DialogFragment {
     private static final String ARG_MESSAGE = "AlertDialogFragment.Message";
     private static final String ARG_POSITIVE_BUTTON_MESSAGE = "AlertDialogFragment.Positive.Button_Message";
     private static final String ARG_NEGATIVE_BUTTON_MESSAGE = "AlertDialogFragment.Negative.Button.Message";
+
+    @FunctionalInterface
+    public interface Callback <A, R> {
+        public R apply (A a);
+    }
+
+    public Callback onComplete = null;
 
     public interface AlertCallback {
         void onDialogPositive();
@@ -69,7 +79,7 @@ public class AlertDialogFragment extends DialogFragment {
         return newInstance(title, message, "", "");
     }
 
-    public static AlertDialogFragment newInstance(int iconID, String title, String message, String positiveButtonMessage, String negativeButtonMessage) {
+    public static AlertDialogFragment newInstance(int iconID, String title, String message, String positiveButtonMessage, String negativeButtonMessage, Callback complete) {
         Bundle args = new Bundle();
         AlertDialogFragment fragment = new AlertDialogFragment();
         args.putString(ARG_MESSAGE, message);
@@ -78,6 +88,7 @@ public class AlertDialogFragment extends DialogFragment {
         args.putString(ARG_POSITIVE_BUTTON_MESSAGE, positiveButtonMessage);
         args.putString(ARG_NEGATIVE_BUTTON_MESSAGE, negativeButtonMessage);
         fragment.setArguments(args);
+        fragment.onComplete = complete;
         return fragment;
     }
 
@@ -176,20 +187,20 @@ public class AlertDialogFragment extends DialogFragment {
         // 2) tell all views to remeasure themselves given the new max width
         relayoutChildren(dialogContent);
 
-
-        // 3) Telling the views to measure is apparently not enough to get the
-        // ConstraintLayout to have the proper width and height. So let's run through
-        // all of the subviews and find the max extents and use those
+        // 3) The total height of the dialog will be
         float totalHeight = 0.0f;
+
         ViewGroup vg = (ViewGroup) dialogContent;
 
         for (int i = 0; i < vg.getChildCount(); i++) {
             final View child = vg.getChildAt(i);
 
-            child.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-
             float vX = child.getMeasuredWidth();
             float vY = child.getMeasuredHeight();
+
+            if (child instanceof TextView) {
+                vY = getTextViewHeight((TextView)child);
+            }
 
             //Log.d("LM", String.format("child[%d] = %f,%f  %s", i, vX, vY, child.toString()));
 
@@ -200,7 +211,7 @@ public class AlertDialogFragment extends DialogFragment {
         //Log.d("LM", String.format("dialogContent width/height= %d,%d", dialogContent.getMeasuredWidth(), dialogContent.getMeasuredHeight()));
 
         // 4) Dialog height should be a little larger than the measured height
-        float idealDialogHeight = totalHeight + dp2px(80.0f);
+        float idealDialogHeight = totalHeight + dp2px(60.0f);
 
         dialogContent.setLayoutParams(new FrameLayout.LayoutParams((int) idealDialogWidth, (int) idealDialogHeight));
 
@@ -221,6 +232,27 @@ public class AlertDialogFragment extends DialogFragment {
         return dialog;
     }
 
+    public int getTextViewHeight(TextView textView) {
+        WindowManager wm =
+                (WindowManager) textView.getContext().getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+
+        int deviceWidth;
+
+        if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2){
+            Point size = new Point();
+            display.getSize(size);
+            deviceWidth = size.x;
+        } else {
+            deviceWidth = display.getWidth();
+        }
+
+        int widthMeasureSpec = View.MeasureSpec.makeMeasureSpec(deviceWidth, View.MeasureSpec.AT_MOST);
+        int heightMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        textView.measure(widthMeasureSpec, heightMeasureSpec);
+        return textView.getMeasuredHeight();
+    }
+
     @Override
     public void onDetach() {
         super.onDetach();
@@ -239,5 +271,8 @@ public class AlertDialogFragment extends DialogFragment {
             }
         }
 
+        if(onComplete != null) {
+            onComplete.apply(buttonResultCode);
+        }
     }
 }

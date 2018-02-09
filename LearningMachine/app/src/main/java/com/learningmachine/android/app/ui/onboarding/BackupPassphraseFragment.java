@@ -110,81 +110,80 @@ public class BackupPassphraseFragment extends OnboardingFragment {
     @Override
     public void didSavePassphraseToDevice(String passphrase) {
         if(passphrase == null) {
-            displayAlert(0,
-                    R.string.onboarding_passphrase_permissions_error_title,
-                    R.string.onboarding_passphrase_permissions_error,
-                    R.string.onboarding_passphrase_ok,
-                    R.string.onboarding_passphrase_cancel);
+
+            DialogUtils.showAlertDialog(getContext(), this,
+                    0,
+                    getResources().getString(R.string.onboarding_passphrase_permissions_error_title),
+                    getResources().getString(R.string.onboarding_passphrase_permissions_error),
+                    getResources().getString(R.string.onboarding_passphrase_ok),
+                    null,
+                    (btnIdx) -> {
+                        HandleBackupOptionCompleted(null);
+                        return null;
+                    });
             return;
         }
 
-        displayAlert(1,
-                R.string.onboarding_passphrase_complete_title,
-                R.string.onboarding_passphrase_save_complete,
-                R.string.onboarding_passphrase_ok,
-                R.string.onboarding_passphrase_cancel);
-
-
+        DialogUtils.showAlertDialog(getContext(), this,
+                0,
+                getResources().getString(R.string.onboarding_passphrase_complete_title),
+                getResources().getString(R.string.onboarding_passphrase_save_complete),
+                getResources().getString(R.string.onboarding_passphrase_ok),
+                null,
+                (btnIdx) -> {
+                    HandleBackupOptionCompleted(mBinding.onboardingSaveCheckmark);
+                    return null;
+                });
     }
 
     private void onEmail() {
-        AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
-        alertDialog.setTitle(getResources().getString(R.string.onboarding_passphrase_email_before_title));
-        alertDialog.setMessage(getResources().getString(R.string.onboarding_passphrase_email_before));
-        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getResources().getString(
-                R.string.onboarding_passphrase_ok),
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
+        DialogUtils.showAlertDialog(getContext(), this,
+                0,
+                getResources().getString(R.string.onboarding_passphrase_email_before_title),
+                getResources().getString(R.string.onboarding_passphrase_email_before),
+                getResources().getString(R.string.onboarding_passphrase_ok),
+                null,
+                (btnIdx) -> {
 
-                        Intent intent = new Intent(Intent.ACTION_SEND);
-                        intent.setType("text/plain");
-                        intent.putExtra(Intent.EXTRA_SUBJECT, "BlockCerts Backup");
-                        intent.putExtra(Intent.EXTRA_TEXT, mPassphrase);
-                        Intent mailer = Intent.createChooser(intent, null);
-                        startActivity(mailer);
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.setType("text/plain");
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "BlockCerts Backup");
+                    intent.putExtra(Intent.EXTRA_TEXT, mPassphrase);
+                    Intent mailer = Intent.createChooser(intent, null);
+                    startActivity(mailer);
 
-                        onActivityResult(2, 0, null);
-                    }
+                    HandleBackupOptionCompleted(mBinding.onboardingEmailCheckmark);
+
+                    return null;
                 });
-        alertDialog.show();
     }
 
     private void onWrite() {
+        DialogUtils.showAlertDialog(getContext(), this,
+                0,
+                getResources().getString(R.string.onboarding_passphrase_write_title),
+                mPassphrase,
+                getResources().getString(R.string.onboarding_passphrase_write_confirmation),
+                null,
+                (btnIdx) -> {
 
-        AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
-        alertDialog.setTitle(getResources().getString(R.string.onboarding_passphrase_write_title));
-        alertDialog.setMessage(mPassphrase);
-        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getResources().getString(R.string.onboarding_passphrase_write_confirmation),
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
+                    DialogUtils.showAlertDialog(getContext(), this,
+                            0,
+                            getResources().getString(R.string.onboarding_passphrase_complete_title),
+                            getResources().getString(R.string.onboarding_passphrase_write_complete),
+                            getResources().getString(R.string.onboarding_passphrase_ok),
+                            null,
+                            (btnIdx2) -> {
+                                HandleBackupOptionCompleted(mBinding.onboardingWriteCheckmark);
+                                return null;
+                            });
 
-                        displayAlert(3,
-                                R.string.onboarding_passphrase_complete_title,
-                                R.string.onboarding_passphrase_write_complete,
-                                R.string.onboarding_passphrase_ok,
-                                R.string.onboarding_passphrase_cancel);
-                    }
+                    return null;
                 });
-        alertDialog.show();
     }
 
 
-    // We do this in order to perform the checkmark animation after the last user dialog is presented
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        View view = null;
-        if (requestCode == 1) {
-            view = mBinding.onboardingSaveCheckmark;
-        }
-        if (requestCode == 2) {
-            view = mBinding.onboardingEmailCheckmark;
-        }
-        if (requestCode == 3) {
-            view = mBinding.onboardingWriteCheckmark;
-        }
-
+    public void HandleBackupOptionCompleted(View view) {
         if(view != null) {
 
             Laba.Animate(view, "!s!f!>", () -> { return null; });

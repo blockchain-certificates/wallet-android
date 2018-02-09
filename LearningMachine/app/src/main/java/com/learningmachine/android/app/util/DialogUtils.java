@@ -57,6 +57,19 @@ public class DialogUtils {
         alertDialogFragment.show(fragmentManager, TAG_DIALOG_ALERT);
     }
 
+    public static void showAlertDialog(Context context, @NonNull Fragment targetFragment, int iconID, String title, String message, String positiveButton, String negativeButton, AlertDialogFragment.Callback callback) {
+        FragmentManager fragmentManager = targetFragment.getFragmentManager();
+        AlertDialogFragment alertDialogFragment = AlertDialogFragment.newInstance(
+                iconID,
+                title,
+                message,
+                positiveButton,
+                negativeButton,
+                callback);
+        alertDialogFragment.setTargetFragment(targetFragment, 0);
+        alertDialogFragment.show(fragmentManager, TAG_DIALOG_ALERT);
+    }
+
     public static void showErrorAlertDialog(Context context, FragmentManager fragmentManager, @StringRes int titleResId, Throwable throwable, ErrorCategory errorCategory) {
         String titleString = context.getString(titleResId);
         String errorString = getErrorMessageString(context, throwable, errorCategory);
