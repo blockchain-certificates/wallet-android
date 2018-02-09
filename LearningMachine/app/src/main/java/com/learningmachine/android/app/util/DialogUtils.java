@@ -60,6 +60,7 @@ public class DialogUtils {
     public static void showAlertDialog(Context context, @NonNull Fragment targetFragment, int iconID, String title, String message, String positiveButton, String negativeButton, AlertDialogFragment.Callback callback) {
         FragmentManager fragmentManager = targetFragment.getFragmentManager();
         AlertDialogFragment alertDialogFragment = AlertDialogFragment.newInstance(
+                0,
                 iconID,
                 title,
                 message,
@@ -69,6 +70,22 @@ public class DialogUtils {
         alertDialogFragment.setTargetFragment(targetFragment, 0);
         alertDialogFragment.show(fragmentManager, TAG_DIALOG_ALERT);
     }
+
+    public static AlertDialogFragment showCustomDialog(Context context, @NonNull Fragment targetFragment, int layoutID, int iconID, String title, String message, String positiveButton, String negativeButton, AlertDialogFragment.Callback callback) {
+        FragmentManager fragmentManager = targetFragment.getFragmentManager();
+        AlertDialogFragment alertDialogFragment = AlertDialogFragment.newInstance(
+                layoutID,
+                iconID,
+                title,
+                message,
+                positiveButton,
+                negativeButton,
+                callback);
+        alertDialogFragment.setTargetFragment(targetFragment, 0);
+        alertDialogFragment.show(fragmentManager, TAG_DIALOG_ALERT);
+        return alertDialogFragment;
+    }
+
 
     public static void showErrorAlertDialog(Context context, FragmentManager fragmentManager, @StringRes int titleResId, Throwable throwable, ErrorCategory errorCategory) {
         String titleString = context.getString(titleResId);

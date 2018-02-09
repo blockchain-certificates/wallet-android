@@ -23,6 +23,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.learningmachine.android.app.R;
@@ -35,6 +36,7 @@ public class AlertDialogFragment extends DialogFragment {
     public static final int RESULT_NEGATIVE = 0;
 
     private static final String ARG_ICON = "AlertDialogFragment.Icon";
+    private static final String ARG_LAYOUT = "AlertDialogFragment.Layout";
     private static final String ARG_TITLE = "AlertDialogFragment.Title";
     private static final String ARG_MESSAGE = "AlertDialogFragment.Message";
     private static final String ARG_POSITIVE_BUTTON_MESSAGE = "AlertDialogFragment.Positive.Button_Message";
@@ -79,12 +81,13 @@ public class AlertDialogFragment extends DialogFragment {
         return newInstance(title, message, "", "");
     }
 
-    public static AlertDialogFragment newInstance(int iconID, String title, String message, String positiveButtonMessage, String negativeButtonMessage, Callback complete) {
+    public static AlertDialogFragment newInstance(int layoutID, int iconID, String title, String message, String positiveButtonMessage, String negativeButtonMessage, Callback complete) {
         Bundle args = new Bundle();
         AlertDialogFragment fragment = new AlertDialogFragment();
         args.putString(ARG_MESSAGE, message);
         args.putString(ARG_TITLE, title);
         args.putInt(ARG_ICON, iconID);
+        args.putInt(ARG_LAYOUT, layoutID);
         args.putString(ARG_POSITIVE_BUTTON_MESSAGE, positiveButtonMessage);
         args.putString(ARG_NEGATIVE_BUTTON_MESSAGE, negativeButtonMessage);
         fragment.setArguments(args);
@@ -141,6 +144,11 @@ public class AlertDialogFragment extends DialogFragment {
             dialogIcon = args.getInt(ARG_ICON);
         }
 
+        int layoutID = 0;
+        if (args.containsKey(ARG_LAYOUT)) {
+            layoutID = args.getInt(ARG_LAYOUT);
+        }
+
         if (StringUtils.isEmpty(positiveButtonMessage)) {
             positiveButtonMessage = getString(android.R.string.ok);
         }
@@ -149,21 +157,33 @@ public class AlertDialogFragment extends DialogFragment {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);
 
+
         LayoutInflater factory = LayoutInflater.from(getContext());
         View dialogContent = null;
-        if (negativeButtonMessage == null) {
-            dialogContent = factory.inflate(R.layout.dialog_1, null);
+        if (layoutID > 0) {
+            dialogContent = factory.inflate(layoutID, null);
         } else {
-            dialogContent = factory.inflate(R.layout.dialog_2, null);
+            if (negativeButtonMessage == null) {
+                dialogContent = factory.inflate(R.layout.dialog_1, null);
+            } else {
+                dialogContent = factory.inflate(R.layout.dialog_2, null);
+            }
         }
 
         dialog.setContentView(dialogContent);
 
 
+        ImageView iconView = (ImageView) dialogContent.findViewById(R.id.image_view);
         TextView titleView = (TextView) dialogContent.findViewById(R.id.titleView);
         TextView messageView = (TextView) dialogContent.findViewById(R.id.messageView);
         Button positiveButtonView = (Button) dialogContent.findViewById(R.id.dialog_positive_button);
         Button negativeButtonView = (Button) dialogContent.findViewById(R.id.dialog_negative_button);
+
+        if (dialogIcon > 0) {
+            iconView.setImageResource(dialogIcon);
+        } else {
+            iconView.setVisibility(View.GONE);
+        }
 
         titleView.setText(title);
         messageView.setText(message);
@@ -187,31 +207,14 @@ public class AlertDialogFragment extends DialogFragment {
         // 2) tell all views to remeasure themselves given the new max width
         relayoutChildren(dialogContent);
 
-        // 3) The total height of the dialog will be
-        float totalHeight = 0.0f;
-
-        ViewGroup vg = (ViewGroup) dialogContent;
-
-        for (int i = 0; i < vg.getChildCount(); i++) {
-            final View child = vg.getChildAt(i);
-
-            float vX = child.getMeasuredWidth();
-            float vY = child.getMeasuredHeight();
-
-            if (child instanceof TextView) {
-                vY = getTextViewHeight((TextView)child);
-            }
-
-            //Log.d("LM", String.format("child[%d] = %f,%f  %s", i, vX, vY, child.toString()));
-
-            totalHeight += vY + dp2px(16.0f);
-        }
-
-        //Log.d("LM", String.format("totalHeight = %f", totalHeight));
-        //Log.d("LM", String.format("dialogContent width/height= %d,%d", dialogContent.getMeasuredWidth(), dialogContent.getMeasuredHeight()));
+        // 3) Calculate the total height of the dialog
+        int widthMeasureSpec = View.MeasureSpec.makeMeasureSpec((int)idealDialogWidth, View.MeasureSpec.EXACTLY);
+        int heightMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        dialogContent.measure(widthMeasureSpec, heightMeasureSpec);
+        float totalHeight = dialogContent.getMeasuredHeight();
 
         // 4) Dialog height should be a little larger than the measured height
-        float idealDialogHeight = totalHeight + dp2px(60.0f);
+        float idealDialogHeight = totalHeight + dp2px(20.0f);
 
         dialogContent.setLayoutParams(new FrameLayout.LayoutParams((int) idealDialogWidth, (int) idealDialogHeight));
 
@@ -232,22 +235,8 @@ public class AlertDialogFragment extends DialogFragment {
         return dialog;
     }
 
-    public int getTextViewHeight(TextView textView) {
-        WindowManager wm =
-                (WindowManager) textView.getContext().getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
-
-        int deviceWidth;
-
-        if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2){
-            Point size = new Point();
-            display.getSize(size);
-            deviceWidth = size.x;
-        } else {
-            deviceWidth = display.getWidth();
-        }
-
-        int widthMeasureSpec = View.MeasureSpec.makeMeasureSpec(deviceWidth, View.MeasureSpec.AT_MOST);
+    public int getTextViewHeight(TextView textView, int maxWidth) {
+        int widthMeasureSpec = View.MeasureSpec.makeMeasureSpec(maxWidth, View.MeasureSpec.AT_MOST);
         int heightMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
         textView.measure(widthMeasureSpec, heightMeasureSpec);
         return textView.getMeasuredHeight();

@@ -73,20 +73,24 @@
     <string name="onboarding_generate_password_button">Generate Passphrase</string>
     <string name="onboarding_passphrase_done_button">All Done!</string>
 
-    <string name="onboarding_passphrase_write_title">Write your passphrase by hand on a piece of paper and store it in a secure location.</string>
-    <string name="onboarding_passphrase_write_confirmation">Yes, I have written down my passphrase!</string>
+    <string name="onboarding_passphrase_write_title">Manual Hardcopy</string>
+    <string name="onboarding_passphrase_write_message">Write your passphrase by hand on a piece of paper and store in a secure location.</string>
+    <string name="onboarding_passphrase_write_confirmation">Done</string>'
 
-    <string name="onboarding_passphrase_email_before_title">Save your Passphrase!</string>
-    <string name="onboarding_passphrase_email_before">Email yourself the passphrase so you can access your credentials in the future.</string>
 
-    <string name="onboarding_passphrase_permissions_error_title">Passphrase Not Saved!</string>
-    <string name="onboarding_passphrase_permissions_error">Your passphrase could not be saved to your device, most likely because you did not allow the permissions necessary to store the passphrase.</string>
+    <string name="onboarding_passphrase_email_before_title">Are you sure?</string>
+    <string name="onboarding_passphrase_email_before">This is a low-security backup method. Do you want to continue?</string>
 
-    <string name="onboarding_passphrase_complete_title">Passphrase Saved!</string>
-    <string name="onboarding_passphrase_save_complete">Your passphrase has been saved to your device. If you uninstall and reinstall BlockCerts we will use the passphrase stored there.</string>
-    <string name="onboarding_passphrase_write_complete">Save your passphrase in a secure location so you can access your credentials in the future.</string>
+    <string name="onboarding_passphrase_permissions_error_title">Backup Error!</string>
+    <string name="onboarding_passphrase_permissions_error">To save passphrase on your device, allow permission to access files.</string>
+
+    <string name="onboarding_passphrase_complete_title">Passphrase Backed Up!</string>
+    <string name="onboarding_passphrase_save_complete">Your passphrase has been saved this external storage as learningmachine.dat.</string>
+
+
+
     <string name="onboarding_passphrase_cancel">Cancel</string>
-    <string name="onboarding_passphrase_ok">OK</string>
+    <string name="onboarding_passphrase_ok">Okay</string>
 
 
     <string name="onboarding_paste_passphrase_done_button">Done</string>

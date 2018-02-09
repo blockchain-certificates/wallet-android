@@ -112,7 +112,7 @@ public class BackupPassphraseFragment extends OnboardingFragment {
         if(passphrase == null) {
 
             DialogUtils.showAlertDialog(getContext(), this,
-                    0,
+                    R.drawable.ic_dialog_failure,
                     getResources().getString(R.string.onboarding_passphrase_permissions_error_title),
                     getResources().getString(R.string.onboarding_passphrase_permissions_error),
                     getResources().getString(R.string.onboarding_passphrase_ok),
@@ -125,7 +125,7 @@ public class BackupPassphraseFragment extends OnboardingFragment {
         }
 
         DialogUtils.showAlertDialog(getContext(), this,
-                0,
+                R.drawable.ic_dialog_success,
                 getResources().getString(R.string.onboarding_passphrase_complete_title),
                 getResources().getString(R.string.onboarding_passphrase_save_complete),
                 getResources().getString(R.string.onboarding_passphrase_ok),
@@ -141,42 +141,36 @@ public class BackupPassphraseFragment extends OnboardingFragment {
                 0,
                 getResources().getString(R.string.onboarding_passphrase_email_before_title),
                 getResources().getString(R.string.onboarding_passphrase_email_before),
+                getResources().getString(R.string.onboarding_passphrase_cancel),
                 getResources().getString(R.string.onboarding_passphrase_ok),
-                null,
                 (btnIdx) -> {
 
-                    Intent intent = new Intent(Intent.ACTION_SEND);
-                    intent.setType("text/plain");
-                    intent.putExtra(Intent.EXTRA_SUBJECT, "BlockCerts Backup");
-                    intent.putExtra(Intent.EXTRA_TEXT, mPassphrase);
-                    Intent mailer = Intent.createChooser(intent, null);
-                    startActivity(mailer);
+                    if((int)btnIdx == 0) {
+                        Intent intent = new Intent(Intent.ACTION_SEND);
+                        intent.setType("text/plain");
+                        intent.putExtra(Intent.EXTRA_SUBJECT, "BlockCerts Backup");
+                        intent.putExtra(Intent.EXTRA_TEXT, mPassphrase);
+                        Intent mailer = Intent.createChooser(intent, null);
+                        startActivity(mailer);
 
-                    HandleBackupOptionCompleted(mBinding.onboardingEmailCheckmark);
-
+                        HandleBackupOptionCompleted(mBinding.onboardingEmailCheckmark);
+                    }
                     return null;
                 });
     }
 
     private void onWrite() {
-        DialogUtils.showAlertDialog(getContext(), this,
-                0,
+        DialogUtils.showCustomDialog(getContext(), this,
+                R.layout.dialog_write_passphrase,
+                R.drawable.ic_writedown,
                 getResources().getString(R.string.onboarding_passphrase_write_title),
-                mPassphrase,
+                getResources().getString(R.string.onboarding_passphrase_write_message),
+                //mPassphrase,
                 getResources().getString(R.string.onboarding_passphrase_write_confirmation),
                 null,
                 (btnIdx) -> {
 
-                    DialogUtils.showAlertDialog(getContext(), this,
-                            0,
-                            getResources().getString(R.string.onboarding_passphrase_complete_title),
-                            getResources().getString(R.string.onboarding_passphrase_write_complete),
-                            getResources().getString(R.string.onboarding_passphrase_ok),
-                            null,
-                            (btnIdx2) -> {
-                                HandleBackupOptionCompleted(mBinding.onboardingWriteCheckmark);
-                                return null;
-                            });
+                    HandleBackupOptionCompleted(mBinding.onboardingWriteCheckmark);
 
                     return null;
                 });
