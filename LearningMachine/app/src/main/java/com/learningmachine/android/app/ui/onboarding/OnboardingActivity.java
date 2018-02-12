@@ -258,7 +258,7 @@ public class OnboardingActivity extends LMActivity implements AccountChooserFrag
                 if(didSucceedInPermissionsRequest){
                     getSavedPassphraseFromDevice(passphraseFragment);
                 } else {
-                    getSavedPassphraseFromDevice(null);
+                    getSavedPassphraseFromDevice(passphraseFragment);
                 }
                 passphraseFragment = null;
             }

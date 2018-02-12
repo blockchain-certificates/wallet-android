@@ -10,6 +10,8 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.text.Editable;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -87,6 +89,17 @@ public class PastePassphraseFragment extends OnboardingFragment {
         mBinding.passphraseLabel.setText(R.string.onboarding_paste_passphrase_load_0);
 
         ((OnboardingActivity)getActivity()).askToGetPassphraseFromDevice(this);
+
+        mBinding.pastePassphraseEditText.setFilters(new InputFilter[] {
+                new InputFilter.AllCaps() {
+                    @Override
+                    public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+                        String toLowered = String.valueOf(source).toLowerCase();
+                        String sanitized = toLowered.replaceAll("[^a-zA-Z ]", "");
+                        return sanitized;
+                    }
+                }
+        });
 
         mBinding.pastePassphraseEditText.addTextChangedListener(new PastePassphraseTextWatcher());
         mBinding.doneButton.setAlpha(0.3f);
