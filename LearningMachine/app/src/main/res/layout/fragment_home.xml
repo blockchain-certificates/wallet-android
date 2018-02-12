@@ -8,9 +8,9 @@
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/issuer_main_content"
-            android:background="@color/off_white_background"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:background="@color/off_white_background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -23,45 +23,40 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
         </android.support.constraint.ConstraintLayout>
 
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/issuer_empty_content"
-            android:background="@color/white"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:background="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <View
-                android:id="@+id/spreader1"
-                android:layout_width="65dp"
+            <android.support.constraint.Guideline
+                android:id="@+id/guideline4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.5" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginEnd="32dp"
-                android:layout_marginStart="32dp"
-                app:layout_constraintBottom_toTopOf="@+id/imageView2"
+                android:background="@color/off_white_background"
+                android:src="@drawable/ic_ready"
+                android:padding="16dp"
+                app:layout_constraintBottom_toTopOf="@+id/guideline4"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="105dp"
-                android:layout_height="105dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:src="@drawable/ic_empty_issuers"
-                app:layout_constraintBottom_toTopOf="@+id/onboarding_home_no_issuers_title"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spreader1" />
 
 
             <TextView
@@ -78,7 +73,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+                app:layout_constraintTop_toBottomOf="@+id/guideline4" />
 
             <TextView
                 android:id="@+id/onboarding_home_no_issuers_desc"
