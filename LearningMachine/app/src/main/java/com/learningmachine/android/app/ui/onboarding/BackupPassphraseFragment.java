@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
+import android.graphics.Point;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -16,9 +17,11 @@ import android.os.Handler;
 import android.support.annotation.StringRes;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.learningmachine.android.app.R;
@@ -160,20 +163,39 @@ public class BackupPassphraseFragment extends OnboardingFragment {
     }
 
     private void onWrite() {
-        DialogUtils.showCustomDialog(getContext(), this,
+        AlertDialogFragment fragment = DialogUtils.showCustomDialog(getContext(), this,
                 R.layout.dialog_write_passphrase,
                 R.drawable.ic_writedown,
                 getResources().getString(R.string.onboarding_passphrase_write_title),
                 getResources().getString(R.string.onboarding_passphrase_write_message),
-                //mPassphrase,
                 getResources().getString(R.string.onboarding_passphrase_write_confirmation),
                 null,
                 (btnIdx) -> {
-
                     HandleBackupOptionCompleted(mBinding.onboardingWriteCheckmark);
+                    return null;
+                },
+                (dialogContent) -> {
+
+                    // Set the content of the passphrase text field
+                    View view = (View)dialogContent;
+                    TextView passphraseView = (TextView)view.findViewById(R.id.onboarding_passphrase_content);
+                    passphraseView.setText(mPassphrase);
+
+                    // For this dialog, we want to fill the whole screen regardless of the size of the content
+                    // 1) Dialog width should be 80% of the width of the screen
+                    Display display = getActivity().getWindowManager().getDefaultDisplay();
+                    Point size = new Point();
+                    display.getSize(size);
+
+                    float idealDialogWidth = size.x * 0.8f;
+                    float idealDialogHeight = size.y * 0.8f;
+
+                    view.setLayoutParams(new FrameLayout.LayoutParams((int) idealDialogWidth, (int) idealDialogHeight));
 
                     return null;
                 });
+
+
     }
 
 

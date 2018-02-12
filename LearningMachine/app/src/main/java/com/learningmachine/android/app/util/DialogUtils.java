@@ -66,12 +66,13 @@ public class DialogUtils {
                 message,
                 positiveButton,
                 negativeButton,
-                callback);
+                callback,
+                null);
         alertDialogFragment.setTargetFragment(targetFragment, 0);
         alertDialogFragment.show(fragmentManager, TAG_DIALOG_ALERT);
     }
 
-    public static AlertDialogFragment showCustomDialog(Context context, @NonNull Fragment targetFragment, int layoutID, int iconID, String title, String message, String positiveButton, String negativeButton, AlertDialogFragment.Callback callback) {
+    public static AlertDialogFragment showCustomDialog(Context context, @NonNull Fragment targetFragment, int layoutID, int iconID, String title, String message, String positiveButton, String negativeButton, AlertDialogFragment.Callback onComplete, AlertDialogFragment.Callback onCreate) {
         FragmentManager fragmentManager = targetFragment.getFragmentManager();
         AlertDialogFragment alertDialogFragment = AlertDialogFragment.newInstance(
                 layoutID,
@@ -80,7 +81,8 @@ public class DialogUtils {
                 message,
                 positiveButton,
                 negativeButton,
-                callback);
+                onComplete,
+                onCreate);
         alertDialogFragment.setTargetFragment(targetFragment, 0);
         alertDialogFragment.show(fragmentManager, TAG_DIALOG_ALERT);
         return alertDialogFragment;

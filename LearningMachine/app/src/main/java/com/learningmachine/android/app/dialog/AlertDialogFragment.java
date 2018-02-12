@@ -48,6 +48,7 @@ public class AlertDialogFragment extends DialogFragment {
     }
 
     public Callback onComplete = null;
+    public Callback onCreate= null;
 
     public interface AlertCallback {
         void onDialogPositive();
@@ -81,7 +82,7 @@ public class AlertDialogFragment extends DialogFragment {
         return newInstance(title, message, "", "");
     }
 
-    public static AlertDialogFragment newInstance(int layoutID, int iconID, String title, String message, String positiveButtonMessage, String negativeButtonMessage, Callback complete) {
+    public static AlertDialogFragment newInstance(int layoutID, int iconID, String title, String message, String positiveButtonMessage, String negativeButtonMessage, Callback complete, Callback onCreate) {
         Bundle args = new Bundle();
         AlertDialogFragment fragment = new AlertDialogFragment();
         args.putString(ARG_MESSAGE, message);
@@ -92,6 +93,7 @@ public class AlertDialogFragment extends DialogFragment {
         args.putString(ARG_NEGATIVE_BUTTON_MESSAGE, negativeButtonMessage);
         fragment.setArguments(args);
         fragment.onComplete = complete;
+        fragment.onCreate = onCreate;
         return fragment;
     }
 
@@ -157,9 +159,8 @@ public class AlertDialogFragment extends DialogFragment {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);
 
-
-        LayoutInflater factory = LayoutInflater.from(getContext());
         View dialogContent = null;
+        LayoutInflater factory = LayoutInflater.from(getContext());
         if (layoutID > 0) {
             dialogContent = factory.inflate(layoutID, null);
         } else {
@@ -230,6 +231,10 @@ public class AlertDialogFragment extends DialogFragment {
                 dismiss();
                 onButtonTapped(RESULT_NEGATIVE);
             });
+        }
+
+        if(onCreate != null) {
+            onCreate.apply(dialogContent);
         }
 
         return dialog;
