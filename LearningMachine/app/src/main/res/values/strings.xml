@@ -46,7 +46,7 @@
 
     <!-- Issuer (Certificate List) -->
     <string name="issuer_no_certificates_desc">No Credentials</string>
-    <string name="issuer_no_certificates_desc2">You will receive an email when a credential is issued. Follow the link in the email to complete the process.</string>
+    <string name="issuer_no_certificates_desc2">You will receive an email when a credential is issued. Follow the link in the email to complete the process. Or add a credential manually.</string>
 
 
     <!-- Issuer Info -->

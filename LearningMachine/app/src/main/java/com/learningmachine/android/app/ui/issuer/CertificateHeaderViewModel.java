@@ -25,7 +25,7 @@ public class CertificateHeaderViewModel extends BaseObservable {
 
         // TODO: Move these to the strings.xml
         if(mIssuer.cachedNumberOfCertificatesForIssuer == 0){
-            return "You have no credentials:";
+            return "";
         }
         if(mIssuer.cachedNumberOfCertificatesForIssuer == 1){
             return "You have 1 credential:";

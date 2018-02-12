@@ -37,10 +37,14 @@
     </style>
 
     <style name="Text.Footer.1">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="Text.Footer.2">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="Text.Footer.3">
         <item name="android:textSize">12sp</item>
     </style>
 

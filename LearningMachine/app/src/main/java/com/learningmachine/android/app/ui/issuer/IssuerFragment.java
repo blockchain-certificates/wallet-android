@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -131,14 +132,13 @@ public class IssuerFragment extends LMFragment {
         }
 
         if(mIssuer != null) {
-
             mIssuer.cachedNumberOfCertificatesForIssuer = mCertificateList.size();
 
             mBinding.certificateRecyclerView.getAdapter()
                     .notifyDataSetChanged();
 
             boolean emptyCertificates = mCertificateList.isEmpty();
-            mBinding.certificateMainContent.setVisibility(emptyCertificates ? View.GONE : View.VISIBLE);
+            mBinding.certificateMainContent.setVisibility(View.VISIBLE);
             mBinding.certificateEmptyContent.setVisibility(emptyCertificates ? View.VISIBLE : View.GONE);
         }
     }
@@ -195,9 +195,6 @@ public class IssuerFragment extends LMFragment {
 
         @Override
         public int getItemCount() {
-            if(mCertificateList.size() == 0) {
-                return 0;
-            }
             return mCertificateList.size() + 1;
         }
     }
