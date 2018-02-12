@@ -42,7 +42,7 @@
             android:maxLines="1"
             android:text="@{viewModel.title}"
             app:layout_constraintBottom_toTopOf="@+id/textView2"
-            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintEnd_toEndOf="@+id/backgroundView"
             app:layout_constraintStart_toStartOf="@+id/backgroundView"
             app:layout_constraintTop_toTopOf="@+id/backgroundView" />
 
@@ -58,28 +58,9 @@
             android:maxLines="1"
             android:text="@{viewModel.dateIssued}"
             app:layout_constraintBottom_toBottomOf="@+id/backgroundView"
-            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintEnd_toEndOf="@+id/backgroundView"
             app:layout_constraintStart_toStartOf="@+id/backgroundView"
             app:layout_constraintTop_toBottomOf="@+id/textView1" />
-
-        <View
-            android:id="@+id/view2"
-            android:layout_width="10dp"
-            android:layout_height="16dp"
-            android:background="@drawable/ic_chevron"
-            app:layout_constraintBottom_toBottomOf="@+id/backgroundView"
-            app:layout_constraintEnd_toEndOf="@+id/backgroundView"
-            app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toTopOf="@+id/backgroundView" />
-
-        <android.support.constraint.Guideline
-            android:id="@+id/guideline2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="49dp"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintGuide_end="64dp" />
 
 
     </android.support.constraint.ConstraintLayout>
