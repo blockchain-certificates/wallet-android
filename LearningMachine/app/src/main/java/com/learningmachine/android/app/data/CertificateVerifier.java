@@ -1,6 +1,7 @@
 package com.learningmachine.android.app.data;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -34,6 +35,7 @@ import java.net.URLDecoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.NoSuchElementException;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
@@ -100,7 +102,7 @@ public class CertificateVerifier {
 
         mUpdates.onNext(CertificateVerificationStatus.CHECKING_MERKLE);
         String sourceId = certificate.getSourceId();
-        return mBlockchainService.getBlockchain(sourceId)
+        return mBlockchainService.getBlockchain(sourceId).delay(3, TimeUnit.SECONDS)
                 .flatMap(txRecord -> verifyBitcoinTransactionRecord(certificate, txRecord));
     }
 
@@ -114,13 +116,13 @@ public class CertificateVerifier {
         }
 
         Timber.d("Blockchain transaction is downloaded successfully");
-        return Observable.just(txRecord);
+        return Observable.just(txRecord).delay(3, TimeUnit.SECONDS);
     }
 
     public Observable<IssuerResponse> verifyIssuer(BlockCert certificate, TxRecord txRecord) {
         mUpdates.onNext(CertificateVerificationStatus.CHECKING_AUTHENTICITY);
         String issuerId = certificate.getIssuerId();
-        return mIssuerService.getIssuer(issuerId)
+        return mIssuerService.getIssuer(issuerId).delay(3, TimeUnit.SECONDS)
                 .flatMap(issuerResponse -> verifyIssuer(issuerResponse, txRecord));
     }
 
@@ -251,28 +253,6 @@ public class CertificateVerifier {
 
         public static int getTotalSteps() {
             return CertificateVerificationStatus.values().length;
-        }
-    }
-
-    public enum CertificateVerificationResult {
-
-        VALID_CERT(R.string.cert_verification_success_title, R.string.cert_verification_step_valid_cert),
-        INVALID_CERT(R.string.cert_verification_failure_title, R.string.cert_verification_step_invalid_cert);
-
-        private int mTitleResId;
-        private int mMessageResId;
-
-        CertificateVerificationResult(int titleResId, int messageResId) {
-            mTitleResId = titleResId;
-            mMessageResId = messageResId;
-        }
-
-        public int getTitleResId() {
-            return mTitleResId;
-        }
-
-        public int getMessageResId() {
-            return mMessageResId;
         }
     }
 }

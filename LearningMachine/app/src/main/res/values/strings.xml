@@ -191,6 +191,7 @@
 
     <!-- Certificate Verification -->
 
+
     <string name="cert_verification_step_computing_local_hash">Computing local hash…</string>
     <string name="cert_verification_step_fetching_remote_hash">Fetching remote hash…</string>
     <string name="cert_verification_step_comparing_hashes">Comparing local and remote hashes…</string>
@@ -199,7 +200,8 @@
     <string name="cert_verification_step_checking_authenticity">Checking authenticity…</string>
     <string name="cert_verification_step_checking_issuer_signature">Checking issuer\'s signature…</string>
     <string name="cert_verification_step_checking_cert_status">Checking if the credential has been revoked…</string>
-    <string name="cert_verification_step_valid_cert">Valid credential</string>
+    <string name="cert_verification_step_valid_cert">Your credential has been successfully verified.</string>
+
     <string name="cert_verification_step_invalid_cert">Not a valid credential</string>
     <string name="error_testnet_certificate_json">This credential is for test purposes only; it has not been recorded to a blockchain</string>
     <string name="error_invalid_certificate_json">The credential file is invalid</string>

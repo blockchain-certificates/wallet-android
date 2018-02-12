@@ -25,7 +25,6 @@ import android.webkit.WebViewClient;
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.CertificateManager;
 import com.learningmachine.android.app.data.CertificateVerifier;
-import com.learningmachine.android.app.data.CertificateVerifier.CertificateVerificationResult;
 import com.learningmachine.android.app.data.CertificateVerifier.CertificateVerificationStatus;
 import com.learningmachine.android.app.data.IssuerManager;
 import com.learningmachine.android.app.data.cert.BlockCert;
@@ -256,18 +255,24 @@ public class CertificateFragment extends LMFragment implements VerficationCancel
         }
     }
 
-    private void showVerificationResultDialog(CertificateVerificationResult status) {
+    private void showVerificationResultDialog(int iconId, int titleId, int messageId) {
         hideVerificationProgressDialog();
-        displayAlert(0,
-                status.getTitleResId(),
-                status.getMessageResId(),
-                R.string.dialog_verify_cert_result_positive_button_title,
-                0);
+
+
+        DialogUtils.showAlertDialog(getContext(), this,
+                iconId,
+                getResources().getString(titleId),
+                getResources().getString(messageId),
+                getResources().getString(R.string.onboarding_passphrase_ok),
+                null,
+                (btnIdx) -> {
+                    return null;
+                });
     }
 
     private void showVerificationFailureDialog(int errorId) {
         hideVerificationProgressDialog();
-        displayAlert(0,
+        displayAlert(R.drawable.ic_dialog_failure,
                 R.string.cert_verification_failure_title,
                 errorId,
                 R.string.dialog_verify_cert_result_positive_button_title,
@@ -348,13 +353,13 @@ public class CertificateFragment extends LMFragment implements VerficationCancel
                 .compose(bindToMainThread())
                 .subscribe(localHash -> {
                     Timber.d("Success!");
-                    showVerificationResultDialog(CertificateVerificationResult.VALID_CERT);
+                    showVerificationResultDialog(R.drawable.ic_dialog_success, R.string.cert_verification_success_title, R.string.cert_verification_step_valid_cert);
                 }, throwable -> {
-                    showVerificationResultDialog(CertificateVerificationResult.INVALID_CERT);
                     Timber.e(throwable, "Error!");
 
                     ExceptionWithResourceString throwableRS = (ExceptionWithResourceString)throwable;
-                    showVerificationFailureDialog(throwableRS.getErrorMessageResId());
+                    showVerificationResultDialog(R.drawable.ic_dialog_failure, R.string.cert_verification_failure_title, throwableRS.getErrorMessageResId());
+                    //showVerificationFailureDialog();
                 });
     }
 
