@@ -14,6 +14,7 @@
             android:id="@+id/progress_bar"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:background ="@drawable/progress_bar"
             app:layout_constraintBottom_toTopOf="@+id/titleView"
             app:layout_constraintEnd_toStartOf="parent"
             app:layout_constraintStart_toStartOf="parent"
