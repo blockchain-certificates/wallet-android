@@ -26,13 +26,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/issuer_info_viewmodel_textview_bottom_padding"
             android:text="@{issuerInfo.title}"
             style="@style/Text.Info"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:autoLink="web"
+            android:textColorLink="@color/linkColor"
             android:paddingBottom="@dimen/issuer_info_viewmodel_textview_bottom_padding"
             android:text="@{issuerInfo.issuerUrl}"
             style="@style/Text.Info"/>
@@ -78,6 +79,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/issuer_info_viewmodel_textview_bottom_padding"
+            android:autoLink="web"
+            android:textColorLink="@color/linkColor"
             android:text="@{issuerInfo.url}"
             style="@style/Text.Info"/>
 

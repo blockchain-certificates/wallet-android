@@ -18,6 +18,8 @@
 
     <color name="off_white_background">#F0F3F5</color>
 
+    <color name="linkColor">#2AB27B</color>
+
     <!-- vvv OLD vvv -->
     <color name="colorPrimary">@color/white</color>
     <color name="colorPrimaryDark">@color/transparent_gray</color>

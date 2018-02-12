@@ -14,7 +14,7 @@ public class LMDatabaseHelper extends SQLiteOpenHelper {
 
     @VisibleForTesting static final String DB_NAME = "com.learningmachine.android.app.sqlite";
 
-    private static final int DB_VERSION = 3;
+    private static final int DB_VERSION = 5;
 
     private Migration[] mMigrations = { };
 
