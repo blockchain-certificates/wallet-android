@@ -297,6 +297,16 @@ public class CertificateFragment extends LMFragment implements VerficationCancel
         showVerficationProgressDialog();
 
 
+        // if there is no internet connection, and unhandled exception is thrown.  Let's catch it.
+        Thread.setDefaultUncaughtExceptionHandler (new Thread.UncaughtExceptionHandler()
+        {
+            @Override
+            public void uncaughtException (Thread thread, Throwable e)
+            {
+                showVerificationFailureDialog(R.string.error_no_internet);
+            }
+        });
+
 
         mCertificateVerifier.getUpdates()
                 .subscribe(this::updateVerficationProgressDialog);

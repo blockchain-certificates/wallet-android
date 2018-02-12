@@ -102,7 +102,7 @@ public class CertificateVerifier {
 
         mUpdates.onNext(CertificateVerificationStatus.CHECKING_MERKLE);
         String sourceId = certificate.getSourceId();
-        return mBlockchainService.getBlockchain(sourceId).delay(3, TimeUnit.SECONDS)
+        return mBlockchainService.getBlockchain(sourceId).delay(2, TimeUnit.SECONDS)
                 .flatMap(txRecord -> verifyBitcoinTransactionRecord(certificate, txRecord));
     }
 
@@ -116,13 +116,13 @@ public class CertificateVerifier {
         }
 
         Timber.d("Blockchain transaction is downloaded successfully");
-        return Observable.just(txRecord).delay(3, TimeUnit.SECONDS);
+        return Observable.just(txRecord).delay(2, TimeUnit.SECONDS);
     }
 
     public Observable<IssuerResponse> verifyIssuer(BlockCert certificate, TxRecord txRecord) {
         mUpdates.onNext(CertificateVerificationStatus.CHECKING_AUTHENTICITY);
         String issuerId = certificate.getIssuerId();
-        return mIssuerService.getIssuer(issuerId).delay(3, TimeUnit.SECONDS)
+        return mIssuerService.getIssuer(issuerId).delay(2, TimeUnit.SECONDS)
                 .flatMap(issuerResponse -> verifyIssuer(issuerResponse, txRecord));
     }
 
