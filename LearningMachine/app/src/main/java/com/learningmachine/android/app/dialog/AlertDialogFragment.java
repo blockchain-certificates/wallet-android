@@ -160,7 +160,6 @@ public class AlertDialogFragment extends DialogFragment {
         if (layoutID > 0) {
             dialogContent = factory.inflate(layoutID, null);
         } else {
-
             if (negativeButtonMessage == null && positiveButtonMessage != null) {
                 dialogContent = factory.inflate(R.layout.dialog_1a, null);
             } else if (negativeButtonMessage != null && positiveButtonMessage == null) {
@@ -179,10 +178,12 @@ public class AlertDialogFragment extends DialogFragment {
         Button positiveButtonView = (Button) dialogContent.findViewById(R.id.dialog_positive_button);
         Button negativeButtonView = (Button) dialogContent.findViewById(R.id.dialog_negative_button);
 
-        if (dialogIcon > 0) {
-            iconView.setImageResource(dialogIcon);
-        } else {
-            iconView.setVisibility(View.GONE);
+        if(iconView != null) {
+            if (dialogIcon > 0) {
+                iconView.setImageResource(dialogIcon);
+            } else {
+                iconView.setVisibility(View.GONE);
+            }
         }
 
         titleView.setText(title);

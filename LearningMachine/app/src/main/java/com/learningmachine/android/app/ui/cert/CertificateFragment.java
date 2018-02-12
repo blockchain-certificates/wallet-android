@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,7 +12,9 @@ import android.support.annotation.StringRes;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
+import android.util.Log;
 import android.util.Pair;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,6 +24,9 @@ import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.FrameLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.CertificateManager;
@@ -35,24 +41,23 @@ import com.learningmachine.android.app.data.model.IssuerRecord;
 import com.learningmachine.android.app.data.model.TxRecord;
 import com.learningmachine.android.app.databinding.FragmentCertificateBinding;
 import com.learningmachine.android.app.dialog.AlertDialogFragment;
-import com.learningmachine.android.app.dialog.CertificateVerficationProgressFragment;
 import com.learningmachine.android.app.ui.LMFragment;
 import com.learningmachine.android.app.util.DialogUtils;
 import com.learningmachine.android.app.util.FileUtils;
 
 import java.io.File;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
 import rx.Observable;
+import rx.Subscription;
 import timber.log.Timber;
 
-import static com.learningmachine.android.app.dialog.CertificateVerficationProgressFragment.VerficationCancelListener;
 
-public class CertificateFragment extends LMFragment implements VerficationCancelListener {
+public class CertificateFragment extends LMFragment {
 
     private static final String ARG_CERTIFICATE_UUID = "CertificateFragment.CertificateUuid";
-    private static final String TAG_VERIFICATION_PROGRESS_DIALOG = "CertificateFragment.CertificateVerficationProgressFragment";
     private static final String INDEX_FILE_PATH = "file:///android_asset/www/index.html";
     private static final String FILE_PROVIDER_AUTHORITY = "com.learningmachine.android.app.fileprovider";
     private static final String TEXT_MIME_TYPE = "text/plain";
@@ -235,29 +240,76 @@ public class CertificateFragment extends LMFragment implements VerficationCancel
         startActivity(intent);
     }
 
+
+
+
+
+    private TextView updateDialogTitleView = null;
+    private TextView updateDialogMessageView = null;
+    private AlertDialogFragment updateDialog = null;
+    private Subscription updateSubscriber = null;
+
     private void showVerficationProgressDialog() {
-        CertificateVerficationProgressFragment fragment = CertificateVerficationProgressFragment.newInstance();
-        fragment.show(getFragmentManager(), TAG_VERIFICATION_PROGRESS_DIALOG);
-        fragment.setCancelClickListener(this);
+
+        if(updateDialog == null) {
+            mCancelVerification = false;
+            updateDialog = DialogUtils.showCustomDialog(getContext(), this,
+                    R.layout.dialog_certificate_verification,
+                    0,
+                    "",
+                    "",
+                    null,
+                    getResources().getString(R.string.onboarding_passphrase_cancel),
+                    (btnIdx) -> {
+                        mCancelVerification = true;
+                        updateDialog = null;
+                        updateDialogTitleView = null;
+                        updateDialogMessageView = null;
+                        updateSubscriber.unsubscribe();
+                        updateSubscriber = null;
+                        return null;
+                    },
+                    (dialogContent) -> {
+                        View view = (View) dialogContent;
+                        updateDialogTitleView = (TextView) view.findViewById(R.id.titleView);
+                        updateDialogMessageView = (TextView) view.findViewById(R.id.messageView);
+
+                        ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
+                        progressBar.animate();
+
+                        this.updateVerficationProgressDialog(CertificateVerificationStatus.CHECKING_MERKLE);
+                        return null;
+                    });
+        }
     }
 
     private void updateVerficationProgressDialog(CertificateVerificationStatus status) {
-        Fragment fragment = getFragmentManager().findFragmentByTag(TAG_VERIFICATION_PROGRESS_DIALOG);
-        if (fragment instanceof CertificateVerficationProgressFragment) {
-            ((CertificateVerficationProgressFragment) fragment).updateVerificationStatus(status);
+        if(updateDialogTitleView != null && updateDialogMessageView != null) {
+            String title = getString(R.string.fragment_verify_cert_step_format,
+                    status.getStepNumber(),
+                    CertificateVerificationStatus.getTotalSteps());
+            String message = getString(status.getMessageResId());
+            updateDialogTitleView.setText(title);
+            updateDialogMessageView.setText(message);
         }
     }
 
     private void hideVerificationProgressDialog() {
-        Fragment fragment = getFragmentManager().findFragmentByTag(TAG_VERIFICATION_PROGRESS_DIALOG);
-        if (fragment instanceof DialogFragment) {
-            ((DialogFragment) fragment).dismissAllowingStateLoss();
+        if(updateDialog != null) {
+            updateDialog.dismissAllowingStateLoss();
         }
+        updateDialog = null;
+        updateDialogTitleView = null;
+        updateDialogMessageView = null;
+        updateSubscriber.unsubscribe();
+        updateSubscriber = null;
     }
+
+
+
 
     private void showVerificationResultDialog(int iconId, int titleId, int messageId) {
         hideVerificationProgressDialog();
-
 
         DialogUtils.showAlertDialog(getContext(), this,
                 iconId,
@@ -284,16 +336,7 @@ public class CertificateFragment extends LMFragment implements VerficationCancel
                 });
     }
 
-
-
-
-    @Override
-    public void onVerificationCancelClick() {
-        mCancelVerification = true;
-    }
-
     private void verifyCertificate() {
-        mCancelVerification = false;
         showVerficationProgressDialog();
 
 
@@ -308,7 +351,7 @@ public class CertificateFragment extends LMFragment implements VerficationCancel
         });
 
 
-        mCertificateVerifier.getUpdates()
+        updateSubscriber = mCertificateVerifier.getUpdates()
                 .subscribe(this::updateVerficationProgressDialog);
 
         mIssuerManager.certificateVerified(mCertUuid)
@@ -369,6 +412,7 @@ public class CertificateFragment extends LMFragment implements VerficationCancel
 
         mCertificateVerifier.verifyJsonLd(certificate, txRecord)
                 .compose(bindToMainThread())
+                .delay(1, TimeUnit.SECONDS)
                 .subscribe(localHash -> {
                     Timber.d("Success!");
                     showVerificationResultDialog(R.drawable.ic_dialog_success, R.string.cert_verification_success_title, R.string.cert_verification_step_valid_cert);
