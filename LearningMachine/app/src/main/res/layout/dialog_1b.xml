@@ -27,7 +27,7 @@
 
         <TextView
             android:id="@+id/titleView"
-            style="@style/Text.Title.2"
+            style="@style/Text.Title.1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -46,15 +46,15 @@
 
         <TextView
             android:id="@+id/messageView"
-            style="@style/Text.Body"
+            style="@style/Text.Body.1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
             android:textAlignment="center"
             app:layout_constraintBottom_toTopOf="@+id/guideline3"
             app:layout_constraintEnd_toEndOf="parent"
@@ -63,8 +63,8 @@
             app:layout_constraintTop_toBottomOf="@+id/titleView" />
 
         <Button
-            android:id="@+id/dialog_positive_button"
-            style="@style/RoundedButton.Dark"
+            android:id="@+id/dialog_negative_button"
+            style="@style/RoundedButton.Light"
             android:layout_width="wrap_content"
             android:layout_height="52dp"
             android:layout_marginBottom="16dp"
@@ -72,7 +72,7 @@
             android:layout_marginTop="16dp"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:text="Positive"
+            android:text="Negative"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"

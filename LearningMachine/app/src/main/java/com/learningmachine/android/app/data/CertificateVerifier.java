@@ -109,10 +109,10 @@ public class CertificateVerifier {
     private Observable<TxRecord> verifyBitcoinTransactionRecord(BlockCert certificate, TxRecord txRecord) {
         String merkleRoot = certificate.getMerkleRoot();
         String remoteHash = txRecord.getRemoteHash();
+
         if (remoteHash == null || !remoteHash.equals(merkleRoot)) {
-            // TODO: show an error
             Timber.e("The transaction record hash doesn't match the certificate's Merkle root");
-            return Observable.error(new ExceptionWithResourceString(R.string.error_invalid_certificate_json));
+            return Observable.error(new ExceptionWithResourceString(R.string.error_invalid_certificate_merkle_root));
         }
 
         Timber.d("Blockchain transaction is downloaded successfully");
@@ -129,9 +129,8 @@ public class CertificateVerifier {
     private Observable<IssuerResponse> verifyIssuer(IssuerResponse issuerResponse, TxRecord txRecord) {
         boolean addressVerified = issuerResponse.verifyTransaction(txRecord);
         if (!addressVerified) {
-            // TODO: show an error
             Timber.e("The issuer key doesn't match the certificate address");
-            return Observable.error(new ExceptionWithResourceString(R.string.error_invalid_certificate_json));
+            return Observable.error(new ExceptionWithResourceString(R.string.error_invalid_issuer_doesnt_match_address));
         }
         return Observable.just(issuerResponse);
     }
@@ -145,6 +144,7 @@ public class CertificateVerifier {
         final String remoteHash = possibleHash;
         JsonObject documentNode = certificate.getDocumentNode();
         if (documentNode == null) {
+
             return Observable.error(new ExceptionWithResourceString(R.string.error_invalid_certificate_json));
         }
         Handler handler = new Handler(Looper.getMainLooper());
@@ -197,7 +197,7 @@ public class CertificateVerifier {
         @JavascriptInterface
         public void result(Object error, String normalizedJsonld) {
             if (error != null) {
-                Exception e = new ExceptionWithResourceString(R.string.error_invalid_certificate_json);
+                Exception e = new ExceptionWithResourceString(R.string.error_invalid_certificate_normalize_json);
                 Timber.e(e, "Could not normalize JSON-LD");
                 mEmitter.onError(e);
                 return;

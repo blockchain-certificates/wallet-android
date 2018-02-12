@@ -151,10 +151,6 @@ public class AlertDialogFragment extends DialogFragment {
             layoutID = args.getInt(ARG_LAYOUT);
         }
 
-        if (StringUtils.isEmpty(positiveButtonMessage)) {
-            positiveButtonMessage = getString(android.R.string.ok);
-        }
-
         final Dialog dialog = new Dialog(getActivity());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);
@@ -164,8 +160,11 @@ public class AlertDialogFragment extends DialogFragment {
         if (layoutID > 0) {
             dialogContent = factory.inflate(layoutID, null);
         } else {
-            if (negativeButtonMessage == null) {
-                dialogContent = factory.inflate(R.layout.dialog_1, null);
+
+            if (negativeButtonMessage == null && positiveButtonMessage != null) {
+                dialogContent = factory.inflate(R.layout.dialog_1a, null);
+            } else if (negativeButtonMessage != null && positiveButtonMessage == null) {
+                dialogContent = factory.inflate(R.layout.dialog_1b, null);
             } else {
                 dialogContent = factory.inflate(R.layout.dialog_2, null);
             }
@@ -188,7 +187,10 @@ public class AlertDialogFragment extends DialogFragment {
 
         titleView.setText(title);
         messageView.setText(message);
-        positiveButtonView.setText(positiveButtonMessage);
+
+        if (positiveButtonView != null) {
+            positiveButtonView.setText(positiveButtonMessage);
+        }
 
         if (negativeButtonView != null) {
             negativeButtonView.setText(negativeButtonMessage);
@@ -209,22 +211,24 @@ public class AlertDialogFragment extends DialogFragment {
         relayoutChildren(dialogContent);
 
         // 3) Calculate the total height of the dialog
-        int widthMeasureSpec = View.MeasureSpec.makeMeasureSpec((int)idealDialogWidth, View.MeasureSpec.EXACTLY);
+        int widthMeasureSpec = View.MeasureSpec.makeMeasureSpec((int)(idealDialogWidth*0.6f), View.MeasureSpec.EXACTLY);
         int heightMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
         dialogContent.measure(widthMeasureSpec, heightMeasureSpec);
         float totalHeight = dialogContent.getMeasuredHeight();
 
         // 4) Dialog height should be a little larger than the measured height
-        float idealDialogHeight = totalHeight + dp2px(20.0f);
+        float idealDialogHeight = totalHeight + dp2px(40.0f);
 
         dialogContent.setLayoutParams(new FrameLayout.LayoutParams((int) idealDialogWidth, (int) idealDialogHeight));
 
 
         // 5) instrument the buttons
-        positiveButtonView.setOnClickListener(view -> {
-            dismiss();
-            onButtonTapped(RESULT_POSITIVE);
-        });
+        if(positiveButtonView != null) {
+            positiveButtonView.setOnClickListener(view -> {
+                dismiss();
+                onButtonTapped(RESULT_POSITIVE);
+            });
+        }
 
         if (negativeButtonView != null) {
             negativeButtonView.setOnClickListener(view -> {

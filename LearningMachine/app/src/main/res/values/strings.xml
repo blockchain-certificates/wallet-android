@@ -204,14 +204,22 @@
 
     <string name="cert_verification_step_invalid_cert">Not a valid credential</string>
     <string name="error_testnet_certificate_json">This credential is for test purposes only; it has not been recorded to a blockchain</string>
-    <string name="error_invalid_certificate_json">The credential file is invalid</string>
+
+
+
+    <string name="error_invalid_certificate_json">The credential json is erroneous</string>
+    <string name="error_invalid_certificate_normalize_json">Unable to normalize the credential JSON-LD</string>
+    <string name="error_invalid_certificate_merkle_root">The transaction record hash does not match the credential Merkle root</string>
+    <string name="error_invalid_issuer_doesnt_match_address">The issuer key does not match the credential address</string>
+    <string name="error_remote_and_local_hash_mismatch">The credential\'s local hash does not match the credential\'s remote hash</string>
+
     <string name="error_cannot_load_certificate_json">Could not load the credential file</string>
-    <string name="error_remote_and_local_hash_mismatch">Local hash doesn\'t match remote hash</string>
+
     <string name="fragment_verify_cert_title">Verifying</string>
     <string name="fragment_verify_cert_step_format">Step %1$d of %2$d</string>
     <string name="fragment_verify_cert_cancel_text_view_title">Cancel</string>
-    <string name="cert_verification_success_title">Success!</string>
-    <string name="cert_verification_failure_title">Failure</string>
+    <string name="cert_verification_success_title">Verified!</string>
+    <string name="cert_verification_failure_title">Fail</string>
     <string name="dialog_verify_cert_result_positive_button_title">OK</string>
 
     <!-- Dialog Error Messages -->

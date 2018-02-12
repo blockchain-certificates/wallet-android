@@ -263,8 +263,8 @@ public class CertificateFragment extends LMFragment implements VerficationCancel
                 iconId,
                 getResources().getString(titleId),
                 getResources().getString(messageId),
-                getResources().getString(R.string.onboarding_passphrase_ok),
                 null,
+                getResources().getString(R.string.onboarding_passphrase_ok),
                 (btnIdx) -> {
                     return null;
                 });
@@ -272,12 +272,20 @@ public class CertificateFragment extends LMFragment implements VerficationCancel
 
     private void showVerificationFailureDialog(int errorId) {
         hideVerificationProgressDialog();
-        displayAlert(R.drawable.ic_dialog_failure,
-                R.string.cert_verification_failure_title,
-                errorId,
-                R.string.dialog_verify_cert_result_positive_button_title,
-                0);
+
+        DialogUtils.showAlertDialog(getContext(), this,
+                R.drawable.ic_dialog_failure,
+                getResources().getString(R.string.cert_verification_failure_title),
+                getResources().getString(errorId),
+                null,
+                getResources().getString(R.string.onboarding_passphrase_ok),
+                (btnIdx) -> {
+                    return null;
+                });
     }
+
+
+
 
     @Override
     public void onVerificationCancelClick() {
@@ -359,7 +367,6 @@ public class CertificateFragment extends LMFragment implements VerficationCancel
 
                     ExceptionWithResourceString throwableRS = (ExceptionWithResourceString)throwable;
                     showVerificationResultDialog(R.drawable.ic_dialog_failure, R.string.cert_verification_failure_title, throwableRS.getErrorMessageResId());
-                    //showVerificationFailureDialog();
                 });
     }
 
