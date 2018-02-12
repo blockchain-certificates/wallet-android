@@ -31,6 +31,15 @@
             style="@style/Text.Info"/>
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/issuer_info_viewmodel_textview_bottom_padding"
+            android:text="@{issuerInfo.issuerUrl}"
+            style="@style/Text.Info"/>
+
+
+
+        <TextView
             android:id="@+id/issuer_info_introduced_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

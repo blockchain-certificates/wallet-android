@@ -157,7 +157,7 @@ public class BlockCertV12 extends BlockchainCertificate implements BlockCert {
         String analytics = null;
         String imageData = issuer.getImage();
 
-        return new IssuerResponse(name, email, certUuid, certsUrl, introUrl, introducedOn, imageData, analytics);
+        return new IssuerResponse(name, email, null, certUuid, certsUrl, introUrl, introducedOn, imageData, analytics);
 
     }
 

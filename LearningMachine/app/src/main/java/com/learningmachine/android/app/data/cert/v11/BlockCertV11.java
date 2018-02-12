@@ -86,7 +86,7 @@ public class BlockCertV11 extends CertificateSchemaV11 implements BlockCert {
         String imageData = issuer.getImage();
         String analytics = null;
 
-        return new IssuerResponse(name, email, certUuid, certsUrl, introUrl, introducedOn, imageData, analytics);
+        return new IssuerResponse(name, email, null, certUuid, certsUrl, introUrl, introducedOn, imageData, analytics);
     }
 
     @Override

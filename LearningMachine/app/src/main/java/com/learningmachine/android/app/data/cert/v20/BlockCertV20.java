@@ -140,6 +140,7 @@ public class BlockCertV20 extends CertSchemaV20 implements BlockCert {
         Issuer issuer = getBadge().getIssuer();
         String name = issuer.getName();
         String email = issuer.getEmail();
+        String issuerURL = issuer.getUrl().toString();
         String certUuid = issuer.getId().toString();
         String certsUrl = null;
         String introUrl = null;
@@ -147,7 +148,7 @@ public class BlockCertV20 extends CertSchemaV20 implements BlockCert {
         String imageData = issuer.getImage();
         String analytics = null;
 
-        return new IssuerResponse(name, email, certUuid, certsUrl, introUrl, introducedOn, imageData, analytics);
+        return new IssuerResponse(name, email, issuerURL, certUuid, certsUrl, introUrl, introducedOn, imageData, analytics);
     }
 
     @Override

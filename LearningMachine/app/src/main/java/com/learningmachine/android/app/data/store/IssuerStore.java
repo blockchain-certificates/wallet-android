@@ -48,6 +48,7 @@ public class IssuerStore implements DataStore {
 
         contentValues.put(LMDatabaseHelper.Column.Issuer.NAME, issuer.getName());
         contentValues.put(LMDatabaseHelper.Column.Issuer.EMAIL, issuer.getEmail());
+        contentValues.put(LMDatabaseHelper.Column.Issuer.ISSUERURL, issuer.getIssuerURL());
         contentValues.put(LMDatabaseHelper.Column.Issuer.INTRODUCED_ON, issuer.getIntroducedOn());
         contentValues.put(LMDatabaseHelper.Column.Issuer.RECIPIENT_PUB_KEY, recipientPubKey);
 
@@ -148,6 +149,7 @@ public class IssuerStore implements DataStore {
                 + LMDatabaseHelper.Table.ISSUER + "." + LMDatabaseHelper.Column.Issuer.ID + ", "
                 + LMDatabaseHelper.Table.ISSUER + "." + LMDatabaseHelper.Column.Issuer.NAME + ", "
                 + LMDatabaseHelper.Table.ISSUER + "." + LMDatabaseHelper.Column.Issuer.EMAIL + ", "
+                + LMDatabaseHelper.Table.ISSUER + "." + LMDatabaseHelper.Column.Issuer.ISSUERURL + ", "
                 + LMDatabaseHelper.Table.ISSUER + "." + LMDatabaseHelper.Column.Issuer.UUID + ", "
                 + LMDatabaseHelper.Table.ISSUER + "." + LMDatabaseHelper.Column.Issuer.CERTS_URL + ", "
                 + LMDatabaseHelper.Table.ISSUER + "." + LMDatabaseHelper.Column.Issuer.INTRO_URL + ", "
