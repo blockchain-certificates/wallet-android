@@ -67,9 +67,18 @@
     <!-- Verification -->
     <string name="fragment_verify_cert_step_format">Verifying Step %1$d of %2$d</string>
 
-    <string name="cert_verification_step_checking_merkle">Comparing expected Merkle root with value on the blockchain</string>
-    <string name="cert_verification_step_checking_authenticity">Validating issuer identity</string>
-    <string name="cert_verification_step_comparing_hashes">Comparing local and remote hashes</string>
+
+    <string name="cert_verification_step0">Beginning verification process</string>
+    <string name="cert_verification_step1">Comparing computed hash with expected hash</string>
+    <string name="cert_verification_step2">Ensuring the Merkle receipt is valid</string>
+    <string name="cert_verification_step3">Comparing expected Merkle root with value on the blockchain</string>
+    <string name="cert_verification_step4">Checking if the credential has been revoked</string>
+    <string name="cert_verification_step5">Validating issuer identity</string>
+    <string name="cert_verification_step6">Checking expiration</string>
+
+    <string name="cert_verification_step1_could_not_create_temp_file">Couldn\'t create a temp file for JSONLD normalization</string>
+    <string name="cert_verification_step1_could_not_save_document">Couldn\'t save the certificate document node</string>
+
 
 
     <string name="error_no_internet">No Network</string>

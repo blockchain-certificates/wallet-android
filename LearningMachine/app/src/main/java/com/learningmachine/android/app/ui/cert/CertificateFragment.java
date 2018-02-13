@@ -31,7 +31,6 @@ import android.widget.TextView;
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.CertificateManager;
 import com.learningmachine.android.app.data.CertificateVerifier;
-import com.learningmachine.android.app.data.CertificateVerifier.CertificateVerificationStatus;
 import com.learningmachine.android.app.data.IssuerManager;
 import com.learningmachine.android.app.data.cert.BlockCert;
 import com.learningmachine.android.app.data.error.ExceptionWithResourceString;
@@ -39,6 +38,7 @@ import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.data.model.CertificateRecord;
 import com.learningmachine.android.app.data.model.IssuerRecord;
 import com.learningmachine.android.app.data.model.TxRecord;
+import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 import com.learningmachine.android.app.databinding.FragmentCertificateBinding;
 import com.learningmachine.android.app.dialog.AlertDialogFragment;
 import com.learningmachine.android.app.ui.LMFragment;
@@ -247,7 +247,6 @@ public class CertificateFragment extends LMFragment {
     private TextView updateDialogTitleView = null;
     private TextView updateDialogMessageView = null;
     private AlertDialogFragment updateDialog = null;
-    private Subscription updateSubscriber = null;
 
     private void showVerficationProgressDialog() {
 
@@ -265,8 +264,6 @@ public class CertificateFragment extends LMFragment {
                         updateDialog = null;
                         updateDialogTitleView = null;
                         updateDialogMessageView = null;
-                        updateSubscriber.unsubscribe();
-                        updateSubscriber = null;
                         return null;
                     },
                     (dialogContent) -> {
@@ -277,18 +274,16 @@ public class CertificateFragment extends LMFragment {
                         ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
                         progressBar.animate();
 
-                        this.updateVerficationProgressDialog(CertificateVerificationStatus.CHECKING_MERKLE);
+                        this.updateVerficationProgressDialog(0, R.string.cert_verification_step0);
                         return null;
                     });
         }
     }
 
-    private void updateVerficationProgressDialog(CertificateVerificationStatus status) {
+    private void updateVerficationProgressDialog(int stepNumber, int messageResId) {
         if(updateDialogTitleView != null && updateDialogMessageView != null) {
-            String title = getString(R.string.fragment_verify_cert_step_format,
-                    status.getStepNumber(),
-                    CertificateVerificationStatus.getTotalSteps());
-            String message = getString(status.getMessageResId());
+            String title = getString(R.string.fragment_verify_cert_step_format, stepNumber, 6);
+            String message = getString(messageResId);
             updateDialogTitleView.setText(title);
             updateDialogMessageView.setText(message);
         }
@@ -301,8 +296,6 @@ public class CertificateFragment extends LMFragment {
         updateDialog = null;
         updateDialogTitleView = null;
         updateDialogMessageView = null;
-        updateSubscriber.unsubscribe();
-        updateSubscriber = null;
     }
 
 
@@ -339,7 +332,6 @@ public class CertificateFragment extends LMFragment {
     private void verifyCertificate() {
         showVerficationProgressDialog();
 
-
         // if there is no internet connection, and unhandled exception is thrown.  Let's catch it.
         Thread.setDefaultUncaughtExceptionHandler (new Thread.UncaughtExceptionHandler()
         {
@@ -350,20 +342,33 @@ public class CertificateFragment extends LMFragment {
             }
         });
 
-
-        updateSubscriber = mCertificateVerifier.getUpdates()
-                .subscribe(this::updateVerficationProgressDialog);
+        updateVerficationProgressDialog(0, R.string.cert_verification_step0);
 
         mIssuerManager.certificateVerified(mCertUuid)
                 .compose(bindToMainThread())
                 .subscribe(aVoid -> Timber.d("Issuer analytics: Certificate verified"),
                         throwable -> Timber.e(throwable, "Issuer has no analytics url."));
 
+
+        // load the certificate
         mCertificateVerifier.loadCertificate(mCertUuid)
                 .compose(bindToMainThread())
                 .subscribe(certificate -> {
-                    Timber.d("Successfully loaded certificate");
-                    verifyBitcoinTransactionRecord(certificate);
+
+                    // load the TX record
+                    mCertificateVerifier.loadTXRecord(certificate).compose(bindToMainThread())
+                            .subscribe(txRecord -> {
+
+                                // begin the verification process
+                                step1_CompareComputedHashWithExpectedHash(certificate, txRecord);
+
+                            }, throwable -> {
+                                Timber.e(throwable, "Error!");
+
+                                ExceptionWithResourceString throwableRS = (ExceptionWithResourceString)throwable;
+                                showVerificationFailureDialog(throwableRS.getErrorMessageResId());
+                            });
+
                 }, throwable -> {
                     Timber.e(throwable, "Error!");
 
@@ -372,55 +377,110 @@ public class CertificateFragment extends LMFragment {
                 });
     }
 
-    private void verifyBitcoinTransactionRecord(BlockCert certificate) {
+    private void step1_CompareComputedHashWithExpectedHash(BlockCert certificate, TxRecord txRecord) {
         if (mCancelVerification) {
             return;
         }
 
-        mCertificateVerifier.verifyBitcoinTransactionRecord(certificate)
+        updateVerficationProgressDialog(1, R.string.cert_verification_step1);
+
+        mCertificateVerifier.CompareComputedHashWithExpectedHash(certificate, txRecord)
                 .compose(bindToMainThread())
-                .subscribe(txRecord -> {
-                    // TODO: success
-                    verifyIssuer(certificate, txRecord);
+                .subscribe((localHash) -> {
+                    step2_EnsuringMerkleReceiptIsValid(certificate, txRecord);
+                }, throwable -> {
+                    ExceptionWithResourceString throwableRS = (ExceptionWithResourceString)throwable;
+                    showVerificationFailureDialog(throwableRS.getErrorMessageResId());
+                });
+    }
+
+    private void step2_EnsuringMerkleReceiptIsValid(BlockCert certificate, TxRecord txRecord) {
+        if (mCancelVerification) {
+            return;
+        }
+
+        updateVerficationProgressDialog(2, R.string.cert_verification_step2);
+
+        mCertificateVerifier.EnsuringMerkleReceiptIsValid(certificate, txRecord)
+                .compose(bindToMainThread())
+                .subscribe(nothing -> {
+                    step3_ComparingExpectedMerkleRootWithValueOnTheBlockchain(certificate, txRecord);
+                }, throwable -> {
+                    ExceptionWithResourceString throwableRS = (ExceptionWithResourceString)throwable;
+                    showVerificationFailureDialog(throwableRS.getErrorMessageResId());
+                });
+
+    }
+
+    private void step3_ComparingExpectedMerkleRootWithValueOnTheBlockchain(BlockCert certificate, TxRecord txRecord) {
+        if (mCancelVerification) {
+            return;
+        }
+
+        updateVerficationProgressDialog(3, R.string.cert_verification_step3);
+
+        mCertificateVerifier.ComparingExpectedMerkleRootWithValueOnTheBlockchain(certificate, txRecord)
+                .compose(bindToMainThread())
+                .subscribe(nothing -> {
+                    step4_ValidatingIssuerIdentity(certificate, txRecord);
+                }, throwable -> {
+                    ExceptionWithResourceString throwableRS = (ExceptionWithResourceString)throwable;
+                    showVerificationFailureDialog(throwableRS.getErrorMessageResId());
+                });
+    }
+
+    private void step4_ValidatingIssuerIdentity(BlockCert certificate, TxRecord txRecord) {
+        if (mCancelVerification) {
+            return;
+        }
+
+        updateVerficationProgressDialog(4, R.string.cert_verification_step5);
+
+        mCertificateVerifier.ValidatingIssuerIdentity(certificate, txRecord)
+                .compose(bindToMainThread())
+                .subscribe(issuerResponse -> {
+                    step5_CheckingIfTheCredentialHasBeenRevoked(certificate, txRecord, issuerResponse);
+                }, throwable -> {
+                    ExceptionWithResourceString throwableRS = (ExceptionWithResourceString)throwable;
+                    showVerificationFailureDialog(throwableRS.getErrorMessageResId());
+                });
+    }
+
+    private void step5_CheckingIfTheCredentialHasBeenRevoked(BlockCert certificate, TxRecord txRecord, IssuerResponse issuerResponse) {
+        if (mCancelVerification) {
+            return;
+        }
+
+        updateVerficationProgressDialog(5, R.string.cert_verification_step4);
+
+        mCertificateVerifier.CheckingIfTheCredentialHasBeenRevoked(certificate, txRecord, issuerResponse)
+                .compose(bindToMainThread())
+                .subscribe(nothing -> {
+                    step6_CheckingExpirationDate(certificate, txRecord, issuerResponse);
+                }, throwable -> {
+                    ExceptionWithResourceString throwableRS = (ExceptionWithResourceString)throwable;
+                    showVerificationFailureDialog(throwableRS.getErrorMessageResId());
+                });
+    }
+
+    private void step6_CheckingExpirationDate(BlockCert certificate, TxRecord txRecord, IssuerResponse issuerResponse) {
+        if (mCancelVerification) {
+            return;
+        }
+
+        updateVerficationProgressDialog(6, R.string.cert_verification_step6);
+
+        mCertificateVerifier.CheckingExpirationDate(certificate, txRecord, issuerResponse)
+                .compose(bindToMainThread())
+                .subscribe(issuerResponse2 -> {
+
+                    showVerificationResultDialog(R.drawable.ic_dialog_success, R.string.cert_verification_success_title, R.string.cert_verification_step_valid_cert);
+
                 }, throwable -> {
                     Timber.e(throwable, "Error! Merkle roots do not match");
 
                     ExceptionWithResourceString throwableRS = (ExceptionWithResourceString)throwable;
                     showVerificationFailureDialog(throwableRS.getErrorMessageResId());
-                });
-    }
-
-    private void verifyIssuer(BlockCert certificate, TxRecord txRecord) {
-        if (mCancelVerification) {
-            return;
-        }
-
-        mCertificateVerifier.verifyIssuer(certificate, txRecord)
-                .compose(bindToMainThread())
-                .subscribe(issuerResponse -> verifyJsonLd(certificate, txRecord), throwable -> {
-                    Timber.e(throwable, "Error! Couldn't verify issuer");
-
-                    ExceptionWithResourceString throwableRS = (ExceptionWithResourceString)throwable;
-                    showVerificationFailureDialog(throwableRS.getErrorMessageResId());
-                });
-    }
-
-    private void verifyJsonLd(BlockCert certificate, TxRecord txRecord) {
-        if (mCancelVerification) {
-            return;
-        }
-
-        mCertificateVerifier.verifyJsonLd(certificate, txRecord)
-                .compose(bindToMainThread())
-                .delay(1, TimeUnit.SECONDS)
-                .subscribe(localHash -> {
-                    Timber.d("Success!");
-                    showVerificationResultDialog(R.drawable.ic_dialog_success, R.string.cert_verification_success_title, R.string.cert_verification_step_valid_cert);
-                }, throwable -> {
-                    Timber.e(throwable, "Error!");
-
-                    ExceptionWithResourceString throwableRS = (ExceptionWithResourceString)throwable;
-                    showVerificationResultDialog(R.drawable.ic_dialog_failure, R.string.cert_verification_failure_title, throwableRS.getErrorMessageResId());
                 });
     }
 

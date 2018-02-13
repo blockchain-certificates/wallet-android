@@ -55,7 +55,7 @@ public class CertificateVerifier {
     private final BlockchainService mBlockchainService;
     private final IssuerService mIssuerService;
 
-    private BehaviorSubject<CertificateVerificationStatus> mUpdates;
+    private final int delayTime = 1;
 
     @Inject
     public CertificateVerifier(Context context, BlockchainService blockchainService, IssuerService issuerService) {
@@ -63,20 +63,10 @@ public class CertificateVerifier {
         mBlockchainService = blockchainService;
         mIssuerService = issuerService;
         mWebView = new WebView(mContext);
-
-        mUpdates = BehaviorSubject.create();
-    }
-
-    public BehaviorSubject<CertificateVerificationStatus> getUpdates() {
-        return mUpdates;
     }
 
     public Observable<BlockCert> loadCertificate(String certificateUuid) {
-        return getCertificate(mContext, certificateUuid);
-    }
-
-    private Observable<BlockCert> getCertificate(Context context, String certificateUuid) {
-        File file = FileUtils.getCertificateFile(context, certificateUuid);
+        File file = FileUtils.getCertificateFile(mContext, certificateUuid);
         try (FileInputStream inputStream = new FileInputStream(file)) {
             BlockCertParser blockCertParser = new BlockCertParser();
             BlockCert blockCert = blockCertParser.fromJson(inputStream);
@@ -87,56 +77,14 @@ public class CertificateVerifier {
         }
     }
 
-    public Observable<TxRecord> verifyBitcoinTransactionRecord(BlockCert certificate) {
-        String receiverKey = certificate.getRecipientPublicKey();
-        String issuerKey = certificate.getVerificationPublicKey();
-
-        // testnet check: if either the receiver or the issuer originated
-        // from testnet then we will not validate using the normal method
-        if(receiverKey != null && issuerKey != null) {
-            if(receiverKey.startsWith("m") || receiverKey.startsWith("n") || issuerKey.startsWith("m") || issuerKey.startsWith("n")) {
-                Timber.e("This is a testnet certificate and cannot be verified");
-                return Observable.error(new ExceptionWithResourceString(R.string.error_testnet_certificate_json));
-            }
-        }
-
-        mUpdates.onNext(CertificateVerificationStatus.CHECKING_MERKLE);
+    public Observable<TxRecord> loadTXRecord(BlockCert certificate) {
         String sourceId = certificate.getSourceId();
-        return mBlockchainService.getBlockchain(sourceId).delay(2, TimeUnit.SECONDS)
-                .flatMap(txRecord -> verifyBitcoinTransactionRecord(certificate, txRecord));
+        return mBlockchainService.getBlockchain(sourceId).delay(delayTime, TimeUnit.SECONDS).flatMap((txRecord) -> {
+            return Observable.just(txRecord);
+        });
     }
 
-    private Observable<TxRecord> verifyBitcoinTransactionRecord(BlockCert certificate, TxRecord txRecord) {
-        String merkleRoot = certificate.getMerkleRoot();
-        String remoteHash = txRecord.getRemoteHash();
-
-        if (remoteHash == null || !remoteHash.equals(merkleRoot)) {
-            Timber.e("The transaction record hash doesn't match the certificate's Merkle root");
-            return Observable.error(new ExceptionWithResourceString(R.string.error_invalid_certificate_merkle_root));
-        }
-
-        Timber.d("Blockchain transaction is downloaded successfully");
-        return Observable.just(txRecord).delay(2, TimeUnit.SECONDS);
-    }
-
-    public Observable<IssuerResponse> verifyIssuer(BlockCert certificate, TxRecord txRecord) {
-        mUpdates.onNext(CertificateVerificationStatus.CHECKING_AUTHENTICITY);
-        String issuerId = certificate.getIssuerId();
-        return mIssuerService.getIssuer(issuerId).delay(2, TimeUnit.SECONDS)
-                .flatMap(issuerResponse -> verifyIssuer(issuerResponse, txRecord));
-    }
-
-    private Observable<IssuerResponse> verifyIssuer(IssuerResponse issuerResponse, TxRecord txRecord) {
-        boolean addressVerified = issuerResponse.verifyTransaction(txRecord);
-        if (!addressVerified) {
-            Timber.e("The issuer key doesn't match the certificate address");
-            return Observable.error(new ExceptionWithResourceString(R.string.error_invalid_issuer_doesnt_match_address));
-        }
-        return Observable.just(issuerResponse);
-    }
-
-    public Observable<String> verifyJsonLd(BlockCert certificate, TxRecord txRecord) {
-        mUpdates.onNext(CertificateVerificationStatus.COMPARING_HASHES);
+    public Observable<Object> CompareComputedHashWithExpectedHash(BlockCert certificate, TxRecord txRecord) {
         String possibleHash = certificate.getReceiptHash();
         if (possibleHash == null) {
             possibleHash = txRecord.getRemoteHash();
@@ -174,8 +122,104 @@ public class CertificateVerifier {
             HashComparison jsonldCallback = new HashComparison(emitter, remoteHash);
             File finalFile = file;
             handler.post(() -> configureWebView(serializedDoc, finalFile, jsonldCallback));
-        }, Emitter.BackpressureMode.DROP);
+        }, Emitter.BackpressureMode.DROP).delay(delayTime, TimeUnit.SECONDS);
     }
+
+    public Observable<Object> EnsuringMerkleReceiptIsValid(BlockCert certificate, TxRecord txRecord) {
+
+        // TODO: ensure the merkle receipt is valid
+
+
+        // END-TODO
+
+        return Observable.create(emitter -> {
+
+            Timber.d("EnsuringMerkleReceiptIsValid - success");
+            emitter.onNext("");
+        }, Emitter.BackpressureMode.DROP).delay(delayTime, TimeUnit.SECONDS);
+    }
+
+    public Observable<Object> ComparingExpectedMerkleRootWithValueOnTheBlockchain(BlockCert certificate, TxRecord txRecord) {
+        String receiverKey = certificate.getRecipientPublicKey();
+        String issuerKey = certificate.getVerificationPublicKey();
+
+        // TODO: REMOVE THIS AND ALLOW ACTUAL VERIFICATIONS OF CROSS CHAIN CERTIFICATES
+        // testnet check: if either the receiver or the issuer originated
+        // from testnet then we will not validate using the normal method
+        if(receiverKey != null && issuerKey != null) {
+            if(receiverKey.startsWith("m") || receiverKey.startsWith("n") || issuerKey.startsWith("m") || issuerKey.startsWith("n")) {
+                Timber.e("This is a testnet certificate and cannot be verified");
+                return Observable.error(new ExceptionWithResourceString(R.string.error_testnet_certificate_json));
+            }
+        }
+
+        return Observable.create(emitter -> {
+            String merkleRoot = certificate.getMerkleRoot();
+            String remoteHash = txRecord.getRemoteHash();
+
+            if (remoteHash == null || !remoteHash.equals(merkleRoot)) {
+                Timber.e("The transaction record hash doesn't match the certificate's Merkle root");
+                emitter.onError(new ExceptionWithResourceString(R.string.error_invalid_certificate_merkle_root));
+                return;
+            }
+
+            Timber.d("ComparingExpectedMerkleRootWithValueOnTheBlockchain - success");
+            emitter.onNext("");
+        }, Emitter.BackpressureMode.DROP).delay(delayTime, TimeUnit.SECONDS);
+
+    }
+
+    public Observable<IssuerResponse> ValidatingIssuerIdentity(BlockCert certificate, TxRecord txRecord) {
+        String issuerId = certificate.getIssuerId();
+        return mIssuerService.getIssuer(issuerId).delay(delayTime, TimeUnit.SECONDS)
+                .flatMap(issuerResponse -> {
+
+                    boolean addressVerified = issuerResponse.verifyTransaction(txRecord);
+                    if (!addressVerified) {
+                        Timber.e("The issuer key doesn't match the certificate address");
+                        return Observable.error(new ExceptionWithResourceString(R.string.error_invalid_issuer_doesnt_match_address));
+                    }
+
+                    Timber.d("ValidatingIssuerIdentity - success");
+                    return Observable.just(issuerResponse);
+                });
+    }
+
+    public Observable<Object> CheckingIfTheCredentialHasBeenRevoked(BlockCert certificate, TxRecord txRecord, IssuerResponse issuerResponse) {
+        return Observable.create(emitter -> {
+            // TODO: Just check is the credential has been revoked
+
+            boolean addressVerified = issuerResponse.verifyTransaction(txRecord);
+            if (!addressVerified) {
+                Timber.e("The issuer key doesn't match the certificate address");
+                emitter.onError(new ExceptionWithResourceString(R.string.error_invalid_issuer_doesnt_match_address));
+                return;
+            }
+
+            Timber.d("CheckingIfTheCredentialHasBeenRevoked - success");
+            emitter.onNext("");
+        }, Emitter.BackpressureMode.DROP).delay(delayTime, TimeUnit.SECONDS);
+    }
+
+    public Observable<Object> CheckingExpirationDate(BlockCert certificate, TxRecord txRecord, IssuerResponse issuerResponse) {
+        return Observable.create(emitter -> {
+            // TODO: Just check is the credential is expired
+
+            boolean addressVerified = issuerResponse.verifyTransaction(txRecord);
+            if (!addressVerified) {
+                Timber.e("The issuer key doesn't match the certificate address");
+                emitter.onError(new ExceptionWithResourceString(R.string.error_invalid_issuer_doesnt_match_address));
+                return;
+            }
+
+            Timber.d("CheckingExpirationDate - success");
+            emitter.onNext("");
+        }, Emitter.BackpressureMode.DROP).delay(delayTime, TimeUnit.SECONDS);
+    }
+
+
+
+
 
     private void configureWebView(String serializedDoc, File file, HashComparison jsonldCallback) {
         mWebView.addJavascriptInterface(jsonldCallback, "jsonldCallback");
@@ -186,10 +230,10 @@ public class CertificateVerifier {
     }
 
     private static class HashComparison {
-        private final Emitter<String> mEmitter;
+        private final Emitter<Object> mEmitter;
         private final String mRemoteHash;
 
-        public HashComparison(Emitter<String> emitter, String remoteHash) {
+        public HashComparison(Emitter<Object> emitter, String remoteHash) {
             mEmitter = emitter;
             mRemoteHash = remoteHash;
         }
@@ -224,35 +268,4 @@ public class CertificateVerifier {
         }
     }
 
-    public enum CertificateVerificationStatus {
-        // unused for now
-//        COMPUTING_LOCAL_HASH(1, R.string.cert_verification_step_computing_local_hash),
-//        FETCHING_REMOTE_HASH(2, R.string.cert_verification_step_fetching_remote_hash),
-//        CHECKING_RECEIPT(5, R.string.cert_verification_step_checking_receipt),
-//        CHECKING_ISSUER_SIGNATURE(7, R.string.cert_verification_step_checking_issuer_signature),
-//        CHECKING_CERT_STATUS(8, R.string.cert_verification_step_checking_cert_status),
-        CHECKING_MERKLE(1, R.string.cert_verification_step_checking_merkle),
-        CHECKING_AUTHENTICITY(2, R.string.cert_verification_step_checking_authenticity),
-        COMPARING_HASHES(3, R.string.cert_verification_step_comparing_hashes);
-
-        private int mStepNumber;
-        private int mMessageResId;
-
-        CertificateVerificationStatus(int stepNumber, int messageResId) {
-            mStepNumber = stepNumber;
-            mMessageResId = messageResId;
-        }
-
-        public int getStepNumber() {
-            return mStepNumber;
-        }
-
-        public int getMessageResId() {
-            return mMessageResId;
-        }
-
-        public static int getTotalSteps() {
-            return CertificateVerificationStatus.values().length;
-        }
-    }
 }
