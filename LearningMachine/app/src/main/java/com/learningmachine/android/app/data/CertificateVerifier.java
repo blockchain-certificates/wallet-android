@@ -13,7 +13,10 @@ import com.google.gson.JsonObject;
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.cert.BlockCert;
 import com.learningmachine.android.app.data.cert.BlockCertParser;
+import com.learningmachine.android.app.data.cert.v20.BlockCertV20;
+import com.learningmachine.android.app.data.cert.v20.Proof;
 import com.learningmachine.android.app.data.error.ExceptionWithResourceString;
+import com.learningmachine.android.app.data.model.KeyRotation;
 import com.learningmachine.android.app.data.model.TxRecord;
 import com.learningmachine.android.app.data.webservice.BlockchainService;
 import com.learningmachine.android.app.data.webservice.IssuerService;
@@ -104,7 +107,7 @@ public class CertificateVerifier {
             try {
                 file = File.createTempFile(JSONLD_TEMP_FILE_NAME, JSONLD_TEMP_FILE_EXT, certsDir);
             } catch (IOException e) {
-                Timber.e(e, "Couldn't create a temp file for JSONLD normalization");
+                Timber.e("CompareComputedHashWithExpectedHash - failed");
                 emitter.onError(e);
                 return;
             }
@@ -115,7 +118,7 @@ public class CertificateVerifier {
                 FileUtils.appendStringToFile(serializedDoc, file);
                 FileUtils.appendCharactersToFile(suffixInputStream, file);
             } catch (Exception e) {
-                Timber.e(e, "Couldn't save the certificate document node");
+                Timber.e("CompareComputedHashWithExpectedHash - failed");
                 emitter.onError(e);
                 return;
             }
@@ -127,7 +130,7 @@ public class CertificateVerifier {
 
     public Observable<Object> EnsuringMerkleReceiptIsValid(BlockCert certificate, TxRecord txRecord) {
 
-        // TODO: ensure the merkle receipt is valid
+        // TODO: ensure the merkle receipt is valid?
 
 
         // END-TODO
@@ -148,7 +151,7 @@ public class CertificateVerifier {
         // from testnet then we will not validate using the normal method
         if(receiverKey != null && issuerKey != null) {
             if(receiverKey.startsWith("m") || receiverKey.startsWith("n") || issuerKey.startsWith("m") || issuerKey.startsWith("n")) {
-                Timber.e("This is a testnet certificate and cannot be verified");
+                Timber.e("ComparingExpectedMerkleRootWithValueOnTheBlockchain - failed");
                 return Observable.error(new ExceptionWithResourceString(R.string.error_testnet_certificate_json));
             }
         }
@@ -158,8 +161,8 @@ public class CertificateVerifier {
             String remoteHash = txRecord.getRemoteHash();
 
             if (remoteHash == null || !remoteHash.equals(merkleRoot)) {
-                Timber.e("The transaction record hash doesn't match the certificate's Merkle root");
-                emitter.onError(new ExceptionWithResourceString(R.string.error_invalid_certificate_merkle_root));
+                Timber.e("ComparingExpectedMerkleRootWithValueOnTheBlockchain - failed");
+                emitter.onError(new ExceptionWithResourceString(R.string.error_step3_reason));
                 return;
             }
 
@@ -174,10 +177,10 @@ public class CertificateVerifier {
         return mIssuerService.getIssuer(issuerId).delay(delayTime, TimeUnit.SECONDS)
                 .flatMap(issuerResponse -> {
 
-                    boolean addressVerified = issuerResponse.verifyTransaction(txRecord);
-                    if (!addressVerified) {
-                        Timber.e("The issuer key doesn't match the certificate address");
-                        return Observable.error(new ExceptionWithResourceString(R.string.error_invalid_issuer_doesnt_match_address));
+                    KeyRotation.KeyStatus status = issuerResponse.verifyTransaction(txRecord);
+                    if (status == KeyRotation.KeyStatus.KEY_INVALID) {
+                        Timber.e("ValidatingIssuerIdentity - failed");
+                        return Observable.error(new ExceptionWithResourceString(R.string.error_step4_reason));
                     }
 
                     Timber.d("ValidatingIssuerIdentity - success");
@@ -187,13 +190,10 @@ public class CertificateVerifier {
 
     public Observable<Object> CheckingIfTheCredentialHasBeenRevoked(BlockCert certificate, TxRecord txRecord, IssuerResponse issuerResponse) {
         return Observable.create(emitter -> {
-            // TODO: Just check is the credential has been revoked
-
-            boolean addressVerified = issuerResponse.verifyTransaction(txRecord);
-            if (!addressVerified) {
-                Timber.e("The issuer key doesn't match the certificate address");
-                emitter.onError(new ExceptionWithResourceString(R.string.error_invalid_issuer_doesnt_match_address));
-                return;
+            KeyRotation.KeyStatus status = issuerResponse.verifyTransaction(txRecord);
+            if (status == KeyRotation.KeyStatus.KEY_REVOKED) {
+                Timber.e("CheckingIfTheCredentialHasBeenRevoked - failed");
+                emitter.onError(new ExceptionWithResourceString(R.string.error_step5_reason));
             }
 
             Timber.d("CheckingIfTheCredentialHasBeenRevoked - success");
@@ -203,13 +203,10 @@ public class CertificateVerifier {
 
     public Observable<Object> CheckingExpirationDate(BlockCert certificate, TxRecord txRecord, IssuerResponse issuerResponse) {
         return Observable.create(emitter -> {
-            // TODO: Just check is the credential is expired
-
-            boolean addressVerified = issuerResponse.verifyTransaction(txRecord);
-            if (!addressVerified) {
-                Timber.e("The issuer key doesn't match the certificate address");
-                emitter.onError(new ExceptionWithResourceString(R.string.error_invalid_issuer_doesnt_match_address));
-                return;
+            KeyRotation.KeyStatus status = issuerResponse.verifyTransaction(txRecord);
+            if (status == KeyRotation.KeyStatus.KEY_EXPIRED) {
+                Timber.e("CheckingExpirationDate - failed");
+                emitter.onError(new ExceptionWithResourceString(R.string.error_step6_reason));
             }
 
             Timber.d("CheckingExpirationDate - success");

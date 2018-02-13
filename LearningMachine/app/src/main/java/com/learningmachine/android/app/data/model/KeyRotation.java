@@ -9,6 +9,13 @@ import org.joda.time.format.ISODateTimeFormat;
 
 public class KeyRotation {
 
+    public enum KeyStatus {
+        KEY_VALID,
+        KEY_EXPIRED,
+        KEY_REVOKED,
+        KEY_INVALID
+    }
+
     @SerializedName("created")
     private String mCreatedDate;
     @SerializedName("expires")
@@ -43,15 +50,15 @@ public class KeyRotation {
         return mRevokedDate;
     }
 
-    public boolean verifyTransaction(TxRecord txRecord) {
+    public KeyStatus verifyTransaction(TxRecord txRecord) {
         TxRecordOut previousOut = txRecord.getInputsPreviousOut();
         if (previousOut == null) {
-            return false;
+            return KeyStatus.KEY_INVALID;
         }
         String address = previousOut.getAddress();
         String keyString = getKey();
         if (address == null || keyString == null) {
-            return false;
+            return KeyStatus.KEY_INVALID;
         }
         // normalize the key string
         // TODO: abstract away from the specific key format
@@ -59,7 +66,7 @@ public class KeyRotation {
             keyString = keyString.substring(LMConstants.ECDSA_KOBLITZ_PUBKEY_PREFIX.length());
         }
         if (!address.equals(keyString)) {
-            return false;
+            return KeyStatus.KEY_INVALID;
         }
 
         // check validity dates
@@ -67,20 +74,20 @@ public class KeyRotation {
         DateTime createdDate = dateTimeFormatter.parseDateTime(mCreatedDate);
         DateTime txRecordTimestamp = txRecord.getDateTime();
         if (createdDate.isAfter(txRecordTimestamp)) {
-            return false;
+            return KeyStatus.KEY_INVALID;
         }
         if (mExpiresDate != null) {
             DateTime expiresDate = dateTimeFormatter.parseDateTime(mExpiresDate);
             if (expiresDate.isBefore(txRecordTimestamp)) {
-                return false;
+                return KeyStatus.KEY_EXPIRED;
             }
         }
         if (mRevokedDate != null) {
             DateTime revokedDate = dateTimeFormatter.parseDateTime(mRevokedDate);
             if (revokedDate.isBefore(txRecordTimestamp)) {
-                return false;
+                return KeyStatus.KEY_REVOKED;
             }
         }
-        return true;
+        return KeyStatus.KEY_VALID;
     }
 }
