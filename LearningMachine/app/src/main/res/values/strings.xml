@@ -96,9 +96,9 @@
 
     <string name="error_step4_reason">Transaction occurred when the issuing address was not considered valid. Please contact the issuer.</string>
 
-    <string name="error_step5_reason">This credential was revoked by the issuer on %1$.</string>
+    <string name="error_step5_reason">This credential was revoked by the issuer.</string>
 
-    <string name="error_step6_reason">This credential expired on %1$</string>
+    <string name="error_step6_reason">This credential is expired</string>
 
 
 
