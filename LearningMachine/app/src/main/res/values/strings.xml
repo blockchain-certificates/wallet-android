@@ -265,6 +265,10 @@
     <string name="cert_verification_failure_title">Fail</string>
     <string name="dialog_verify_cert_result_positive_button_title">OK</string>
 
+
+    <string name="cert_passphrase_invalid_title">Passphrase Invalid</string>
+    <string name="cert_passphrase_invalid_desc">Please check your passphrase and try again.</string>
+
     <!-- Dialog Error Messages -->
 
     <string name="connection_error_message">Connection unavailable. Please check your connection and try again.</string>

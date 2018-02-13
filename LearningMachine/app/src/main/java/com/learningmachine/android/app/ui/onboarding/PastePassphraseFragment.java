@@ -160,10 +160,20 @@ public class PastePassphraseFragment extends OnboardingFragment {
 
     protected void displayErrorsLocal(Throwable throwable, DialogUtils.ErrorCategory errorCategory, @StringRes int errorTitleResId) {
         stopCountingTimer();
+
         mBinding.passphraseLabel.setText(R.string.onboarding_paste_passphrase_load_2);
         mBinding.pastePassphraseEditText.setEnabled(true);
         mBinding.pastePassphraseEditText.setText("");
-        displayErrors(throwable, errorCategory, errorTitleResId);
+
+        DialogUtils.showAlertDialog(getContext(), this,
+                R.drawable.ic_dialog_failure,
+                getResources().getString(R.string.cert_passphrase_invalid_title),
+                getResources().getString(R.string.cert_passphrase_invalid_desc),
+                null,
+                getResources().getString(R.string.onboarding_passphrase_ok),
+                (btnIdx) -> {
+                    return null;
+                });
     }
 
 
