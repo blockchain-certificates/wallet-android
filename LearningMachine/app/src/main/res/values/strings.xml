@@ -82,38 +82,28 @@
     <string name="cert_verification_step1_could_not_save_document">Couldn\'t save the certificate document node</string>
 
 
-
     <string name="error_no_internet">No Network</string>
-
     <string name="error_invalid_certificate_json">The credential json is erroneous</string>
     <string name="error_invalid_certificate_normalize_json">Unable to normalize the credential JSON-LD</string>
     <string name="error_remote_and_local_hash_mismatch">The credential\'s local hash does not match the credential\'s remote hash</string>
     <string name="error_cannot_load_certificate_json">Could not load the credential file</string>
 
     <string name="error_step1_reason">Computed hash does not match expected hash. This credential may have been altered. Please contact the issuer.</string>
-
     <string name="error_step2_reason">The Merkle receipt is not valid. Please contact the issuer.</string>
-
     <string name="error_step3_reason">Merkle root does not match the hash value on the blockchain. Please contact the issuer.</string>
-
     <string name="error_step4_reason">Transaction occurred when the issuing address was not considered valid. Please contact the issuer.</string>
-
     <string name="error_step5_reason">This credential was revoked by the issuer.</string>
-
     <string name="error_step6_reason">This credential is expired</string>
 
 
 
     <!-- Certificate View -->
-
     <string name="certificate_share_button">Share</string>
     <string name="certificate_verify_button">Verify this credential</string>
 
 
     <!-- Settings -->
-
     <string name="settings_logout">Log out and Reset</string>
-
     <string name="settings_logout_title">Log out and Clear Device</string>
     <string name="settings_logout_message">Logging out will remove all of your certificates and any stored passphrases on this device. You will need to manually enter your passphrase again to re-download your certificates. Would you like to proceeed?</string>
 
@@ -243,7 +233,8 @@
     <string name="certificate_share_menu_item_title">Share</string>
     <string name="certificate_info_menu_item_title">Info</string>
     <string name="fragment_certificate_progress_dialog_message">Loading Credential…</string>
-    <string name="fragment_certificate_share_message">How would you like to share your credential?</string>
+    <string name="fragment_certificate_share_title">How would you like to share your credential?</string>
+    <string name="fragment_certificate_share_message"></string>
     <string name="fragment_certificate_share_url_button_title">URL</string>
     <string name="fragment_certificate_share_file_button_title">File</string>
     <string name="fragment_certificate_share_url_format">Check out my credential from %1$s! %2$s</string>

@@ -42,6 +42,7 @@ import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 import com.learningmachine.android.app.databinding.FragmentCertificateBinding;
 import com.learningmachine.android.app.dialog.AlertDialogFragment;
 import com.learningmachine.android.app.ui.LMFragment;
+import com.learningmachine.android.app.ui.onboarding.OnboardingActivity;
 import com.learningmachine.android.app.util.DialogUtils;
 import com.learningmachine.android.app.util.FileUtils;
 
@@ -123,15 +124,6 @@ public class CertificateFragment extends LMFragment {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_SHARE_METHOD) {
-            boolean shareFile = resultCode == AlertDialogFragment.RESULT_NEGATIVE;
-            shareCertificateTypeResult(shareFile);
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
     private void setupWebView() {
         WebSettings webSettings = mBinding.webView.getSettings();
         // Enable JavaScript.
@@ -185,10 +177,23 @@ public class CertificateFragment extends LMFragment {
     }
 
     private void showShareTypeDialog() {
-        displayAlert(REQUEST_SHARE_METHOD,
-                R.string.fragment_certificate_share_message,
-                R.string.fragment_certificate_share_url_button_title,
-                R.string.fragment_certificate_share_file_button_title);
+
+        DialogUtils.showAlertDialog(getContext(), this,
+                0,
+                getResources().getString(R.string.fragment_certificate_share_title),
+                getResources().getString(R.string.fragment_certificate_share_message),
+                getResources().getString(R.string.fragment_certificate_share_url_button_title),
+                getResources().getString(R.string.fragment_certificate_share_file_button_title),
+                (btnIdx) -> {
+                    if((int)btnIdx == 0) {
+                        shareCertificateTypeResult(true);
+                    }
+                    if((int)btnIdx == 1) {
+                        shareCertificateTypeResult(false);
+                    }
+                    return null;
+                });
+
     }
 
     private void shareCertificateTypeResult(boolean shareFile) {

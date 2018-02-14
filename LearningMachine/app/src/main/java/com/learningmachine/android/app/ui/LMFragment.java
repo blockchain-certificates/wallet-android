@@ -117,23 +117,6 @@ public class LMFragment extends Fragment implements LifecycleProvider<FragmentEv
         return (Observable.Transformer<T, T>) mMainThreadTransformer;
     }
 
-    protected void displayAlert(int requestCode, @StringRes int titleResId, @StringRes int messageResId, @StringRes int positiveButtonResId, @StringRes int negativeButtonResId) {
-        DialogUtils.showAlertDialog(getContext(),
-                this,
-                requestCode,
-                titleResId,
-                messageResId,
-                positiveButtonResId,
-                negativeButtonResId);
-    }
-
-    protected void displayAlert(int requestCode, @StringRes int messageResId, @StringRes int positiveButtonResId, @StringRes int negativeButtonResId) {
-        displayAlert(requestCode,
-                0,
-                messageResId,
-                positiveButtonResId,
-                negativeButtonResId);
-    }
 
     protected void displayErrors(Throwable throwable, DialogUtils.ErrorCategory errorCategory, @StringRes int errorTitleResId) {
         hideProgressDialog();
