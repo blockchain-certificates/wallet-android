@@ -112,6 +112,17 @@ public class HomeFragment extends LMFragment {
         mIssuerList.clear();
         mIssuerList.addAll(issuerList);
 
+
+        if (mSharedPreferencesManager.wasReturnUser()) {
+            mBinding.imageView2.setImageResource(R.drawable.ic_ready_for_certs);
+            mBinding.onboardingHomeNoIssuersDesc.setText(R.string.onboarding_home_no_issuers_desc_returning_user);
+        } else {
+            mBinding.imageView2.setImageResource(R.drawable.ic_ready);
+            mBinding.onboardingHomeNoIssuersDesc.setText(R.string.onboarding_home_no_issuers_desc_new_user);
+        }
+
+
+
         // calculate the number of certificates per issuer
         totalIssuersCertificateCountCalculated = mIssuerList.size();
         for(IssuerRecord record : mIssuerList) {

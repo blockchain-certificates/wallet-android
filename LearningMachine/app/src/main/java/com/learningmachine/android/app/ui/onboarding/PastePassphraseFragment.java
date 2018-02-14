@@ -23,6 +23,7 @@ import android.view.inputmethod.InputMethodManager;
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.bitcoin.BitcoinManager;
 import com.learningmachine.android.app.data.inject.Injector;
+import com.learningmachine.android.app.data.preferences.SharedPreferencesManager;
 import com.learningmachine.android.app.databinding.FragmentPastePassphraseBinding;
 import com.learningmachine.android.app.ui.home.HomeActivity;
 import com.learningmachine.android.app.util.DialogUtils;
@@ -145,6 +146,7 @@ public class PastePassphraseFragment extends OnboardingFragment {
                                     stopCountingTimer();
 
 
+                                    mSharedPreferencesManager.setWasReturnUser(true);
                                     mSharedPreferencesManager.setFirstLaunch(false);
                                     if (continueDelayedURLsFromDeepLinking() == false) {
                                         startActivity(new Intent(getActivity(), HomeActivity.class));

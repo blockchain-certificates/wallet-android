@@ -40,7 +40,9 @@
     <!-- Home -->
 
     <string name="onboarding_home_no_issuers_title">Ready!</string>
-    <string name="onboarding_home_no_issuers_desc">You will receive an email when an issuer is ready to be added. Follow the link in the email to complete the process.</string>
+    <string name="onboarding_home_no_issuers_desc_new_user">You will receive an email when an issuer is ready to be added. Follow the link in the email to complete the process.</string>
+    <string name="onboarding_home_no_issuers_desc_returning_user">There is no need to add issuers from whom you have already received credentials. When you import your credentials into the app, the issuers will automatically be added as well.</string>
+
     <string name="onboarding_home_no_issuers_desc2">You may add an issuer manually by visiting Settings and tapping Add an Issuer</string>
 
 
@@ -104,7 +106,12 @@
 
 
 
+    <!-- Settings -->
 
+    <string name="settings_logout">Log out and Reset</string>
+
+    <string name="settings_logout_title">Log out and Clear Device</string>
+    <string name="settings_logout_message">Logging out will remove all of your certificates and any stored passphrases on this device. You will need to manually enter your passphrase again to re-download your certificates. Would you like to proceeed?</string>
 
 
 
@@ -165,7 +172,6 @@
 
     <string name="settings_passphrase_header">Passphrase</string>
     <string name="settings_reveal_passphrase">Reveal Passphrase</string>
-    <string name="settings_replace_passphrase">Replace Passphrase</string>
     <string name="settings_about_passphrases">About Passphrases</string>
 
     <string name="settings_about_header">About</string>

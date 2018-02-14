@@ -48,13 +48,6 @@
                 style="@style/Settings.TextView"/>
 
             <TextView
-                android:id="@+id/settings_replace_passphrase_text_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/settings_replace_passphrase"
-                style="@style/Settings.TextView"/>
-
-            <TextView
                 android:id="@+id/settings_about_passphrase_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -97,6 +90,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/settings_email_logs"
+                style="@style/Settings.TextView"/>
+
+            <TextView
+                android:id="@+id/settings_logout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/fragment_settings_about_padding_top"
+                android:text="@string/settings_logout"
                 style="@style/Settings.TextView"/>
 
         </LinearLayout>

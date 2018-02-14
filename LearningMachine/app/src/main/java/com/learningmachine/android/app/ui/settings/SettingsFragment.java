@@ -11,23 +11,38 @@ import android.view.ViewGroup;
 
 import com.learningmachine.android.app.BuildConfig;
 import com.learningmachine.android.app.R;
+import com.learningmachine.android.app.data.bitcoin.BitcoinManager;
+import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.databinding.FragmentSettingsBinding;
 import com.learningmachine.android.app.ui.LMFragment;
 import com.learningmachine.android.app.ui.LMWebActivity;
 import com.learningmachine.android.app.ui.issuer.AddIssuerActivity;
-import com.learningmachine.android.app.ui.settings.passphrase.ReplacePassphraseActivity;
+import com.learningmachine.android.app.ui.onboarding.OnboardingActivity;
 import com.learningmachine.android.app.ui.settings.passphrase.RevealPassphraseActivity;
+import com.learningmachine.android.app.util.DialogUtils;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import javax.inject.Inject;
+
 
 public class SettingsFragment extends LMFragment {
 
+    @Inject
+    protected BitcoinManager mBitcoinManager;
+
     public static SettingsFragment newInstance() {
         return new SettingsFragment();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Injector.obtain(getContext())
+                .inject(this);
     }
 
     @Nullable
@@ -99,14 +114,31 @@ public class SettingsFragment extends LMFragment {
 
     private void setupReplacePassphrase(FragmentSettingsBinding binding) {
         if (!BuildConfig.DEBUG) {
-            binding.settingsReplacePassphraseTextView.setVisibility(View.GONE);
+            binding.settingsLogout.setVisibility(View.GONE);
             return;
         }
 
-        binding.settingsReplacePassphraseTextView.setVisibility(View.VISIBLE);
-        binding.settingsReplacePassphraseTextView.setOnClickListener(v -> {
-            Intent intent = ReplacePassphraseActivity.newIntent(getContext());
-            startActivity(intent);
+        binding.settingsLogout.setVisibility(View.VISIBLE);
+        binding.settingsLogout.setOnClickListener(v -> {
+
+            DialogUtils.showAlertDialog(getContext(), this,
+                    R.drawable.ic_dialog_failure,
+                    getResources().getString(R.string.settings_logout_title),
+                    getResources().getString(R.string.settings_logout_message),
+                    getResources().getString(R.string.onboarding_passphrase_ok),
+                    getResources().getString(R.string.onboarding_passphrase_cancel),
+                    (btnIdx) -> {
+                        if((int)btnIdx == 1) {
+                            mBitcoinManager.resetEverything();
+
+                            Intent intent = new Intent(getActivity(), OnboardingActivity.class);
+                            startActivity(intent);
+                            getActivity().finish();
+                        }
+                        return null;
+                    });
+
+
         });
     }
 }

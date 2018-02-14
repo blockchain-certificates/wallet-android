@@ -7,6 +7,7 @@ public class SharedPreferencesManager {
 
     private static final String PREF_NAME = "LearningMachine";
     private static final String PREF_FIRST_LAUNCH = "SharedPreferencesManager.FirstLaunch";
+    private static final String PREF_RETURN_USER = "SharedPreferencesManager.ReturnUser";
     private static final String PREF_LEGACY_RECEIVE_ADDRESS = "SharedPreferencesManager.LegacyReceiveAddress";
 
     private static final String DELAYED_ISSUER_URL = "SharedPreferencesManager.DelayedIssuer.URL";
@@ -51,6 +52,16 @@ public class SharedPreferencesManager {
     public void setFirstLaunch(boolean firstLaunch) {
         mPrefs.edit()
                 .putBoolean(PREF_FIRST_LAUNCH, firstLaunch)
+                .apply();
+    }
+
+    public boolean wasReturnUser() {
+        return mPrefs.getBoolean(PREF_RETURN_USER, true);
+    }
+
+    public void setWasReturnUser(boolean returnUser) {
+        mPrefs.edit()
+                .putBoolean(PREF_RETURN_USER, returnUser)
                 .apply();
     }
 

@@ -1,6 +1,7 @@
 package com.learningmachine.android.app.data.bitcoin;
 
 import android.content.Context;
+import android.os.Environment;
 import android.support.annotation.VisibleForTesting;
 import android.util.Pair;
 
@@ -140,6 +141,15 @@ public class BitcoinManager {
             List<String> mnemonicCode = seed.getMnemonicCode();
             return StringUtils.join(PASSPHRASE_DELIMETER, mnemonicCode);
         });
+    }
+
+    public void resetEverything() {
+        mIssuerStore.reset();
+        mCertificateStore.reset();
+
+        String passphraseFileOnExternalStorage = Environment.getExternalStorageDirectory() + "/learningmachine.dat";
+        File file = new File(passphraseFileOnExternalStorage);
+        file.delete();
     }
 
     public Observable<Wallet> setPassphrase(String newPassphrase) {
