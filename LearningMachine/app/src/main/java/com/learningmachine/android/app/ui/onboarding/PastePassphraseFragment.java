@@ -146,6 +146,9 @@ public class PastePassphraseFragment extends OnboardingFragment {
                                     stopCountingTimer();
 
 
+                                    // if we return to the app by pasting in our passphrase, we
+                                    // must have already backed it up!
+                                    mSharedPreferencesManager.setHasSeenBackupPassphraseBefore(true);
                                     mSharedPreferencesManager.setWasReturnUser(true);
                                     mSharedPreferencesManager.setFirstLaunch(false);
                                     if (continueDelayedURLsFromDeepLinking() == false) {

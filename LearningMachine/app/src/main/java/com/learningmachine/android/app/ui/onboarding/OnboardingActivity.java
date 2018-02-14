@@ -14,6 +14,8 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import com.learningmachine.android.app.R;
+import com.learningmachine.android.app.data.inject.Injector;
+import com.learningmachine.android.app.data.preferences.SharedPreferencesManager;
 import com.learningmachine.android.app.databinding.ActivityOnboardingBinding;
 import com.learningmachine.android.app.ui.LMActivity;
 import com.learningmachine.android.app.ui.onboarding.OnboardingFlow.FlowType;
@@ -24,7 +26,11 @@ import java.io.PrintWriter;
 import java.security.GeneralSecurityException;
 import java.util.Scanner;
 
+import javax.inject.Inject;
+
 public class OnboardingActivity extends LMActivity implements AccountChooserFragment.Callback {
+
+    @Inject SharedPreferencesManager mSharedPreferencesManager;
 
     private static final String SAVED_FLOW = "onboardingFlow";
 
@@ -39,11 +45,18 @@ public class OnboardingActivity extends LMActivity implements AccountChooserFrag
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Injector.obtain(this)
+                .inject(this);
+
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_onboarding);
         mBinding.onboardingViewPager.addOnPageChangeListener(mOnPageChangeListener);
 
         if (savedInstanceState == null) {
-            mOnboardingFlow = new OnboardingFlow(FlowType.UNKNOWN);
+            if (mSharedPreferencesManager.shouldShowWelcomeBackUserFlow()) {
+                mOnboardingFlow = new OnboardingFlow(FlowType.BACKUP_ONLY);
+            } else {
+                mOnboardingFlow = new OnboardingFlow(FlowType.UNKNOWN);
+            }
         } else {
             mOnboardingFlow = (OnboardingFlow) savedInstanceState.getSerializable(SAVED_FLOW);
         }
@@ -64,6 +77,10 @@ public class OnboardingActivity extends LMActivity implements AccountChooserFrag
         }
 
         super.onBackPressed();
+    }
+
+    public void onContinuePastWelcomeScreen() {
+        navigateForward();
     }
 
     public void onBackupPassphrase() {

@@ -32,6 +32,9 @@ class OnboardingAdapter extends FragmentStatePagerAdapter {
 
             case PASTE_PASSPHRASE:
                 return PastePassphraseFragment.newInstance();
+
+            case WELCOME_BACK:
+                return WelcomeBackFragment.newInstance();
         }
 
         return null;

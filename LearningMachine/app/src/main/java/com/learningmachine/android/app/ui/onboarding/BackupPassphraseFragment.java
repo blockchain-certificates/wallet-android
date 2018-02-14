@@ -99,6 +99,7 @@ public class BackupPassphraseFragment extends OnboardingFragment {
 
     private void onDone() {
 
+        mSharedPreferencesManager.setHasSeenBackupPassphraseBefore(true);
         mSharedPreferencesManager.setWasReturnUser(false);
         mSharedPreferencesManager.setFirstLaunch(false);
         if (continueDelayedURLsFromDeepLinking() == false) {

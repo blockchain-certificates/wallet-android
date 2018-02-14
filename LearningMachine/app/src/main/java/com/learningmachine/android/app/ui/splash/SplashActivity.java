@@ -40,7 +40,7 @@ public class SplashActivity extends LMActivity {
         LaunchData launchData = SplashUrlDecoder.getLaunchType(uriString);
 
         // Note: If we have not "logged into" an account yet, then we need to force the user into onboarding
-        if(mSharedPreferencesManager.isFirstLaunch()) {
+        if(mSharedPreferencesManager.isFirstLaunch() || mSharedPreferencesManager.shouldShowWelcomeBackUserFlow()) {
             if(launchData.getLaunchType() == ADD_ISSUER) {
                 mSharedPreferencesManager.setDelayedIssuerURL(launchData.getIntroUrl(), launchData.getNonce());
             }

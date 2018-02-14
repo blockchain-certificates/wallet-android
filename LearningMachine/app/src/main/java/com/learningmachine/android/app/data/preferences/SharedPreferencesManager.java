@@ -8,6 +8,7 @@ public class SharedPreferencesManager {
     private static final String PREF_NAME = "LearningMachine";
     private static final String PREF_FIRST_LAUNCH = "SharedPreferencesManager.FirstLaunch";
     private static final String PREF_RETURN_USER = "SharedPreferencesManager.ReturnUser";
+    private static final String PREF_SEEN_BACKUP_PASSPHRASE= "SharedPreferencesManager.SeenBackupPassphrase";
     private static final String PREF_LEGACY_RECEIVE_ADDRESS = "SharedPreferencesManager.LegacyReceiveAddress";
 
     private static final String DELAYED_ISSUER_URL = "SharedPreferencesManager.DelayedIssuer.URL";
@@ -52,6 +53,21 @@ public class SharedPreferencesManager {
     public void setFirstLaunch(boolean firstLaunch) {
         mPrefs.edit()
                 .putBoolean(PREF_FIRST_LAUNCH, firstLaunch)
+                .apply();
+    }
+
+    public boolean shouldShowWelcomeBackUserFlow() {
+        // if this is not a first time user and we have not stored the special preference key
+        return isFirstLaunch() == false && mPrefs.contains(PREF_SEEN_BACKUP_PASSPHRASE) == false;
+    }
+
+    public boolean hasSeenBackupPassphraseBefore() {
+        return mPrefs.getBoolean(PREF_SEEN_BACKUP_PASSPHRASE, false);
+    }
+
+    public void setHasSeenBackupPassphraseBefore(boolean hasSeenBackupPassphraseBefore) {
+        mPrefs.edit()
+                .putBoolean(PREF_SEEN_BACKUP_PASSPHRASE, hasSeenBackupPassphraseBefore)
                 .apply();
     }
 

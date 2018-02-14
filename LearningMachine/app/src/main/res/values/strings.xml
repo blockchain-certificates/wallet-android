@@ -36,6 +36,10 @@
     <string name="onboarding_paste_passphrase_load_2">Enter Your Passphrase</string>
 
 
+    <string name="onboarding_welcome_title">Welcome To BlockCert 2.0!</string>
+    <string name="onboarding_welcome_desc">[Text will communicate that the user needs to backup passphrase on the next screen.]</string>
+    <string name="onboarding_welcome_button_title">Continue</string>
+
 
     <!-- Home -->
 
