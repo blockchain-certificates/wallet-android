@@ -101,6 +101,9 @@ public class CertificateFragment extends LMFragment {
 
         setupWebView();
 
+        mBinding.verifyButton.setOnClickListener(view -> verifyCertificate() );
+        mBinding.shareButton.setOnClickListener(view -> shareCertificate() );
+
         return mBinding.getRoot();
     }
 
@@ -113,12 +116,6 @@ public class CertificateFragment extends LMFragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.fragment_certificate_verify_menu_item:
-                verifyCertificate();
-                return true;
-            case R.id.fragment_certificate_share_menu_item:
-                shareCertificate();
-                return true;
             case R.id.fragment_certificate_info_menu_item:
                 viewCertificateInfo();
                 return true;

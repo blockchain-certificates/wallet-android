@@ -16,6 +16,7 @@ import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.databinding.FragmentSettingsBinding;
 import com.learningmachine.android.app.ui.LMFragment;
 import com.learningmachine.android.app.ui.LMWebActivity;
+import com.learningmachine.android.app.ui.cert.AddCertificateActivity;
 import com.learningmachine.android.app.ui.issuer.AddIssuerActivity;
 import com.learningmachine.android.app.ui.onboarding.OnboardingActivity;
 import com.learningmachine.android.app.ui.settings.passphrase.RevealPassphraseActivity;
@@ -62,6 +63,11 @@ public class SettingsFragment extends LMFragment {
 
         binding.settingsAddIssuerTextView.setOnClickListener(v -> {
             Intent intent = AddIssuerActivity.newIntent(getContext());
+            startActivity(intent);
+        });
+
+        binding.settingsAddCredentialTextView.setOnClickListener(v -> {
+            Intent intent = AddCertificateActivity.newIntent(getContext());
             startActivity(intent);
         });
 

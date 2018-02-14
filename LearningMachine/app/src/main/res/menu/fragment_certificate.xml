@@ -3,19 +3,6 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/fragment_certificate_verify_menu_item"
-        android:title="@string/certificate_verify_menu_item_title"
-        app:showAsAction="always|withText"/>
-
-    <item
-        android:id="@+id/fragment_certificate_share_menu_item"
-        android:icon="@drawable/ic_action_share"
-        android:actionProviderClass=
-            "android.widget.ShareActionProvider"
-        android:title="@string/certificate_info_menu_item_title"
-        app:showAsAction="always"/>
-
-    <item
         android:id="@+id/fragment_certificate_info_menu_item"
         android:icon="@drawable/ic_action_info"
         android:title="@string/certificate_info_menu_item_title"

@@ -66,6 +66,12 @@
         <item name="android:background">@drawable/rounded_passphrase_background</item>
     </style>
 
+    <style name="ButtonTitleWhite">
+        <item name="android:fontFamily">@font/opensans_reg</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
     <style name="RoundedButton" parent="@style/Widget.AppCompat.Button">
         <item name="android:background">@drawable/rounded_button_background_light</item>
         <item name="android:fontFamily">@font/opensans_reg</item>
@@ -76,6 +82,11 @@
 
     <style name="RoundedButton.Light">
         <item name="android:background">@drawable/rounded_button_background_light</item>
+        <item name="android:textColor">@color/primaryButtonNormal</item>
+    </style>
+
+    <style name="RoundedButton.NoBorder">
+        <item name="android:background">@drawable/rounded_button_background_no_border</item>
         <item name="android:textColor">@color/primaryButtonNormal</item>
     </style>
 

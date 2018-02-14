@@ -104,6 +104,10 @@
 
 
 
+    <!-- Certificate View -->
+
+    <string name="certificate_share_button">Share</string>
+    <string name="certificate_verify_button">Verify this credential</string>
 
 
     <!-- Settings -->
@@ -169,6 +173,9 @@
 
     <string name="settings_issuer_header">Issuers</string>
     <string name="settings_add_issuer">Add Issuer</string>
+
+    <string name="settings_credential_header">Credentials</string>
+    <string name="settings_add_credential">Add Credential</string>
 
     <string name="settings_passphrase_header">Passphrase</string>
     <string name="settings_reveal_passphrase">Reveal Passphrase</string>
