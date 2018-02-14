@@ -84,12 +84,6 @@
             android:launchMode="singleTask"/>
 
         <activity
-            android:name=".ui.settings.passphrase.ReplacePassphraseActivity"
-            android:label="@string/replace_passphrase_title"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTask"/>
-
-        <activity
             android:name=".ui.cert.CertificateActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTask"/>
