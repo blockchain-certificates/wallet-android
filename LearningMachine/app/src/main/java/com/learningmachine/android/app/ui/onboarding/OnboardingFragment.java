@@ -11,6 +11,7 @@ import com.learningmachine.android.app.data.preferences.SharedPreferencesManager
 import com.learningmachine.android.app.ui.LMFragment;
 import com.learningmachine.android.app.ui.cert.AddCertificateActivity;
 import com.learningmachine.android.app.ui.issuer.AddIssuerActivity;
+import com.learningmachine.android.app.util.DialogUtils;
 
 import java.util.ArrayList;
 
@@ -45,18 +46,26 @@ public class OnboardingFragment extends LMFragment {
 
     public void checkForDelayedURLsFromDeepLinking() {
         if (mSharedPreferencesManager.getDelayedCertificateURL().length() > 0) {
-            displayAlert(0,
-                    R.string.onboarding_no_account,
-                    R.string.wallet_does_not_exist_and_want_to_add_certificate,
-                    R.string.onboarding_passphrase_ok,
-                    R.string.onboarding_passphrase_cancel);
+            DialogUtils.showAlertDialog(getContext(), this,
+                    R.drawable.ic_dialog_failure,
+                    getResources().getString(R.string.onboarding_no_account),
+                    getResources().getString(R.string.wallet_does_not_exist_and_want_to_add_certificate),
+                    null,
+                    getResources().getString(R.string.onboarding_passphrase_ok),
+                    (btnIdx) -> {
+                        return null;
+                    });
         }
         if (mSharedPreferencesManager.getDelayedIssuerURL().length() > 0) {
-            displayAlert(0,
-                    R.string.onboarding_no_account,
-                    R.string.wallet_does_not_exist_and_want_to_add_issuer,
-                    R.string.onboarding_passphrase_ok,
-                    R.string.onboarding_passphrase_cancel);
+            DialogUtils.showAlertDialog(getContext(), this,
+                    R.drawable.ic_dialog_failure,
+                    getResources().getString(R.string.onboarding_no_account),
+                    getResources().getString(R.string.wallet_does_not_exist_and_want_to_add_issuer),
+                    null,
+                    getResources().getString(R.string.onboarding_passphrase_ok),
+                    (btnIdx) -> {
+                        return null;
+                    });
         }
     }
 
