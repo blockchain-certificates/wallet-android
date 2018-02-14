@@ -119,11 +119,6 @@ public class SettingsFragment extends LMFragment {
     }
 
     private void setupReplacePassphrase(FragmentSettingsBinding binding) {
-        if (!BuildConfig.DEBUG) {
-            binding.settingsLogout.setVisibility(View.GONE);
-            return;
-        }
-
         binding.settingsLogout.setVisibility(View.VISIBLE);
         binding.settingsLogout.setOnClickListener(v -> {
 
