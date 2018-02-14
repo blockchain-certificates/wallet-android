@@ -85,6 +85,11 @@
         <item name="android:textColor">@color/primaryButtonNormal</item>
     </style>
 
+    <style name="RoundedButton.Red">
+        <item name="android:background">@drawable/rounded_button_background_grey</item>
+        <item name="android:textColor">@color/red</item>
+    </style>
+
     <style name="RoundedButton.NoBorder">
         <item name="android:background">@drawable/rounded_button_background_no_border</item>
         <item name="android:textColor">@color/primaryButtonNormal</item>

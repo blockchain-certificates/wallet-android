@@ -2,10 +2,4 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
-        android:id="@+id/fragment_certificate_info_delete_menu_item"
-        android:icon="@drawable/ic_action_delete"
-        android:title="@string/fragment_certificate_info_delete_menu_item_title"
-        app:showAsAction="always"/>
-
 </menu>

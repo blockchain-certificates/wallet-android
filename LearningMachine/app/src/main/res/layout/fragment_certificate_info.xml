@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -10,10 +11,43 @@
             android:id="@+id/certificate_info_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingEnd="@dimen/certificate_info_linear_layout_padding_end"
-            android:paddingStart="@dimen/certificate_info_linear_layout_padding_start"
-            android:paddingTop="@dimen/fragment_home_recyclerview_spacing"/>
+            android:padding="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/guideline2"
+            app:layout_constraintTop_toTopOf="parent"
+            />
 
-    </LinearLayout>
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_end="88dp" />
+
+        <View
+            android:id="@+id/bottomBackground"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/off_white_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/guideline2" />
+
+        <Button
+            android:id="@+id/delete_button"
+            style="@style/RoundedButton.Red"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginStart="32dp"
+            android:text="@string/certificate_delete_button"
+            app:layout_constraintTop_toTopOf="@+id/bottomBackground"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
 
 </layout>

@@ -106,6 +106,9 @@
     <string name="certificate_verify_button">Verify this credential</string>
 
 
+    <string name="certificate_delete_button">Delete Credential</string>
+
+
     <!-- Settings -->
     <string name="settings_logout">Log out and Reset</string>
     <string name="settings_logout_title">Log out and Clear Device</string>

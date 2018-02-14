@@ -90,6 +90,28 @@ public class CertificateInfoFragment extends LMFragment {
                     mBinding.certificateInfoRecyclerView.setAdapter(adapter);
                 }, throwable -> Timber.e(throwable, "Unable to load certificate & issuer"));
 
+        mBinding.deleteButton.setOnClickListener(view -> {
+            DialogUtils.showAlertDialog(getContext(), this,
+                    0,
+                    getResources().getString(R.string.fragment_certificate_info_delete_warning_title),
+                    getResources().getString(R.string.fragment_certificate_info_delete_warning_message),
+                    getResources().getString(R.string.fragment_certificate_info_delete_warning_positive_title),
+                    getResources().getString(R.string.fragment_certificate_info_delete_warning_negative_title),
+                    (btnIdx) -> {
+                        if((int)btnIdx == 1) {
+                            String uuid = mCertificate.getUuid();
+                            mCertificateManager.removeCertificate(uuid)
+                                    .compose(bindToMainThread())
+                                    .subscribe(success -> {
+                                        String issuerUuid = mCertificate.getIssuerUuid();
+                                        Intent intent = IssuerActivity.newIntent(getContext(), issuerUuid);
+                                        startActivity(intent);
+                                    });
+                        }
+                        return null;
+                    });
+        });
+
         return mBinding.getRoot();
     }
 
@@ -97,38 +119,6 @@ public class CertificateInfoFragment extends LMFragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.fragment_certificate_info, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.fragment_certificate_info_delete_menu_item:
-
-
-                DialogUtils.showAlertDialog(getContext(), this,
-                        0,
-                        getResources().getString(R.string.fragment_certificate_info_delete_warning_title),
-                        getResources().getString(R.string.fragment_certificate_info_delete_warning_message),
-                        getResources().getString(R.string.fragment_certificate_info_delete_warning_positive_title),
-                        getResources().getString(R.string.fragment_certificate_info_delete_warning_negative_title),
-                        (btnIdx) -> {
-                            if((int)btnIdx == 1) {
-                                String uuid = mCertificate.getUuid();
-                                mCertificateManager.removeCertificate(uuid)
-                                        .compose(bindToMainThread())
-                                        .subscribe(success -> {
-                                            String issuerUuid = mCertificate.getIssuerUuid();
-                                            Intent intent = IssuerActivity.newIntent(getContext(), issuerUuid);
-                                            startActivity(intent);
-                                        });
-                            }
-                            return null;
-                        });
-
-
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     private class CertificateInfoAdapter extends RecyclerView.Adapter<CertificateInfoItemViewHolder> {

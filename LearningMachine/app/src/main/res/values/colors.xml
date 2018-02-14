@@ -20,6 +20,8 @@
 
     <color name="linkColor">#2AB27B</color>
 
+    <color name="red">#DF5454</color>
+
     <!-- vvv OLD vvv -->
     <color name="colorPrimary">@color/white</color>
     <color name="colorPrimaryDark">@color/transparent_gray</color>
