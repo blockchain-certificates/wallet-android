@@ -49,15 +49,13 @@
             android:layout_width="0dp"
             android:layout_height="73dp"
             android:layout_marginEnd="8dp"
-            android:text="State University of New York College of Environmental Science and Forestry"
+            android:text="@{viewModel.title}"
             android:textAlignment="viewStart"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/textView2"
             app:layout_constraintEnd_toEndOf="@+id/view"
             app:layout_constraintStart_toStartOf="@+id/guideline"
             app:layout_constraintTop_toTopOf="@+id/image_view" />
-
-        <!--android:text="@{viewModel.title}"-->
 
         <TextView
             android:id="@+id/textView2"
