@@ -47,8 +47,6 @@ public class IssuerViewHolder extends RecyclerView.ViewHolder implements View.On
         mViewModel.bindIssuer(issuer);
         loadImageView(issuer);
         mBinding.executePendingBindings();
-
-        ensureTextFitsInView(mBinding.textView);
     }
 
     private void loadImageView(IssuerRecord issuer) {
@@ -59,26 +57,5 @@ public class IssuerViewHolder extends RecyclerView.ViewHolder implements View.On
                 .load(file)
                 .placeholder(R.mipmap.ic_placeholder)
                 .into(mBinding.imageView);
-    }
-
-    private void ensureTextFitsInView(TextView view) {
-        // remeasure and resize the text until it fits
-        float size = view.getTextSize();
-        float designedHeight = view.getHeight();
-
-        while (size > 6.0) {
-            view.setTextSize(size);
-
-            int widthMeasureSpec = View.MeasureSpec.makeMeasureSpec(view.getWidth(), View.MeasureSpec.EXACTLY);
-            int heightMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
-            view.measure(widthMeasureSpec, heightMeasureSpec);
-            float totalHeight = view.getMeasuredHeight();
-
-            if (totalHeight > designedHeight) {
-                size -= 1.0f;
-            } else {
-                break;
-            }
-        }
     }
 }

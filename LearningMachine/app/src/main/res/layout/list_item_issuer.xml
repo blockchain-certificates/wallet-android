@@ -43,7 +43,7 @@
             app:layout_constraintStart_toStartOf="@+id/view"
             app:layout_constraintTop_toTopOf="@+id/view" />
 
-        <TextView
+        <com.learningmachine.android.app.ui.AutoResizeTextView
             android:id="@+id/textView"
             style="@style/Text.Title.2"
             android:layout_width="0dp"
