@@ -109,8 +109,8 @@
     <!-- Settings -->
     <string name="settings_logout">Log out and Reset</string>
     <string name="settings_logout_title">Log out and Clear Device</string>
-    <string name="settings_logout_message">Logging out will remove all of your certificates and any stored passphrases on this device. You will need to manually enter your passphrase again to re-download your certificates. Would you like to proceeed?</string>
-
+    <string name="settings_logout_message">Logging out will remove all of your certificates and any stored passphrases on this device.</string>
+    <string name="settings_logout_button_title">Log out</string>
 
 
 

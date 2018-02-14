@@ -126,7 +126,7 @@ public class SettingsFragment extends LMFragment {
                     R.drawable.ic_dialog_failure,
                     getResources().getString(R.string.settings_logout_title),
                     getResources().getString(R.string.settings_logout_message),
-                    getResources().getString(R.string.onboarding_passphrase_ok),
+                    getResources().getString(R.string.settings_logout_button_title),
                     getResources().getString(R.string.onboarding_passphrase_cancel),
                     (btnIdx) -> {
                         if((int)btnIdx == 1) {

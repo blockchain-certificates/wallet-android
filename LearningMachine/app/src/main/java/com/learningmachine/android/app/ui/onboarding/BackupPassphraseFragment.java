@@ -94,7 +94,7 @@ public class BackupPassphraseFragment extends OnboardingFragment {
 
     @Override
     public boolean isBackAllowed() {
-        return false;
+        return true;
     }
 
     private void onDone() {
