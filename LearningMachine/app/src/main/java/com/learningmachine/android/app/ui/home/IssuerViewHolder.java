@@ -2,6 +2,9 @@ package com.learningmachine.android.app.ui.home;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
@@ -11,6 +14,7 @@ import com.learningmachine.android.app.data.model.IssuerRecord;
 import com.learningmachine.android.app.databinding.ListItemIssuerBinding;
 import com.learningmachine.android.app.ui.issuer.IssuerActivity;
 import com.learningmachine.android.app.util.ImageUtils;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -53,9 +57,21 @@ public class IssuerViewHolder extends RecyclerView.ViewHolder implements View.On
         String uuid = issuer.getUuid();
         File file = ImageUtils.getImageFile(mContext, uuid);
 
-        Picasso.with(mContext)
-                .load(file)
-                .placeholder(R.mipmap.ic_placeholder)
-                .into(mBinding.imageView);
+        Picasso.with(mContext).load(file).fetch(new Callback() {
+            @Override
+            public void onSuccess() {
+
+                Picasso.with(mContext).load(file).into(mBinding.imageView);
+                Bitmap bitmap = ((BitmapDrawable)mBinding.imageView.getDrawable()).getBitmap();
+
+                int pixel = bitmap.getPixel(0,0);
+                mBinding.imageView.setBackgroundColor(pixel);
+            }
+
+            @Override
+            public void onError() {
+
+            }
+        });
     }
 }
