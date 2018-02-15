@@ -17,21 +17,42 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/fragment_add_certificate_text_view_bottom_margin"
+            android:paddingBottom="16dp"
             android:text="@string/certificate_add_url_label"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             style="@style/Text.ListHeader"/>
 
         <EditText
-            android:id="@+id/certificate_url_edit_text"
+            android:id="@+id/certificate_edit_text"
+            style="@style/Text.Passphrase"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:hint="@string/certificate_add_url_edit_text_hint"
-            android:imeOptions="flagNoFullscreen|actionDone"
-            android:imeActionLabel="@string/ime_action_done"
             android:imeActionId="@integer/action_done"
-            android:inputType="textUri"
+            android:imeActionLabel="@string/ime_action_done"
+            android:imeOptions="flagNoFullscreen|actionDone"
+            android:inputType="textMultiLine"
             android:maxLines="1"
-            style="@style/Text.Passphrase"/>
+            android:gravity="top"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:minHeight="108dp"
+            android:singleLine="false"
+            android:scrollHorizontally="false"
+            android:lines="5"
+            />
+
+        <Button
+            android:id="@+id/import_button"
+            style="@style/RoundedButton.Dark"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:text="@string/add_certificate_import" />
 
 
     </LinearLayout>

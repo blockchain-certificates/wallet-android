@@ -62,18 +62,16 @@ public class AddCertificateFileFragment extends LMFragment {
 
         mBinding.chooseFileButton.setOnClickListener(mOnClickListener);
 
+        mBinding.importButton.setOnClickListener(v -> {
+            addCertificateFile();
+        });
+
+        mBinding.importButton.setAlpha(0.3f);
+        mBinding.importButton.setEnabled(false);
+
         return mBinding.getRoot();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.fragment_add_certificate_verify:
-                addCertificateFile();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     private View.OnClickListener mOnClickListener = v -> {
         if (ContextCompat.checkSelfPermission(getContext(),
@@ -127,6 +125,9 @@ public class AddCertificateFileFragment extends LMFragment {
 
         String filename = mSelectedFile.getName();
         mBinding.chooseFileButton.setText(filename);
+
+        mBinding.importButton.setAlpha(1.0f);
+        mBinding.importButton.setEnabled(true);
     }
 
     private void showFileDialog(File[] files) {

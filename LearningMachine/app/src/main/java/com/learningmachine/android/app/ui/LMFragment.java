@@ -9,6 +9,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
+import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.util.DialogUtils;
 import com.trello.rxlifecycle.LifecycleProvider;
 import com.trello.rxlifecycle.LifecycleTransformer;

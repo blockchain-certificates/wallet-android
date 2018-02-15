@@ -79,7 +79,7 @@ public class AlertDialogFragment extends DialogFragment {
     }
 
     public static AlertDialogFragment newInstance(String title, String message) {
-        return newInstance(title, message, "", "");
+        return newInstance(title, message, null, "Okay");
     }
 
     public static AlertDialogFragment newInstance(int layoutID, int iconID, String title, String message, String positiveButtonMessage, String negativeButtonMessage, Callback complete, Callback onCreate) {

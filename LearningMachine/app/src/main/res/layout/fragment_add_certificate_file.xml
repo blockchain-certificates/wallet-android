@@ -23,15 +23,26 @@
 
         <Button
             android:id="@+id/choose_file_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:paddingBottom="8dp"
-            android:paddingEnd="48dp"
-            android:paddingStart="48dp"
-            android:paddingTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             android:text="@string/framgent_add_certificate_file_choose_file_button_title"
             style="@style/RoundedButton.Light"/>
+
+        <Button
+            android:id="@+id/import_button"
+            style="@style/RoundedButton.Dark"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:text="@string/add_certificate_import" />
 
     </LinearLayout>
 

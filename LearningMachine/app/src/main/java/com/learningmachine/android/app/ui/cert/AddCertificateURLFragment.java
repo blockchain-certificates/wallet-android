@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -54,7 +56,35 @@ public class AddCertificateURLFragment extends LMFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_certificate_url, container, false);
-        mBinding.certificateUrlEditText.setOnEditorActionListener(mActionListener);
+        mBinding.certificateEditText.setOnEditorActionListener(mActionListener);
+
+
+        mBinding.certificateEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (mBinding.certificateEditText.getText().length() > 0) {
+                    mBinding.importButton.setAlpha(1.0f);
+                    mBinding.importButton.setEnabled(true);
+                } else {
+                    mBinding.importButton.setAlpha(0.3f);
+                    mBinding.importButton.setEnabled(false);
+                }
+            }
+        });
+
+        mBinding.importButton.setAlpha(0.3f);
+        mBinding.importButton.setEnabled(false);
+        mBinding.importButton.setOnClickListener(v -> {
+            addCertificate();
+        });
 
         handleArgs();
 
@@ -69,13 +99,13 @@ public class AddCertificateURLFragment extends LMFragment {
 
         String certUrlString = args.getString(ARG_CERT_URL);
         if (!StringUtils.isEmpty(certUrlString)) {
-            mBinding.certificateUrlEditText.setText(certUrlString);
+            mBinding.certificateEditText.setText(certUrlString);
         }
     }
 
     private void addCertificate() {
         hideKeyboard();
-        String url = mBinding.certificateUrlEditText.getText()
+        String url = mBinding.certificateEditText.getText()
                 .toString();
         mCertificateManager.addCertificate(url)
                 .doOnSubscribe(() -> displayProgressDialog(R.string.fragment_add_certificate_progress_dialog_message))
@@ -89,6 +119,8 @@ public class AddCertificateURLFragment extends LMFragment {
                 }, throwable -> displayErrors(throwable, DialogUtils.ErrorCategory.CERTIFICATE, R.string.error_title_message));
     }
 
+
+
     private TextView.OnEditorActionListener mActionListener = (v, actionId, event) -> {
         if (actionId == getResources().getInteger(R.integer.action_done) || actionId == EditorInfo.IME_ACTION_DONE) {
             addCertificate();
@@ -97,13 +129,4 @@ public class AddCertificateURLFragment extends LMFragment {
         return false;
     };
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.fragment_add_certificate_verify:
-                addCertificate();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 }
