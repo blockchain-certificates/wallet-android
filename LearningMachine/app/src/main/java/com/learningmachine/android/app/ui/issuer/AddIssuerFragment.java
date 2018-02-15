@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -53,6 +55,16 @@ public class AddIssuerFragment extends LMFragment {
         return fragment;
     }
 
+    private void CheckIfImportButtonShouldBeEnabled() {
+        if (mBinding.addIssuerNonceEditText.getText().length() > 0 && mBinding.addIssuerUrlEditText.getText().length() > 0) {
+            mBinding.importButton.setAlpha(1.0f);
+            mBinding.importButton.setEnabled(true);
+        } else {
+            mBinding.importButton.setAlpha(0.3f);
+            mBinding.importButton.setEnabled(false);
+        }
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -61,6 +73,39 @@ public class AddIssuerFragment extends LMFragment {
         handleArgs();
 
         mBinding.addIssuerNonceEditText.setOnEditorActionListener(mActionListener);
+
+        mBinding.importButton.setOnClickListener(v -> {
+            startIssuerIntroduction();
+        });
+
+
+        CheckIfImportButtonShouldBeEnabled();
+        mBinding.addIssuerNonceEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) { }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                CheckIfImportButtonShouldBeEnabled();
+            }
+        });
+
+        mBinding.addIssuerUrlEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) { }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                CheckIfImportButtonShouldBeEnabled();
+            }
+        });
+
 
         return mBinding.getRoot();
     }
@@ -178,13 +223,4 @@ public class AddIssuerFragment extends LMFragment {
         return false;
     };
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.fragment_add_issuer_verify:
-                startIssuerIntroduction();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 }

@@ -20,46 +20,77 @@
                 android:id="@+id/add_issuer_url_info_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/fragment_add_issuer_url_textview_bottom_padding"
                 android:layout_marginTop="@dimen/fragment_add_issuer_linear_layout_top_padding"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
                 android:text="@string/fragment_add_issuer_info_url_text"
                 style="@style/Text.ListHeader"/>
 
             <EditText
                 android:id="@+id/add_issuer_url_edit_text"
+                style="@style/Text.Passphrase"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginBottom="@dimen/fragment_add_isser_url_edittext_bottom_padding"
+                android:layout_height="wrap_content"
                 android:hint="@string/fragment_add_issuer_url"
-                android:imeOptions="flagNoFullscreen|actionNext"
-                android:inputType="textUri"
+                android:imeActionId="@integer/action_done"
+                android:imeActionLabel="@string/ime_action_done"
+                android:imeOptions="flagNoFullscreen|actionDone"
+                android:inputType="textMultiLine"
                 android:maxLines="1"
-                android:nextFocusForward="@+id/add_issuer_identity_edit_text"
-                android:paddingEnd="@dimen/fragment_add_isser_edittext_padding_right"
-                style="@style/Text.Passphrase"/>
+                android:gravity="top"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:minHeight="108dp"
+                android:singleLine="false"
+                android:scrollHorizontally="false"
+                android:lines="5"
+                />
+
 
 
             <TextView
                 android:id="@+id/add_issuer_nonce_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/fragment_add_issuer_identity_textview_bottom_padding"
+                android:layout_marginTop="@dimen/fragment_add_issuer_identity_textview_bottom_padding"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
                 android:text="@string/fragment_add_issuer_identity_text"
                 style="@style/Text.ListHeader"/>
 
             <EditText
                 android:id="@+id/add_issuer_nonce_edit_text"
+                style="@style/Text.Passphrase"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:hint="@string/fragment_add_issuer_add_identity"
                 android:imeActionId="@integer/action_done"
                 android:imeActionLabel="@string/ime_action_done"
                 android:imeOptions="flagNoFullscreen|actionDone"
-                android:inputType="text"
+                android:inputType="textMultiLine"
                 android:maxLines="1"
-                android:paddingEnd="@dimen/fragment_add_isser_edittext_padding_right"
-                style="@style/Text.Passphrase"/>
+                android:gravity="top"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:minHeight="108dp"
+                android:singleLine="false"
+                android:scrollHorizontally="false"
+                android:lines="5"
+                />
 
+
+            <Button
+                android:id="@+id/import_button"
+                style="@style/RoundedButton.Dark"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:text="@string/add_certificate_import" />
 
         </LinearLayout>
 
