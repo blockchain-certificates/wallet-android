@@ -89,6 +89,11 @@ public class BlockCertV12 extends BlockchainCertificate implements BlockCert {
     }
 
     @Override
+    public String getExpirationDate() {
+        return null;
+    }
+
+    @Override
     public String getUrl() {
         if (getDocument() == null
                 || getDocument().getAssertion() == null

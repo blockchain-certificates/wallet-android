@@ -23,6 +23,10 @@ import com.learningmachine.android.app.data.webservice.IssuerService;
 import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 import com.learningmachine.android.app.util.FileUtils;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.ISODateTimeFormat;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -182,7 +186,7 @@ public class CertificateVerifier {
                 .flatMap(issuerResponse -> {
 
                     KeyRotation.KeyStatus status = issuerResponse.verifyTransaction(txRecord);
-                    if (status == KeyRotation.KeyStatus.KEY_INVALID) {
+                    if (status != KeyRotation.KeyStatus.KEY_VALID) {
                         Timber.e("ValidatingIssuerIdentity - failed");
                         return Observable.error(new ExceptionWithResourceString(R.string.error_step4_reason));
                     }
@@ -193,25 +197,34 @@ public class CertificateVerifier {
     }
 
     public Observable<Object> CheckingIfTheCredentialHasBeenRevoked(BlockCert certificate, TxRecord txRecord, IssuerResponse issuerResponse) {
-        return Observable.create(emitter -> {
-            KeyRotation.KeyStatus status = issuerResponse.verifyTransaction(txRecord);
-            if (status == KeyRotation.KeyStatus.KEY_REVOKED) {
-                Timber.e("CheckingIfTheCredentialHasBeenRevoked - failed");
-                emitter.onError(new ExceptionWithResourceString(R.string.error_step5_reason));
-            }
 
+        // TODO: has this certificate been revoked?
+
+
+        // END-TODO
+
+        return Observable.create(emitter -> {
             Timber.d("CheckingIfTheCredentialHasBeenRevoked - success");
             emitter.onNext("");
         }, Emitter.BackpressureMode.DROP).delay(delayTime, TimeUnit.SECONDS);
     }
 
     public Observable<Object> CheckingExpirationDate(BlockCert certificate, TxRecord txRecord, IssuerResponse issuerResponse) {
+
         return Observable.create(emitter -> {
-            KeyRotation.KeyStatus status = issuerResponse.verifyTransaction(txRecord);
-            if (status == KeyRotation.KeyStatus.KEY_EXPIRED) {
-                Timber.e("CheckingExpirationDate - failed");
+
+            // This check is pretty simple (as implemented in the javascript verifier), just check the certificate's
+            // expiration date against the current device datetime. Personally i think we shouldn't trust the device
+            // time and should probably contact an NTP server.
+            DateTimeFormatter dateTimeFormatter = ISODateTimeFormat.dateTime();
+            DateTime expiryDate = dateTimeFormatter.parseDateTime(certificate.getExpirationDate());
+            DateTime currentDate = new DateTime();
+            if (currentDate.isAfter(expiryDate)) {
+                Timber.d("CheckingExpirationDate - failed");
                 emitter.onError(new ExceptionWithResourceString(R.string.error_step6_reason));
+                return;
             }
+
 
             Timber.d("CheckingExpirationDate - success");
             emitter.onNext("");
