@@ -62,7 +62,7 @@ public class CertificateHeaderViewHolder extends RecyclerView.ViewHolder impleme
                     Picasso.with(mContext).load(file).into(mBinding.imageView);
                     Bitmap bitmap = ((BitmapDrawable)mBinding.imageView.getDrawable()).getBitmap();
 
-                    int pixel = bitmap.getPixel(0,0);
+                    int pixel = bitmap.getPixel(bitmap.getWidth()-1,0);
                     mBinding.imageView.setBackgroundColor(pixel);
                 }
 
