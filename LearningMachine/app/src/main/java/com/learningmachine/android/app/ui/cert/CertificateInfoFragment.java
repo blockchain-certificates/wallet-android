@@ -86,31 +86,9 @@ public class CertificateInfoFragment extends LMFragment {
                     return mIssuerManager.getIssuer(issuerUuid);
                 })
                 .subscribe(issuer -> {
-                    CertificateInfoAdapter adapter = new CertificateInfoAdapter(mCertificate, issuer);
+                    CertificateInfoAdapter adapter = new CertificateInfoAdapter(this, mCertificate, issuer);
                     mBinding.certificateInfoRecyclerView.setAdapter(adapter);
                 }, throwable -> Timber.e(throwable, "Unable to load certificate & issuer"));
-
-        mBinding.deleteButton.setOnClickListener(view -> {
-            DialogUtils.showAlertDialog(getContext(), this,
-                    0,
-                    getResources().getString(R.string.fragment_certificate_info_delete_warning_title),
-                    getResources().getString(R.string.fragment_certificate_info_delete_warning_message),
-                    getResources().getString(R.string.fragment_certificate_info_delete_warning_positive_title),
-                    getResources().getString(R.string.fragment_certificate_info_delete_warning_negative_title),
-                    (btnIdx) -> {
-                        if((int)btnIdx == 1) {
-                            String uuid = mCertificate.getUuid();
-                            mCertificateManager.removeCertificate(uuid)
-                                    .compose(bindToMainThread())
-                                    .subscribe(success -> {
-                                        String issuerUuid = mCertificate.getIssuerUuid();
-                                        Intent intent = IssuerActivity.newIntent(getContext(), issuerUuid);
-                                        startActivity(intent);
-                                    });
-                        }
-                        return null;
-                    });
-        });
 
         return mBinding.getRoot();
     }
@@ -125,10 +103,39 @@ public class CertificateInfoFragment extends LMFragment {
 
         private final List<CertificateInfoItemViewModel> mViewModels;
 
-        CertificateInfoAdapter(CertificateRecord certificate, IssuerRecord issuer) {
+        CertificateInfoAdapter(CertificateInfoFragment fragment, CertificateRecord certificate, IssuerRecord issuer) {
             List<CertificateInfoItemViewModel> viewModels = getHeaderData(certificate, issuer);
             List<CertificateInfoItemViewModel> metadataViewModels = getMetadata(certificate);
             viewModels.addAll(metadataViewModels);
+
+            CertificateInfoItemViewModel deleteButton = new CertificateInfoItemViewModel("", "");
+            deleteButton.setIsDeleteButton(() -> {
+
+                DialogUtils.showAlertDialog(getContext(), fragment,
+                        0,
+                        getResources().getString(R.string.fragment_certificate_info_delete_warning_title),
+                        getResources().getString(R.string.fragment_certificate_info_delete_warning_message),
+                        getResources().getString(R.string.fragment_certificate_info_delete_warning_positive_title),
+                        getResources().getString(R.string.fragment_certificate_info_delete_warning_negative_title),
+                        (btnIdx) -> {
+                            if((int)btnIdx == 1) {
+                                String uuid = mCertificate.getUuid();
+                                mCertificateManager.removeCertificate(uuid)
+                                        .compose(bindToMainThread())
+                                        .subscribe(success -> {
+                                            String issuerUuid = mCertificate.getIssuerUuid();
+                                            Intent intent = IssuerActivity.newIntent(getContext(), issuerUuid);
+                                            startActivity(intent);
+                                        });
+                            }
+                            return null;
+                        });
+
+                return null;
+            });
+
+            viewModels.add(deleteButton);
+
             this.mViewModels = viewModels;
         }
 

@@ -4,7 +4,7 @@
 
     <stroke
         android:width="@dimen/rounded_button_stroke_width"
-        android:color="@color/red"/>
+        android:color="@color/grey"/>
 
     <corners android:radius="8dp" />
 </shape>

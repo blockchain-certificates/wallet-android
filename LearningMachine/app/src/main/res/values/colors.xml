@@ -21,6 +21,7 @@
     <color name="linkColor">#2AB27B</color>
 
     <color name="red">#DF5454</color>
+    <color name="grey">#D8D8D8</color>
 
     <!-- vvv OLD vvv -->
     <color name="colorPrimary">@color/white</color>
