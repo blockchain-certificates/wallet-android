@@ -14,6 +14,7 @@ import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.cert.BlockCert;
 import com.learningmachine.android.app.data.cert.BlockCertParser;
 import com.learningmachine.android.app.data.cert.v20.BlockCertV20;
+import com.learningmachine.android.app.data.cert.v20.MerkleProof2017Schema;
 import com.learningmachine.android.app.data.cert.v20.Proof;
 import com.learningmachine.android.app.data.error.ExceptionWithResourceString;
 import com.learningmachine.android.app.data.model.KeyRotation;
@@ -23,6 +24,7 @@ import com.learningmachine.android.app.data.webservice.IssuerService;
 import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 import com.learningmachine.android.app.util.FileUtils;
 import com.learningmachine.android.app.util.ListUtils;
+import com.learningmachine.android.app.util.StringUtils;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;
@@ -42,6 +44,7 @@ import java.math.BigInteger;
 import java.net.URLDecoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
@@ -153,12 +156,68 @@ public class CertificateVerifier {
 
     public Observable<Object> EnsuringMerkleReceiptIsValid(BlockCert certificate, TxRecord txRecord) {
 
-        // TODO: ensure the merkle receipt is valid?
-
-
-        // END-TODO
-
         return Observable.create(emitter -> {
+
+            boolean hasValidReceipt = false;
+
+            if (certificate instanceof BlockCertV20) {
+                BlockCertV20 certV20 = (BlockCertV20) certificate;
+
+                MerkleProof2017Schema signature = certV20.getSignature();
+
+                MessageDigest sha256 = null;
+                try {
+                    sha256 = MessageDigest.getInstance("SHA-256");
+                } catch (NoSuchAlgorithmException e) {
+                    Timber.e(e, "Couldn't obtain SHA-256, the impossible situation");
+                    emitter.onError(new ExceptionWithResourceString(R.string.error_step2_reason));
+                    return;
+                }
+
+                if (signature != null && signature.getProof() != null) {
+
+                    byte[] targetHash = StringUtils.asHexData(signature.getTargetHash());
+                    byte[] merkleRoot = StringUtils.asHexData(signature.getMerkleRoot());
+
+                    byte[] proofHash = targetHash;
+
+                    // no proofs to combine, so we test that the two hashes match
+                    if (signature.getProof().size() == 0) {
+                        hasValidReceipt = Arrays.equals(targetHash, merkleRoot);
+                    } else {
+                        for (Proof p : signature.getProof()) {
+
+                            if (p.getLeft() != null) {
+                                proofHash = StringUtils.combineByteArrays(StringUtils.asHexData(p.getLeft()), proofHash);
+                                proofHash = sha256.digest(proofHash);
+                            } else if (p.getRight() != null) {
+                                proofHash = StringUtils.combineByteArrays(proofHash, StringUtils.asHexData(p.getRight()));
+                                proofHash = sha256.digest(proofHash);
+                            } else {
+                                // Either:
+                                // 1. There's no left or right key.
+                                // 2. There is, but it's not properly formatted hex data.
+                                // In either case, we can't correctly compute the hash. This receipt is clearly
+                                emitter.onError(new ExceptionWithResourceString(R.string.error_step2_reason));
+                                return;
+                            }
+                        }
+                        hasValidReceipt = Arrays.equals(proofHash, merkleRoot);
+                    }
+
+                } else {
+                    hasValidReceipt = false;
+                }
+
+            } else {
+                // certificates older than v2.0 we're not supporting, so pass them along
+                hasValidReceipt = true;
+            }
+
+            if (!hasValidReceipt) {
+                emitter.onError(new ExceptionWithResourceString(R.string.error_step2_reason));
+                return;
+            }
 
             Timber.d("EnsuringMerkleReceiptIsValid - success");
             emitter.onNext("");
@@ -200,13 +259,16 @@ public class CertificateVerifier {
 
     public Observable<Object> CheckingIfTheCredentialHasBeenRevoked(BlockCert certificate, TxRecord txRecord, IssuerResponse issuerResponse) {
 
+        // TODO: Since we cannot test revocation of credentials yet, I'm going to leave this commented out
+
+        /*
         // If the certificate has been revoked, the specific keys which were revoked are in the revoation keys list.
         // If the certificate id is contained in the revocation keys then it has been revoked by the issuer
         List<String> revocationList= issuerResponse.getRevocationList();
         if(revocationList != null && revocationList.contains(certificate.getUrl())) {
             Timber.d("CheckingIfTheCredentialHasBeenRevoked - failed");
             return Observable.error(new ExceptionWithResourceString(R.string.error_step5_reason));
-        }
+        }*/
 
         return Observable.create(emitter -> {
             Timber.d("CheckingIfTheCredentialHasBeenRevoked - success");
