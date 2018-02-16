@@ -33,6 +33,8 @@ import com.learningmachine.android.app.data.CertificateManager;
 import com.learningmachine.android.app.data.CertificateVerifier;
 import com.learningmachine.android.app.data.IssuerManager;
 import com.learningmachine.android.app.data.cert.BlockCert;
+import com.learningmachine.android.app.data.cert.BlockCertParser;
+import com.learningmachine.android.app.data.cert.v20.BlockCertV20;
 import com.learningmachine.android.app.data.error.ExceptionWithResourceString;
 import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.data.model.CertificateRecord;
@@ -47,6 +49,7 @@ import com.learningmachine.android.app.util.DialogUtils;
 import com.learningmachine.android.app.util.FileUtils;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -100,10 +103,10 @@ public class CertificateFragment extends LMFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_certificate, container, false);
 
-        setupWebView();
-
         mBinding.verifyButton.setOnClickListener(view -> verifyCertificate() );
         mBinding.shareButton.setOnClickListener(view -> shareCertificate() );
+
+        setupWebView();
 
         return mBinding.getRoot();
     }
@@ -125,15 +128,40 @@ public class CertificateFragment extends LMFragment {
     }
 
     private void setupWebView() {
+
+        // Note: This entire code has been reworked to more closely match the iOS application.
         WebSettings webSettings = mBinding.webView.getSettings();
-        // Enable JavaScript.
-        webSettings.setJavaScriptEnabled(true);
-        // Enable HTML Imports to be loaded from file://.
-        webSettings.setAllowFileAccessFromFileURLs(true);
-        // Ensure local links/redirects in WebView, not the browser.
+        webSettings.setJavaScriptEnabled(false);
+        webSettings.setAllowFileAccessFromFileURLs(false);
         mBinding.webView.setWebViewClient(new LMWebViewClient());
 
-        mBinding.webView.loadUrl(INDEX_FILE_PATH);
+        mBinding.progressBar.setVisibility(View.VISIBLE);
+        mBinding.progressBar.animate();
+
+        mCertificateVerifier.loadCertificate(mCertUuid)
+                .compose(bindToMainThread())
+                .subscribe(certificate -> {
+                    // Display the actual certificate
+                    String displayHTML = "";
+
+                    if(certificate instanceof BlockCertV20) {
+                        BlockCertV20 cert2 = (BlockCertV20) certificate;
+                        displayHTML = cert2.getDisplayHtml();
+                    }else{
+                        displayHTML = "BlockCerts Wallet only supports certificates which match the v2.0 specification.";
+                    }
+
+                    String normalizeCss = "/*! normalize.css v7.0.0 | MIT License | github.com/necolas/normalize.css */html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,aside,footer,header,nav,section{display:block}h1{font-size:2em;margin:.67em 0}figcaption,figure,main{display:block}figure{margin:1em 40px}hr{box-sizing:content-box;height:0;overflow:visible}pre{font-family:monospace,monospace;font-size:1em}a{background-color:transparent;-webkit-text-decoration-skip:objects}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}b,strong{font-weight:inherit}b,strong{font-weight:bolder}code,kbd,samp{font-family:monospace,monospace;font-size:1em}dfn{font-style:italic}mark{background-color:#ff0;color:#000}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}audio,video{display:inline-block}audio:not([controls]){display:none;height:0}img{border-style:none}svg:not(:root){overflow:hidden}button,input,optgroup,select,textarea{font-family:sans-serif;font-size:100%;line-height:1.15;margin:0}button,input{overflow:visible}button,select{text-transform:none}[type=reset],[type=submit],button,html [type=button]{-webkit-appearance:button}[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner,button::-moz-focus-inner{border-style:none;padding:0}[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring,button:-moz-focusring{outline:1px dotted ButtonText}fieldset{padding:.35em .75em .625em}legend{box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}progress{display:inline-block;vertical-align:baseline}textarea{overflow:auto}[type=checkbox],[type=radio]{box-sizing:border-box;padding:0}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-cancel-button,[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}details,menu{display:block}summary{display:list-item}canvas{display:inline-block}template{display:none}[hidden]{display:none}/*# sourceMappingURL=normalize.min.css.map */";
+                    String customCss = "body {padding: 20px; font-size: 12px; line-height: 1.5;} body > section { padding: 0;} body section { max-width: 100%; } body img { max-width: 100%; height: auto; width: inherit; }";
+                    String wrappedHtml = String.format("<!doctype html><html class=\"no-js\" lang=\"\"><head><meta charset=\"utf-8\"><meta http-equiv=\"x-ua-compatible\" content=\"ie=edge\"><title></title><meta content=\"width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0\" name=\"viewport\" /><meta name=”viewport” content=”width=device-width” /><style type=\"text/css\">%s</style><style type=\"text/css\">%s</style></head><body>%s</body></html>", normalizeCss, customCss, displayHTML);
+                    mBinding.webView.loadData(wrappedHtml, "text/html; charset=UTF-8", null);
+
+                }, throwable -> {
+                    Timber.e(throwable, "Error!");
+
+                    ExceptionWithResourceString throwableRS = (ExceptionWithResourceString)throwable;
+                    showVerificationFailureDialog(throwableRS.getErrorMessageResId());
+                });
     }
 
     public class LMWebViewClient extends WebViewClient {
@@ -153,13 +181,8 @@ public class CertificateFragment extends LMFragment {
 
         @Override
         public void onPageFinished(WebView view, String url) {
-            File certFile = FileUtils.getCertificateFile(getContext(), mCertUuid);
-            String certFilePath = certFile.toString();
-
-            String javascript = String.format(
-                    "javascript:(function() { document.getElementsByTagName('blockchain-certificate')[0].href='%1$s';})()",
-                    certFilePath);
-            mBinding.webView.loadUrl(javascript);
+            mBinding.progressBar.clearAnimation();
+            mBinding.progressBar.setVisibility(View.GONE);
         }
     }
 

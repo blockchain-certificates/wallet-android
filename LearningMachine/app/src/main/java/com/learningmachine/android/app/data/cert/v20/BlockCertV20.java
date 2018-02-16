@@ -1,5 +1,7 @@
 package com.learningmachine.android.app.data.cert.v20;
 
+import android.util.Log;
+
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -19,6 +21,14 @@ public class BlockCertV20 extends CertSchemaV20 implements BlockCert {
     @SerializedName("metadataJson")
     @Expose
     private String mMetadata;
+
+    @SerializedName("displayHtml")
+    @Expose
+    private String mDisplayHtml;
+
+    public String getDisplayHtml() {
+        return mDisplayHtml;
+    }
 
     @Override
     public String getCertUid() {

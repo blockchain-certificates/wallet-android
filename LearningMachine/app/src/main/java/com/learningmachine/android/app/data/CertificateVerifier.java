@@ -82,22 +82,6 @@ public class CertificateVerifier {
         try (FileInputStream inputStream = new FileInputStream(file)) {
             BlockCertParser blockCertParser = new BlockCertParser();
             BlockCert blockCert = blockCertParser.fromJson(inputStream);
-
-
-            String receiverKey = blockCert.getRecipientPublicKey();
-            String issuerKey = blockCert.getVerificationPublicKey();
-
-            // TODO: REMOVE THIS AND ALLOW ACTUAL VERIFICATIONS OF CROSS CHAIN CERTIFICATES
-            // testnet check: if either the receiver or the issuer originated
-            // from testnet then we will not validate using the normal method
-            if(receiverKey != null && issuerKey != null) {
-                if(receiverKey.startsWith("m") || receiverKey.startsWith("n") || issuerKey.startsWith("m") || issuerKey.startsWith("n")) {
-                    Timber.e("ComparingExpectedMerkleRootWithValueOnTheBlockchain - failed");
-                    return Observable.error(new ExceptionWithResourceString(R.string.error_testnet_certificate_json));
-                }
-            }
-
-
             return Observable.just(blockCert);
         } catch (IOException | NoSuchElementException e) {
             Timber.e(e, "Could not read certificate file");
@@ -106,6 +90,20 @@ public class CertificateVerifier {
     }
 
     public Observable<TxRecord> loadTXRecord(BlockCert certificate) {
+
+        String receiverKey = certificate.getRecipientPublicKey();
+        String issuerKey = certificate.getVerificationPublicKey();
+
+        // TODO: REMOVE THIS AND ALLOW ACTUAL VERIFICATIONS OF CROSS CHAIN CERTIFICATES
+        // testnet check: if either the receiver or the issuer originated
+        // from testnet then we will not validate using the normal method
+        if(receiverKey != null && issuerKey != null) {
+            if(receiverKey.startsWith("m") || receiverKey.startsWith("n") || issuerKey.startsWith("m") || issuerKey.startsWith("n")) {
+                Timber.e("loadCertificate - failed");
+                return Observable.error(new ExceptionWithResourceString(R.string.error_testnet_certificate_json));
+            }
+        }
+
         String sourceId = certificate.getSourceId();
         return mBlockchainService.getBlockchain(sourceId).delay(delayTime, TimeUnit.SECONDS).flatMap((txRecord) -> {
             return Observable.just(txRecord);
