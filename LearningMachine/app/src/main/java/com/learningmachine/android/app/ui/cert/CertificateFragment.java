@@ -335,7 +335,6 @@ public class CertificateFragment extends LMFragment {
         showVerficationProgressDialog();
 
         // if there is no internet connection, and unhandled exception is thrown.  Let's catch it.
-        /*
         Thread.setDefaultUncaughtExceptionHandler (new Thread.UncaughtExceptionHandler()
         {
             @Override
@@ -343,7 +342,7 @@ public class CertificateFragment extends LMFragment {
             {
                 showVerificationFailureDialog(R.string.error_no_internet);
             }
-        });*/
+        });
 
         updateVerficationProgressDialog(0, R.string.cert_verification_step0);
 
