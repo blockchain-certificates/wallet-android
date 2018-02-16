@@ -25,6 +25,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/certificate_info_viewmodel_textview_bottom_padding"
+            android:autoLink="all"
+            android:clickable="true"
             android:text="@{item.value}"
             app:layout_constraintTop_toBottomOf="@+id/textView1"
             app:layout_constraintBottom_toBottomOf="parent"
