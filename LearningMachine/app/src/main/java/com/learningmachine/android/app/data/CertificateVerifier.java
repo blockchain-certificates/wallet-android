@@ -22,6 +22,7 @@ import com.learningmachine.android.app.data.webservice.BlockchainService;
 import com.learningmachine.android.app.data.webservice.IssuerService;
 import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 import com.learningmachine.android.app.util.FileUtils;
+import com.learningmachine.android.app.util.ListUtils;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;
@@ -41,6 +42,7 @@ import java.math.BigInteger;
 import java.net.URLDecoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 
@@ -198,10 +200,13 @@ public class CertificateVerifier {
 
     public Observable<Object> CheckingIfTheCredentialHasBeenRevoked(BlockCert certificate, TxRecord txRecord, IssuerResponse issuerResponse) {
 
-        // TODO: has this certificate been revoked?
-
-
-        // END-TODO
+        // If the certificate has been revoked, the specific keys which were revoked are in the revoation keys list.
+        // If the certificate id is contained in the revocation keys then it has been revoked by the issuer
+        List<String> revocationList= issuerResponse.getRevocationList();
+        if(revocationList != null && revocationList.contains(certificate.getUrl())) {
+            Timber.d("CheckingIfTheCredentialHasBeenRevoked - failed");
+            return Observable.error(new ExceptionWithResourceString(R.string.error_step5_reason));
+        }
 
         return Observable.create(emitter -> {
             Timber.d("CheckingIfTheCredentialHasBeenRevoked - success");
