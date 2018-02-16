@@ -71,6 +71,14 @@ public class BlockCertV20 extends CertSchemaV20 implements BlockCert {
     }
 
     @Override
+    public String getExpirationDate() {
+        if (getExpires() == null) {
+            return null;
+        }
+        return getExpires().toString();
+    }
+
+    @Override
     public String getUrl() {
         if (StringUtils.isWebUrl(getId())) {
             return getId();

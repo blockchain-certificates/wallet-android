@@ -39,6 +39,11 @@ public class BlockCertV11 extends CertificateSchemaV11 implements BlockCert {
     }
 
     @Override
+    public String getExpirationDate() {
+        return null;
+    }
+
+    @Override
     public String getUrl() {
         return getAssertion().getId()
                 .toString();
