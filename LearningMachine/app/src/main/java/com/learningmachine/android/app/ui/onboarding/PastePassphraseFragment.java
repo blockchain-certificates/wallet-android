@@ -25,6 +25,7 @@ import com.learningmachine.android.app.data.bitcoin.BitcoinManager;
 import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.data.preferences.SharedPreferencesManager;
 import com.learningmachine.android.app.databinding.FragmentPastePassphraseBinding;
+import com.learningmachine.android.app.ui.LMActivity;
 import com.learningmachine.android.app.ui.home.HomeActivity;
 import com.learningmachine.android.app.util.DialogUtils;
 import com.learningmachine.android.app.util.StringUtils;
@@ -89,7 +90,16 @@ public class PastePassphraseFragment extends OnboardingFragment {
 
         mBinding.passphraseLabel.setText(R.string.onboarding_paste_passphrase_load_0);
 
-        ((OnboardingActivity)getActivity()).askToGetPassphraseFromDevice(this);
+        ((LMActivity)getActivity()).askToGetPassphraseFromDevice((passphrase) -> {
+            if (passphrase != null) {
+                mBinding.pastePassphraseEditText.setText(passphrase.toString());
+                onDone();
+            } else {
+                mBinding.passphraseLabel.setText(R.string.onboarding_paste_passphrase_load_2);
+                mBinding.passphraseLabel.requestFocus();
+            }
+            return null;
+        });
 
         mBinding.pastePassphraseEditText.setFilters(new InputFilter[] {
                 new InputFilter.AllCaps() {
@@ -108,17 +118,6 @@ public class PastePassphraseFragment extends OnboardingFragment {
         mBinding.doneButton.setOnClickListener(view -> onDone());
 
         return mBinding.getRoot();
-    }
-
-    @Override
-    public void didFindSavedPassphrase(String passphrase) {
-        if (passphrase != null) {
-            mBinding.pastePassphraseEditText.setText(passphrase);
-            onDone();
-        } else {
-            mBinding.passphraseLabel.setText(R.string.onboarding_paste_passphrase_load_2);
-            mBinding.passphraseLabel.requestFocus();
-        }
     }
 
 

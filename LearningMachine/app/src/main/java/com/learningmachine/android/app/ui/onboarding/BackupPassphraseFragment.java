@@ -46,8 +46,8 @@ public class BackupPassphraseFragment extends OnboardingFragment {
 
     @Inject protected BitcoinManager mBitcoinManager;
 
-    private FragmentBackupPassphraseBinding mBinding;
-    private String mPassphrase;
+    protected FragmentBackupPassphraseBinding mBinding;
+    protected String mPassphrase;
 
     private int numberOfBackupOptionsUsed = 0;
 
@@ -108,40 +108,40 @@ public class BackupPassphraseFragment extends OnboardingFragment {
         }
     }
 
-    private void onSave() {
-        ((OnboardingActivity)getActivity()).askToSavePassphraseToDevice(mPassphrase, this);
-    }
+    protected void onSave() {
+        ((OnboardingActivity)getActivity()).askToSavePassphraseToDevice(mPassphrase, (passphrase) -> {
+            if(passphrase == null) {
 
-    @Override
-    public void didSavePassphraseToDevice(String passphrase) {
-        if(passphrase == null) {
+                DialogUtils.showAlertDialog(getContext(), this,
+                        R.drawable.ic_dialog_failure,
+                        getResources().getString(R.string.onboarding_passphrase_permissions_error_title),
+                        getResources().getString(R.string.onboarding_passphrase_permissions_error),
+                        getResources().getString(R.string.onboarding_passphrase_ok),
+                        null,
+                        (btnIdx) -> {
+                            HandleBackupOptionCompleted(null);
+                            return null;
+                        });
+                return null;
+            }
 
             DialogUtils.showAlertDialog(getContext(), this,
-                    R.drawable.ic_dialog_failure,
-                    getResources().getString(R.string.onboarding_passphrase_permissions_error_title),
-                    getResources().getString(R.string.onboarding_passphrase_permissions_error),
+                    R.drawable.ic_dialog_success,
+                    getResources().getString(R.string.onboarding_passphrase_complete_title),
+                    getResources().getString(R.string.onboarding_passphrase_save_complete),
                     getResources().getString(R.string.onboarding_passphrase_ok),
                     null,
                     (btnIdx) -> {
-                        HandleBackupOptionCompleted(null);
+                        if(mBinding != null) {
+                            HandleBackupOptionCompleted(mBinding.onboardingSaveCheckmark);
+                        }
                         return null;
                     });
-            return;
-        }
-
-        DialogUtils.showAlertDialog(getContext(), this,
-                R.drawable.ic_dialog_success,
-                getResources().getString(R.string.onboarding_passphrase_complete_title),
-                getResources().getString(R.string.onboarding_passphrase_save_complete),
-                getResources().getString(R.string.onboarding_passphrase_ok),
-                null,
-                (btnIdx) -> {
-                    HandleBackupOptionCompleted(mBinding.onboardingSaveCheckmark);
-                    return null;
-                });
+            return null;
+        });
     }
 
-    private void onEmail() {
+    protected void onEmail() {
         DialogUtils.showAlertDialog(getContext(), this,
                 0,
                 getResources().getString(R.string.onboarding_passphrase_email_before_title),
@@ -158,13 +158,15 @@ public class BackupPassphraseFragment extends OnboardingFragment {
                         Intent mailer = Intent.createChooser(intent, null);
                         startActivity(mailer);
 
-                        HandleBackupOptionCompleted(mBinding.onboardingEmailCheckmark);
+                        if(mBinding != null) {
+                            HandleBackupOptionCompleted(mBinding.onboardingEmailCheckmark);
+                        }
                     }
                     return null;
                 });
     }
 
-    private void onWrite() {
+    protected void onWrite() {
         AlertDialogFragment fragment = DialogUtils.showCustomDialog(getContext(), this,
                 R.layout.dialog_write_passphrase,
                 R.drawable.ic_writedown,
@@ -173,7 +175,9 @@ public class BackupPassphraseFragment extends OnboardingFragment {
                 getResources().getString(R.string.onboarding_passphrase_write_confirmation),
                 null,
                 (btnIdx) -> {
-                    HandleBackupOptionCompleted(mBinding.onboardingWriteCheckmark);
+                    if(mBinding != null) {
+                        HandleBackupOptionCompleted(mBinding.onboardingWriteCheckmark);
+                    }
                     return null;
                 },
                 (dialogContent) -> {

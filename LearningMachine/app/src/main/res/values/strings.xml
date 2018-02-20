@@ -110,6 +110,15 @@
 
 
     <!-- Settings -->
+
+    <string name="settings_add_issuer">Add an Issuer</string>
+    <string name="settings_add_credential">Add a Credential</string>
+    <string name="settings_reveal_passphrase">My Passphrase</string>
+    <string name="settings_about_passphrases">About Passphrases</string>
+    <string name="settings_privacy_policy">Privacy Policy</string>
+    <string name="settings_privacy_policy_endpoint">http://www.learningmachine.com/mobile-privacy/</string>
+    <string name="settings_email_logs">Email Logs</string>
+
     <string name="settings_logout">Log out and Reset</string>
     <string name="settings_logout_title">Log out and Clear Device</string>
     <string name="settings_logout_message">Logging out will remove all of your certificates and any stored passphrases on this device.</string>
@@ -186,22 +195,18 @@
     <string name="settings_fragment">Settings</string>
 
     <string name="settings_issuer_header">Issuers</string>
-    <string name="settings_add_issuer">Add Issuer</string>
 
     <string name="settings_credential_header">Credentials</string>
-    <string name="settings_add_credential">Add Credential</string>
 
     <string name="settings_passphrase_header">Passphrase</string>
-    <string name="settings_reveal_passphrase">Reveal Passphrase</string>
-    <string name="settings_about_passphrases">About Passphrases</string>
+
+
 
     <string name="settings_about_header">About</string>
     <string name="settings_about_this_app">About this app</string>
-    <string name="settings_privacy_policy">Privacy Policy</string>
-    <string name="settings_privacy_policy_endpoint">http://www.learningmachine.com/mobile-privacy/</string>
+
 
     <string name="settings_troubleshooting_header">Troubleshooting</string>
-    <string name="settings_email_logs">Email Logs</string>
 
     <!-- Add Issuer -->
     <string name="fragment_add_issuer_title">Add Issuer</string>
