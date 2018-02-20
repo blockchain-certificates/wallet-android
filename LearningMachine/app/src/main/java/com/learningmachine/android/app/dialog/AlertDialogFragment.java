@@ -201,8 +201,12 @@ public class AlertDialogFragment extends DialogFragment {
             }
         }
 
-        titleView.setText(title);
-        messageView.setText(message);
+        if(titleView != null) {
+            titleView.setText(title);
+        }
+        if(messageView != null) {
+            messageView.setText(message);
+        }
 
         if (positiveButtonView != null) {
             positiveButtonView.setText(positiveButtonMessage);

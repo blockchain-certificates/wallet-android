@@ -240,12 +240,13 @@
     <string name="certificate_share_menu_item_title">Share</string>
     <string name="certificate_info_menu_item_title">Info</string>
     <string name="fragment_certificate_progress_dialog_message">Loading Credential…</string>
-    <string name="fragment_certificate_share_title">How would you like to share your credential?</string>
     <string name="fragment_certificate_share_message"></string>
-    <string name="fragment_certificate_share_url_button_title">URL</string>
-    <string name="fragment_certificate_share_file_button_title">File</string>
     <string name="fragment_certificate_share_url_format">Check out my credential from %1$s! %2$s</string>
     <string name="fragment_certificate_share_file_format">Check out my credential from %1$s!</string>
+
+    <string name="fragment_certificate_share_url_button_title">Share link</string>
+    <string name="fragment_certificate_share_file_button_title">Share file</string>
+
 
     <!-- Certificate Info Fragment -->
 

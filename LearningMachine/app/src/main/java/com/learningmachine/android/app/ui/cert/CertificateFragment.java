@@ -201,19 +201,23 @@ public class CertificateFragment extends LMFragment {
 
     private void showShareTypeDialog() {
 
-        DialogUtils.showAlertDialog(getContext(), this,
+        AlertDialogFragment fragment = DialogUtils.showCustomSheet(getContext(), this,
+                R.layout.dialog_share_file_or_url,
                 0,
-                getResources().getString(R.string.fragment_certificate_share_title),
-                getResources().getString(R.string.fragment_certificate_share_message),
-                getResources().getString(R.string.fragment_certificate_share_url_button_title),
-                getResources().getString(R.string.fragment_certificate_share_file_button_title),
+                "",
+                "",
+                "",
+                "",
                 (btnIdx) -> {
-                    if((int)btnIdx == 0) {
+                    if ((int) btnIdx == 0) {
                         shareCertificateTypeResult(true);
                     }
-                    if((int)btnIdx == 1) {
+                    if ((int) btnIdx == 1) {
                         shareCertificateTypeResult(false);
                     }
+                    return null;
+                },
+                (dialogContent) -> {
                     return null;
                 });
 

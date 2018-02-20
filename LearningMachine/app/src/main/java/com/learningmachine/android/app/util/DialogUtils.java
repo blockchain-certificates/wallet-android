@@ -60,6 +60,7 @@ public class DialogUtils {
     public static void showAlertDialog(Context context, @NonNull Fragment targetFragment, int iconID, String title, String message, String positiveButton, String negativeButton, AlertDialogFragment.Callback callback) {
         FragmentManager fragmentManager = targetFragment.getFragmentManager();
         AlertDialogFragment alertDialogFragment = AlertDialogFragment.newInstance(
+                false,
                 0,
                 iconID,
                 title,
@@ -75,6 +76,24 @@ public class DialogUtils {
     public static AlertDialogFragment showCustomDialog(Context context, @NonNull Fragment targetFragment, int layoutID, int iconID, String title, String message, String positiveButton, String negativeButton, AlertDialogFragment.Callback onComplete, AlertDialogFragment.Callback onCreate) {
         FragmentManager fragmentManager = targetFragment.getFragmentManager();
         AlertDialogFragment alertDialogFragment = AlertDialogFragment.newInstance(
+                false,
+                layoutID,
+                iconID,
+                title,
+                message,
+                positiveButton,
+                negativeButton,
+                onComplete,
+                onCreate);
+        alertDialogFragment.setTargetFragment(targetFragment, 0);
+        alertDialogFragment.show(fragmentManager, TAG_DIALOG_ALERT);
+        return alertDialogFragment;
+    }
+
+    public static AlertDialogFragment showCustomSheet(Context context, @NonNull Fragment targetFragment, int layoutID, int iconID, String title, String message, String positiveButton, String negativeButton, AlertDialogFragment.Callback onComplete, AlertDialogFragment.Callback onCreate) {
+        FragmentManager fragmentManager = targetFragment.getFragmentManager();
+        AlertDialogFragment alertDialogFragment = AlertDialogFragment.newInstance(
+                true,
                 layoutID,
                 iconID,
                 title,
