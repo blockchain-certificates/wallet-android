@@ -1,19 +1,33 @@
 package com.learningmachine.android.app.ui;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 
+import com.learningmachine.android.app.ui.onboarding.OnboardingActivity;
+import com.learningmachine.android.app.ui.onboarding.OnboardingFragment;
+import com.learningmachine.android.app.util.AESCrypt;
 import com.smallplanet.labalib.Laba;
 import com.trello.rxlifecycle.LifecycleProvider;
 import com.trello.rxlifecycle.LifecycleTransformer;
 import com.trello.rxlifecycle.RxLifecycle;
 import com.trello.rxlifecycle.android.ActivityEvent;
 import com.trello.rxlifecycle.android.RxLifecycleAndroid;
+
+import java.io.File;
+import java.io.PrintWriter;
+import java.security.GeneralSecurityException;
+import java.util.Scanner;
 
 import javax.annotation.Nonnull;
 
@@ -51,6 +65,31 @@ public abstract class LMActivity extends AppCompatActivity implements LifecycleP
     protected void onResume() {
         super.onResume();
         mLifecycleSubject.onNext(ActivityEvent.RESUME);
+
+
+        if(didReceivePermissionsCallback){
+            if(tempPassphrase != null && passphraseCallback != null) {
+                if (didSucceedInPermissionsRequest) {
+                    savePassphraseToDevice(tempPassphrase, passphraseCallback);
+                } else {
+                    savePassphraseToDevice(null, passphraseCallback);
+                }
+                tempPassphrase = null;
+                passphraseCallback = null;
+            }
+
+            if(passphraseCallback != null) {
+                if(didSucceedInPermissionsRequest){
+                    getSavedPassphraseFromDevice(passphraseCallback);
+                } else {
+                    getSavedPassphraseFromDevice(passphraseCallback);
+                }
+                passphraseCallback = null;
+            }
+
+            didReceivePermissionsCallback = false;
+            didSucceedInPermissionsRequest = false;
+        }
     }
 
     @Override
@@ -150,6 +189,121 @@ public abstract class LMActivity extends AppCompatActivity implements LifecycleP
 
     protected boolean requiresBackNavigation() {
         return false;
+    }
+
+
+
+
+
+
+    /* Saving passphrases to device */
+
+    @FunctionalInterface
+    public interface Callback <A, R> {
+        public R apply (A a);
+    }
+
+    private String tempPassphrase = null;
+    private Callback passphraseCallback = null;
+
+
+    public static String pathToSavedPassphraseFile() {
+        return Environment.getExternalStorageDirectory() + "/learningmachine.dat";
+    }
+
+    private String getDeviceId(Context context) {
+        final String deviceId = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+        if(deviceId == null || deviceId.length() == 0) {
+            return "NOT_IDEAL_KEY";
+        }
+        return deviceId;
+    }
+
+    private void savePassphraseToDevice(String passphrase, Callback passphraseCallback) {
+        if (passphrase == null) {
+            passphraseCallback.apply(null);
+            return;
+        }
+
+        String passphraseFile = pathToSavedPassphraseFile();
+        try( PrintWriter out = new PrintWriter(passphraseFile) ) {
+            String encryptionKey= getDeviceId(getApplicationContext());
+            String mneumonicString = "mneumonic:"+passphrase;
+            try {
+                String encryptedMsg = AESCrypt.encrypt(encryptionKey, mneumonicString);
+                out.println(encryptedMsg);
+                passphraseCallback.apply(passphrase);
+            }catch (GeneralSecurityException e){
+                passphraseCallback.apply(null);
+            }
+        } catch(Exception e) {
+            passphraseCallback.apply(null);
+        }
+    }
+
+    public void askToSavePassphraseToDevice(String passphrase, Callback passphraseCallback) {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
+                    checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                savePassphraseToDevice(passphrase, passphraseCallback);
+            } else {
+                tempPassphrase = passphrase;
+                this.passphraseCallback = passphraseCallback;
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+            }
+        } else {
+            savePassphraseToDevice(passphrase, passphraseCallback);
+        }
+    }
+
+    public void askToGetPassphraseFromDevice(Callback passphraseCallback) {
+
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                getSavedPassphraseFromDevice(passphraseCallback);
+            } else {
+                this.passphraseCallback = passphraseCallback;
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+            }
+        } else {
+            getSavedPassphraseFromDevice(passphraseCallback);
+        }
+    }
+
+    private boolean getSavedPassphraseFromDevice(Callback passphraseCallback) {
+        String passphraseFile = OnboardingActivity.pathToSavedPassphraseFile();
+        try {
+            String encryptedMsg = new Scanner(new File(passphraseFile)).useDelimiter("\\Z").next();
+            String encryptionKey = getDeviceId(getApplicationContext());
+            try {
+                String content = AESCrypt.decrypt(encryptionKey, encryptedMsg);
+                if (content.startsWith("mneumonic:")) {
+                    passphraseCallback.apply(content.substring(10).trim());
+                    return true;
+                }
+            }catch (GeneralSecurityException e){
+
+            }
+        } catch(Exception e) {
+            // note: this is a non-critical feature, so if this fails nbd
+        }
+
+        passphraseCallback.apply(null);
+        return false;
+    }
+
+
+
+    private boolean didReceivePermissionsCallback = false;
+    private boolean didSucceedInPermissionsRequest = false;
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        // Note: this really sucks, but android will crash if we try and display dialogs in the permissions
+        // result callback.  So we delay this until onResume is called on the activity
+        didReceivePermissionsCallback = true;
+        didSucceedInPermissionsRequest = grantResults[0] == PackageManager.PERMISSION_GRANTED;
     }
 
 }
