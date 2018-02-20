@@ -67,8 +67,23 @@ public class SettingsFragment extends LMFragment {
         });
 
         binding.settingsAddCredentialTextView.setOnClickListener(v -> {
-            Intent intent = AddCertificateActivity.newIntent(getContext());
-            startActivity(intent);
+
+            DialogUtils.showCustomSheet(getContext(), this,
+                    R.layout.dialog_add_by_file_or_url,
+                    0,
+                    "",
+                    "",
+                    "",
+                    "",
+                    (btnIdx) -> {
+                        Intent intent = AddCertificateActivity.newIntent(getContext(), (int)btnIdx, null);
+                        startActivity(intent);
+                        return null;
+                    },
+                    (dialogContent) -> {
+                        return null;
+                    });
+
         });
 
         binding.settingsEmailLogsTextView.setOnClickListener(v -> {

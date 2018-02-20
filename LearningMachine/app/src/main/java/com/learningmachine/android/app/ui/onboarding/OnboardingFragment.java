@@ -71,7 +71,7 @@ public class OnboardingFragment extends LMFragment {
 
     public boolean continueDelayedURLsFromDeepLinking() {
         if (mSharedPreferencesManager.getDelayedCertificateURL().length() > 0) {
-            startActivityAndFinish(AddCertificateActivity.newIntent(getContext(), mSharedPreferencesManager.getDelayedCertificateURL()));
+            startActivityAndFinish(AddCertificateActivity.newIntent(getContext(), 0, mSharedPreferencesManager.getDelayedCertificateURL()));
             mSharedPreferencesManager.setDelayedCertificateURL("");
             return true;
         }

@@ -67,7 +67,7 @@ public class SplashActivity extends LMActivity {
                 break;
 
             case ADD_CERTIFICATE:
-                Intent certificateIntent = AddCertificateActivity.newIntent(this, launchData.getCertUrl());
+                Intent certificateIntent = AddCertificateActivity.newIntent(this, 0, launchData.getCertUrl());
                 certificateIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_TASK_ON_HOME);
                 startActivityAndFinish(certificateIntent);
                 break;

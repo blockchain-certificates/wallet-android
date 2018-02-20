@@ -26,6 +26,7 @@ import com.learningmachine.android.app.databinding.ListCertificateHeaderBinding;
 import com.learningmachine.android.app.databinding.ListItemCertificateBinding;
 import com.learningmachine.android.app.ui.LMFragment;
 import com.learningmachine.android.app.ui.cert.AddCertificateActivity;
+import com.learningmachine.android.app.util.DialogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,8 +76,21 @@ public class IssuerFragment extends LMFragment {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_issuer, container, false);
 
         mBinding.addCertificateFloatingActionButton.setOnClickListener(v -> {
-            Intent intent = AddCertificateActivity.newIntent(getContext());
-            startActivity(intent);
+            DialogUtils.showCustomSheet(getContext(), this,
+                    R.layout.dialog_add_by_file_or_url,
+                    0,
+                    "",
+                    "",
+                    "",
+                    "",
+                    (btnIdx) -> {
+                        Intent intent = AddCertificateActivity.newIntent(getContext(), (int)btnIdx, null);
+                        startActivity(intent);
+                        return null;
+                    },
+                    (dialogContent) -> {
+                        return null;
+                    });
         });
 
         setupRecyclerView();

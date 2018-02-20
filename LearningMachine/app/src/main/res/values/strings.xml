@@ -119,8 +119,8 @@
 
     <!-- Add Issuer / Add Certificate -->
     <string name="add_certificate_import">Import</string>
-    <string name="add_certificate_by_file">BY FILE</string>
-    <string name="add_certificate_by_url">BY URL</string>
+    <string name="add_certificate_by_file">Add a credential by file</string>
+    <string name="add_certificate_by_url">Add a credential by URL</string>
     <string name="certificate_add_url_label">Copy and paste the credential URL:</string>
     <string name="certificate_add_url_edit_text_hint">Credential URL</string>
     <string name="fragment_add_certificate_file_label">What is the File of the credential?</string>
@@ -130,6 +130,12 @@
     <string name="fragment_add_certificate_alert_dialog_success_title">Success!</string>
     <string name="fragment_add_certificate_alert_dialog_success_message">This is a valid credential.</string>
     <string name="fragment_add_certificate_alert_dialog_error_message">That doesn\'t appear to be a valid credential. Please check the URL and try again.</string>
+
+
+
+    <!-- Share certificate -->
+    <string name="fragment_certificate_share_url_button_title">Share link</string>
+    <string name="fragment_certificate_share_file_button_title">Share file</string>
 
 
 
@@ -243,9 +249,6 @@
     <string name="fragment_certificate_share_message"></string>
     <string name="fragment_certificate_share_url_format">Check out my credential from %1$s! %2$s</string>
     <string name="fragment_certificate_share_file_format">Check out my credential from %1$s!</string>
-
-    <string name="fragment_certificate_share_url_button_title">Share link</string>
-    <string name="fragment_certificate_share_file_button_title">Share file</string>
 
 
     <!-- Certificate Info Fragment -->

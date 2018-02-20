@@ -23,16 +23,18 @@ import java.util.List;
 public class AddCertificateActivity extends LMActivity {
 
     private static final String EXTRA_CERT_URL = "AddIssuerActivity.CertUrl";
+    private static final String PAGER_INDEX = "AddIssuerActivity.PagerIndex";
 
     private ActivityAddCertificateBinding mBinding;
 
     public static Intent newIntent(Context context) {
-        return newIntent(context, null);
+        return newIntent(context, 0, null);
     }
 
-    public static Intent newIntent(Context context, String certificateUrlString) {
+    public static Intent newIntent(Context context, int pagerIndex, String certificateUrlString) {
         Intent intent = new Intent(context, AddCertificateActivity.class);
         intent.putExtra(EXTRA_CERT_URL, certificateUrlString);
+        intent.putExtra(PAGER_INDEX, pagerIndex);
         return intent;
     }
 
@@ -43,7 +45,6 @@ public class AddCertificateActivity extends LMActivity {
         setSupportActionBar(mBinding.addCertificateToolbar);
 
         setupViewPager(mBinding.activityCertificatePagerViewPager);
-        mBinding.addCertificateTabs.setupWithViewPager(mBinding.activityCertificatePagerViewPager);
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -55,6 +56,8 @@ public class AddCertificateActivity extends LMActivity {
                 getSupportFragmentManager(),
                 certificateTypes);
         viewPager.setAdapter(adapter);
+
+        viewPager.setCurrentItem(getIntent().getIntExtra(PAGER_INDEX, 0));
     }
 
     @Override
