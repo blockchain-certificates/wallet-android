@@ -16,6 +16,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,7 @@ public class AlertDialogFragment extends DialogFragment {
     public static final int RESULT_POSITIVE = 1;
     public static final int RESULT_NEGATIVE = 0;
 
+    private static final String ARG_BOTTOM = "AlertDialogFragment.BOTTOM";
     private static final String ARG_ICON = "AlertDialogFragment.Icon";
     private static final String ARG_LAYOUT = "AlertDialogFragment.Layout";
     private static final String ARG_TITLE = "AlertDialogFragment.Title";
@@ -82,12 +84,13 @@ public class AlertDialogFragment extends DialogFragment {
         return newInstance(title, message, null, "Okay");
     }
 
-    public static AlertDialogFragment newInstance(int layoutID, int iconID, String title, String message, String positiveButtonMessage, String negativeButtonMessage, Callback complete, Callback onCreate) {
+    public static AlertDialogFragment newInstance(boolean bottomSheet, int layoutID, int iconID, String title, String message, String positiveButtonMessage, String negativeButtonMessage, Callback complete, Callback onCreate) {
         Bundle args = new Bundle();
         AlertDialogFragment fragment = new AlertDialogFragment();
         args.putString(ARG_MESSAGE, message);
         args.putString(ARG_TITLE, title);
         args.putInt(ARG_ICON, iconID);
+        args.putBoolean(ARG_BOTTOM, bottomSheet);
         args.putInt(ARG_LAYOUT, layoutID);
         args.putString(ARG_POSITIVE_BUTTON_MESSAGE, positiveButtonMessage);
         args.putString(ARG_NEGATIVE_BUTTON_MESSAGE, negativeButtonMessage);
@@ -141,6 +144,11 @@ public class AlertDialogFragment extends DialogFragment {
         String positiveButtonMessage = args.getString(ARG_POSITIVE_BUTTON_MESSAGE);
         String negativeButtonMessage = args.getString(ARG_NEGATIVE_BUTTON_MESSAGE);
 
+        boolean bottomSheet = false;
+        if (args.containsKey(ARG_BOTTOM)) {
+            bottomSheet = args.getBoolean(ARG_BOTTOM);
+        }
+
         int dialogIcon = 0;
         if (args.containsKey(ARG_ICON)) {
             dialogIcon = args.getInt(ARG_ICON);
@@ -151,8 +159,14 @@ public class AlertDialogFragment extends DialogFragment {
             layoutID = args.getInt(ARG_LAYOUT);
         }
 
-        final Dialog dialog = new Dialog(getActivity());
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        Dialog dialog = null;
+
+        if (bottomSheet) {
+            dialog = new Dialog(getActivity(), R.style.bottom_dialog);
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        } else {
+            dialog = new Dialog(getActivity());
+        }
         dialog.setCancelable(false);
 
         View dialogContent = null;
@@ -169,6 +183,7 @@ public class AlertDialogFragment extends DialogFragment {
             }
         }
 
+
         dialog.setContentView(dialogContent);
 
 
@@ -178,7 +193,7 @@ public class AlertDialogFragment extends DialogFragment {
         Button positiveButtonView = (Button) dialogContent.findViewById(R.id.dialog_positive_button);
         Button negativeButtonView = (Button) dialogContent.findViewById(R.id.dialog_negative_button);
 
-        if(iconView != null) {
+        if (iconView != null) {
             if (dialogIcon > 0) {
                 iconView.setImageResource(dialogIcon);
             } else {
@@ -205,6 +220,11 @@ public class AlertDialogFragment extends DialogFragment {
         float idealDialogWidth = size.x * 0.8f;
         float maxDialogHeight = size.y * 0.8f;
 
+        if (bottomSheet) {
+            idealDialogWidth = size.x * 1.0f;
+            maxDialogHeight = size.y * 1.0f;
+        }
+
         // 1) Size the dialog to the max
         dialogContent.setLayoutParams(new FrameLayout.LayoutParams((int) idealDialogWidth, (int) maxDialogHeight));
 
@@ -212,7 +232,7 @@ public class AlertDialogFragment extends DialogFragment {
         relayoutChildren(dialogContent);
 
         // 3) Calculate the total height of the dialog
-        int widthMeasureSpec = View.MeasureSpec.makeMeasureSpec((int)(idealDialogWidth*0.6f), View.MeasureSpec.EXACTLY);
+        int widthMeasureSpec = View.MeasureSpec.makeMeasureSpec((int) (idealDialogWidth * 0.6f), View.MeasureSpec.EXACTLY);
         int heightMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
         dialogContent.measure(widthMeasureSpec, heightMeasureSpec);
         float totalHeight = dialogContent.getMeasuredHeight();
@@ -224,7 +244,7 @@ public class AlertDialogFragment extends DialogFragment {
 
 
         // 5) instrument the buttons
-        if(positiveButtonView != null) {
+        if (positiveButtonView != null) {
             positiveButtonView.setOnClickListener(view -> {
                 dismiss();
                 onButtonTapped(RESULT_POSITIVE);
@@ -238,8 +258,15 @@ public class AlertDialogFragment extends DialogFragment {
             });
         }
 
-        if(onCreate != null) {
+        if (onCreate != null) {
             onCreate.apply(dialogContent);
+        }
+
+        if (bottomSheet) {
+            Window window = dialog.getWindow();
+            WindowManager.LayoutParams wlp = window.getAttributes();
+            wlp.gravity = Gravity.BOTTOM;
+            window.setAttributes(wlp);
         }
 
         return dialog;

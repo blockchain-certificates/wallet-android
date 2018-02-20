@@ -1,5 +1,18 @@
 <resources>
 
+    <style name="bottom_dialog_animation">
+        <item name="android:windowEnterAnimation">@anim/slide_up_dialog</item>
+        <item name="android:windowExitAnimation">@anim/slide_down_dialog</item>
+    </style>
+
+    <style name="bottom_dialog" parent="@android:style/Animation.Dialog">
+        <item name="android:windowAnimationStyle">@style/bottom_dialog_animation</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+    </style>
+
     <style name="Text" >
         <item name="android:fontFamily">@font/opensans_reg</item>
     </style>
