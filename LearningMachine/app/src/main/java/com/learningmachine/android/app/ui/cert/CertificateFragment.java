@@ -6,6 +6,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Point;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -37,6 +39,7 @@ import com.learningmachine.android.app.data.CertificateVerifier;
 import com.learningmachine.android.app.data.IssuerManager;
 import com.learningmachine.android.app.data.cert.BlockCert;
 import com.learningmachine.android.app.data.cert.BlockCertParser;
+import com.learningmachine.android.app.data.cert.v20.Anchor;
 import com.learningmachine.android.app.data.cert.v20.BlockCertV20;
 import com.learningmachine.android.app.data.error.ExceptionWithResourceString;
 import com.learningmachine.android.app.data.inject.Injector;
@@ -55,6 +58,8 @@ import org.bitcoinj.core.Block;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -192,7 +197,7 @@ public class CertificateFragment extends LMFragment {
                     Timber.e(throwable, "Error!");
 
                     ExceptionWithResourceString throwableRS = (ExceptionWithResourceString)throwable;
-                    showVerificationFailureDialog(throwableRS.getErrorMessageResId());
+                    showVerificationFailureDialog(throwableRS.getErrorMessageResId(), Anchor.ChainType.unknown);
                 });
     }
 
@@ -361,14 +366,54 @@ public class CertificateFragment extends LMFragment {
 
 
 
+    private int actualStringByChain(int messageID, Anchor.ChainType chainType) {
 
-    private void showVerificationResultDialog(int iconId, int titleId, int messageId) {
+        if(chainType == Anchor.ChainType.testnet || chainType == Anchor.ChainType.regtest) {
+            switch (messageID) {
+                case R.string.error_mainnet_step1_reason:
+                    return R.string.error_testnet_step1_reason;
+                case R.string.error_mainnet_step2_reason:
+                    return R.string.error_testnet_step2_reason;
+                case R.string.error_mainnet_step3_reason:
+                    return R.string.error_testnet_step3_reason;
+                case R.string.error_mainnet_step4_reason:
+                    return R.string.error_testnet_step4_reason;
+                case R.string.error_mainnet_step5_reason:
+                    return R.string.error_testnet_step5_reason;
+                case R.string.error_mainnet_step6_reason:
+                    return R.string.error_testnet_step6_reason;
+                case R.string.success_mainnet_verification:
+                    return R.string.success_testnet_verification;
+            }
+        }
+        if(chainType == Anchor.ChainType.mocknet) {
+            switch (messageID) {
+                case R.string.error_mainnet_step1_reason:
+                    return R.string.error_mocknet_step1_reason;
+                case R.string.error_mainnet_step2_reason:
+                    return R.string.error_mocknet_step2_reason;
+                case R.string.error_mainnet_step3_reason:
+                    return R.string.error_mocknet_step3_reason;
+                case R.string.error_mainnet_step4_reason:
+                    return R.string.error_mocknet_step4_reason;
+                case R.string.error_mainnet_step5_reason:
+                    return R.string.error_mocknet_step5_reason;
+                case R.string.error_mainnet_step6_reason:
+                    return R.string.error_mocknet_step6_reason;
+                case R.string.success_mainnet_verification:
+                    return R.string.success_mocknet_verification;
+            }
+        }
+        return messageID;
+    }
+
+    private void showVerificationResultDialog(int iconId, int titleId, int messageId, Anchor.ChainType chainType) {
         hideVerificationProgressDialog();
 
         DialogUtils.showAlertDialog(getContext(), this,
                 iconId,
                 getResources().getString(titleId),
-                getResources().getString(messageId),
+                getResources().getString(actualStringByChain(messageId, chainType)),
                 null,
                 getResources().getString(R.string.onboarding_passphrase_ok),
                 (btnIdx) -> {
@@ -376,13 +421,13 @@ public class CertificateFragment extends LMFragment {
                 });
     }
 
-    private void showVerificationFailureDialog(int errorId) {
+    private void showVerificationFailureDialog(int errorId, Anchor.ChainType chainType) {
         hideVerificationProgressDialog();
 
         DialogUtils.showAlertDialog(getContext(), this,
                 R.drawable.ic_dialog_failure,
                 getResources().getString(R.string.cert_verification_failure_title),
-                getResources().getString(errorId),
+                getResources().getString(actualStringByChain(errorId, chainType)),
                 null,
                 getResources().getString(R.string.onboarding_passphrase_ok),
                 (btnIdx) -> {
@@ -398,6 +443,11 @@ public class CertificateFragment extends LMFragment {
         // 0. show the progress dialog
         showVerficationProgressDialog();
 
+        if(isOnline(getContext()) == false) {
+            showVerificationFailureDialog(R.string.error_no_internet, Anchor.ChainType.unknown);
+            return;
+        }
+
         // 1. instrument the verify_view web view to begin javascript verification
         WebSettings webSettings = mBinding.verifyView.getSettings();
         webSettings.setJavaScriptEnabled(true);
@@ -411,7 +461,7 @@ public class CertificateFragment extends LMFragment {
             mBinding.verifyView.loadUrl(urlOrHtml);
         } else {
             // we failed to load the verification lib, error out
-            showVerificationFailureDialog(R.string.error_no_engine);
+            showVerificationFailureDialog(R.string.error_no_engine, Anchor.ChainType.unknown);
             return;
         }
 
@@ -437,14 +487,33 @@ public class CertificateFragment extends LMFragment {
                                 @Override
                                 public void onReceiveValue(String verificationResult) {
                                     if (verificationResult.contains("success") || verificationResult.contains("failure")) {
-                                        if(shouldContinueCheckingForVerificationResults == true) {
+                                        if (shouldContinueCheckingForVerificationResults == true) {
                                             shouldContinueCheckingForVerificationResults = false;
 
                                             // 3. perform a theatrical replay of the verification results in the progress dialog
                                             mCertificateVerifier.loadCertificate(mCertUuid)
                                                     .compose(bindToMainThread())
-                                                    .subscribe(nothing -> {
-                                                        step1_CompareComputedHashWithExpectedHash(verificationResult);
+                                                    .subscribe(certificate -> {
+
+                                                        Anchor.ChainType chainType = Anchor.ChainType.unknown;
+
+                                                        // here we need to determine if this is main/test/mock net and adjust
+                                                        // our user facing strings accordingly
+                                                        if (certificate instanceof BlockCertV20) {
+                                                            BlockCertV20 cert2 = (BlockCertV20) certificate;
+                                                            chainType = cert2.getChain();
+                                                        }
+
+
+                                                        if (chainType != Anchor.ChainType.bitcoin &&
+                                                                chainType != Anchor.ChainType.regtest &&
+                                                                chainType != Anchor.ChainType.testnet &&
+                                                                chainType != Anchor.ChainType.mocknet) {
+                                                            showVerificationFailureDialog(R.string.error_unknown_chain_reason, Anchor.ChainType.unknown);
+                                                            return;
+                                                        }
+
+                                                        step1_CompareComputedHashWithExpectedHash(verificationResult, chainType);
                                                     });
                                         }
                                     }
@@ -460,13 +529,19 @@ public class CertificateFragment extends LMFragment {
     }
 
 
+    public static boolean isOnline(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isAvailable() && networkInfo.isConnected();
+    }
+
     // the results of our javascript verification process will look something like this:
     // computingLocalHash\ncomparingHashes\ncheckingMerkleRoot\ncheckingReceipt\ncheckingRevokedStatus\ncheckingAuthenticity\ncheckingExpiresDate\nsuccess\n
     //
     // for each step we check our step + failure is there, if it is we failed our step.
     // it is ok if our step is missing, as not all chains support all checks
 
-    private void step1_CompareComputedHashWithExpectedHash(String verificationResult) {
+    private void step1_CompareComputedHashWithExpectedHash(String verificationResult, Anchor.ChainType chainType) {
         if (mCancelVerification) {
             return;
         }
@@ -478,18 +553,18 @@ public class CertificateFragment extends LMFragment {
                 .subscribe(nothing -> {
 
                     if (verificationResult.contains("computingLocalHash\\nfailure") || verificationResult.contains("comparingHashes\\nfailure")) {
-                        showVerificationFailureDialog(R.string.error_step1_reason);
+                        showVerificationFailureDialog(R.string.error_mainnet_step1_reason, chainType);
                         return;
                     }
 
-                    step2_EnsuringMerkleReceiptIsValid(verificationResult);
+                    step2_EnsuringMerkleReceiptIsValid(verificationResult, chainType);
                 }, throwable -> {
                     ExceptionWithResourceString throwableRS = (ExceptionWithResourceString) throwable;
-                    showVerificationFailureDialog(throwableRS.getErrorMessageResId());
+                    showVerificationFailureDialog(throwableRS.getErrorMessageResId(), Anchor.ChainType.unknown);
                 });
     }
 
-    private void step2_EnsuringMerkleReceiptIsValid(String verificationResult) {
+    private void step2_EnsuringMerkleReceiptIsValid(String verificationResult, Anchor.ChainType chainType) {
         if (mCancelVerification) {
             return;
         }
@@ -501,19 +576,19 @@ public class CertificateFragment extends LMFragment {
                 .subscribe(nothing -> {
 
                     if (verificationResult.contains("checkingReceipt\\nfailure")) {
-                        showVerificationFailureDialog(R.string.error_step2_reason);
+                        showVerificationFailureDialog(R.string.error_mainnet_step2_reason, chainType);
                         return;
                     }
 
-                    step3_ComparingExpectedMerkleRootWithValueOnTheBlockchain(verificationResult);
+                    step3_ComparingExpectedMerkleRootWithValueOnTheBlockchain(verificationResult, chainType);
                 }, throwable -> {
                     ExceptionWithResourceString throwableRS = (ExceptionWithResourceString)throwable;
-                    showVerificationFailureDialog(throwableRS.getErrorMessageResId());
+                    showVerificationFailureDialog(throwableRS.getErrorMessageResId(), Anchor.ChainType.unknown);
                 });
 
     }
 
-    private void step3_ComparingExpectedMerkleRootWithValueOnTheBlockchain(String verificationResult) {
+    private void step3_ComparingExpectedMerkleRootWithValueOnTheBlockchain(String verificationResult, Anchor.ChainType chainType) {
         if (mCancelVerification) {
             return;
         }
@@ -525,18 +600,18 @@ public class CertificateFragment extends LMFragment {
                 .subscribe(nothing -> {
 
                     if (verificationResult.contains("checkingMerkleRoot\\nfailure")) {
-                        showVerificationFailureDialog(R.string.error_step3_reason);
+                        showVerificationFailureDialog(R.string.error_mainnet_step3_reason, chainType);
                         return;
                     }
 
-                    step4_ValidatingIssuerIdentity(verificationResult);
+                    step4_ValidatingIssuerIdentity(verificationResult, chainType);
                 }, throwable -> {
                     ExceptionWithResourceString throwableRS = (ExceptionWithResourceString)throwable;
-                    showVerificationFailureDialog(throwableRS.getErrorMessageResId());
+                    showVerificationFailureDialog(throwableRS.getErrorMessageResId(), Anchor.ChainType.unknown);
                 });
     }
 
-    private void step4_ValidatingIssuerIdentity(String verificationResult) {
+    private void step4_ValidatingIssuerIdentity(String verificationResult, Anchor.ChainType chainType) {
         if (mCancelVerification) {
             return;
         }
@@ -548,18 +623,18 @@ public class CertificateFragment extends LMFragment {
                 .subscribe(nothing -> {
 
                     if (verificationResult.contains("checkingAuthenticity\\nfailure")) {
-                        showVerificationFailureDialog(R.string.error_step4_reason);
+                        showVerificationFailureDialog(R.string.error_mainnet_step4_reason, chainType);
                         return;
                     }
 
-                    step5_CheckingIfTheCredentialHasBeenRevoked(verificationResult);
+                    step5_CheckingIfTheCredentialHasBeenRevoked(verificationResult, chainType);
                 }, throwable -> {
                     ExceptionWithResourceString throwableRS = (ExceptionWithResourceString)throwable;
-                    showVerificationFailureDialog(throwableRS.getErrorMessageResId());
+                    showVerificationFailureDialog(throwableRS.getErrorMessageResId(), Anchor.ChainType.unknown);
                 });
     }
 
-    private void step5_CheckingIfTheCredentialHasBeenRevoked(String verificationResult) {
+    private void step5_CheckingIfTheCredentialHasBeenRevoked(String verificationResult, Anchor.ChainType chainType) {
         if (mCancelVerification) {
             return;
         }
@@ -571,18 +646,18 @@ public class CertificateFragment extends LMFragment {
                 .subscribe(nothing -> {
 
                     if (verificationResult.contains("checkingRevokedStatus\\nfailure")) {
-                        showVerificationFailureDialog(R.string.error_step5_reason);
+                        showVerificationFailureDialog(R.string.error_mainnet_step5_reason, chainType);
                         return;
                     }
 
-                    step6_CheckingExpirationDate(verificationResult);
+                    step6_CheckingExpirationDate(verificationResult, chainType);
                 }, throwable -> {
                     ExceptionWithResourceString throwableRS = (ExceptionWithResourceString)throwable;
-                    showVerificationFailureDialog(throwableRS.getErrorMessageResId());
+                    showVerificationFailureDialog(throwableRS.getErrorMessageResId(), Anchor.ChainType.unknown);
                 });
     }
 
-    private void step6_CheckingExpirationDate(String verificationResult) {
+    private void step6_CheckingExpirationDate(String verificationResult, Anchor.ChainType chainType) {
         if (mCancelVerification) {
             return;
         }
@@ -594,20 +669,20 @@ public class CertificateFragment extends LMFragment {
                 .subscribe(nothing -> {
 
                     if (verificationResult.contains("checkingExpiresDate\\nfailure")) {
-                        showVerificationFailureDialog(R.string.error_step6_reason);
+                        showVerificationFailureDialog(R.string.error_mainnet_step6_reason, chainType);
                         return;
                     }
 
                     if (verificationResult.contains("failure")) {
-                        showVerificationFailureDialog(R.string.error_unknown_reason);
+                        showVerificationFailureDialog(R.string.error_unknown_reason, Anchor.ChainType.unknown);
                         return;
                     }
 
-                    showVerificationResultDialog(R.drawable.ic_dialog_success, R.string.cert_verification_success_title, R.string.cert_verification_step_valid_cert);
+                    showVerificationResultDialog(R.drawable.ic_dialog_success, R.string.cert_verification_success_title, R.string.success_mainnet_verification, chainType);
 
                 }, throwable -> {
                     ExceptionWithResourceString throwableRS = (ExceptionWithResourceString)throwable;
-                    showVerificationFailureDialog(throwableRS.getErrorMessageResId());
+                    showVerificationFailureDialog(throwableRS.getErrorMessageResId(), Anchor.ChainType.unknown);
                 });
     }
 

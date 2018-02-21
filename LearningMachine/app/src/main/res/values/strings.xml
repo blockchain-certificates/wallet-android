@@ -93,13 +93,33 @@
     <string name="error_remote_and_local_hash_mismatch">The credential\'s local hash does not match the credential\'s remote hash</string>
     <string name="error_cannot_load_certificate_json">Could not load the credential file</string>
 
-    <string name="error_step1_reason">Computed hash does not match expected hash. This credential may have been altered. Please contact the issuer.</string>
-    <string name="error_step2_reason">The Merkle receipt is not valid. Please contact the issuer.</string>
-    <string name="error_step3_reason">Merkle root does not match the hash value on the blockchain. Please contact the issuer.</string>
-    <string name="error_step4_reason">Transaction occurred when the issuing address was not considered valid. Please contact the issuer.</string>
-    <string name="error_step5_reason">This credential was revoked by the issuer.</string>
-    <string name="error_step6_reason">This credential is expired</string>
 
+    <string name="error_mainnet_step1_reason">Computed hash does not match expected hash. This credential may have been altered. Please contact the issuer.</string>
+    <string name="error_mainnet_step2_reason">The Merkle receipt is not valid. Please contact the issuer.</string>
+    <string name="error_mainnet_step3_reason">Merkle root does not match the hash value on the blockchain. Please contact the issuer.</string>
+    <string name="error_mainnet_step4_reason">Transaction occurred when the issuing address was not considered valid. Please contact the issuer.</string>
+    <string name="error_mainnet_step5_reason">This credential was revoked by the issuer.</string>
+    <string name="error_mainnet_step6_reason">This credential is expired</string>
+    <string name="success_mainnet_verification">Your credential has been successfully verified.</string>
+
+    <string name="error_testnet_step1_reason">Computed hash does not match expected hash. This test credential may have been altered. Please contact the issuer.</string>
+    <string name="error_testnet_step2_reason">The Merkle receipt is not valid. Please contact the issuer.</string>
+    <string name="error_testnet_step3_reason">Merkle root does not match the hash value on the blockchain. Please contact the issuer.</string>
+    <string name="error_testnet_step4_reason">Transaction occurred when the issuing address was not considered valid. Please contact the issuer.</string>
+    <string name="error_testnet_step5_reason">This test credential was revoked by the issuer.</string>
+    <string name="error_testnet_step6_reason">This test credential is expired</string>
+    <string name="success_testnet_verification">Your test credential has been successfully verified.</string>
+
+    <string name="error_mocknet_step1_reason">Computed hash does not match expected hash. This mock credential may have been altered. Please contact the issuer.</string>
+    <string name="error_mocknet_step2_reason">The Merkle receipt is not valid. Please contact the issuer.</string>
+    <string name="error_mocknet_step3_reason">Merkle root does not match the hash value on the blockchain. Please contact the issuer.</string>
+    <string name="error_mocknet_step4_reason">Transaction occurred when the issuing address was not considered valid. Please contact the issuer.</string>
+    <string name="error_mocknet_step5_reason">This mock credential was revoked by the issuer.</string>
+    <string name="error_mocknet_step6_reason">This mock credential is expired</string>
+    <string name="success_mocknet_verification">This mock credential passed all checks. Mocknet mode is only used by issuers to test their workflow locally. This credential was not recorded to a blockchain and should not be considered a verified credential.</string>
+
+
+    <string name="error_unknown_chain_reason">This credential is not a mainnet, testnet, or mocknet certificate and cannot be verified.</string>
     <string name="error_unknown_reason">This credential failed verification for an unknown reason.</string>
 
 
@@ -275,7 +295,7 @@
     <string name="cert_verification_step_checking_receipt">Checking receipt…</string>
     <string name="cert_verification_step_checking_issuer_signature">Checking issuer\'s signature…</string>
     <string name="cert_verification_step_checking_cert_status">Checking if the credential has been revoked…</string>
-    <string name="cert_verification_step_valid_cert">Your credential has been successfully verified.</string>
+
 
     <string name="cert_verification_step_invalid_cert">Not a valid credential</string>
     <string name="error_testnet_certificate_json">This credential is for test purposes only; it has not been recorded to a blockchain</string>
