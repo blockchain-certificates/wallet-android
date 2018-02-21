@@ -12,7 +12,7 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/issuer_main_content"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="40dp"
         android:background="@color/clear">
 
         <TextView
@@ -20,8 +20,8 @@
             style="@style/Text.ListHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="32dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="4dp"
             android:text="Issuers"
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
