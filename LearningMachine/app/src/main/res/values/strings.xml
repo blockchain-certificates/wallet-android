@@ -87,6 +87,7 @@
 
 
     <string name="error_no_internet">No Network</string>
+    <string name="error_no_engine">Unable to load the verification engine.</string>
     <string name="error_invalid_certificate_json">The credential json is erroneous</string>
     <string name="error_invalid_certificate_normalize_json">Unable to normalize the credential JSON-LD</string>
     <string name="error_remote_and_local_hash_mismatch">The credential\'s local hash does not match the credential\'s remote hash</string>
@@ -98,6 +99,8 @@
     <string name="error_step4_reason">Transaction occurred when the issuing address was not considered valid. Please contact the issuer.</string>
     <string name="error_step5_reason">This credential was revoked by the issuer.</string>
     <string name="error_step6_reason">This credential is expired</string>
+
+    <string name="error_unknown_reason">This credential failed verification for an unknown reason.</string>
 
 
 

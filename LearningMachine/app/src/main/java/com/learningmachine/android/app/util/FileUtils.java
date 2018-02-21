@@ -51,6 +51,14 @@ public class FileUtils {
         return getCertificateFile(context, uuid, false);
     }
 
+    public static String getCertificateFileJSON(Context context, String uuid) throws Exception {
+        File fl = getCertificateFile(context, uuid);
+        FileInputStream fin = new FileInputStream(fl);
+        String ret = convertStreamToString(fin);
+        fin.close();
+        return ret;
+    }
+
     private static File getCertificateFile(Context context, String uuid, boolean createDir) {
         File certDir = getCertificateDirectory(context, createDir);
         String filename = uuid + JSON_EXT;
@@ -129,6 +137,27 @@ public class FileUtils {
     }
 
 
+    public static boolean writeStringToFile(String string, String outputPath) throws IOException {
+        File outputFile = new File(outputPath);
+        FileWriter writer = new FileWriter(outputFile, false);
+        writer.write(string);
+        writer.flush();
+        return true;
+    }
+
+
+    public static void copyAssetFile(Context appContext, String assetFilePath, String destinationFilePath) throws IOException
+    {
+        InputStream in = appContext.getAssets().open(assetFilePath);
+        OutputStream out = new FileOutputStream(appContext.getFilesDir() + "/" + destinationFilePath);
+
+        byte[] buf = new byte[1024];
+        int len;
+        while ((len = in.read(buf)) > 0)
+            out.write(buf, 0, len);
+        in.close();
+        out.close();
+    }
 
 
     public static String convertStreamToString(InputStream is) throws Exception {
