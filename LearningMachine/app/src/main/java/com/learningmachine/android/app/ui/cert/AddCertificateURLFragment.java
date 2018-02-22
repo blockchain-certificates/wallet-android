@@ -91,6 +91,10 @@ public class AddCertificateURLFragment extends LMFragment {
         return mBinding.getRoot();
     }
 
+    public void updateArgs(String certificateURL) {
+        mBinding.certificateEditText.setText(certificateURL);
+    }
+
     private void handleArgs() {
         Bundle args = getArguments();
         if (args == null) {
