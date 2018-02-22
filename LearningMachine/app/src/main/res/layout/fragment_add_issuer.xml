@@ -21,9 +21,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/fragment_add_issuer_linear_layout_top_padding"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginBottom="12dp"
                 android:text="@string/fragment_add_issuer_info_url_text"
                 style="@style/Text.ListHeader"/>
 
@@ -39,8 +37,6 @@
                 android:inputType="textMultiLine"
                 android:maxLines="1"
                 android:gravity="top"
-                android:layout_marginEnd="12dp"
-                android:layout_marginStart="12dp"
                 android:padding="12dp"
                 android:minHeight="108dp"
                 android:singleLine="false"
@@ -54,8 +50,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/fragment_add_issuer_identity_textview_bottom_padding"
                 android:layout_marginBottom="12dp"
-                android:layout_marginEnd="12dp"
-                android:layout_marginStart="12dp"
                 android:text="@string/fragment_add_issuer_identity_text"
                 style="@style/Text.ListHeader"/>
 
@@ -71,8 +65,6 @@
                 android:inputType="textMultiLine"
                 android:maxLines="1"
                 android:gravity="top"
-                android:layout_marginEnd="12dp"
-                android:layout_marginStart="12dp"
                 android:padding="12dp"
                 android:minHeight="108dp"
                 android:singleLine="false"
@@ -87,8 +79,6 @@
                 android:layout_height="52dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
                 android:text="@string/add_certificate_import" />
 
         </LinearLayout>

@@ -19,8 +19,6 @@
             android:layout_height="wrap_content"
             android:paddingBottom="16dp"
             android:text="@string/certificate_add_url_label"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
             style="@style/Text.ListHeader"/>
 
         <EditText
@@ -35,8 +33,6 @@
             android:inputType="textMultiLine"
             android:maxLines="1"
             android:gravity="top"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
             android:minHeight="108dp"
             android:singleLine="false"
             android:scrollHorizontally="false"
@@ -51,8 +47,6 @@
             android:layout_height="52dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
             android:text="@string/add_certificate_import" />
 
 
