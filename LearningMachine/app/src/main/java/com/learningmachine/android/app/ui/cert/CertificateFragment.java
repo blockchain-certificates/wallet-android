@@ -486,7 +486,7 @@ public class CertificateFragment extends LMFragment {
                             mBinding.verifyView.evaluateJavascript("document.getElementById('output').innerText", new ValueCallback<String>() {
                                 @Override
                                 public void onReceiveValue(String verificationResult) {
-                                    if (verificationResult.contains("success") || verificationResult.contains("failure")) {
+                                    if (verificationResult.toLowerCase().contains("success") || verificationResult.toLowerCase().contains("failure")) {
                                         if (shouldContinueCheckingForVerificationResults == true) {
                                             shouldContinueCheckingForVerificationResults = false;
 
