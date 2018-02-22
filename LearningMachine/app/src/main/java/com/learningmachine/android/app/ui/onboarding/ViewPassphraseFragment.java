@@ -127,7 +127,7 @@ public class ViewPassphraseFragment extends OnboardingFragment {
             AsyncTask.execute(new Runnable() {
                 @Override
                 public void run() {
-                    mBitcoinManager.getPassphrase().delay(1, TimeUnit.SECONDS).subscribe(passphrase -> {
+                    mBitcoinManager.getPassphrase().delay(1500, TimeUnit.MILLISECONDS).subscribe(passphrase -> {
                         mPassphrase = passphrase;
 
                         activity.runOnUiThread(new Runnable() {
