@@ -28,7 +28,9 @@ import com.learningmachine.android.app.data.model.IssuerRecord;
 import com.learningmachine.android.app.databinding.CertificateInfoItemBinding;
 import com.learningmachine.android.app.databinding.FragmentCertificateInfoBinding;
 import com.learningmachine.android.app.dialog.AlertDialogFragment;
+import com.learningmachine.android.app.ui.LMActivity;
 import com.learningmachine.android.app.ui.LMFragment;
+import com.learningmachine.android.app.ui.home.HomeActivity;
 import com.learningmachine.android.app.ui.issuer.IssuerActivity;
 import com.learningmachine.android.app.util.DateUtils;
 import com.learningmachine.android.app.util.DialogUtils;
@@ -123,9 +125,7 @@ public class CertificateInfoFragment extends LMFragment {
                                 mCertificateManager.removeCertificate(uuid)
                                         .compose(bindToMainThread())
                                         .subscribe(success -> {
-                                            String issuerUuid = mCertificate.getIssuerUuid();
-                                            Intent intent = IssuerActivity.newIntent(getContext(), issuerUuid);
-                                            startActivity(intent);
+                                            ((LMActivity)getActivity()).safeGoBack();
                                         });
                             }
                             return null;

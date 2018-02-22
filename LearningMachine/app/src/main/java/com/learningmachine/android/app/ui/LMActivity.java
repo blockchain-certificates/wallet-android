@@ -2,6 +2,7 @@ package com.learningmachine.android.app.ui;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,11 +12,15 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 
+import com.learningmachine.android.app.ui.home.HomeActivity;
+import com.learningmachine.android.app.ui.issuer.IssuerActivity;
 import com.learningmachine.android.app.ui.onboarding.OnboardingActivity;
 import com.learningmachine.android.app.ui.onboarding.OnboardingFragment;
+import com.learningmachine.android.app.ui.settings.SettingsActivity;
 import com.learningmachine.android.app.util.AESCrypt;
 import com.smallplanet.labalib.Laba;
 import com.trello.rxlifecycle.LifecycleProvider;
@@ -27,6 +32,8 @@ import com.trello.rxlifecycle.android.RxLifecycleAndroid;
 import java.io.File;
 import java.io.PrintWriter;
 import java.security.GeneralSecurityException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import javax.annotation.Nonnull;
@@ -37,9 +44,33 @@ import rx.subjects.BehaviorSubject;
 
 public abstract class LMActivity extends AppCompatActivity implements LifecycleProvider<ActivityEvent> {
 
+    protected static Class lastImportantClassSeen = HomeActivity.class;
+
     // Used by LifecycleProvider interface to transform lifeycycle events into a stream of events through an observable.
     private final BehaviorSubject<ActivityEvent> mLifecycleSubject = BehaviorSubject.create();
     private Observable.Transformer mMainThreadTransformer;
+
+
+    public void safeGoBack() {
+
+        // ideallt what we want to do here is to safely go back to a known good activity in our flow.
+        // for example, if we enter the app at home, go to settings, add a cert, go to cert info,
+        // and delete the cert, where should we go back to?  Ideally that would be settings.
+        //
+        // however, if we do the same thing but go to issuers, then the cert, then going
+        // back should go to the issuer activity...
+
+        Intent intent = new Intent(this, lastImportantClassSeen);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +90,10 @@ public abstract class LMActivity extends AppCompatActivity implements LifecycleP
          */
         setupActionBar();
 
+        Class c = this.getClass();
+        if(c == HomeActivity.class || c == IssuerActivity.class || c == SettingsActivity.class) {
+            lastImportantClassSeen = c;
+        }
     }
 
     @Override
