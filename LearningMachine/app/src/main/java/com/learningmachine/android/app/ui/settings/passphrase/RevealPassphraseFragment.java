@@ -62,11 +62,9 @@ public class RevealPassphraseFragment extends LMFragment {
 
         mBinding.onboardingEmailButton.setOnClickListener(view -> onEmail());
         mBinding.onboardingSaveButton.setOnClickListener(view -> onSave());
-        mBinding.onboardingWriteButton.setOnClickListener(view -> onWrite());
 
         mBinding.onboardingSaveCheckmark.setVisibility(View.INVISIBLE);
         mBinding.onboardingEmailCheckmark.setVisibility(View.INVISIBLE);
-        mBinding.onboardingWriteCheckmark.setVisibility(View.INVISIBLE);
 
         return mBinding.getRoot();
     }
@@ -147,44 +145,6 @@ public class RevealPassphraseFragment extends LMFragment {
                     }
                     return null;
                 });
-    }
-
-    protected void onWrite() {
-        AlertDialogFragment fragment = DialogUtils.showCustomDialog(getContext(), this,
-                R.layout.dialog_write_passphrase,
-                R.drawable.ic_writedown,
-                getResources().getString(R.string.onboarding_passphrase_write_title),
-                getResources().getString(R.string.onboarding_passphrase_write_message),
-                getResources().getString(R.string.onboarding_passphrase_write_confirmation),
-                null,
-                (btnIdx) -> {
-                    if(mBinding != null) {
-                        HandleBackupOptionCompleted(mBinding.onboardingWriteCheckmark);
-                    }
-                    return null;
-                },
-                (dialogContent) -> {
-
-                    // Set the content of the passphrase text field
-                    View view = (View)dialogContent;
-                    TextView passphraseView = (TextView)view.findViewById(R.id.onboarding_passphrase_content);
-                    passphraseView.setText(mPassphrase);
-
-                    // For this dialog, we want to fill the whole screen regardless of the size of the content
-                    // 1) Dialog width should be 80% of the width of the screen
-                    Display display = getActivity().getWindowManager().getDefaultDisplay();
-                    Point size = new Point();
-                    display.getSize(size);
-
-                    float idealDialogWidth = size.x * 0.8f;
-                    float idealDialogHeight = size.y * 0.8f;
-
-                    view.setLayoutParams(new FrameLayout.LayoutParams((int) idealDialogWidth, (int) idealDialogHeight));
-
-                    return null;
-                });
-
-
     }
 
     public void HandleBackupOptionCompleted(View view) {

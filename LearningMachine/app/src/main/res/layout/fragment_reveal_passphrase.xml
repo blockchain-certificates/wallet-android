@@ -48,40 +48,11 @@
             android:gravity="center"
             android:padding="16dp"
             android:text=" "
-            app:layout_constraintBottom_toTopOf="@+id/textView3"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-        <TextView
-            android:id="@+id/textView3"
-            style="@style/Text.ListHeader"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="32dp"
-            android:text="Back Up My Passphrase"
-            android:textAlignment="center"
-            app:layout_constraintBottom_toTopOf="@+id/messageView"
-            app:layout_constraintTop_toBottomOf="@+id/onboarding_passphrase_content"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
-            android:id="@+id/messageView"
-            style="@style/Text.Body"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="32dp"
-            android:layout_marginStart="32dp"
-            android:text="If you haven’t created a backup, please choose from the options below."
-            android:textAlignment="viewStart"
             app:layout_constraintBottom_toTopOf="@+id/spreader3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
 
 
@@ -91,37 +62,11 @@
             android:layout_height="0dp"
             android:layout_marginEnd="32dp"
             android:layout_marginStart="32dp"
-            app:layout_constraintBottom_toTopOf="@+id/onboarding_write_button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/messageView" />
-
-
-        <Button
-            android:id="@+id/onboarding_write_button"
-            style="@style/RoundedButton.Light"
-            android:layout_width="0dp"
-            android:layout_height="52dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginStart="32dp"
-            android:text="@string/onboarding_backup_write_button"
             app:layout_constraintBottom_toTopOf="@+id/onboarding_save_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spreader3" />
+            app:layout_constraintTop_toBottomOf="@+id/onboarding_passphrase_content" />
 
-        <ImageView
-            android:id="@+id/onboarding_write_checkmark"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:src="@drawable/ic_checkmark"
-            app:layout_constraintBottom_toBottomOf="@+id/onboarding_write_button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.85"
-            app:layout_constraintRight_toRightOf="@+id/onboarding_write_button"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/onboarding_write_button" />
 
 
         <Button
@@ -136,7 +81,7 @@
             app:layout_constraintBottom_toTopOf="@+id/onboarding_email_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/onboarding_write_button" />
+            app:layout_constraintTop_toBottomOf="@+id/spreader3" />
 
         <ImageView
             android:id="@+id/onboarding_save_checkmark"
