@@ -247,7 +247,7 @@ public class Laba {
     	context = c;
 	}
 
-	private static float px2dp(float px) {
+	public static float px2dp(float px) {
 		if (context == null) {
 			Log.d("LABA", "laba context is null, automatic conversion from px to dp is not available");
 			return px;
@@ -257,7 +257,7 @@ public class Laba {
 		return px / ((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
 	}
 
-	private static float dp2px(float dp) {
+	public static float dp2px(float dp) {
 		if (context == null) {
 			Log.d("LABA", "laba context is null, automatic conversion from px to dp is not available");
 			return dp;

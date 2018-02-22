@@ -8,9 +8,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
 import android.graphics.Point;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -18,9 +21,13 @@ import android.support.annotation.StringRes;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.Display;
+import android.view.KeyCharacterMap;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -35,6 +42,7 @@ import com.learningmachine.android.app.util.DialogUtils;
 import com.smallplanet.labalib.Laba;
 
 import java.io.PrintWriter;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -167,7 +175,7 @@ public class BackupPassphraseFragment extends OnboardingFragment {
     }
 
     protected void onWrite() {
-        AlertDialogFragment fragment = DialogUtils.showCustomDialog(getContext(), this,
+        AlertDialogFragment fragment = DialogUtils.showCustomSheet(getContext(), this,
                 R.layout.dialog_write_passphrase,
                 R.drawable.ic_writedown,
                 getResources().getString(R.string.onboarding_passphrase_write_title),
@@ -193,8 +201,10 @@ public class BackupPassphraseFragment extends OnboardingFragment {
                     Point size = new Point();
                     display.getSize(size);
 
-                    float idealDialogWidth = size.x * 0.8f;
-                    float idealDialogHeight = size.y * 0.8f;
+                    float idealDialogWidth = size.x * 1.0f;
+                    float idealDialogHeight = size.y * 1.0f;
+
+                    idealDialogHeight = idealDialogHeight + Laba.dp2px(24) - getNavigationBarSize(getContext()).y;
 
                     view.setLayoutParams(new FrameLayout.LayoutParams((int) idealDialogWidth, (int) idealDialogHeight));
 
@@ -220,5 +230,48 @@ public class BackupPassphraseFragment extends OnboardingFragment {
                 mBinding.onboardingDoneButton.setEnabled(true);
             }
         }
+    }
+
+    public static Point getNavigationBarSize(Context context) {
+        Point appUsableSize = getAppUsableScreenSize(context);
+        Point realScreenSize = getRealScreenSize(context);
+
+        // navigation bar on the right
+        if (appUsableSize.x < realScreenSize.x) {
+            return new Point(realScreenSize.x - appUsableSize.x, appUsableSize.y);
+        }
+
+        // navigation bar at the bottom
+        if (appUsableSize.y < realScreenSize.y) {
+            return new Point(appUsableSize.x, realScreenSize.y - appUsableSize.y);
+        }
+
+        // navigation bar is not present
+        return new Point();
+    }
+
+    public static Point getAppUsableScreenSize(Context context) {
+        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = windowManager.getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        return size;
+    }
+
+    public static Point getRealScreenSize(Context context) {
+        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = windowManager.getDefaultDisplay();
+        Point size = new Point();
+
+        if (Build.VERSION.SDK_INT >= 17) {
+            display.getRealSize(size);
+        } else if (Build.VERSION.SDK_INT >= 14) {
+            try {
+                size.x = (Integer) Display.class.getMethod("getRawWidth").invoke(display);
+                size.y = (Integer) Display.class.getMethod("getRawHeight").invoke(display);
+            } catch (IllegalAccessException e) {} catch (InvocationTargetException e) {} catch (NoSuchMethodException e) {}
+        }
+
+        return size;
     }
 }
