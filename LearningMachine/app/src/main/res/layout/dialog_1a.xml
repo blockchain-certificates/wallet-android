@@ -28,7 +28,7 @@
 
         <TextView
             android:id="@+id/titleView"
-            style="@style/Text.Title.1"
+            style="@style/Text.Title.3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -38,8 +38,6 @@
             android:paddingRight="16dp"
             android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
             android:textAlignment="center"
-            android:textSize="18sp"
-            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/messageView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -48,7 +46,7 @@
 
         <TextView
             android:id="@+id/messageView"
-            style="@style/Text.Body.1"
+            style="@style/Text.Body.2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -58,7 +56,6 @@
             android:paddingRight="16dp"
             android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
             android:textAlignment="center"
-            android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@+id/guideline3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
