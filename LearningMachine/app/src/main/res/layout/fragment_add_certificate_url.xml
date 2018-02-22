@@ -41,6 +41,7 @@
             android:singleLine="false"
             android:scrollHorizontally="false"
             android:lines="5"
+            android:padding="12dp"
             />
 
         <Button

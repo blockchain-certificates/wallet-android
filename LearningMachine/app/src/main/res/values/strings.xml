@@ -233,9 +233,9 @@
 
     <!-- Add Issuer -->
     <string name="fragment_add_issuer_title">Add Issuer</string>
-    <string name="fragment_add_issuer_info_url_text">Add the URL you were given by your Issuer.</string>
+    <string name="fragment_add_issuer_info_url_text">Add the URL given by your Issuer.</string>
     <string name="fragment_add_issuer_url">Issuer URL</string>
-    <string name="fragment_add_issuer_identity_text">Add information to identify yourself to the Issuer.</string>
+    <string name="fragment_add_issuer_identity_text">Add your one-time code.</string>
     <string name="fragment_add_issuer_add_identity">One-time Code</string>
     <string name="fragment_add_issuer_bad_identity_info_error">Bad info for the identity.</string>
     <string name="fragment_add_issuer_adding_issuer_progress_dialog_message">Adding Issuer…</string>

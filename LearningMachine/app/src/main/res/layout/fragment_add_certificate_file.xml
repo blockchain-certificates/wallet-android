@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/fragment_add_certificate_text_view_bottom_margin"
             android:text="@string/fragment_add_certificate_file_label"
-            style="@style/Material.Light.Body1"/>
+            style="@style/Text.ListHeader"/>
 
         <Button
             android:id="@+id/choose_file_button"
