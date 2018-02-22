@@ -34,6 +34,7 @@ import com.smallplanet.labalib.Laba;
 import java.io.PrintWriter;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
@@ -126,7 +127,7 @@ public class ViewPassphraseFragment extends OnboardingFragment {
             AsyncTask.execute(new Runnable() {
                 @Override
                 public void run() {
-                    mBitcoinManager.getPassphrase().subscribe(passphrase -> {
+                    mBitcoinManager.getPassphrase().delay(1, TimeUnit.SECONDS).subscribe(passphrase -> {
                         mPassphrase = passphrase;
 
                         activity.runOnUiThread(new Runnable() {
