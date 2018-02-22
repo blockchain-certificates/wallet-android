@@ -58,7 +58,7 @@ public class ViewPassphraseFragment extends OnboardingFragment {
                 public void run() {
 
                     if(didGeneratePassphrase == false) {
-                        mBinding.onboardingStatusText.setText(getResources().getString(R.string.onboarding_passphrase_status_0) + " " + countingSeconds + "s");
+                        mBinding.onboardingStatusText.setText(getResources().getString(R.string.onboarding_passphrase_status_0));
                     }
                     countingSeconds++;
                 }
@@ -101,8 +101,12 @@ public class ViewPassphraseFragment extends OnboardingFragment {
         mBinding.onboardingDoneButton.setAlpha(0.3f);
         mBinding.onboardingDoneButton.setEnabled(false);
 
+        mBinding.imageView2.setVisibility(View.INVISIBLE);
+        mBinding.onboardingPassphraseDesc.setVisibility(View.INVISIBLE);
         mBinding.onboardingPassphraseTitle.setVisibility(View.INVISIBLE);
         mBinding.onboardingPassphraseContent.setVisibility(View.INVISIBLE);
+
+        mBinding.progressBar.animate();
 
         return mBinding.getRoot();
     }
@@ -132,13 +136,21 @@ public class ViewPassphraseFragment extends OnboardingFragment {
 
                                 didGeneratePassphrase = true;
 
-                                Laba.Animate(mBinding.onboardingPassphraseTitle, "f0d0,!^!f", () -> {
+                                Laba.Animate(mBinding.onboardingPassphraseDesc, "f0d0,!^!f", () -> {
                                     return null;
                                 });
-                                Laba.Animate(mBinding.onboardingPassphraseContent, "f0d0,,!^!f", () -> {
+                                Laba.Animate(mBinding.onboardingPassphraseTitle, "f0d0,,!^!f", () -> {
+                                    return null;
+                                });
+                                Laba.Animate(mBinding.onboardingPassphraseContent, "f0d0,,,!^!f", () -> {
                                     return null;
                                 });
 
+                                mBinding.progressBar.clearAnimation();
+                                mBinding.progressBar.setVisibility(View.GONE);
+
+                                mBinding.imageView2.setVisibility(View.VISIBLE);
+                                mBinding.onboardingPassphraseDesc.setVisibility(View.VISIBLE);
                                 mBinding.onboardingPassphraseTitle.setVisibility(View.VISIBLE);
                                 mBinding.onboardingPassphraseContent.setVisibility(View.VISIBLE);
 
@@ -156,6 +168,9 @@ public class ViewPassphraseFragment extends OnboardingFragment {
                 }
             });
         } else {
+            mBinding.progressBar.clearAnimation();
+            mBinding.progressBar.setVisibility(View.GONE);
+
             mBinding.onboardingPassphraseTitle.setTranslationY(0);
             mBinding.onboardingPassphraseContent.setTranslationY(0);
             mBinding.onboardingDoneButton.setTranslationY(0);
