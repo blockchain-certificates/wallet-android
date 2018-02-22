@@ -187,7 +187,7 @@
 
     <string name="onboarding_passphrase_write_title">Manual Hardcopy</string>
     <string name="onboarding_passphrase_write_message">Write your passphrase by hand on a piece of paper and store in a secure location.</string>
-    <string name="onboarding_passphrase_write_confirmation">Yes, I wrote it down!</string>'
+    <string name="onboarding_passphrase_write_confirmation">Done</string>'
 
 
     <string name="onboarding_passphrase_email_before_title">Are you sure?</string>

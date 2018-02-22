@@ -22,7 +22,7 @@
 
         <TextView
             android:id="@+id/titleView"
-            style="@style/Text.Title.1"
+            style="@style/Text.ListHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -41,7 +41,7 @@
 
         <TextView
             android:id="@+id/messageView"
-            style="@style/Text.Body.1"
+            style="@style/Text.Body.2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="32dp"
