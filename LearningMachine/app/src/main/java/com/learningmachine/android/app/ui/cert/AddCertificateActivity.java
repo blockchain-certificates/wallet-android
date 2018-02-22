@@ -26,6 +26,7 @@ public class AddCertificateActivity extends LMActivity {
     private static final String PAGER_INDEX = "AddIssuerActivity.PagerIndex";
 
     private ActivityAddCertificateBinding mBinding;
+    private AddCertificateURLFragment lastURLFragment = null;
 
     public static Intent newIntent(Context context) {
         return newIntent(context, 0, null);
@@ -45,6 +46,14 @@ public class AddCertificateActivity extends LMActivity {
         setSupportActionBar(mBinding.addCertificateToolbar);
 
         setupViewPager(mBinding.activityCertificatePagerViewPager);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if(lastURLFragment != null) {
+            lastURLFragment.updateArgs(intent.getStringExtra(EXTRA_CERT_URL));
+        }
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -103,7 +112,8 @@ public class AddCertificateActivity extends LMActivity {
             switch (certificateType) {
                 case URL:
                     String certUrlString = getIntent().getStringExtra(EXTRA_CERT_URL);
-                    return AddCertificateURLFragment.newInstance(certUrlString);
+                    lastURLFragment = AddCertificateURLFragment.newInstance(certUrlString);
+                    return lastURLFragment;
                 case FILE:
                     return AddCertificateFileFragment.newInstance();
             }
