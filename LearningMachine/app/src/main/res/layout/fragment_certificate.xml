@@ -41,19 +41,18 @@
             app:layout_constraintTop_toBottomOf="@+id/guideline2" />
 
 
-
         <Button
             android:id="@+id/share_button"
             style="@style/RoundedButton.Dark"
             android:layout_width="0dp"
             android:layout_height="52dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginStart="32dp"
-            app:layout_constraintTop_toTopOf="@+id/bottomBackground"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
             app:layout_constraintBottom_toTopOf="@+id/verify_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/bottomBackground" />
 
         <ImageView
             android:id="@+id/share_button_icon"
@@ -84,21 +83,19 @@
             app:layout_constraintTop_toTopOf="@+id/share_button" />
 
 
-
-
         <Button
             android:id="@+id/verify_button"
             style="@style/RoundedButton.NoBorder"
             android:layout_width="0dp"
             android:layout_height="52dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginStart="32dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
             android:text="@string/certificate_verify_button"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/share_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/share_button" />
 
 
         <ProgressBar
