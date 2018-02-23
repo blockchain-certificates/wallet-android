@@ -14,9 +14,9 @@
             android:id="@+id/image_view"
             android:layout_width="35dp"
             android:layout_height="35dp"
+            android:layout_marginBottom="12dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
             android:src="@drawable/ic_dialog_success"
             app:layout_constraintBottom_toTopOf="@+id/titleView"
             app:layout_constraintEnd_toEndOf="parent"
@@ -32,7 +32,6 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:text="Lorem ipsum dolor sit."
@@ -48,8 +47,9 @@
             style="@style/Text.Body.2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="32dp"
-            android:layout_marginStart="32dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
@@ -57,7 +57,6 @@
             android:textAlignment="center"
             app:layout_constraintBottom_toTopOf="@+id/guideline3"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/titleView" />
 
@@ -66,7 +65,7 @@
             style="@style/RoundedButton.Dark"
             android:layout_width="wrap_content"
             android:layout_height="44dp"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="28dp"
             android:layout_marginEnd="8dp"
             android:layout_marginTop="16dp"
             android:paddingLeft="16dp"
@@ -83,7 +82,7 @@
             style="@style/RoundedButton.Light"
             android:layout_width="wrap_content"
             android:layout_height="44dp"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="28dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:paddingLeft="16dp"
@@ -99,7 +98,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_end="64dp" />
+            app:layout_constraintGuide_end="54dp" />
 
     </android.support.constraint.ConstraintLayout>
 

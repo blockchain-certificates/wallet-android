@@ -48,9 +48,10 @@
             style="@style/Text.Body.2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
@@ -66,8 +67,8 @@
             style="@style/RoundedButton.Light"
             android:layout_width="wrap_content"
             android:layout_height="44dp"
-            android:layout_marginBottom="32dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginBottom="28dp"
+            android:layout_marginTop="12dp"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:text="Negative"
@@ -82,7 +83,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_end="54dp" />
+            app:layout_constraintGuide_end="64dp" />
 
     </android.support.constraint.ConstraintLayout>
 
