@@ -151,7 +151,7 @@
 
     <!-- Add Issuer / Add Certificate -->
     <string name="add_certificate_import">Import</string>
-    <string name="add_certificate_by_file">Import from file</string>
+    <string name="add_certificate_by_file">Import from File</string>
     <string name="add_certificate_by_url">Import from URL</string>
     <string name="certificate_add_url_label">Copy and paste the credential URL:</string>
     <string name="certificate_add_url_edit_text_hint">Credential URL</string>
