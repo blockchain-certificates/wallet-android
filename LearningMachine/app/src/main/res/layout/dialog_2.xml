@@ -67,6 +67,7 @@
             android:layout_height="44dp"
             android:layout_marginBottom="28dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginStart="4dp"
             android:layout_marginTop="16dp"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
@@ -83,6 +84,7 @@
             android:layout_width="wrap_content"
             android:layout_height="44dp"
             android:layout_marginBottom="28dp"
+            android:layout_marginEnd="4dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:paddingLeft="16dp"
@@ -90,6 +92,7 @@
             android:text="Negative"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/dialog_positive_button"
+            app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/guideline3" />
 
