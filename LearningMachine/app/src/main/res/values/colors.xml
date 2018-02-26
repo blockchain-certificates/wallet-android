@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="colorBackgroundGreen">#41ca86</color>
+
     <color name="colorBackground">#062451</color>
     <color name="colorBackgroundDark">#031126</color>
 

@@ -6,14 +6,48 @@
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/linearLayout"
-        android:background="@color/colorBackground"
+        android:background="@color/colorBackgroundGreen"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <View android:background="@drawable/splash_background"
-            android:layout_marginTop="25dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="260dp"
+            android:layout_height="68dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/ic_blockcerts_white"
+            app:layout_constraintBottom_toTopOf="@+id/background_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="spread" />
+
+
+        <ImageView
+            android:id="@+id/background_image"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="32dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/ic_splash_background"
+            app:layout_constraintBottom_toTopOf="@+id/new_account_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/logo" />
+
+        <ImageButton
+            android:id="@+id/play_video"
+            android:src="@drawable/ic_play_button"
+            android:background="@null"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
+            app:layout_constraintBottom_toBottomOf="@+id/background_image"
+            app:layout_constraintTop_toTopOf="@+id/background_image"
+            app:layout_constraintLeft_toLeftOf="@+id/background_image"
+            app:layout_constraintRight_toRightOf="@+id/background_image"
+            />
 
         <Button
             android:id="@+id/new_account_button"
