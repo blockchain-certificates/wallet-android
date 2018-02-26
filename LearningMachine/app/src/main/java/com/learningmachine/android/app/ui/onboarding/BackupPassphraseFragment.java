@@ -203,8 +203,10 @@ public class BackupPassphraseFragment extends OnboardingFragment {
 
                     float idealDialogWidth = size.x * 1.0f;
                     float idealDialogHeight = size.y * 1.0f;
+                    Point appUsableSize = getAppUsableScreenSize(getContext());
 
-                    idealDialogHeight = idealDialogHeight + Laba.dp2px(24) - getNavigationBarSize(getContext()).y;
+                    idealDialogWidth = appUsableSize.x;
+                    idealDialogHeight = appUsableSize.y - Laba.dp2px(24);
 
                     view.setLayoutParams(new FrameLayout.LayoutParams((int) idealDialogWidth, (int) idealDialogHeight));
 
