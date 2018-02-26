@@ -65,7 +65,7 @@
 
         <Button
             android:id="@+id/existing_account_button"
-            style="@style/RoundedButton.Light"
+            style="@style/RoundedButton.White"
             android:layout_width="0dp"
             android:layout_height="52dp"
             android:layout_marginBottom="20dp"
