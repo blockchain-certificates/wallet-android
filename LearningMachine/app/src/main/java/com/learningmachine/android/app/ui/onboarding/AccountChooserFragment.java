@@ -20,6 +20,7 @@ import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.preferences.SharedPreferencesManager;
 import com.learningmachine.android.app.databinding.FragmentAccountChooserBinding;
 import com.learningmachine.android.app.dialog.AlertDialogFragment;
+import com.learningmachine.android.app.ui.video.VideoActivity;
 import com.learningmachine.android.app.util.DialogUtils;
 import com.smallplanet.labalib.Laba;
 
@@ -49,11 +50,15 @@ public class AccountChooserFragment extends OnboardingFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_account_chooser, container, false);
 
-        Laba.Animate(mBinding.newAccountButton, "!^300", () -> { return null; });
-        Laba.Animate(mBinding.existingAccountButton, "!^300", () -> { return null; });
+        Laba.Animate(mBinding.newAccountButton, "!^300", () -> {
+            return null;
+        });
+        Laba.Animate(mBinding.existingAccountButton, "!^300", () -> {
+            return null;
+        });
 
         mBinding.playVideo.setOnClickListener(view2 -> {
-
+            startActivity(new Intent(getContext(), VideoActivity.class));
         });
 
         mBinding.newAccountButton.setOnClickListener(view -> mCallback.onNewAccount());

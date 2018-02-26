@@ -90,25 +90,30 @@ public class BackupPassphraseFragment extends OnboardingFragment {
         mBinding.onboardingSaveButton.setOnClickListener(view -> onSave());
         mBinding.onboardingWriteButton.setOnClickListener(view -> onWrite());
 
-        Laba.Animate(mBinding.onboardingDoneButton, "d0v200", () -> {
-            return null;
-        });
-        mBinding.onboardingDoneButton.setAlpha(0.3f);
-        mBinding.onboardingDoneButton.setEnabled(false);
-
-
+        int numCompleted = 3;
         if (savedInstanceState == null || savedInstanceState.getBoolean("onboardingSaveCheckmark") == false) {
             mBinding.onboardingSaveCheckmark.setVisibility(View.INVISIBLE);
+            numCompleted--;
         }
         if (savedInstanceState == null || savedInstanceState.getBoolean("onboardingEmailCheckmark") == false) {
             mBinding.onboardingEmailCheckmark.setVisibility(View.INVISIBLE);
+            numCompleted--;
         }
         if (savedInstanceState == null || savedInstanceState.getBoolean("onboardingWriteCheckmark") == false) {
             mBinding.onboardingWriteCheckmark.setVisibility(View.INVISIBLE);
+            numCompleted--;
         }
 
         if (savedInstanceState != null) {
             mPassphrase = savedInstanceState.getString("p");
+        }
+
+        if(numCompleted < 2) {
+            Laba.Animate(mBinding.onboardingDoneButton, "d0v200", () -> {
+                return null;
+            });
+            mBinding.onboardingDoneButton.setAlpha(0.3f);
+            mBinding.onboardingDoneButton.setEnabled(false);
         }
 
         return mBinding.getRoot();

@@ -45,6 +45,10 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".ui.video.VideoActivity"
+            android:screenOrientation="user"
+            android:launchMode="singleTask"/>
+
         <activity
             android:name=".ui.onboarding.OnboardingActivity"
             android:theme="@style/NoToolbarTheme.Onboarding"
