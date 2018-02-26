@@ -9,13 +9,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.exoplayer2.ExoPlaybackException;
+import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.PlaybackParameters;
+import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.Timeline;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.source.TrackGroupArray;
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelection;
+import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
 import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.upstream.BandwidthMeter;
 import com.google.android.exoplayer2.upstream.DataSource;
@@ -114,6 +121,36 @@ public class VideoFragment extends LMFragment {
         player.prepare(videoSource);
 
         player.setPlayWhenReady(true);
+
+
+        player.addListener(new Player.EventListener() {
+
+            public void onPlayerStateChanged(boolean playWhenReady, int state) {
+                if (state == Player.STATE_ENDED){
+                    getActivity().finish();
+                }
+            }
+
+            public void onTimelineChanged(Timeline timeline, Object manifest, @Player.TimelineChangeReason int reason) {}
+
+            public void onTracksChanged(TrackGroupArray trackGroups, TrackSelectionArray trackSelections) {}
+
+            public void onLoadingChanged(boolean isLoading) {}
+
+            public void onRepeatModeChanged(@Player.RepeatMode int repeatMode) {}
+
+            public void onShuffleModeEnabledChanged(boolean shuffleModeEnabled) {}
+
+            public void onPlayerError(ExoPlaybackException error) {}
+
+            public void onPositionDiscontinuity(@Player.DiscontinuityReason int reason) {}
+
+            public void onPlaybackParametersChanged(PlaybackParameters playbackParameters) {}
+
+            public void onSeekProcessed() {}
+
+        });
+
 
 
         //String fileName = "android.resource://" + getActivity().getPackageName() + "/raw/video";
