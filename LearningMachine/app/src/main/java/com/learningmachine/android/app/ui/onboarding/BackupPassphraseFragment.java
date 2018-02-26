@@ -71,6 +71,17 @@ public class BackupPassphraseFragment extends OnboardingFragment {
     }
 
     @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+
+
+        savedInstanceState.putString("p", mPassphrase);
+        savedInstanceState.putBoolean("onboardingSaveCheckmark", mBinding.onboardingSaveCheckmark.getVisibility() == View.VISIBLE);
+        savedInstanceState.putBoolean("onboardingWriteCheckmark", mBinding.onboardingWriteCheckmark.getVisibility() == View.VISIBLE);
+        savedInstanceState.putBoolean("onboardingEmailCheckmark", mBinding.onboardingEmailCheckmark.getVisibility() == View.VISIBLE);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_backup_passphrase, container, false);
 
@@ -79,13 +90,26 @@ public class BackupPassphraseFragment extends OnboardingFragment {
         mBinding.onboardingSaveButton.setOnClickListener(view -> onSave());
         mBinding.onboardingWriteButton.setOnClickListener(view -> onWrite());
 
-        Laba.Animate(mBinding.onboardingDoneButton, "d0v200", () -> { return null; });
+        Laba.Animate(mBinding.onboardingDoneButton, "d0v200", () -> {
+            return null;
+        });
         mBinding.onboardingDoneButton.setAlpha(0.3f);
         mBinding.onboardingDoneButton.setEnabled(false);
 
-        mBinding.onboardingSaveCheckmark.setVisibility(View.INVISIBLE);
-        mBinding.onboardingEmailCheckmark.setVisibility(View.INVISIBLE);
-        mBinding.onboardingWriteCheckmark.setVisibility(View.INVISIBLE);
+
+        if (savedInstanceState == null || savedInstanceState.getBoolean("onboardingSaveCheckmark") == false) {
+            mBinding.onboardingSaveCheckmark.setVisibility(View.INVISIBLE);
+        }
+        if (savedInstanceState == null || savedInstanceState.getBoolean("onboardingEmailCheckmark") == false) {
+            mBinding.onboardingEmailCheckmark.setVisibility(View.INVISIBLE);
+        }
+        if (savedInstanceState == null || savedInstanceState.getBoolean("onboardingWriteCheckmark") == false) {
+            mBinding.onboardingWriteCheckmark.setVisibility(View.INVISIBLE);
+        }
+
+        if (savedInstanceState != null) {
+            mPassphrase = savedInstanceState.getString("p");
+        }
 
         return mBinding.getRoot();
     }
@@ -150,6 +174,7 @@ public class BackupPassphraseFragment extends OnboardingFragment {
     }
 
     protected void onEmail() {
+
         DialogUtils.showAlertDialog(getContext(), this,
                 0,
                 getResources().getString(R.string.onboarding_passphrase_email_before_title),
