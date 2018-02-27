@@ -7,8 +7,7 @@
         android:id="@+id/dialog_main_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:minWidth="280dp">
+        android:background="@color/white">
 
 
         <ImageView
