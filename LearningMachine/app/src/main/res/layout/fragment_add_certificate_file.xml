@@ -12,6 +12,7 @@
         android:paddingEnd="@dimen/fragment_add_certificate_linear_layout_start_padding"
         android:paddingStart="@dimen/fragment_add_certificate_linear_layout_start_padding"
         android:paddingTop="@dimen/fragment_add_certificate_linear_layout_top_padding"
+        android:background="@color/white"
         tools:context=".ui.cert.AddCertificateFileFragment">
 
         <TextView

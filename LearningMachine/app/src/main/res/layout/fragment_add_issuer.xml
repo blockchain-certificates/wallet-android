@@ -14,6 +14,7 @@
             android:orientation="vertical"
             android:paddingEnd="@dimen/fragment_add_issuer_linear_layout_padding_horizontal"
             android:paddingStart="@dimen/fragment_add_issuer_linear_layout_padding_horizontal"
+            android:background="@color/white"
             tools:context="com.learningmachine.android.app.ui.issuer.AddIssuerActivity">
 
             <TextView

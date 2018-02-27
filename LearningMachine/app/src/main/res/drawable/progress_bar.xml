@@ -11,8 +11,8 @@
         <rotate
             android:pivotX="50%" android:pivotY="50%" android:fromDegrees="0"
             android:toDegrees="360">
-            <shape android:shape="ring" android:innerRadiusRatio="2.9"
-                android:thicknessRatio="9" android:useLevel="false">
+            <shape android:shape="ring" android:innerRadiusRatio="2.7"
+                android:thicknessRatio="15" android:useLevel="false">
 
                 <size android:width="76dip" android:height="76dip" />
                 <gradient android:type="sweep" android:useLevel="false"
