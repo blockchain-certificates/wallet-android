@@ -11,35 +11,45 @@
         android:background="@color/white">
 
 
+        <ImageView
+            android:id="@+id/image_view"
+            android:layout_width="match_parent"
+            android:layout_height="204dp"
+            android:src="@drawable/ic_small_video_background"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            app:layout_constraintBottom_toTopOf="@+id/spreader1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/play_video"
+            android:src="@drawable/ic_play_button"
+            android:background="@null"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
+            app:layout_constraintBottom_toBottomOf="@+id/image_view"
+            app:layout_constraintTop_toTopOf="@+id/image_view"
+            app:layout_constraintLeft_toLeftOf="@+id/image_view"
+            app:layout_constraintRight_toRightOf="@+id/image_view"
+            />
+
         <View
             android:id="@+id/spreader1"
             android:layout_width="65dp"
             android:layout_height="0dp"
             android:layout_marginEnd="32dp"
             android:layout_marginStart="32dp"
-            app:layout_constraintBottom_toTopOf="@+id/image_view"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed" />
-
-        <ImageView
-            android:id="@+id/image_view"
-            android:layout_width="105dp"
-            android:layout_height="105dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:src="@drawable/ic_welcom_back"
-            app:layout_constraintTop_toBottomOf="@+id/spreader1"
+            app:layout_constraintTop_toBottomOf="@+id/image_view"
             app:layout_constraintBottom_toTopOf="@+id/titleView"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/titleView"
-            style="@style/Text.Title.1"
+            style="@style/Text.Title.4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -54,7 +64,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/image_view" />
+            app:layout_constraintTop_toBottomOf="@+id/spreader1" />
 
         <TextView
             android:id="@+id/messageView"
