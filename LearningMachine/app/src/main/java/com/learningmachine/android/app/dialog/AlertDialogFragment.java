@@ -242,7 +242,7 @@ public class AlertDialogFragment extends DialogFragment {
         float totalHeight = dialogContent.getMeasuredHeight();
 
         // 4) Dialog height should be a little larger than the measured height
-        float idealDialogHeight = totalHeight + dp2px(40.0f);
+        float idealDialogHeight = totalHeight + dp2px(1.0f);
 
         dialogContent.setLayoutParams(new FrameLayout.LayoutParams((int) idealDialogWidth, (int) idealDialogHeight));
 
