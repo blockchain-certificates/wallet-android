@@ -13,10 +13,10 @@
 
         <ImageView
             android:id="@+id/logo"
-            android:layout_width="260dp"
-            android:layout_height="68dp"
+            android:layout_width="180dp"
+            android:layout_height="64dp"
             android:layout_marginBottom="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="48dp"
             android:src="@drawable/ic_blockcerts_white"
             app:layout_constraintBottom_toTopOf="@+id/background_image"
             app:layout_constraintEnd_toEndOf="parent"

@@ -11,6 +11,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:background="@color/white"
             tools:context="com.learningmachine.android.app.ui.settings.SettingsActivity">
 
 
@@ -23,7 +24,7 @@
                 android:gravity="center_vertical"
                 android:paddingStart="17dp"
                 android:paddingEnd="17dp"
-                style="@style/Text.Body"/>
+                style="@style/Text.Title.2"/>
 
             <View
                 android:layout_width="match_parent"
@@ -39,7 +40,7 @@
                 android:gravity="center_vertical"
                 android:paddingStart="17dp"
                 android:paddingEnd="17dp"
-                style="@style/Text.Body"/>
+                style="@style/Text.Title.2"/>
 
             <View
                 android:layout_width="match_parent"
@@ -54,7 +55,7 @@
                 android:gravity="center_vertical"
                 android:paddingStart="17dp"
                 android:paddingEnd="17dp"
-                style="@style/Text.Body"/>
+                style="@style/Text.Title.2"/>
 
             <View
                 android:layout_width="match_parent"
@@ -69,7 +70,7 @@
                 android:gravity="center_vertical"
                 android:paddingStart="17dp"
                 android:paddingEnd="17dp"
-                style="@style/Text.Body"/>
+                style="@style/Text.Title.2"/>
 
             <View
                 android:layout_width="match_parent"
@@ -84,7 +85,7 @@
                 android:gravity="center_vertical"
                 android:paddingStart="17dp"
                 android:paddingEnd="17dp"
-                style="@style/Text.Body"/>
+                style="@style/Text.Title.2"/>
 
             <View
                 android:layout_width="match_parent"
@@ -100,7 +101,7 @@
                 android:gravity="center_vertical"
                 android:paddingStart="17dp"
                 android:paddingEnd="17dp"
-                style="@style/Text.Body"/>
+                style="@style/Text.Title.2"/>
 
             <View
                 android:layout_width="match_parent"
@@ -115,7 +116,7 @@
                 android:gravity="center_vertical"
                 android:paddingStart="17dp"
                 android:paddingEnd="17dp"
-                style="@style/Text.Body"/>
+                style="@style/Text.Title.2"/>
 
             <View
                 android:layout_width="match_parent"
