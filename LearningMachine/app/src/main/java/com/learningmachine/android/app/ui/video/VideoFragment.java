@@ -42,6 +42,7 @@ public class VideoFragment extends LMFragment {
         return new VideoFragment();
     }
 
+    private FragmentVideoBinding mBinding;
     private SimpleExoPlayer player;
 
     @Override
@@ -55,111 +56,133 @@ public class VideoFragment extends LMFragment {
     @Override
     public void onStart() {
         super.onStart();
+
+
     }
 
+
+    private static long pauseSavedPosition = 0;
     @Override
     public void onResume() {
         super.onResume();
-
-        player.setPlayWhenReady(true);
+        initPlayer(pauseSavedPosition);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-
-        player.setPlayWhenReady(false);
+        if (player != null) {
+            pauseSavedPosition = player.getCurrentPosition();
+        }
+        releasePlayer();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-
-        player.release();
+        if (player != null) {
+            pauseSavedPosition = player.getCurrentPosition();
+        }
+        releasePlayer();
     }
 
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
-
-
-        /*
-        savedInstanceState.putString("p", mPassphrase);
-        savedInstanceState.putBoolean("onboardingSaveCheckmark", mBinding.onboardingSaveCheckmark.getVisibility() == View.VISIBLE);
-        savedInstanceState.putBoolean("onboardingWriteCheckmark", mBinding.onboardingWriteCheckmark.getVisibility() == View.VISIBLE);
-        savedInstanceState.putBoolean("onboardingEmailCheckmark", mBinding.onboardingEmailCheckmark.getVisibility() == View.VISIBLE);
-        */
-
-        player.release();
+        if (player != null) {
+            savedInstanceState.putLong("resumePosition", player.getCurrentPosition());
+        }
+        releasePlayer();
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        FragmentVideoBinding binding = DataBindingUtil.inflate(inflater,
+        mBinding = DataBindingUtil.inflate(inflater,
                 R.layout.fragment_video,
                 container,
                 false);
 
+        if (savedInstanceState != null) {
+            pauseSavedPosition = savedInstanceState.getLong("resumePosition", 0);
+        }
 
-        Handler mainHandler = new Handler();
-        TrackSelection.Factory videoTrackSelectionFactory =
-                new AdaptiveTrackSelection.Factory(null);
-        TrackSelector trackSelector =
-                new DefaultTrackSelector(videoTrackSelectionFactory);
-
-
-        player = ExoPlayerFactory.newSimpleInstance(getContext(), trackSelector);
-        binding.VideoView.setPlayer(player);
+        return mBinding.getRoot();
+    }
 
 
-        DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(getContext(),
-                Util.getUserAgent(getContext(), "BlockCerts Wallet"), null);
-
-        String filename = "rawresource:///" + R.raw.video;
-        MediaSource videoSource = new ExtractorMediaSource.Factory(dataSourceFactory).createMediaSource(Uri.parse(filename));
-        player.prepare(videoSource);
-
-        player.setPlayWhenReady(true);
+    private void initPlayer(long resumePosition) {
+        if(player == null) {
+            TrackSelection.Factory videoTrackSelectionFactory =
+                    new AdaptiveTrackSelection.Factory(null);
+            TrackSelector trackSelector =
+                    new DefaultTrackSelector(videoTrackSelectionFactory);
 
 
-        player.addListener(new Player.EventListener() {
+            player = ExoPlayerFactory.newSimpleInstance(getContext(), trackSelector);
+            mBinding.VideoView.setPlayer(player);
 
-            public void onPlayerStateChanged(boolean playWhenReady, int state) {
-                if (state == Player.STATE_ENDED){
-                    getActivity().finish();
+
+            DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(getContext(),
+                    Util.getUserAgent(getContext(), "BlockCerts Wallet"), null);
+
+            String filename = "rawresource:///" + R.raw.video;
+            MediaSource videoSource = new ExtractorMediaSource.Factory(dataSourceFactory).createMediaSource(Uri.parse(filename));
+
+            player.prepare(videoSource);
+
+            player.setPlayWhenReady(true);
+
+            player.seekTo(resumePosition);
+
+
+            player.addListener(new Player.EventListener() {
+
+                public void onPlayerStateChanged(boolean playWhenReady, int state) {
+                    if (state == Player.STATE_ENDED) {
+                        getActivity().finish();
+                    }
                 }
-            }
 
-            public void onTimelineChanged(Timeline timeline, Object manifest, @Player.TimelineChangeReason int reason) {}
+                public void onTimelineChanged(Timeline timeline, Object manifest, @Player.TimelineChangeReason int reason) {
+                }
 
-            public void onTracksChanged(TrackGroupArray trackGroups, TrackSelectionArray trackSelections) {}
+                public void onTracksChanged(TrackGroupArray trackGroups, TrackSelectionArray trackSelections) {
+                }
 
-            public void onLoadingChanged(boolean isLoading) {}
+                public void onLoadingChanged(boolean isLoading) {
+                }
 
-            public void onRepeatModeChanged(@Player.RepeatMode int repeatMode) {}
+                public void onRepeatModeChanged(@Player.RepeatMode int repeatMode) {
+                }
 
-            public void onShuffleModeEnabledChanged(boolean shuffleModeEnabled) {}
+                public void onShuffleModeEnabledChanged(boolean shuffleModeEnabled) {
+                }
 
-            public void onPlayerError(ExoPlaybackException error) {}
+                public void onPlayerError(ExoPlaybackException error) {
+                }
 
-            public void onPositionDiscontinuity(@Player.DiscontinuityReason int reason) {}
+                public void onPositionDiscontinuity(@Player.DiscontinuityReason int reason) {
+                }
 
-            public void onPlaybackParametersChanged(PlaybackParameters playbackParameters) {}
+                public void onPlaybackParametersChanged(PlaybackParameters playbackParameters) {
+                }
 
-            public void onSeekProcessed() {}
+                public void onSeekProcessed() {
+                }
 
-        });
+            });
+        }
+    }
 
-
-
-        //String fileName = "android.resource://" + getActivity().getPackageName() + "/raw/video";
-        //binding.VideoView.setVideoURI(Uri.parse(fileName));
-        //binding.VideoView.start();
-
-        return binding.getRoot();
+    private void releasePlayer() {
+        if(player != null) {
+            player.stop();
+            player.release();
+            player = null;
+        }
     }
 
 }
