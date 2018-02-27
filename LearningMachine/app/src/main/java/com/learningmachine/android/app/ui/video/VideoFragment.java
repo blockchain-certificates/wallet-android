@@ -48,6 +48,8 @@ public class VideoFragment extends LMFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setHasOptionsMenu(false);
+
     }
 
     @Override

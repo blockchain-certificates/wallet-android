@@ -163,11 +163,18 @@
     </style>
 
     <style name="NoToolbarTheme.Splash">
-        <item name="android:windowBackground">@drawable/splash_background</item>
+        <item name="android:windowBackground">@color/colorBackgroundGreen</item>
+        <item name="android:statusBarColor">@color/colorBackgroundGreen</item>
+    </style>
+
+    <style name="NoToolbarTheme.Video">
+        <item name="android:windowBackground">@color/black</item>
+        <item name="android:statusBarColor">@color/black</item>
     </style>
 
     <style name="NoToolbarTheme.Onboarding">
         <item name="buttonStyle">@style/RoundedButton</item>
+        <item name="android:statusBarColor">@color/colorBackgroundGreen</item>
         <item name="editTextStyle">@style/OnboardingPassphraseEditText</item>
     </style>
 

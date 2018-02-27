@@ -46,7 +46,8 @@
         </activity>
 
         <activity android:name=".ui.video.VideoActivity"
-            android:screenOrientation="user"
+            android:theme="@style/NoToolbarTheme.Video"
+            android:screenOrientation="fullUser"
             android:launchMode="singleTask"/>
 
         <activity
