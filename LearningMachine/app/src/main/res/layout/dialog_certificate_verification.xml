@@ -12,9 +12,9 @@
 
         <ProgressBar
             android:id="@+id/progress_bar"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="16dp"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="24dp"
             android:background="@drawable/progress_bar"
             app:layout_constraintBottom_toTopOf="@+id/titleView"
             app:layout_constraintEnd_toStartOf="parent"
@@ -26,8 +26,8 @@
             style="@style/Text.ListHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
@@ -45,9 +45,9 @@
             style="@style/Text.Body.2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
@@ -66,7 +66,6 @@
             android:layout_height="44dp"
             android:layout_marginBottom="24dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:text="Negative"
@@ -81,7 +80,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_end="82dp" />
+            app:layout_constraintGuide_end="86dp" />
 
     </android.support.constraint.ConstraintLayout>
 
