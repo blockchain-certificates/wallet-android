@@ -163,10 +163,10 @@ public class AlertDialogFragment extends DialogFragment {
 
         if (bottomSheet) {
             dialog = new Dialog(getActivity(), R.style.bottom_dialog);
-            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         } else {
             dialog = new Dialog(getActivity());
         }
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);
 
         View dialogContent = null;
