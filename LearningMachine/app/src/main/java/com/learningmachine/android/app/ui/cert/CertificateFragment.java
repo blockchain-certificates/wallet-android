@@ -30,7 +30,6 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.learningmachine.android.app.R;
@@ -188,7 +187,6 @@ public class CertificateFragment extends LMFragment {
         mBinding.webView.setWebViewClient(new LMWebViewClient());
 
         mBinding.progressBar.setVisibility(View.VISIBLE);
-        mBinding.progressBar.animate();
 
         mCertificateVerifier.loadCertificate(mCertUuid)
                 .compose(bindToMainThread())
@@ -222,7 +220,6 @@ public class CertificateFragment extends LMFragment {
 
         @Override
         public void onPageFinished(WebView view, String url) {
-            mBinding.progressBar.clearAnimation();
             mBinding.progressBar.setVisibility(View.GONE);
         }
     }
@@ -340,10 +337,6 @@ public class CertificateFragment extends LMFragment {
                         View view = (View) dialogContent;
                         updateDialogTitleView = (TextView) view.findViewById(R.id.titleView);
                         updateDialogMessageView = (TextView) view.findViewById(R.id.messageView);
-
-                        ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
-                        progressBar.animate();
-
                         this.updateVerficationProgressDialog(0, R.string.cert_verification_step0);
                         return null;
                     });

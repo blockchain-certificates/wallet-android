@@ -10,12 +10,11 @@
         android:background="@color/white">
 
 
-        <ProgressBar
+        <com.learningmachine.android.app.ui.LMProgressView
             android:id="@+id/progress_bar"
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:layout_marginTop="24dp"
-            android:background="@drawable/progress_bar"
             app:layout_constraintBottom_toTopOf="@+id/titleView"
             app:layout_constraintEnd_toStartOf="parent"
             app:layout_constraintStart_toStartOf="parent"

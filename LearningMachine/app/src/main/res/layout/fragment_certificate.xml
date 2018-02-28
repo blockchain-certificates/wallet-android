@@ -98,7 +98,7 @@
             app:layout_constraintTop_toBottomOf="@+id/share_button" />
 
 
-        <ProgressBar
+        <com.learningmachine.android.app.ui.LMProgressView
             android:id="@+id/progress_bar"
             android:layout_width="40dp"
             android:layout_height="40dp"
