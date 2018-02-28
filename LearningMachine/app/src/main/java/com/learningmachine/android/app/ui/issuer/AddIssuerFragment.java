@@ -167,13 +167,13 @@ public class AddIssuerFragment extends LMFragment {
                     } else {
                         performStandardIssuerIntroduction(request);
                     }
-                }, throwable -> displayErrors(throwable, DialogUtils.ErrorCategory.ISSUER, R.string.error_title_message));
+                }, throwable -> displayErrors(throwable, DialogUtils.ErrorCategory.ISSUER, R.string.error_title_message1));
     }
 
     private void performStandardIssuerIntroduction(IssuerIntroductionRequest request) {
         mIssuerManager.addIssuer(request)
                 .compose(bindToMainThread())
-                .subscribe(uuid -> didAddIssuer(uuid), throwable -> displayErrors(throwable, DialogUtils.ErrorCategory.ISSUER, R.string.error_title_message));
+                .subscribe(uuid -> didAddIssuer(uuid), throwable -> displayErrors(throwable, DialogUtils.ErrorCategory.ISSUER, R.string.error_title_message2));
     }
 
     private void performWebAuth(IssuerIntroductionRequest request) {
@@ -194,7 +194,7 @@ public class AddIssuerFragment extends LMFragment {
                     .doOnSubscribe(() -> displayProgressDialog(R.string.fragment_add_issuer_adding_issuer_progress_dialog_message))
                     .compose(bindToMainThread())
                     .map(issuer -> mIssuerManager.saveIssuer(issuer, bitcoinAddress))
-                    .subscribe(this::didAddIssuer, throwable -> displayErrors(throwable, DialogUtils.ErrorCategory.ISSUER, R.string.error_title_message));
+                    .subscribe(this::didAddIssuer, throwable -> displayErrors(throwable, DialogUtils.ErrorCategory.ISSUER, R.string.error_title_message3));
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }

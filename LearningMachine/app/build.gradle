@@ -181,6 +181,7 @@ dependencies {
     implementation "com.google.guava:guava:$GUAVA_VERSION"
 
     compile 'com.google.android.exoplayer:exoplayer:2.7.0'
+    compile 'com.airbnb.android:lottie:2.5.0'
 
     androidTestImplementation("com.android.support.test.espresso:espresso-core:$ESPRESSO_VERSION", {
         exclude group: 'com.android.support', module: 'support-annotations'

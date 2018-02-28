@@ -24,14 +24,17 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="spread" />
 
-
-        <ImageView
+        <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/background_image"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginBottom="32dp"
             android:layout_marginTop="8dp"
-            android:src="@drawable/ic_splash_background"
+
+            app:lottie_fileName="lottie_background.json"
+            app:lottie_loop="true"
+            app:lottie_autoPlay="true"
+
             app:layout_constraintBottom_toTopOf="@+id/new_account_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
