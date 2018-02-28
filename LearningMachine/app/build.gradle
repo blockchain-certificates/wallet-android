@@ -3,6 +3,10 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 26
     buildToolsVersion '26.0.2'
+    dexOptions {
+        incremental true
+        javaMaxHeapSize "4g"
+    }
     defaultConfig {
         applicationId "com.learningmachine.android.app"
         minSdkVersion 19

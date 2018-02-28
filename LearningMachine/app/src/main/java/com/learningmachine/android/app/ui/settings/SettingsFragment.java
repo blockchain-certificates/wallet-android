@@ -141,7 +141,6 @@ public class SettingsFragment extends LMFragment {
             return;
         }
 
-        binding.settingsLogout.setVisibility(View.VISIBLE);
         binding.settingsLogout.setOnClickListener(v -> {
 
             DialogUtils.showAlertDialog(getContext(), this,
