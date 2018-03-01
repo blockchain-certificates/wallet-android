@@ -939,19 +939,37 @@ CONTEXTS["https://w3id.org/blockcerts/v2"] = BLOCKCERTSV2_CONTEXT;
 CONTEXTS["https://www.w3id.org/blockcerts/schema/2.0/context.json"] = BLOCKCERTSV2_CONTEXT;
 CONTEXTS["https://w3id.org/blockcerts/v1"] = BLOCKCERTSV1_2_CONTEXT;
 
+function findIndexOfRevokedAddress(items, key) {
+  var index = -1;
+  for (var i = 0; i < items.length; ++i) {
+    if (items[i].address === key) {
+      index = i;
+      break;
+    }
+  }
+  return index;
+}
+
+function findIndexOfId(items, key) {
+  var index = -1;
+  for (var i = 0; i < items.length; ++i) {
+    if (items[i].id === key) {
+      index = i;
+      break;
+    }
+  }
+  return index;
+}
+
 function ensureNotRevokedBySpentOutput(revokedAddresses, issuerRevocationKey, recipientRevocationKey) {
   if (issuerRevocationKey) {
-    var isRevokedByIssuer = -1 != revokedAddresses.findIndex(function (address) {
-      return address === issuerRevocationKey;
-    });
+    var isRevokedByIssuer = -1 != findIndexOfRevokedAddress(revokedAddresses, issuerRevocationKey);
     if (isRevokedByIssuer) {
       throw new _default.VerifierError("This certificate batch has been revoked by the issuer.");
     }
   }
   if (recipientRevocationKey) {
-    var isRevokedByRecipient = -1 != revokedAddresses.findIndex(function (address) {
-      return address === recipientRevocationKey;
-    });
+    var isRevokedByRecipient = -1 != findIndexOfRevokedAddress(revokedAddresses, recipientRevocationKey);
     if (isRevokedByRecipient) {
       throw new _default.VerifierError("This recipient's certificate has been revoked.");
     }
@@ -966,9 +984,7 @@ function ensureNotRevokedByList(revokedAssertions, assertionUid) {
   var revokedAddresses = revokedAssertions.map(function (output) {
     return output.id;
   });
-  var isRevokedByIssuer = -1 != revokedAddresses.findIndex(function (id) {
-    return id === assertionUid;
-  });
+  var isRevokedByIssuer = -1 != findIndexOfId(revokedAddresses, assertionUid);
   if (isRevokedByIssuer) {
     throw new _default.VerifierError("This certificate has been revoked by the issuer.");
   }
