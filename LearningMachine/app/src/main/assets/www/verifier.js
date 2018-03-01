@@ -666,7 +666,11 @@ Promise.properRace = function (promises, count) {
   var results = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
 
   // Source: https://www.jcore.com/2016/12/18/promise-me-you-wont-use-promise-race/
-  promises = Array.from(promises);
+
+  // Note: Array.from is not supported on older browsers
+  // From my experience, promises appears to be an Array anyway...
+  //promises = Array.from(promises);
+
   if (promises.length < count) {
     return Promise.reject(new _default.VerifierError("Could not confirm the transaction"));
   }
