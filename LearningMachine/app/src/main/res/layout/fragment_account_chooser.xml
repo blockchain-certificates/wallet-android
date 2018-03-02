@@ -6,7 +6,7 @@
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/linearLayout"
-        android:background="@color/colorBackgroundGreen"
+        android:background="@color/colorBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

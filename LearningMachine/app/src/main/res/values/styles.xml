@@ -168,7 +168,7 @@
     </style>
 
     <style name="NoToolbarTheme.Splash">
-        <item name="android:windowBackground">@color/colorBackgroundGreen</item>
+        <item name="android:windowBackground">@color/colorBackground</item>
         <item name="android:statusBarColor">@color/colorBackground</item>
     </style>
 
