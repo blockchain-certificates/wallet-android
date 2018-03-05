@@ -11,6 +11,28 @@
         android:layout_height="match_parent">
 
 
+        <VideoView
+            android:id="@+id/background_video"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+
+            app:layout_constraintDimensionRatio="H,720:720"
+
+            app:layout_constraintBottom_toBottomOf="@+id/background_video_spacer"
+            app:layout_constraintLeft_toLeftOf="@+id/background_video_spacer"
+            app:layout_constraintRight_toRightOf="@+id/background_video_spacer" />
+
+        <View
+            android:id="@+id/background_video_cover"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/colorBackground"
+            app:layout_constraintBottom_toBottomOf="@+id/background_video"
+            app:layout_constraintTop_toTopOf="@+id/background_video"
+            app:layout_constraintLeft_toLeftOf="@+id/background_video"
+            app:layout_constraintRight_toRightOf="@+id/background_video" />
+
+
         <ImageView
             android:id="@+id/logo"
             android:layout_width="180dp"
@@ -24,29 +46,21 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="spread" />
 
-        <VideoView
-            android:id="@+id/background_video"
+
+        <View
+            android:id="@+id/background_video_spacer"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginBottom="32dp"
             android:layout_marginTop="8dp"
-
-            app:layout_constraintDimensionRatio="720:720"
 
             app:layout_constraintBottom_toTopOf="@+id/new_account_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/logo" />
 
-        <View
-            android:id="@+id/background_video_cover"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="@color/colorBackground"
-            app:layout_constraintBottom_toBottomOf="@+id/background_video"
-            app:layout_constraintTop_toTopOf="@+id/background_video"
-            app:layout_constraintLeft_toLeftOf="@+id/background_video"
-            app:layout_constraintRight_toRightOf="@+id/background_video" />
+
+
 
         <ImageButton
             android:id="@+id/play_video"
