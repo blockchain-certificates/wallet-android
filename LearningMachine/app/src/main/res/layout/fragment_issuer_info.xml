@@ -42,6 +42,25 @@
 
 
         <TextView
+            android:id="@+id/issuer_info_email_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fragment_issuer_info_email"
+            style="@style/Text.ListHeader"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/issuer_info_viewmodel_textview_bottom_padding"
+            android:autoLink="all"
+            android:clickable="true"
+            android:textColorLink="@color/linkColor"
+            android:text="@{issuerInfo.email}"
+            style="@style/Text.Info"/>
+
+
+
+        <TextView
             android:id="@+id/issuer_info_introduced_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -86,22 +105,6 @@
             android:text="@{issuerInfo.url}"
             style="@style/Text.Info"/>
 
-        <TextView
-            android:id="@+id/issuer_info_email_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/fragment_issuer_info_email"
-            style="@style/Text.ListHeader"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/issuer_info_viewmodel_textview_bottom_padding"
-            android:autoLink="all"
-            android:clickable="true"
-            android:textColorLink="@color/linkColor"
-            android:text="@{issuerInfo.email}"
-            style="@style/Text.Info"/>
 
         <TextView
             android:id="@+id/issuer_info_description_textview"

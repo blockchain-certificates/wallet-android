@@ -59,11 +59,11 @@
     <string name="issuer_info_title">Issuer Info</string>
     <string name="issuer_info_menu_item_title">Info</string>
     <string name="fragment_issuer_info_title">Issuer Name</string>
+    <string name="fragment_issuer_info_email">Issuer Contact Email</string>
 
     <string name="fragment_issuer_info_introduced_on">Introduced on</string>
     <string name="fragment_issuer_info_shared_address">Shared Address</string>
     <string name="fragment_issuer_info_url">URL</string>
-    <string name="fragment_issuer_info_email">Email</string>
     <string name="fragment_issuer_info_description">Description</string>
 
     <string name="fragment_issuer_info_additional_information">Additional Info</string>
