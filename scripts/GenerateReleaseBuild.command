@@ -5,9 +5,13 @@ newPath=`echo $0 | awk '{split($0, a, ";"); split(a[1], b, "/"); for(x = 2; x < 
 cd "$newPath/../LearningMachine/"
 
 
+echo "version code (11):"
+read versioncode
+
 echo "key password:"
 read keypassword
 
+export BUILD_NUMBER=$versioncode
 export SIGNING_KEY_ALIAS="learningmachine"
 export SIGNING_KEY_PASSWORD=$keypassword
 export SIGNING_STORE_PASSWORD=$keypassword

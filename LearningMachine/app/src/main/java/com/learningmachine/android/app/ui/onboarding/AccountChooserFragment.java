@@ -5,8 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Point;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -56,6 +58,24 @@ public class AccountChooserFragment extends OnboardingFragment {
             return null;
         });
 
+        String fileName = "android.resource://" + getActivity().getPackageName() + "/raw/background";
+
+        mBinding.backgroundVideoCover.setAlpha(1.0f);
+        mBinding.backgroundVideo.setVideoURI(Uri.parse(fileName));
+        mBinding.backgroundVideo.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                Log.d("LM", "SETTING VIDEO SCALING MODE");
+                mp.setVideoScalingMode(MediaPlayer.VIDEO_SCALING_MODE_SCALE_TO_FIT_WITH_CROPPING);
+                mp.setLooping(true);
+                mp.setScreenOnWhilePlaying(false);
+
+                Laba.Animate(mBinding.backgroundVideoCover, "d1|f0", null);
+            }
+        });
+        mBinding.backgroundVideo.start();
+
+
         mBinding.playVideo.setOnClickListener(view2 -> {
             startActivity(new Intent(getContext(), VideoActivity.class));
         });
@@ -77,6 +97,22 @@ public class AccountChooserFragment extends OnboardingFragment {
             checkForDelayedURLsFromDeepLinking();
         }
 
+        mBinding.backgroundVideoCover.setAlpha(1.0f);
+        mBinding.backgroundVideo.start();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mBinding.backgroundVideo.stopPlayback();
+        mBinding.backgroundVideoCover.setAlpha(1.0f);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mBinding.backgroundVideo.stopPlayback();
+        mBinding.backgroundVideoCover.setAlpha(1.0f);
     }
 
     @Override

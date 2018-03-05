@@ -18,27 +18,35 @@
             android:layout_marginBottom="16dp"
             android:layout_marginTop="48dp"
             android:src="@drawable/ic_blockcerts_white"
-            app:layout_constraintBottom_toTopOf="@+id/background_image"
+            app:layout_constraintBottom_toTopOf="@+id/background_video"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="spread" />
 
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/background_image"
+        <VideoView
+            android:id="@+id/background_video"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginBottom="32dp"
             android:layout_marginTop="8dp"
 
-            app:lottie_fileName="lottie_background.json"
-            app:lottie_loop="true"
-            app:lottie_autoPlay="true"
+            app:layout_constraintDimensionRatio="720:720"
 
             app:layout_constraintBottom_toTopOf="@+id/new_account_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/logo" />
+
+        <View
+            android:id="@+id/background_video_cover"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/colorBackground"
+            app:layout_constraintBottom_toBottomOf="@+id/background_video"
+            app:layout_constraintTop_toTopOf="@+id/background_video"
+            app:layout_constraintLeft_toLeftOf="@+id/background_video"
+            app:layout_constraintRight_toRightOf="@+id/background_video" />
 
         <ImageButton
             android:id="@+id/play_video"
@@ -46,10 +54,10 @@
             android:background="@null"
             android:layout_width="85dp"
             android:layout_height="85dp"
-            app:layout_constraintBottom_toBottomOf="@+id/background_image"
-            app:layout_constraintTop_toTopOf="@+id/background_image"
-            app:layout_constraintLeft_toLeftOf="@+id/background_image"
-            app:layout_constraintRight_toRightOf="@+id/background_image"
+            app:layout_constraintBottom_toBottomOf="@+id/background_video"
+            app:layout_constraintTop_toTopOf="@+id/background_video"
+            app:layout_constraintLeft_toLeftOf="@+id/background_video"
+            app:layout_constraintRight_toRightOf="@+id/background_video"
             />
 
         <Button
@@ -68,7 +76,7 @@
 
         <Button
             android:id="@+id/existing_account_button"
-            style="@style/RoundedButton.White"
+            style="@style/RoundedButton.Light"
             android:layout_width="0dp"
             android:layout_height="52dp"
             android:layout_marginBottom="20dp"
