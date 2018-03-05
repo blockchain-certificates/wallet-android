@@ -131,6 +131,20 @@ public class AddCertificateFileFragment extends LMFragment {
     }
 
     private void showFileDialog(File[] files) {
+        if(files.length == 0) {
+            DialogUtils.showAlertDialog(getContext(), this,
+                    R.drawable.ic_dialog_failure,
+                    getResources().getString(R.string.no_files_downloaded_title),
+                    getResources().getString(R.string.no_files_downloaded_message),
+                    null,
+                    getResources().getString(R.string.onboarding_passphrase_ok),
+                    (btnIdx) -> {
+                        return null;
+                    });
+            return;
+        }
+
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         FileArrayAdapter fileArrayAdapter = new FileArrayAdapter(getContext(), files);
         builder.setAdapter(fileArrayAdapter, (dialog, which) -> {

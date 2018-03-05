@@ -198,7 +198,8 @@
 
 
 
-
+    <string name="no_files_downloaded_title">No Certificates Downloaded</string>
+    <string name="no_files_downloaded_message">Download the certificate json from your certifate email before trying to add a certificate by file.</string>
 
 
 
