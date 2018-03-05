@@ -68,7 +68,7 @@ public class AlertDialogFragment extends DialogFragment {
         String message = messageResId == 0 ? "" : context.getString(messageResId);
         String positiveButtonMessage = positiveButtonResId == 0 ? "" : context.getString(positiveButtonResId);
         String negativeButtonMessage = negativeButtonResId == 0 ? "" : context.getString(negativeButtonResId);
-        return newInstance(title, message, positiveButtonMessage, negativeButtonMessage);
+        return newInstance(0, title, message, positiveButtonMessage, negativeButtonMessage);
     }
 
 
@@ -77,11 +77,11 @@ public class AlertDialogFragment extends DialogFragment {
     }
 
     public static AlertDialogFragment newInstance(String message) {
-        return newInstance("", message, "", "");
+        return newInstance(0, "", message, "", "");
     }
 
     public static AlertDialogFragment newInstance(String title, String message) {
-        return newInstance(title, message, null, "Okay");
+        return newInstance(R.drawable.ic_dialog_failure, title, message, null, "Okay");
     }
 
     public static AlertDialogFragment newInstance(boolean bottomSheet, int layoutID, int iconID, String title, String message, String positiveButtonMessage, String negativeButtonMessage, Callback complete, Callback onCreate) {
@@ -100,9 +100,12 @@ public class AlertDialogFragment extends DialogFragment {
         return fragment;
     }
 
-    public static AlertDialogFragment newInstance(String title, String message, String positiveButtonMessage, String negativeButtonMessage) {
+    public static AlertDialogFragment newInstance(int iconID, String title, String message, String positiveButtonMessage, String negativeButtonMessage) {
         Bundle args = new Bundle();
         AlertDialogFragment fragment = new AlertDialogFragment();
+        if(iconID > 0) {
+            args.putInt(ARG_ICON, iconID);
+        }
         args.putString(ARG_MESSAGE, message);
         args.putString(ARG_TITLE, title);
         args.putString(ARG_POSITIVE_BUTTON_MESSAGE, positiveButtonMessage);

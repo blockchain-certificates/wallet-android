@@ -114,6 +114,12 @@ public class DialogUtils {
         showErrorAlertDialog(context, fragmentManager, titleString, errorString, throwable);
     }
 
+    public static void showErrorAlertDialog(Context context, FragmentManager fragmentManager, @StringRes int titleResId, int errorID, Throwable throwable, ErrorCategory errorCategory) {
+        String titleString = context.getString(titleResId);
+        String errorString = context.getString(errorID);
+        showErrorAlertDialog(context, fragmentManager, titleString, errorString, throwable);
+    }
+
     private static void showErrorAlertDialog(Context context, FragmentManager fragmentManager, String title, String errorMessage, Throwable throwable) {
         AlertDialogFragment dialog = AlertDialogFragment.newInstance(title, errorMessage);
         fragmentManager.beginTransaction()
