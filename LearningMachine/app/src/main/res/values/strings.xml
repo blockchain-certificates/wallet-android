@@ -171,6 +171,37 @@
 
 
 
+    <!-- Dialog Error Messages -->
+
+    <string name="connection_error_message">Connection unavailable. Please check your connection and try again.</string>
+    <string name="unknown_error_message">Unknown error. Something unexepected occurred.</string>
+    <string name="error_title_message">Error</string>
+    <string name="ime_action_done">Done</string>
+
+    <string name="error_title_message1">Error 1</string>
+    <string name="error_title_message2">Error 2</string>
+    <string name="error_title_message3">Error 3</string>
+
+    <string name="http_not_found_issuer">There does not appear to be a valid issuer at this URL. Please check the URL and try again.</string>
+    <string name="http_bad_request_issuer">There was an error adding this issuer. This can happen when a single-use invitation link is clicked more than once. Please check with the issuer and request a new invitation, if necessary.</string>
+
+    <string name="http_not_found_certificate">There does not appear to be a valid credential at this URL. Please check the URL and try again.</string>
+    <string name="http_bad_request_certificate">This credential URL appears to be invalid. This could be for a number of reasons, such as this the credential having already been issued.</string>
+
+    <string name="http_not_found_generic">This does not appear to be a valid URL. Please check the URL and try again.</string>
+    <string name="http_bad_request_generic">An invalid URL was entered. Please check the URL and try again.</string>
+
+
+    <string name="wallet_does_not_exist_and_want_to_add_issuer">Before you may add an issuer you must log in to an account.\n\nGo ahead and log in, we will try to add the issuer after you are finished.</string>
+    <string name="wallet_does_not_exist_and_want_to_add_certificate">Before you may add a credential you must log in to an account.\n\nGo ahead and log in, we will try to add the credential after you are finished.</string>
+
+
+
+
+
+
+
+
 
 
     <!-- vvv OLD vvv -->
@@ -311,30 +342,6 @@
 
     <string name="cert_passphrase_invalid_title">Passphrase Invalid</string>
     <string name="cert_passphrase_invalid_desc">Please check your passphrase and try again.</string>
-
-    <!-- Dialog Error Messages -->
-
-    <string name="connection_error_message">Connection unavailable. Please check your connection and try again.</string>
-    <string name="unknown_error_message">Unknown error. Something unexepected occurred.</string>
-    <string name="error_title_message">Error</string>
-    <string name="ime_action_done">Done</string>
-
-    <string name="error_title_message1">Error 1</string>
-    <string name="error_title_message2">Error 2</string>
-    <string name="error_title_message3">Error 3</string>
-
-    <string name="http_not_found_issuer">There does not appear to be a valid issuer at this URL. Please check the URL and try again.</string>
-    <string name="http_bad_request_issuer">This issuer URL appears to be invalid. Please check the URL and try again.</string>
-
-    <string name="http_not_found_certificate">There does not appear to be a valid credential at this URL. Please check the URL and try again.</string>
-    <string name="http_bad_request_certificate">This credential URL appears to be invalid. This could be for a number of reasons, such as this the credential having already been issued.</string>
-
-    <string name="http_not_found_generic">This does not appear to be a valid URL. Please check the URL and try again.</string>
-    <string name="http_bad_request_generic">An invalid URL was entered. Please check the URL and try again.</string>
-
-
-    <string name="wallet_does_not_exist_and_want_to_add_issuer">Before you may add an issuer you must log in to an account.\n\nGo ahead and log in, we will try to add the issuer after you are finished.</string>
-    <string name="wallet_does_not_exist_and_want_to_add_certificate">Before you may add a credential you must log in to an account.\n\nGo ahead and log in, we will try to add the credential after you are finished.</string>
 
 
     <!--Certificate Info Fragment-->
