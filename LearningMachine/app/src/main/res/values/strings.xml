@@ -178,9 +178,9 @@
     <string name="error_title_message">Error</string>
     <string name="ime_action_done">Done</string>
 
-    <string name="error_title_message1">Error 1</string>
-    <string name="error_title_message2">Error 2</string>
-    <string name="error_title_message3">Error 3</string>
+    <string name="error_title_message1">Error</string>
+    <string name="error_title_message2">Error</string>
+    <string name="error_title_message3">Error</string>
 
     <string name="http_not_found_issuer">There does not appear to be a valid issuer at this URL. Please check the URL and try again.</string>
     <string name="http_bad_request_issuer">There was an error adding this issuer. This can happen when a single-use invitation link is clicked more than once. Please check with the issuer and request a new invitation, if necessary.</string>
