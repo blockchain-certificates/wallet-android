@@ -189,7 +189,6 @@ public class AlertDialogFragment extends DialogFragment {
 
         dialog.setContentView(dialogContent);
 
-
         ImageView iconView = (ImageView) dialogContent.findViewById(R.id.image_view);
         TextView titleView = (TextView) dialogContent.findViewById(R.id.titleView);
         TextView messageView = (TextView) dialogContent.findViewById(R.id.messageView);
@@ -275,6 +274,10 @@ public class AlertDialogFragment extends DialogFragment {
             wlp.gravity = Gravity.BOTTOM;
             window.setAttributes(wlp);
         }
+
+
+        dialog.setCancelable(false);
+        this.setCancelable(false);
 
         return dialog;
     }
