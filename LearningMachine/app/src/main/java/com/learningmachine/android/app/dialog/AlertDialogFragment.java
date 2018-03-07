@@ -276,8 +276,8 @@ public class AlertDialogFragment extends DialogFragment {
         }
 
 
-        dialog.setCancelable(false);
-        this.setCancelable(false);
+        //dialog.setCancelable(false);
+        //this.setCancelable(false);
 
         return dialog;
     }
