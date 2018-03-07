@@ -2,6 +2,7 @@ package com.learningmachine.android.app.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.graphics.Point;
 import android.os.Build;
@@ -293,6 +294,16 @@ public class AlertDialogFragment extends DialogFragment {
     public void onDetach() {
         super.onDetach();
         callback = null;
+    }
+
+    @Override
+    public void onCancel(DialogInterface dialog) {
+        if (callback != null) {
+            callback.onDialogNegative();
+        }
+        if(onComplete != null) {
+            onComplete.apply(0);
+        }
     }
 
     private void onButtonTapped(int buttonResultCode) {
