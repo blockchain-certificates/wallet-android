@@ -339,7 +339,8 @@ public class CertificateFragment extends LMFragment {
                         updateDialogMessageView = (TextView) view.findViewById(R.id.messageView);
                         this.updateVerficationProgressDialog(0, R.string.cert_verification_step0);
                         return null;
-                    });
+                    },
+                    null);
         }
     }
 

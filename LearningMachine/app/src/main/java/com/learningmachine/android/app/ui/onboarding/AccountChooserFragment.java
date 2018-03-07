@@ -106,15 +106,16 @@ public class AccountChooserFragment extends OnboardingFragment {
     @Override
     public void onPause() {
         super.onPause();
-        mBinding.backgroundVideo.stopPlayback();
         mBinding.backgroundVideoCover.setAlpha(1.0f);
+        mBinding.backgroundVideo.stopPlayback();
+
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        mBinding.backgroundVideo.stopPlayback();
         mBinding.backgroundVideoCover.setAlpha(1.0f);
+        mBinding.backgroundVideo.stopPlayback();
     }
 
     @Override

@@ -50,6 +50,7 @@ public class AlertDialogFragment extends DialogFragment {
         public R apply (A a);
     }
 
+    public Callback onCancel = null;
     public Callback onComplete = null;
     public Callback onCreate= null;
 
@@ -85,7 +86,7 @@ public class AlertDialogFragment extends DialogFragment {
         return newInstance(R.drawable.ic_dialog_failure, title, message, null, "Okay");
     }
 
-    public static AlertDialogFragment newInstance(boolean bottomSheet, int layoutID, int iconID, String title, String message, String positiveButtonMessage, String negativeButtonMessage, Callback complete, Callback onCreate) {
+    public static AlertDialogFragment newInstance(boolean bottomSheet, int layoutID, int iconID, String title, String message, String positiveButtonMessage, String negativeButtonMessage, Callback complete, Callback onCreate, Callback onCancel) {
         Bundle args = new Bundle();
         AlertDialogFragment fragment = new AlertDialogFragment();
         args.putString(ARG_MESSAGE, message);
@@ -97,6 +98,7 @@ public class AlertDialogFragment extends DialogFragment {
         args.putString(ARG_NEGATIVE_BUTTON_MESSAGE, negativeButtonMessage);
         fragment.setArguments(args);
         fragment.onComplete = complete;
+        fragment.onCancel = onCancel;
         fragment.onCreate = onCreate;
         return fragment;
     }
@@ -310,11 +312,8 @@ public class AlertDialogFragment extends DialogFragment {
 
     @Override
     public void onCancel(DialogInterface dialog) {
-        if (callback != null) {
-            callback.onDialogNegative();
-        }
-        if(onComplete != null) {
-            onComplete.apply(0);
+        if(onCancel != null) {
+            onCancel.apply(0);
         }
     }
 
