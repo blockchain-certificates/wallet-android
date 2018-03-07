@@ -27,6 +27,8 @@ import com.smallplanet.labalib.Laba;
 
 import javax.inject.Inject;
 
+import timber.log.Timber;
+
 public class AccountChooserFragment extends OnboardingFragment {
 
     private Callback mCallback;
@@ -65,7 +67,7 @@ public class AccountChooserFragment extends OnboardingFragment {
         mBinding.backgroundVideo.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
-                Log.d("LM", "SETTING VIDEO SCALING MODE");
+                Timber.d("SETTING VIDEO SCALING MODE");
                 mp.setVideoScalingMode(MediaPlayer.VIDEO_SCALING_MODE_SCALE_TO_FIT_WITH_CROPPING);
                 mp.setLooping(true);
                 mp.setScreenOnWhilePlaying(false);

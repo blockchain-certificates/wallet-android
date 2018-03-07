@@ -21,6 +21,7 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subjects.BehaviorSubject;
+import timber.log.Timber;
 
 public class LMFragment extends Fragment implements LifecycleProvider<FragmentEvent> {
 
@@ -38,6 +39,7 @@ public class LMFragment extends Fragment implements LifecycleProvider<FragmentEv
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mLifecycleSubject.onNext(FragmentEvent.CREATE);
+        Timber.d("onCreate: " + getFileExtension(this.getClass().toString()));
     }
 
     @Override
@@ -50,24 +52,28 @@ public class LMFragment extends Fragment implements LifecycleProvider<FragmentEv
     public void onStart() {
         super.onStart();
         mLifecycleSubject.onNext(FragmentEvent.START);
+        Timber.d("onStart: " + getFileExtension(this.getClass().toString()));
     }
 
     @Override
     public void onResume() {
         super.onResume();
         mLifecycleSubject.onNext(FragmentEvent.RESUME);
+        Timber.d("onResume: " + getFileExtension(this.getClass().toString()));
     }
 
     @Override
     public void onPause() {
         mLifecycleSubject.onNext(FragmentEvent.PAUSE);
         super.onPause();
+        Timber.d("onPause: " + getFileExtension(this.getClass().toString()));
     }
 
     @Override
     public void onStop() {
         mLifecycleSubject.onNext(FragmentEvent.STOP);
         super.onStop();
+        Timber.d("onStop: " + getFileExtension(this.getClass().toString()));
     }
 
     @Override
@@ -149,5 +155,13 @@ public class LMFragment extends Fragment implements LifecycleProvider<FragmentEv
     protected void hideKeyboard() {
         LMActivity activity = (LMActivity) getActivity();
         activity.hideKeyboard();
+    }
+
+    public static String getFileExtension(String name) {
+        try {
+            return name.substring(name.lastIndexOf(".") + 1);
+        } catch (Exception e) {
+            return "";
+        }
     }
 }

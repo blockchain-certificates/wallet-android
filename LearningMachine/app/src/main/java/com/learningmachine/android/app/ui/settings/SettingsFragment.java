@@ -21,6 +21,7 @@ import com.learningmachine.android.app.ui.issuer.AddIssuerActivity;
 import com.learningmachine.android.app.ui.onboarding.OnboardingActivity;
 import com.learningmachine.android.app.ui.settings.passphrase.RevealPassphraseActivity;
 import com.learningmachine.android.app.util.DialogUtils;
+import com.learningmachine.android.app.util.FileLoggingTree;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -87,22 +88,7 @@ public class SettingsFragment extends LMFragment {
         });
 
         binding.settingsEmailLogsTextView.setOnClickListener(v -> {
-            String emailData="";
-            try {
-                Process process = Runtime.getRuntime().exec("logcat -d");
-                BufferedReader bufferedReader = new BufferedReader(
-                        new InputStreamReader(process.getInputStream()));
-
-                StringBuilder sb=new StringBuilder();
-                String line;
-                while ((line = bufferedReader.readLine()) != null) {
-                    sb.append(line + "\n");
-                }
-                emailData=sb.toString();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+            String emailData = FileLoggingTree.logAsString();
 
             //send file using email
             Intent emailIntent = new Intent(Intent.ACTION_SEND);
