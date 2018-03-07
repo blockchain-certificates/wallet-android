@@ -92,7 +92,7 @@ public class SettingsFragment extends LMFragment {
 
             //send file using email
             Intent emailIntent = new Intent(Intent.ACTION_SEND);
-            String to[] = {"logs@smallplanet.com"};
+            String to[] = {"techsupport@learningmachine.com"};
             emailIntent .putExtra(Intent.EXTRA_EMAIL, to);
             // the attachment
             emailIntent .putExtra(Intent.EXTRA_TEXT, emailData);
