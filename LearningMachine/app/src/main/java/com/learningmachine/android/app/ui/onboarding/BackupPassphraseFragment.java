@@ -240,6 +240,7 @@ public class BackupPassphraseFragment extends OnboardingFragment {
                     return null;
                 });
 
+        fragment.forceFullscreen = true;
 
     }
 

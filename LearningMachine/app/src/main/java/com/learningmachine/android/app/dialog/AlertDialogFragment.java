@@ -290,6 +290,18 @@ public class AlertDialogFragment extends DialogFragment {
         return textView.getMeasuredHeight();
     }
 
+    public boolean forceFullscreen = false;
+    @Override
+    public void onStart() {
+        super.onStart();
+        if(forceFullscreen) {
+            Dialog dialog = getDialog();
+            if (dialog != null) {
+                dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            }
+        }
+    }
+
     @Override
     public void onDetach() {
         super.onDetach();
