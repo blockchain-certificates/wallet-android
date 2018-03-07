@@ -227,18 +227,15 @@ public class BackupPassphraseFragment extends OnboardingFragment {
 
                     // For this dialog, we want to fill the whole screen regardless of the size of the content
                     // 1) Dialog width should be 80% of the width of the screen
-                    Display display = getActivity().getWindowManager().getDefaultDisplay();
-                    Point size = new Point();
-                    display.getSize(size);
-
-                    float idealDialogWidth = size.x * 1.0f;
-                    float idealDialogHeight = size.y * 1.0f;
                     Point appUsableSize = getAppUsableScreenSize(getContext());
 
-                    idealDialogWidth = appUsableSize.x;
-                    idealDialogHeight = appUsableSize.y - Laba.dp2px(24);
+                    int idealDialogWidth = appUsableSize.x;
+                    int idealDialogHeight = (int)(appUsableSize.y - Laba.dp2px(24));
 
-                    view.setLayoutParams(new FrameLayout.LayoutParams((int) idealDialogWidth, (int) idealDialogHeight));
+                    view.setMinimumWidth(idealDialogWidth);
+                    view.setMinimumHeight(idealDialogHeight);
+
+                    view.setLayoutParams(new FrameLayout.LayoutParams(idealDialogWidth, idealDialogHeight));
 
                     return null;
                 });
