@@ -116,6 +116,11 @@ public class RevealPassphraseFragment extends LMFragment {
                             HandleBackupOptionCompleted(mBinding.onboardingSaveCheckmark);
                         }
                         return null;
+                    }, (cancel) -> {
+                        if(mBinding != null) {
+                            HandleBackupOptionCompleted(mBinding.onboardingSaveCheckmark);
+                        }
+                        return null;
                     });
 
             return null;

@@ -41,7 +41,6 @@ public class PastePassphraseFragment extends OnboardingFragment {
 
     private FragmentPastePassphraseBinding mBinding;
 
-
     private Timer countingTimer;
     private int countingSeconds = 1;
 
@@ -53,13 +52,16 @@ public class PastePassphraseFragment extends OnboardingFragment {
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mBinding.passphraseLabel.setText(getResources().getString(R.string.onboarding_paste_passphrase_load_1) + " " + countingSeconds + "s");
-                        countingSeconds++;
-                    }
-                });
+                Activity activity = getActivity();
+                if(activity != null) {
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mBinding.passphraseLabel.setText(getResources().getString(R.string.onboarding_paste_passphrase_load_1) + " " + countingSeconds + "s");
+                            countingSeconds++;
+                        }
+                    });
+                }
             }
         };
 
@@ -139,28 +141,55 @@ public class PastePassphraseFragment extends OnboardingFragment {
                         .compose(bindToMainThread())
                         .subscribe(wallet -> {
 
-                            activity.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    stopCountingTimer();
+                            stopCountingTimer();
 
+                            if(isVisible()) {
 
-                                    // if we return to the app by pasting in our passphrase, we
-                                    // must have already backed it up!
-                                    mSharedPreferencesManager.setHasSeenBackupPassphraseBefore(true);
-                                    mSharedPreferencesManager.setWasReturnUser(true);
-                                    mSharedPreferencesManager.setFirstLaunch(false);
-                                    if (continueDelayedURLsFromDeepLinking() == false) {
-                                        startActivity(new Intent(getActivity(), HomeActivity.class));
-                                        getActivity().finish();
+                                Log.d("LM", "PastePassphraseFragment isVisible()");
+
+                                activity.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+
+                                        if(isVisible()) {
+                                            // if we return to the app by pasting in our passphrase, we
+                                            // must have already backed it up!
+                                            mSharedPreferencesManager.setHasSeenBackupPassphraseBefore(true);
+                                            mSharedPreferencesManager.setWasReturnUser(true);
+                                            mSharedPreferencesManager.setFirstLaunch(false);
+                                            if (continueDelayedURLsFromDeepLinking() == false) {
+                                                startActivity(new Intent(getActivity(), HomeActivity.class));
+                                                getActivity().finish();
+                                            }
+                                        }
                                     }
-                                }
-                            });
+                                });
+                            }
                         }, e -> displayErrorsLocal(e, DialogUtils.ErrorCategory.GENERIC, R.string.error_title_message));
             }
         });
     }
 
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
 
     protected void displayErrorsLocal(Throwable throwable, DialogUtils.ErrorCategory errorCategory, @StringRes int errorTitleResId) {
         stopCountingTimer();

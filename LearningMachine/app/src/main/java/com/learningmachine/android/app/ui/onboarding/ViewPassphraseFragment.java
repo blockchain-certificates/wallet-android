@@ -54,16 +54,19 @@ public class ViewPassphraseFragment extends OnboardingFragment {
     private TimerTask timerTask = new TimerTask() {
         @Override
         public void run() {
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
+            Activity activity = getActivity();
+            if(activity != null) {
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
 
-                    if(didGeneratePassphrase == false) {
-                        mBinding.onboardingStatusText.setText(getResources().getString(R.string.onboarding_passphrase_status_0));
+                        if (didGeneratePassphrase == false) {
+                            mBinding.onboardingStatusText.setText(getResources().getString(R.string.onboarding_passphrase_status_0));
+                        }
+                        countingSeconds++;
                     }
-                    countingSeconds++;
-                }
-            });
+                });
+            }
         }
     };
 
@@ -135,34 +138,39 @@ public class ViewPassphraseFragment extends OnboardingFragment {
                             public void run() {
                                 stopCountingTimer();
 
-                                didGeneratePassphrase = true;
+                                if(isVisible()) {
 
-                                Laba.Animate(mBinding.onboardingPassphraseDesc, "f0d0,!^!f", () -> {
-                                    return null;
-                                });
-                                Laba.Animate(mBinding.onboardingPassphraseTitle, "f0d0,,!^!f", () -> {
-                                    return null;
-                                });
-                                Laba.Animate(mBinding.onboardingPassphraseContent, "f0d0,,,!^!f", () -> {
-                                    return null;
-                                });
+                                    Log.d("LM", "ViewPassphraseFragment isVisible()");
 
-                                mBinding.progressBar.clearAnimation();
-                                mBinding.progressBar.setVisibility(View.GONE);
+                                    didGeneratePassphrase = true;
 
-                                mBinding.imageView2.setVisibility(View.VISIBLE);
-                                mBinding.onboardingPassphraseDesc.setVisibility(View.VISIBLE);
-                                mBinding.onboardingPassphraseTitle.setVisibility(View.VISIBLE);
-                                mBinding.onboardingPassphraseContent.setVisibility(View.VISIBLE);
+                                    Laba.Animate(mBinding.onboardingPassphraseDesc, "f0d0,!^!f", () -> {
+                                        return null;
+                                    });
+                                    Laba.Animate(mBinding.onboardingPassphraseTitle, "f0d0,,!^!f", () -> {
+                                        return null;
+                                    });
+                                    Laba.Animate(mBinding.onboardingPassphraseContent, "f0d0,,,!^!f", () -> {
+                                        return null;
+                                    });
 
-                                mBinding.onboardingStatusText.setText(R.string.onboarding_passphrase_status_1);
-                                mBinding.onboardingPassphraseContent.setText(passphrase);
+                                    mBinding.progressBar.clearAnimation();
+                                    mBinding.progressBar.setVisibility(View.GONE);
 
-                                Laba.Animate(mBinding.onboardingDoneButton, ",,,^200", () -> {
-                                    return null;
-                                });
-                                mBinding.onboardingDoneButton.setAlpha(1.0f);
-                                mBinding.onboardingDoneButton.setEnabled(true);
+                                    mBinding.imageView2.setVisibility(View.VISIBLE);
+                                    mBinding.onboardingPassphraseDesc.setVisibility(View.VISIBLE);
+                                    mBinding.onboardingPassphraseTitle.setVisibility(View.VISIBLE);
+                                    mBinding.onboardingPassphraseContent.setVisibility(View.VISIBLE);
+
+                                    mBinding.onboardingStatusText.setText(R.string.onboarding_passphrase_status_1);
+                                    mBinding.onboardingPassphraseContent.setText(passphrase);
+
+                                    Laba.Animate(mBinding.onboardingDoneButton, ",,,^200", () -> {
+                                        return null;
+                                    });
+                                    mBinding.onboardingDoneButton.setAlpha(1.0f);
+                                    mBinding.onboardingDoneButton.setEnabled(true);
+                                }
                             }
                         });
                     });
@@ -177,6 +185,26 @@ public class ViewPassphraseFragment extends OnboardingFragment {
             mBinding.onboardingDoneButton.setTranslationY(0);
         }
 
+    }
+
+    @Override
+    public void onPause() {
+        super .onPause();
+    }
+
+    @Override
+    public void onStop() {
+        super .onStop();
+    }
+
+    @Override
+    public void onResume() {
+        super .onResume();
+    }
+
+    @Override
+    public void onStart() {
+        super .onStart();
     }
 
     @Override
