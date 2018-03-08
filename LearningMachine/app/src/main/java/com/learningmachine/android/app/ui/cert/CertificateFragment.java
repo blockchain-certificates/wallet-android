@@ -340,7 +340,13 @@ public class CertificateFragment extends LMFragment {
                         this.updateVerficationProgressDialog(0, R.string.cert_verification_step0);
                         return null;
                     },
-                    null);
+                    (btnIdx) -> {
+                        mCancelVerification = true;
+                        updateDialog = null;
+                        updateDialogTitleView = null;
+                        updateDialogMessageView = null;
+                        return null;
+                    });
         }
     }
 
@@ -438,10 +444,18 @@ public class CertificateFragment extends LMFragment {
     private static boolean shouldContinueCheckingForVerificationResults = false;
     private void verifyCertificate() {
 
+        if (updateDialog != null) {
+            return;
+        }
+
+        if(shouldContinueCheckingForVerificationResults == true) {
+            return;
+        }
+
         // 0. show the progress dialog
         showVerficationProgressDialog();
 
-        if(isOnline(getContext()) == false) {
+        if (isOnline(getContext()) == false) {
             showVerificationFailureDialog(R.string.error_no_internet, Anchor.ChainType.unknown);
             return;
         }
