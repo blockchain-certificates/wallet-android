@@ -65,7 +65,7 @@
             android:src="@drawable/ic_checkmark"
             app:layout_constraintBottom_toBottomOf="@+id/onboarding_save_button"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.85"
+            app:layout_constraintHorizontal_bias="0.9"
             app:layout_constraintRight_toRightOf="@+id/onboarding_save_button"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/onboarding_save_button" />
@@ -92,7 +92,7 @@
             android:src="@drawable/ic_checkmark"
             app:layout_constraintBottom_toBottomOf="@+id/onboarding_email_button"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.85"
+            app:layout_constraintHorizontal_bias="0.9"
             app:layout_constraintRight_toRightOf="@+id/onboarding_email_button"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/onboarding_email_button" />
