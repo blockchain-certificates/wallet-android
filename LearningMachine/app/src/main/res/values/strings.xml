@@ -119,7 +119,7 @@
     <string name="success_mocknet_verification">This mock credential passed all checks. Mocknet mode is only used by issuers to test their workflow locally. This credential was not recorded to a blockchain and should not be considered a verified credential.</string>
 
 
-    <string name="error_unknown_chain_reason">This credential is not a mainnet, testnet, or mocknet certificate and cannot be verified.</string>
+    <string name="error_unknown_chain_reason">This credential is not a mainnet, testnet, or mocknet credential and cannot be verified.</string>
     <string name="error_unknown_reason">This credential failed verification for an unknown reason.</string>
 
 
@@ -144,7 +144,7 @@
 
     <string name="settings_logout">Log out and Reset</string>
     <string name="settings_logout_title">Log out and Clear Device</string>
-    <string name="settings_logout_message">Logging out will remove all of your certificates and any stored passphrases on this device.</string>
+    <string name="settings_logout_message">Logging out will remove all of your credentials and any stored passphrases on this device.</string>
     <string name="settings_logout_button_title">Log out</string>
 
 
@@ -198,8 +198,8 @@
 
 
 
-    <string name="no_files_downloaded_title">No Certificates Downloaded</string>
-    <string name="no_files_downloaded_message">Download the certificate json from your certifate email before trying to add a certificate by file.</string>
+    <string name="no_files_downloaded_title">No Credentials Downloaded</string>
+    <string name="no_files_downloaded_message">Download the credential json from your credential email before trying to add a credential by file.</string>
 
 
 
