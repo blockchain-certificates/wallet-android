@@ -99,7 +99,7 @@
     <string name="error_mainnet_step3_reason">Merkle root does not match the hash value on the blockchain. Please contact the issuer.</string>
     <string name="error_mainnet_step4_reason">Transaction occurred when the issuing address was not considered valid. Please contact the issuer.</string>
     <string name="error_mainnet_step5_reason">This credential was revoked by the issuer.</string>
-    <string name="error_mainnet_step6_reason">This credential is expired</string>
+    <string name="error_mainnet_step6_reason">This credential expired</string>
     <string name="success_mainnet_verification">Your credential has been successfully verified.</string>
 
     <string name="error_testnet_step1_reason">Computed hash does not match expected hash. This test credential may have been altered. Please contact the issuer.</string>
