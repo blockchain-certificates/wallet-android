@@ -316,8 +316,8 @@
     <string name="fragment_certificate_info_delete_menu_item_title">Delete</string>
     <string name="fragment_certificate_info_delete_warning_title">Be careful</string>
     <string name="fragment_certificate_info_delete_warning_message">If you delete this credential and don\'t have a backup, then you\'ll have to ask the issuer to send it to you again if you want to recover it. Are you sure you want to delete this credential?</string>
-    <string name="fragment_certificate_info_delete_warning_positive_title">Delete</string>
-    <string name="fragment_certificate_info_delete_warning_negative_title">Cancel</string>
+    <string name="fragment_certificate_info_delete_warning_positive_title">Cancel</string>
+    <string name="fragment_certificate_info_delete_warning_negative_title">Delete</string>
 
     <!-- Certificate Verification -->
 

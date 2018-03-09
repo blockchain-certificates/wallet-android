@@ -120,7 +120,7 @@ public class CertificateInfoFragment extends LMFragment {
                         getResources().getString(R.string.fragment_certificate_info_delete_warning_positive_title),
                         getResources().getString(R.string.fragment_certificate_info_delete_warning_negative_title),
                         (btnIdx) -> {
-                            if((int)btnIdx == 1) {
+                            if((int)btnIdx == 0) {
                                 String uuid = mCertificate.getUuid();
                                 mCertificateManager.removeCertificate(uuid)
                                         .compose(bindToMainThread())
