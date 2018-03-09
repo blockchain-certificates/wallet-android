@@ -984,7 +984,8 @@ function ensureNotRevokedByList(revokedAssertions, assertionUid) {
   var revokedAddresses = revokedAssertions.map(function (output) {
     return output.id;
   });
-  var isRevokedByIssuer = -1 != findIndexOfId(revokedAddresses, assertionUid);
+
+  var isRevokedByIssuer = revokedAddresses.toString().indexOf(assertionUid) >= 0;
   if (isRevokedByIssuer) {
     throw new _default.VerifierError("This certificate has been revoked by the issuer.");
   }
