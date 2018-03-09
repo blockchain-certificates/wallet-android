@@ -83,7 +83,7 @@
     <string name="cert_verification_step6">Checking expiration</string>
 
     <string name="cert_verification_step1_could_not_create_temp_file">Couldn\'t create a temp file for JSONLD normalization</string>
-    <string name="cert_verification_step1_could_not_save_document">Couldn\'t save the certificate document node</string>
+    <string name="cert_verification_step1_could_not_save_document">Couldn\'t save the credential document node</string>
 
 
     <string name="error_no_internet">No Network</string>
@@ -198,8 +198,8 @@
 
 
 
-    <string name="no_files_downloaded_title">No Credentials Downloaded</string>
-    <string name="no_files_downloaded_message">Download the credential json from your credential email before trying to add a credential by file.</string>
+    <string name="no_files_downloaded_title">No Credential Files</string>
+    <string name="no_files_downloaded_message">There are no credential files saved to this device.</string>
 
 
 
