@@ -11,10 +11,13 @@ read versioncode
 echo "key password:"
 read keypassword
 
+echo "store password:"
+read storepassword
+
 export BUILD_NUMBER=$versioncode
-export SIGNING_KEY_ALIAS="learningmachine"
+export SIGNING_KEY_ALIAS="key0"
 export SIGNING_KEY_PASSWORD=$keypassword
-export SIGNING_STORE_PASSWORD=$keypassword
+export SIGNING_STORE_PASSWORD=$storepassword
 
 ./gradlew assembleRelease
 
