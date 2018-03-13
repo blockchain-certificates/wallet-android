@@ -1,6 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="colorBackgroundGreen">#41ca86</color>
+
+    <color name="colorBackground">#062451</color>
+    <color name="colorBackgroundDark">#031126</color>
+
+    <color name="primaryButtonNormal">#2AB27B</color>
+    <color name="primaryButtonPressed">#1d7a54</color>
+
+    <color name="secondaryButtonNormal">#ffffff</color>
+    <color name="secondaryButtonPressed">#cccccc</color>
+
+    <color name="passphraseBodyBackground">#ECF5FE</color>
+
+    <color name="headline">#1D6FBE</color>
+
+    <color name="clear">#00000000</color>
+
+    <color name="off_white_background">#F0F3F5</color>
+
+    <color name="linkColor">#2AB27B</color>
+
+    <color name="red">#DF5454</color>
+    <color name="grey">#D8D8D8</color>
+
+    <!-- vvv OLD vvv -->
     <color name="colorPrimary">@color/white</color>
     <color name="colorPrimaryDark">@color/transparent_gray</color>
     <color name="colorAccent">@color/black</color>
@@ -8,11 +33,12 @@
     <color name="fab_color">#707070</color>
     <color name="transparent_gray">#1e000000</color>
     <color name="white">#ffffff</color>
-    <color name="off_white_background">#f3f4f5</color>
+
     <color name="black">#000000</color>
     <color name="black_8a">#8a000000</color>
     <color name="black_8b">#8b000000</color>
     <color name="black_de">#de000000</color>
     <color name="black_61">#61000000</color>
+    <color name="link">#ff288dff</color>
 
 </resources>

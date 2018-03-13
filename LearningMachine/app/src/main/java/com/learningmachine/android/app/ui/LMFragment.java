@@ -9,6 +9,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
+import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.util.DialogUtils;
 import com.trello.rxlifecycle.LifecycleProvider;
 import com.trello.rxlifecycle.LifecycleTransformer;
@@ -20,6 +21,7 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subjects.BehaviorSubject;
+import timber.log.Timber;
 
 public class LMFragment extends Fragment implements LifecycleProvider<FragmentEvent> {
 
@@ -37,6 +39,7 @@ public class LMFragment extends Fragment implements LifecycleProvider<FragmentEv
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mLifecycleSubject.onNext(FragmentEvent.CREATE);
+        Timber.d("onCreate: " + getFileExtension(this.getClass().toString()));
     }
 
     @Override
@@ -49,24 +52,28 @@ public class LMFragment extends Fragment implements LifecycleProvider<FragmentEv
     public void onStart() {
         super.onStart();
         mLifecycleSubject.onNext(FragmentEvent.START);
+        Timber.d("onStart: " + getFileExtension(this.getClass().toString()));
     }
 
     @Override
     public void onResume() {
         super.onResume();
         mLifecycleSubject.onNext(FragmentEvent.RESUME);
+        Timber.d("onResume: " + getFileExtension(this.getClass().toString()));
     }
 
     @Override
     public void onPause() {
         mLifecycleSubject.onNext(FragmentEvent.PAUSE);
         super.onPause();
+        Timber.d("onPause: " + getFileExtension(this.getClass().toString()));
     }
 
     @Override
     public void onStop() {
         mLifecycleSubject.onNext(FragmentEvent.STOP);
         super.onStop();
+        Timber.d("onStop: " + getFileExtension(this.getClass().toString()));
     }
 
     @Override
@@ -117,27 +124,15 @@ public class LMFragment extends Fragment implements LifecycleProvider<FragmentEv
         return (Observable.Transformer<T, T>) mMainThreadTransformer;
     }
 
-    protected void displayAlert(int requestCode, @StringRes int titleResId, @StringRes int messageResId, @StringRes int positiveButtonResId, @StringRes int negativeButtonResId) {
-        DialogUtils.showAlertDialog(getContext(),
-                this,
-                requestCode,
-                titleResId,
-                messageResId,
-                positiveButtonResId,
-                negativeButtonResId);
-    }
 
-    protected void displayAlert(int requestCode, @StringRes int messageResId, @StringRes int positiveButtonResId, @StringRes int negativeButtonResId) {
-        displayAlert(requestCode,
-                0,
-                messageResId,
-                positiveButtonResId,
-                negativeButtonResId);
-    }
-
-    protected void displayErrors(Throwable throwable, @StringRes int errorTitleResId) {
+    protected void displayErrors(Throwable throwable, DialogUtils.ErrorCategory errorCategory, @StringRes int errorTitleResId) {
         hideProgressDialog();
-        DialogUtils.showErrorAlertDialog(getContext(), getFragmentManager(), errorTitleResId, throwable);
+        DialogUtils.showErrorAlertDialog(getContext(), getFragmentManager(), errorTitleResId, throwable, errorCategory);
+    }
+
+    protected void displayErrors(int errorID, Throwable throwable, DialogUtils.ErrorCategory errorCategory, @StringRes int errorTitleResId) {
+        hideProgressDialog();
+        DialogUtils.showErrorAlertDialog(getContext(), getFragmentManager(), errorTitleResId, errorID, throwable, errorCategory);
     }
 
     protected void displayProgressDialog(@StringRes int progressMessageResId) {
@@ -160,5 +155,13 @@ public class LMFragment extends Fragment implements LifecycleProvider<FragmentEv
     protected void hideKeyboard() {
         LMActivity activity = (LMActivity) getActivity();
         activity.hideKeyboard();
+    }
+
+    public static String getFileExtension(String name) {
+        try {
+            return name.substring(name.lastIndexOf(".") + 1);
+        } catch (Exception e) {
+            return "";
+        }
     }
 }

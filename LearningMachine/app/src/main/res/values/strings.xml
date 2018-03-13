@@ -1,55 +1,281 @@
 <resources>
     <string name="app_name">Blockcerts</string>
-    <string name="home_issuers">Issuers</string>
+    <string name="home_issuers">Blockcerts Wallet</string>
     <string name="home_settings_menu_item_title">Settings</string>
 
     <!-- Onboarding -->
+
+    <string name="onboarding_welcome">Welcome message goes here</string>
+    <string name="onboarding_new_user">New User</string>
+    <string name="onboarding_returning_user">Current User</string>
+
+
+    <string name="onboarding_passphrase_status_0">Generating your new passphrase...</string>
+    <string name="onboarding_passphrase_status_1">Passphrase Generated!</string>
+
+    <string name="onboarding_passphrase_description">This is the passphrase to your wallet. You must have a backup in case you reinstall or switch devices.</string>
+    <string name="onboarding_passphrase">Passphrase</string>
+    <string name="onboarding_passphrase_create_backup">Create a Backup</string>
+
+
+    <string name="onboarding_backup_methods">Select Backup Methods</string>
+    <string name="onboarding_backup_description">Please select at least two options from the choices below.</string>
+    <string name="onboarding_backup_write_button">Manual Hardcopy</string>
+    <string name="onboarding_backup_save_button">Save to Device</string>
+    <string name="onboarding_backup_email_button">Copy to E-Mail or Clipboard</string>
+    <string name="onboarding_backup_done_button">Done</string>
+
+
+    <string name="onboarding_paste_passphrase_title">Enter your passphrase</string>
+    <string name="onboarding_paste_passphrase_desc">Please type or paste your passphrase here:</string>
+    <string name="onboarding_paste_passphrase_done">Enter</string>
+    <string name="onboarding_paste_passphrase_hint">Tap to enter passphrase</string>
+
+    <string name="onboarding_paste_passphrase_load_0">Looking for passphrase...</string>
+    <string name="onboarding_paste_passphrase_load_1">Passphrase found, loading...</string>
+    <string name="onboarding_paste_passphrase_load_2">Enter Your Passphrase</string>
+
+
+    <string name="onboarding_welcome_title">Welcome to the new Blockcerts Wallet!</string>
+    <string name="onboarding_welcome_desc">We\'ve improved the experience, but you\'ll be able to receive and manage your credentials as before.\n\nPlease note that you are now required to back up your passphrase, but you can do so easily in the app!</string>
+    <string name="onboarding_welcome_button_title">Continue</string>
+
+
+    <!-- Home -->
+
+    <string name="onboarding_home_no_issuers_title">Ready!</string>
+    <string name="onboarding_home_no_issuers_desc_new_user">You will receive an email when an issuer is ready to be added. Follow the link in the email to complete the process.</string>
+    <string name="onboarding_home_no_issuers_desc_returning_user">There is no need to add issuers from whom you have already received credentials. When you import your credentials into the app, the issuers will automatically be added as well.</string>
+
+    <string name="onboarding_home_no_issuers_desc2">You may add an issuer manually by visiting Settings and tapping Add an Issuer</string>
+
+
+    <!-- Issuer (Certificate List) -->
+    <string name="issuer_no_certificates_desc">No Credentials</string>
+    <string name="issuer_no_certificates_desc2">You will receive an email when a credential is issued. Follow the link in the email to complete the process. Or add a credential manually.</string>
+
+
+    <!-- Issuer Info -->
+    <string name="issuer_info_title">Issuer Info</string>
+    <string name="issuer_info_menu_item_title">Info</string>
+    <string name="fragment_issuer_info_title">Issuer Name</string>
+    <string name="fragment_issuer_info_email">Issuer Contact Email</string>
+
+    <string name="fragment_issuer_info_introduced_on">Introduced on</string>
+    <string name="fragment_issuer_info_shared_address">Shared Address</string>
+    <string name="fragment_issuer_info_url">URL</string>
+    <string name="fragment_issuer_info_description">Description</string>
+
+    <string name="fragment_issuer_info_additional_information">Additional Info</string>
+
+
+
+    <!-- Verification -->
+    <string name="fragment_verify_cert_step_format">Verifying Step %1$d of %2$d</string>
+
+
+    <string name="cert_verification_step0">Beginning verification process</string>
+    <string name="cert_verification_step1">Comparing computed hash with expected hash</string>
+    <string name="cert_verification_step2">Ensuring the Merkle receipt is valid</string>
+    <string name="cert_verification_step3">Comparing expected Merkle root with value on the blockchain</string>
+    <string name="cert_verification_step4">Checking if the credential has been revoked</string>
+    <string name="cert_verification_step5">Validating issuer identity</string>
+    <string name="cert_verification_step6">Checking expiration</string>
+
+    <string name="cert_verification_step1_could_not_create_temp_file">Couldn\'t create a temp file for JSONLD normalization</string>
+    <string name="cert_verification_step1_could_not_save_document">Couldn\'t save the credential document node</string>
+
+
+    <string name="error_no_internet">No Network</string>
+    <string name="error_no_engine">Unable to load the verification engine.</string>
+    <string name="error_invalid_certificate_json">The credential json is erroneous</string>
+    <string name="error_invalid_certificate_normalize_json">Unable to normalize the credential JSON-LD</string>
+    <string name="error_remote_and_local_hash_mismatch">The credential\'s local hash does not match the credential\'s remote hash</string>
+    <string name="error_cannot_load_certificate_json">Could not load the credential file</string>
+
+
+    <string name="error_mainnet_step1_reason">Computed hash does not match expected hash. This credential may have been altered. Please contact the issuer.</string>
+    <string name="error_mainnet_step2_reason">The Merkle receipt is not valid. Please contact the issuer.</string>
+    <string name="error_mainnet_step3_reason">Merkle root does not match the hash value on the blockchain. Please contact the issuer.</string>
+    <string name="error_mainnet_step4_reason">Transaction occurred when the issuing address was not considered valid. Please contact the issuer.</string>
+    <string name="error_mainnet_step5_reason">This credential was revoked by the issuer.</string>
+    <string name="error_mainnet_step6_reason">This credential expired</string>
+    <string name="success_mainnet_verification">Your credential has been successfully verified.</string>
+
+    <string name="error_testnet_step1_reason">Computed hash does not match expected hash. This test credential may have been altered. Please contact the issuer.</string>
+    <string name="error_testnet_step2_reason">The Merkle receipt is not valid. Please contact the issuer.</string>
+    <string name="error_testnet_step3_reason">Merkle root does not match the hash value on the blockchain. Please contact the issuer.</string>
+    <string name="error_testnet_step4_reason">Transaction occurred when the issuing address was not considered valid. Please contact the issuer.</string>
+    <string name="error_testnet_step5_reason">This test credential was revoked by the issuer.</string>
+    <string name="error_testnet_step6_reason">This test credential is expired</string>
+    <string name="success_testnet_verification">Your test credential has been successfully verified.</string>
+
+    <string name="error_mocknet_step1_reason">Computed hash does not match expected hash. This mock credential may have been altered. Please contact the issuer.</string>
+    <string name="error_mocknet_step2_reason">The Merkle receipt is not valid. Please contact the issuer.</string>
+    <string name="error_mocknet_step3_reason">Merkle root does not match the hash value on the blockchain. Please contact the issuer.</string>
+    <string name="error_mocknet_step4_reason">Transaction occurred when the issuing address was not considered valid. Please contact the issuer.</string>
+    <string name="error_mocknet_step5_reason">This mock credential was revoked by the issuer.</string>
+    <string name="error_mocknet_step6_reason">This mock credential is expired</string>
+    <string name="success_mocknet_verification">This mock credential passed all checks. Mocknet mode is only used by issuers to test their workflow locally. This credential was not recorded to a blockchain and should not be considered a verified credential.</string>
+
+
+    <string name="error_unknown_chain_reason">This credential is not a mainnet, testnet, or mocknet credential and cannot be verified.</string>
+    <string name="error_unknown_reason">This credential failed verification for an unknown reason.</string>
+
+
+
+    <!-- Certificate View -->
+    <string name="certificate_share_button">Share</string>
+    <string name="certificate_verify_button">Verify this credential</string>
+
+
+    <string name="certificate_delete_button">Delete Credential</string>
+
+
+    <!-- Settings -->
+
+    <string name="settings_add_issuer">Add an Issuer</string>
+    <string name="settings_add_credential">Add a Credential</string>
+    <string name="settings_reveal_passphrase">My Passphrase</string>
+    <string name="settings_about_passphrases">About Passphrases</string>
+    <string name="settings_privacy_policy">Privacy Policy</string>
+    <string name="settings_privacy_policy_endpoint">http://www.learningmachine.com/mobile-privacy/</string>
+    <string name="settings_email_logs">Email Logs</string>
+
+    <string name="settings_logout">Log out and Reset</string>
+    <string name="settings_logout_title">Log out and Clear Device</string>
+    <string name="settings_logout_message">Logging out will remove all of your credentials and any stored passphrases on this device.</string>
+    <string name="settings_logout_button_title">Log out</string>
+
+
+
+    <!-- Add Issuer / Add Certificate -->
+    <string name="add_certificate_import">Import</string>
+    <string name="add_certificate_by_file">Import from File</string>
+    <string name="add_certificate_by_url">Import from URL</string>
+    <string name="certificate_add_url_label">Copy and paste the credential URL:</string>
+    <string name="certificate_add_url_edit_text_hint">Credential URL</string>
+    <string name="fragment_add_certificate_file_label">What is the File of the credential?</string>
+    <string name="framgent_add_certificate_file_choose_file_button_title">Choose File</string>
+    <string name="fragment_add_certificate_title">Add Credential</string>
+    <string name="fragment_add_certificate_progress_dialog_message">Adding credential…</string>
+    <string name="fragment_add_certificate_alert_dialog_success_title">Success!</string>
+    <string name="fragment_add_certificate_alert_dialog_success_message">This is a valid credential.</string>
+    <string name="fragment_add_certificate_alert_dialog_error_message">That doesn\'t appear to be a valid credential. Please check the URL and try again.</string>
+
+
+
+    <!-- Share certificate -->
+    <string name="fragment_certificate_share_url_button_title">Share link</string>
+    <string name="fragment_certificate_share_file_button_title">Share file</string>
+
+
+
+    <!-- Dialog Error Messages -->
+
+    <string name="connection_error_message">Connection unavailable. Please check your connection and try again.</string>
+    <string name="unknown_error_message">Unknown error. Something unexepected occurred.</string>
+    <string name="error_title_message">Error</string>
+    <string name="ime_action_done">Done</string>
+
+    <string name="error_title_message1">Add Issuer Failed</string>
+    <string name="error_title_message2">Add Issuer Failed</string>
+    <string name="error_title_message3">Add Issuer Failed</string>
+
+    <string name="http_not_found_issuer">There does not appear to be a valid issuer at this URL. Please check the URL and try again.</string>
+    <string name="http_bad_request_issuer">There was an error adding this issuer. This can happen when a single-use invitation link is clicked more than once. Please check with the issuer and request a new invitation, if necessary.</string>
+
+    <string name="http_not_found_certificate">There does not appear to be a valid credential at this URL. Please check the URL and try again.</string>
+    <string name="http_bad_request_certificate">This credential URL appears to be invalid. This could be for a number of reasons, such as this the credential having already been issued.</string>
+
+    <string name="http_not_found_generic">This does not appear to be a valid URL. Please check the URL and try again.</string>
+    <string name="http_bad_request_generic">An invalid URL was entered. Please check the URL and try again.</string>
+
+
+    <string name="wallet_does_not_exist_and_want_to_add_issuer">Before you may add an issuer you must log in to an account.\n\nGo ahead and log in, we will try to add the issuer after you are finished.</string>
+    <string name="wallet_does_not_exist_and_want_to_add_certificate">Before you may add a credential you must log in to an account.\n\nGo ahead and log in, we will try to add the credential after you are finished.</string>
+
+
+
+
+    <string name="no_files_downloaded_title">No Credential Files</string>
+    <string name="no_files_downloaded_message">There are no credential files saved to this device.</string>
+
+
+
+
+
+    <!-- vvv OLD vvv -->
+
+
+    <string name="onboarding_no_account">Account Does Not Exist</string>
+
     <string name="onboarding_new_account">New Account</string>
     <string name="onboarding_existing_account">I already have one</string>
     <string name="onboarding_generate_password_title">New Account</string>
     <string name="onboarding_generate_password_description">If you ever lose your phone, you will need this passphrase to recover your records.</string>
     <string name="onboarding_generate_password_button">Generate Passphrase</string>
-    <string name="onboarding_passphrase_title">Passphrase</string>
-    <string name="onboarding_passphrase_description">Write this down as a backup.</string>
-    <string name="onboarding_passphrase_done_button">Done</string>
-    <string name="onboarding_paste_passphrase_title">Paste your passphrase</string>
-    <string name="onboarding_paste_passphrase_hint">Paste your passphrase</string>
+    <string name="onboarding_passphrase_done_button">All Done!</string>
+
+    <string name="onboarding_passphrase_write_title">Manual Hardcopy</string>
+    <string name="onboarding_passphrase_write_message">Write your passphrase by hand on a piece of paper and store in a secure location.</string>
+    <string name="onboarding_passphrase_write_confirmation">Done</string>'
+
+
+    <string name="onboarding_passphrase_email_before_title">Are you sure?</string>
+    <string name="onboarding_passphrase_email_before">This is a low-security backup method. Do you want to continue?</string>
+
+    <string name="onboarding_passphrase_permissions_error_title">Backup Error!</string>
+    <string name="onboarding_passphrase_permissions_error">To save passphrase on your device, allow permission to access files.</string>
+
+    <string name="onboarding_passphrase_complete_title">Passphrase Backed Up!</string>
+    <string name="onboarding_passphrase_save_complete">Your passphrase has been saved this external storage as learningmachine.dat.</string>
+
+
+
+    <string name="onboarding_passphrase_cancel">Cancel</string>
+    <string name="onboarding_passphrase_ok">Okay</string>
+
+
     <string name="onboarding_paste_passphrase_done_button">Done</string>
+
 
     <!-- Home -->
     <string name="fragment_home_empty_title">You are ready!</string>
-    <string name="fragment_home_empty_description">Issuers will send you an email with a link to add them. This will send a special code that represents you. If you already have their information, continue.</string>
+    <string name="fragment_home_empty_description">Check email inbox for invitation email from your issuing institution to add your credential.</string>
     <string name="fragment_home_empty_action">Add Issuer</string>
 
     <!-- Settings -->
     <string name="settings">settings</string>
     <string name="settings_fragment">Settings</string>
 
+    <string name="settings_issuer_header">Issuers</string>
+
+    <string name="settings_credential_header">Credentials</string>
+
     <string name="settings_passphrase_header">Passphrase</string>
-    <string name="settings_reveal_passphrase">Reveal Passphrase</string>
-    <string name="settings_replace_passphrase">Replace Passphrase</string>
-    <string name="settings_about_passphrases">About Passphrases</string>
+
+
 
     <string name="settings_about_header">About</string>
     <string name="settings_about_this_app">About this app</string>
-    <string name="settings_privacy_policy">Privacy Policy</string>
-    <string name="settings_privacy_policy_endpoint">http://www.learningmachine.com/mobile-privacy/</string>
+
+
+    <string name="settings_troubleshooting_header">Troubleshooting</string>
 
     <!-- Add Issuer -->
     <string name="fragment_add_issuer_title">Add Issuer</string>
-    <string name="fragment_add_issuer_info_url_text">Add the URL you were given by your Issuer.</string>
+    <string name="fragment_add_issuer_info_url_text">Add the URL given by your Issuer.</string>
     <string name="fragment_add_issuer_url">Issuer URL</string>
-    <string name="fragment_add_issuer_identity_text">Add information to identify yourself to the Issuer.</string>
+    <string name="fragment_add_issuer_identity_text">Add your one-time code.</string>
     <string name="fragment_add_issuer_add_identity">One-time Code</string>
-    <string name="fragment_add_issuer_invalid_issuer_error">This doesn’t appear to be a valid Issuer. Please check the URL and try again.</string>
-    <string name="fragment_add_issuer_bad_url_error">Invalid url was entered for the issuer URL.</string>
     <string name="fragment_add_issuer_bad_identity_info_error">Bad info for the identity.</string>
     <string name="fragment_add_issuer_adding_issuer_progress_dialog_message">Adding Issuer…</string>
 
     <!-- Reveal Passphrase -->
 
     <string name="reveal_passphrase_title">Reveal Passphrase</string>
-    <string name="reveal_passphrase_instructional_message">This passphrase uniquely proves ownership of all your certificates. Write this down, keep it safe, and don’t reveal it to anyone else.</string>
+    <string name="reveal_passphrase_instructional_message">This passphrase uniquely proves ownership of all your credentials. Write this down, keep it safe, and don’t reveal it to anyone else.</string>
     <string name="reveal_passphrase_current_title">Current Passphrase</string>
     <string name="reveal_passphrase_text_copied">Passphrase has been copied.</string>
 
@@ -57,7 +283,7 @@
 
     <string name="replace_passphrase_title">Replace Passphrase</string>
     <string name="replace_passphrase_menu_item_title">Replace</string>
-    <string name="replace_passphrase_warning_message">Note that replacing your passphrase will remove all your issuers and certificates. Make sure this is what you want to do before proceeding.</string>
+    <string name="replace_passphrase_warning_message">Note that replacing your passphrase will remove all your issuers and credentials. Make sure this is what you want to do before proceeding.</string>
     <string name="replace_passphrase_hint">Paste Passphrase</string>
     <string name="replace_passphrase_success_message">Passphrase successfully replaced</string>
 
@@ -68,27 +294,10 @@
 
     <!-- Issuer Info Fragment -->
 
-    <string name="issuer_info_menu_item_title">Info</string>
-    <string name="fragment_issuer_info_additional_information">Additional Information</string>
-    <string name="fragment_issuer_info_introduced_on">Introduced on</string>
-    <string name="fragment_issuer_info_shared_address">Shared Address</string>
-    <string name="fragment_issuer_info_url">URL</string>
-    <string name="fragment_issuer_info_email">Email</string>
-    <string name="fragment_issuer_info_description">Description</string>
+
 
     <!--Add Certificate-->
 
-    <string name="add_certificate_by_file">BY FILE</string>
-    <string name="add_certificate_by_url">BY URL</string>
-    <string name="certificate_add_url_label">What is the URL of the certificate?</string>
-    <string name="certificate_add_url_edit_text_hint">Certificate URL</string>
-    <string name="fragment_add_certificate_file_label">What is the File of the certificate?</string>
-    <string name="framgent_add_certificate_file_choose_file_button_title">Choose File</string>
-    <string name="fragment_add_certificate_title">Add Certificate</string>
-    <string name="fragment_add_certificate_progress_dialog_message">Adding certificate…</string>
-    <string name="fragment_add_certificate_alert_dialog_success_title">Success!</string>
-    <string name="fragment_add_certificate_alert_dialog_success_message">This is a valid certificate.</string>
-    <string name="fragment_add_certificate_alert_dialog_error_message">That doesn\'t appear to be a valid certificate. Please check the URL and try again.</string>
 
     <!-- Certificate Fragment -->
 
@@ -96,49 +305,45 @@
     <string name="certificate_verify_menu_item_title">Verify</string>
     <string name="certificate_share_menu_item_title">Share</string>
     <string name="certificate_info_menu_item_title">Info</string>
-    <string name="fragment_certificate_progress_dialog_message">Loading Certificate…</string>
-    <string name="fragment_certificate_share_message">How would you like to share your certificate?</string>
-    <string name="fragment_certificate_share_url_button_title">URL</string>
-    <string name="fragment_certificate_share_file_button_title">File</string>
-    <string name="fragment_certificate_share_url_format">Check out my certificate from %1$s! %2$s</string>
-    <string name="fragment_certificate_share_file_format">Check out my certificate from %1$s!</string>
+    <string name="fragment_certificate_progress_dialog_message">Loading Credential…</string>
+    <string name="fragment_certificate_share_message"></string>
+    <string name="fragment_certificate_share_url_format">Check out my credential from %1$s! %2$s</string>
+    <string name="fragment_certificate_share_file_format">Check out my credential from %1$s!</string>
+
 
     <!-- Certificate Info Fragment -->
 
     <string name="fragment_certificate_info_delete_menu_item_title">Delete</string>
     <string name="fragment_certificate_info_delete_warning_title">Be careful</string>
-    <string name="fragment_certificate_info_delete_warning_message">If you delete this certificate and don\'t have a backup, then you\'ll have to ask the issuer to send it to you again if you want to recover it. Are you sure you want to delete this certificate?</string>
-    <string name="fragment_certificate_info_delete_warning_positive_title">Delete</string>
-    <string name="fragment_certificate_info_delete_warning_negative_title">Cancel</string>
+    <string name="fragment_certificate_info_delete_warning_message">If you delete this credential and don\'t have a backup, then you\'ll have to ask the issuer to send it to you again if you want to recover it. Are you sure you want to delete this credential?</string>
+    <string name="fragment_certificate_info_delete_warning_positive_title">Cancel</string>
+    <string name="fragment_certificate_info_delete_warning_negative_title">Delete</string>
 
     <!-- Certificate Verification -->
 
+
     <string name="cert_verification_step_computing_local_hash">Computing local hash…</string>
     <string name="cert_verification_step_fetching_remote_hash">Fetching remote hash…</string>
-    <string name="cert_verification_step_comparing_hashes">Comparing local and remote hashes…</string>
-    <string name="cert_verification_step_checking_merkle">Checking merkle root…</string>
     <string name="cert_verification_step_checking_receipt">Checking receipt…</string>
-    <string name="cert_verification_step_checking_authenticity">Checking authenticity…</string>
     <string name="cert_verification_step_checking_issuer_signature">Checking issuer\'s signature…</string>
-    <string name="cert_verification_step_checking_cert_status">Checking if the certificate has been revoked…</string>
-    <string name="cert_verification_step_valid_cert">Valid certificate</string>
-    <string name="cert_verification_step_invalid_cert">Not a valid certificate</string>
-    <string name="error_invalid_certificate_json">The certificate file is invalid</string>
-    <string name="error_cannot_load_certificate_json">Could not load the certificate file</string>
-    <string name="error_remote_and_local_hash_mismatch">Local hash doesn\'t match remote hash</string>
+    <string name="cert_verification_step_checking_cert_status">Checking if the credential has been revoked…</string>
+
+
+    <string name="cert_verification_step_invalid_cert">Not a valid credential</string>
+    <string name="error_testnet_certificate_json">This credential is for test purposes only; it has not been recorded to a blockchain</string>
+
+
+
     <string name="fragment_verify_cert_title">Verifying</string>
-    <string name="fragment_verify_cert_step_format">Step %1$d of %2$d</string>
     <string name="fragment_verify_cert_cancel_text_view_title">Cancel</string>
-    <string name="cert_verification_success_title">Success!</string>
-    <string name="cert_verification_failure_title">Failure</string>
+    <string name="cert_verification_success_title">Verified!</string>
+    <string name="cert_verification_failure_title">Fail</string>
     <string name="dialog_verify_cert_result_positive_button_title">OK</string>
 
-    <!-- Dialog Error Messages -->
 
-    <string name="connection_error_message">Connection unavailable. Please check your connection and try again.</string>
-    <string name="unknown_error_message">Unknown error. Something unexepected occurred.</string>
-    <string name="error_title_message">Error</string>
-    <string name="ime_action_done">Done</string>
+    <string name="cert_passphrase_invalid_title">Passphrase Invalid</string>
+    <string name="cert_passphrase_invalid_desc">Please check your passphrase and try again.</string>
+
 
     <!--Certificate Info Fragment-->
 

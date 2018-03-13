@@ -20,6 +20,10 @@ import static java.net.HttpURLConnection.HTTP_NOT_FOUND;
 
 public class DialogUtils {
 
+    public enum ErrorCategory {
+        GENERIC, ISSUER, CERTIFICATE
+    }
+
     public static final String TAG_DIALOG_PROGRESS = "DialogUtils.Dialog.Progress";
     private static final String TAG_DIALOG_ALERT = "DialogUtils.Dialog.Alert";
 
@@ -53,9 +57,86 @@ public class DialogUtils {
         alertDialogFragment.show(fragmentManager, TAG_DIALOG_ALERT);
     }
 
-    public static void showErrorAlertDialog(Context context, FragmentManager fragmentManager, @StringRes int titleResId, Throwable throwable) {
+    public static void showAlertDialog(Context context, @NonNull Fragment targetFragment, int iconID, String title, String message, String positiveButton, String negativeButton, AlertDialogFragment.Callback callback) {
+        FragmentManager fragmentManager = targetFragment.getFragmentManager();
+        AlertDialogFragment alertDialogFragment = AlertDialogFragment.newInstance(
+                false,
+                0,
+                iconID,
+                title,
+                message,
+                positiveButton,
+                negativeButton,
+                callback,
+                null,
+                null);
+        alertDialogFragment.setTargetFragment(targetFragment, 0);
+        alertDialogFragment.show(fragmentManager, TAG_DIALOG_ALERT);
+    }
+
+    public static void showAlertDialog(Context context, @NonNull Fragment targetFragment, int iconID, String title, String message, String positiveButton, String negativeButton, AlertDialogFragment.Callback callback, AlertDialogFragment.Callback onCancel) {
+        FragmentManager fragmentManager = targetFragment.getFragmentManager();
+        AlertDialogFragment alertDialogFragment = AlertDialogFragment.newInstance(
+                false,
+                0,
+                iconID,
+                title,
+                message,
+                positiveButton,
+                negativeButton,
+                callback,
+                null,
+                onCancel);
+        alertDialogFragment.setTargetFragment(targetFragment, 0);
+        alertDialogFragment.show(fragmentManager, TAG_DIALOG_ALERT);
+    }
+
+    public static AlertDialogFragment showCustomDialog(Context context, @NonNull Fragment targetFragment, int layoutID, int iconID, String title, String message, String positiveButton, String negativeButton, AlertDialogFragment.Callback onComplete, AlertDialogFragment.Callback onCreate, AlertDialogFragment.Callback onCancel) {
+        FragmentManager fragmentManager = targetFragment.getFragmentManager();
+        AlertDialogFragment alertDialogFragment = AlertDialogFragment.newInstance(
+                false,
+                layoutID,
+                iconID,
+                title,
+                message,
+                positiveButton,
+                negativeButton,
+                onComplete,
+                onCreate,
+                onCancel);
+        alertDialogFragment.setTargetFragment(targetFragment, 0);
+        alertDialogFragment.show(fragmentManager, TAG_DIALOG_ALERT);
+        return alertDialogFragment;
+    }
+
+    public static AlertDialogFragment showCustomSheet(Context context, @NonNull Fragment targetFragment, int layoutID, int iconID, String title, String message, String positiveButton, String negativeButton, AlertDialogFragment.Callback onComplete, AlertDialogFragment.Callback onCreate) {
+        FragmentManager fragmentManager = targetFragment.getFragmentManager();
+        AlertDialogFragment alertDialogFragment = AlertDialogFragment.newInstance(
+                true,
+                layoutID,
+                iconID,
+                title,
+                message,
+                positiveButton,
+                negativeButton,
+                onComplete,
+                onCreate,
+                null);
+        alertDialogFragment.setTargetFragment(targetFragment, 0);
+        alertDialogFragment.show(fragmentManager, TAG_DIALOG_ALERT);
+        return alertDialogFragment;
+    }
+
+
+    public static void showErrorAlertDialog(Context context, FragmentManager fragmentManager, @StringRes int titleResId, Throwable throwable, ErrorCategory errorCategory) {
         String titleString = context.getString(titleResId);
-        String errorString = getErrorMessageString(context, throwable);
+        String errorString = getErrorMessageString(context, throwable, errorCategory);
+        showErrorAlertDialog(context, fragmentManager, titleString, errorString, throwable);
+    }
+
+    public static void showErrorAlertDialog(Context context, FragmentManager fragmentManager, @StringRes int titleResId, int errorID, Throwable throwable, ErrorCategory errorCategory) {
+        String titleString = context.getString(titleResId);
+        String errorString = context.getString(errorID);
         showErrorAlertDialog(context, fragmentManager, titleString, errorString, throwable);
     }
 
@@ -66,24 +147,38 @@ public class DialogUtils {
                 .commitAllowingStateLoss();
     }
 
-    private static String getErrorMessageString(Context context, Throwable throwable) {
-        int resId = getErrorMessageResourceId(throwable);
+    private static String getErrorMessageString(Context context, Throwable throwable, ErrorCategory errorCategory) {
+        int resId = getErrorMessageResourceId(throwable, errorCategory);
         if (resId == 0) {
             return throwable.getMessage();
         }
         return context.getString(resId);
     }
 
-    private static int getErrorMessageResourceId(Throwable throwable) {
+    private static int getErrorMessageResourceId(Throwable throwable, ErrorCategory errorCategory) {
         if (throwable instanceof UnknownHostException) {
             return R.string.connection_error_message;
         } else if (throwable instanceof HttpException) {
             switch (((HttpException) throwable).code()) {
                 case HTTP_NOT_FOUND:
-                    return R.string.fragment_add_issuer_bad_url_error;
+                    switch(errorCategory){
+                        case ISSUER:
+                            return R.string.http_not_found_issuer;
+                        case CERTIFICATE:
+                            return R.string.http_not_found_certificate;
+                        default:
+                            return R.string.http_not_found_generic;
+                    }
                 default:
                 case HTTP_BAD_REQUEST:
-                    return R.string.fragment_add_issuer_invalid_issuer_error;
+                    switch(errorCategory){
+                        case ISSUER:
+                            return R.string.http_bad_request_issuer;
+                        case CERTIFICATE:
+                            return R.string.http_bad_request_certificate;
+                        default:
+                            return R.string.http_bad_request_generic;
+                    }
             }
         } else if (throwable instanceof ExceptionWithResourceString) {
             ExceptionWithResourceString exceptionWithResourceString = (ExceptionWithResourceString) throwable;

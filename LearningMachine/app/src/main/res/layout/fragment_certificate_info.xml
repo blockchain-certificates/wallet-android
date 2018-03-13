@@ -1,29 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/certificate_info_additional_info_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingEnd="@dimen/certificate_info_linear_layout_padding_end"
-            android:paddingStart="@dimen/certificate_info_linear_layout_padding_start"
-            android:paddingTop="@dimen/certificate_info_linear_layout_padding_top"
-            android:text="@string/fragment_issuer_info_additional_information"
-            style="@style/CertificateInfo.Header"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/certificate_info_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingEnd="@dimen/certificate_info_linear_layout_padding_end"
-            android:paddingStart="@dimen/certificate_info_linear_layout_padding_start"
-            android:paddingTop="@dimen/fragment_home_recyclerview_spacing"/>
+            android:padding="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
 
-    </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
 
 </layout>

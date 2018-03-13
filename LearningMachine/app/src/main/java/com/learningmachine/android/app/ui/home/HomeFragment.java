@@ -7,8 +7,10 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,11 +19,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.learningmachine.android.app.R;
+import com.learningmachine.android.app.data.CertificateManager;
 import com.learningmachine.android.app.data.IssuerManager;
 import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.data.model.IssuerRecord;
 import com.learningmachine.android.app.data.preferences.SharedPreferencesManager;
 import com.learningmachine.android.app.databinding.FragmentHomeBinding;
+import com.learningmachine.android.app.databinding.ListIssuerHeaderBinding;
 import com.learningmachine.android.app.databinding.ListItemIssuerBinding;
 import com.learningmachine.android.app.ui.LMFragment;
 import com.learningmachine.android.app.ui.issuer.AddIssuerActivity;
@@ -37,6 +41,7 @@ import timber.log.Timber;
 public class HomeFragment extends LMFragment {
 
     @Inject IssuerManager mIssuerManager;
+    @Inject CertificateManager mCertificateManager;
     @Inject SharedPreferencesManager mSharedPreferencesManager;
 
     private FragmentHomeBinding mBinding;
@@ -53,8 +58,6 @@ public class HomeFragment extends LMFragment {
         Injector.obtain(getContext())
                 .inject(this);
 
-        mSharedPreferencesManager.setFirstLaunch(false);
-
         mIssuerList = new ArrayList<>();
     }
 
@@ -64,10 +67,6 @@ public class HomeFragment extends LMFragment {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
 
         setupRecyclerView();
-
-        mBinding.issuerAddButton.setOnClickListener(v -> addIssuer());
-
-        mBinding.issuerFloatingActionButton.setOnClickListener(v -> addIssuer());
 
         return mBinding.getRoot();
     }
@@ -98,40 +97,55 @@ public class HomeFragment extends LMFragment {
         return super.onOptionsItemSelected(item);
     }
 
-    private void addIssuer() {
-        Intent intent = AddIssuerActivity.newIntent(getContext());
-        startActivity(intent);
-    }
-
     private void setupRecyclerView() {
         IssuerAdapter adapter = new IssuerAdapter(mIssuerList);
         mBinding.issuerRecyclerview.setAdapter(adapter);
 
-        int gridSize = calculateSpanCount();
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), gridSize);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+
         mBinding.issuerRecyclerview.setLayoutManager(layoutManager);
-        mBinding.issuerRecyclerview.setHasFixedSize(true);
     }
 
-    private int calculateSpanCount() {
-        Resources resources = getResources();
-        DisplayMetrics displayMetrics = resources.getDisplayMetrics();
-        int itemWidth = resources.getDimensionPixelSize(R.dimen.list_item_issuer_width_total);
-        return displayMetrics.widthPixels / itemWidth;
-    }
 
+    private int totalIssuersCertificateCountCalculated = 0;
     private void updateRecyclerView(List<IssuerRecord> issuerList) {
         mIssuerList.clear();
         mIssuerList.addAll(issuerList);
-        mBinding.issuerRecyclerview.getAdapter()
-                .notifyDataSetChanged();
 
-        boolean emptyIssuers = issuerList.isEmpty();
-        mBinding.issuerMainContent.setVisibility(emptyIssuers ? View.GONE : View.VISIBLE);
-        mBinding.issuerEmptyContent.setVisibility(emptyIssuers ? View.VISIBLE : View.GONE);
+
+        if (mSharedPreferencesManager.wasReturnUser()) {
+            mBinding.imageView2.setImageResource(R.drawable.ic_ready_for_certs);
+            mBinding.onboardingHomeNoIssuersDesc.setText(R.string.onboarding_home_no_issuers_desc_returning_user);
+        } else {
+            mBinding.imageView2.setImageResource(R.drawable.ic_ready);
+            mBinding.onboardingHomeNoIssuersDesc.setText(R.string.onboarding_home_no_issuers_desc_new_user);
+        }
+
+
+
+        // calculate the number of certificates per issuer
+        totalIssuersCertificateCountCalculated = mIssuerList.size();
+        for(IssuerRecord record : mIssuerList) {
+            mCertificateManager.getCertificatesForIssuer(record.getUuid())
+                    .compose(bindToMainThread())
+                    .subscribe((certificateRecords) -> {
+                            record.cachedNumberOfCertificatesForIssuer = certificateRecords.size();
+
+                        totalIssuersCertificateCountCalculated--;
+                        if(totalIssuersCertificateCountCalculated <= 0) {
+                            mBinding.issuerRecyclerview.getAdapter()
+                                    .notifyDataSetChanged();
+
+                            boolean emptyIssuers = issuerList.isEmpty();
+                            mBinding.issuerMainContent.setVisibility(emptyIssuers ? View.GONE : View.VISIBLE);
+                            mBinding.issuerEmptyContent.setVisibility(emptyIssuers ? View.VISIBLE : View.GONE);
+                        }
+
+                    }, throwable -> Timber.e(throwable, "Unable to load certificates"));
+        }
     }
 
-    private class IssuerAdapter extends RecyclerView.Adapter<IssuerViewHolder> {
+    private class IssuerAdapter extends RecyclerView.Adapter {
 
         private List<IssuerRecord> mIssuerList;
 
@@ -140,22 +154,54 @@ public class HomeFragment extends LMFragment {
         }
 
         @Override
-        public IssuerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            Context context = parent.getContext();
-            LayoutInflater inflater = LayoutInflater.from(context);
-            ListItemIssuerBinding binding = DataBindingUtil.inflate(inflater, R.layout.list_item_issuer, parent, false);
-            return new IssuerViewHolder(binding);
+        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            if(viewType == 0) {
+                Context context = parent.getContext();
+                LayoutInflater inflater = LayoutInflater.from(context);
+                ListIssuerHeaderBinding binding = DataBindingUtil.inflate(inflater,
+                        R.layout.list_issuer_header,
+                        parent,
+                        false);
+                return new GenericViewHolder(binding);
+            }
+
+            if(viewType == 1) {
+                Context context = parent.getContext();
+                LayoutInflater inflater = LayoutInflater.from(context);
+                ListItemIssuerBinding binding = DataBindingUtil.inflate(inflater, R.layout.list_item_issuer, parent, false);
+
+                float height = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150, getResources().getDisplayMetrics());
+
+                IssuerViewHolder holder = new IssuerViewHolder(binding);
+                holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(mBinding.issuerRecyclerview.getWidth(), (int) height));
+                return holder;
+            }
+
+            return null;
         }
 
         @Override
-        public void onBindViewHolder(IssuerViewHolder holder, int position) {
-            IssuerRecord issuer = mIssuerList.get(position);
-            holder.bind(issuer);
+        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+            if(position > 0) {
+                IssuerRecord issuer = mIssuerList.get(position - 1);
+                ((IssuerViewHolder)holder).bind(issuer);
+            }
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+            if(position == 0) {
+                return 0;
+            }
+            return 1;
         }
 
         @Override
         public int getItemCount() {
-            return mIssuerList.size();
+            if(mIssuerList.size() == 0) {
+                return 0;
+            }
+            return mIssuerList.size() + 1;
         }
     }
 }

@@ -39,6 +39,11 @@ public class BlockCertV11 extends CertificateSchemaV11 implements BlockCert {
     }
 
     @Override
+    public String getExpirationDate() {
+        return null;
+    }
+
+    @Override
     public String getUrl() {
         return getAssertion().getId()
                 .toString();
@@ -47,6 +52,11 @@ public class BlockCertV11 extends CertificateSchemaV11 implements BlockCert {
     @Override
     public String getRecipientPublicKey() {
         return getRecipient().getPubkey();
+    }
+
+    @Override
+    public String getVerificationPublicKey() {
+        return null;
     }
 
     @Override
@@ -81,7 +91,7 @@ public class BlockCertV11 extends CertificateSchemaV11 implements BlockCert {
         String imageData = issuer.getImage();
         String analytics = null;
 
-        return new IssuerResponse(name, email, certUuid, certsUrl, introUrl, introducedOn, imageData, analytics);
+        return new IssuerResponse(name, email, null, certUuid, certsUrl, introUrl, introducedOn, imageData, analytics);
     }
 
     @Override

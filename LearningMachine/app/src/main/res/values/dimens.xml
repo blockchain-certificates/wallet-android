@@ -1,5 +1,10 @@
 <resources>
 
+    <dimen name="rounded_button_stroke_width">1dp</dimen>
+
+    <!-- vvv OLD vvv -->
+
+
     <!-- Default screen margins, per the Android Design guidelines. -->
 
     <dimen name="activity_horizontal_margin">16dp</dimen>
@@ -14,22 +19,23 @@
 
     <dimen name="onboarding_logo_margin_top">30dp</dimen>
 
-    <dimen name="onboarding_button_padding_vertical">8dp</dimen>
+    <dimen name="onboarding_button_padding_vertical">4dp</dimen>
     <dimen name="onboarding_button_padding_horizontal">48dp</dimen>
     <dimen name="onboarding_button_border_width">1dp</dimen>
-    <dimen name="onboarding_button_width">260dp</dimen>
+    <dimen name="onboarding_button_width">300dp</dimen>
+    <dimen name="onboarding_button_height">52dp</dimen>
 
     <dimen name="onboarding_choose_new_account_margin_top">104dp</dimen>
-    <dimen name="onboarding_choose_button_margin_bottom">22dp</dimen>
+    <dimen name="onboarding_choose_button_margin_bottom">24dp</dimen>
 
     <dimen name="onboarding_generate_passphrase_textive_width">282dp</dimen>
     <dimen name="onboarding_generate_container_margin_top">66dp</dimen>
-    <dimen name="onboarding_generate_title_margin_top">21dp</dimen>
+    <dimen name="onboarding_generate_title_margin_top">24dp</dimen>
     <dimen name="onboarding_generate_passphrase_button_margin_top">29dp</dimen>
 
-    <dimen name="onboarding_view_passphrase_imageview_size">150dp</dimen>
-    <dimen name="onboarding_view_passphrase_imageview_margin_top">56dp</dimen>
-    <dimen name="onboarding_view_passphrase_title_margin_vertical">21dp</dimen>
+    <dimen name="onboarding_view_passphrase_imageview_size">120dp</dimen>
+    <dimen name="onboarding_view_passphrase_imageview_margin_top">30dp</dimen>
+    <dimen name="onboarding_view_passphrase_title_margin_vertical">24dp</dimen>
     <dimen name="onboarding_view_passphrase_textview_margin_top">27dp</dimen>
     <dimen name="onboarding_view_passphrase_textview_padding_veritical">24dp</dimen>
     <dimen name="onboarding_view_passphrase_textview_padding_horizontal">12dp</dimen>
@@ -44,7 +50,7 @@
     <!-- Home -->
 
     <dimen name="fragment_home_empty_title_margin">32dp</dimen>
-    <dimen name="fragment_home_empty_description_margin">22dp</dimen>
+    <dimen name="fragment_home_empty_description_margin">24dp</dimen>
     <dimen name="fragment_home_empty_description_width">282dp</dimen>
     <dimen name="fragment_home_empty_button_margin">39dp</dimen>
     <dimen name="fragment_home_empty_button_width">260dp</dimen>
@@ -52,7 +58,7 @@
 
     <!-- Add Issuer -->
 
-    <dimen name="fragment_add_issuer_linear_layout_top_padding">22dp</dimen>
+    <dimen name="fragment_add_issuer_linear_layout_top_padding">20dp</dimen>
     <dimen name="fragment_add_issuer_linear_layout_padding_horizontal">16dp</dimen>
     <dimen name="fragment_add_isser_edittext_padding_right">3dp</dimen>
     <dimen name="fragment_add_issuer_url_textview_top_padding">22dp</dimen>
@@ -63,15 +69,15 @@
 
     <!-- Add Certificate -->
 
-    <dimen name="fragment_add_certificate_linear_layout_top_padding">20dp</dimen>
-    <dimen name="fragment_add_certificate_linear_layout_start_padding">16dp</dimen>
-    <dimen name="fragment_add_certificate_text_view_bottom_margin">31dp</dimen>
+    <dimen name="fragment_add_certificate_linear_layout_top_padding">24dp</dimen>
+    <dimen name="fragment_add_certificate_linear_layout_start_padding">20dp</dimen>
+    <dimen name="fragment_add_certificate_text_view_bottom_margin">20dp</dimen>
 
     <!-- Settings -->
 
     <dimen name="fragment_settings_textview_padding_top">13dp</dimen>
     <dimen name="fragment_settings_textview_padding_bottom">11dp</dimen>
-    <dimen name="fragment_settings_linear_layout_horizontal_padding">16dp</dimen>
+    <dimen name="fragment_settings_linear_layout_horizontal_padding">20dp</dimen>
     <dimen name="fragment_settings_linear_layout_padding_top">13dp</dimen>
     <dimen name="fragment_settings_about_padding_top">13dp</dimen>
 

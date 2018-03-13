@@ -4,7 +4,9 @@ import android.content.Context;
 
 import com.google.common.io.Files;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -47,6 +49,14 @@ public class FileUtils {
 
     public static File getCertificateFile(Context context, String uuid) {
         return getCertificateFile(context, uuid, false);
+    }
+
+    public static String getCertificateFileJSON(Context context, String uuid) throws Exception {
+        File fl = getCertificateFile(context, uuid);
+        FileInputStream fin = new FileInputStream(fl);
+        String ret = convertStreamToString(fin);
+        fin.close();
+        return ret;
     }
 
     private static File getCertificateFile(Context context, String uuid, boolean createDir) {
@@ -125,4 +135,48 @@ public class FileUtils {
         writer.flush();
         return true;
     }
+
+
+    public static boolean writeStringToFile(String string, String outputPath) throws IOException {
+        File outputFile = new File(outputPath);
+        FileWriter writer = new FileWriter(outputFile, false);
+        writer.write(string);
+        writer.flush();
+        return true;
+    }
+
+
+    public static void copyAssetFile(Context appContext, String assetFilePath, String destinationFilePath) throws IOException
+    {
+        InputStream in = appContext.getAssets().open(assetFilePath);
+        OutputStream out = new FileOutputStream(appContext.getFilesDir() + "/" + destinationFilePath);
+
+        byte[] buf = new byte[1024];
+        int len;
+        while ((len = in.read(buf)) > 0)
+            out.write(buf, 0, len);
+        in.close();
+        out.close();
+    }
+
+
+    public static String convertStreamToString(InputStream is) throws Exception {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+        StringBuilder sb = new StringBuilder();
+        String line = null;
+        while ((line = reader.readLine()) != null) {
+            sb.append(line).append("\n");
+        }
+        reader.close();
+        return sb.toString();
+    }
+
+    public static String getStringFromFile (String filePath) throws Exception {
+        File fl = new File(filePath);
+        FileInputStream fin = new FileInputStream(fl);
+        String ret = convertStreamToString(fin);
+        fin.close();
+        return ret;
+    }
+
 }

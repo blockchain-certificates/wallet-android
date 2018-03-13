@@ -24,6 +24,7 @@ import com.learningmachine.android.app.data.CertificateManager;
 import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.databinding.FragmentAddCertificateFileBinding;
 import com.learningmachine.android.app.ui.LMFragment;
+import com.learningmachine.android.app.util.DialogUtils;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -61,18 +62,16 @@ public class AddCertificateFileFragment extends LMFragment {
 
         mBinding.chooseFileButton.setOnClickListener(mOnClickListener);
 
+        mBinding.importButton.setOnClickListener(v -> {
+            addCertificateFile();
+        });
+
+        mBinding.importButton.setAlpha(0.3f);
+        mBinding.importButton.setEnabled(false);
+
         return mBinding.getRoot();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.fragment_add_certificate_verify:
-                addCertificateFile();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     private View.OnClickListener mOnClickListener = v -> {
         if (ContextCompat.checkSelfPermission(getContext(),
@@ -112,7 +111,7 @@ public class AddCertificateFileFragment extends LMFragment {
                     Intent intent = CertificateActivity.newIntent(getContext(), uuid);
                     startActivity(intent);
                     getActivity().finish();
-                }, throwable -> displayErrors(throwable, R.string.error_title_message));
+                }, throwable -> displayErrors(throwable, DialogUtils.ErrorCategory.CERTIFICATE, R.string.error_title_message));
     }
 
     private void selectFile(File file) {
@@ -126,9 +125,26 @@ public class AddCertificateFileFragment extends LMFragment {
 
         String filename = mSelectedFile.getName();
         mBinding.chooseFileButton.setText(filename);
+
+        mBinding.importButton.setAlpha(1.0f);
+        mBinding.importButton.setEnabled(true);
     }
 
     private void showFileDialog(File[] files) {
+        if(files.length == 0) {
+            DialogUtils.showAlertDialog(getContext(), this,
+                    R.drawable.ic_dialog_failure,
+                    getResources().getString(R.string.no_files_downloaded_title),
+                    getResources().getString(R.string.no_files_downloaded_message),
+                    null,
+                    getResources().getString(R.string.onboarding_passphrase_ok),
+                    (btnIdx) -> {
+                        return null;
+                    });
+            return;
+        }
+
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         FileArrayAdapter fileArrayAdapter = new FileArrayAdapter(getContext(), files);
         builder.setAdapter(fileArrayAdapter, (dialog, which) -> {

@@ -1,45 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/linearLayout"
+        android:background="@color/colorBackground"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
+
+
+        <VideoView
+            android:id="@+id/background_video"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+
+            app:layout_constraintDimensionRatio="H,720:720"
+
+            app:layout_constraintBottom_toBottomOf="@+id/background_video_spacer"
+            app:layout_constraintLeft_toLeftOf="@+id/background_video_spacer"
+            app:layout_constraintRight_toRightOf="@+id/background_video_spacer" />
+
+        <View
+            android:id="@+id/background_video_cover"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/colorBackground"
+            app:layout_constraintBottom_toBottomOf="@+id/background_video"
+            app:layout_constraintTop_toTopOf="@+id/background_video"
+            app:layout_constraintLeft_toLeftOf="@+id/background_video"
+            app:layout_constraintRight_toRightOf="@+id/background_video" />
+
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top|center_horizontal"
-            android:layout_marginTop="@dimen/onboarding_logo_margin_top"
-            android:contentDescription="@null"
-            android:src="@drawable/ic_splash"/>
+            android:id="@+id/logo"
+            android:layout_width="230dp"
+            android:layout_height="65dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="24dp"
+            android:src="@drawable/ic_blockcerts_white"
+            app:layout_constraintBottom_toTopOf="@+id/background_video"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="spread" />
+
+
+        <View
+            android:id="@+id/background_video_spacer"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+
+            app:layout_constraintBottom_toTopOf="@+id/new_account_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/logo" />
+
+
+        <ImageButton
+            android:id="@+id/play_video"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@null"
+            android:src="@drawable/ic_play_button"
+            app:layout_constraintBottom_toBottomOf="@+id/background_video"
+            app:layout_constraintLeft_toLeftOf="@+id/background_video"
+            app:layout_constraintRight_toRightOf="@+id/background_video"
+            app:layout_constraintTop_toTopOf="@+id/background_video" />
 
         <Button
             android:id="@+id/new_account_button"
-            android:layout_width="@dimen/onboarding_button_width"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="@dimen/onboarding_choose_button_margin_bottom"
-            android:layout_marginTop="@dimen/onboarding_choose_new_account_margin_top"
-            android:paddingBottom="@dimen/onboarding_button_padding_vertical"
-            android:paddingEnd="@dimen/onboarding_button_padding_horizontal"
-            android:paddingStart="@dimen/onboarding_button_padding_horizontal"
-            android:paddingTop="@dimen/onboarding_button_padding_vertical"
-            android:text="@string/onboarding_new_account"
-            style="@style/OnboardingButton.Light"/>
+            style="@style/RoundedButton.Dark"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_marginBottom="12dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:text="@string/onboarding_new_user"
+            app:layout_constraintBottom_toTopOf="@+id/existing_account_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/existing_account_button"
-            android:layout_width="@dimen/onboarding_button_width"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:paddingBottom="@dimen/onboarding_button_padding_vertical"
-            android:paddingEnd="@dimen/onboarding_button_padding_horizontal"
-            android:paddingStart="@dimen/onboarding_button_padding_horizontal"
-            android:paddingTop="@dimen/onboarding_button_padding_vertical"
-            android:text="@string/onboarding_existing_account"/>
+            style="@style/RoundedButton.Light"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:text="@string/onboarding_returning_user"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
 
 </layout>

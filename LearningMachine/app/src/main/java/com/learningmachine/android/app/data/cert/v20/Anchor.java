@@ -6,9 +6,22 @@ import com.google.gson.annotations.SerializedName;
 
 public class Anchor {
 
+    public enum ChainType {
+        bitcoin,
+        testnet,
+        regtest,
+        mocknet,
+        unknown
+    }
+
+    @SerializedName("chain")
+    @Expose
+    private String chain;
+
     @SerializedName("sourceId")
     @Expose
     private String sourceId;
+
     @SerializedName("type")
     @Expose
     private String type;
@@ -27,6 +40,14 @@ public class Anchor {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getChain() {
+        return chain;
+    }
+
+    public void setChain(String chain) {
+        this.chain = chain;
     }
 
 }

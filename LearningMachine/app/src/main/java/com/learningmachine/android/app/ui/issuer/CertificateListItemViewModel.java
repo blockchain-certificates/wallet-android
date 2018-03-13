@@ -5,6 +5,13 @@ import android.databinding.Bindable;
 
 import com.learningmachine.android.app.data.model.CertificateRecord;
 
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.ISODateTimeFormat;
+
 public class CertificateListItemViewModel extends BaseObservable {
 
     private CertificateRecord mCertificate;
@@ -23,6 +30,19 @@ public class CertificateListItemViewModel extends BaseObservable {
             return null;
         }
         return mCertificate.getDescription();
+    }
+
+    @Bindable
+    public String getDateIssued() {
+        if (mCertificate == null) {
+            return null;
+        }
+
+        // 2018-02-01T23:00:00.0000+00.00
+        DateTimeFormatter parser = ISODateTimeFormat.dateTimeParser();
+        DateTimeFormatter formatter = ISODateTimeFormat.basicDate();
+        DateTime issuedDate = parser.parseDateTime(mCertificate.getIssuedOn());
+        return String.format("Issued %s", issuedDate.toString("MMM dd, yyyy"));
     }
 
     public void bindCertificate(CertificateRecord certificate) {

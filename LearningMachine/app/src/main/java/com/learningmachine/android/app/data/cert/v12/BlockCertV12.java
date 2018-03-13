@@ -89,6 +89,11 @@ public class BlockCertV12 extends BlockchainCertificate implements BlockCert {
     }
 
     @Override
+    public String getExpirationDate() {
+        return null;
+    }
+
+    @Override
     public String getUrl() {
         if (getDocument() == null
                 || getDocument().getAssertion() == null
@@ -108,6 +113,11 @@ public class BlockCertV12 extends BlockchainCertificate implements BlockCert {
         }
         return getDocument().getRecipient()
                 .getPublicKey();
+    }
+
+    @Override
+    public String getVerificationPublicKey() {
+        return null;
     }
 
     @Override
@@ -152,7 +162,7 @@ public class BlockCertV12 extends BlockchainCertificate implements BlockCert {
         String analytics = null;
         String imageData = issuer.getImage();
 
-        return new IssuerResponse(name, email, certUuid, certsUrl, introUrl, introducedOn, imageData, analytics);
+        return new IssuerResponse(name, email, null, certUuid, certsUrl, introUrl, introducedOn, imageData, analytics);
 
     }
 

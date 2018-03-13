@@ -14,22 +14,15 @@
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
+            android:theme="@style/AppTheme">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/add_certificate_toolbar"
-                android:background="?attr/colorPrimary"
+                android:background="@color/colorBackground"
+                app:titleTextColor="@color/white"
+                app:subtitleTextColor="@color/white"
                 android:layout_height="?attr/actionBarSize"
                 android:layout_width="match_parent"/>
-
-            <android.support.design.widget.TabLayout
-                android:id="@+id/add_certificate_tabs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?attr/colorPrimary"
-                app:tabGravity="fill"
-                app:tabIndicatorColor="?colorAccent"
-                app:tabMode="fixed"/>
 
         </android.support.design.widget.AppBarLayout>
 

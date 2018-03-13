@@ -13,6 +13,7 @@ import com.learningmachine.android.app.data.inject.LMComponent;
 import com.learningmachine.android.app.data.inject.LMGraph;
 import com.learningmachine.android.app.data.preferences.SharedPreferencesManager;
 import com.learningmachine.android.app.util.BitcoinUtils;
+import com.learningmachine.android.app.util.FileLoggingTree;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
@@ -55,6 +56,7 @@ public class LMApplication extends MultiDexApplication {
 
     private void setupTimber() {
         Timber.plant(mTree);
+        Timber.plant(new FileLoggingTree());
     }
 
     protected void setupJodaTime() {

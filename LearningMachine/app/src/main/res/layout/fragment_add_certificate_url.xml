@@ -12,32 +12,44 @@
         android:paddingEnd="@dimen/fragment_add_certificate_linear_layout_start_padding"
         android:paddingStart="@dimen/fragment_add_certificate_linear_layout_start_padding"
         android:paddingTop="@dimen/fragment_add_certificate_linear_layout_top_padding"
+        android:background="@color/white"
         tools:context=".ui.cert.AddCertificateURLFragment">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/fragment_add_certificate_text_view_bottom_margin"
+            android:paddingBottom="16dp"
             android:text="@string/certificate_add_url_label"
-            style="@style/Material.Light.Body1"/>
+            style="@style/Text.ListHeader"/>
 
-        <android.support.design.widget.TextInputLayout
+        <EditText
+            android:id="@+id/certificate_edit_text"
+            style="@style/Text.Passphrase"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:hint="@string/certificate_add_url_edit_text_hint"
+            android:imeActionId="@integer/action_done"
+            android:imeActionLabel="@string/ime_action_done"
+            android:imeOptions="flagNoFullscreen|actionDone"
+            android:inputType="textMultiLine"
+            android:maxLines="1"
+            android:gravity="top"
+            android:minHeight="108dp"
+            android:singleLine="false"
+            android:scrollHorizontally="false"
+            android:lines="5"
+            android:padding="12dp"
+            />
 
-            <EditText
-                android:id="@+id/certificate_url_edit_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/certificate_add_url_edit_text_hint"
-                android:imeOptions="flagNoFullscreen|actionDone"
-                android:imeActionLabel="@string/ime_action_done"
-                android:imeActionId="@integer/action_done"
-                android:inputType="textUri"
-                android:maxLines="1"
-                style="@style/Material.Light.Subhead.Disabled"/>
+        <Button
+            android:id="@+id/import_button"
+            style="@style/RoundedButton.Dark"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/add_certificate_import" />
 
-        </android.support.design.widget.TextInputLayout>
 
     </LinearLayout>
 

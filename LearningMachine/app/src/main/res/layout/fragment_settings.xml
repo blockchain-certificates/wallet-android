@@ -11,54 +11,119 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingTop="@dimen/fragment_settings_linear_layout_padding_top"
+            android:background="@color/white"
             tools:context="com.learningmachine.android.app.ui.settings.SettingsActivity">
 
+
+
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/settings_passphrase_header"
-                style="@style/Settings.Header"/>
+                android:id="@+id/settings_add_issuer_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="@string/settings_add_issuer"
+                android:gravity="center_vertical"
+                android:paddingStart="17dp"
+                android:paddingEnd="17dp"
+                style="@style/Text.Title.2"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/off_white_background"/>
+
+
+            <TextView
+                android:id="@+id/settings_add_credential_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="@string/settings_add_credential"
+                android:gravity="center_vertical"
+                android:paddingStart="17dp"
+                android:paddingEnd="17dp"
+                style="@style/Text.Title.2"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/off_white_background"/>
 
             <TextView
                 android:id="@+id/settings_reveal_passphrase_text_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="56dp"
                 android:text="@string/settings_reveal_passphrase"
-                style="@style/Settings.TextView"/>
+                android:gravity="center_vertical"
+                android:paddingStart="17dp"
+                android:paddingEnd="17dp"
+                style="@style/Text.Title.2"/>
 
-            <TextView
-                android:id="@+id/settings_replace_passphrase_text_view"
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/settings_replace_passphrase"
-                style="@style/Settings.TextView"/>
+                android:layout_height="1dp"
+                android:background="@color/off_white_background"/>
 
             <TextView
                 android:id="@+id/settings_about_passphrase_text_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="56dp"
                 android:text="@string/settings_about_passphrases"
-                style="@style/Settings.TextView"/>
+                android:gravity="center_vertical"
+                android:paddingStart="17dp"
+                android:paddingEnd="17dp"
+                style="@style/Text.Title.2"/>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
+                android:layout_height="1dp"
                 android:background="@color/off_white_background"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="@dimen/fragment_settings_about_padding_top"
-                android:text="@string/settings_about_header"
-                style="@style/Settings.Header"/>
 
             <TextView
                 android:id="@+id/settings_privacy_policy_text_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="56dp"
                 android:text="@string/settings_privacy_policy"
-                style="@style/Settings.TextView"/>
+                android:gravity="center_vertical"
+                android:paddingStart="17dp"
+                android:paddingEnd="17dp"
+                style="@style/Text.Title.2"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/off_white_background"/>
+
+
+            <TextView
+                android:id="@+id/settings_email_logs_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="@string/settings_email_logs"
+                android:gravity="center_vertical"
+                android:paddingStart="17dp"
+                android:paddingEnd="17dp"
+                style="@style/Text.Title.2"/>
+
+            <View
+                android:id="@+id/settings_logout_separator"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/off_white_background"/>
+
+            <TextView
+                android:id="@+id/settings_logout"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="@string/settings_logout"
+                android:gravity="center_vertical"
+                android:paddingStart="17dp"
+                android:paddingEnd="17dp"
+                style="@style/Text.Title.2"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/off_white_background"/>
+
 
         </LinearLayout>
 

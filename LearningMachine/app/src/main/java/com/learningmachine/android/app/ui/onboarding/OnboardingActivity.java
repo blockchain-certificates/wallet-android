@@ -1,16 +1,36 @@
 package com.learningmachine.android.app.ui.onboarding;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
+import android.telephony.TelephonyManager;
+import android.util.Log;
 
 import com.learningmachine.android.app.R;
+import com.learningmachine.android.app.data.inject.Injector;
+import com.learningmachine.android.app.data.preferences.SharedPreferencesManager;
 import com.learningmachine.android.app.databinding.ActivityOnboardingBinding;
 import com.learningmachine.android.app.ui.LMActivity;
 import com.learningmachine.android.app.ui.onboarding.OnboardingFlow.FlowType;
+import com.learningmachine.android.app.util.AESCrypt;
 
-public class OnboardingActivity extends LMActivity implements AccountChooserFragment.Callback,
-    GeneratePassphraseFragment.Callback {
+import java.io.File;
+import java.io.PrintWriter;
+import java.security.GeneralSecurityException;
+import java.util.Scanner;
+
+import javax.inject.Inject;
+
+public class OnboardingActivity extends LMActivity implements AccountChooserFragment.Callback {
+
+    @Inject SharedPreferencesManager mSharedPreferencesManager;
 
     private static final String SAVED_FLOW = "onboardingFlow";
 
@@ -22,11 +42,18 @@ public class OnboardingActivity extends LMActivity implements AccountChooserFrag
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Injector.obtain(this)
+                .inject(this);
+
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_onboarding);
         mBinding.onboardingViewPager.addOnPageChangeListener(mOnPageChangeListener);
 
         if (savedInstanceState == null) {
-            mOnboardingFlow = new OnboardingFlow(FlowType.UNKNOWN);
+            if (mSharedPreferencesManager.shouldShowWelcomeBackUserFlow()) {
+                mOnboardingFlow = new OnboardingFlow(FlowType.BACKUP_ONLY);
+            } else {
+                mOnboardingFlow = new OnboardingFlow(FlowType.UNKNOWN);
+            }
         } else {
             mOnboardingFlow = (OnboardingFlow) savedInstanceState.getSerializable(SAVED_FLOW);
         }
@@ -49,6 +76,14 @@ public class OnboardingActivity extends LMActivity implements AccountChooserFrag
         super.onBackPressed();
     }
 
+    public void onContinuePastWelcomeScreen() {
+        navigateForward();
+    }
+
+    public void onBackupPassphrase() {
+        navigateForward();
+    }
+
     @Override
     public void onNewAccount() {
         replaceScreens(FlowType.NEW_ACCOUNT);
@@ -57,11 +92,6 @@ public class OnboardingActivity extends LMActivity implements AccountChooserFrag
     @Override
     public void onExistingAccount() {
         replaceScreens(FlowType.EXISTING_ACCOUNT);
-    }
-
-    @Override
-    public void onGeneratePassphraseClick() {
-        navigateForward();
     }
 
     private void setupAdapter() {
@@ -119,5 +149,11 @@ public class OnboardingActivity extends LMActivity implements AccountChooserFrag
         @Override
         public void onPageScrollStateChanged(int i) { }
     };
+
+
+    public boolean isOnAccountsScreen() {
+        return mOnboardingFlow.getPosition() == 0;
+    }
+
 
 }

@@ -20,6 +20,22 @@ public class IssuerListItemViewModel extends BaseObservable {
         return mIssuer.getName();
     }
 
+    @Bindable
+    public String getNumberOfCertificatesAsString() {
+        if (mIssuer == null) {
+            return null;
+        }
+
+        // TODO: Move these to the strings.xml
+        if(mIssuer.cachedNumberOfCertificatesForIssuer == 0){
+            return "No Credentials";
+        }
+        if(mIssuer.cachedNumberOfCertificatesForIssuer == 1){
+            return "1 Credential";
+        }
+        return String.format("%d Credentials", mIssuer.cachedNumberOfCertificatesForIssuer);
+    }
+
     public void bindIssuer(IssuerRecord issuer) {
         mIssuer = issuer;
         notifyChange();

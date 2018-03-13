@@ -12,10 +12,12 @@ public interface BlockCert {
     String getIssueDate();
     String getUrl();
     String getRecipientPublicKey();
+    String getVerificationPublicKey();
     String getSourceId();
     String getMerkleRoot();
     String getMetadata();
     String getReceiptHash();
+    String getExpirationDate();
 
     /**
      * @return The portion of the certificate whose hash needs to be compared against the

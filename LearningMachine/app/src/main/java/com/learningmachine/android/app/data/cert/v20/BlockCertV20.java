@@ -1,5 +1,7 @@
 package com.learningmachine.android.app.data.cert.v20;
 
+import android.util.Log;
+
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -19,6 +21,14 @@ public class BlockCertV20 extends CertSchemaV20 implements BlockCert {
     @SerializedName("metadataJson")
     @Expose
     private String mMetadata;
+
+    @SerializedName("displayHtml")
+    @Expose
+    private String mDisplayHtml;
+
+    public String getDisplayHtml() {
+        return mDisplayHtml;
+    }
 
     @Override
     public String getCertUid() {
@@ -71,6 +81,14 @@ public class BlockCertV20 extends CertSchemaV20 implements BlockCert {
     }
 
     @Override
+    public String getExpirationDate() {
+        if (getExpires() == null) {
+            return null;
+        }
+        return getExpires().toString();
+    }
+
+    @Override
     public String getUrl() {
         if (StringUtils.isWebUrl(getId())) {
             return getId();
@@ -92,6 +110,19 @@ public class BlockCertV20 extends CertSchemaV20 implements BlockCert {
         String keyString = getRecipientProfile()
                 .getPublicKey()
                 .toString();
+        if (keyString.startsWith(LMConstants.ECDSA_KOBLITZ_PUBKEY_PREFIX)) {
+            keyString = keyString.substring(LMConstants.ECDSA_KOBLITZ_PUBKEY_PREFIX.length());
+        }
+        return keyString;
+    }
+
+    @Override
+    public String getVerificationPublicKey() {
+        if( getVerification() == null || getVerification().getPublicKey() == null) {
+            return null;
+        }
+
+        String keyString = getVerification().getPublicKey().toString();
         if (keyString.startsWith(LMConstants.ECDSA_KOBLITZ_PUBKEY_PREFIX)) {
             keyString = keyString.substring(LMConstants.ECDSA_KOBLITZ_PUBKEY_PREFIX.length());
         }
@@ -127,6 +158,7 @@ public class BlockCertV20 extends CertSchemaV20 implements BlockCert {
         Issuer issuer = getBadge().getIssuer();
         String name = issuer.getName();
         String email = issuer.getEmail();
+        String issuerURL = issuer.getUrl().toString();
         String certUuid = issuer.getId().toString();
         String certsUrl = null;
         String introUrl = null;
@@ -134,7 +166,7 @@ public class BlockCertV20 extends CertSchemaV20 implements BlockCert {
         String imageData = issuer.getImage();
         String analytics = null;
 
-        return new IssuerResponse(name, email, certUuid, certsUrl, introUrl, introducedOn, imageData, analytics);
+        return new IssuerResponse(name, email, issuerURL, certUuid, certsUrl, introUrl, introducedOn, imageData, analytics);
     }
 
     @Override
@@ -150,4 +182,34 @@ public class BlockCertV20 extends CertSchemaV20 implements BlockCert {
     public void setDocumentNode(JsonObject documentNode) {
         mDocumentNode = documentNode;
     }
+
+
+    public Anchor.ChainType getChain() {
+        if(getSignature() != null && getSignature().getAnchors() != null) {
+            Anchor anchor = getSignature().getAnchors().get(0);
+            String anchorChain = anchor.getChain();
+            if (anchorChain != null) {
+                if (anchorChain.toLowerCase().equals("bitcoinmainnet")) {
+                    return Anchor.ChainType.bitcoin;
+                } else if (anchorChain.toLowerCase().equals("bitcointestnet")) {
+                    return Anchor.ChainType.testnet;
+                } else if (anchorChain.toLowerCase().equals("bitcoinregtest")) {
+                    return Anchor.ChainType.regtest;
+                } else if (anchorChain.toLowerCase().equals("mockchain")) {
+                    return Anchor.ChainType.mocknet;
+                } else {
+                    return Anchor.ChainType.unknown;
+                }
+            }
+        }
+
+        String pubkey = getVerificationPublicKey();
+        // Legacy path: we didn't support anything other than testnet and mainnet, so we check the address prefix
+        // otherwise try to determine the chain from a bitcoin address
+        if (pubkey.startsWith("1") || pubkey.startsWith("ecdsa-koblitz-pubkey:1")) {
+            return Anchor.ChainType.bitcoin;
+        }
+
+        return Anchor.ChainType.testnet;
+    };
 }

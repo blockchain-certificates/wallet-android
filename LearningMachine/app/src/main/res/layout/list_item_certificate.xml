@@ -1,38 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-
         <variable
             name="viewModel"
             type="com.learningmachine.android.app.ui.issuer.CertificateListItemViewModel"/>
     </data>
 
-    <FrameLayout
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/issuer_main_content"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/list_item_certificate_view_height"
-        android:paddingEnd="@dimen/list_item_certificate_view_padding_horizontal"
-        android:paddingStart="@dimen/list_item_certificate_view_padding_horizontal"
-        android:paddingTop="@dimen/list_item_certificate_view_padding_top">
+        android:layout_height="100dp"
+        android:background="@color/clear">
+
+        <View
+            android:id="@+id/backgroundView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/list_item_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@{viewModel.title}"
+            android:id="@+id/textView1"
+            style="@style/Text.Title.2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
             android:ellipsize="end"
             android:lines="1"
             android:maxLines="1"
-            style="@style/TextStyle"/>
+            android:text="@{viewModel.title}"
+            app:layout_constraintBottom_toTopOf="@+id/textView2"
+            app:layout_constraintEnd_toEndOf="@+id/backgroundView"
+            app:layout_constraintStart_toStartOf="@+id/backgroundView"
+            app:layout_constraintTop_toTopOf="@+id/backgroundView" />
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/list_item_certificate_description_margin_top"
-            android:text="@{viewModel.description}"
+            android:id="@+id/textView2"
+            style="@style/Text.Body.2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
             android:ellipsize="end"
             android:maxLines="1"
-            style="@style/Material.Light.Body1.Secondary"/>
+            android:text="@{viewModel.dateIssued}"
+            app:layout_constraintBottom_toBottomOf="@+id/backgroundView"
+            app:layout_constraintEnd_toEndOf="@+id/backgroundView"
+            app:layout_constraintStart_toStartOf="@+id/backgroundView"
+            app:layout_constraintTop_toBottomOf="@+id/textView1" />
 
-    </FrameLayout>
+
+    </android.support.constraint.ConstraintLayout>
 
 </layout>

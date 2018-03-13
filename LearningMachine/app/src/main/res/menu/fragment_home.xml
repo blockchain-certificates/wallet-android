@@ -6,6 +6,6 @@
         android:id="@+id/fragment_home_settings_menu_item"
         android:icon="@drawable/ic_action_settings"
         android:title="@string/home_settings_menu_item_title"
-        app:showAsAction="always"/>
+        app:showAsAction="always" />
 
 </menu>

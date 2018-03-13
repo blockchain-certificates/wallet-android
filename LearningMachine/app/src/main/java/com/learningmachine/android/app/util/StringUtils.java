@@ -17,6 +17,24 @@ import timber.log.Timber;
 
 public class StringUtils {
 
+    public static byte[] combineByteArrays(byte[] one, byte[] two) {
+        byte[] combined = new byte[one.length + two.length];
+        for (int i = 0; i < combined.length; ++i) {
+            combined[i] = i < one.length ? one[i] : two[i - one.length];
+        }
+        return combined;
+    }
+
+    public static byte[] asHexData(String s) {
+        int len = s.length();
+        byte[] data = new byte[len / 2];
+        for (int i = 0; i < len; i += 2) {
+            data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
+                    + Character.digit(s.charAt(i+1), 16));
+        }
+        return data;
+    }
+
     /**
      * Returns a string containing the tokens joined by delimiters.
      *

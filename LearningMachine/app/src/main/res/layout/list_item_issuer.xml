@@ -1,49 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-
         <variable
             name="viewModel"
             type="com.learningmachine.android.app.ui.home.IssuerListItemViewModel"/>
     </data>
 
-
-    <FrameLayout
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/issuer_main_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent">
+        android:layout_height="150dp"
+        android:background="@color/clear">
 
-        <LinearLayout
-            android:layout_width="@dimen/list_item_issuer_width"
+        <View
+            android:id="@+id/view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/list_item_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageView
+            android:id="@+id/image_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/view"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintStart_toStartOf="@+id/view"
+            app:layout_constraintTop_toTopOf="@+id/view" />
+
+        <com.learningmachine.android.app.ui.AutoResizeTextView
+            android:id="@+id/textView"
+            style="@style/Text.Title.2"
+            android:layout_width="0dp"
+            android:layout_height="73dp"
+            android:layout_marginEnd="16dp"
+            android:text="@{viewModel.title}"
+            android:textAlignment="viewStart"
+            app:layout_constraintBottom_toTopOf="@+id/textView2"
+            app:layout_constraintEnd_toEndOf="@+id/view"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="@+id/image_view" />
+
+        <TextView
+            android:id="@+id/textView2"
+            style="@style/Text.Body.2"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="16dp"
+            android:text="@{viewModel.numberOfCertificatesAsString}"
+            android:textAlignment="viewStart"
+            app:layout_constraintBottom_toBottomOf="@+id/image_view"
+            app:layout_constraintEnd_toEndOf="@+id/view"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="@dimen/fragment_home_recyclerview_spacing"
-            android:background="@color/white"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="160dp" />
 
-            <ImageView
-                android:id="@+id/image_view"
-                android:layout_width="@dimen/list_item_issuer_imageview_size"
-                android:layout_height="@dimen/list_item_issuer_imageview_size"
-                android:layout_marginBottom="@dimen/list_item_issuer_imageview_margin_bottom"
-                android:layout_marginLeft="@dimen/list_item_issuer_imageview_margin_horizontal"
-                android:layout_marginRight="@dimen/list_item_issuer_imageview_margin_horizontal"
-                android:layout_marginTop="@dimen/list_item_issuer_imageview_margin_top"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/list_item_issuer_textview_padding_bottom"
-                android:text="@{viewModel.title}"
-                android:textAlignment="center"
-                android:paddingLeft="@dimen/list_item_issuer_textview_padding_left"
-                android:paddingRight="@dimen/list_item_issuer_textview_padding_right"
-                style="@style/Material.Light.Body1"/>
-
-        </LinearLayout>
-
-    </FrameLayout>
+    </android.support.constraint.ConstraintLayout>
 
 </layout>

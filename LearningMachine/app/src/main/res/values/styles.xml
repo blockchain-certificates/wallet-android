@@ -1,30 +1,185 @@
 <resources>
 
+    <style name="bottom_dialog_animation">
+        <item name="android:windowEnterAnimation">@anim/slide_up_dialog</item>
+        <item name="android:windowExitAnimation">@anim/slide_down_dialog</item>
+    </style>
+
+    <style name="bottom_dialog" parent="@android:style/Animation.Dialog">
+        <item name="android:windowAnimationStyle">@style/bottom_dialog_animation</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+    </style>
+
+    <style name="Text" >
+        <item name="android:fontFamily">@font/opensans_reg</item>
+    </style>
+
+    <style name="Text.Title" >
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#062451</item>
+        <item name="android:fontFamily">@font/opensans_bold</item>
+    </style>
+
+    <style name="Text.Title.1">
+        <item name="android:textSize">24sp</item>
+        <item name="android:fontFamily">@font/opensans_semibold</item>
+    </style>
+
+    <style name="Text.Title.2">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/opensans_semibold</item>
+    </style>
+
+    <style name="Text.Title.3">
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">@font/opensans_semibold</item>
+
+    </style>
+
+    <style name="Text.Title.4">
+        <item name="android:textSize">22sp</item>
+        <item name="android:fontFamily">@font/opensans_semibold</item>
+    </style>
+
+    <style name="Text.Body">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#333333</item>
+    </style>
+
+    <style name="Text.Body.1">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="Text.Body.2">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="Text.Body.3">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="Text.Body.4">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#919396</item>
+    </style>
+
+    <style name="Text.Info">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#333333</item>
+    </style>
+
+    <style name="Text.ListHeader">
+        <item name="android:textColor">#207BD3</item>
+        <item name="android:fontFamily">@font/opensans_bold</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="Text.Footer">
+        <item name="android:textColor">#919396</item>
+    </style>
+
+    <style name="Text.Footer.1">
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">@font/opensans_semibold</item>
+    </style>
+
+    <style name="Text.Footer.2">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/opensans_semibold</item>
+    </style>
+
+    <style name="Text.Footer.3">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+
+    <style name="Text.Passphrase">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#062451</item>
+        <item name="android:fontFamily">@font/opensans_semibold</item>
+        <item name="android:background">@drawable/rounded_passphrase_background</item>
+    </style>
+
+    <style name="ButtonTitleWhite">
+        <item name="android:fontFamily">@font/opensans_semibold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="RoundedButton" parent="@style/Widget.AppCompat.Button">
+        <item name="android:background">@drawable/rounded_button_background_light</item>
+        <item name="android:fontFamily">@font/opensans_semibold</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="RoundedButton.Light">
+        <item name="android:background">@drawable/rounded_button_background_light</item>
+        <item name="android:textColor">@color/primaryButtonNormal</item>
+    </style>
+
+    <style name="RoundedButton.White">
+        <item name="android:background">@drawable/rounded_button_background_no_border</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="RoundedButton.Red">
+        <item name="android:background">@drawable/rounded_button_background_grey</item>
+        <item name="android:textColor">@color/red</item>
+    </style>
+
+    <style name="RoundedButton.NoBorder">
+        <item name="android:background">@drawable/rounded_button_background_no_border</item>
+        <item name="android:textColor">@color/primaryButtonNormal</item>
+    </style>
+
+    <style name="RoundedButton.Dark">
+        <item name="android:background">@drawable/rounded_button_background_dark</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+
+    <!-- vvv OLD vvv -->
+
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorBackground</item>
+        <item name="colorPrimaryDark">@color/white</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textViewStyle">@style/LearningMachineTextView</item>
-        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">@color/colorBackground</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="colorControlNormal">@color/white</item>
     </style>
 
     <!--No Toolbar Theme-->
-
     <style name="NoToolbarTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textViewStyle">@style/LearningMachineTextView</item>
-        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">@color/colorBackground</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="colorControlNormal">@color/white</item>
     </style>
 
     <style name="NoToolbarTheme.Splash">
-        <item name="android:windowBackground">@drawable/splash_background</item>
+        <item name="android:windowBackground">@color/colorBackground</item>
+        <item name="android:statusBarColor">@color/colorBackground</item>
+    </style>
+
+    <style name="NoToolbarTheme.Video">
+        <item name="android:windowBackground">@color/black</item>
+        <item name="android:statusBarColor">@color/black</item>
     </style>
 
     <style name="NoToolbarTheme.Onboarding">
-        <item name="buttonStyle">@style/OnboardingButton</item>
+        <item name="buttonStyle">@style/RoundedButton</item>
+        <item name="android:statusBarColor">@color/colorBackground</item>
         <item name="editTextStyle">@style/OnboardingPassphraseEditText</item>
     </style>
 
@@ -36,7 +191,7 @@
     </style>
 
     <style name="LearningMachineTextView.Medium" parent="android:style/Widget.TextView">
-        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:fontFamily">opensans_semibold</item>
     </style>
 
     <style name="LearningMachineDialog" parent="AlertDialog.AppCompat">
@@ -60,7 +215,7 @@
     <style name="TextStyle" parent="LearningMachineTextView">
         <item name="android:textSize">@dimen/text_style_text_size</item>
         <item name="android:lineSpacingExtra">@dimen/text_style_line_spacing_extra</item>
-        <item name="android:textColor">@color/black_de</item>
+        <item name="android:textColor">#333333</item>
     </style>
 
     <style name="Material.Light.Subhead" parent="LearningMachineTextView">
@@ -105,6 +260,13 @@
         <item name="android:textColor">@color/black_de</item>
     </style>
 
+    <style name="Material.Bold.TextButton" parent="LearningMachineTextView">
+        <item name="android:textSize">@dimen/material_light_body1_text_size</item>
+        <item name="android:lineSpacingExtra">@dimen/material_light_body1_line_spacing_extra</item>
+        <item name="android:textColor">@color/link</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <!-- Custom -->
 
     <style name="Settings.Header" parent="LearningMachineTextView.Medium">
@@ -133,14 +295,6 @@
         <item name="android:textSize">@dimen/material_light_body1_text_size</item>
         <item name="android:textColor">?colorAccent</item>
         <item name="android:paddingBottom">@dimen/issuer_info_textview_padding_bottom</item>
-    </style>
-
-    <style name="OnboardingButton" parent="@style/Widget.AppCompat.Button">
-        <item name="android:background">@drawable/onboarding_button_background</item>
-    </style>
-
-    <style name="OnboardingButton.Light">
-        <item name="android:background">@drawable/onboarding_button_background_light</item>
     </style>
 
     <style name="Material.Light.Body1.OnboardingPassphraseField">

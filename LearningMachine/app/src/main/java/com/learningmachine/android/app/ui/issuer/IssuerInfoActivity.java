@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
+import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.IssuerManager;
 import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.ui.LMSingleFragmentActivity;
@@ -49,7 +50,7 @@ public class IssuerInfoActivity extends LMSingleFragmentActivity {
 
     @Override
     public String getActionBarTitle() {
-        return mIssuerName;
+        return getResources().getString(R.string.issuer_info_title);
     }
 
     @Override

@@ -1,0 +1,34 @@
+<html>
+	<head>
+		<script src="./verifier.js"></script>
+	</head>
+
+	<body>
+		<div id="output" />
+		
+		<script>
+			function loadJSON(url, callback) {   
+				var xobj = new XMLHttpRequest();
+				xobj.overrideMimeType("text/plain");
+				xobj.open('GET', url, true);
+				xobj.onreadystatechange = function () {
+				      if (xobj.readyState == 4 && (xobj.status == "200" || xobj.status == "0")) {
+						  callback(xobj.responseText);
+				      }
+				};
+				xobj.send(null);  
+			}
+		
+			function statusCallback(arg1) {
+				const output = document.getElementById('output')
+				console.log(arg1)
+				output.innerHTML = output.innerHTML + arg1 + "<br>"
+			}
+			
+			loadJSON("./certificate.json", function(certificateContentsString) {
+				v = new Verifier.CertificateVerifier(certificateContentsString, statusCallback)
+				v.verify()
+			});
+		</script>
+	</body>
+</html>

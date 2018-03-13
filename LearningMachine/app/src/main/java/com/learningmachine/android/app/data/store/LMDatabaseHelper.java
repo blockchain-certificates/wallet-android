@@ -4,19 +4,19 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.VisibleForTesting;
+import android.util.Log;
 
 import com.learningmachine.android.app.data.store.db.Migration;
+import com.learningmachine.android.app.data.store.db.TrackIssuerURL;
 import com.learningmachine.android.app.data.store.db.TrackPubKeySentToIssuer;
 
 public class LMDatabaseHelper extends SQLiteOpenHelper {
 
     @VisibleForTesting static final String DB_NAME = "com.learningmachine.android.app.sqlite";
 
-    private static final int DB_VERSION = 2;
+    private static final int DB_VERSION = 5;
 
-    private Migration[] mMigrations = {
-            new TrackPubKeySentToIssuer()
-    };
+    private Migration[] mMigrations = { };
 
     public LMDatabaseHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -37,6 +37,23 @@ public class LMDatabaseHelper extends SQLiteOpenHelper {
             if (migration != null) {
                 migration.onUpgrade(sqLiteDatabase, version);
             }
+        }
+
+        // New mechanism: test to see if we're missing what we need, then add it. Works across all versions. Simpler to keep track of
+        ConfirmColumnExistsInTable(sqLiteDatabase, LMDatabaseHelper.Table.ISSUER, LMDatabaseHelper.Column.Issuer.RECIPIENT_PUB_KEY, "text", null);
+        ConfirmColumnExistsInTable(sqLiteDatabase, LMDatabaseHelper.Table.ISSUER, LMDatabaseHelper.Column.Issuer.ISSUERURL, "text", "");
+    }
+
+    private void ConfirmColumnExistsInTable(SQLiteDatabase sqLiteDatabase, String tableName, String columnName, String typeName, String defaultValue) {
+        // I don't think we need to check if it exists first; if it fails, it already exists!
+        try {
+            if (defaultValue != null) {
+                sqLiteDatabase.execSQL(String.format("alter table %s add column %s %s default \"%s\"", tableName, columnName, typeName, defaultValue));
+            } else {
+                sqLiteDatabase.execSQL(String.format("alter table %s add column %s %s", tableName, columnName, typeName));
+            }
+        }catch (Exception e) {
+
         }
     }
 
@@ -61,6 +78,7 @@ public class LMDatabaseHelper extends SQLiteOpenHelper {
             public static final String ID = "id";
             public static final String NAME = "name";
             public static final String EMAIL = "email";
+            public static final String ISSUERURL = "issuer_url";
             public static final String UUID = "uuid";
             public static final String CERTS_URL = "certs_url";
             public static final String INTRO_URL = "intro_url";
@@ -94,6 +112,7 @@ public class LMDatabaseHelper extends SQLiteOpenHelper {
                 + " ( " + Column.Issuer.ID + " TEXT PRIMARY KEY "
                 + ", " + Column.Issuer.NAME + " TEXT"
                 + ", " + Column.Issuer.EMAIL + " TEXT"
+                + ", " + Column.Issuer.ISSUERURL + " TEXT"
                 + ", " + Column.Issuer.UUID + " TEXT"
                 + ", " + Column.Issuer.CERTS_URL + " TEXT"
                 + ", " + Column.Issuer.INTRO_URL + " TEXT"

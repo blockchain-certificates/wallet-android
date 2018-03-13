@@ -19,6 +19,9 @@ public class IssuerRecord {
     @SerializedName("email")
     private String mEmail;
 
+    @SerializedName("issuerURL")
+    private String mIssuerURL;
+
     /** Unique identifier for an Issuer. Also, the URL where you can re-request data.
      * This is useful if an instance of this struct only has partial data, or if you want to see that the keys are still valid. */
     @SerializedName("id")
@@ -43,6 +46,11 @@ public class IssuerRecord {
     @SerializedName("revocationKeys")
     private List<KeyRotation> mRevocationKeys;
 
+
+    /** A list of certificate urls that have been revoked by the issuer */
+    @SerializedName("revocationList")
+    private List<String> mRevocationList;
+
     @SerializedName("analyticsURL")
     private String mAnalyticsUrlString;
 
@@ -51,9 +59,10 @@ public class IssuerRecord {
 
     private String mRecipientPubKey;
 
-    public IssuerRecord(String name, String email, String uuid, String certsUrl, String introUrl, String introducedOn, String analyticsUrlString, String recipientPubKey) {
+    public IssuerRecord(String name, String email, String issuerURL, String uuid, String certsUrl, String introUrl, String introducedOn, String analyticsUrlString, String recipientPubKey) {
         mName = name;
         mEmail = email;
+        mIssuerURL = issuerURL;
         mUuid = uuid;
         mCertsUrl = certsUrl;
         mIntroUrl = introUrl;
@@ -65,6 +74,11 @@ public class IssuerRecord {
     public String getName() {
         return mName;
     }
+
+    public String getIssuerURL() {
+        return mIssuerURL;
+    }
+
 
     public String getEmail() {
         return mEmail;
@@ -88,6 +102,10 @@ public class IssuerRecord {
 
     public void setIssuerKeys(List<KeyRotation> issuerKeys) {
         mIssuerKeys = issuerKeys;
+    }
+
+    public List<String> getRevocationList() {
+        return mRevocationList;
     }
 
     public List<KeyRotation> getRevocationKeys() {
@@ -145,4 +163,8 @@ public class IssuerRecord {
     public void setRecipientPubKey(String recipientPubKey) {
         this.mRecipientPubKey = recipientPubKey;
     }
+
+    // Note: Below are convenience variables to store information about an issuer which is
+    // generally expensive to calculate
+    public int cachedNumberOfCertificatesForIssuer = -1;
 }
