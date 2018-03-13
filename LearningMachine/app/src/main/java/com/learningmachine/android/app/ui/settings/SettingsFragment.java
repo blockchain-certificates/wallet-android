@@ -97,7 +97,7 @@ public class SettingsFragment extends LMFragment {
             // the attachment
             emailIntent .putExtra(Intent.EXTRA_TEXT, emailData);
             // the mail subject
-            emailIntent .putExtra(Intent.EXTRA_SUBJECT, "Logcat content for BlockCerts");
+            emailIntent .putExtra(Intent.EXTRA_SUBJECT, "Logcat content for Blockcerts");
             emailIntent.setType("message/rfc822");
             startActivity(Intent.createChooser(emailIntent , "Send email..."));
         });

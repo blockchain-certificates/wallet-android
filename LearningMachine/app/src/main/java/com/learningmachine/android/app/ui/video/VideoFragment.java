@@ -126,7 +126,7 @@ public class VideoFragment extends LMFragment {
 
 
             DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(getContext(),
-                    Util.getUserAgent(getContext(), "BlockCerts Wallet"), null);
+                    Util.getUserAgent(getContext(), "Blockcerts Wallet"), null);
 
             String filename = "rawresource:///" + R.raw.video;
             MediaSource videoSource = new ExtractorMediaSource.Factory(dataSourceFactory).createMediaSource(Uri.parse(filename));
