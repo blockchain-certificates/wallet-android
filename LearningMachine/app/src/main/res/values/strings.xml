@@ -36,7 +36,7 @@
     <string name="onboarding_paste_passphrase_load_2">Enter Your Passphrase</string>
 
 
-    <string name="onboarding_welcome_title">Welcome to the new Blockcerts!</string>
+    <string name="onboarding_welcome_title">Welcome to the new Blockcerts Wallet!</string>
     <string name="onboarding_welcome_desc">We\'ve improved the experience, but you\'ll be able to receive and manage your credentials as before.\n\nPlease note that you are now required to back up your passphrase, but you can do so easily in the app!</string>
     <string name="onboarding_welcome_button_title">Continue</string>
 
