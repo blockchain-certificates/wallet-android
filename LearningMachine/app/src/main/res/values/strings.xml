@@ -45,7 +45,8 @@
 
     <string name="onboarding_home_no_issuers_title">Ready!</string>
     <string name="onboarding_home_no_issuers_desc_new_user">You will receive an email when an issuer is ready to be added. Follow the link in the email to complete the process.</string>
-    <string name="onboarding_home_no_issuers_desc_returning_user">There is no need to add issuers from whom you have already received credentials. When you import your credentials into the app, the issuers will automatically be added as well.</string>
+    <string name="onboarding_home_no_issuers_title_returning_user">Re-import your credentials</string>
+    <string name="onboarding_home_no_issuers_desc_returning_user">To see your issuers, go to Settings to add your credentials or add them via the email from the issuer.</string>
 
     <string name="onboarding_home_no_issuers_desc2">You may add an issuer manually by visiting Settings and tapping Add an Issuer</string>
 
