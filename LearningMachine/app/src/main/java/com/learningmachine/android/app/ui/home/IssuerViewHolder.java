@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
@@ -57,21 +58,28 @@ public class IssuerViewHolder extends RecyclerView.ViewHolder implements View.On
         String uuid = issuer.getUuid();
         File file = ImageUtils.getImageFile(mContext, uuid);
 
-        Picasso.with(mContext).load(file).fetch(new Callback() {
-            @Override
-            public void onSuccess() {
+        if (file != null) {
+            Picasso.with(mContext).load(file).fetch(new Callback() {
+                @Override
+                public void onSuccess() {
 
-                Picasso.with(mContext).load(file).into(mBinding.imageView);
-                Bitmap bitmap = ((BitmapDrawable)mBinding.imageView.getDrawable()).getBitmap();
+                    Picasso.with(mContext).load(file).into(mBinding.imageView);
 
-                int pixel = bitmap.getPixel(bitmap.getWidth()-1,0);
-                mBinding.imageView.setBackgroundColor(pixel);
-            }
+                    BitmapDrawable drawable = (BitmapDrawable) mBinding.imageView.getDrawable();
+                    if (drawable != null) {
+                        Bitmap bitmap = drawable.getBitmap();
+                        int pixel = bitmap.getPixel(bitmap.getWidth() - 1, 0);
+                        mBinding.imageView.setBackgroundColor(pixel);
+                    } else {
+                        mBinding.imageView.setBackgroundResource(R.color.white);
+                    }
+                }
 
-            @Override
-            public void onError() {
+                @Override
+                public void onError() {
 
-            }
-        });
+                }
+            });
+        }
     }
 }
