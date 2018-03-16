@@ -115,6 +115,8 @@ public class HomeFragment extends LMFragment {
 
         if (mSharedPreferencesManager.wasReturnUser()) {
             mBinding.imageView2.setImageResource(R.drawable.ic_ready_for_certs);
+            mBinding.onboardingHomeNoIssuersTitle.setText(R.string.onboarding_home_no_issuers_title_returning_user);
+
             mBinding.onboardingHomeNoIssuersDesc.setText(R.string.onboarding_home_no_issuers_desc_returning_user);
         } else {
             mBinding.imageView2.setImageResource(R.drawable.ic_ready);
