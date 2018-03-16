@@ -60,15 +60,23 @@ public class CertificateHeaderViewHolder extends RecyclerView.ViewHolder impleme
                     @Override
                     public void onSuccess() {
 
-                        Picasso.with(mContext).load(file).into(mBinding.imageView);
-                        BitmapDrawable drawable = (BitmapDrawable) mBinding.imageView.getDrawable();
-                        if (drawable != null) {
-                            Bitmap bitmap = drawable.getBitmap();
-                            int pixel = bitmap.getPixel(bitmap.getWidth() - 1, 0);
-                            mBinding.imageView.setBackgroundColor(pixel);
-                        } else {
-                            mBinding.imageView.setBackgroundResource(R.color.white);
-                        }
+                        Picasso.with(mContext).load(file).into(mBinding.imageView, new com.squareup.picasso.Callback() {
+                            @Override
+                            public void onSuccess() {
+                                //do smth when picture is loaded successfully
+                                BitmapDrawable drawable = (BitmapDrawable) mBinding.imageView.getDrawable();
+                                if (drawable != null) {
+                                    Bitmap bitmap = drawable.getBitmap();
+                                    int pixel = bitmap.getPixel(bitmap.getWidth() - 1, 0);
+                                    mBinding.imageView.setBackgroundColor(pixel);
+                                }
+                            }
+
+                            @Override
+                            public void onError() {
+                                //do smth when there is picture loading error
+                            }
+                        });
                     }
 
                     @Override

@@ -58,21 +58,30 @@ public class IssuerViewHolder extends RecyclerView.ViewHolder implements View.On
         String uuid = issuer.getUuid();
         File file = ImageUtils.getImageFile(mContext, uuid);
 
+        mBinding.imageView.setBackgroundResource(R.color.white);
+
         if (file != null) {
             Picasso.with(mContext).load(file).fetch(new Callback() {
                 @Override
                 public void onSuccess() {
 
-                    Picasso.with(mContext).load(file).into(mBinding.imageView);
+                    Picasso.with(mContext).load(file).into(mBinding.imageView, new com.squareup.picasso.Callback() {
+                        @Override
+                        public void onSuccess() {
+                            //do smth when picture is loaded successfully
+                            BitmapDrawable drawable = (BitmapDrawable) mBinding.imageView.getDrawable();
+                            if (drawable != null) {
+                                Bitmap bitmap = drawable.getBitmap();
+                                int pixel = bitmap.getPixel(bitmap.getWidth() - 1, 0);
+                                mBinding.imageView.setBackgroundColor(pixel);
+                            }
+                        }
 
-                    BitmapDrawable drawable = (BitmapDrawable) mBinding.imageView.getDrawable();
-                    if (drawable != null) {
-                        Bitmap bitmap = drawable.getBitmap();
-                        int pixel = bitmap.getPixel(bitmap.getWidth() - 1, 0);
-                        mBinding.imageView.setBackgroundColor(pixel);
-                    } else {
-                        mBinding.imageView.setBackgroundResource(R.color.white);
-                    }
+                        @Override
+                        public void onError() {
+                            //do smth when there is picture loading error
+                        }
+                    });
                 }
 
                 @Override
