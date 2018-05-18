@@ -76,7 +76,7 @@ public class Issuer {
      */
     @SerializedName("revocationList")
     @Expose
-    private Object revocationList;
+    private URI revocationList;
 
     /**
      * Defined by `id` property of https://w3id.org/openbadges#Profile
@@ -214,7 +214,7 @@ public class Issuer {
      * Defined by `revocationList` property of https://w3id.org/openbadges#Profile. If embedded in a Blockcert and the issuer-hosted Profile, the value in the Blockcert should take preference.
      * 
      */
-    public Object getRevocationList() {
+    public URI getRevocationList() {
         return revocationList;
     }
 
@@ -222,7 +222,7 @@ public class Issuer {
      * Defined by `revocationList` property of https://w3id.org/openbadges#Profile. If embedded in a Blockcert and the issuer-hosted Profile, the value in the Blockcert should take preference.
      * 
      */
-    public void setRevocationList(Object revocationList) {
+    public void setRevocationList(URI revocationList) {
         this.revocationList = revocationList;
     }
 

@@ -47,9 +47,9 @@ public class IssuerRecord {
     private List<KeyRotation> mRevocationKeys;
 
 
-    /** A list of certificate urls that have been revoked by the issuer */
+    /** A URL pointing to a list of certificate urls that have been revoked by the issuer */
     @SerializedName("revocationList")
-    private List<String> mRevocationList;
+    private String mRevocationList;
 
     @SerializedName("analyticsURL")
     private String mAnalyticsUrlString;
@@ -104,7 +104,7 @@ public class IssuerRecord {
         mIssuerKeys = issuerKeys;
     }
 
-    public List<String> getRevocationList() {
+    public String getRevocationList() {
         return mRevocationList;
     }
 
