@@ -56,13 +56,9 @@ public class AddIssuerFragment extends LMFragment {
     }
 
     private void CheckIfImportButtonShouldBeEnabled() {
-        if (mBinding.addIssuerNonceEditText.getText().length() > 0 && mBinding.addIssuerUrlEditText.getText().length() > 0) {
-            mBinding.importButton.setAlpha(1.0f);
-            mBinding.importButton.setEnabled(true);
-        } else {
-            mBinding.importButton.setAlpha(0.3f);
-            mBinding.importButton.setEnabled(false);
-        }
+        boolean shouldEnableButton = mBinding.addIssuerNonceEditText.getText().length() > 0 &&
+                mBinding.addIssuerUrlEditText.getText().length() > 0;
+        enableImportButton(shouldEnableButton);
     }
 
     @Nullable
@@ -160,6 +156,9 @@ public class AddIssuerFragment extends LMFragment {
                 mIssuerManager.fetchIssuer(introUrl),
                 IssuerIntroductionRequest::new)
                 .doOnSubscribe(() -> displayProgressDialog(R.string.fragment_add_issuer_adding_issuer_progress_dialog_message))
+                .doOnSubscribe(() -> enableImportButton(false))
+                .doOnCompleted(() -> enableImportButton(true))
+                .doOnError(throwable -> enableImportButton(true))
                 .compose(bindToMainThread())
                 .subscribe(request -> {
                     if (request.getIssuerResponse().usesWebAuth()) {
@@ -168,6 +167,11 @@ public class AddIssuerFragment extends LMFragment {
                         performStandardIssuerIntroduction(request);
                     }
                 }, throwable -> displayErrors(R.string.http_bad_request_issuer, throwable, DialogUtils.ErrorCategory.ISSUER, R.string.error_title_message1));
+    }
+
+    private void enableImportButton(boolean enable) {
+        mBinding.importButton.setAlpha(enable ? 1.0f : 0.3f);
+        mBinding.importButton.setEnabled(enable);
     }
 
     private void performStandardIssuerIntroduction(IssuerIntroductionRequest request) {
