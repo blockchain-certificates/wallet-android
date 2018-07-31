@@ -19,6 +19,8 @@ import com.learningmachine.android.app.ui.onboarding.OnboardingActivity;
 
 import javax.inject.Inject;
 
+import timber.log.Timber;
+
 import static com.learningmachine.android.app.data.url.LaunchType.ADD_CERTIFICATE;
 import static com.learningmachine.android.app.data.url.LaunchType.ADD_ISSUER;
 
@@ -55,10 +57,12 @@ public class SplashActivity extends LMActivity {
 
             case ONBOARDING:
             case MAIN:
+                Timber.i("Application was launched from a user activity.");
                 startActivityAndFinish(new Intent(this, HomeActivity.class));
                 break;
 
             case ADD_ISSUER:
+                Timber.i("Application was launched with this url: " + data.toString());
                 Intent issuerIntent = AddIssuerActivity.newIntent(this,
                         launchData.getIntroUrl(),
                         launchData.getNonce());
@@ -67,6 +71,7 @@ public class SplashActivity extends LMActivity {
                 break;
 
             case ADD_CERTIFICATE:
+                Timber.i("Application was launched with this url: " + data.toString());
                 Intent certificateIntent = AddCertificateActivity.newIntent(this, 0, launchData.getCertUrl());
                 certificateIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_TASK_ON_HOME);
                 startActivityAndFinish(certificateIntent);

@@ -90,6 +90,7 @@ public class HomeFragment extends LMFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.fragment_home_settings_menu_item:
+                Timber.i("Settings button tapped");
                 Intent intent = SettingsActivity.newIntent(getContext());
                 startActivity(intent);
                 break;
@@ -111,6 +112,8 @@ public class HomeFragment extends LMFragment {
     private void updateRecyclerView(List<IssuerRecord> issuerList) {
         mIssuerList.clear();
         mIssuerList.addAll(issuerList);
+
+        Timber.d("Managed issuers list url: " + issuerList.toString());
 
 
         if (mSharedPreferencesManager.wasReturnUser()) {

@@ -112,7 +112,11 @@ public class CertificateManager {
             String certUid = blockCert.getCertUid();
             FileUtils.saveCertificate(mContext, buffer, certUid);
             return Observable.just(certUid);
-        } catch (JsonSyntaxException | IOException e) {
+        } catch (JsonSyntaxException e) {
+            Timber.w(e, "Certificate failed to parse");
+            return Observable.error(e);
+        } catch (IOException e) {
+            Timber.e(e, "Couldn't save certificate");
             return Observable.error(e);
         }
     }
@@ -142,6 +146,7 @@ public class CertificateManager {
         }
 
         if (blockCert == null) {
+            Timber.e("Failed to load a certificate from file. Data is null");
             return Observable.error(new CertificateFileImportException());
         }
 
@@ -167,6 +172,7 @@ public class CertificateManager {
     }
 
     private void saveBlockCert(BlockCert blockCert) {
+        Timber.i("Saving certificate " + blockCert.getCertName());
         mCertificateStore.saveBlockchainCertificate(blockCert);
         IssuerResponse issuer = blockCert.getIssuer();
         String recipientPublicKey = blockCert.getRecipientPublicKey();

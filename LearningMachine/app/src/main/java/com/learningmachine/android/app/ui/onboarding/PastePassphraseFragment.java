@@ -35,6 +35,8 @@ import java.util.TimerTask;
 
 import javax.inject.Inject;
 
+import timber.log.Timber;
+
 public class PastePassphraseFragment extends OnboardingFragment {
 
     @Inject protected BitcoinManager mBitcoinManager;
@@ -165,7 +167,10 @@ public class PastePassphraseFragment extends OnboardingFragment {
                                     }
                                 });
                             }
-                        }, e -> displayErrorsLocal(e, DialogUtils.ErrorCategory.GENERIC, R.string.error_title_message));
+                        }, e -> {
+                            Timber.e(e, "Could not set passphrase.");
+                            displayErrorsLocal(e, DialogUtils.ErrorCategory.GENERIC, R.string.error_title_message);
+                        });
             }
         });
     }

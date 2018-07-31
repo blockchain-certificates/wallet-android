@@ -17,9 +17,12 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.IssuerManager;
 import com.learningmachine.android.app.data.bitcoin.BitcoinManager;
+import com.learningmachine.android.app.data.error.LMApiError;
 import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.data.webservice.request.IssuerIntroductionRequest;
 import com.learningmachine.android.app.databinding.FragmentAddIssuerBinding;
@@ -27,11 +30,19 @@ import com.learningmachine.android.app.ui.LMFragment;
 import com.learningmachine.android.app.ui.WebAuthActivity;
 import com.learningmachine.android.app.ui.home.HomeActivity;
 import com.learningmachine.android.app.util.DialogUtils;
+import com.learningmachine.android.app.util.ErrorUtils;
 import com.learningmachine.android.app.util.StringUtils;
+
+import org.json.JSONObject;
+
+import java.io.IOException;
 
 import javax.inject.Inject;
 
+import okhttp3.ResponseBody;
+import retrofit2.HttpException;
 import rx.Observable;
+import timber.log.Timber;
 
 public class AddIssuerFragment extends LMFragment {
 
@@ -71,6 +82,7 @@ public class AddIssuerFragment extends LMFragment {
         mBinding.addIssuerNonceEditText.setOnEditorActionListener(mActionListener);
 
         mBinding.importButton.setOnClickListener(v -> {
+            Timber.i("Import issuer tapped");
             startIssuerIntroduction();
         });
 
@@ -150,6 +162,8 @@ public class AddIssuerFragment extends LMFragment {
         String nonce = mBinding.addIssuerNonceEditText.getText()
                 .toString();
 
+        Timber.i("Starting process to identify and introduce issuer at " + introUrl);
+
         Observable.combineLatest(
                 mBitcoinManager.getFreshBitcoinAddress(),
                 Observable.just(nonce),
@@ -161,12 +175,16 @@ public class AddIssuerFragment extends LMFragment {
                 .doOnError(throwable -> enableImportButton(true))
                 .compose(bindToMainThread())
                 .subscribe(request -> {
+                    Timber.i(String.format("Issuer identification at %s succeeded. Beginning introduction step.", introUrl));
                     if (request.getIssuerResponse().usesWebAuth()) {
                         performWebAuth(request);
                     } else {
                         performStandardIssuerIntroduction(request);
                     }
-                }, throwable -> displayErrors(R.string.http_bad_request_issuer, throwable, DialogUtils.ErrorCategory.ISSUER, R.string.error_title_message1));
+                }, throwable -> {
+                    Timber.e(throwable, "Error during issuer identification: " + ErrorUtils.getErrorFromThrowable(throwable));
+                    displayErrors(R.string.http_bad_request_issuer, throwable, DialogUtils.ErrorCategory.ISSUER, R.string.error_title_message1);
+                });
     }
 
     private void enableImportButton(boolean enable) {
@@ -177,10 +195,14 @@ public class AddIssuerFragment extends LMFragment {
     private void performStandardIssuerIntroduction(IssuerIntroductionRequest request) {
         mIssuerManager.addIssuer(request)
                 .compose(bindToMainThread())
-                .subscribe(uuid -> didAddIssuer(uuid), throwable -> displayErrors(R.string.http_bad_request_issuer, throwable, DialogUtils.ErrorCategory.ISSUER, R.string.error_title_message2));
+                .subscribe(this::didAddIssuer, throwable -> {
+                    Timber.e(throwable, "Error during issuer introduction: " + ErrorUtils.getErrorFromThrowable(throwable));
+                    displayErrors(R.string.http_bad_request_issuer, throwable, DialogUtils.ErrorCategory.ISSUER, R.string.error_title_message2);
+                });
     }
 
     private void performWebAuth(IssuerIntroductionRequest request) {
+        Timber.i("Presenting the web view in the Add Issuer screen");
         hideProgressDialog();
         Intent intent = WebAuthActivity.newIntent(getContext(), request);
         startActivityForResult(intent, REQUEST_WEB_AUTH);
@@ -198,7 +220,10 @@ public class AddIssuerFragment extends LMFragment {
                     .doOnSubscribe(() -> displayProgressDialog(R.string.fragment_add_issuer_adding_issuer_progress_dialog_message))
                     .compose(bindToMainThread())
                     .map(issuer -> mIssuerManager.saveIssuer(issuer, bitcoinAddress))
-                    .subscribe(this::didAddIssuer, throwable -> displayErrors(R.string.http_bad_request_issuer, throwable, DialogUtils.ErrorCategory.ISSUER, R.string.error_title_message3));
+                    .subscribe(this::didAddIssuer, throwable -> {
+                        Timber.e(throwable, "Error during issuer introduction: " + ErrorUtils.getErrorFromThrowable(throwable));
+                        displayErrors(R.string.http_bad_request_issuer, throwable, DialogUtils.ErrorCategory.ISSUER, R.string.error_title_message3);
+                    });
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }

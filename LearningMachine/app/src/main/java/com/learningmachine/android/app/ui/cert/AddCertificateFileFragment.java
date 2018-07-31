@@ -111,7 +111,10 @@ public class AddCertificateFileFragment extends LMFragment {
                     Intent intent = CertificateActivity.newIntent(getContext(), uuid);
                     startActivity(intent);
                     getActivity().finish();
-                }, throwable -> displayErrors(throwable, DialogUtils.ErrorCategory.CERTIFICATE, R.string.error_title_message));
+                }, throwable -> {
+                    Timber.e(throwable, "Importing failed with error");
+                    displayErrors(throwable, DialogUtils.ErrorCategory.CERTIFICATE, R.string.error_title_message);
+                });
     }
 
     private void selectFile(File file) {

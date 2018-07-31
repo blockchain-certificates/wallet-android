@@ -111,6 +111,7 @@ public class AddCertificateURLFragment extends LMFragment {
         hideKeyboard();
         String url = mBinding.certificateEditText.getText()
                 .toString();
+        Timber.i("User attempting to add a certificate from " + url);
         mCertificateManager.addCertificate(url)
                 .doOnSubscribe(() -> displayProgressDialog(R.string.fragment_add_certificate_progress_dialog_message))
                 .compose(bindToMainThread())
@@ -120,7 +121,10 @@ public class AddCertificateURLFragment extends LMFragment {
                     Intent intent = CertificateActivity.newIntent(getContext(), uuid);
                     startActivity(intent);
                     getActivity().finish();
-                }, throwable -> displayErrors(throwable, DialogUtils.ErrorCategory.CERTIFICATE, R.string.error_title_message));
+                }, throwable -> {
+                    Timber.e("Failed to load certificate from " + url);
+                    displayErrors(throwable, DialogUtils.ErrorCategory.CERTIFICATE, R.string.error_title_message);
+                });
     }
 
 

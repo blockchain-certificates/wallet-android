@@ -9,6 +9,8 @@ import com.learningmachine.android.app.data.model.CertificateRecord;
 import com.learningmachine.android.app.databinding.ListItemCertificateBinding;
 import com.learningmachine.android.app.ui.cert.CertificateActivity;
 
+import timber.log.Timber;
+
 public class CertificateViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     private ListItemCertificateBinding mBinding;
@@ -28,6 +30,7 @@ public class CertificateViewHolder extends RecyclerView.ViewHolder implements Vi
     @Override
     public void onClick(View v) {
         CertificateRecord certificate = mViewModel.getCertificate();
+        Timber.i("Navigating to certificate " + certificate.getName());
         Context context = mBinding.getRoot()
                 .getContext();
         String certUuid = certificate.getUuid();

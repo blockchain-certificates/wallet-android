@@ -41,6 +41,7 @@ import javax.annotation.Nonnull;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.subjects.BehaviorSubject;
+import timber.log.Timber;
 
 public abstract class LMActivity extends AppCompatActivity implements LifecycleProvider<ActivityEvent> {
 
@@ -269,9 +270,11 @@ public abstract class LMActivity extends AppCompatActivity implements LifecycleP
                 out.println(encryptedMsg);
                 passphraseCallback.apply(passphrase);
             }catch (GeneralSecurityException e){
+                Timber.e(e, "Could not encrypt passphrase.");
                 passphraseCallback.apply(null);
             }
         } catch(Exception e) {
+            Timber.e(e, "Could not write to passphrase file");
             passphraseCallback.apply(null);
         }
     }
@@ -317,7 +320,7 @@ public abstract class LMActivity extends AppCompatActivity implements LifecycleP
                     return true;
                 }
             }catch (GeneralSecurityException e){
-
+                Timber.e(e, "Could not decrypt passphrase.");
             }
         } catch(Exception e) {
             // note: this is a non-critical feature, so if this fails nbd

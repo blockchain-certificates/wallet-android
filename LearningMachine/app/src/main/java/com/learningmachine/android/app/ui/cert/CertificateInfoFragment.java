@@ -112,7 +112,7 @@ public class CertificateInfoFragment extends LMFragment {
 
             CertificateInfoItemViewModel deleteButton = new CertificateInfoItemViewModel("", "");
             deleteButton.setIsDeleteButton(() -> {
-
+                Timber.i("User has tapped the delete button on this certificate");
                 DialogUtils.showAlertDialog(getContext(), fragment,
                         0,
                         getResources().getString(R.string.fragment_certificate_info_delete_warning_title),
@@ -125,8 +125,16 @@ public class CertificateInfoFragment extends LMFragment {
                                 mCertificateManager.removeCertificate(uuid)
                                         .compose(bindToMainThread())
                                         .subscribe(success -> {
+                                            if (success) {
+                                                Timber.i(String.format("User has deleted certificate %s with id %s",
+                                                        mCertificate.getName(), mCertificate.getUuid()));
+                                            } else {
+                                                Timber.e(String.format("Deleting certificate %s failed", mCertificate.getUuid()));
+                                            }
                                             ((LMActivity)getActivity()).safeGoBack();
                                         });
+                            } else {
+                                Timber.i("User canceled the deletion of the certificate");
                             }
                             return null;
                         });

@@ -108,6 +108,7 @@ public class CertificateFragment extends LMFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.fragment_certificate_info_menu_item:
+                Timber.i("More info tapped on the Certificate display");
                 viewCertificateInfo();
                 return true;
         }
@@ -131,6 +132,7 @@ public class CertificateFragment extends LMFragment {
             return "file://" + getContext().getFilesDir() + "/" + "verify.html";
 
         } catch (Exception e) {
+            Timber.e(e, "Unable to prepare the certificate verification system.");
             return "Unable to prepare the certificate verification system<br>"+e.toString();
         }
     }
@@ -172,7 +174,7 @@ public class CertificateFragment extends LMFragment {
                     mBinding.webView.loadData(html, "text/html; charset=UTF-8", null);
 
                 }, throwable -> {
-                    Timber.e(throwable, "Error!");
+                    Timber.e(throwable, "Could not setup webview.");
 
                     ExceptionWithResourceString throwableRS = (ExceptionWithResourceString)throwable;
                     showVerificationFailureDialog(throwableRS.getErrorMessageResId(), Anchor.ChainType.unknown);
@@ -214,7 +216,7 @@ public class CertificateFragment extends LMFragment {
     }
 
     private void showShareTypeDialog() {
-
+        Timber.i("Showing share certificate dialog for " + mCertUuid);
         AlertDialogFragment fragment = DialogUtils.showCustomSheet(getContext(), this,
                 R.layout.dialog_share_file_or_url,
                 0,
@@ -224,14 +226,18 @@ public class CertificateFragment extends LMFragment {
                 "",
                 (btnIdx) -> {
                     if ((int) btnIdx == 0) {
+                        Timber.i("User chose to share certificate via file");
                         shareCertificateTypeResult(true);
                     }
                     if ((int) btnIdx == 1) {
+                        Timber.i("User chose to share the certificate via URL");
                         shareCertificateTypeResult(false);
                     }
                     return null;
                 },
+                (dialogContent) -> null,
                 (dialogContent) -> {
+                    Timber.i("Share dialog cancelled");
                     return null;
                 });
 
@@ -428,7 +434,7 @@ public class CertificateFragment extends LMFragment {
     }
 
     private void verifyCertificate() {
-
+        Timber.i("User tapped verify on this certificate");
         if (updateDialog != null) {
             return;
         }

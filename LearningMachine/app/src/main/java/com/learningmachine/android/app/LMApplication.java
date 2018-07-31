@@ -41,6 +41,7 @@ public class LMApplication extends MultiDexApplication {
         enableWebDebugging();
         setupMnemonicCode();
         setupBugsee();
+        Timber.i("Application was launched!");
     }
 
     private void setupBugsee() {

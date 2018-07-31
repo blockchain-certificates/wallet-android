@@ -20,6 +20,8 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 
+import timber.log.Timber;
+
 public class IssuerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     private Context mContext;
@@ -44,6 +46,7 @@ public class IssuerViewHolder extends RecyclerView.ViewHolder implements View.On
     public void onClick(View v) {
         IssuerRecord issuer = mViewModel.getIssuer();
         String issuerUuid = issuer.getUuid();
+        Timber.i(String.format("Navigating to issuer %s with id: %s", issuer.getName(), issuerUuid));
         Intent intent = IssuerActivity.newIntent(mContext, issuerUuid);
         mContext.startActivity(intent);
     }
