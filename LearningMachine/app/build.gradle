@@ -68,13 +68,16 @@ android {
                 // avoid legacy multidex
                 minSdkVersion 21
             }
+            buildConfigField "String", "BUGSEE_KEY", LMWALLET_BUGSEE_KEY
         }
         staging {
             applicationId "com.learningmachine.android.app.staging"
             dimension "env"
+            buildConfigField "String", "BUGSEE_KEY", '""'
         }
         production {
             dimension "env"
+            buildConfigField "String", "BUGSEE_KEY", '""'
         }
     }
 
@@ -179,8 +182,10 @@ dependencies {
     implementation "nl.littlerobots.rxlint:rxlint:$RXLINT_VERSION"
     implementation "com.squareup.picasso:picasso:$PICASSO_VERSION"
     implementation "com.google.guava:guava:$GUAVA_VERSION"
+    implementation 'com.bugsee:bugsee-android:1.12.3'
 
     compile 'com.google.android.exoplayer:exoplayer:2.7.0'
+
 
     androidTestImplementation("com.android.support.test.espresso:espresso-core:$ESPRESSO_VERSION", {
         exclude group: 'com.android.support', module: 'support-annotations'

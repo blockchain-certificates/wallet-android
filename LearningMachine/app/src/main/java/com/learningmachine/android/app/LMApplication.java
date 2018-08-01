@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.multidex.MultiDexApplication;
 import android.webkit.WebView;
 
+import com.bugsee.library.Bugsee;
 import com.learningmachine.android.app.data.CertificateManager;
 import com.learningmachine.android.app.data.IssuerManager;
 import com.learningmachine.android.app.data.inject.Injector;
@@ -39,6 +40,13 @@ public class LMApplication extends MultiDexApplication {
         setupJodaTime();
         enableWebDebugging();
         setupMnemonicCode();
+        setupBugsee();
+    }
+
+    private void setupBugsee() {
+        if (BuildConfig.DEBUG) {
+            Bugsee.launch(this, BuildConfig.BUGSEE_KEY);
+        }
     }
 
     @Override
