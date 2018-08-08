@@ -4,10 +4,8 @@
 	</head>
 
 	<body>
-		<div id="output" />
-		
-		<script>
-			function loadJSON(url, callback) {   
+    <script>
+			function loadJSON(url, callback) {
 				var xobj = new XMLHttpRequest();
 				xobj.overrideMimeType("text/plain");
 				xobj.open('GET', url, true);
@@ -16,19 +14,21 @@
 						  callback(xobj.responseText);
 				      }
 				};
-				xobj.send(null);  
+				xobj.send(null);
 			}
-		
+
 			function statusCallback(arg1) {
-				const output = document.getElementById('output')
-				console.log(arg1)
-				output.innerHTML = output.innerHTML + arg1 + "<br>"
+				Android.notifyStatusChanged(JSON.stringify(arg1))
 			}
-			
-			loadJSON("./certificate.json", function(certificateContentsString) {
-				v = new Verifier.CertificateVerifier(certificateContentsString, statusCallback)
-				v.verify()
-			});
+
+			loadJSON("./certificate.json", async function(certificateContentsString) {
+                var certificate = new Verifier.Certificate(certificateContentsString)
+                Android.notifyChainType(certificate.chain.code)
+                var verificationSteps = certificate.verificationSteps
+                Android.notifyVerificationSteps(JSON.stringify(verificationSteps))
+                var lastStep = await certificate.verify(statusCallback)
+                Android.notifyLastStep(JSON.stringify(lastStep))
+            });
 		</script>
-	</body>
+    </body>
 </html>
