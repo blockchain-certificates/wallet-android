@@ -11,6 +11,7 @@ public class Anchor {
         testnet,
         regtest,
         mocknet,
+        ethmain,
         unknown
     }
 
@@ -48,6 +49,16 @@ public class Anchor {
 
     public void setChain(String chain) {
         this.chain = chain;
+    }
+
+    public static boolean isValidChain(String chainName) {
+        for (ChainType chainType :
+                ChainType.values()) {
+            if (chainType.name().equals(chainName)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

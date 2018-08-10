@@ -386,6 +386,10 @@ public class CertificateFragment extends LMFragment {
     private void showVerificationResultDialog(int iconId, int titleId, int messageId, Anchor.ChainType chainType) {
         hideVerificationProgressDialog();
 
+        if (chainType == null) {
+            chainType = Anchor.ChainType.unknown;
+        }
+
         DialogUtils.showAlertDialog(getContext(), this,
                 iconId,
                 getResources().getString(titleId),
@@ -524,7 +528,9 @@ public class CertificateFragment extends LMFragment {
          */
         @android.webkit.JavascriptInterface
         public void notifyChainType(String chainType) {
-            mChainType = Anchor.ChainType.valueOf(chainType);
+            if (Anchor.isValidChain(chainType)) {
+                mChainType = Anchor.ChainType.valueOf(chainType);
+            }
         }
     }
 }
