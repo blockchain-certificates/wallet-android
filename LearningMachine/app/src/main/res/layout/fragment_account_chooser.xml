@@ -92,6 +92,7 @@
             android:layout_marginEnd="20dp"
             android:layout_marginStart="20dp"
             android:text="@string/onboarding_returning_user"
+            android:textColor="@color/c14"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"

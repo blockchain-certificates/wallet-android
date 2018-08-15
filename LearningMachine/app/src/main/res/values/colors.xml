@@ -3,27 +3,34 @@
 
     <color name="colorBackgroundGreen">#41ca86</color>
 
+    <color name="c1">#FFFFFF</color>
+    <color name="c2">#F0F3F5</color>
+    <color name="c3">#062451</color>
+    <color name="c4">#2AB27B</color>
+    <color name="c5">#156DCB</color>
+    <color name="c6">#333333</color>
+    <color name="c7">#757575</color>
+    <color name="c8">#E8E8E8</color>
+    <color name="c9">#D0021B</color>
+    <color name="c10">#ECF5FE</color>
+    <color name="c11">#006239</color>
+    <color name="c14">#7CE4B4</color>
+
+
     <color name="colorBackground">#062451</color>
     <color name="colorBackgroundDark">#031126</color>
+    <color name="primaryButtonNormal">#7CE4B4</color>
+    <color name="primaryButtonPressed">#2AB27B</color>
 
-    <color name="primaryButtonNormal">#2AB27B</color>
-    <color name="primaryButtonPressed">#1d7a54</color>
-
-    <color name="secondaryButtonNormal">#ffffff</color>
-    <color name="secondaryButtonPressed">#cccccc</color>
-
-    <color name="passphraseBodyBackground">#ECF5FE</color>
-
-    <color name="headline">#1D6FBE</color>
-
+    <color name="secondaryButtonNormal">#062451</color>
+    <color name="secondaryButtonPressed">#062451</color>
     <color name="clear">#00000000</color>
 
     <color name="off_white_background">#F0F3F5</color>
 
     <color name="linkColor">#2AB27B</color>
 
-    <color name="red">#DF5454</color>
-    <color name="grey">#D8D8D8</color>
+    <color name="grey">#E8E8E8</color>
 
     <!-- vvv OLD vvv -->
     <color name="colorPrimary">@color/white</color>
