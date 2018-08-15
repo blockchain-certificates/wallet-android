@@ -159,7 +159,7 @@
     <string name="fragment_add_certificate_file_label">What is the File of the credential?</string>
     <string name="framgent_add_certificate_file_choose_file_button_title">Choose File</string>
     <string name="fragment_add_certificate_title">Add Credential</string>
-    <string name="fragment_add_certificate_progress_dialog_message">Adding credential…</string>
+    <string name="fragment_add_certificate_progress_dialog_message">Adding Credential</string>
     <string name="fragment_add_certificate_alert_dialog_success_title">Success!</string>
     <string name="fragment_add_certificate_alert_dialog_success_message">This is a valid credential.</string>
     <string name="fragment_add_certificate_alert_dialog_error_message">That doesn\'t appear to be a valid credential. Please check the URL and try again.</string>
@@ -271,7 +271,7 @@
     <string name="fragment_add_issuer_identity_text">Add your one-time code.</string>
     <string name="fragment_add_issuer_add_identity">One-time Code</string>
     <string name="fragment_add_issuer_bad_identity_info_error">Bad info for the identity.</string>
-    <string name="fragment_add_issuer_adding_issuer_progress_dialog_message">Adding Issuer…</string>
+    <string name="fragment_add_issuer_adding_issuer_progress_dialog_message">Adding Issuer</string>
 
     <!-- Reveal Passphrase -->
 

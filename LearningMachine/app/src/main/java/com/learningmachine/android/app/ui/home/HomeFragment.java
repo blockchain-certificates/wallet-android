@@ -28,8 +28,12 @@ import com.learningmachine.android.app.databinding.FragmentHomeBinding;
 import com.learningmachine.android.app.databinding.ListIssuerHeaderBinding;
 import com.learningmachine.android.app.databinding.ListItemIssuerBinding;
 import com.learningmachine.android.app.ui.LMFragment;
+import com.learningmachine.android.app.ui.LMIssuerBaseFragment;
+import com.learningmachine.android.app.ui.cert.CertificateActivity;
 import com.learningmachine.android.app.ui.issuer.AddIssuerActivity;
 import com.learningmachine.android.app.ui.settings.SettingsActivity;
+import com.learningmachine.android.app.util.DialogUtils;
+import com.learningmachine.android.app.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,9 +42,8 @@ import javax.inject.Inject;
 
 import timber.log.Timber;
 
-public class HomeFragment extends LMFragment {
+public class HomeFragment extends LMIssuerBaseFragment {
 
-    @Inject IssuerManager mIssuerManager;
     @Inject CertificateManager mCertificateManager;
     @Inject SharedPreferencesManager mSharedPreferencesManager;
 
@@ -49,6 +52,29 @@ public class HomeFragment extends LMFragment {
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
+    }
+
+    public static HomeFragment newInstanceForIssuer(String issuerUrlString, String nonce) {
+        Bundle args = new Bundle();
+        args.putString(ARG_ISSUER_URL, issuerUrlString);
+        args.putString(ARG_ISSUER_NONCE, nonce);
+        args.putString(ARG_LINK_TYPE, ARG_LINK_TYPE_ISSUER);
+
+        HomeFragment fragment = new HomeFragment();
+        fragment.setArguments(args);
+
+        return fragment;
+    }
+
+    public static HomeFragment newInstanceForCert(String certUrl) {
+        Bundle args = new Bundle();
+        args.putString(ARG_CERT_URL, certUrl);
+        args.putString(ARG_LINK_TYPE, ARG_LINK_TYPE_CERT);
+
+        HomeFragment fragment = new HomeFragment();
+        fragment.setArguments(args);
+
+        return fragment;
     }
 
     @Override
@@ -65,6 +91,14 @@ public class HomeFragment extends LMFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
+
+        handleArgs();
+
+        if (ARG_LINK_TYPE_ISSUER.equals(mLinkType) && !StringUtils.isEmpty(super.mIntroUrl) && !StringUtils.isEmpty(super.mNounce)) {
+            startIssuerIntroduction();
+        } else if (ARG_LINK_TYPE_CERT.equals(mLinkType) && !StringUtils.isEmpty(super.mCertUrl)) {
+            addCertificate();
+        }
 
         setupRecyclerView();
 
@@ -208,5 +242,58 @@ public class HomeFragment extends LMFragment {
             }
             return mIssuerList.size() + 1;
         }
+    }
+
+    public void updateArgsIssuer(String issuerUrlString, String issuerNonce) {
+        if (!StringUtils.isEmpty(issuerUrlString)) {
+            mIntroUrl = issuerUrlString;
+        }
+        if (!StringUtils.isEmpty(issuerNonce)) {
+            mNounce = issuerNonce;
+        }
+        startIssuerIntroduction();
+    }
+
+    public void updateArgsCert(String certUrl) {
+        if (!StringUtils.isEmpty(certUrl)) {
+            mCertUrl = certUrl;
+        }
+
+        addCertificate();
+    }
+
+    private void addCertificate() {
+        mCertificateManager.addCertificate(mCertUrl)
+                .doOnSubscribe(() -> displayProgressDialog(R.string.fragment_add_certificate_progress_dialog_message))
+                .compose(bindToMainThread())
+                .subscribe(uuid -> {
+                    Timber.d("Cert downloaded");
+                    hideProgressDialog();
+                    Intent intent = CertificateActivity.newIntent(getContext(), uuid);
+                    startActivity(intent);
+                }, throwable -> displayErrors(throwable, DialogUtils.ErrorCategory.CERTIFICATE, R.string.error_title_message));
+    }
+
+    @Override
+    protected void addIssuerOnSubscribe() {
+        //Nothing to do here
+    }
+
+    @Override
+    protected void addIssuerOnCompleted() {
+        //Nothing to do here
+    }
+
+    @Override
+    protected void addIssuerOnError() {
+        //Nothing to do here
+    }
+
+    @Override
+    protected void addIssuerOnIssuerAdded(String uuid) {
+        hideProgressDialog();
+        mIssuerManager.getIssuers()
+                .compose(bindToMainThread())
+                .subscribe(this::updateRecyclerView, throwable -> Timber.e(throwable, "Unable to load issuers"));
     }
 }

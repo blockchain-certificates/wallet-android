@@ -1,15 +1,18 @@
 package com.learningmachine.android.app.util;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
 
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.error.ExceptionWithResourceString;
 import com.learningmachine.android.app.dialog.AlertDialogFragment;
-import com.learningmachine.android.app.dialog.ProgressDialogFragment;
 
 import java.net.UnknownHostException;
 
@@ -24,21 +27,18 @@ public class DialogUtils {
         GENERIC, ISSUER, CERTIFICATE
     }
 
-    public static final String TAG_DIALOG_PROGRESS = "DialogUtils.Dialog.Progress";
     private static final String TAG_DIALOG_ALERT = "DialogUtils.Dialog.Alert";
 
-    public static void showProgressDialog(FragmentManager fragmentManager, String message) {
-        ProgressDialogFragment progressDialogFragment = ProgressDialogFragment.newInstance(message);
-        progressDialogFragment.setCancelable(false);
-        progressDialogFragment.show(fragmentManager, TAG_DIALOG_PROGRESS);
-
-    }
-
-    public static void hideProgressDialog(FragmentManager fragmentManager) {
-        Fragment fragment = fragmentManager.findFragmentByTag(TAG_DIALOG_PROGRESS);
-        if (fragment instanceof ProgressDialogFragment) {
-            ((ProgressDialogFragment) fragment).dismissAllowingStateLoss();
-        }
+    public static AlertDialog showProgressDialog(Context context, String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        final View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_progress, null);
+        TextView title = dialogView.findViewById(R.id.titleView);
+        title.setText(message);
+        builder.setView(dialogView);
+        builder.setCancelable(false);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        return dialog;
     }
 
     public static void showAlertDialog(Context context, FragmentManager fragmentManager, @StringRes int messageResId) {

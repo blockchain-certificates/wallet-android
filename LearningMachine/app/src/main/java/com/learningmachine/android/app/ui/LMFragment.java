@@ -1,5 +1,6 @@
 package com.learningmachine.android.app.ui;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -7,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 
 import com.learningmachine.android.app.R;
@@ -28,6 +30,7 @@ public class LMFragment extends Fragment implements LifecycleProvider<FragmentEv
     // Used by LifecycleProvider interface to transform lifeycycle events into a stream of events through an observable.
     private final BehaviorSubject<FragmentEvent> mLifecycleSubject = BehaviorSubject.create();
     private Observable.Transformer mMainThreadTransformer;
+    private AlertDialog mProgressDialog;
 
     @Override
     public void onAttach(Context context) {
@@ -136,11 +139,22 @@ public class LMFragment extends Fragment implements LifecycleProvider<FragmentEv
     }
 
     protected void displayProgressDialog(@StringRes int progressMessageResId) {
-        DialogUtils.showProgressDialog(getFragmentManager(), getString(progressMessageResId));
+        FragmentActivity parentActivity = getActivity();
+        if (parentActivity == null) {
+            return;
+        }
+        getActivity().runOnUiThread(() -> mProgressDialog = DialogUtils.showProgressDialog(getContext(), getString(progressMessageResId)));
+
     }
 
     protected void hideProgressDialog() {
-        DialogUtils.hideProgressDialog(getFragmentManager());
+        if (mProgressDialog != null) {
+            FragmentActivity parentActivity = getActivity();
+            if (parentActivity == null) {
+                return;
+            }
+            getActivity().runOnUiThread(() -> mProgressDialog.dismiss());
+        }
     }
 
     // Snackbars

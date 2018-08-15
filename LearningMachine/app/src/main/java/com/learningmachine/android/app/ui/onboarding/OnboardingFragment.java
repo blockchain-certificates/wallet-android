@@ -3,17 +3,14 @@ package com.learningmachine.android.app.ui.onboarding;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.data.preferences.SharedPreferencesManager;
 import com.learningmachine.android.app.ui.LMFragment;
 import com.learningmachine.android.app.ui.cert.AddCertificateActivity;
-import com.learningmachine.android.app.ui.issuer.AddIssuerActivity;
+import com.learningmachine.android.app.ui.home.HomeActivity;
 import com.learningmachine.android.app.util.DialogUtils;
-
-import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -71,12 +68,13 @@ public class OnboardingFragment extends LMFragment {
 
     public boolean continueDelayedURLsFromDeepLinking() {
         if (mSharedPreferencesManager.getDelayedCertificateURL().length() > 0) {
-            startActivityAndFinish(AddCertificateActivity.newIntent(getContext(), 0, mSharedPreferencesManager.getDelayedCertificateURL()));
+            startActivityAndFinish(HomeActivity.newIntentForCert(getContext(),
+                    mSharedPreferencesManager.getDelayedCertificateURL()));
             mSharedPreferencesManager.setDelayedCertificateURL("");
             return true;
         }
         if (mSharedPreferencesManager.getDelayedIssuerURL().length() > 0) {
-            startActivityAndFinish(AddIssuerActivity.newIntent(getContext(),
+            startActivityAndFinish(HomeActivity.newIntentForIssuer(getContext(),
                     mSharedPreferencesManager.getDelayedIssuerURL(),
                     mSharedPreferencesManager.getDelayedIssuerNonce()));
             mSharedPreferencesManager.setDelayedIssuerURL("", "");
