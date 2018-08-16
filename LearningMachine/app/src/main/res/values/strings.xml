@@ -339,6 +339,7 @@
     <string name="fragment_verify_cert_cancel_text_view_title">Cancel</string>
     <string name="cert_verification_success_title">Verified!</string>
     <string name="cert_verification_failure_title">Fail</string>
+    <string name="cert_verification_revoked_title">Revoked</string>
     <string name="dialog_verify_cert_result_positive_button_title">OK</string>
 
 

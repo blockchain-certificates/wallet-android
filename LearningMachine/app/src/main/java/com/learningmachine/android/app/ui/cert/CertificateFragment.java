@@ -424,12 +424,12 @@ public class CertificateFragment extends LMFragment {
                 });
     }
 
-    private void showVerificationFailureDialog(String error) {
+    private void showVerificationFailureDialog(String error, String title) {
         hideVerificationProgressDialog();
 
         DialogUtils.showAlertDialog(getContext(), this,
                 R.drawable.ic_dialog_failure,
-                getResources().getString(R.string.cert_verification_failure_title),
+                title,
                 error,
                 null,
                 getResources().getString(R.string.onboarding_passphrase_ok),
@@ -486,6 +486,7 @@ public class CertificateFragment extends LMFragment {
      * JavaScript will notify changes in Status when a certificate is being verified.
      */
     private class JavascriptInterface {
+        private static final String CHECK_REVOKED_STATUS = "checkRevokedStatus";
         private VerificationSteps[] mVerificationSteps;
         private Anchor.ChainType mChainType;
         private String mChainName;
@@ -503,7 +504,11 @@ public class CertificateFragment extends LMFragment {
                 String title = getString(R.string.fragment_verify_cert_chain_format, mChainName);
                 updateVerificationProgressDialog(title, stepLabel, status.label);
             } else if (status.isFailure()) {
-                showVerificationFailureDialog(status.errorMessage);
+                String failureTitle = getResources().getString(R.string.cert_verification_failure_title);
+                if (status.code.equals(CHECK_REVOKED_STATUS)) {
+                    failureTitle = getResources().getString(R.string.cert_verification_revoked_title);
+                }
+                showVerificationFailureDialog(status.errorMessage, failureTitle);
             }
         }
 
