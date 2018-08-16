@@ -9,13 +9,13 @@
     <color name="c4">#2AB27B</color>
     <color name="c5">#156DCB</color>
     <color name="c6">#333333</color>
-    <color name="c7">#757575</color>
-    <color name="c8">#E8E8E8</color>
+    <color name="c7">#666666</color>
+    <color name="c8">#E3E3E3</color>
     <color name="c9">#D0021B</color>
     <color name="c10">#ECF5FE</color>
     <color name="c11">#006239</color>
+    <color name="c12">#9F9F9F</color>
     <color name="c14">#7CE4B4</color>
-
 
     <color name="colorBackground">#062451</color>
     <color name="colorBackgroundDark">#031126</color>
@@ -30,7 +30,7 @@
 
     <color name="linkColor">#2AB27B</color>
 
-    <color name="grey">#E8E8E8</color>
+    <color name="grey">#D8D8D8</color>
 
     <!-- vvv OLD vvv -->
     <color name="colorPrimary">@color/white</color>
