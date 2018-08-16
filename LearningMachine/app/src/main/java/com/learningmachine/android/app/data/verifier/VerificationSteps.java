@@ -9,10 +9,10 @@ public class VerificationSteps {
     public SubSteps[] subSteps;
 
     public class SubSteps {
-        String code;
-        String label;
-        String labelPending;
-        String parentStep;
+        public String code;
+        public String label;
+        public String labelPending;
+        public String parentStep;
     }
 
     public static VerificationSteps[] getFromString(String verificationSteps) {

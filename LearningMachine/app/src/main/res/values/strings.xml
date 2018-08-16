@@ -72,7 +72,7 @@
 
 
     <!-- Verification -->
-    <string name="fragment_verify_cert_step_format">Verifying Step %1$d</string>
+    <string name="fragment_verify_cert_chain_format" formatted="true">Verifying %1$s</string>
 
 
     <string name="cert_verification_step0">Beginning verification process</string>

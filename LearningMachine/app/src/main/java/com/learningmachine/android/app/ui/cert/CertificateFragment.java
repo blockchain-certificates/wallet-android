@@ -290,6 +290,7 @@ public class CertificateFragment extends LMFragment {
     }
 
     private TextView updateDialogTitleView = null;
+    private TextView updateDialogSubTitleView = null;
     private TextView updateDialogMessageView = null;
     private AlertDialogFragment updateDialog = null;
 
@@ -306,14 +307,16 @@ public class CertificateFragment extends LMFragment {
                     (btnIdx) -> {
                         updateDialog = null;
                         updateDialogTitleView = null;
+                        updateDialogSubTitleView = null;
                         updateDialogMessageView = null;
                         return null;
                     },
                     (dialogContent) -> {
                         View view = (View) dialogContent;
                         updateDialogTitleView = (TextView) view.findViewById(R.id.titleView);
+                        updateDialogSubTitleView = (TextView) view.findViewById(R.id.subTitleView);
                         updateDialogMessageView = (TextView) view.findViewById(R.id.messageView);
-                        this.updateVerificationProgressDialog(0, R.string.cert_verification_step0);
+                        this.updateVerificationProgressDialog(R.string.cert_verification_step0);
                         return null;
                     },
                     (btnIdx) -> {
@@ -325,14 +328,14 @@ public class CertificateFragment extends LMFragment {
         }
     }
 
-    private void updateVerificationProgressDialog(int stepNumber, int messageResId) {
-       updateVerificationProgressDialog(stepNumber, getString(messageResId));
+    private void updateVerificationProgressDialog(int messageResId) {
+       updateVerificationProgressDialog("", "", getString(messageResId));
     }
 
-    private void updateVerificationProgressDialog(int stepNumber, String message) {
+    private void updateVerificationProgressDialog(String blockChain, String stepLabel, String message) {
         if(updateDialogTitleView != null && updateDialogMessageView != null) {
-            String title = getString(R.string.fragment_verify_cert_step_format, stepNumber);
-            updateDialogTitleView.setText(title);
+            updateDialogTitleView.setText(blockChain);
+            updateDialogSubTitleView.setText(stepLabel);
             updateDialogMessageView.setText(message);
         }
     }
@@ -483,9 +486,9 @@ public class CertificateFragment extends LMFragment {
      * JavaScript will notify changes in Status when a certificate is being verified.
      */
     private class JavascriptInterface {
-        private int mStepsCounter;
         private VerificationSteps[] mVerificationSteps;
         private Anchor.ChainType mChainType;
+        private String mChainName;
 
         /**
          * This method will be called when a new Status is available in a Credential verification process.
@@ -495,9 +498,10 @@ public class CertificateFragment extends LMFragment {
         public void notifyStatusChanged(String statusStr) {
 
             VerifierStatus status = VerifierStatus.getFromString(statusStr);
+            String stepLabel = getStepLabelFromSubStep(status.code);
             if (status.isSuccess()) {
-                mStepsCounter++;
-                updateVerificationProgressDialog(mStepsCounter, status.label);
+                String title = getString(R.string.fragment_verify_cert_chain_format, mChainName);
+                updateVerificationProgressDialog(title, stepLabel, status.label);
             } else if (status.isFailure()) {
                 showVerificationFailureDialog(status.errorMessage);
             }
@@ -510,7 +514,6 @@ public class CertificateFragment extends LMFragment {
         @android.webkit.JavascriptInterface
         public void notifyVerificationSteps(String verificationStepsStr) {
             mVerificationSteps = VerificationSteps.getFromString(verificationStepsStr);
-            mStepsCounter = 0;
         }
 
         /**
@@ -533,10 +536,26 @@ public class CertificateFragment extends LMFragment {
          * @param chainType The chain type code. Such as mocknet, bitcoin and testnet.
          */
         @android.webkit.JavascriptInterface
-        public void notifyChainType(String chainType) {
+        public void notifyChainType(String chainType, String chainName) {
+            mChainName = chainName;
             if (Anchor.isValidChain(chainType)) {
                 mChainType = Anchor.ChainType.valueOf(chainType);
+            } else {
+                mChainType = Anchor.ChainType.unknown;
             }
+        }
+
+        private String getStepLabelFromSubStep(String code) {
+            for (VerificationSteps step :
+                    mVerificationSteps) {
+                for (VerificationSteps.SubSteps subStep:
+                        step.subSteps) {
+                    if (subStep.code.equals(code)) {
+                        return step.label;
+                    }
+                }
+            }
+            return null;
         }
     }
 }
