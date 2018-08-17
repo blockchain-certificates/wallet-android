@@ -1,12 +1,14 @@
 package com.learningmachine.android.app.ui;
 
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.learningmachine.android.app.R;
@@ -37,7 +39,25 @@ public class LMWebFragment extends LMFragment {
     }
 
     protected void setupWebView() {
-        WebViewClient webViewClient = new WebViewClient();
+        WebViewClient webViewClient = new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return true;
+            }
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+                mBinding.progressBar.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                mBinding.progressBar.setVisibility(View.GONE);
+            }
+        };
         mBinding.webViewController.setWebViewClient(webViewClient);
         mBinding.webViewController.getSettings()
                 .setJavaScriptEnabled(true);
