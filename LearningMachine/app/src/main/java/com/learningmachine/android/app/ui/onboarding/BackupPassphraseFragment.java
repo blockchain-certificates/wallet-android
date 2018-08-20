@@ -1,31 +1,14 @@
 package com.learningmachine.android.app.ui.onboarding;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
 import android.graphics.Point;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.Handler;
-import android.support.annotation.StringRes;
-import android.support.v4.app.ActivityCompat;
-import android.util.Log;
 import android.view.Display;
-import android.view.KeyCharacterMap;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
@@ -35,20 +18,14 @@ import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.bitcoin.BitcoinManager;
 import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.databinding.FragmentBackupPassphraseBinding;
-import com.learningmachine.android.app.databinding.FragmentViewPassphraseBinding;
 import com.learningmachine.android.app.dialog.AlertDialogFragment;
 import com.learningmachine.android.app.ui.home.HomeActivity;
 import com.learningmachine.android.app.util.DialogUtils;
 import com.smallplanet.labalib.Laba;
 
-import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import javax.inject.Inject;
-
-import static android.content.ContentValues.TAG;
 
 public class BackupPassphraseFragment extends OnboardingFragment {
 
@@ -109,10 +86,7 @@ public class BackupPassphraseFragment extends OnboardingFragment {
         }
 
         if(numCompleted < 2) {
-            Laba.Animate(mBinding.onboardingDoneButton, "d0v200", () -> {
-                return null;
-            });
-            mBinding.onboardingDoneButton.setAlpha(0.3f);
+            mBinding.onboardingDoneButton.setText(R.string.select_two_to_continue);
             mBinding.onboardingDoneButton.setEnabled(false);
         }
 
@@ -258,10 +232,8 @@ public class BackupPassphraseFragment extends OnboardingFragment {
 
             numberOfBackupOptionsUsed++;
 
-            if (numberOfBackupOptionsUsed >= 2 && mBinding.onboardingDoneButton.isEnabled() == false) {
-
-                Laba.Animate(mBinding.onboardingDoneButton, "^200", () -> { return null; });
-                mBinding.onboardingDoneButton.setAlpha(1.0f);
+            if (numberOfBackupOptionsUsed >= 2 && !mBinding.onboardingDoneButton.isEnabled()) {
+                mBinding.onboardingDoneButton.setText(R.string.onboarding_backup_done_button);
                 mBinding.onboardingDoneButton.setEnabled(true);
             }
         }

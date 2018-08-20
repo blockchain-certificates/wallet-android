@@ -130,7 +130,6 @@ public class AddIssuerFragment extends LMIssuerBaseFragment {
     }
 
     private void enableImportButton(boolean enable) {
-        mBinding.importButton.setAlpha(enable ? 1.0f : 0.3f);
         mBinding.importButton.setEnabled(enable);
     }
 

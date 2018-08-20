@@ -134,7 +134,7 @@
 
     <style name="RoundedButton.Dark">
         <item name="android:background">@drawable/rounded_button_background_dark</item>
-        <item name="android:textColor">@color/c3</item>
+        <item name="android:textColor">@color/button_text_color</item>
     </style>
 
 
