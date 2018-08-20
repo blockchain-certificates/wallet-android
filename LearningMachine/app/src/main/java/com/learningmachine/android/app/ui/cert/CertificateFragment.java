@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.FileProvider;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -333,11 +334,18 @@ public class CertificateFragment extends LMFragment {
     }
 
     private void updateVerificationProgressDialog(String blockChain, String stepLabel, String message) {
-        if(updateDialogTitleView != null && updateDialogMessageView != null) {
-            updateDialogTitleView.setText(blockChain);
-            updateDialogSubTitleView.setText(stepLabel);
-            updateDialogMessageView.setText(message);
+        FragmentActivity parent = getActivity();
+        if (parent == null || parent.isFinishing()) {
+            return;
         }
+        parent.runOnUiThread(() -> {
+            if(updateDialogTitleView != null && updateDialogMessageView != null) {
+                updateDialogTitleView.setText(blockChain);
+                updateDialogSubTitleView.setText(stepLabel);
+                updateDialogMessageView.setText(message);
+
+            }
+        });
     }
 
     private void hideVerificationProgressDialog() {
