@@ -44,6 +44,9 @@ public class AlertDialogFragment extends DialogFragment {
     private static final String ARG_MESSAGE = "AlertDialogFragment.Message";
     private static final String ARG_POSITIVE_BUTTON_MESSAGE = "AlertDialogFragment.Positive.Button_Message";
     private static final String ARG_NEGATIVE_BUTTON_MESSAGE = "AlertDialogFragment.Negative.Button.Message";
+    private TextView mTitleView;
+    private TextView mSubTitleView;
+    private TextView mMessageView;
 
     @FunctionalInterface
     public interface Callback <A, R> {
@@ -193,8 +196,9 @@ public class AlertDialogFragment extends DialogFragment {
         dialog.setContentView(dialogContent);
 
         ImageView iconView = (ImageView) dialogContent.findViewById(R.id.image_view);
-        TextView titleView = (TextView) dialogContent.findViewById(R.id.titleView);
-        TextView messageView = (TextView) dialogContent.findViewById(R.id.messageView);
+        mTitleView = (TextView) dialogContent.findViewById(R.id.titleView);
+        mSubTitleView = (TextView) dialogContent.findViewById(R.id.subTitleView);
+        mMessageView = (TextView) dialogContent.findViewById(R.id.messageView);
         Button positiveButtonView = (Button) dialogContent.findViewById(R.id.dialog_positive_button);
         Button negativeButtonView = (Button) dialogContent.findViewById(R.id.dialog_negative_button);
 
@@ -206,11 +210,11 @@ public class AlertDialogFragment extends DialogFragment {
             }
         }
 
-        if(titleView != null) {
-            titleView.setText(title);
+        if(mTitleView != null) {
+            mTitleView.setText(title);
         }
-        if(messageView != null) {
-            messageView.setText(message);
+        if(mMessageView != null) {
+            mMessageView.setText(message);
         }
 
         if (positiveButtonView != null) {
@@ -283,6 +287,24 @@ public class AlertDialogFragment extends DialogFragment {
         //this.setCancelable(false);
 
         return dialog;
+    }
+
+    public void setCustomTitle(String customTitle) {
+        if (mTitleView != null) {
+            mTitleView.setText(customTitle);
+        }
+    }
+
+    public void setCustomSubTitle(String customSubTitle) {
+        if (mSubTitleView != null) {
+            mSubTitleView.setText(customSubTitle);
+        }
+    }
+
+    public void setCustomMessage(String customMessage) {
+        if (mMessageView != null) {
+            mMessageView.setText(customMessage);
+        }
     }
 
     public int getTextViewHeight(TextView textView, int maxWidth) {

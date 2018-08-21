@@ -27,7 +27,7 @@ public class DialogUtils {
         GENERIC, ISSUER, CERTIFICATE
     }
 
-    private static final String TAG_DIALOG_ALERT = "DialogUtils.Dialog.Alert";
+    public static final String TAG_DIALOG_ALERT = "DialogUtils.Dialog.Alert";
 
     public static AlertDialog showProgressDialog(Context context, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -91,11 +91,11 @@ public class DialogUtils {
         alertDialogFragment.show(fragmentManager, TAG_DIALOG_ALERT);
     }
 
-    public static AlertDialogFragment showCustomDialog(Context context, @NonNull Fragment targetFragment, int layoutID, int iconID, String title, String message, String positiveButton, String negativeButton, AlertDialogFragment.Callback onComplete, AlertDialogFragment.Callback onCreate, AlertDialogFragment.Callback onCancel) {
+    public static AlertDialogFragment showCustomDialog(Context context, @NonNull Fragment targetFragment, int iconID, String title, String message, String positiveButton, String negativeButton, AlertDialogFragment.Callback onComplete, AlertDialogFragment.Callback onCreate, AlertDialogFragment.Callback onCancel) {
         FragmentManager fragmentManager = targetFragment.getFragmentManager();
         AlertDialogFragment alertDialogFragment = AlertDialogFragment.newInstance(
                 false,
-                layoutID,
+                R.layout.dialog_custom,
                 iconID,
                 title,
                 message,

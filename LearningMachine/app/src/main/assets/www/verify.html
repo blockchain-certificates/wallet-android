@@ -21,13 +21,12 @@
 				Android.notifyStatusChanged(JSON.stringify(arg1))
 			}
 
-			loadJSON("./certificate.json", async function(certificateContentsString) {
+			loadJSON("./certificate.json", function(certificateContentsString) {
                 var certificate = new Verifier.Certificate(certificateContentsString)
                 Android.notifyChainType(certificate.chain.code, certificate.chain.name)
                 var verificationSteps = certificate.verificationSteps
                 Android.notifyVerificationSteps(JSON.stringify(verificationSteps))
-                var lastStep = await certificate.verify(statusCallback)
-                Android.notifyLastStep(JSON.stringify(lastStep))
+                certificate.verify(statusCallback)
             });
 		</script>
     </body>
