@@ -68,16 +68,13 @@ android {
                 // avoid legacy multidex
                 minSdkVersion 21
             }
-            buildConfigField "String", "BUGSEE_KEY", LMWALLET_BUGSEE_KEY
         }
         staging {
             applicationId "com.learningmachine.android.app.staging"
             dimension "env"
-            buildConfigField "String", "BUGSEE_KEY", '""'
         }
         production {
             dimension "env"
-            buildConfigField "String", "BUGSEE_KEY", '""'
         }
     }
 
@@ -96,14 +93,22 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.LearningMachineRelease
+            buildConfigField "String", "BUGSEE_KEY", '""'
         }
-
         debug {
             if (System.getenv("BUILD_NUMBER") == null) {
                 versionNameSuffix "-debug"
             }
             buildConfigField "boolean", "DEBUG_BUILD", "true"
-
+            buildConfigField "String", "BUGSEE_KEY", '""'
+        }
+        qa {
+            if (System.getenv("BUILD_NUMBER") == null) {
+                versionNameSuffix "-qa"
+            }
+            signingConfig signingConfigs.debug
+            debuggable true
+            buildConfigField "String", "BUGSEE_KEY", LMWALLET_BUGSEE_KEY
         }
     }
 

@@ -45,7 +45,7 @@ public class LMApplication extends MultiDexApplication {
     }
 
     private void setupBugsee() {
-        if (BuildConfig.DEBUG) {
+        if (BuildConfig.BUILD_TYPE.equals("qa")) {
             Bugsee.launch(this, BuildConfig.BUGSEE_KEY);
         }
     }
