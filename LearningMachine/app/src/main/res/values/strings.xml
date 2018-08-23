@@ -204,6 +204,12 @@
     <string name="fragment_certificate_info_delete_warning_positive_title">Cancel</string>
     <string name="fragment_certificate_info_delete_warning_negative_title">Delete</string>
 
+    <!-- Check version -->
+    <string name="check_version_title">Old version</string>
+    <string name="check_version_message">You are using an old version. Please go to play store and update.</string>
+    <string name="check_version_message_cancel_title">Cancel</string>
+    <string name="check_version_message_confirm_title">Okay</string>
+
     <!-- Certificate Verification -->
 
     <string name="cert_verification_success_title">Verified!</string>

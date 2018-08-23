@@ -263,15 +263,21 @@ public class HomeFragment extends LMIssuerBaseFragment {
     }
 
     private void addCertificate() {
-        mCertificateManager.addCertificate(mCertUrl)
-                .doOnSubscribe(() -> displayProgressDialog(R.string.fragment_add_certificate_progress_dialog_message))
-                .compose(bindToMainThread())
-                .subscribe(uuid -> {
-                    Timber.d("Cert downloaded");
-                    hideProgressDialog();
-                    Intent intent = CertificateActivity.newIntent(getContext(), uuid);
-                    startActivity(intent);
-                }, throwable -> displayErrors(throwable, DialogUtils.ErrorCategory.CERTIFICATE, R.string.error_title_message));
+        displayProgressDialog(R.string.fragment_add_certificate_progress_dialog_message);
+        checkVersion(updateNeeded -> {
+            if (!updateNeeded) {
+                mCertificateManager.addCertificate(mCertUrl)
+                        .compose(bindToMainThread())
+                        .subscribe(uuid -> {
+                            Timber.d("Added certificate from home screen.");
+                            hideProgressDialog();
+                            Intent intent = CertificateActivity.newIntent(getContext(), uuid);
+                            startActivity(intent);
+                        }, throwable -> displayErrors(throwable, DialogUtils.ErrorCategory.CERTIFICATE, R.string.error_title_message));
+            } else {
+                hideProgressDialog();
+            }
+        });
     }
 
     @Override

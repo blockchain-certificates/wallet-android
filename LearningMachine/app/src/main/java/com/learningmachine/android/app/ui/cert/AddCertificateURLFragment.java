@@ -80,7 +80,14 @@ public class AddCertificateURLFragment extends LMFragment {
 
         mBinding.importButton.setEnabled(false);
         mBinding.importButton.setOnClickListener(v -> {
-            addCertificate();
+            displayProgressDialog(R.string.fragment_add_certificate_progress_dialog_message);
+            checkVersion(updateNeeded -> {
+                if (!updateNeeded) {
+                    addCertificate();
+                } else {
+                    hideProgressDialog();
+                }
+            });
         });
 
         handleArgs();
@@ -110,7 +117,6 @@ public class AddCertificateURLFragment extends LMFragment {
                 .toString();
         Timber.i("User attempting to add a certificate from " + url);
         mCertificateManager.addCertificate(url)
-                .doOnSubscribe(() -> displayProgressDialog(R.string.fragment_add_certificate_progress_dialog_message))
                 .compose(bindToMainThread())
                 .subscribe(uuid -> {
                     Timber.d("Cert downloaded");

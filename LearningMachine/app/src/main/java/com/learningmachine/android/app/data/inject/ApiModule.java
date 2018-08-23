@@ -5,6 +5,9 @@ import com.learningmachine.android.app.data.webservice.BlockchainService;
 import com.learningmachine.android.app.data.webservice.CertificateInterceptor;
 import com.learningmachine.android.app.data.webservice.CertificateService;
 import com.learningmachine.android.app.data.webservice.IssuerService;
+import com.learningmachine.android.app.data.webservice.VersionService;
+
+import junit.runner.Version;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -103,5 +106,22 @@ public class ApiModule {
     @Singleton
     BlockchainService provideBlockchainService(@Named("blockchain") Retrofit retrofit) {
         return retrofit.create(BlockchainService.class);
+    }
+
+    @Provides
+    @Singleton
+    @Named("version")
+    Retrofit provideVersionRetrofit(@Named("issuer") OkHttpClient okHttpClient) {
+        return new Retrofit.Builder().baseUrl(LMConstants.VERSION_BASE_URL)
+                .client(okHttpClient)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.createWithScheduler(Schedulers.io()))
+                .build();
+    }
+
+    @Provides
+    @Singleton
+    VersionService provideVersionService(@Named("version") Retrofit retrofit) {
+        return retrofit.create(VersionService.class);
     }
 }

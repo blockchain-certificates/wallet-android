@@ -63,7 +63,15 @@ public class AddCertificateFileFragment extends LMFragment {
         mBinding.chooseFileButton.setOnClickListener(mOnClickListener);
 
         mBinding.importButton.setOnClickListener(v -> {
-            addCertificateFile();
+            displayProgressDialog(R.string.fragment_add_certificate_progress_dialog_message);
+            checkVersion(updateNeeded -> {
+                if (!updateNeeded) {
+                    addCertificateFile();
+                } else {
+                    hideProgressDialog();
+                }
+            });
+
         });
 
         mBinding.importButton.setEnabled(false);
@@ -102,7 +110,6 @@ public class AddCertificateFileFragment extends LMFragment {
             return;
         }
         mCertificateManager.addCertificate(mSelectedFile)
-                .doOnSubscribe(() -> displayProgressDialog(R.string.fragment_add_certificate_progress_dialog_message))
                 .compose(bindToMainThread())
                 .subscribe(uuid -> {
                     Timber.d("Cert copied");

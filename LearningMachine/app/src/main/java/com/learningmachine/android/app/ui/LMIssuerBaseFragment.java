@@ -72,6 +72,17 @@ public abstract class LMIssuerBaseFragment extends LMFragment {
     }
 
     protected void startIssuerIntroduction() {
+        displayProgressDialog(R.string.fragment_add_issuer_adding_issuer_progress_dialog_message);
+        checkVersion(updateNeeded -> {
+            if (updateNeeded) {
+                hideProgressDialog();
+            } else {
+                introduceIssuer();
+            }
+        });
+    }
+
+    protected void introduceIssuer() {
         Timber.i("Starting process to identify and introduce issuer at " + mIntroUrl);
 
         Observable.combineLatest(
@@ -79,7 +90,6 @@ public abstract class LMIssuerBaseFragment extends LMFragment {
                 Observable.just(mNounce),
                 mIssuerManager.fetchIssuer(mIntroUrl),
                 IssuerIntroductionRequest::new)
-                .doOnSubscribe(() -> displayProgressDialog(R.string.fragment_add_issuer_adding_issuer_progress_dialog_message))
                 .doOnSubscribe(this::addIssuerOnSubscribe)
                 .doOnCompleted(this::addIssuerOnCompleted)
                 .doOnError(throwable -> addIssuerOnError())
@@ -91,6 +101,7 @@ public abstract class LMIssuerBaseFragment extends LMFragment {
                     } else {
                         performStandardIssuerIntroduction(request);
                     }
+                    hideProgressDialog();
                 }, throwable -> {
                     Timber.e(throwable, "Error during issuer identification: " + ErrorUtils.getErrorFromThrowable(throwable));
                     displayErrors(R.string.http_bad_request_issuer, throwable, DialogUtils.ErrorCategory.ISSUER, R.string.error_title_message1);

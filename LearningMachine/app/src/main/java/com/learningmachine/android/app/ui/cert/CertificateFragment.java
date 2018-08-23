@@ -48,7 +48,6 @@ import javax.inject.Inject;
 import rx.Observable;
 import timber.log.Timber;
 
-
 public class CertificateFragment extends LMFragment {
 
     private static final String ARG_CERTIFICATE_UUID = "CertificateFragment.CertificateUuid";
