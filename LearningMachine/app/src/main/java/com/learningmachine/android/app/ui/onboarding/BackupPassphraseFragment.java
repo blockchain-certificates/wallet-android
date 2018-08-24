@@ -68,15 +68,15 @@ public class BackupPassphraseFragment extends OnboardingFragment {
         mBinding.onboardingWriteButton.setOnClickListener(view -> onWrite());
 
         int numCompleted = 3;
-        if (savedInstanceState == null || savedInstanceState.getBoolean("onboardingSaveCheckmark") == false) {
+        if (savedInstanceState == null || !savedInstanceState.getBoolean("onboardingSaveCheckmark")) {
             mBinding.onboardingSaveCheckmark.setVisibility(View.INVISIBLE);
             numCompleted--;
         }
-        if (savedInstanceState == null || savedInstanceState.getBoolean("onboardingEmailCheckmark") == false) {
+        if (savedInstanceState == null || !savedInstanceState.getBoolean("onboardingEmailCheckmark")) {
             mBinding.onboardingEmailCheckmark.setVisibility(View.INVISIBLE);
             numCompleted--;
         }
-        if (savedInstanceState == null || savedInstanceState.getBoolean("onboardingWriteCheckmark") == false) {
+        if (savedInstanceState == null || !savedInstanceState.getBoolean("onboardingWriteCheckmark")) {
             mBinding.onboardingWriteCheckmark.setVisibility(View.INVISIBLE);
             numCompleted--;
         }
@@ -113,7 +113,7 @@ public class BackupPassphraseFragment extends OnboardingFragment {
         mSharedPreferencesManager.setHasSeenBackupPassphraseBefore(true);
         mSharedPreferencesManager.setWasReturnUser(false);
         mSharedPreferencesManager.setFirstLaunch(false);
-        if (continueDelayedURLsFromDeepLinking() == false) {
+        if (!continueDelayedURLsFromDeepLinking()) {
             startActivity(new Intent(getActivity(), HomeActivity.class));
             getActivity().finish();
         }
@@ -227,6 +227,9 @@ public class BackupPassphraseFragment extends OnboardingFragment {
     public void HandleBackupOptionCompleted(View view) {
         if(view != null) {
 
+            if (view.getVisibility() == View.VISIBLE) {
+                return;
+            }
             Laba.Animate(view, "!s!f!>", () -> { return null; });
             view.setVisibility(View.VISIBLE);
 
