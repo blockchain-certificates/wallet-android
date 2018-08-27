@@ -66,7 +66,6 @@ public class AddCertificateFileFragment extends LMFragment {
             addCertificateFile();
         });
 
-        mBinding.importButton.setAlpha(0.3f);
         mBinding.importButton.setEnabled(false);
 
         return mBinding.getRoot();
@@ -129,7 +128,6 @@ public class AddCertificateFileFragment extends LMFragment {
         String filename = mSelectedFile.getName();
         mBinding.chooseFileButton.setText(filename);
 
-        mBinding.importButton.setAlpha(1.0f);
         mBinding.importButton.setEnabled(true);
     }
 

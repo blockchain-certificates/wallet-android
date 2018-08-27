@@ -117,7 +117,6 @@ public class PastePassphraseFragment extends OnboardingFragment {
         });
 
         mBinding.pastePassphraseEditText.addTextChangedListener(new PastePassphraseTextWatcher());
-        mBinding.doneButton.setAlpha(0.3f);
         mBinding.doneButton.setEnabled(false);
         mBinding.doneButton.setOnClickListener(view -> onDone());
 
@@ -132,7 +131,6 @@ public class PastePassphraseFragment extends OnboardingFragment {
 
         startCountingTimer();
 
-        mBinding.doneButton.setAlpha(0.3f);
         mBinding.doneButton.setEnabled(false);
         mBinding.pastePassphraseEditText.setEnabled(false);
 
@@ -230,11 +228,6 @@ public class PastePassphraseFragment extends OnboardingFragment {
                     .toString();
             boolean emptyPassphrase = StringUtils.isEmpty(passphrase);
             mBinding.doneButton.setEnabled(!emptyPassphrase);
-            if (mBinding.doneButton.isEnabled()) {
-                mBinding.doneButton.setAlpha(1.0f);
-            } else {
-                mBinding.doneButton.setAlpha(0.3f);
-            }
         }
     }
 }

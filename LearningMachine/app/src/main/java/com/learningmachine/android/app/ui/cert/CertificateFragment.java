@@ -21,7 +21,6 @@ import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.TextView;
 
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.CertificateManager;
@@ -62,6 +61,8 @@ public class CertificateFragment extends LMFragment {
 
     private FragmentCertificateBinding mBinding;
     private String mCertUuid;
+    private AlertDialogFragment mUpdateDialog;
+    private boolean mWasCanceled;
 
     public static CertificateFragment newInstance(String certificateUuid) {
         Bundle args = new Bundle();
@@ -290,43 +291,27 @@ public class CertificateFragment extends LMFragment {
         startActivity(intent);
     }
 
-    private TextView updateDialogTitleView = null;
-    private TextView updateDialogSubTitleView = null;
-    private TextView updateDialogMessageView = null;
-    private AlertDialogFragment updateDialog = null;
 
-    private void showVerficationProgressDialog() {
-
-        if(updateDialog == null) {
-            updateDialog = DialogUtils.showCustomDialog(getContext(), this,
-                    R.layout.dialog_certificate_verification,
-                    0,
-                    "",
-                    "",
-                    null,
-                    getResources().getString(R.string.onboarding_passphrase_cancel),
-                    (btnIdx) -> {
-                        updateDialog = null;
-                        updateDialogTitleView = null;
-                        updateDialogSubTitleView = null;
-                        updateDialogMessageView = null;
-                        return null;
+    private void showVerificationProgressDialog() {
+        mWasCanceled = false;
+        mUpdateDialog = DialogUtils.showCustomDialog(getContext(), this,
+                0,
+                "",
+                "",
+                null,
+                getResources().getString(R.string.onboarding_passphrase_cancel),
+                (btnIdx) -> {
+                    mWasCanceled = true;
+                    return null;
                     },
-                    (dialogContent) -> {
-                        View view = (View) dialogContent;
-                        updateDialogTitleView = (TextView) view.findViewById(R.id.titleView);
-                        updateDialogSubTitleView = (TextView) view.findViewById(R.id.subTitleView);
-                        updateDialogMessageView = (TextView) view.findViewById(R.id.messageView);
-                        this.updateVerificationProgressDialog(R.string.cert_verification_step0);
-                        return null;
-                    },
-                    (btnIdx) -> {
-                        updateDialog = null;
-                        updateDialogTitleView = null;
-                        updateDialogMessageView = null;
-                        return null;
-                    });
-        }
+                (dialogContent) -> {
+                    this.updateVerificationProgressDialog(R.string.cert_verification_step0);
+                    return null;
+                },
+                (btnIdx) -> {
+                    mWasCanceled = true;
+                    return null;
+                });
     }
 
     private void updateVerificationProgressDialog(int messageResId) {
@@ -335,22 +320,24 @@ public class CertificateFragment extends LMFragment {
 
     private void updateVerificationProgressDialog(String blockChain, String stepLabel, String message) {
         FragmentActivity parent = getActivity();
-        if(updateDialogTitleView != null && updateDialogMessageView != null && parent != null && !parent.isFinishing()) {
-            parent.runOnUiThread(() -> {
-                updateDialogTitleView.setText(blockChain);
-                updateDialogSubTitleView.setText(stepLabel);
-                updateDialogMessageView.setText(message);
-            });
+        if (parent == null || parent.isFinishing()) {
+            return;
         }
+
+        parent.runOnUiThread(() -> {
+            if (mUpdateDialog == null) {
+                return;
+            }
+            mUpdateDialog.setCustomTitle(blockChain);
+            mUpdateDialog.setCustomSubTitle(stepLabel);
+            mUpdateDialog.setCustomMessage(message);
+        });
     }
 
     private void hideVerificationProgressDialog() {
-        if(updateDialog != null) {
-            updateDialog.dismissAllowingStateLoss();
+        if(mUpdateDialog != null) {
+            mUpdateDialog.dismissAllowingStateLoss();
         }
-        updateDialog = null;
-        updateDialogTitleView = null;
-        updateDialogMessageView = null;
     }
 
 
@@ -397,6 +384,9 @@ public class CertificateFragment extends LMFragment {
     }
 
     private void showVerificationResultDialog(int iconId, int titleId, int messageId, Anchor.ChainType chainType) {
+        if (mWasCanceled) {
+            return;
+        }
         hideVerificationProgressDialog();
 
         if (chainType == null) {
@@ -415,6 +405,9 @@ public class CertificateFragment extends LMFragment {
     }
 
     private void showVerificationFailureDialog(int errorId, Anchor.ChainType chainType) {
+        if (mWasCanceled) {
+            return;
+        }
         hideVerificationProgressDialog();
 
         DialogUtils.showAlertDialog(getContext(), this,
@@ -429,6 +422,9 @@ public class CertificateFragment extends LMFragment {
     }
 
     private void showVerificationFailureDialog(String error, String title) {
+        if (mWasCanceled) {
+            return;
+        }
         hideVerificationProgressDialog();
 
         DialogUtils.showAlertDialog(getContext(), this,
@@ -442,12 +438,8 @@ public class CertificateFragment extends LMFragment {
 
     private void verifyCertificate() {
         Timber.i("User tapped verify on this certificate");
-        if (updateDialog != null) {
-            return;
-        }
-
         // 0. show the progress dialog
-        showVerficationProgressDialog();
+        showVerificationProgressDialog();
 
         if (!isOnline(getContext())) {
             showVerificationFailureDialog(R.string.error_no_internet, Anchor.ChainType.unknown);
@@ -494,6 +486,8 @@ public class CertificateFragment extends LMFragment {
         private VerificationSteps[] mVerificationSteps;
         private Anchor.ChainType mChainType;
         private String mChainName;
+        private int mSubStepsTotalCount;
+        private int mSubStepsCount;
 
         /**
          * This method will be called when a new Status is available in a Credential verification process.
@@ -507,6 +501,14 @@ public class CertificateFragment extends LMFragment {
             if (status.isSuccess()) {
                 String title = getString(R.string.fragment_verify_cert_chain_format, mChainName);
                 updateVerificationProgressDialog(title, stepLabel, status.label);
+
+                mSubStepsCount++;
+                if (mSubStepsCount == mSubStepsTotalCount) {
+                    showVerificationResultDialog(R.drawable.ic_dialog_success,
+                            R.string.cert_verification_success_title,
+                            R.string.success_mainnet_verification,
+                            mChainType);
+                }
             } else if (status.isFailure()) {
                 String failureTitle = getResources().getString(R.string.cert_verification_failure_title);
                 if (status.code.equals(CHECK_REVOKED_STATUS)) {
@@ -523,21 +525,8 @@ public class CertificateFragment extends LMFragment {
         @android.webkit.JavascriptInterface
         public void notifyVerificationSteps(String verificationStepsStr) {
             mVerificationSteps = VerificationSteps.getFromString(verificationStepsStr);
-        }
-
-        /**
-         * This method will be called when the verification process finishes.
-         * @param lastStepStr The final Status String in a JSON format.
-         */
-        @android.webkit.JavascriptInterface
-        public void notifyLastStep(String lastStepStr) {
-            VerifierStatus finalStepStatus = VerifierStatus.getFromString(lastStepStr);
-            if (finalStepStatus.isSuccess()) {
-                showVerificationResultDialog(R.drawable.ic_dialog_success,
-                        R.string.cert_verification_success_title,
-                        R.string.success_mainnet_verification,
-                        mChainType);
-            }
+            mSubStepsTotalCount = getSubStepsCount(mVerificationSteps);
+            mSubStepsCount = 0;
         }
 
         /**
@@ -565,6 +554,15 @@ public class CertificateFragment extends LMFragment {
                 }
             }
             return null;
+        }
+
+        private int getSubStepsCount(VerificationSteps[] steps) {
+            int count = 0;
+            for (VerificationSteps step :
+                    steps) {
+                count += step.subSteps.length;
+            }
+            return count;
         }
     }
 }

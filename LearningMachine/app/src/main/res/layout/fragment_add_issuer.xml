@@ -5,7 +5,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -14,7 +15,6 @@
             android:orientation="vertical"
             android:paddingEnd="@dimen/fragment_add_issuer_linear_layout_padding_horizontal"
             android:paddingStart="@dimen/fragment_add_issuer_linear_layout_padding_horizontal"
-            android:background="@color/white"
             tools:context="com.learningmachine.android.app.ui.issuer.AddIssuerActivity">
 
             <TextView

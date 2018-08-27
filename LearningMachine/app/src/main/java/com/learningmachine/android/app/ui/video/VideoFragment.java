@@ -142,6 +142,7 @@ public class VideoFragment extends LMFragment {
 
                 public void onPlayerStateChanged(boolean playWhenReady, int state) {
                     if (state == Player.STATE_ENDED) {
+                        player.seekTo(0);
                         getActivity().finish();
                     }
                 }
