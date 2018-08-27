@@ -15,9 +15,8 @@
             android:id="@+id/background_video"
             android:layout_width="0dp"
             android:layout_height="0dp"
-
+            android:importantForAccessibility="no"
             app:layout_constraintDimensionRatio="H,720:720"
-
             app:layout_constraintBottom_toBottomOf="@+id/background_video_spacer"
             app:layout_constraintLeft_toLeftOf="@+id/background_video_spacer"
             app:layout_constraintRight_toRightOf="@+id/background_video_spacer" />
@@ -27,6 +26,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@color/colorBackground"
+            android:importantForAccessibility="no"
             app:layout_constraintBottom_toBottomOf="@+id/background_video"
             app:layout_constraintTop_toTopOf="@+id/background_video"
             app:layout_constraintLeft_toLeftOf="@+id/background_video"
@@ -41,6 +41,7 @@
             android:layout_marginTop="24dp"
             android:src="@drawable/ic_blockcerts_white"
             app:layout_constraintBottom_toTopOf="@+id/background_video"
+            android:importantForAccessibility="no"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -51,7 +52,7 @@
             android:id="@+id/background_video_spacer"
             android:layout_width="0dp"
             android:layout_height="0dp"
-
+            android:importantForAccessibility="no"
             app:layout_constraintBottom_toTopOf="@+id/new_account_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

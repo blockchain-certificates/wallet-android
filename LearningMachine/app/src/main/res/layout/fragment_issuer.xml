@@ -65,6 +65,7 @@
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:src="@drawable/ic_letter"
+                android:importantForAccessibility="no"
                 app:layout_constraintBottom_toTopOf="@+id/issuer_no_certificates_desc"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"

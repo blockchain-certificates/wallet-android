@@ -27,6 +27,7 @@
             android:paddingBottom="@dimen/certificate_info_viewmodel_textview_bottom_padding"
             android:autoLink="all"
             android:clickable="true"
+            android:focusable="true"
             android:textColorLink="@color/linkColor"
             android:text="@{item.value}"
             app:layout_constraintTop_toBottomOf="@+id/textView1"

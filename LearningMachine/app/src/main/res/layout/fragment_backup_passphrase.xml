@@ -29,6 +29,7 @@
             android:layout_marginEnd="32dp"
             android:layout_marginStart="32dp"
             android:src="@drawable/ic_backup_passphrase"
+            android:importantForAccessibility="no"
             app:layout_constraintBottom_toTopOf="@+id/onboarding_backup_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -18,6 +18,7 @@
             android:src="@drawable/ic_small_video_background"
             android:scaleType="centerCrop"
             android:adjustViewBounds="true"
+            android:importantForAccessibility="no"
             app:layout_constraintBottom_toTopOf="@+id/spreader1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
