@@ -32,7 +32,6 @@
             app:layout_constraintLeft_toLeftOf="@+id/background_video"
             app:layout_constraintRight_toRightOf="@+id/background_video" />
 
-
         <ImageView
             android:id="@+id/logo"
             android:layout_width="230dp"
@@ -65,6 +64,7 @@
             android:layout_height="100dp"
             android:background="@null"
             android:src="@drawable/ic_play_button"
+            android:contentDescription="@string/play_intro_video"
             app:layout_constraintBottom_toBottomOf="@+id/background_video"
             app:layout_constraintLeft_toLeftOf="@+id/background_video"
             app:layout_constraintRight_toRightOf="@+id/background_video"

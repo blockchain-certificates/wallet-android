@@ -356,5 +356,6 @@
     <string name="error_invalid_passphrase_empty">Passphrase cannot be empty</string>
     <string name="error_invalid_passphrase_malformed">Invalid passphrase</string>
     <string name="select_two_to_continue">Select two to continue</string>
+    <string name="play_intro_video">Play introductory video</string>
 
 </resources>

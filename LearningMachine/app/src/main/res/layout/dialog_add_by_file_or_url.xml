@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <android.support.constraint.ConstraintLayout
@@ -17,6 +16,7 @@
             style="@style/RoundedButton.NoBorder"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:contentDescription="@string/add_certificate_by_url"
             app:layout_constraintBottom_toBottomOf="@+id/horizontal"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -27,6 +27,7 @@
             style="@style/RoundedButton.NoBorder"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:contentDescription="@string/add_certificate_by_file"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -50,6 +51,7 @@
             android:layout_height="0dp"
             android:text="@string/add_certificate_by_url"
             android:gravity="center_vertical"
+            android:importantForAccessibility="no"
             app:layout_constraintBottom_toBottomOf="@+id/horizontal"
             app:layout_constraintLeft_toLeftOf="@+id/vertical"
             app:layout_constraintRight_toRightOf="parent"
@@ -73,6 +75,7 @@
             android:layout_height="0dp"
             android:text="@string/add_certificate_by_file"
             android:gravity="center_vertical"
+            android:importantForAccessibility="no"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="@+id/vertical"
             app:layout_constraintRight_toRightOf="parent"
