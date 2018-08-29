@@ -35,6 +35,7 @@
             android:layout_height="wrap_content"
             android:autoLink="all"
             android:clickable="true"
+            android:focusable="true"
             android:textColorLink="@color/linkColor"
             android:paddingBottom="@dimen/issuer_info_viewmodel_textview_bottom_padding"
             android:text="@{issuerInfo.issuerUrl}"

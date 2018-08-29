@@ -19,8 +19,8 @@
 
     <color name="colorBackground">#062451</color>
     <color name="colorBackgroundDark">#031126</color>
-    <color name="primaryButtonNormal">#7CE4B4</color>
-    <color name="primaryButtonPressed">#2AB27B</color>
+    <color name="primaryButtonNormal">@color/c14</color>
+    <color name="primaryButtonPressed">@color/c4</color>
 
     <color name="secondaryButtonNormal">#062451</color>
     <color name="secondaryButtonPressed">#062451</color>
@@ -28,7 +28,7 @@
 
     <color name="off_white_background">#F0F3F5</color>
 
-    <color name="linkColor">#2AB27B</color>
+    <color name="linkColor">@color/c11</color>
 
     <color name="grey">#D8D8D8</color>
 

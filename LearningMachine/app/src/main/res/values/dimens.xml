@@ -11,6 +11,9 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="add_identity_top_padding">13dp</dimen>
 
+    <!--Default paddings and margins-->
+    <dimen name="default_small_padding">8dp</dimen>
+
     <!-- Splash -->
 
     <dimen name="splash_logo_margin_top">124dp</dimen>
@@ -170,5 +173,6 @@
 
     <dimen name="dialog_file_chooser_padding">8dp</dimen>
     <dimen name="default_dialog_button_height">48dp</dimen>
+    <dimen name="default_dialog_item_height">48dp</dimen>
 
 </resources>

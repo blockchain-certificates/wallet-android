@@ -31,6 +31,7 @@
             android:background="@null"
             android:layout_width="85dp"
             android:layout_height="85dp"
+            android:contentDescription="@string/play_intro_video"
             app:layout_constraintBottom_toBottomOf="@+id/image_view"
             app:layout_constraintTop_toTopOf="@+id/image_view"
             app:layout_constraintLeft_toLeftOf="@+id/image_view"

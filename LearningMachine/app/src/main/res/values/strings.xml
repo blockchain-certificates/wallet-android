@@ -9,6 +9,8 @@
     <string name="onboarding_new_user">New User</string>
     <string name="onboarding_returning_user">Current User</string>
 
+    <string name="play_intro_video">Play introductory video</string>
+
 
     <string name="onboarding_passphrase_status_0">Generating your new passphrase...</string>
     <string name="onboarding_passphrase_status_1">Passphrase Generated!</string>
@@ -57,6 +59,7 @@
 
 
     <!-- Issuer Info -->
+    <string name="fragment_issuer_title">Issuer</string>
     <string name="issuer_info_title">Issuer Info</string>
     <string name="issuer_info_menu_item_title">Info</string>
     <string name="fragment_issuer_info_title">Issuer Name</string>
@@ -302,7 +305,7 @@
 
     <!-- Certificate Fragment -->
 
-    <string name="fragment_certificate_title">\u00A0</string>
+    <string name="fragment_certificate_title">Credential</string>
     <string name="certificate_verify_menu_item_title">Verify</string>
     <string name="certificate_share_menu_item_title">Share</string>
     <string name="certificate_info_menu_item_title">Info</string>
@@ -356,6 +359,5 @@
     <string name="error_invalid_passphrase_empty">Passphrase cannot be empty</string>
     <string name="error_invalid_passphrase_malformed">Invalid passphrase</string>
     <string name="select_two_to_continue">Select two to continue</string>
-    <string name="play_intro_video">Play introductory video</string>
 
 </resources>

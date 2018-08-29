@@ -143,7 +143,8 @@
             android:src="@drawable/ic_action_add"
             app:backgroundTint="@color/primaryButtonNormal"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:contentDescription="@string/add_certificate_import"/>
 
 
     </android.support.constraint.ConstraintLayout>

@@ -48,38 +48,27 @@
             android:layout_height="52dp"
             android:layout_marginEnd="20dp"
             android:layout_marginStart="20dp"
+            android:contentDescription="@string/certificate_share_button"
             app:layout_constraintBottom_toTopOf="@+id/verify_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/bottomBackground" />
 
-        <ImageView
-            android:id="@+id/share_button_icon"
-            android:layout_width="0dp"
-            android:layout_height="25dp"
-            android:layout_marginBottom="13dp"
-            android:layout_marginTop="13dp"
-            android:layout_marginEnd="13dp"
-            android:importantForAccessibility="no"
-            android:src="@drawable/ic_share"
-            android:scaleType="fitEnd"
-            android:clickable="false"
-            app:layout_constraintBottom_toBottomOf="@+id/share_button"
-            app:layout_constraintLeft_toLeftOf="@+id/share_button"
-            app:layout_constraintRight_toLeftOf="@+id/share_button_title"
-            app:layout_constraintTop_toTopOf="@+id/share_button" />
 
         <TextView
             android:id="@+id/share_button_title"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/certificate_share_button"
-            android:textAlignment="viewStart"
             style="@style/ButtonTitleWhite"
             android:clickable="false"
+            android:drawableStart="@drawable/ic_share"
+            android:drawablePadding="@dimen/default_small_padding"
+            android:gravity="center"
+            android:importantForAccessibility="no"
             app:layout_constraintBottom_toBottomOf="@+id/share_button"
-            app:layout_constraintLeft_toRightOf="@+id/share_button_icon"
+            app:layout_constraintLeft_toLeftOf="@+id/share_button"
             app:layout_constraintRight_toRightOf="@+id/share_button"
             app:layout_constraintTop_toTopOf="@+id/share_button" />
 
