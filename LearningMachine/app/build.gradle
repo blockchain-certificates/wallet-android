@@ -189,7 +189,7 @@ dependencies {
     implementation "com.google.guava:guava:$GUAVA_VERSION"
     implementation 'com.bugsee:bugsee-android:1.12.3'
 
-    implementation 'com.google.android.exoplayer:exoplayer:2.7.0'
+    implementation 'com.google.android.exoplayer:exoplayer:2.8.4'
 
 
     androidTestImplementation("com.android.support.test.espresso:espresso-core:$ESPRESSO_VERSION", {

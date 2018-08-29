@@ -3,14 +3,12 @@ package com.learningmachine.android.app.ui.video;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.exoplayer2.ExoPlaybackException;
-import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.PlaybackParameters;
 import com.google.android.exoplayer2.Player;
@@ -24,16 +22,12 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelection;
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
 import com.google.android.exoplayer2.trackselection.TrackSelector;
-import com.google.android.exoplayer2.upstream.BandwidthMeter;
 import com.google.android.exoplayer2.upstream.DataSource;
-import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 import com.learningmachine.android.app.R;
-import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.databinding.FragmentVideoBinding;
 import com.learningmachine.android.app.ui.LMFragment;
-import com.trello.rxlifecycle.android.FragmentEvent;
 
 
 public class VideoFragment extends LMFragment {
@@ -44,24 +38,19 @@ public class VideoFragment extends LMFragment {
 
     private FragmentVideoBinding mBinding;
     private SimpleExoPlayer player;
+    private static long pauseSavedPosition = 0;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setHasOptionsMenu(false);
-
     }
 
     @Override
     public void onStart() {
         super.onStart();
-
-
     }
 
-
-    private static long pauseSavedPosition = 0;
     @Override
     public void onResume() {
         super.onResume();
@@ -123,6 +112,13 @@ public class VideoFragment extends LMFragment {
 
             player = ExoPlayerFactory.newSimpleInstance(getContext(), trackSelector);
             mBinding.VideoView.setPlayer(player);
+            //The exoplayer progress bar already contains the current position information
+            //We can make the position view not important for accessibility.
+            View videoPosView = mBinding.VideoView.findViewById(R.id.exo_position);
+            if (videoPosView != null) {
+                videoPosView.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);
+
+            }
 
 
             DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(getContext(),
