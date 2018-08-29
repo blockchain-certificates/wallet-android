@@ -169,5 +169,6 @@
     <!-- Cert file dialog -->
 
     <dimen name="dialog_file_chooser_padding">8dp</dimen>
+    <dimen name="default_dialog_button_height">48dp</dimen>
 
 </resources>
