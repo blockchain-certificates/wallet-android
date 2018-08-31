@@ -179,7 +179,7 @@ public class CertificateFragment extends LMFragment {
                     Timber.e(throwable, "Could not setup webview.");
 
                     ExceptionWithResourceString throwableRS = (ExceptionWithResourceString)throwable;
-                    showVerificationFailureDialog(throwableRS.getErrorMessageResId(), Anchor.ChainType.unknown);
+                    showVerificationFailureDialog(throwableRS.getErrorMessageResId());
                 });
     }
 
@@ -346,36 +346,12 @@ public class CertificateFragment extends LMFragment {
 
         if(chainType == Anchor.ChainType.testnet || chainType == Anchor.ChainType.regtest) {
             switch (messageID) {
-                case R.string.error_mainnet_step1_reason:
-                    return R.string.error_testnet_step1_reason;
-                case R.string.error_mainnet_step2_reason:
-                    return R.string.error_testnet_step2_reason;
-                case R.string.error_mainnet_step3_reason:
-                    return R.string.error_testnet_step3_reason;
-                case R.string.error_mainnet_step4_reason:
-                    return R.string.error_testnet_step4_reason;
-                case R.string.error_mainnet_step5_reason:
-                    return R.string.error_testnet_step5_reason;
-                case R.string.error_mainnet_step6_reason:
-                    return R.string.error_testnet_step6_reason;
                 case R.string.success_mainnet_verification:
                     return R.string.success_testnet_verification;
             }
         }
         if(chainType == Anchor.ChainType.mocknet) {
             switch (messageID) {
-                case R.string.error_mainnet_step1_reason:
-                    return R.string.error_mocknet_step1_reason;
-                case R.string.error_mainnet_step2_reason:
-                    return R.string.error_mocknet_step2_reason;
-                case R.string.error_mainnet_step3_reason:
-                    return R.string.error_mocknet_step3_reason;
-                case R.string.error_mainnet_step4_reason:
-                    return R.string.error_mocknet_step4_reason;
-                case R.string.error_mainnet_step5_reason:
-                    return R.string.error_mocknet_step5_reason;
-                case R.string.error_mainnet_step6_reason:
-                    return R.string.error_mocknet_step6_reason;
                 case R.string.success_mainnet_verification:
                     return R.string.success_mocknet_verification;
             }
@@ -404,7 +380,7 @@ public class CertificateFragment extends LMFragment {
                 });
     }
 
-    private void showVerificationFailureDialog(int errorId, Anchor.ChainType chainType) {
+    private void showVerificationFailureDialog(int errorId) {
         if (mWasCanceled) {
             return;
         }
@@ -413,7 +389,7 @@ public class CertificateFragment extends LMFragment {
         DialogUtils.showAlertDialog(getContext(), this,
                 R.drawable.ic_dialog_failure,
                 getResources().getString(R.string.cert_verification_failure_title),
-                getResources().getString(actualStringByChain(errorId, chainType)),
+                getResources().getString(errorId),
                 null,
                 getResources().getString(R.string.onboarding_passphrase_ok),
                 (btnIdx) -> {
@@ -442,7 +418,7 @@ public class CertificateFragment extends LMFragment {
         showVerificationProgressDialog();
 
         if (!isOnline(getContext())) {
-            showVerificationFailureDialog(R.string.error_no_internet, Anchor.ChainType.unknown);
+            showVerificationFailureDialog(R.string.error_no_internet);
             return;
         }
 
@@ -460,7 +436,7 @@ public class CertificateFragment extends LMFragment {
             mBinding.verifyView.loadUrl(urlOrHtml);
         } else {
             // we failed to load the verification lib, error out
-            showVerificationFailureDialog(R.string.error_no_engine, Anchor.ChainType.unknown);
+            showVerificationFailureDialog(R.string.error_no_engine);
         }
 
     }

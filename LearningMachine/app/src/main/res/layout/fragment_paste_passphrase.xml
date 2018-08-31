@@ -66,7 +66,7 @@
             android:layout_marginTop="24dp"
             android:gravity="center"
             android:padding="16dp"
-            android:contentDescription="@string/onboarding_paste_passphrase_hint"
+            android:contentDescription="@string/onboarding_paste_passphrase_content_description"
             app:layout_constraintBottom_toTopOf="@+id/doneButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
