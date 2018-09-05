@@ -21,6 +21,11 @@
     <color name="colorBackgroundDark">#031126</color>
     <color name="primaryButtonNormal">@color/c14</color>
     <color name="primaryButtonPressed">@color/c4</color>
+    <color name="colorBlueActionBar">@color/c3</color>
+    <color name="colorWhiteActionBar">@color/c1</color>
+    <color name="colorBlueDarkTextTitle">@color/c3</color>
+    <color name="colorCertificateMenuItem">@color/c3</color>
+    <color name="colorDivider">@color/c8</color>
 
     <color name="secondaryButtonNormal">#062451</color>
     <color name="secondaryButtonPressed">#062451</color>

@@ -13,9 +13,6 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.FileProvider;
 import android.util.Pair;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
@@ -91,29 +88,26 @@ public class CertificateFragment extends LMFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_certificate, container, false);
 
-        mBinding.verifyButton.setOnClickListener(view -> verifyCertificate() );
-        mBinding.shareButton.setOnClickListener(view -> shareCertificate() );
-
+        mBinding.certBottomNavigation.setOnNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.fragment_certificate_info_menu_item:
+                    Timber.i("More info tapped on the Certificate display");
+                    viewCertificateInfo();
+                    return true;
+                case R.id.fragment_certificate_verify_menu_item:
+                    Timber.i("Verify Certificate tapped on the Certificate display");
+                    verifyCertificate();
+                    return true;
+                case R.id.fragment_certificate_share_menu_item:
+                    Timber.i("Share Certificate tapped on the Certificate display");
+                    shareCertificate();
+                    return true;
+            }
+            return false;
+        });
         setupWebView();
 
         return mBinding.getRoot();
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.fragment_certificate, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.fragment_certificate_info_menu_item:
-                Timber.i("More info tapped on the Certificate display");
-                viewCertificateInfo();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     private String prepareForCertificateVerification() {

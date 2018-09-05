@@ -142,6 +142,7 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="actionBarStyle">@style/BlueActionBar</item>
         <item name="colorPrimary">@color/colorBackground</item>
         <item name="colorPrimaryDark">@color/white</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -149,6 +150,19 @@
         <item name="android:statusBarColor">@color/colorBackground</item>
         <item name="android:windowLightStatusBar">false</item>
         <item name="colorControlNormal">@color/white</item>
+    </style>
+
+    <style name="AppThemeLight" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="homeAsUpIndicator">@drawable/ic_up_blue</item>
+        <item name="actionBarStyle">@style/WhiteActionBar</item>
+        <item name="colorPrimary">@color/colorBackground</item>
+        <item name="colorPrimaryDark">@color/white</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textViewStyle">@style/LearningMachineTextView</item>
+        <item name="android:statusBarColor">@color/colorBackground</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="colorControlNormal">@color/white</item>
+        <item name="colorControlHighlight">@color/c10</item>
     </style>
 
     <!--No Toolbar Theme-->
@@ -160,6 +174,24 @@
         <item name="android:statusBarColor">@color/colorBackground</item>
         <item name="android:windowLightStatusBar">false</item>
         <item name="colorControlNormal">@color/white</item>
+    </style>
+
+    <style name="BlueActionBar"
+        parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@color/colorBlueActionBar</item>
+
+        <!-- Support library compatibility -->
+        <item name="background">@color/colorBlueActionBar</item>
+    </style>
+
+    <style name="WhiteActionBar"
+        parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@color/colorWhiteActionBar</item>
+        <item name="android:titleTextStyle">@style/WhiteActionBarTextStyle</item>
+
+        <!-- Support library compatibility -->
+        <item name="background">@color/colorWhiteActionBar</item>
+        <item name="titleTextStyle">@style/WhiteActionBarTextStyle</item>
     </style>
 
     <style name="NoToolbarTheme.Splash">
@@ -176,6 +208,11 @@
         <item name="buttonStyle">@style/RoundedButton</item>
         <item name="android:statusBarColor">@color/colorBackground</item>
         <item name="editTextStyle">@style/OnboardingPassphraseEditText</item>
+    </style>
+
+    <style name="WhiteActionBarTextStyle"
+        parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/colorBlueDarkTextTitle</item>
     </style>
 
     <!-- Base -->

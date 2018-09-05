@@ -82,8 +82,8 @@
     <string name="success_mocknet_verification">This mock credential passed all checks. Mocknet mode is only used by issuers to test their workflow locally. This credential was not recorded to a blockchain and should not be considered a verified credential.</string>
 
     <!-- Certificate View -->
-    <string name="certificate_share_button">Share</string>
-    <string name="certificate_verify_button">Verify this credential</string>
+    <string name="certificate_share_menu_item_title">Share</string>
+    <string name="certificate_verify_menu_item_title">Verify</string>
 
     <string name="certificate_delete_button">Delete Credential</string>
 

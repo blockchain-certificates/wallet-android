@@ -91,6 +91,7 @@
 
         <activity
             android:name=".ui.cert.CertificateActivity"
+            android:theme="@style/AppThemeLight"
             android:screenOrientation="portrait"
             android:launchMode="singleTask"/>
 
@@ -109,6 +110,7 @@
             android:name=".ui.cert.CertificateInfoActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTask"/>
+
         <activity android:name=".ui.WebAuthActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTask"/>
