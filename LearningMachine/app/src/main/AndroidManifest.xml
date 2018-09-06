@@ -115,6 +115,10 @@
             android:screenOrientation="portrait"
             android:launchMode="singleTask"/>
 
+        <activity android:name=".ui.cert.VerifyCertificateActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"/>
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.learningmachine.android.app.fileprovider"

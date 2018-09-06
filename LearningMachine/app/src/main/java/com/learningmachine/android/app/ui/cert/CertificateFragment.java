@@ -1,15 +1,10 @@
 package com.learningmachine.android.app.ui.cert;
 
-import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.FileProvider;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -17,7 +12,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -31,8 +25,6 @@ import com.learningmachine.android.app.data.error.ExceptionWithResourceString;
 import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.data.model.CertificateRecord;
 import com.learningmachine.android.app.data.model.IssuerRecord;
-import com.learningmachine.android.app.data.verifier.VerificationSteps;
-import com.learningmachine.android.app.data.verifier.VerifierStatus;
 import com.learningmachine.android.app.databinding.FragmentCertificateBinding;
 import com.learningmachine.android.app.dialog.AlertDialogFragment;
 import com.learningmachine.android.app.ui.LMFragment;
@@ -58,8 +50,6 @@ public class CertificateFragment extends LMFragment {
 
     private FragmentCertificateBinding mBinding;
     private String mCertUuid;
-    private AlertDialogFragment mUpdateDialog;
-    private boolean mWasCanceled;
 
     public static CertificateFragment newInstance(String certificateUuid) {
         Bundle args = new Bundle();
@@ -125,28 +115,6 @@ public class CertificateFragment extends LMFragment {
         }
     }
 
-    private String prepareForCertificateVerification() {
-        try {
-            // 0. copy VERIFY_LIB_FILE_PATH to documents folder
-            // 1. copy VERIFY_FILE_PATH to documents folder
-            // 2. copy the certificate to "certificate.json"
-            // 3. return the URL to the HTML file
-
-            FileUtils.copyAssetFile(getContext(), "www/verifier.js", "verifier.js");
-            FileUtils.copyAssetFile(getContext(), "www/verify.html", "verify.html");
-
-            String certificateJSON = FileUtils.getCertificateFileJSON(getContext(), mCertUuid);
-            String localJsonPath = getContext().getFilesDir() + "/" + "certificate.json";
-            FileUtils.writeStringToFile(certificateJSON, localJsonPath);
-
-            return "file://" + getContext().getFilesDir() + "/" + "verify.html";
-
-        } catch (Exception e) {
-            Timber.e(e, "Unable to prepare the certificate verification system.");
-            return "Unable to prepare the certificate verification system<br>"+e.toString();
-        }
-    }
-
     private String displayHTML(BlockCert certificate) {
         String displayHTML = "";
 
@@ -169,9 +137,6 @@ public class CertificateFragment extends LMFragment {
     }
 
     private void setupWebView() {
-
-
-
         // Note: This entire code has been reworked to more closely match the iOS application.
         mBinding.webView.setWebViewClient(new LMWebViewClient());
         mBinding.progressBar.setVisibility(View.VISIBLE);
@@ -187,7 +152,7 @@ public class CertificateFragment extends LMFragment {
                     Timber.e(throwable, "Could not setup webview.");
 
                     ExceptionWithResourceString throwableRS = (ExceptionWithResourceString)throwable;
-                    showVerificationFailureDialog(throwableRS.getErrorMessageResId());
+                    showFailureDialog(throwableRS.getErrorMessageResId());
                 });
     }
 
@@ -300,75 +265,7 @@ public class CertificateFragment extends LMFragment {
     }
 
 
-    private void showVerificationProgressDialog() {
-        mWasCanceled = false;
-        mUpdateDialog = DialogUtils.showCustomDialog(getContext(), this,
-                0,
-                "",
-                "",
-                null,
-                getResources().getString(R.string.onboarding_passphrase_cancel),
-                (btnIdx) -> {
-                    mWasCanceled = true;
-                    return null;
-                    },
-                (dialogContent) -> {
-                    return null;
-                },
-                (btnIdx) -> {
-                    mWasCanceled = true;
-                    return null;
-                });
-    }
-
-    private void updateVerificationProgressDialog(int messageResId) {
-       updateVerificationProgressDialog("", "", getString(messageResId));
-    }
-
-    private void updateVerificationProgressDialog(String blockChain, String stepLabel, String message) {
-        FragmentActivity parent = getActivity();
-        if (parent == null || parent.isFinishing()) {
-            return;
-        }
-
-        parent.runOnUiThread(() -> {
-            if (mUpdateDialog == null) {
-                return;
-            }
-            mUpdateDialog.setCustomTitle(blockChain);
-            mUpdateDialog.setCustomSubTitle(stepLabel);
-            mUpdateDialog.setCustomMessage(message);
-        });
-    }
-
-    private void hideVerificationProgressDialog() {
-        if(mUpdateDialog != null) {
-            mUpdateDialog.dismissAllowingStateLoss();
-        }
-    }
-
-    private void showVerificationSuccessDialog(int iconId, String title, String message) {
-        if (mWasCanceled) {
-            return;
-        }
-        hideVerificationProgressDialog();
-
-        DialogUtils.showAlertDialog(getContext(), this,
-                iconId,
-                title,
-                message,
-                null,
-                getResources().getString(R.string.ok_button),
-                (btnIdx) -> {
-                    return null;
-                });
-    }
-
-    private void showVerificationFailureDialog(int errorId) {
-        if (mWasCanceled) {
-            return;
-        }
-        hideVerificationProgressDialog();
+    private void showFailureDialog(int errorId) {
 
         DialogUtils.showAlertDialog(getContext(), this,
                 R.drawable.ic_dialog_failure,
@@ -381,144 +278,10 @@ public class CertificateFragment extends LMFragment {
                 });
     }
 
-    private void showVerificationFailureDialog(String error, String title) {
-        if (mWasCanceled) {
-            return;
-        }
-        hideVerificationProgressDialog();
-
-        DialogUtils.showAlertDialog(getContext(), this,
-                R.drawable.ic_dialog_failure,
-                title,
-                error,
-                null,
-                getResources().getString(R.string.ok_button),
-                (btnIdx) -> null);
-    }
 
     private void verifyCertificate() {
         Timber.i("User tapped verify on this certificate");
-        // 0. show the progress dialog
-        showVerificationProgressDialog();
-
-        if (!isOnline(getContext())) {
-            showVerificationFailureDialog(getString(R.string.error_no_internet_message),
-                    getString(R.string.error_no_internet_title));
-            return;
-        }
-
-        // 1. instrument the verify_view web view to begin javascript verification
-        WebSettings webSettings = mBinding.verifyView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        webSettings.setAllowFileAccess(true);
-        webSettings.setAllowContentAccess(true);
-        webSettings.setAllowFileAccessFromFileURLs(true);
-        webSettings.setAllowUniversalAccessFromFileURLs(true);
-        mBinding.verifyView.addJavascriptInterface(new JavascriptInterface(), "Android");
-
-        String urlOrHtml = prepareForCertificateVerification();
-        if (urlOrHtml.startsWith("file://")) {
-            mBinding.verifyView.loadUrl(urlOrHtml);
-        } else {
-            // we failed to load the verification lib, error out
-            showVerificationFailureDialog(R.string.error_no_engine);
-        }
-
-    }
-
-    public static boolean isOnline(Context context) {
-        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        return networkInfo != null && networkInfo.isAvailable() && networkInfo.isConnected();
-    }
-
-    @Override
-    protected void displayErrors(Throwable throwable, DialogUtils.ErrorCategory errorCategory, @StringRes int errorTitleResId) {
-        hideVerificationProgressDialog();
-        super.displayErrors(throwable, errorCategory, errorTitleResId);
-    }
-
-    /**
-     * This class has methods that will be called by JavaScript code.
-     * JavaScript will notify changes in Status when a certificate is being verified.
-     */
-    private class JavascriptInterface {
-        private static final String CHECK_REVOKED_STATUS = "checkRevokedStatus";
-        private VerificationSteps[] mVerificationSteps;
-        private String mChainName;
-        private int mSubStepsTotalCount;
-        private int mSubStepsCount;
-
-        /**
-         * This method will be called when a new Status is available in a Credential verification process.
-         * @param statusStr The status String in JSON format.
-         */
-        @android.webkit.JavascriptInterface
-        public void notifyStatusChanged(String statusStr) {
-
-            VerifierStatus status = VerifierStatus.getFromString(statusStr);
-            String stepLabel = getStepLabelFromSubStep(status.code);
-            if (status.isSuccess()) {
-                String title = getString(R.string.fragment_verify_cert_chain_format, mChainName);
-                updateVerificationProgressDialog(title, stepLabel, status.label);
-
-                mSubStepsCount++;
-                if (mSubStepsCount == mSubStepsTotalCount) {
-                    String successTitle = getString(R.string.cert_verification_success_title);
-                    String successMessage = getString(R.string.success_verification, mChainName);
-                    showVerificationSuccessDialog(R.drawable.ic_dialog_success,
-                            successTitle,
-                            successMessage);
-                }
-            } else if (status.isFailure()) {
-                String failureTitle = getResources().getString(R.string.cert_verification_failure_title);
-                if (status.code.equals(CHECK_REVOKED_STATUS)) {
-                    failureTitle = getResources().getString(R.string.cert_verification_revoked_title);
-                }
-                showVerificationFailureDialog(status.errorMessage, failureTitle);
-            }
-        }
-
-        /**
-         * This method will receive the Sub Steps.
-         * @param verificationStepsStr The substeps String in JSON format.
-         */
-        @android.webkit.JavascriptInterface
-        public void notifyVerificationSteps(String verificationStepsStr) {
-            mVerificationSteps = VerificationSteps.getFromString(verificationStepsStr);
-            mSubStepsTotalCount = getSubStepsCount(mVerificationSteps);
-            mSubStepsCount = 0;
-        }
-
-        /**
-         * This method will receive the chain type code.
-         * @param chainName The chain name. Such as mocknet, bitcoin and testnet.
-         */
-        @android.webkit.JavascriptInterface
-        public void notifyChainName(String chainName) {
-            mChainName = chainName;
-        }
-
-        private String getStepLabelFromSubStep(String code) {
-            for (VerificationSteps step :
-                    mVerificationSteps) {
-                for (VerificationSteps.SubSteps subStep:
-                        step.subSteps) {
-                    if (subStep.code.equals(code)) {
-                        return step.label;
-                    }
-                }
-            }
-            return null;
-        }
-
-        private int getSubStepsCount(VerificationSteps[] steps) {
-            int count = 0;
-            for (VerificationSteps step :
-                    steps) {
-                count += step.subSteps.length;
-            }
-            return count;
-        }
+        Intent certificateActivity = VerifyCertificateActivity.newIntent(getContext(), mCertUuid);
+        startActivity(certificateActivity);
     }
 }
