@@ -85,7 +85,7 @@
 
         <activity
             android:name=".ui.settings.passphrase.RevealPassphraseActivity"
-            android:label="@string/reveal_passphrase_title"
+            android:label="@string/settings_reveal_passphrase"
             android:screenOrientation="portrait"
             android:launchMode="singleTask"/>
 

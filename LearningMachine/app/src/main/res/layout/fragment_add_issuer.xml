@@ -83,7 +83,7 @@
                 android:layout_height="52dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
-                android:text="@string/add_certificate_import" />
+                android:text="@string/fragment_add_issuer_import_button" />
 
         </LinearLayout>
 

@@ -6,10 +6,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import com.google.gson.stream.MalformedJsonException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.gson.JsonParseException;
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.error.ExceptionWithResourceString;
 import com.learningmachine.android.app.dialog.AlertDialogFragment;
@@ -176,9 +178,9 @@ public class DialogUtils {
                 case HTTP_NOT_FOUND:
                     switch(errorCategory){
                         case ISSUER:
-                            return R.string.http_not_found_issuer;
+                            return R.string.invalid_issuer_url;
                         case CERTIFICATE:
-                            return R.string.http_not_found_certificate;
+                            return R.string.invalid_certificate;
                         default:
                             return R.string.http_not_found_generic;
                     }
@@ -186,17 +188,34 @@ public class DialogUtils {
                 case HTTP_BAD_REQUEST:
                     switch(errorCategory){
                         case ISSUER:
-                            return R.string.http_bad_request_issuer;
+                            return R.string.invalid_issuer_nonce;
                         case CERTIFICATE:
-                            return R.string.http_bad_request_certificate;
+                            return R.string.invalid_certificate;
                         default:
-                            return R.string.http_bad_request_generic;
+                            return R.string.http_not_found_generic;
                     }
             }
         } else if (throwable instanceof ExceptionWithResourceString) {
             ExceptionWithResourceString exceptionWithResourceString = (ExceptionWithResourceString) throwable;
             return exceptionWithResourceString.getErrorMessageResId();
-        } else {
+        } else if (throwable instanceof JsonParseException) {
+            //There was an error parsing json
+            switch(errorCategory) {
+                case CERTIFICATE:
+                    return R.string.invalid_credential_error;
+                default:
+                    return 0;
+            }
+        } else if (throwable instanceof MalformedJsonException) {
+            switch(errorCategory) {
+                case ISSUER:
+                    //if the url json is malformed
+                    return R.string.invalid_issuer_url;
+                default:
+                    return 0;
+            }
+        }
+        else {
             return 0;
         }
     }

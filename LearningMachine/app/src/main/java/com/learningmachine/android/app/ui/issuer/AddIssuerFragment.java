@@ -85,7 +85,7 @@ public class AddIssuerFragment extends LMIssuerBaseFragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mIntroUrl = mBinding.addIssuerNonceEditText.getText().toString();
+                mIntroUrl = mBinding.addIssuerUrlEditText.getText().toString();
                 CheckIfImportButtonShouldBeEnabled();
             }
         });

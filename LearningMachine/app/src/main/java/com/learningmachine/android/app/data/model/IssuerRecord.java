@@ -93,6 +93,9 @@ public class IssuerRecord {
     }
 
     public String getIntroUrl() {
+        if (mIntroUrl == null) {
+            return "";
+        }
         return mIntroUrl;
     }
 

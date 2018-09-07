@@ -24,7 +24,6 @@ import com.learningmachine.android.app.data.CertificateManager;
 import com.learningmachine.android.app.data.CertificateVerifier;
 import com.learningmachine.android.app.data.IssuerManager;
 import com.learningmachine.android.app.data.cert.BlockCert;
-import com.learningmachine.android.app.data.cert.v20.Anchor;
 import com.learningmachine.android.app.data.cert.v20.BlockCertV20;
 import com.learningmachine.android.app.data.error.ExceptionWithResourceString;
 import com.learningmachine.android.app.data.inject.Injector;
@@ -140,10 +139,10 @@ public class CertificateFragment extends LMFragment {
             displayHTML = cert2.getDisplayHtml();
 
             if(displayHTML == null) {
-                displayHTML = "<center>Blockcerts Wallet only supports certificates which match the v2.0 specification. This certificate is missing the displayHTML attribute and cannot be rendered.</center>";
+                displayHTML = "<center>" + getString(R.string.cert_old_version_error) + "</center>";
             }
         }else{
-            displayHTML = "<center>Blockcerts Wallet only supports certificates which match the v2.0 specification.</center>";
+            displayHTML = "<center>" + getString(R.string.cert_old_version_error) + "</center>";
         }
 
         String normalizeCss = "/*! normalize.css v7.0.0 | MIT License | github.com/necolas/normalize.css */html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,aside,footer,header,nav,section{display:block}h1{font-size:2em;margin:.67em 0}figcaption,figure,main{display:block}figure{margin:1em 40px}hr{box-sizing:content-box;height:0;overflow:visible}pre{font-family:monospace,monospace;font-size:1em}a{background-color:transparent;-webkit-text-decoration-skip:objects}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}b,strong{font-weight:inherit}b,strong{font-weight:bolder}code,kbd,samp{font-family:monospace,monospace;font-size:1em}dfn{font-style:italic}mark{background-color:#ff0;color:#000}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}audio,video{display:inline-block}audio:not([controls]){display:none;height:0}img{border-style:none}svg:not(:root){overflow:hidden}button,input,optgroup,select,textarea{font-family:sans-serif;font-size:100%;line-height:1.15;margin:0}button,input{overflow:visible}button,select{text-transform:none}[type=reset],[type=submit],button,html [type=button]{-webkit-appearance:button}[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner,button::-moz-focus-inner{border-style:none;padding:0}[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring,button:-moz-focusring{outline:1px dotted ButtonText}fieldset{padding:.35em .75em .625em}legend{box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}progress{display:inline-block;vertical-align:baseline}textarea{overflow:auto}[type=checkbox],[type=radio]{box-sizing:border-box;padding:0}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-cancel-button,[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}details,menu{display:block}summary{display:list-item}canvas{display:inline-block}template{display:none}[hidden]{display:none}/*# sourceMappingURL=normalize.min.css.map */";
@@ -298,7 +297,6 @@ public class CertificateFragment extends LMFragment {
                     return null;
                     },
                 (dialogContent) -> {
-                    this.updateVerificationProgressDialog(R.string.cert_verification_step0);
                     return null;
                 },
                 (btnIdx) -> {
@@ -333,39 +331,16 @@ public class CertificateFragment extends LMFragment {
         }
     }
 
-
-
-    private int actualStringByChain(int messageID, Anchor.ChainType chainType) {
-
-        if(chainType == Anchor.ChainType.testnet || chainType == Anchor.ChainType.regtest) {
-            switch (messageID) {
-                case R.string.success_mainnet_verification:
-                    return R.string.success_testnet_verification;
-            }
-        }
-        if(chainType == Anchor.ChainType.mocknet) {
-            switch (messageID) {
-                case R.string.success_mainnet_verification:
-                    return R.string.success_mocknet_verification;
-            }
-        }
-        return messageID;
-    }
-
-    private void showVerificationResultDialog(int iconId, int titleId, int messageId, Anchor.ChainType chainType) {
+    private void showVerificationSuccessDialog(int iconId, String title, String message) {
         if (mWasCanceled) {
             return;
         }
         hideVerificationProgressDialog();
 
-        if (chainType == null) {
-            chainType = Anchor.ChainType.unknown;
-        }
-
         DialogUtils.showAlertDialog(getContext(), this,
                 iconId,
-                getResources().getString(titleId),
-                getResources().getString(actualStringByChain(messageId, chainType)),
+                title,
+                message,
                 null,
                 getResources().getString(R.string.onboarding_passphrase_ok),
                 (btnIdx) -> {
@@ -411,7 +386,8 @@ public class CertificateFragment extends LMFragment {
         showVerificationProgressDialog();
 
         if (!isOnline(getContext())) {
-            showVerificationFailureDialog(R.string.error_no_internet);
+            showVerificationFailureDialog(getString(R.string.error_no_internet_message),
+                    getString(R.string.error_no_internet_title));
             return;
         }
 
@@ -453,7 +429,6 @@ public class CertificateFragment extends LMFragment {
     private class JavascriptInterface {
         private static final String CHECK_REVOKED_STATUS = "checkRevokedStatus";
         private VerificationSteps[] mVerificationSteps;
-        private Anchor.ChainType mChainType;
         private String mChainName;
         private int mSubStepsTotalCount;
         private int mSubStepsCount;
@@ -473,10 +448,11 @@ public class CertificateFragment extends LMFragment {
 
                 mSubStepsCount++;
                 if (mSubStepsCount == mSubStepsTotalCount) {
-                    showVerificationResultDialog(R.drawable.ic_dialog_success,
-                            R.string.cert_verification_success_title,
-                            R.string.success_mainnet_verification,
-                            mChainType);
+                    String successTitle = getString(R.string.cert_verification_success_title);
+                    String successMessage = getString(R.string.success_verification, mChainName);
+                    showVerificationSuccessDialog(R.drawable.ic_dialog_success,
+                            successTitle,
+                            successMessage);
                 }
             } else if (status.isFailure()) {
                 String failureTitle = getResources().getString(R.string.cert_verification_failure_title);
@@ -500,16 +476,11 @@ public class CertificateFragment extends LMFragment {
 
         /**
          * This method will receive the chain type code.
-         * @param chainType The chain type code. Such as mocknet, bitcoin and testnet.
+         * @param chainName The chain name. Such as mocknet, bitcoin and testnet.
          */
         @android.webkit.JavascriptInterface
-        public void notifyChainType(String chainType, String chainName) {
+        public void notifyChainName(String chainName) {
             mChainName = chainName;
-            if (Anchor.isValidChain(chainType)) {
-                mChainType = Anchor.ChainType.valueOf(chainType);
-            } else {
-                mChainType = Anchor.ChainType.unknown;
-            }
         }
 
         private String getStepLabelFromSubStep(String code) {

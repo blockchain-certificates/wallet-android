@@ -3,6 +3,7 @@ package com.learningmachine.android.app.data;
 import android.content.Context;
 import android.content.res.AssetManager;
 
+import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
 import com.learningmachine.android.app.LMConstants;
 import com.learningmachine.android.app.data.bitcoin.BitcoinManager;
@@ -124,7 +125,7 @@ public class CertificateManager {
     private Observable<String> handleCertificateFile(File certificateFile) {
         try (FileInputStream inputStream = new FileInputStream(certificateFile)) {
             return handleCertificateInputStream(inputStream);
-        } catch (IOException e) {
+        } catch (IOException | JsonParseException e) {
             return Observable.error(e);
         }
     }

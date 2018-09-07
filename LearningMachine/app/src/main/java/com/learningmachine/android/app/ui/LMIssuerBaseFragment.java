@@ -104,7 +104,7 @@ public abstract class LMIssuerBaseFragment extends LMFragment {
                     hideProgressDialog();
                 }, throwable -> {
                     Timber.e(throwable, "Error during issuer identification: " + ErrorUtils.getErrorFromThrowable(throwable));
-                    displayErrors(R.string.http_bad_request_issuer, throwable, DialogUtils.ErrorCategory.ISSUER, R.string.error_title_message1);
+                    displayErrors(throwable, DialogUtils.ErrorCategory.ISSUER, R.string.error_title_message);
                 });
     }
 
@@ -112,7 +112,7 @@ public abstract class LMIssuerBaseFragment extends LMFragment {
         mIssuerManager.addIssuer(request)
                 .compose(bindToMainThread())
                 .subscribe(this::addIssuerOnIssuerAdded,
-                        throwable -> displayErrors(R.string.http_bad_request_issuer, throwable, DialogUtils.ErrorCategory.ISSUER, R.string.error_title_message2));
+                        throwable -> displayErrors(throwable, DialogUtils.ErrorCategory.ISSUER, R.string.error_title_message));
     }
 
     private void performWebAuth(IssuerIntroductionRequest request) {
@@ -135,7 +135,7 @@ public abstract class LMIssuerBaseFragment extends LMFragment {
                     .map(issuer -> mIssuerManager.saveIssuer(issuer, bitcoinAddress))
                     .subscribe(this::addIssuerOnIssuerAdded, throwable -> {
                         Timber.e(throwable, "Error during issuer introduction: " + ErrorUtils.getErrorFromThrowable(throwable));
-                        displayErrors(R.string.http_bad_request_issuer, throwable, DialogUtils.ErrorCategory.ISSUER, R.string.error_title_message3);
+                        displayErrors(throwable, DialogUtils.ErrorCategory.ISSUER, R.string.error_title_message);
                     });
         } else {
             super.onActivityResult(requestCode, resultCode, data);
