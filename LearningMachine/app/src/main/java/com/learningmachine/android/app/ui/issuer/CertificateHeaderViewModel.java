@@ -1,8 +1,12 @@
 package com.learningmachine.android.app.ui.issuer;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+import android.view.View;
 
+import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.model.IssuerRecord;
 
 public class CertificateHeaderViewModel extends BaseObservable {
@@ -17,20 +21,28 @@ public class CertificateHeaderViewModel extends BaseObservable {
         return mIssuer.getName();
     }
 
+    public boolean hasCertificate() {
+        return mIssuer.cachedNumberOfCertificatesForIssuer > 0;
+    }
+
     @Bindable
-    public String getNumberOfCertificatesAsString() {
+    public int getCertificateTitleVisibility(){
+        if (mIssuer == null) {
+            return View.GONE;
+        }
+        return mIssuer.cachedNumberOfCertificatesForIssuer > 0 ? View.VISIBLE : View.GONE;
+    }
+
+    public String getNumberOfCertificatesAsString(Context context) {
         if (mIssuer == null) {
             return null;
         }
 
-        // TODO: Move these to the strings.xml
-        if(mIssuer.cachedNumberOfCertificatesForIssuer == 0){
-            return "";
-        }
-        if(mIssuer.cachedNumberOfCertificatesForIssuer == 1){
-            return "You have 1 credential:";
-        }
-        return String.format("You have %d credentials:", mIssuer.cachedNumberOfCertificatesForIssuer);
+        Resources resources = context.getResources();
+
+        return resources.getQuantityString(R.plurals.certificate_counting_head,
+                mIssuer.cachedNumberOfCertificatesForIssuer,
+                mIssuer.cachedNumberOfCertificatesForIssuer);
     }
 
     public void bindIssuer(IssuerRecord issuer) {

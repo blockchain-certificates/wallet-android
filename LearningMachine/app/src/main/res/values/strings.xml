@@ -57,7 +57,10 @@
     <!-- Issuer (Certificate List) -->
     <string name="issuer_no_certificates_desc">No Credentials</string>
     <string name="issuer_no_certificates_desc2">You will receive an email when a credential is issued. Follow the link in the email to complete the process.</string>
-
+    <plurals name="certificate_counting_head">
+        <item quantity="one">You have %d credential:</item>
+        <item quantity="other">You have %d credentials:</item>
+    </plurals>
 
     <!-- Issuer Info -->
     <string name="fragment_issuer_title">Issuer</string>
