@@ -13,6 +13,8 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.FileProvider;
 import android.util.Pair;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
@@ -86,8 +88,9 @@ public class CertificateFragment extends LMFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_certificate, container, false);
-
+        setAllItemsChecked();
         mBinding.certBottomNavigation.setOnNavigationItemSelectedListener(item -> {
+            setAllItemsChecked();
             switch (item.getItemId()) {
                 case R.id.fragment_certificate_info_menu_item:
                     Timber.i("More info tapped on the Certificate display");
@@ -107,6 +110,19 @@ public class CertificateFragment extends LMFragment {
         setupWebView();
 
         return mBinding.getRoot();
+    }
+
+    /**
+     * This method will make all items in menu have the same size.
+     */
+    private void setAllItemsChecked(){
+        Menu menu = mBinding.certBottomNavigation.getMenu();
+
+        for (int i = 0, size = menu.size(); i < size; i++) {
+            MenuItem item = menu.getItem(i);
+            item.setChecked(false);
+            item.setCheckable(false);
+        }
     }
 
     private String prepareForCertificateVerification() {
