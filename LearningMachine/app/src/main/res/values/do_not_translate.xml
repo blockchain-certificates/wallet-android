@@ -2,8 +2,8 @@
 <resources>
     <string name="app_name">Blockcerts</string>
     <string name="fragment_issuer_info_url">URL</string>
-    <string name="settings_privacy_policy_endpoint">http://www.learningmachine.com/mobile-privacy/</string>
-    <string name="about_passphrases_endpoint">http://www.learningmachine.com/about-passphrases/</string>
+    <string name="settings_privacy_policy_endpoint">https://www.blockcerts.org/mobile-privacy</string>
+    <string name="about_passphrases_endpoint">https://www.blockcerts.org/about-passphrase</string>
     <string name="cert_metadata_boolean_true">True</string>
     <string name="cert_metadata_boolean_false">False</string>
 
