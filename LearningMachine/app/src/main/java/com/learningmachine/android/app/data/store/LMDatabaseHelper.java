@@ -4,17 +4,14 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.VisibleForTesting;
-import android.util.Log;
 
 import com.learningmachine.android.app.data.store.db.Migration;
-import com.learningmachine.android.app.data.store.db.TrackIssuerURL;
-import com.learningmachine.android.app.data.store.db.TrackPubKeySentToIssuer;
 
 public class LMDatabaseHelper extends SQLiteOpenHelper {
 
     @VisibleForTesting static final String DB_NAME = "com.learningmachine.android.app.sqlite";
 
-    private static final int DB_VERSION = 5;
+    private static final int DB_VERSION = 6;
 
     private Migration[] mMigrations = { };
 
@@ -42,6 +39,7 @@ public class LMDatabaseHelper extends SQLiteOpenHelper {
         // New mechanism: test to see if we're missing what we need, then add it. Works across all versions. Simpler to keep track of
         ConfirmColumnExistsInTable(sqLiteDatabase, LMDatabaseHelper.Table.ISSUER, LMDatabaseHelper.Column.Issuer.RECIPIENT_PUB_KEY, "text", null);
         ConfirmColumnExistsInTable(sqLiteDatabase, LMDatabaseHelper.Table.ISSUER, LMDatabaseHelper.Column.Issuer.ISSUERURL, "text", "");
+        ConfirmColumnExistsInTable(sqLiteDatabase, LMDatabaseHelper.Table.CERTIFICATE, LMDatabaseHelper.Column.Certificate.EXPIRATION_DATE, "text", "");
     }
 
     private void ConfirmColumnExistsInTable(SQLiteDatabase sqLiteDatabase, String tableName, String columnName, String typeName, String defaultValue) {
@@ -102,6 +100,7 @@ public class LMDatabaseHelper extends SQLiteOpenHelper {
             public static final String DESCRIPTION = "description";
             public static final String ISSUE_DATE = "issue_date";
             public static final String URL = "url";
+            public static final String EXPIRATION_DATE = "expiration_date";
             public static final String METADATA = "metadata";
         }
     }
@@ -152,6 +151,7 @@ public class LMDatabaseHelper extends SQLiteOpenHelper {
                 + ", " + Column.Certificate.DESCRIPTION + " TEXT"
                 + ", " + Column.Certificate.ISSUE_DATE + " TEXT"
                 + ", " + Column.Certificate.URL + " TEXT"
+                + ", " + Column.Certificate.EXPIRATION_DATE + " TEXT"
                 + ", " + Column.Certificate.METADATA + " TEXT"
                 + ");";
         sqLiteDatabase.execSQL(createTable);

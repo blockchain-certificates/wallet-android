@@ -138,18 +138,38 @@ public class CertificateInfoFragment extends LMFragment {
         }
 
         private List<CertificateInfoItemViewModel> getHeaderData(CertificateRecord certificate, IssuerRecord issuer) {
-            String issuerTitle = getString(R.string.fragment_certificate_info_issuer_title);
-            String issuerName = issuer.getName();
-            CertificateInfoItemViewModel issuerViewModel = new CertificateInfoItemViewModel(issuerTitle, issuerName);
-
-            String dateString = certificate.getIssuedOn();
-            String issueDate = DateUtils.formatDateString(dateString);
-            String issueDateTitle = getString(R.string.fragment_certificate_info_issuer_issue_date);
-            CertificateInfoItemViewModel issueDateViewModel = new CertificateInfoItemViewModel(issueDateTitle, issueDate);
-
             List<CertificateInfoItemViewModel> viewModels = new ArrayList<>();
-            viewModels.add(issuerViewModel);
-            viewModels.add(issueDateViewModel);
+
+            String certName = certificate.getName();
+            if (!StringUtils.isEmpty(certName)) {
+                String certNameTitle = getString(R.string.fragment_certificate_info_cert_name);
+                CertificateInfoItemViewModel certNameViewModel = new CertificateInfoItemViewModel(certNameTitle, certName);
+                viewModels.add(certNameViewModel);
+            }
+            
+            String dateString = certificate.getIssuedOn();
+            if (!StringUtils.isEmpty(dateString)) {
+                String issueDate = DateUtils.formatDateString(dateString);
+                String issueDateTitle = getString(R.string.fragment_certificate_info_issuer_issue_date);
+                CertificateInfoItemViewModel issueDateViewModel = new CertificateInfoItemViewModel(issueDateTitle, issueDate);
+                viewModels.add(issueDateViewModel);
+            }
+
+            String expirationDateString = certificate.getExpirationDate();
+            if (!StringUtils.isEmpty(expirationDateString)) {
+                String expirationDate = DateUtils.formatDateString(expirationDateString);
+                String expirationDateTitle = getString(R.string.fragment_certificate_info_cert_expiration);
+                CertificateInfoItemViewModel expirationDateViewModel = new CertificateInfoItemViewModel(expirationDateTitle, expirationDate);
+                viewModels.add(expirationDateViewModel);
+            }
+
+            String description = certificate.getDescription();
+            if (!StringUtils.isEmpty(description)) {
+                String descriptionTitle = getString(R.string.fragment_certificate_info_cert_description);
+                CertificateInfoItemViewModel certDescriptionViewModel = new CertificateInfoItemViewModel(descriptionTitle, description);
+                viewModels.add(certDescriptionViewModel);
+            }
+
             return viewModels;
         }
 

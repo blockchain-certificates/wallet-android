@@ -195,8 +195,8 @@
     <string name="fragment_certificate_info_delete_warning_negative_title">Delete</string>
 
     <!-- Check version -->
-    <string name="check_version_title">Old version</string>
-    <string name="check_version_message">You are using an old version. Please go to play store and update.</string>
+    <string name="check_version_title">Please Update Blockcerts Wallet</string>
+    <string name="check_version_message">In order to add an issuer or credential, you must have the latest version of Blockerts Wallet.</string>
     <string name="check_version_message_cancel_title">Cancel</string>
     <string name="check_version_message_confirm_title">Okay</string>
 

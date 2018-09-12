@@ -19,8 +19,10 @@ public class CertificateRecord {
     private String mIssuedOn;
     private String mUrlString;
     private String mMetadata;
+    private String mExpirationDate;
 
-    public CertificateRecord(String uuid, String issuerUuid, String name, String description, String issuedOn, String urlString, String metadata) {
+    public CertificateRecord(String uuid, String issuerUuid, String name, String description,
+                             String issuedOn, String urlString, String metadata, String expirationDate) {
         mUuid = uuid;
         mIssuerUuid = issuerUuid;
         mName = name;
@@ -28,6 +30,7 @@ public class CertificateRecord {
         mIssuedOn = issuedOn;
         mUrlString = urlString;
         mMetadata = metadata;
+        mExpirationDate = expirationDate;
     }
 
     public String getName() {
@@ -121,5 +124,9 @@ public class CertificateRecord {
 
     public boolean urlStringContainsUrl() {
         return StringUtils.isWebUrl(mUrlString);
+    }
+
+    public String getExpirationDate() {
+        return mExpirationDate;
     }
 }
