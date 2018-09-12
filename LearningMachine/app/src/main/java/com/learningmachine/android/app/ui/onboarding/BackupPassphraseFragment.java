@@ -127,7 +127,7 @@ public class BackupPassphraseFragment extends OnboardingFragment {
                         R.drawable.ic_dialog_failure,
                         getResources().getString(R.string.onboarding_passphrase_permissions_error_title),
                         getResources().getString(R.string.onboarding_passphrase_permissions_error),
-                        getResources().getString(R.string.onboarding_passphrase_ok),
+                        getResources().getString(R.string.ok_button),
                         null,
                         (btnIdx) -> {
                             HandleBackupOptionCompleted(null);
@@ -140,7 +140,7 @@ public class BackupPassphraseFragment extends OnboardingFragment {
                     R.drawable.ic_dialog_success,
                     getResources().getString(R.string.onboarding_passphrase_complete_title),
                     getResources().getString(R.string.onboarding_passphrase_save_complete),
-                    getResources().getString(R.string.onboarding_passphrase_ok),
+                    getResources().getString(R.string.ok_button),
                     null,
                     (btnIdx) -> {
                         if(mBinding != null) {
@@ -164,7 +164,7 @@ public class BackupPassphraseFragment extends OnboardingFragment {
                 getResources().getString(R.string.onboarding_passphrase_email_before_title),
                 getResources().getString(R.string.onboarding_passphrase_email_before),
                 getResources().getString(R.string.onboarding_passphrase_cancel),
-                getResources().getString(R.string.onboarding_passphrase_ok),
+                getResources().getString(R.string.ok_button),
                 (btnIdx) -> {
 
                     if((int)btnIdx == 0) {

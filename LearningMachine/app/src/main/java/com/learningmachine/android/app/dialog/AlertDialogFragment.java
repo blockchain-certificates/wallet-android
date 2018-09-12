@@ -5,17 +5,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.graphics.Point;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -29,8 +24,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.learningmachine.android.app.R;
-import com.learningmachine.android.app.util.StringUtils;
-import com.smallplanet.labalib.Laba;
 
 public class AlertDialogFragment extends DialogFragment {
 
@@ -85,8 +78,9 @@ public class AlertDialogFragment extends DialogFragment {
         return newInstance(0, "", message, "", "");
     }
 
-    public static AlertDialogFragment newInstance(String title, String message) {
-        return newInstance(R.drawable.ic_dialog_failure, title, message, null, "Okay");
+    public static AlertDialogFragment newInstance(Context context, String title, String message) {
+        String negativeButton = context.getString(R.string.ok_button);
+        return newInstance(R.drawable.ic_dialog_failure, title, message, null, negativeButton);
     }
 
     public static AlertDialogFragment newInstance(boolean bottomSheet, int layoutID, int iconID, String title, String message, String positiveButtonMessage, String negativeButtonMessage, Callback complete, Callback onCreate, Callback onCancel) {

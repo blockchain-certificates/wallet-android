@@ -156,7 +156,7 @@ public class DialogUtils {
     }
 
     private static void showErrorAlertDialog(Context context, FragmentManager fragmentManager, String title, String errorMessage, Throwable throwable) {
-        AlertDialogFragment dialog = AlertDialogFragment.newInstance(title, errorMessage);
+        AlertDialogFragment dialog = AlertDialogFragment.newInstance(context, title, errorMessage);
         fragmentManager.beginTransaction()
                 .add(dialog, TAG_DIALOG_ALERT)
                 .commitAllowingStateLoss();

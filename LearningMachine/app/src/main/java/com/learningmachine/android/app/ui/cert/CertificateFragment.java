@@ -358,7 +358,7 @@ public class CertificateFragment extends LMFragment {
                 title,
                 message,
                 null,
-                getResources().getString(R.string.onboarding_passphrase_ok),
+                getResources().getString(R.string.ok_button),
                 (btnIdx) -> {
                     return null;
                 });
@@ -375,7 +375,7 @@ public class CertificateFragment extends LMFragment {
                 getResources().getString(R.string.cert_verification_failure_title),
                 getResources().getString(errorId),
                 null,
-                getResources().getString(R.string.onboarding_passphrase_ok),
+                getResources().getString(R.string.ok_button),
                 (btnIdx) -> {
                     return null;
                 });
@@ -392,7 +392,7 @@ public class CertificateFragment extends LMFragment {
                 title,
                 error,
                 null,
-                getResources().getString(R.string.onboarding_passphrase_ok),
+                getResources().getString(R.string.ok_button),
                 (btnIdx) -> null);
     }
 

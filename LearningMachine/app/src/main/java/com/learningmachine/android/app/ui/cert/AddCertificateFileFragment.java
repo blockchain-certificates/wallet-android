@@ -13,7 +13,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -145,7 +144,7 @@ public class AddCertificateFileFragment extends LMFragment {
                     getResources().getString(R.string.no_files_downloaded_title),
                     getResources().getString(R.string.no_files_downloaded_message),
                     null,
-                    getResources().getString(R.string.onboarding_passphrase_ok),
+                    getResources().getString(R.string.ok_button),
                     (btnIdx) -> {
                         return null;
                     });

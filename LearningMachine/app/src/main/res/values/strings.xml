@@ -163,7 +163,7 @@
 
 
     <string name="onboarding_passphrase_cancel">Cancel</string>
-    <string name="onboarding_passphrase_ok">Okay</string>
+    <string name="ok_button">Okay</string>
 
 
     <!-- Settings -->
@@ -198,7 +198,6 @@
     <string name="check_version_title">Please Update Blockcerts Wallet</string>
     <string name="check_version_message">In order to add an issuer or credential, you must have the latest version of Blockerts Wallet.</string>
     <string name="check_version_message_cancel_title">Cancel</string>
-    <string name="check_version_message_confirm_title">Okay</string>
 
     <!-- Certificate Verification -->
 

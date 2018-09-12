@@ -25,9 +25,6 @@ import com.learningmachine.android.app.ui.home.HomeActivity;
 import com.learningmachine.android.app.util.DialogUtils;
 import com.learningmachine.android.app.util.StringUtils;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 import javax.inject.Inject;
 
 import timber.log.Timber;
@@ -159,7 +156,7 @@ public class PastePassphraseFragment extends OnboardingFragment {
                 getResources().getString(R.string.onboarding_passphrase_invalid_title),
                 getResources().getString(R.string.onboarding_passphrase_invalid_desc),
                 null,
-                getResources().getString(R.string.onboarding_passphrase_ok),
+                getResources().getString(R.string.ok_button),
                 (btnIdx) -> {
                     return null;
                 });

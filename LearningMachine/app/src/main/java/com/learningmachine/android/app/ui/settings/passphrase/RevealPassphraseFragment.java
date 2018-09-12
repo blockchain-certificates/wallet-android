@@ -1,29 +1,20 @@
 package com.learningmachine.android.app.ui.settings.passphrase;
 
-import android.content.ClipData;
-import android.content.ClipboardManager;
-import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.bitcoin.BitcoinManager;
 import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.databinding.FragmentRevealPassphraseBinding;
-import com.learningmachine.android.app.dialog.AlertDialogFragment;
 import com.learningmachine.android.app.ui.LMActivity;
 import com.learningmachine.android.app.ui.LMFragment;
-import com.learningmachine.android.app.ui.onboarding.OnboardingActivity;
 import com.learningmachine.android.app.util.DialogUtils;
 import com.smallplanet.labalib.Laba;
 
@@ -96,7 +87,7 @@ public class RevealPassphraseFragment extends LMFragment {
                         R.drawable.ic_dialog_failure,
                         getResources().getString(R.string.onboarding_passphrase_permissions_error_title),
                         getResources().getString(R.string.onboarding_passphrase_permissions_error),
-                        getResources().getString(R.string.onboarding_passphrase_ok),
+                        getResources().getString(R.string.ok_button),
                         null,
                         (btnIdx) -> {
                             HandleBackupOptionCompleted(null);
@@ -109,7 +100,7 @@ public class RevealPassphraseFragment extends LMFragment {
                     R.drawable.ic_dialog_success,
                     getResources().getString(R.string.onboarding_passphrase_complete_title),
                     getResources().getString(R.string.onboarding_passphrase_save_complete),
-                    getResources().getString(R.string.onboarding_passphrase_ok),
+                    getResources().getString(R.string.ok_button),
                     null,
                     (btnIdx) -> {
                         if(mBinding != null) {
@@ -133,7 +124,7 @@ public class RevealPassphraseFragment extends LMFragment {
                 getResources().getString(R.string.onboarding_passphrase_email_before_title),
                 getResources().getString(R.string.onboarding_passphrase_email_before),
                 getResources().getString(R.string.onboarding_passphrase_cancel),
-                getResources().getString(R.string.onboarding_passphrase_ok),
+                getResources().getString(R.string.ok_button),
                 (btnIdx) -> {
 
                     if((int)btnIdx == 0) {

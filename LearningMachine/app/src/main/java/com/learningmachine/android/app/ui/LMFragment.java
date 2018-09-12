@@ -216,7 +216,7 @@ public class LMFragment extends Fragment implements LifecycleProvider<FragmentEv
                 R.drawable.ic_dialog_warning,
                 getResources().getString(R.string.check_version_title),
                 getResources().getString(R.string.check_version_message),
-                getResources().getString(R.string.check_version_message_confirm_title),
+                getResources().getString(R.string.ok_button),
                 getResources().getString(R.string.check_version_message_cancel_title),
                 (btnIdx) -> {
                     if((int)btnIdx == 1) {
