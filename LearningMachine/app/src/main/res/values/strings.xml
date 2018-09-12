@@ -214,5 +214,6 @@
     <string name="fragment_certificate_info_cert_name">Credential Name</string>
     <string name="fragment_certificate_info_cert_expiration">Credential Expiration</string>
     <string name="fragment_certificate_info_cert_description">Description</string>
+    <string name="fragment_certificate_info_cert_expiration_never">Never</string>
 
 </resources>

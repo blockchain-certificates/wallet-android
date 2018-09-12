@@ -156,12 +156,14 @@ public class CertificateInfoFragment extends LMFragment {
             }
 
             String expirationDateString = certificate.getExpirationDate();
+            String expirationDate = getString(R.string.fragment_certificate_info_cert_expiration_never);
+            String expirationDateTitle = getString(R.string.fragment_certificate_info_cert_expiration);
             if (!StringUtils.isEmpty(expirationDateString)) {
-                String expirationDate = DateUtils.formatDateString(expirationDateString);
-                String expirationDateTitle = getString(R.string.fragment_certificate_info_cert_expiration);
-                CertificateInfoItemViewModel expirationDateViewModel = new CertificateInfoItemViewModel(expirationDateTitle, expirationDate);
-                viewModels.add(expirationDateViewModel);
+                expirationDate = DateUtils.formatDateString(expirationDateString);
+                expirationDateTitle = getString(R.string.fragment_certificate_info_cert_expiration);
             }
+            CertificateInfoItemViewModel expirationDateViewModel = new CertificateInfoItemViewModel(expirationDateTitle, expirationDate);
+            viewModels.add(expirationDateViewModel);
 
             String description = certificate.getDescription();
             if (!StringUtils.isEmpty(description)) {
