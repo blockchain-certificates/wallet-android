@@ -83,13 +83,13 @@
 
         <ImageView
             android:id="@+id/onboarding_write_checkmark"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="@dimen/backup_checkmark_size"
+            android:layout_height="@dimen/backup_checkmark_size"
             android:src="@drawable/ic_checkmark"
             android:importantForAccessibility="no"
             app:layout_constraintBottom_toBottomOf="@+id/onboarding_write_button"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.90"
+            app:layout_constraintHorizontal_bias="0.92"
             app:layout_constraintRight_toRightOf="@+id/onboarding_write_button"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/onboarding_write_button" />
@@ -111,13 +111,13 @@
 
         <ImageView
             android:id="@+id/onboarding_save_checkmark"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="@dimen/backup_checkmark_size"
+            android:layout_height="@dimen/backup_checkmark_size"
             android:src="@drawable/ic_checkmark"
             android:importantForAccessibility="no"
             app:layout_constraintBottom_toBottomOf="@+id/onboarding_save_button"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.90"
+            app:layout_constraintHorizontal_bias="0.92"
             app:layout_constraintRight_toRightOf="@+id/onboarding_save_button"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/onboarding_save_button" />
@@ -127,11 +127,15 @@
             android:id="@+id/onboarding_email_button"
             style="@style/RoundedButton.Light"
             android:layout_width="0dp"
-            android:layout_height="52dp"
+            android:layout_height="wrap_content"
+            android:minHeight="52dp"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="20dp"
             android:layout_marginStart="20dp"
             android:text="@string/onboarding_backup_email_button"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp"
+            android:singleLine="false"
             app:layout_constraintBottom_toTopOf="@+id/spreader3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -139,13 +143,13 @@
 
         <ImageView
             android:id="@+id/onboarding_email_checkmark"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="@dimen/backup_checkmark_size"
+            android:layout_height="@dimen/backup_checkmark_size"
             android:src="@drawable/ic_checkmark"
             android:importantForAccessibility="no"
             app:layout_constraintBottom_toBottomOf="@+id/onboarding_email_button"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.90"
+            app:layout_constraintHorizontal_bias="0.92"
             app:layout_constraintRight_toRightOf="@+id/onboarding_email_button"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/onboarding_email_button" />

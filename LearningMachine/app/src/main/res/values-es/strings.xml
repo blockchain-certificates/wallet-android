@@ -1,0 +1,220 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="home_issuers">Blockcerts Wallet</string>
+    <string name="home_settings_menu_item_title">Ajustes</string>
+
+    <!-- Onboarding -->
+
+    <string name="onboarding_new_user">Nuevo usuario</string>
+    <string name="onboarding_returning_user">Usuario existente</string>
+
+    <!--This is for accessibility-->
+    <string name="play_intro_video">Reproducir el vídeo de introducción</string>
+
+
+    <string name="onboarding_passphrase_status_0">Generando tu frase de contraseña…</string>
+    <string name="onboarding_passphrase_status_1">¡Frase de contraseña generada!</string>
+
+    <string name="onboarding_passphrase_description">Esta es la frase de contraseña para tu cartera. Guarda una copia de seguridad por si quieres reinstalar la aplicación o cambiar de dispositivo.</string>
+    <string name="onboarding_passphrase">Frase de contraseña</string>
+    <string name="onboarding_passphrase_create_backup">Crear copia de seguridad</string>
+
+
+    <string name="onboarding_backup_methods">Métodos de copia de seguridad</string>
+    <string name="onboarding_backup_description">Selecciona al menos dos opciones a continuación.</string>
+    <string name="onboarding_backup_write_button">Copiar a mano</string>
+    <string name="onboarding_backup_save_button">Guardar en el dispositivo</string>
+    <string name="onboarding_backup_email_button">Copiar en correo o portapapeles</string>
+    <string name="select_two_to_continue">Selecciona dos al menos para seguir</string>
+    <string name="onboarding_backup_done_button">Hecho</string>
+
+
+    <string name="onboarding_paste_passphrase_title">Introducir frase de contraseña</string>
+    <string name="onboarding_paste_passphrase_desc">Escribe o pega tu frase de contraseña aquí:</string>
+    <string name="onboarding_paste_passphrase_done">Introducir</string>
+
+    <string name="onboarding_passphrase_invalid_title">Frase de contraseña no válida</string>
+    <string name="onboarding_passphrase_invalid_desc">Compruébala y vuelve a intentarlo.</string>
+    <string name="onboarding_passphrase_loading">Cargando la frase de contraseña guardada…</string>
+
+    <string name="error_invalid_passphrase_empty">La frase de contraseña no puede estar vacía</string>
+    <string name="error_invalid_passphrase_malformed">Frase de contraseña no válida</string>
+
+    <string name="onboarding_welcome_title">¡Esta es la nueva versión de Blockcerts Wallet!</string>
+    <string name="onboarding_welcome_desc">Hemos mejorado la experiencia, aunque seguirás recibiendo y gestionando tus credenciales como siempre. Ahora deberás guardar una copia de seguridad de tus frases de contraseña, pero la aplicación te lo pone fácil. Toca Continuar para empezar.</string>
+    <string name="onboarding_welcome_button_title">Continuar</string>
+
+
+    <!-- Home -->
+
+    <string name="onboarding_home_no_issuers_title">¡Listo!</string>
+    <string name="onboarding_home_no_issuers_desc_new_user">Recibirás un correo electrónico cuando haya un emisor que añadir. Sigue el enlace del correo para completar el proceso.</string>
+    <string name="onboarding_home_no_issuers_title_returning_user">Reimportar tus credenciales</string>
+    <string name="onboarding_home_no_issuers_desc_returning_user">Para ver tus emisores, ve a Ajustes y añade tus credenciales. También puedes hacerlo mediante el correo electrónico del emisor.</string>
+
+    <string name="onboarding_home_no_issuers_desc2">Puedes añadir un emisor manualmente desde Ajustes > Añadir emisor.</string>
+
+
+    <!-- Issuer (Certificate List) -->
+    <string name="issuer_no_certificates_desc">No hay credenciales</string>
+    <string name="issuer_no_certificates_desc2">Recibirás un correo electrónico cuando se emitan credenciales. Sigue el enlace del correo para completar el proceso.</string>
+    <plurals name="certificate_counting_head">
+        <item quantity="one">Tienes %d credencial:</item>
+        <item quantity="other">Tienes %d credenciales:</item>
+    </plurals>
+
+    <!-- Issuer Info -->
+    <string name="fragment_issuer_title">Emisor</string>
+    <string name="issuer_info_title">Información del emisor</string>
+    <string name="issuer_info_menu_item_title">Información</string>
+    <string name="fragment_issuer_info_title">Emisor</string>
+    <string name="fragment_issuer_info_email">Contacto del emisor</string>
+
+    <string name="fragment_issuer_info_introduced_on">Introducido</string>
+    <string name="fragment_issuer_info_shared_address">Dirección compartida</string>
+    <string name="fragment_issuer_info_description">Descripción</string>
+
+    <!-- Verification -->
+    <string name="fragment_verify_cert_chain_format" formatted="true">Verificando credencial de %1$s…</string>
+
+
+    <string name="error_no_internet_title">Error de conexión a Internet</string>
+    <string name="error_no_internet_message">Comprueba tu conexión a Internet y vuelve a intentarlo.</string>
+    <string name="error_no_engine">No se ha podido cargar el motor de verificación.</string>
+    <string name="error_cannot_load_certificate_json">No se ha podido cargar el archivo de credencial</string>
+
+    <string name="success_verification">Esta es una credencial válida de %1$s.</string>
+    <string name="error_verification">Esta credencial no está verificada. Contacta con el emisor.</string>
+
+    <!-- Certificate View -->
+    <string name="certificate_share_menu_item_title">Compartir</string>
+    <string name="certificate_verify_menu_item_title">Verificar</string>
+    <string name="certificate_info_title">Información de la credencial</string>
+    <string name="certificate_delete_button">Eliminar credencial</string>
+
+    <!-- Settings -->
+    <string name="settings_add_issuer">Añadir emisor</string>
+    <string name="settings_add_credential">Añadir credencial</string>
+    <string name="settings_reveal_passphrase">Mi frase de contraseña</string>
+    <string name="settings_about_passphrases">¿Qué son las frases de contraseña?</string>
+    <string name="settings_privacy_policy">Política de privacidad</string>
+    <string name="settings_email_logs">Registros de correo electrónico</string>
+
+    <string name="settings_logout">Cerrar sesión y restablecer</string>
+    <string name="settings_logout_title">Cerrar sesión y borrar del dispositivo</string>
+    <string name="settings_logout_message">Al cerrar sesión, se eliminarán las credenciales y frases de contraseña que tengas en el dispositivo.</string>
+    <string name="settings_logout_button_title">Cerrar sesión</string>
+
+
+
+    <!-- Add Issuer / Add Certificate -->
+    <string name="add_certificate_import">Importar</string>
+    <string name="add_certificate_by_file">Importar desde archivo</string>
+    <string name="add_certificate_by_url">Importar desde URL</string>
+    <string name="certificate_add_url_label">Escribe o pega la URL de la credencial:</string>
+    <string name="certificate_add_url_edit_text_hint">URL de la credencial</string>
+    <string name="fragment_add_certificate_file_label">Selecciona el archivo correspondiente de la credencial:</string>
+    <string name="framgent_add_certificate_file_choose_file_button_title">Elegir archivo</string>
+    <string name="fragment_add_certificate_title">Añadir credencial</string>
+    <string name="fragment_add_certificate_progress_dialog_message">Añadiendo credencial…</string>
+
+    <!-- Share certificate -->
+    <string name="fragment_certificate_share_url_button_title">Compartir enlace</string>
+    <string name="fragment_certificate_share_file_button_title">Compartir archivo</string>
+
+
+
+    <!-- Dialog Error Messages -->
+
+    <string name="connection_error_message">Comprueba tu conexión a Internet y vuelve a intentarlo.</string>
+    <string name="error_title_message">Error</string>
+    <string name="ime_action_done">Hecho</string>
+
+    <string name="invalid_issuer_url">Esta URL de emisor no es válida. Compruébala y vuelve a intentarlo.</string>
+    <string name="invalid_issuer_nonce">Este código de un solo uso no es válido. Compruébalo y vuelve a intentarlo. </string>
+
+    <string name="invalid_certificate">Esta URL de credencial no es válida. Compruébala y vuelve a intentarlo.</string>
+
+    <string name="http_not_found_generic">Esta URL no es válida. Compruébala y vuelve a intentarlo.</string>
+
+    <string name="invalid_credential_error">Este archivo de credencial no es válido. Compruébalo y vuelve a intentarlo.</string>
+
+    <string name="no_files_downloaded_title">No hay archivos de credenciales</string>
+    <string name="no_files_downloaded_message">No hay archivos de credenciales guardados en este dispositivo.</string>
+
+
+    <!--Certificate error messages-->
+    <string name="cert_old_version_error">Esta credencial tiene un formato antiguo y no se puede mostrar correctamente. Consulta a tu emisor y vuelve a intentarlo.</string>
+
+    <!-- vvv OLD vvv -->
+
+    <string name="onboarding_passphrase_write_title">Copiar a mano</string>
+    <string name="onboarding_passphrase_write_message">Escribe la frase de contraseña en un papel y guárdala en un lugar seguro.</string>
+    <string name="onboarding_passphrase_write_confirmation">Hecho</string>'
+
+
+    <string name="onboarding_passphrase_email_before_title">¿Seguro?</string>
+    <string name="onboarding_passphrase_email_before">Este método de copia de seguridad es poco seguro. ¿Quieres continuar?</string>
+
+    <string name="onboarding_passphrase_permissions_error_title">Error de copia de seguridad</string>
+    <string name="onboarding_passphrase_permissions_error">Para guardar la frase de seguridad en este dispositivo, debes permitir que Blockcerts Wallet acceda a tus archivos.</string>
+
+    <string name="onboarding_passphrase_complete_title">Copia de seguridad completada</string>
+    <string name="onboarding_passphrase_save_complete">La frase de seguridad se ha guardado en este dispositivo como learningmachine.dat.</string>
+
+
+    <string name="onboarding_passphrase_cancel">Cancelar</string>
+    <string name="onboarding_passphrase_ok">Aceptar</string>
+
+
+    <!-- Settings -->
+    <string name="settings_fragment">Ajustes</string>
+
+    <!-- Add Issuer -->
+    <string name="fragment_add_issuer_title">Añadir emisor</string>
+    <string name="fragment_add_issuer_info_url_text">Introduce la URL proporcionada por el emisor</string>
+    <string name="fragment_add_issuer_url">URL del emisor</string>
+    <string name="fragment_add_issuer_identity_text">Introduce el código de un solo uso</string>
+    <string name="fragment_add_issuer_add_identity">Código de un solo uso</string>
+    <string name="fragment_add_issuer_adding_issuer_progress_dialog_message">Añadiendo al emisor…</string>
+    <string name="fragment_add_issuer_import_button">Añadir emisor</string>
+
+    <!-- About Passphrase -->
+    <string name="about_passphrases_title">Frases de contraseña</string>
+
+    <!-- Certificate Fragment -->
+    <string name="fragment_certificate_title">Credencial</string>
+    <string name="certificate_info_menu_item_title">Información</string>
+    <string name="fragment_certificate_share_url_format">¡Mira mi credencial de %1$s! %2$s</string>
+    <string name="fragment_certificate_share_file_format">¡Mira mi credencial de %1$s!</string>
+
+
+    <!-- Certificate Info Fragment -->
+    <string name="fragment_certificate_info_delete_warning_title">¡Aviso!</string>
+    <string name="fragment_certificate_info_delete_warning_message">Si eliminas esta credencial y no tienes una copia, tendrás que pedir al emisor que vuelva a enviártela si quieres recuperarla. ¿Seguro que quieres eliminarla?</string>
+    <string name="fragment_certificate_info_delete_warning_positive_title">Cancelar</string>
+    <string name="fragment_certificate_info_delete_warning_negative_title">Eliminar</string>
+
+    <!-- Check version -->
+    <string name="check_version_title">Actualiza Blockcerts Wallet</string>
+    <string name="check_version_message">Para poder añadir un emisor o una credencial, debes tener la última versión de Blockcerts Wallet.</string>
+    <string name="check_version_message_cancel_title">Cancelar</string>
+    <string name="check_version_message_confirm_title">Aceptar</string>
+
+    <!-- Certificate Verification -->
+
+    <string name="cert_verification_success_title">¡Se ha verificado!</string>
+    <string name="cert_verification_failure_title">Se ha producido un error</string>
+    <string name="cert_verification_revoked_title">Se ha revocado</string>
+
+
+    <!--Certificate Info Fragment-->
+
+    <string name="fragment_certificate_info_issuer_title">Emisor</string>
+    <string name="fragment_certificate_info_issuer_issue_date">Fecha de emisión</string>
+    <string name="fragment_certificate_info_cert_name">Nombre de la credencial</string>
+    <string name="fragment_certificate_info_cert_expiration">Caducidad de la credencial</string>
+    <string name="fragment_certificate_info_cert_description">Descripción</string>
+    <string name="fragment_certificate_info_cert_expiration_never">Nunca</string>
+
+</resources>
