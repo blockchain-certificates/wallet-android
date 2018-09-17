@@ -47,6 +47,7 @@
     <!-- Home -->
 
     <string name="onboarding_home_no_issuers_title">Ready!</string>
+    <string name="onboarding_home_issuers_title">Issuers</string>
     <string name="onboarding_home_no_issuers_desc_new_user">You will receive an email when an issuer is ready to be added. Follow the link in the email to complete the process.</string>
     <string name="onboarding_home_no_issuers_title_returning_user">Re-import Your Credentials</string>
     <string name="onboarding_home_no_issuers_desc_returning_user">To see your issuers, go to Settings to add your credentials or add them via the email from the Issuer.</string>

@@ -19,8 +19,6 @@ import com.learningmachine.android.app.ui.LMActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-import timber.log.Timber;
-
 
 public class AddCertificateActivity extends LMActivity {
 
