@@ -29,7 +29,6 @@
             style="@style/Text.Passphrase"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/certificate_add_url_edit_text_hint"
             android:imeActionId="@integer/action_done"
             android:imeActionLabel="@string/ime_action_done"
             android:imeOptions="flagNoFullscreen|actionDone"
