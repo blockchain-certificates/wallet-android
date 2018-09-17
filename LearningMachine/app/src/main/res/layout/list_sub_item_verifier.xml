@@ -52,6 +52,7 @@
         android:paddingEnd="32dp"
         android:paddingStart="56dp"
         android:textColor="@color/c9"
+        android:fontFamily="@font/opensans_reg"
         android:textSize="@dimen/material_sub_title_text_size"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
