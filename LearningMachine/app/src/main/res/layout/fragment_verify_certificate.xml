@@ -17,13 +17,15 @@
             android:id="@+id/verification_status"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:gravity="center_vertical"
-            android:paddingStart="40dp"
-            android:paddingEnd="16dp"
-            android:textSize="@dimen/material_sub_title_text_size"
             android:background="@color/c5"
+            android:fontFamily="@font/opensans_bold"
+            android:gravity="center_vertical"
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp"
+            android:textAlignment="center"
             android:textColor="@color/white"
-            tools:text="Verifying Ethereum Credential"/>
+            android:textSize="@dimen/material_sub_title_text_size"
+            tools:text="Verifying Ethereum Credential" />
 
         <ScrollView
             android:id="@+id/status_view_scroll_container"
@@ -49,6 +51,7 @@
                     android:layout_width="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_height="@dimen/default_dialog_button_height"
+                    android:layout_marginTop="24dp"
                     android:layout_marginBottom="8dp"
                     android:text="@string/ime_action_done"
                     app:layout_constraintBottom_toBottomOf="parent"

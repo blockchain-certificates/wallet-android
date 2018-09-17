@@ -36,7 +36,7 @@
 
         <TextView
             android:id="@+id/textView1"
-            style="@style/Text.Title.1"
+            style="@style/Text.Title.3"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
