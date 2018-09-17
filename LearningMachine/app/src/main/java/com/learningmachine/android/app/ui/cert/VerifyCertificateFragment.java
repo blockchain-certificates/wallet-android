@@ -76,18 +76,17 @@ public class VerifyCertificateFragment extends Fragment {
     }
 
     private void setupStatus(VerificationSteps[] verificationSteps, String chainName) {
-        showVerificationStartedStatus(chainName);
-        mBinding.statusView.setOnVerificationFinishListener(withError -> {
-            showDoneButton();
-            mBinding.statusViewScrollContainer.fullScroll(View.FOCUS_DOWN);
-            if (withError) {
-                showVerificationErrorStatus();
-            } else {
-                showVerificationSuccessStatus(chainName);
-            }
-        });
-
         mParentActivity.get().runOnUiThread(() -> {
+            showVerificationStartedStatus(chainName);
+            mBinding.statusView.setOnVerificationFinishListener(withError -> {
+                showDoneButton();
+                mBinding.statusViewScrollContainer.fullScroll(View.FOCUS_DOWN);
+                if (withError) {
+                    showVerificationErrorStatus();
+                } else {
+                    showVerificationSuccessStatus(chainName);
+                }
+            });
             mBinding.statusView.addVerificationSteps(verificationSteps);
         });
     }
@@ -212,7 +211,6 @@ public class VerifyCertificateFragment extends Fragment {
          */
         @android.webkit.JavascriptInterface
         public void notifyStatusChanged(String statusStr) {
-
             VerifierStatus status = VerifierStatus.getFromString(statusStr);
             activateSubStep(status);
         }
