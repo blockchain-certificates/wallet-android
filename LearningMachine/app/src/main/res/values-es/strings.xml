@@ -48,6 +48,7 @@
     <!-- Home -->
 
     <string name="onboarding_home_no_issuers_title">¡Listo!</string>
+    <string name="onboarding_home_issuers_title">Emisores</string>
     <string name="onboarding_home_no_issuers_desc_new_user">Recibirás un correo electrónico cuando haya un emisor que añadir. Sigue el enlace del correo para completar el proceso.</string>
     <string name="onboarding_home_no_issuers_title_returning_user">Reimportar tus credenciales</string>
     <string name="onboarding_home_no_issuers_desc_returning_user">Para ver tus emisores, ve a Ajustes y añade tus credenciales. También puedes hacerlo mediante el correo electrónico del emisor.</string>
