@@ -125,6 +125,7 @@
     <style name="RoundedButton.Red">
         <item name="android:background">@drawable/rounded_button_background_grey</item>
         <item name="android:textColor">@color/c9</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="RoundedButton.NoBorder">

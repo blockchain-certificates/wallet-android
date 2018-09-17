@@ -73,6 +73,7 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             tools:text="Negative"
+            android:textSize="14dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
