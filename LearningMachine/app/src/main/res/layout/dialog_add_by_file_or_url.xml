@@ -46,7 +46,7 @@
 
         <TextView
             android:id="@+id/link_text"
-            style="@style/Text.Body.1"
+            style="@style/Text.Body"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:text="@string/add_certificate_by_url"
@@ -70,7 +70,7 @@
 
         <TextView
             android:id="@+id/file_text"
-            style="@style/Text.Body.1"
+            style="@style/Text.Body"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:text="@string/add_certificate_by_file"

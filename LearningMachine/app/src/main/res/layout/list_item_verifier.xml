@@ -30,14 +30,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:textSize="@dimen/material_title_text_size"
+        android:textSize="@dimen/text_style_text_size"
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@id/status_icon_container"
         android:layout_alignTop="@id/status_icon_container"
         android:layout_alignBottom="@id/status_icon_container"
         android:gravity="center_vertical"
         android:textColor="@color/c7"
-        android:textStyle="bold"
+        android:fontFamily="@font/opensans_bold"
         tools:text="Item Title" />
 
     <View
@@ -93,12 +93,12 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="4dp"
             android:layout_centerVertical="true"
-            android:textSize="@dimen/material_title_text_size"
+            android:textSize="@dimen/text_style_text_size"
+            android:fontFamily="@font/opensans_bold"
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@id/verified_icon"
             android:gravity="center_vertical"
             android:textColor="@color/c6"
-            android:textStyle="bold"
             android:text="@string/cert_verification_success_title"/>
     </RelativeLayout>
 

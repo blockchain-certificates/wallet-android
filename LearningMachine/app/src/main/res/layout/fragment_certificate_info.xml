@@ -18,16 +18,17 @@
             android:layout_marginBottom="8dp"
             android:padding="20dp" />
 
+
         <Button
             android:id="@+id/delete_button"
             style="@style/RoundedButton.Red"
-            android:visibility="visible"
             android:layout_width="match_parent"
-            android:layout_height="52dp"
+            android:layout_height="@dimen/default_dialog_button_height"
+            android:layout_marginBottom="16dp"
             android:layout_marginEnd="32dp"
             android:layout_marginStart="32dp"
-            android:layout_marginBottom="16dp"
-            android:text="@string/certificate_delete_button" />
+            android:text="@string/certificate_delete_button"
+            android:visibility="visible" />
 
     </LinearLayout>
     </ScrollView>

@@ -48,7 +48,7 @@
 
         <TextView
             android:id="@+id/link_text"
-            style="@style/Text.Body.1"
+            style="@style/Text.Body"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:text="@string/fragment_certificate_share_url_button_title"
@@ -71,7 +71,7 @@
 
         <TextView
             android:id="@+id/file_text"
-            style="@style/Text.Body.1"
+            style="@style/Text.Body"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:text="@string/fragment_certificate_share_file_button_title"

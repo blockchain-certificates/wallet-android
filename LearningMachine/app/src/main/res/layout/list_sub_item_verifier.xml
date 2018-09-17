@@ -24,6 +24,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp"
+        android:fontFamily="@font/opensans_semibold"
         android:textSize="@dimen/material_sub_title_text_size"
         android:textColor="@color/c7"
         tools:text="sub item"

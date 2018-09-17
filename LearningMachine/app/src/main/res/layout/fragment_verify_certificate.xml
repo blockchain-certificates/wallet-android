@@ -50,6 +50,7 @@
                     style="@style/RoundedButton"
                     android:layout_width="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:textSize="14sp"
                     android:layout_height="@dimen/default_dialog_button_height"
                     android:layout_marginTop="24dp"
                     android:layout_marginBottom="8dp"
