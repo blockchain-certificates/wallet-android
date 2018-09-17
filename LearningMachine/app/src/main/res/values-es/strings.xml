@@ -168,7 +168,7 @@
 
 
     <!-- Settings -->
-    <string name="settings_fragment">Ajustes</string>
+    <string name="settings_fragment">Emisores</string>
 
     <!-- Add Issuer -->
     <string name="fragment_add_issuer_title">Añadir emisor</string>
