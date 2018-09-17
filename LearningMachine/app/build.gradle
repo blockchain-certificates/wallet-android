@@ -115,6 +115,10 @@ android {
     dataBinding {
         enabled = true
     }
+
+    lintOptions {
+        abortOnError false
+    }
 }
 
 final SUPPORT_VERSION = '27.1.1'
