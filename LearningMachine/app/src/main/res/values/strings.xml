@@ -204,12 +204,10 @@
 
     <string name="cert_verification_success_title">Verified!</string>
     <string name="cert_verification_failure_title">Fail</string>
-    <string name="cert_verification_revoked_title">Revoked</string>
 
 
     <!--Certificate Info Fragment-->
 
-    <string name="fragment_certificate_info_issuer_title">Issuer</string>
     <string name="fragment_certificate_info_issuer_issue_date">Date Issued</string>
     <string name="fragment_certificate_info_cert_name">Credential Name</string>
     <string name="fragment_certificate_info_cert_expiration">Credential Expiration</string>

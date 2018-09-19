@@ -206,12 +206,10 @@
 
     <string name="cert_verification_success_title">¡Se ha verificado!</string>
     <string name="cert_verification_failure_title">Se ha producido un error</string>
-    <string name="cert_verification_revoked_title">Se ha revocado</string>
 
 
     <!--Certificate Info Fragment-->
 
-    <string name="fragment_certificate_info_issuer_title">Emisor</string>
     <string name="fragment_certificate_info_issuer_issue_date">Fecha de emisión</string>
     <string name="fragment_certificate_info_cert_name">Nombre de la credencial</string>
     <string name="fragment_certificate_info_cert_expiration">Caducidad de la credencial</string>
