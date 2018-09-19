@@ -5,8 +5,11 @@ import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.internal.BottomNavigationMenuView;
 import android.support.v4.content.FileProvider;
+import android.util.DisplayMetrics;
 import android.util.Pair;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -99,7 +102,25 @@ public class CertificateFragment extends LMFragment {
         });
         setupWebView();
 
+        setBottomIconsSize(28);
+
         return mBinding.getRoot();
+    }
+
+    /**
+     * Set the Bottom Navigation Icons size
+     * @param size The size (width an height) in dp
+     */
+    private void setBottomIconsSize(int size) {
+        BottomNavigationMenuView menuView = (BottomNavigationMenuView) mBinding.certBottomNavigation.getChildAt(0);
+        for (int i = 0; i < menuView.getChildCount(); i++) {
+            View icon = menuView.getChildAt(i).findViewById(android.support.design.R.id.icon);
+            ViewGroup.LayoutParams layoutParams = icon.getLayoutParams();
+            DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+            layoutParams.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, size, displayMetrics);
+            layoutParams.width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, size, displayMetrics);
+            icon.setLayoutParams(layoutParams);
+        }
     }
 
     /**
