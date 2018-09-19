@@ -68,7 +68,10 @@ public class CertificateHeaderViewHolder extends RecyclerView.ViewHolder impleme
                                 if (drawable != null) {
                                     Bitmap bitmap = drawable.getBitmap();
                                     int pixel = bitmap.getPixel(bitmap.getWidth() - 1, 0);
-                                    mBinding.imageView.setBackgroundColor(pixel);
+                                    int transparent = mContext.getResources().getColor(android.R.color.transparent);
+                                    if (pixel != transparent) {
+                                        mBinding.imageView.setBackgroundColor(pixel);
+                                    }
                                 }
                             }
 

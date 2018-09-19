@@ -50,6 +50,13 @@ public class HomeActivity extends LMSingleFragmentActivity {
         return mLastFragment;
     }
 
+    private HomeFragment getLastFragment() {
+        if (mLastFragment == null) {
+            mLastFragment = HomeFragment.newInstance();
+        }
+        return mLastFragment;
+    }
+
     @Override
     public String getActionBarTitle() {
         return getString(R.string.home_issuers);
@@ -63,10 +70,10 @@ public class HomeActivity extends LMSingleFragmentActivity {
         if (LINK_TYPE_ISSUER.equals(linkType)) {
             String issuerUrl = intent.getStringExtra(EXTRA_ISSUER_URL);
             String nounce = intent.getStringExtra(EXTRA_ISSUER_NONCE);
-            mLastFragment.updateArgsIssuer(issuerUrl, nounce);
+            getLastFragment().updateArgsIssuer(issuerUrl, nounce);
         } else if (LINK_TYPE_CERT.equals(linkType)) {
             String certUrl = intent.getStringExtra(EXTRA_CERT_URL);
-            mLastFragment.updateArgsCert(certUrl);
+            getLastFragment().updateArgsCert(certUrl);
         }
 
     }
