@@ -16,7 +16,7 @@
         <TextView
             android:id="@+id/verification_status"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="70dp"
             android:background="@color/c5"
             android:fontFamily="@font/opensans_bold"
             android:gravity="center_vertical"
