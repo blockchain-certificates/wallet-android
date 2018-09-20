@@ -37,7 +37,7 @@ public class VerifyCertificateActivity  extends LMSingleFragmentActivity {
 
     @Override
     public String getActionBarTitle() {
-        return "";
+        return getString(R.string.verification_header);
     }
 
     @Override

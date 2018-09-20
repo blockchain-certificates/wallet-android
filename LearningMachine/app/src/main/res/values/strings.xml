@@ -75,6 +75,9 @@
     <string name="fragment_issuer_info_description">Description</string>
 
     <!-- Verification -->
+
+    <string name="verification_header">Verification</string>
+
     <string name="fragment_verify_cert_chain_format" formatted="true">Verifying %1$s Credential…</string>
 
 

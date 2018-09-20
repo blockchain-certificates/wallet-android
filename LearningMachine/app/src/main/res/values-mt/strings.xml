@@ -78,6 +78,7 @@
 
     <!-- Verification -->
     <string name="fragment_verify_cert_chain_format" formatted="true">Qed jiġi vverifikat il-kredenzjali %1$s…</string>
+    <string name="verification_header">Verification</string>
 
 
     <string name="error_no_internet_title">Żball fil-Konnessjoni tan-Netwerk</string>
