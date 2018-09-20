@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.TextView;
 
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.CertificateManager;
@@ -115,6 +116,8 @@ public class CertificateFragment extends LMFragment {
         BottomNavigationMenuView menuView = (BottomNavigationMenuView) mBinding.certBottomNavigation.getChildAt(0);
         for (int i = 0; i < menuView.getChildCount(); i++) {
             View icon = menuView.getChildAt(i).findViewById(android.support.design.R.id.icon);
+            TextView textView = menuView.getChildAt(i).findViewById(android.support.design.R.id.largeLabel);
+            textView.setTextAppearance(getContext(), R.style.Text_Footer_4);
             ViewGroup.LayoutParams layoutParams = icon.getLayoutParams();
             DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
             layoutParams.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, size, displayMetrics);

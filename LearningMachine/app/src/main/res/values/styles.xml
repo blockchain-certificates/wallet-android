@@ -95,6 +95,12 @@
         <item name="android:textSize">12sp</item>
     </style>
 
+    <style name="Text.Footer.4">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/opensans_semibold</item>
+        <item name="android:textColor">@color/c3</item>
+    </style>
+
 
     <style name="Text.Passphrase">
         <item name="android:textSize">16sp</item>
