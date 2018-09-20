@@ -25,19 +25,17 @@
     </RelativeLayout>
 
 
-    <TextView
+    <android.support.v7.widget.AppCompatTextView
         android:id="@+id/verifier_item_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:textSize="@dimen/text_style_text_size"
+        android:layout_marginStart="14dp"
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@id/status_icon_container"
         android:layout_alignTop="@id/status_icon_container"
         android:layout_alignBottom="@id/status_icon_container"
         android:gravity="center_vertical"
-        android:textColor="@color/c7"
-        android:fontFamily="@font/opensans_bold"
+        android:theme="@style/Text.VerifierItem"
         tools:text="Item Title" />
 
     <View

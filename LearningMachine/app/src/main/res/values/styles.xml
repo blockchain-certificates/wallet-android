@@ -109,6 +109,34 @@
         <item name="android:background">@drawable/rounded_passphrase_background</item>
     </style>
 
+
+    <style name="Text.VerifierItem">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/opensans_semibold</item>
+        <item name="android:textColor">@color/c7</item>
+    </style>
+
+    <style name="Text.VerifierItem.Active">
+        <item name="android:fontFamily">@font/opensans_bold</item>
+        <item name="android:textColor">@color/c6</item>
+    </style>
+
+    <style name="Text.VerifierSubItem">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/opensans_reg</item>
+        <item name="android:textColor">@color/c7</item>
+    </style>
+
+    <style name="Text.VerifierSubItem.Active">
+        <item name="android:fontFamily">@font/opensans_semibold</item>
+        <item name="android:textColor">@color/c6</item>
+    </style>
+
+    <style name="Text.VerifierSubItem.Active.Error">
+        <item name="android:fontFamily">@font/opensans_semibold</item>
+        <item name="android:textColor">@color/c9</item>
+    </style>
+
     <style name="ButtonTitleWhite">
         <item name="android:fontFamily">@font/opensans_semibold</item>
         <item name="android:textSize">16sp</item>

@@ -17,16 +17,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
 
-    <TextView
+    <android.support.v7.widget.AppCompatTextView
         android:id="@+id/verifier_sub_item_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp"
-        android:fontFamily="@font/opensans_semibold"
-        android:textSize="@dimen/material_sub_title_text_size"
-        android:textColor="@color/c7"
+        android:theme="@style/Text.VerifierSubItem"
         tools:text="sub item"
         app:layout_constraintStart_toEndOf="@id/sub_item_mark"
         app:layout_constraintTop_toTopOf="parent" />

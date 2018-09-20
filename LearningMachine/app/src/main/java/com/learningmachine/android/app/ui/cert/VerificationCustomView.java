@@ -83,7 +83,7 @@ public class VerificationCustomView extends LinearLayout {
     /**
      * Will reconstruct the sub items marks.
      */
-    private void reconstructViews() {
+    public void reconstructViews() {
         for (int i = 0; i < getChildCount(); i++) {
             VerificationCustomItem item = (VerificationCustomItem) getChildAt(i);
             item.reconstructView();

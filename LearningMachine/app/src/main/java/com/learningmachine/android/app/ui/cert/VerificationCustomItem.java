@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.TextViewCompat;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
@@ -276,8 +277,7 @@ public class VerificationCustomItem extends RelativeLayout {
                 mSubItemHeight += fromDpToPx(24);
                 showSuccessIcon();
             }
-            subItemTitle.setTextColor(getResources().getColor(R.color.c6));
-            mItemTitle.setTextColor(getResources().getColor(R.color.c6));
+
             int itemHeight = mItemStatusBar.getLayoutParams().height;
             ValueAnimator anim = ValueAnimator.ofInt(itemHeight, itemHeight + mSubItemHeight).setDuration(200);
             anim.addUpdateListener(animation -> {
@@ -298,10 +298,16 @@ public class VerificationCustomItem extends RelativeLayout {
                     }
                 }
             });
+
+            TextViewCompat.setTextAppearance(subItemTitle, R.style.Text_VerifierSubItem_Active);
+            TextViewCompat.setTextAppearance(mItemTitle, R.style.Text_VerifierItem_Active);
+            //This custom view gets weird when we set styles. Needs to reconstruct.
+            ((VerificationCustomView)getParent()).reconstructViews();
+
         } else if(status.isFailure()) {
             mItemStatusBar.getLayoutParams().height += mSubItemHeight;
-            mItemTitle.setTextColor(getResources().getColor(R.color.c6));
-            subItemTitle.setTextColor(getResources().getColor(R.color.c9));
+            TextViewCompat.setTextAppearance(subItemTitle, R.style.Text_VerifierSubItem_Active_Error);
+            TextViewCompat.setTextAppearance(mItemTitle, R.style.Text_VerifierItem_Active);
 
             TextView subItemError = subItem.findViewById(R.id.verifier_sub_item_error);
             subItemError.setText(status.errorMessage);
