@@ -253,12 +253,11 @@
     <!-- Base -->
 
     <style name="LearningMachineTextView" parent="android:style/Widget.TextView">
-        <item name="android:fontFamily">sans-serif</item>
-        <item name="android:textStyle">normal</item>
+        <item name="android:fontFamily">@font/opensans_semibold</item>
     </style>
 
     <style name="LearningMachineTextView.Medium" parent="android:style/Widget.TextView">
-        <item name="android:fontFamily">opensans_semibold</item>
+        <item name="android:fontFamily">@font/opensans_semibold</item>
     </style>
 
     <style name="LearningMachineDialog" parent="AlertDialog.AppCompat">

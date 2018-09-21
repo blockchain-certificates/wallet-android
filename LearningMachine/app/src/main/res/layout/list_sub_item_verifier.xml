@@ -24,7 +24,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp"
-        android:theme="@style/Text.VerifierSubItem"
+        style="@style/Text.VerifierSubItem"
         tools:text="sub item"
         app:layout_constraintStart_toEndOf="@id/sub_item_mark"
         app:layout_constraintTop_toTopOf="parent" />

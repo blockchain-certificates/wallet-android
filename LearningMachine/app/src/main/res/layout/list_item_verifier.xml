@@ -35,7 +35,7 @@
         android:layout_alignTop="@id/status_icon_container"
         android:layout_alignBottom="@id/status_icon_container"
         android:gravity="center_vertical"
-        android:theme="@style/Text.VerifierItem"
+        style="@style/Text.VerifierItem"
         tools:text="Item Title" />
 
     <View
