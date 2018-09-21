@@ -160,7 +160,12 @@ public class HomeFragment extends LMIssuerBaseFragment {
             mBinding.onboardingHomeNoIssuersDesc.setText(R.string.onboarding_home_no_issuers_desc_new_user);
         }
 
-
+        if (issuerList.isEmpty()) {
+            mBinding.issuerRecyclerview.getAdapter()
+                    .notifyDataSetChanged();
+            mBinding.issuerMainContent.setVisibility(View.GONE);
+            mBinding.issuerEmptyContent.setVisibility(View.VISIBLE);
+        }
 
         // calculate the number of certificates per issuer
         totalIssuersCertificateCountCalculated = mIssuerList.size();
@@ -175,9 +180,8 @@ public class HomeFragment extends LMIssuerBaseFragment {
                             mBinding.issuerRecyclerview.getAdapter()
                                     .notifyDataSetChanged();
 
-                            boolean emptyIssuers = issuerList.isEmpty();
-                            mBinding.issuerMainContent.setVisibility(emptyIssuers ? View.GONE : View.VISIBLE);
-                            mBinding.issuerEmptyContent.setVisibility(emptyIssuers ? View.VISIBLE : View.GONE);
+                            mBinding.issuerMainContent.setVisibility(issuerList.isEmpty() ? View.GONE : View.VISIBLE);
+                            mBinding.issuerEmptyContent.setVisibility(issuerList.isEmpty() ? View.VISIBLE : View.GONE);
                         }
 
                     }, throwable -> Timber.e(throwable, "Unable to load certificates"));
