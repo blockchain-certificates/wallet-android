@@ -27,15 +27,6 @@
             </intent-filter>
             <intent-filter>
                 <data
-                    android:host="certificates.learningmachine.com"
-                    android:scheme="https"/>
-                <action android:name="android.intent.action.VIEW"/>
-
-                <category android:name="android.intent.category.BROWSABLE"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-            <intent-filter>
-                <data
                     android:host="wallet.blockcerts.org"
                     android:scheme="https"/>
                 <action android:name="android.intent.action.VIEW"/>
