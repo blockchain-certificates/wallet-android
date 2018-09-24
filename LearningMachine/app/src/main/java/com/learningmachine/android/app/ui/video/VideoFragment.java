@@ -32,6 +32,10 @@ import com.learningmachine.android.app.ui.LMFragment;
 
 public class VideoFragment extends LMFragment {
 
+    public static final String RESUME_POSITION_KEY = "com.learningmachine.android.app.ui.video.resumePosition";
+    public static final String IS_PAUSED_KEY = "com.learningmachine.android.app.ui.video.isPaused";
+    private boolean mIsPaused;
+
     public static VideoFragment newInstance() {
         return new VideoFragment();
     }
@@ -54,13 +58,23 @@ public class VideoFragment extends LMFragment {
     @Override
     public void onResume() {
         super.onResume();
-        initPlayer(pauseSavedPosition);
+        Bundle args = getArguments();
+        if (args != null) {
+            mIsPaused = args.getBoolean(IS_PAUSED_KEY);
+            initPlayer(args.getLong(RESUME_POSITION_KEY));
+        } else {
+            initPlayer(pauseSavedPosition);
+        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
         if (player != null) {
+            Bundle bundle = new Bundle();
+            bundle.putLong(RESUME_POSITION_KEY, player.getCurrentPosition());
+            bundle.putBoolean(IS_PAUSED_KEY, mIsPaused);
+            setArguments(bundle);
             pauseSavedPosition = player.getCurrentPosition();
         }
         releasePlayer();
@@ -70,6 +84,10 @@ public class VideoFragment extends LMFragment {
     public void onStop() {
         super.onStop();
         if (player != null) {
+            Bundle bundle = new Bundle();
+            bundle.putLong(RESUME_POSITION_KEY, player.getCurrentPosition());
+            bundle.putBoolean(IS_PAUSED_KEY, mIsPaused);
+            setArguments(bundle);
             pauseSavedPosition = player.getCurrentPosition();
         }
         releasePlayer();
@@ -80,7 +98,7 @@ public class VideoFragment extends LMFragment {
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
         if (player != null) {
-            savedInstanceState.putLong("resumePosition", player.getCurrentPosition());
+            savedInstanceState.putLong(RESUME_POSITION_KEY, player.getCurrentPosition());
         }
         releasePlayer();
     }
@@ -129,7 +147,7 @@ public class VideoFragment extends LMFragment {
 
             player.prepare(videoSource);
 
-            player.setPlayWhenReady(true);
+            player.setPlayWhenReady(!mIsPaused);
 
             player.seekTo(resumePosition);
 
@@ -140,6 +158,9 @@ public class VideoFragment extends LMFragment {
                     if (state == Player.STATE_ENDED) {
                         player.seekTo(0);
                         getActivity().finish();
+                    }
+                    if (state == Player.STATE_READY) {
+                        mIsPaused = !playWhenReady;
                     }
                 }
 
