@@ -172,6 +172,10 @@
         <item name="android:textColor">@color/button_text_color</item>
     </style>
 
+    <style name="ProgressBar" parent="Widget.AppCompat.ProgressBar">
+        <item name="colorAccent">@color/c3</item>
+    </style>
+
 
     <!-- vvv OLD vvv -->
 
