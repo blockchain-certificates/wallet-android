@@ -145,6 +145,8 @@ public class CertificateFragment extends LMFragment {
         if(certificate instanceof BlockCertV20) {
             BlockCertV20 cert2 = (BlockCertV20) certificate;
             displayHTML = cert2.getDisplayHtml();
+            //Injecting title to img tag to prevent talkback to read base64 characters
+            displayHTML = displayHTML.replace("<img", "<img title=\" \" ");
 
             if(displayHTML == null) {
                 displayHTML = "<center>" + getString(R.string.cert_old_version_error) + "</center>";
