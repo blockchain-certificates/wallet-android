@@ -301,8 +301,6 @@ public class VerificationCustomItem extends RelativeLayout {
 
             TextViewCompat.setTextAppearance(subItemTitle, R.style.Text_VerifierSubItem_Active);
             TextViewCompat.setTextAppearance(mItemTitle, R.style.Text_VerifierItem_Active);
-            //This custom view gets weird when we set styles. Needs to reconstruct.
-            ((VerificationCustomView)getParent()).reconstructViews();
 
         } else if(status.isFailure()) {
             mItemStatusBar.getLayoutParams().height += mSubItemHeight;
