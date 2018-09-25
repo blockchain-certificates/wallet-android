@@ -72,6 +72,8 @@
     <string name="fragment_issuer_info_title">Emittent</string>
     <string name="fragment_issuer_info_email">Kuntatt tal-Emittent</string>
 
+    <string name="issuer_name">Isem tal-Emittent</string>
+
     <string name="fragment_issuer_info_introduced_on">Introdott</string>
     <string name="fragment_issuer_info_shared_address">Indirizz Ikkondiviż</string>
     <string name="fragment_issuer_info_description">Deskrizzjoni</string>

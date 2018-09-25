@@ -70,6 +70,8 @@
     <string name="fragment_issuer_info_title">Issuer</string>
     <string name="fragment_issuer_info_email">Issuer Contact</string>
 
+    <string name="issuer_name">Issuer name</string>
+
     <string name="fragment_issuer_info_introduced_on">Introduced</string>
     <string name="fragment_issuer_info_shared_address">Shared Address</string>
     <string name="fragment_issuer_info_description">Description</string>

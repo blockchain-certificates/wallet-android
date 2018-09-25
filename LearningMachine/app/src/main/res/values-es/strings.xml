@@ -71,6 +71,8 @@
     <string name="fragment_issuer_info_title">Emisor</string>
     <string name="fragment_issuer_info_email">Contacto del emisor</string>
 
+    <string name="issuer_name">Nombre del emisor</string>
+
     <string name="fragment_issuer_info_introduced_on">Introducido</string>
     <string name="fragment_issuer_info_shared_address">Dirección compartida</string>
     <string name="fragment_issuer_info_description">Descripción</string>
