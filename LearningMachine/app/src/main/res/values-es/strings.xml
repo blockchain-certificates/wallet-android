@@ -3,6 +3,9 @@
     <string name="home_issuers">Blockcerts Wallet</string>
     <string name="home_settings_menu_item_title">Ajustes</string>
 
+    <string name="settings_privacy_policy_endpoint">https://www.blockcerts.org/es/mobile-privacy</string>
+    <string name="about_passphrases_endpoint">https://www.blockcerts.org/es/about-passphrase</string>
+
     <!-- Onboarding -->
 
     <string name="onboarding_new_user">Nuevo Usuario</string>
