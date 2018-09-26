@@ -66,7 +66,7 @@ public abstract class LMIssuerBaseFragment extends LMFragment {
         }
 
         String linkType = args.getString(ARG_LINK_TYPE);
-        if (!StringUtils.isEmpty(certUrl)) {
+        if (!StringUtils.isEmpty(linkType)) {
             mLinkType = linkType;
         }
     }
