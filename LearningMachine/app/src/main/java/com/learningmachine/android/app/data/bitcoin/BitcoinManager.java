@@ -153,10 +153,7 @@ public class BitcoinManager {
     }
 
     public Observable<Wallet> setPassphrase(String newPassphrase) {
-        if (StringUtils.isEmpty(newPassphrase)) {
-            return Observable.error(new ExceptionWithResourceString(R.string.error_invalid_passphrase_empty));
-        }
-        if (!BitcoinUtils.isValidPassphrase(newPassphrase)) {
+        if (StringUtils.isEmpty(newPassphrase) || !BitcoinUtils.isValidPassphrase(newPassphrase)) {
             return Observable.error(new ExceptionWithResourceString(R.string.error_invalid_passphrase_malformed));
         }
         mIssuerStore.reset();

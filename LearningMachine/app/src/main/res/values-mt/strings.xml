@@ -36,7 +36,6 @@
     <string name="onboarding_passphrase_invalid_desc">Jekk jogħġbok iċċekkjaha u erġa\' pprova.</string>
     <string name="onboarding_passphrase_loading">Il-passphrase ssejvjata qed tillowdja…</string>
 
-    <string name="error_invalid_passphrase_empty">Passphrase cannot be empty</string>
     <string name="error_invalid_passphrase_malformed">Passphrase Invalida</string>
 
     <string name="onboarding_welcome_title">Merħba għall-Blockcerts Wallet il-ġdid!</string>
@@ -72,7 +71,7 @@
     <string name="fragment_issuer_info_title">Emittent</string>
     <string name="fragment_issuer_info_email">Kuntatt tal-Emittent</string>
 
-    <string name="issuer_name">Isem tal-Emittent</string>
+    <string name="issuer_name">Isem l-Emittent</string>
 
     <string name="fragment_issuer_info_introduced_on">Introdott</string>
     <string name="fragment_issuer_info_shared_address">Indirizz Ikkondiviż</string>
@@ -85,8 +84,8 @@
 
     <string name="error_no_internet_title">Żball fil-Konnessjoni tan-Netwerk</string>
     <string name="error_no_internet_message">Jekk jogħġbok iċċekkja l-konnessjoni tal-internet tiegħek u erġa\' pprova.</string>
-    <string name="error_no_engine">Unable to load the verification engine.</string>
-    <string name="error_cannot_load_certificate_json">Could not load the credential file</string>
+    <string name="error_no_engine">Mhux possibbli li tiġi llowdjata l-magna tal-verifika.</string>
+    <string name="error_cannot_load_certificate_json">Il-fajl tal-kredenzjali ma setax jillowdja</string>
 
     <string name="success_verification">Dan huwa kredenzjali validu %1$s.</string>
     <string name="error_verification">Dan il-kredenzjali mhux ivverifikat. Jekk jogħġbok ikkuntattja lill-emittent.</string>
@@ -105,10 +104,10 @@
     <string name="settings_privacy_policy">Strateġija tal-Privatezza</string>
     <string name="settings_email_logs">Email Logs</string>
 
-    <string name="settings_logout">Log out and Reset</string>
-    <string name="settings_logout_title">Log out and Clear Device</string>
-    <string name="settings_logout_message">Logging out will remove all of your credentials and any stored passphrases on this device.</string>
-    <string name="settings_logout_button_title">Log out</string>
+    <string name="settings_logout">Illoggja \'l barra u Rrisettja</string>
+    <string name="settings_logout_title">Illoggja \'l barra u neħħi mit-tagħmir</string>
+    <string name="settings_logout_message">Meta tilloggja \'l barra jitneħħew il-kredenzjali kollha tiegħek u kwalunkwe passphrases maħżuna fuq dan it-tagħmir.</string>
+    <string name="settings_logout_button_title">Illoggja \'l barra</string>
 
 
 
@@ -121,7 +120,7 @@
     <string name="fragment_add_certificate_file_label">Jekk jogħġbok agħżel il-fajl tal-kredenzjali t-tajjeb</string>
     <string name="framgent_add_certificate_file_choose_file_button_title">Agħżel il-Fajl</string>
     <string name="fragment_add_certificate_title">Żid Kredenzjali</string>
-    <string name="fragment_add_certificate_progress_dialog_message">Adding Credential</string>
+    <string name="fragment_add_certificate_progress_dialog_message">Qed jiġi miżjud Kredenzjali</string>
 
     <!-- Share certificate -->
     <string name="fragment_certificate_share_url_button_title">Ikkondividi l-Link</string>
@@ -190,8 +189,8 @@
     <!-- Certificate Fragment -->
     <string name="fragment_certificate_title">Kredenzjali</string>
     <string name="certificate_info_menu_item_title">Info</string>
-    <string name="fragment_certificate_share_url_format">Check out my credential from %1$s! %2$s</string>
-    <string name="fragment_certificate_share_file_format">Check out my credential from %1$s!</string>
+    <string name="fragment_certificate_share_url_format">Iċċekkja l-kredenzjali tiegħi minn %1$s! %2$s</string>
+    <string name="fragment_certificate_share_file_format">Iċċekkja l-kredenzjali tiegħi minn %1$s!</string>
 
 
     <!-- Certificate Info Fragment -->
@@ -207,8 +206,8 @@
 
     <!-- Certificate Verification -->
 
-    <string name="cert_verification_success_title">Verified!</string>
-    <string name="cert_verification_failure_title">Fail</string>
+    <string name="cert_verification_success_title">Ivverifikat!</string>
+    <string name="cert_verification_failure_title">Ma rnexxietx</string>
 
 
     <!--Certificate Info Fragment-->
@@ -217,6 +216,6 @@
     <string name="fragment_certificate_info_cert_name">Isem il-Kredenzjali</string>
     <string name="fragment_certificate_info_cert_expiration">Skadenza tal-Kredenzjali</string>
     <string name="fragment_certificate_info_cert_description">Deskrizzjoni</string>
-    <string name="fragment_certificate_info_cert_expiration_never">Never</string>
+    <string name="fragment_certificate_info_cert_expiration_never">Qatt</string>
 
 </resources>

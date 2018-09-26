@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
 
     <android.support.constraint.ConstraintLayout
@@ -17,7 +18,7 @@
             android:layout_marginBottom="8dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
-            android:text="My Passphrase"
+            android:text="@string/settings_reveal_passphrase"
             android:textAlignment="center"
             app:layout_constraintBottom_toTopOf="@+id/onboarding_passphrase_content"
             app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +37,7 @@
             android:layout_weight="1"
             android:gravity="left"
             android:padding="16dp"
-            android:text=" "
+            tools:text=" "
             app:layout_constraintBottom_toTopOf="@+id/onboarding_save_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"

@@ -36,7 +36,6 @@
     <string name="onboarding_passphrase_invalid_desc">Please check it and try again.</string>
     <string name="onboarding_passphrase_loading">Loading saved passphrase…</string>
 
-    <string name="error_invalid_passphrase_empty">Passphrase cannot be empty</string>
     <string name="error_invalid_passphrase_malformed">Invalid passphrase</string>
 
     <string name="onboarding_welcome_title">Welcome to the new Blockcerts Wallet!</string>

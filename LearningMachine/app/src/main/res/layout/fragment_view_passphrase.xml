@@ -108,7 +108,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:padding="16dp"
-            android:text="sand unaware entire churn achieve rough femail first post spider venture stool hero stand gloom fuel siege sun desk switch heart already donor myth"
+            tools:text="sand unaware entire churn achieve rough femail first post spider venture stool hero stand gloom fuel siege sun desk switch heart already donor myth"
             android:textAlignment="viewStart"
             android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@+id/spreader3"
