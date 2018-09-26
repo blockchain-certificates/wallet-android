@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
 
+import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.webservice.request.IssuerIntroductionRequest;
 import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 
@@ -70,7 +71,7 @@ public class WebAuthActivity extends LMSingleFragmentActivity implements WebAuth
     }
 
     public String getActionBarTitle() {
-        return "Web Auth";
+        return getString(R.string.login_to_issuer);
     }
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {

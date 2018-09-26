@@ -226,4 +226,7 @@
     <string name="fragment_certificate_info_cert_description">Descripción</string>
     <string name="fragment_certificate_info_cert_expiration_never">Nunca</string>
 
+    <!--SAML login title-->
+    <string name="login_to_issuer">Accede tu cuenta</string>
+
 </resources>

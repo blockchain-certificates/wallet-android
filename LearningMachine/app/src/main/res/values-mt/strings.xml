@@ -228,4 +228,7 @@
     <string name="fragment_certificate_info_cert_description">Deskrizzjoni</string>
     <string name="fragment_certificate_info_cert_expiration_never">Qatt</string>
 
+    <!--SAML login title-->
+    <string name="login_to_issuer">Idħol</string>
+
 </resources>

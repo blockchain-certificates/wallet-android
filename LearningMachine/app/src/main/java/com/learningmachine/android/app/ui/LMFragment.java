@@ -176,6 +176,12 @@ public class LMFragment extends Fragment implements LifecycleProvider<FragmentEv
     }
 
     protected void checkVersion(OnVersionChecked onVersionChecked) {
+        if (mVersionService == null) {
+            if (onVersionChecked != null) {
+                onVersionChecked.needsUpdate(false);
+            }
+            return;
+        }
         mVersionService.getVersion()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
