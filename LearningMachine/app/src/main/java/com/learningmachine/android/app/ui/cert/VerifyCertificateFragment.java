@@ -76,6 +76,9 @@ public class VerifyCertificateFragment extends Fragment {
     }
 
     private void setupStatus(VerificationSteps[] verificationSteps, String chainName) {
+        if (!isValidFragmentInstance()) {
+            return;
+        }
         mParentActivity.get().runOnUiThread(() -> {
             showVerificationStartedStatus(chainName);
             mBinding.statusView.setOnVerificationFinishListener(withError -> {
@@ -89,6 +92,10 @@ public class VerifyCertificateFragment extends Fragment {
             });
             mBinding.statusView.addVerificationSteps(verificationSteps);
         });
+    }
+
+    private boolean isValidFragmentInstance() {
+        return isAdded() && mParentActivity.get() != null && !mParentActivity.get().isFinishing();
     }
 
     private void showVerificationStartedStatus(String chainName) {
@@ -113,15 +120,14 @@ public class VerifyCertificateFragment extends Fragment {
     private void showDoneButton() {
         mBinding.doneVerification.setVisibility(View.VISIBLE);
         mBinding.doneVerification.setEnabled(true);
-        mBinding.doneVerification.setOnClickListener(v -> {
-            mParentActivity.get().finish();
-        });
+        mBinding.doneVerification.setOnClickListener(v -> mParentActivity.get().finish());
     }
 
     private void activateSubStep(VerifierStatus status) {
-        mParentActivity.get().runOnUiThread(() -> {
-            mBinding.statusView.activateSubStep(status);
-        });
+        if (!isValidFragmentInstance()) {
+            return;
+        }
+        mParentActivity.get().runOnUiThread(() -> mBinding.statusView.activateSubStep(status));
     }
 
     private String prepareForCertificateVerification() {
