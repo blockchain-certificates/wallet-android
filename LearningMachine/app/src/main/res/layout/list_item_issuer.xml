@@ -60,7 +60,7 @@
                     android:layout_width="0dp"
                     android:layout_height="20dp"
                     android:layout_marginEnd="16dp"
-                    android:text="@{viewModel.numberOfCertificatesAsString}"
+                    android:text="@{viewModel.getNumberOfCertificatesAsString(context)}"
                     android:textAlignment="viewStart"
                     app:layout_constraintBottom_toBottomOf="@+id/image_view"
                     app:layout_constraintEnd_toEndOf="parent"

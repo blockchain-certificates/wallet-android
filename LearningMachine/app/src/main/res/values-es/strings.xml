@@ -63,7 +63,12 @@
     <string name="issuer_no_certificates_desc2">Recibirás un correo electrónico cuando una credencial haya sido emitida. Sigue la liga en el correo electrónico para completar el proceso.</string>
     <plurals name="certificate_counting_head">
         <item quantity="one">%d Credencial:</item>
-        <item quantity="other">T%d Credenciales:</item>
+        <item quantity="other">%d Credenciales:</item>
+    </plurals>
+
+    <plurals name="certificate_counting">
+        <item quantity="one">%d Credencial</item>
+        <item quantity="other">%d Credenciales</item>
     </plurals>
 
     <!-- Issuer Info -->

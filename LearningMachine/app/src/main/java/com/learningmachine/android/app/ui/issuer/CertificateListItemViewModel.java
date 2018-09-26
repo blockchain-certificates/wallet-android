@@ -1,8 +1,11 @@
 package com.learningmachine.android.app.ui.issuer;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
+import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.model.CertificateRecord;
 
 import org.joda.time.DateTime;
@@ -40,9 +43,8 @@ public class CertificateListItemViewModel extends BaseObservable {
 
         // 2018-02-01T23:00:00.0000+00.00
         DateTimeFormatter parser = ISODateTimeFormat.dateTimeParser();
-        DateTimeFormatter formatter = ISODateTimeFormat.basicDate();
         DateTime issuedDate = parser.parseDateTime(mCertificate.getIssuedOn());
-        return String.format("Issued %s", issuedDate.toString("MMM dd, yyyy"));
+        return issuedDate.toString("MMM dd, yyyy");
     }
 
     public void bindCertificate(CertificateRecord certificate) {

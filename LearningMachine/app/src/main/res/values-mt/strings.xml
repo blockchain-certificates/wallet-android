@@ -67,6 +67,13 @@
         <item quantity="many">Int għandek %d kredenzjali:</item>
     </plurals>
 
+    <plurals name="certificate_counting">
+        <item quantity="one">%d Kredenzjali</item>
+        <item quantity="other">%d Kredenzjali</item>
+        <item quantity="few">%d kredenzjali</item>
+        <item quantity="many">%d kredenzjali</item>
+    </plurals>
+
     <!-- Issuer Info -->
     <string name="fragment_issuer_title">Emittent</string>
     <string name="issuer_info_title">Info tal-Emittent</string>
