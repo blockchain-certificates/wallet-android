@@ -6,11 +6,13 @@ import android.content.res.AssetManager;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
 import com.learningmachine.android.app.LMConstants;
+import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.bitcoin.BitcoinManager;
 import com.learningmachine.android.app.data.cert.BlockCert;
 import com.learningmachine.android.app.data.cert.BlockCertParser;
 import com.learningmachine.android.app.data.error.CertificateFileImportException;
 import com.learningmachine.android.app.data.error.CertificateOwnershipException;
+import com.learningmachine.android.app.data.error.ExceptionWithResourceString;
 import com.learningmachine.android.app.data.model.CertificateRecord;
 import com.learningmachine.android.app.data.store.CertificateStore;
 import com.learningmachine.android.app.data.store.IssuerStore;
@@ -92,6 +94,9 @@ public class CertificateManager {
             // Parse
             BlockCertParser blockCertParser = new BlockCertParser();
             BlockCert blockCert = blockCertParser.fromJson(responseBody.string());
+            if (blockCert == null) {
+                return Observable.error(new ExceptionWithResourceString(R.string.invalid_certificate));
+            }
             String recipientKey = blockCert.getRecipientPublicKey();
 
             if (LMConstants.SHOULD_PERFORM_OWNERSHIP_CHECK) {
