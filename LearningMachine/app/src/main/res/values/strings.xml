@@ -156,7 +156,7 @@
 
 
     <!--Certificate error messages-->
-    <string name="cert_old_version_error">This credential is in an old format and cannot be displayed properly. Please check with your issuer and try again.</string>
+    <string name="cert_old_version_error">This credential is in an outdated format and cannot be displayed properly. Please check with the issuer and try again.</string>
 
     <!-- vvv OLD vvv -->
 
