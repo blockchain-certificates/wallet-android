@@ -30,12 +30,14 @@
         android:id="@+id/verifier_item_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="14dp"
+        android:layout_marginStart="8dp"
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@id/status_icon_container"
         android:layout_alignTop="@id/status_icon_container"
         android:layout_alignBottom="@id/status_icon_container"
         android:gravity="center_vertical"
+        android:ellipsize="end"
+        android:maxLines="1"
         style="@style/Text.VerifierItem"
         tools:text="Item Title" />
 
