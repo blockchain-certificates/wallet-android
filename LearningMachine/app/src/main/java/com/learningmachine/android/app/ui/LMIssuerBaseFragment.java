@@ -84,6 +84,10 @@ public abstract class LMIssuerBaseFragment extends LMFragment {
 
     protected void introduceIssuer() {
         Timber.i("Starting process to identify and introduce issuer at " + mIntroUrl);
+        if (mBitcoinManager == null || mIssuerManager == null) {
+            Timber.e("Bitcoin Manager or Issuer Manager not available");
+            return;
+        }
 
         Observable.combineLatest(
                 mBitcoinManager.getFreshBitcoinAddress(),
