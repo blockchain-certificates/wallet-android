@@ -52,7 +52,8 @@ public class HomeActivity extends LMSingleFragmentActivity {
 
     private HomeFragment getLastFragment() {
         if (mLastFragment == null) {
-            mLastFragment = HomeFragment.newInstance();
+            //Get from super
+            mLastFragment = (HomeFragment) getFragment();
         }
         return mLastFragment;
     }
