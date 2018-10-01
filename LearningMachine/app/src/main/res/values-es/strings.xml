@@ -166,6 +166,8 @@
 
     <string name="onboarding_passphrase_email_before_title">¿Estás Seguro?</string>
     <string name="onboarding_passphrase_email_before">Este método de respaldo es de baja seguridad. ¿Quieres continuar?</string>
+    <string name="ok_button">Aceptar</string>
+
 
     <string name="onboarding_passphrase_permissions_error_title">Error de Respaldo</string>
     <string name="onboarding_passphrase_permissions_error">Para guardar tu frase de contraseña en éste dispositivo deberás permitirle a Blockcerts Wallet que acceda tus archivos.</string>
