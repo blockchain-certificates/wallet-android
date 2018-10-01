@@ -10,13 +10,13 @@ android {
         applicationId "com.learningmachine.android.app"
         minSdkVersion 19
         targetSdkVersion 26
-        versionName "3.0.5"
+        versionName "3.0.4"
         def buildNumber = System.getenv("BUILD_NUMBER")
         if (buildNumber != null) {
             versionCode buildNumber.toInteger()
             versionNameSuffix "-" + buildNumber
         } else {
-            versionCode 23
+            versionCode 29
         }
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -92,23 +92,13 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.LearningMachineRelease
-            buildConfigField "String", "BUGSEE_KEY", '""'
         }
         debug {
             if (System.getenv("BUILD_NUMBER") == null) {
                 versionNameSuffix "-debug"
             }
             buildConfigField "boolean", "DEBUG_BUILD", "true"
-            buildConfigField "String", "BUGSEE_KEY", '""'
             debuggable true
-        }
-        qa {
-            if (System.getenv("BUILD_NUMBER") == null) {
-                versionNameSuffix "-qa"
-            }
-            signingConfig signingConfigs.debug
-            debuggable true
-            buildConfigField "String", "BUGSEE_KEY", LMWALLET_BUGSEE_KEY
         }
     }
 
