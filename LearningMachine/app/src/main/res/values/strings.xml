@@ -209,7 +209,7 @@
 
     <!-- Check version -->
     <string name="check_version_title">Please Update Blockcerts Wallet</string>
-    <string name="check_version_message">In order to add an issuer or credential, you must have the latest version of Blockerts Wallet.</string>
+    <string name="check_version_message">In order to add an issuer or credential, you must have the latest version of Blockcerts Wallet.</string>
     <string name="check_version_message_cancel_title">Cancel</string>
 
     <!-- Certificate Verification -->
