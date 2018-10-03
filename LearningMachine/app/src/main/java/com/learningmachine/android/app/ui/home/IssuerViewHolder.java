@@ -76,7 +76,9 @@ public class IssuerViewHolder extends RecyclerView.ViewHolder implements View.On
                             if (drawable != null) {
                                 Bitmap bitmap = drawable.getBitmap();
                                 int pixel = bitmap.getPixel(bitmap.getWidth() - 1, 0);
-                                mBinding.imageView.setBackgroundColor(pixel);
+                                if (!ImageUtils.hasTransparentPixel(bitmap)) {
+                                    mBinding.imageView.setBackgroundColor(pixel);
+                                }
                             }
                         }
 
