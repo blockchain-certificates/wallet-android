@@ -39,13 +39,17 @@ public class CertificateManager {
     private final IssuerStore mIssuerStore;
     private final CertificateService mCertificateService;
     private final BitcoinManager mBitcoinManager;
+    private final IssuerManager mIssuerManager;
 
-    public CertificateManager(Context context, CertificateStore certificateStore, IssuerStore issuerStore, CertificateService certificateService, BitcoinManager bitcoinManager) {
+    public CertificateManager(Context context, CertificateStore certificateStore,
+                              IssuerStore issuerStore, CertificateService certificateService,
+                              BitcoinManager bitcoinManager, IssuerManager issuerManager) {
         mContext = context;
         mCertificateStore = certificateStore;
         mIssuerStore = issuerStore;
         mCertificateService = certificateService;
         mBitcoinManager = bitcoinManager;
+        mIssuerManager = issuerManager;
     }
 
     public Observable<String> loadSampleCertificate() {
@@ -117,7 +121,12 @@ public class CertificateManager {
             // Write response to file
             String certUid = blockCert.getCertUid();
             FileUtils.saveCertificate(mContext, buffer, certUid);
-            return Observable.just(certUid);
+
+            return mIssuerManager.fetchIssuer(blockCert.getIssuerId()).map(issuer -> {
+                String recipientPublicKey = blockCert.getRecipientPublicKey();
+                mIssuerStore.saveIssuerResponse(issuer, recipientPublicKey);
+                return certUid;
+            });
         } catch (JsonSyntaxException e) {
             Timber.w(e, "Certificate failed to parse");
             return Observable.error(e);
@@ -174,14 +183,15 @@ public class CertificateManager {
         String certUid = blockCert.getCertUid();
         FileUtils.renameCertificateFile(mContext, tempFilename, certUid);
 
-        return Observable.just(certUid);
+        return mIssuerManager.fetchIssuer(blockCert.getIssuerId()).map(issuer -> {
+            String recipientPublicKey = blockCert.getRecipientPublicKey();
+            mIssuerStore.saveIssuerResponse(issuer, recipientPublicKey);
+            return certUid;
+        });
     }
 
     private void saveBlockCert(BlockCert blockCert) {
         Timber.i("Saving certificate " + blockCert.getCertName());
         mCertificateStore.saveBlockchainCertificate(blockCert);
-        IssuerResponse issuer = blockCert.getIssuer();
-        String recipientPublicKey = blockCert.getRecipientPublicKey();
-        mIssuerStore.saveIssuerResponse(issuer, recipientPublicKey);
     }
 }

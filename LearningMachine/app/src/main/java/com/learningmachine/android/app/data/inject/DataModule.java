@@ -55,8 +55,9 @@ public class DataModule {
 
     @Provides
     @Singleton
-    CertificateManager providesCertificateManager(Context context, CertificateStore certificateStore, IssuerStore issuerStore, CertificateService certificateService, BitcoinManager bitcoinManager) {
-        return new CertificateManager(context, certificateStore, issuerStore, certificateService, bitcoinManager);
+    CertificateManager providesCertificateManager(Context context, CertificateStore certificateStore,
+                                                  IssuerStore issuerStore, CertificateService certificateService, BitcoinManager bitcoinManager, IssuerManager issuerManager) {
+        return new CertificateManager(context, certificateStore, issuerStore, certificateService, bitcoinManager, issuerManager);
     }
 
     @Provides
