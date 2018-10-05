@@ -1,6 +1,7 @@
 package com.learningmachine.android.app.util;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 
 import java.io.File;
 
@@ -34,5 +35,22 @@ public class ImageUtils {
             return null;
         }
         return parts[1];
+    }
+
+    /**
+     * Search for transparent pixel in 4 corners of a Bitmap
+     * @param bmp The bitmap to search for a transparent pixel
+     * @return True if at least one corner is transparent.
+     */
+    public static boolean hasTransparentPixel(Bitmap bmp) {
+        int top = 0;
+        int left = 0;
+        int right = bmp.getWidth() - 1;
+        int bottom = bmp.getHeight() - 1;
+        //Int for transparent is 0
+        int pixel = bmp.getPixel(left, top) & bmp.getPixel(left, bottom) &
+                bmp.getPixel(right, top) & bmp.getPixel(right, bottom);
+        int transparent = 0;
+        return pixel == transparent;
     }
 }

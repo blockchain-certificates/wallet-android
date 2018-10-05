@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.constraint.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.learningmachine.android.app.ui.cert.VerifyCertificateFragment">
+
+        <WebView
+            android:id="@+id/verify_view"
+            android:layout_width="1dp"
+            android:layout_height="1dp"
+            android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/verification_status"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/c5"
+            android:fontFamily="@font/opensans_bold"
+            android:gravity="center_vertical"
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/material_sub_title_text_size"
+            tools:text="Verifying Ethereum Credential" />
+
+        <ScrollView
+            android:id="@+id/status_view_scroll_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="60dp"
+            android:background="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/verification_status">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <com.learningmachine.android.app.ui.cert.VerificationCustomView
+                    android:id="@+id/status_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:clipChildren="false"
+                    android:orientation="vertical" />
+                <Button
+                    android:id="@+id/done_verification"
+                    style="@style/RoundedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="14sp"
+                    android:layout_height="@dimen/default_dialog_button_height"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/ime_action_done"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:visibility="invisible"
+                    android:enabled="false"/>
+            </LinearLayout>
+        </ScrollView>
+
+    </android.support.constraint.ConstraintLayout>
+</layout>

@@ -5,17 +5,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.graphics.Point;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -29,8 +24,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.learningmachine.android.app.R;
-import com.learningmachine.android.app.util.StringUtils;
-import com.smallplanet.labalib.Laba;
 
 public class AlertDialogFragment extends DialogFragment {
 
@@ -44,6 +37,9 @@ public class AlertDialogFragment extends DialogFragment {
     private static final String ARG_MESSAGE = "AlertDialogFragment.Message";
     private static final String ARG_POSITIVE_BUTTON_MESSAGE = "AlertDialogFragment.Positive.Button_Message";
     private static final String ARG_NEGATIVE_BUTTON_MESSAGE = "AlertDialogFragment.Negative.Button.Message";
+    private TextView mTitleView;
+    private TextView mSubTitleView;
+    private TextView mMessageView;
 
     @FunctionalInterface
     public interface Callback <A, R> {
@@ -82,8 +78,9 @@ public class AlertDialogFragment extends DialogFragment {
         return newInstance(0, "", message, "", "");
     }
 
-    public static AlertDialogFragment newInstance(String title, String message) {
-        return newInstance(R.drawable.ic_dialog_failure, title, message, null, "Okay");
+    public static AlertDialogFragment newInstance(Context context, String title, String message) {
+        String negativeButton = context.getString(R.string.ok_button);
+        return newInstance(R.drawable.ic_dialog_failure, title, message, null, negativeButton);
     }
 
     public static AlertDialogFragment newInstance(boolean bottomSheet, int layoutID, int iconID, String title, String message, String positiveButtonMessage, String negativeButtonMessage, Callback complete, Callback onCreate, Callback onCancel) {
@@ -193,8 +190,9 @@ public class AlertDialogFragment extends DialogFragment {
         dialog.setContentView(dialogContent);
 
         ImageView iconView = (ImageView) dialogContent.findViewById(R.id.image_view);
-        TextView titleView = (TextView) dialogContent.findViewById(R.id.titleView);
-        TextView messageView = (TextView) dialogContent.findViewById(R.id.messageView);
+        mTitleView = (TextView) dialogContent.findViewById(R.id.titleView);
+        mSubTitleView = (TextView) dialogContent.findViewById(R.id.subTitleView);
+        mMessageView = (TextView) dialogContent.findViewById(R.id.messageView);
         Button positiveButtonView = (Button) dialogContent.findViewById(R.id.dialog_positive_button);
         Button negativeButtonView = (Button) dialogContent.findViewById(R.id.dialog_negative_button);
 
@@ -206,11 +204,11 @@ public class AlertDialogFragment extends DialogFragment {
             }
         }
 
-        if(titleView != null) {
-            titleView.setText(title);
+        if(mTitleView != null) {
+            mTitleView.setText(title);
         }
-        if(messageView != null) {
-            messageView.setText(message);
+        if(mMessageView != null) {
+            mMessageView.setText(message);
         }
 
         if (positiveButtonView != null) {
@@ -283,6 +281,24 @@ public class AlertDialogFragment extends DialogFragment {
         //this.setCancelable(false);
 
         return dialog;
+    }
+
+    public void setCustomTitle(String customTitle) {
+        if (mTitleView != null) {
+            mTitleView.setText(customTitle);
+        }
+    }
+
+    public void setCustomSubTitle(String customSubTitle) {
+        if (mSubTitleView != null) {
+            mSubTitleView.setText(customSubTitle);
+        }
+    }
+
+    public void setCustomMessage(String customMessage) {
+        if (mMessageView != null) {
+            mMessageView.setText(customMessage);
+        }
     }
 
     public int getTextViewHeight(TextView textView, int maxWidth) {

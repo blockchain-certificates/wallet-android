@@ -93,6 +93,9 @@ public class IssuerRecord {
     }
 
     public String getIntroUrl() {
+        if (mIntroUrl == null) {
+            return "";
+        }
         return mIntroUrl;
     }
 
@@ -167,4 +170,9 @@ public class IssuerRecord {
     // Note: Below are convenience variables to store information about an issuer which is
     // generally expensive to calculate
     public int cachedNumberOfCertificatesForIssuer = -1;
+
+    @Override
+    public String toString() {
+        return mIntroUrl;
+    }
 }

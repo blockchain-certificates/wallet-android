@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/fragment_certificate_info_menu_item"
+        android:icon="@drawable/ic_action_info"
+        android:title="@string/certificate_info_menu_item_title"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/fragment_certificate_verify_menu_item"
+        android:icon="@drawable/ic_action_verify"
+        android:title="@string/certificate_verify_menu_item_title"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/fragment_certificate_share_menu_item"
+        android:icon="@drawable/ic_action_share"
+        android:title="@string/certificate_share_menu_item_title"
+        app:showAsAction="ifRoom" />
+
+
+</menu>

@@ -27,6 +27,7 @@
             android:paddingBottom="@dimen/certificate_info_viewmodel_textview_bottom_padding"
             android:autoLink="all"
             android:clickable="true"
+            android:focusable="true"
             android:textColorLink="@color/linkColor"
             android:text="@{item.value}"
             app:layout_constraintTop_toBottomOf="@+id/textView1"
@@ -34,20 +35,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             style="@style/Text.Info"/>
-
-        <Button
-            android:id="@+id/deleteButton"
-            style="@style/RoundedButton.Red"
-            android:visibility="gone"
-            android:layout_width="0dp"
-            android:layout_height="52dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginStart="32dp"
-            android:text="@string/certificate_delete_button"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 </layout>

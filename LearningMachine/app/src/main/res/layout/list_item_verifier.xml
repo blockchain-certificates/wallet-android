@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:id="@+id/status_icon_container"
+        android:layout_width="40dp"
+        android:layout_height="40dp">
+        <ImageView
+            android:id="@+id/item_status_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:importantForAccessibility="no"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_verification_status_item_idle"/>
+        <ProgressBar
+            android:id="@+id/item_status_progress"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:paddingBottom="2dp"
+            android:layout_centerInParent="true"
+            android:theme="@style/ProgressBar"
+            android:visibility="gone"/>
+    </RelativeLayout>
+
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/verifier_item_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@id/status_icon_container"
+        android:layout_alignTop="@id/status_icon_container"
+        android:layout_alignBottom="@id/status_icon_container"
+        android:gravity="center_vertical"
+        android:ellipsize="end"
+        android:maxLines="1"
+        style="@style/Text.VerifierItem"
+        tools:text="Item Title" />
+
+    <View
+        android:id="@+id/placeholder_status_bar"
+        android:layout_width="12dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="-20dp"
+        android:background="@drawable/rounded_verification_placeholder_status_bar_bg"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/verifier_item_title"/>
+
+    <View
+        android:id="@+id/item_status_bar"
+        android:layout_width="12dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="-16dp"
+        android:background="@drawable/rounded_verification_status_bar_bg"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/verifier_item_title"
+        android:visibility="invisible"/>
+
+    <LinearLayout
+        android:id="@+id/verifier_sub_item_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/verifier_item_title"/>
+
+
+    <RelativeLayout
+        android:id="@+id/verified_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="-8dp"
+        android:layout_below="@id/placeholder_status_bar"
+        android:visibility="gone">
+        <ImageView
+            android:id="@+id/verified_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_verified_shield"/>
+
+        <TextView
+            android:id="@+id/verified_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="4dp"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/text_style_text_size"
+            android:fontFamily="@font/opensans_bold"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@id/verified_icon"
+            android:gravity="center_vertical"
+            android:textColor="@color/c6"
+            android:text="@string/cert_verification_success_title"/>
+    </RelativeLayout>
+
+
+</RelativeLayout>

@@ -19,12 +19,12 @@
 
     <style name="Text.Title" >
         <item name="android:textSize">16sp</item>
-        <item name="android:textColor">#062451</item>
+        <item name="android:textColor">@color/c3</item>
         <item name="android:fontFamily">@font/opensans_bold</item>
     </style>
 
     <style name="Text.Title.1">
-        <item name="android:textSize">24sp</item>
+        <item name="android:textSize">22sp</item>
         <item name="android:fontFamily">@font/opensans_semibold</item>
     </style>
 
@@ -40,13 +40,13 @@
     </style>
 
     <style name="Text.Title.4">
-        <item name="android:textSize">22sp</item>
+        <item name="android:textSize">20sp</item>
         <item name="android:fontFamily">@font/opensans_semibold</item>
     </style>
 
     <style name="Text.Body">
         <item name="android:textSize">16sp</item>
-        <item name="android:textColor">#333333</item>
+        <item name="android:textColor">@color/c6</item>
     </style>
 
     <style name="Text.Body.1">
@@ -63,7 +63,7 @@
 
     <style name="Text.Body.4">
         <item name="android:textSize">14sp</item>
-        <item name="android:textColor">#919396</item>
+        <item name="android:textColor">@color/c7</item>
     </style>
 
     <style name="Text.Info">
@@ -72,17 +72,17 @@
     </style>
 
     <style name="Text.ListHeader">
-        <item name="android:textColor">#207BD3</item>
+        <item name="android:textColor">@color/c5</item>
         <item name="android:fontFamily">@font/opensans_bold</item>
         <item name="android:textSize">14sp</item>
     </style>
 
     <style name="Text.Footer">
-        <item name="android:textColor">#919396</item>
+        <item name="android:textColor">@color/c7</item>
     </style>
 
     <style name="Text.Footer.1">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:fontFamily">@font/opensans_semibold</item>
     </style>
 
@@ -95,18 +95,52 @@
         <item name="android:textSize">12sp</item>
     </style>
 
+    <style name="Text.Footer.4">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/opensans_semibold</item>
+        <item name="android:textColor">@color/c3</item>
+    </style>
+
 
     <style name="Text.Passphrase">
         <item name="android:textSize">16sp</item>
-        <item name="android:textColor">#062451</item>
+        <item name="android:textColor">@color/c3</item>
         <item name="android:fontFamily">@font/opensans_semibold</item>
         <item name="android:background">@drawable/rounded_passphrase_background</item>
+    </style>
+
+
+    <style name="Text.VerifierItem">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/opensans_semibold</item>
+        <item name="android:textColor">@color/c7</item>
+    </style>
+
+    <style name="Text.VerifierItem.Active">
+        <item name="android:fontFamily">@font/opensans_bold</item>
+        <item name="android:textColor">@color/c6</item>
+    </style>
+
+    <style name="Text.VerifierSubItem">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/opensans_reg</item>
+        <item name="android:textColor">@color/c7</item>
+    </style>
+
+    <style name="Text.VerifierSubItem.Active">
+        <item name="android:fontFamily">@font/opensans_semibold</item>
+        <item name="android:textColor">@color/c6</item>
+    </style>
+
+    <style name="Text.VerifierSubItem.Active.Error">
+        <item name="android:fontFamily">@font/opensans_semibold</item>
+        <item name="android:textColor">@color/c9</item>
     </style>
 
     <style name="ButtonTitleWhite">
         <item name="android:fontFamily">@font/opensans_semibold</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textColor">@color/c3</item>
     </style>
 
     <style name="RoundedButton" parent="@style/Widget.AppCompat.Button">
@@ -119,27 +153,27 @@
 
     <style name="RoundedButton.Light">
         <item name="android:background">@drawable/rounded_button_background_light</item>
-        <item name="android:textColor">@color/primaryButtonNormal</item>
-    </style>
-
-    <style name="RoundedButton.White">
-        <item name="android:background">@drawable/rounded_button_background_no_border</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/c3</item>
     </style>
 
     <style name="RoundedButton.Red">
         <item name="android:background">@drawable/rounded_button_background_grey</item>
-        <item name="android:textColor">@color/red</item>
+        <item name="android:textColor">@color/c9</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="RoundedButton.NoBorder">
         <item name="android:background">@drawable/rounded_button_background_no_border</item>
-        <item name="android:textColor">@color/primaryButtonNormal</item>
+        <item name="android:textColor">@color/c3</item>
     </style>
 
     <style name="RoundedButton.Dark">
         <item name="android:background">@drawable/rounded_button_background_dark</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/button_text_color</item>
+    </style>
+
+    <style name="ProgressBar" parent="Widget.AppCompat.ProgressBar">
+        <item name="colorAccent">@color/c3</item>
     </style>
 
 
@@ -147,6 +181,7 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="actionBarStyle">@style/BlueActionBar</item>
         <item name="colorPrimary">@color/colorBackground</item>
         <item name="colorPrimaryDark">@color/white</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -154,6 +189,19 @@
         <item name="android:statusBarColor">@color/colorBackground</item>
         <item name="android:windowLightStatusBar">false</item>
         <item name="colorControlNormal">@color/white</item>
+    </style>
+
+    <style name="AppThemeLight" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="homeAsUpIndicator">@drawable/ic_up_blue</item>
+        <item name="actionBarStyle">@style/WhiteActionBar</item>
+        <item name="colorPrimary">@color/colorBackground</item>
+        <item name="colorPrimaryDark">@color/white</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textViewStyle">@style/LearningMachineTextView</item>
+        <item name="android:statusBarColor">@color/colorBackground</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="colorControlNormal">@color/white</item>
+        <item name="colorControlHighlight">@color/c10</item>
     </style>
 
     <!--No Toolbar Theme-->
@@ -165,6 +213,24 @@
         <item name="android:statusBarColor">@color/colorBackground</item>
         <item name="android:windowLightStatusBar">false</item>
         <item name="colorControlNormal">@color/white</item>
+    </style>
+
+    <style name="BlueActionBar"
+        parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@color/colorBlueActionBar</item>
+
+        <!-- Support library compatibility -->
+        <item name="background">@color/colorBlueActionBar</item>
+    </style>
+
+    <style name="WhiteActionBar"
+        parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@color/colorWhiteActionBar</item>
+        <item name="android:titleTextStyle">@style/WhiteActionBarTextStyle</item>
+
+        <!-- Support library compatibility -->
+        <item name="background">@color/colorWhiteActionBar</item>
+        <item name="titleTextStyle">@style/WhiteActionBarTextStyle</item>
     </style>
 
     <style name="NoToolbarTheme.Splash">
@@ -183,15 +249,19 @@
         <item name="editTextStyle">@style/OnboardingPassphraseEditText</item>
     </style>
 
+    <style name="WhiteActionBarTextStyle"
+        parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/colorBlueDarkTextTitle</item>
+    </style>
+
     <!-- Base -->
 
     <style name="LearningMachineTextView" parent="android:style/Widget.TextView">
-        <item name="android:fontFamily">sans-serif</item>
-        <item name="android:textStyle">normal</item>
+        <item name="android:fontFamily">@font/opensans_semibold</item>
     </style>
 
     <style name="LearningMachineTextView.Medium" parent="android:style/Widget.TextView">
-        <item name="android:fontFamily">opensans_semibold</item>
+        <item name="android:fontFamily">@font/opensans_semibold</item>
     </style>
 
     <style name="LearningMachineDialog" parent="AlertDialog.AppCompat">

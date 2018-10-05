@@ -76,6 +76,7 @@ public class IssuerFragment extends LMFragment {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_issuer, container, false);
 
         mBinding.addCertificateFloatingActionButton.setOnClickListener(v -> {
+            Timber.i("Add certificate button tapped");
             DialogUtils.showCustomSheet(getContext(), this,
                     R.layout.dialog_add_by_file_or_url,
                     0,
@@ -84,6 +85,12 @@ public class IssuerFragment extends LMFragment {
                     "",
                     "",
                     (btnIdx) -> {
+
+                        if ((int)btnIdx == 0) {
+                            Timber.i("Add Credential from URL tapped in issuer view");
+                        } else {
+                            Timber.i("User has chosen to add a certificate from file");
+                        }
                         Intent intent = AddCertificateActivity.newIntent(getContext(), (int)btnIdx, null);
                         startActivity(intent);
                         return null;
@@ -109,6 +116,7 @@ public class IssuerFragment extends LMFragment {
 
         switch (item.getItemId()) {
             case R.id.fragment_issuer_info_menu_item:
+                Timber.i("More info tapped on the Issuer display");
                 Intent intent = IssuerInfoActivity.newIntent(getContext(), mIssuerUuid);
                 startActivity(intent);
                 return true;

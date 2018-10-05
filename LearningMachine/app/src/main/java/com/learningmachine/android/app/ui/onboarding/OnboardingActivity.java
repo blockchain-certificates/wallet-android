@@ -73,7 +73,9 @@ public class OnboardingActivity extends LMActivity implements AccountChooserFrag
             return;
         }
 
-        super.onBackPressed();
+        //This is the last screen in the app.
+        //Tapping back should close the app.
+        finishAffinity();
     }
 
     public void onContinuePastWelcomeScreen() {

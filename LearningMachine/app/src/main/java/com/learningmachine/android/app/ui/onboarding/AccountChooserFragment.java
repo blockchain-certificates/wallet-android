@@ -1,31 +1,19 @@
 package com.learningmachine.android.app.ui.onboarding;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.graphics.Point;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import com.learningmachine.android.app.R;
-import com.learningmachine.android.app.data.preferences.SharedPreferencesManager;
 import com.learningmachine.android.app.databinding.FragmentAccountChooserBinding;
-import com.learningmachine.android.app.dialog.AlertDialogFragment;
 import com.learningmachine.android.app.ui.video.VideoActivity;
-import com.learningmachine.android.app.util.DialogUtils;
 import com.smallplanet.labalib.Laba;
-
-import javax.inject.Inject;
 
 import timber.log.Timber;
 
@@ -93,11 +81,6 @@ public class AccountChooserFragment extends OnboardingFragment {
     @Override
     public void onResume() {
         super.onResume();
-
-        OnboardingActivity activity = (OnboardingActivity)getActivity();
-        if(activity.isOnAccountsScreen()) {
-            checkForDelayedURLsFromDeepLinking();
-        }
 
         mBinding.backgroundVideoCover.setAlpha(1.0f);
         mBinding.backgroundVideo.start();

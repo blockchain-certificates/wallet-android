@@ -9,75 +9,73 @@
             type="com.learningmachine.android.app.ui.home.IssuerListItemViewModel"/>
     </data>
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/issuer_main_content"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:background="@color/clear">
-
-        <View
+        android:layout_height="wrap_content"
+        android:clipChildren="false">
+        <android.support.v7.widget.CardView
             android:id="@+id/view"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
             android:layout_marginEnd="20dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="4dp"
-            android:background="@drawable/list_item_background"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:cardElevation="2dp">
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/issuer_main_content"
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:background="@color/clear">
+                <ImageView
+                    android:id="@+id/image_view"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:importantForAccessibility="no"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/image_view"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginBottom="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintBottom_toBottomOf="@+id/view"
-            app:layout_constraintEnd_toStartOf="@+id/guideline"
-            app:layout_constraintStart_toStartOf="@+id/view"
-            app:layout_constraintTop_toTopOf="@+id/view" />
+                <com.learningmachine.android.app.ui.AutoResizeTextView
+                    android:id="@+id/textView"
+                    style="@style/Text.Title.2"
+                    android:layout_width="0dp"
+                    android:layout_height="73dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="@{viewModel.title}"
+                    android:textAlignment="viewStart"
+                    app:layout_constraintBottom_toTopOf="@+id/textView2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/guideline"
+                    app:layout_constraintTop_toTopOf="@+id/image_view" />
 
-        <com.learningmachine.android.app.ui.AutoResizeTextView
-            android:id="@+id/textView"
-            style="@style/Text.Title.2"
-            android:layout_width="0dp"
-            android:layout_height="73dp"
-            android:layout_marginEnd="16dp"
-            android:text="@{viewModel.title}"
-            android:textAlignment="viewStart"
-            app:layout_constraintBottom_toTopOf="@+id/textView2"
-            app:layout_constraintEnd_toEndOf="@+id/view"
-            app:layout_constraintStart_toStartOf="@+id/guideline"
-            app:layout_constraintTop_toTopOf="@+id/image_view" />
+                <TextView
+                    android:id="@+id/textView2"
+                    style="@style/Text.Body.2"
+                    android:layout_width="0dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="@{viewModel.getNumberOfCertificatesAsString(context)}"
+                    android:textAlignment="viewStart"
+                    app:layout_constraintBottom_toBottomOf="@+id/image_view"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/guideline"
+                    app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-        <TextView
-            android:id="@+id/textView2"
-            style="@style/Text.Body.2"
-            android:layout_width="0dp"
-            android:layout_height="20dp"
-            android:layout_marginEnd="16dp"
-            android:text="@{viewModel.numberOfCertificatesAsString}"
-            android:textAlignment="viewStart"
-            app:layout_constraintBottom_toBottomOf="@+id/image_view"
-            app:layout_constraintEnd_toEndOf="@+id/view"
-            app:layout_constraintStart_toStartOf="@+id/guideline"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-        <android.support.constraint.Guideline
-            android:id="@+id/guideline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_begin="160dp" />
+                <android.support.constraint.Guideline
+                    android:id="@+id/guideline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_begin="160dp" />
 
 
-    </android.support.constraint.ConstraintLayout>
-
+            </android.support.constraint.ConstraintLayout>
+        </android.support.v7.widget.CardView>
+    </RelativeLayout>
 </layout>

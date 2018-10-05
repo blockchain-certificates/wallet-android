@@ -3,9 +3,7 @@ package com.learningmachine.android.app.ui.splash;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 
-import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.bitcoin.BitcoinManager;
 import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.data.preferences.SharedPreferencesManager;
@@ -14,10 +12,11 @@ import com.learningmachine.android.app.data.url.SplashUrlDecoder;
 import com.learningmachine.android.app.ui.LMActivity;
 import com.learningmachine.android.app.ui.cert.AddCertificateActivity;
 import com.learningmachine.android.app.ui.home.HomeActivity;
-import com.learningmachine.android.app.ui.issuer.AddIssuerActivity;
 import com.learningmachine.android.app.ui.onboarding.OnboardingActivity;
 
 import javax.inject.Inject;
+
+import timber.log.Timber;
 
 import static com.learningmachine.android.app.data.url.LaunchType.ADD_CERTIFICATE;
 import static com.learningmachine.android.app.data.url.LaunchType.ADD_ISSUER;
@@ -55,11 +54,13 @@ public class SplashActivity extends LMActivity {
 
             case ONBOARDING:
             case MAIN:
+                Timber.i("Application was launched from a user activity.");
                 startActivityAndFinish(new Intent(this, HomeActivity.class));
                 break;
 
             case ADD_ISSUER:
-                Intent issuerIntent = AddIssuerActivity.newIntent(this,
+                Timber.i("Application was launched with this url: " + data.toString());
+                Intent issuerIntent = HomeActivity.newIntentForIssuer(this,
                         launchData.getIntroUrl(),
                         launchData.getNonce());
                 issuerIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_TASK_ON_HOME);
@@ -67,7 +68,8 @@ public class SplashActivity extends LMActivity {
                 break;
 
             case ADD_CERTIFICATE:
-                Intent certificateIntent = AddCertificateActivity.newIntent(this, 0, launchData.getCertUrl());
+                Timber.i("Application was launched with this url: " + data.toString());
+                Intent certificateIntent = HomeActivity.newIntentForCert(this, launchData.getCertUrl());
                 certificateIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_TASK_ON_HOME);
                 startActivityAndFinish(certificateIntent);
                 break;

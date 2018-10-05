@@ -13,7 +13,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -63,10 +62,17 @@ public class AddCertificateFileFragment extends LMFragment {
         mBinding.chooseFileButton.setOnClickListener(mOnClickListener);
 
         mBinding.importButton.setOnClickListener(v -> {
-            addCertificateFile();
+            displayProgressDialog(R.string.fragment_add_certificate_progress_dialog_message);
+            checkVersion(updateNeeded -> {
+                if (!updateNeeded) {
+                    addCertificateFile();
+                } else {
+                    hideProgressDialog();
+                }
+            });
+
         });
 
-        mBinding.importButton.setAlpha(0.3f);
         mBinding.importButton.setEnabled(false);
 
         return mBinding.getRoot();
@@ -103,7 +109,6 @@ public class AddCertificateFileFragment extends LMFragment {
             return;
         }
         mCertificateManager.addCertificate(mSelectedFile)
-                .doOnSubscribe(() -> displayProgressDialog(R.string.fragment_add_certificate_progress_dialog_message))
                 .compose(bindToMainThread())
                 .subscribe(uuid -> {
                     Timber.d("Cert copied");
@@ -111,7 +116,10 @@ public class AddCertificateFileFragment extends LMFragment {
                     Intent intent = CertificateActivity.newIntent(getContext(), uuid);
                     startActivity(intent);
                     getActivity().finish();
-                }, throwable -> displayErrors(throwable, DialogUtils.ErrorCategory.CERTIFICATE, R.string.error_title_message));
+                }, throwable -> {
+                    Timber.e(throwable, "Importing failed with error");
+                    displayErrors(throwable, DialogUtils.ErrorCategory.CERTIFICATE, R.string.error_title_message);
+                });
     }
 
     private void selectFile(File file) {
@@ -126,7 +134,6 @@ public class AddCertificateFileFragment extends LMFragment {
         String filename = mSelectedFile.getName();
         mBinding.chooseFileButton.setText(filename);
 
-        mBinding.importButton.setAlpha(1.0f);
         mBinding.importButton.setEnabled(true);
     }
 
@@ -137,7 +144,7 @@ public class AddCertificateFileFragment extends LMFragment {
                     getResources().getString(R.string.no_files_downloaded_title),
                     getResources().getString(R.string.no_files_downloaded_message),
                     null,
-                    getResources().getString(R.string.onboarding_passphrase_ok),
+                    getResources().getString(R.string.ok_button),
                     (btnIdx) -> {
                         return null;
                     });

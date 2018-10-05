@@ -19,16 +19,5 @@ public class CertificateInfoItemViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(CertificateInfoItemViewModel viewModel) {
         mBinding.setItem(viewModel);
-
-        if(viewModel.isDeleteButton()){
-            mBinding.textView1.setVisibility(View.GONE);
-            mBinding.textView2.setVisibility(View.GONE);
-            mBinding.deleteButton.setVisibility(View.VISIBLE);
-
-            mBinding.deleteButton.setOnClickListener(view -> {
-                viewModel.pressDeleteButton();
-            });
-        }
-
     }
 }

@@ -14,7 +14,8 @@
         android:orientation="vertical"
         android:paddingStart="@dimen/issuer_info_linear_layout_padding_start"
         android:paddingEnd="@dimen/issuer_info_linear_layout_padding_end"
-        android:paddingTop="@dimen/issuer_info_linear_layout_padding_top">
+        android:paddingTop="@dimen/issuer_info_linear_layout_padding_top"
+        android:focusable="true">
 
         <TextView
             android:id="@+id/issuer_info_issuer_name"
@@ -34,12 +35,11 @@
             android:layout_height="wrap_content"
             android:autoLink="all"
             android:clickable="true"
+            android:focusable="true"
             android:textColorLink="@color/linkColor"
             android:paddingBottom="@dimen/issuer_info_viewmodel_textview_bottom_padding"
             android:text="@{issuerInfo.issuerUrl}"
             style="@style/Text.Info"/>
-
-
 
         <TextView
             android:id="@+id/issuer_info_email_textview"
@@ -54,6 +54,7 @@
             android:paddingBottom="@dimen/issuer_info_viewmodel_textview_bottom_padding"
             android:autoLink="all"
             android:clickable="true"
+            android:focusable="true"
             android:textColorLink="@color/linkColor"
             android:text="@{issuerInfo.email}"
             style="@style/Text.Info"/>
@@ -79,6 +80,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/fragment_issuer_info_shared_address"
+            android:importantForAccessibility="no"
             style="@style/Text.ListHeader"/>
 
         <TextView
@@ -86,6 +88,7 @@
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/issuer_info_viewmodel_textview_bottom_padding"
             android:text="@{issuerInfo.sharedAddress}"
+            android:importantForAccessibility="no"
             style="@style/Text.Info"/>
 
         <TextView
@@ -101,6 +104,7 @@
             android:paddingBottom="@dimen/issuer_info_viewmodel_textview_bottom_padding"
             android:autoLink="all"
             android:clickable="true"
+            android:focusable="true"
             android:textColorLink="@color/linkColor"
             android:text="@{issuerInfo.url}"
             style="@style/Text.Info"/>

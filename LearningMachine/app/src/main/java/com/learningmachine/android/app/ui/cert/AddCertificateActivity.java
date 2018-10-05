@@ -28,10 +28,6 @@ public class AddCertificateActivity extends LMActivity {
     private ActivityAddCertificateBinding mBinding;
     private AddCertificateURLFragment lastURLFragment = null;
 
-    public static Intent newIntent(Context context) {
-        return newIntent(context, 0, null);
-    }
-
     public static Intent newIntent(Context context, int pagerIndex, String certificateUrlString) {
         Intent intent = new Intent(context, AddCertificateActivity.class);
         intent.putExtra(EXTRA_CERT_URL, certificateUrlString);

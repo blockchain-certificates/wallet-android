@@ -20,6 +20,7 @@
                 android:id="@+id/issuer_recyclerview"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:importantForAccessibility="no"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -45,19 +46,97 @@
                 android:orientation="horizontal"
                 app:layout_constraintGuide_percent="0.5" />
 
-            <ImageView
-                android:id="@+id/imageView2"
+            <android.support.constraint.Guideline
+                android:id="@+id/guideline5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
+
+            <android.support.constraint.Guideline
+                android:id="@+id/guideline6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.25" />
+
+            <View
+                android:id="@+id/image_background"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:background="@color/off_white_background"
-                android:src="@drawable/ic_ready"
-                android:padding="24dp"
+                android:importantForAccessibility="no"
                 app:layout_constraintBottom_toTopOf="@+id/guideline4"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"/>
 
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="262dp"
+                android:layout_height="228dp"
+                android:src="@drawable/ic_ready"
+                android:importantForAccessibility="no"
+                app:layout_constraintBottom_toTopOf="@+id/guideline4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:visibility="visible"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/issuer_name_title"
+                android:layout_width="94dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_marginBottom="52dp"
+                style="@style/Text.Title"
+                android:textSize="14sp"
+                android:text="@string/issuer_name"
+                app:layout_constraintLeft_toRightOf="@id/guideline5"
+                app:layout_constraintBottom_toTopOf="@id/guideline6"
+                android:visibility="visible"/>
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="225dp"
+                android:layout_height="160dp"
+                android:src="@drawable/ic_ready_for_certs"
+                android:importantForAccessibility="no"
+                app:layout_constraintBottom_toTopOf="@+id/guideline4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:visibility="gone"/>
+
+
+            <RelativeLayout
+                android:id="@+id/credential_name_title_container"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:minHeight="80dp"
+                android:gravity="center_vertical"
+                app:layout_constraintLeft_toLeftOf="@id/imageView3"
+                app:layout_constraintTop_toTopOf="@id/imageView3"
+                android:layout_marginStart="76dp"
+                android:visibility="gone">
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/credential_name_title"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    style="@style/Text.Title"
+                    android:textSize="14sp"
+                    android:text="@string/fragment_certificate_info_cert_name"/>
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/credential_date_issued"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/credential_name_title"
+                    style="@style/Text.Body.4"
+                    android:textSize="12sp"
+                    android:text="@string/fragment_certificate_info_issuer_issue_date"
+                    />
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/onboarding_home_no_issuers_title"
@@ -126,71 +205,5 @@
         </android.support.constraint.ConstraintLayout>
 
     </android.support.constraint.ConstraintLayout>
-
-
-
-    <!--
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-        <FrameLayout
-            android:id="@+id/issuer_main_content"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/off_white_background">
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/issuer_recyclerview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingEnd="@dimen/fragment_home_recyclerview_spacing"
-                android:paddingStart="@dimen/fragment_home_recyclerview_spacing"
-                android:paddingTop="@dimen/fragment_home_recyclerview_spacing"/>
-
-        </FrameLayout>
-
-        <LinearLayout
-            android:id="@+id/issuer_empty_content"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_horizontal|top"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/fragment_home_empty_title_margin"
-                android:text="@string/fragment_home_empty_title"
-                android:textAllCaps="true"
-                style="@style/Material.Title.Light"/>
-
-            <TextView
-                android:layout_width="@dimen/fragment_home_empty_description_width"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/fragment_home_empty_description_margin"
-                android:gravity="center"
-                android:text="@string/fragment_home_empty_description"
-                style="@style/Material.Light.Body1"/>
-
-
-            <Button
-                android:id="@+id/issuer_add_button"
-                android:layout_width="@dimen/fragment_home_empty_button_width"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/fragment_home_empty_button_margin"
-                android:paddingBottom="@dimen/onboarding_button_padding_vertical"
-                android:paddingEnd="@dimen/onboarding_button_padding_horizontal"
-                android:paddingStart="@dimen/onboarding_button_padding_horizontal"
-                android:paddingTop="@dimen/onboarding_button_padding_vertical"
-                android:text="@string/fragment_home_empty_action"
-                style="@style/RoundedButton.Light"/>
-
-        </LinearLayout>
-
-    </FrameLayout>
-
-    -->
 
 </layout>

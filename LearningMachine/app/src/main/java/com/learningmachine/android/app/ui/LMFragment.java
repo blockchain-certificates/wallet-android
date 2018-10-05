@@ -1,21 +1,32 @@
 package com.learningmachine.android.app.ui;
 
+import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 
+import com.learningmachine.android.app.BuildConfig;
+import com.learningmachine.android.app.LMConstants;
 import com.learningmachine.android.app.R;
+import com.learningmachine.android.app.data.inject.Injector;
+import com.learningmachine.android.app.data.webservice.VersionService;
 import com.learningmachine.android.app.util.DialogUtils;
 import com.trello.rxlifecycle.LifecycleProvider;
 import com.trello.rxlifecycle.LifecycleTransformer;
 import com.trello.rxlifecycle.RxLifecycle;
 import com.trello.rxlifecycle.android.FragmentEvent;
 import com.trello.rxlifecycle.android.RxLifecycleAndroid;
+
+import javax.inject.Inject;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -28,6 +39,14 @@ public class LMFragment extends Fragment implements LifecycleProvider<FragmentEv
     // Used by LifecycleProvider interface to transform lifeycycle events into a stream of events through an observable.
     private final BehaviorSubject<FragmentEvent> mLifecycleSubject = BehaviorSubject.create();
     private Observable.Transformer mMainThreadTransformer;
+    private AlertDialog mProgressDialog;
+
+    @Inject
+    protected VersionService mVersionService;
+
+    protected interface OnVersionChecked {
+        void needsUpdate(boolean updateNeeded);
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -40,6 +59,8 @@ public class LMFragment extends Fragment implements LifecycleProvider<FragmentEv
         super.onCreate(savedInstanceState);
         mLifecycleSubject.onNext(FragmentEvent.CREATE);
         Timber.d("onCreate: " + getFileExtension(this.getClass().toString()));
+        Injector.obtain(getContext())
+                .inject(this);
     }
 
     @Override
@@ -136,11 +157,87 @@ public class LMFragment extends Fragment implements LifecycleProvider<FragmentEv
     }
 
     protected void displayProgressDialog(@StringRes int progressMessageResId) {
-        DialogUtils.showProgressDialog(getFragmentManager(), getString(progressMessageResId));
+        FragmentActivity parentActivity = getActivity();
+        if (parentActivity == null) {
+            return;
+        }
+        getActivity().runOnUiThread(() -> mProgressDialog = DialogUtils.showProgressDialog(getContext(), getString(progressMessageResId)));
+
     }
 
     protected void hideProgressDialog() {
-        DialogUtils.hideProgressDialog(getFragmentManager());
+        if (mProgressDialog != null) {
+            FragmentActivity parentActivity = getActivity();
+            if (parentActivity == null) {
+                return;
+            }
+            getActivity().runOnUiThread(() -> mProgressDialog.dismiss());
+        }
+    }
+
+    protected void checkVersion(OnVersionChecked onVersionChecked) {
+        if (mVersionService == null) {
+            if (onVersionChecked != null) {
+                onVersionChecked.needsUpdate(false);
+            }
+            return;
+        }
+        mVersionService.getVersion()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(version -> {
+                    String playStoreVersion = version.android;
+                    String localVersion = BuildConfig.VERSION_NAME;
+                    localVersion = localVersion.split("-")[0];
+
+                    String[] playStoreParts = playStoreVersion.split("\\.");
+                    String[] localParts = localVersion.split("\\.");
+
+                    if (playStoreParts.length != localParts.length) {
+                        onVersionChecked.needsUpdate(false);
+                        return;
+                    }
+
+                    boolean needsUpdate = false;
+                    for (int i = 0; i < playStoreParts.length; i++) {
+                        int psv = Integer.parseInt(playStoreParts[i]);
+                        int lv = Integer.parseInt(localParts[i]);
+                        if (psv == lv) {
+                            continue;
+                        }
+                        if (psv < lv) {
+                            break;
+                        }
+                        needsUpdate = true;
+                    }
+                    onVersionChecked.needsUpdate(needsUpdate);
+                    if (needsUpdate) {
+                        showVersionDialog();
+                    }
+                }, throwable -> onVersionChecked.needsUpdate(false));
+    }
+
+    private void showVersionDialog() {
+        DialogUtils.showAlertDialog(getContext(), this,
+                R.drawable.ic_dialog_warning,
+                getResources().getString(R.string.check_version_title),
+                getResources().getString(R.string.check_version_message),
+                getResources().getString(R.string.ok_button),
+                getResources().getString(R.string.check_version_message_cancel_title),
+                (btnIdx) -> {
+                    if((int)btnIdx == 1) {
+                        try {
+                            startActivity(new Intent(Intent.ACTION_VIEW,
+                                    Uri.parse(LMConstants.PLAY_STORE_URL)));
+                        } catch (ActivityNotFoundException e) {
+                            startActivity(new Intent(Intent.ACTION_VIEW,
+                                    Uri.parse(LMConstants.PLAY_STORE_EXTERNAL_URL)));
+                        }
+                    } else {
+                        Timber.i("User is not going to play store to update");
+                    }
+                    return null;
+                });
     }
 
     // Snackbars

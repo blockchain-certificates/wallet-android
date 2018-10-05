@@ -71,19 +71,23 @@ public class AddCertificateURLFragment extends LMFragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (mBinding.certificateEditText.getText().length() > 0) {
-                    mBinding.importButton.setAlpha(1.0f);
                     mBinding.importButton.setEnabled(true);
                 } else {
-                    mBinding.importButton.setAlpha(0.3f);
                     mBinding.importButton.setEnabled(false);
                 }
             }
         });
 
-        mBinding.importButton.setAlpha(0.3f);
         mBinding.importButton.setEnabled(false);
         mBinding.importButton.setOnClickListener(v -> {
-            addCertificate();
+            displayProgressDialog(R.string.fragment_add_certificate_progress_dialog_message);
+            checkVersion(updateNeeded -> {
+                if (!updateNeeded) {
+                    addCertificate();
+                } else {
+                    hideProgressDialog();
+                }
+            });
         });
 
         handleArgs();
@@ -111,8 +115,8 @@ public class AddCertificateURLFragment extends LMFragment {
         hideKeyboard();
         String url = mBinding.certificateEditText.getText()
                 .toString();
+        Timber.i("User attempting to add a certificate from " + url);
         mCertificateManager.addCertificate(url)
-                .doOnSubscribe(() -> displayProgressDialog(R.string.fragment_add_certificate_progress_dialog_message))
                 .compose(bindToMainThread())
                 .subscribe(uuid -> {
                     Timber.d("Cert downloaded");
@@ -120,7 +124,10 @@ public class AddCertificateURLFragment extends LMFragment {
                     Intent intent = CertificateActivity.newIntent(getContext(), uuid);
                     startActivity(intent);
                     getActivity().finish();
-                }, throwable -> displayErrors(throwable, DialogUtils.ErrorCategory.CERTIFICATE, R.string.error_title_message));
+                }, throwable -> {
+                    Timber.e("Failed to load certificate from " + url);
+                    displayErrors(throwable, DialogUtils.ErrorCategory.CERTIFICATE, R.string.error_title_message);
+                });
     }
 
 

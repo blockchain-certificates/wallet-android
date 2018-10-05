@@ -27,15 +27,6 @@
             </intent-filter>
             <intent-filter>
                 <data
-                    android:host="certificates.learningmachine.com"
-                    android:scheme="https"/>
-                <action android:name="android.intent.action.VIEW"/>
-
-                <category android:name="android.intent.category.BROWSABLE"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-            <intent-filter>
-                <data
                     android:host="wallet.blockcerts.org"
                     android:scheme="https"/>
                 <action android:name="android.intent.action.VIEW"/>
@@ -85,12 +76,13 @@
 
         <activity
             android:name=".ui.settings.passphrase.RevealPassphraseActivity"
-            android:label="@string/reveal_passphrase_title"
+            android:label="@string/settings_reveal_passphrase"
             android:screenOrientation="portrait"
             android:launchMode="singleTask"/>
 
         <activity
             android:name=".ui.cert.CertificateActivity"
+            android:theme="@style/AppThemeLight"
             android:screenOrientation="portrait"
             android:launchMode="singleTask"/>
 
@@ -109,7 +101,12 @@
             android:name=".ui.cert.CertificateInfoActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTask"/>
+
         <activity android:name=".ui.WebAuthActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"/>
+
+        <activity android:name=".ui.cert.VerifyCertificateActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTask"/>
 

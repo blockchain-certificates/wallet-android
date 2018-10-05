@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 
+import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.ui.LMSingleFragmentActivity;
 
 public class CertificateInfoActivity extends LMSingleFragmentActivity {
@@ -25,5 +26,10 @@ public class CertificateInfoActivity extends LMSingleFragmentActivity {
     @Override
     protected boolean requiresBackNavigation() {
         return true;
+    }
+
+    @Override
+    public String getActionBarTitle() {
+        return getString(R.string.certificate_info_title);
     }
 }

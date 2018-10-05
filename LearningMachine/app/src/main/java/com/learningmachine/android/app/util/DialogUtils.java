@@ -1,15 +1,20 @@
 package com.learningmachine.android.app.util;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import com.google.gson.stream.MalformedJsonException;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
 
+import com.google.gson.JsonParseException;
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.error.ExceptionWithResourceString;
 import com.learningmachine.android.app.dialog.AlertDialogFragment;
-import com.learningmachine.android.app.dialog.ProgressDialogFragment;
 
 import java.net.UnknownHostException;
 
@@ -24,21 +29,18 @@ public class DialogUtils {
         GENERIC, ISSUER, CERTIFICATE
     }
 
-    public static final String TAG_DIALOG_PROGRESS = "DialogUtils.Dialog.Progress";
-    private static final String TAG_DIALOG_ALERT = "DialogUtils.Dialog.Alert";
+    public static final String TAG_DIALOG_ALERT = "DialogUtils.Dialog.Alert";
 
-    public static void showProgressDialog(FragmentManager fragmentManager, String message) {
-        ProgressDialogFragment progressDialogFragment = ProgressDialogFragment.newInstance(message);
-        progressDialogFragment.setCancelable(false);
-        progressDialogFragment.show(fragmentManager, TAG_DIALOG_PROGRESS);
-
-    }
-
-    public static void hideProgressDialog(FragmentManager fragmentManager) {
-        Fragment fragment = fragmentManager.findFragmentByTag(TAG_DIALOG_PROGRESS);
-        if (fragment instanceof ProgressDialogFragment) {
-            ((ProgressDialogFragment) fragment).dismissAllowingStateLoss();
-        }
+    public static AlertDialog showProgressDialog(Context context, String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        final View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_progress, null);
+        TextView title = dialogView.findViewById(R.id.titleView);
+        title.setText(message);
+        builder.setView(dialogView);
+        builder.setCancelable(false);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        return dialog;
     }
 
     public static void showAlertDialog(Context context, FragmentManager fragmentManager, @StringRes int messageResId) {
@@ -91,11 +93,11 @@ public class DialogUtils {
         alertDialogFragment.show(fragmentManager, TAG_DIALOG_ALERT);
     }
 
-    public static AlertDialogFragment showCustomDialog(Context context, @NonNull Fragment targetFragment, int layoutID, int iconID, String title, String message, String positiveButton, String negativeButton, AlertDialogFragment.Callback onComplete, AlertDialogFragment.Callback onCreate, AlertDialogFragment.Callback onCancel) {
+    public static AlertDialogFragment showCustomDialog(Context context, @NonNull Fragment targetFragment, int iconID, String title, String message, String positiveButton, String negativeButton, AlertDialogFragment.Callback onComplete, AlertDialogFragment.Callback onCreate, AlertDialogFragment.Callback onCancel) {
         FragmentManager fragmentManager = targetFragment.getFragmentManager();
         AlertDialogFragment alertDialogFragment = AlertDialogFragment.newInstance(
                 false,
-                layoutID,
+                R.layout.dialog_custom,
                 iconID,
                 title,
                 message,
@@ -109,7 +111,20 @@ public class DialogUtils {
         return alertDialogFragment;
     }
 
-    public static AlertDialogFragment showCustomSheet(Context context, @NonNull Fragment targetFragment, int layoutID, int iconID, String title, String message, String positiveButton, String negativeButton, AlertDialogFragment.Callback onComplete, AlertDialogFragment.Callback onCreate) {
+
+    public static AlertDialogFragment showCustomSheet(Context context, @NonNull Fragment targetFragment,
+                                                      int layoutID, int iconID, String title, String message,
+                                                      String positiveButton, String negativeButton,
+                                                      AlertDialogFragment.Callback onComplete, AlertDialogFragment.Callback onCreate) {
+        return showCustomSheet(context, targetFragment, layoutID, iconID, title, message,
+                positiveButton, negativeButton, onComplete, onCreate, null);
+    }
+
+    public static AlertDialogFragment showCustomSheet(Context context, @NonNull Fragment targetFragment,
+                                                      int layoutID, int iconID, String title, String message,
+                                                      String positiveButton, String negativeButton,
+                                                      AlertDialogFragment.Callback onComplete, AlertDialogFragment.Callback onCreate,
+                                                      AlertDialogFragment.Callback onCancel) {
         FragmentManager fragmentManager = targetFragment.getFragmentManager();
         AlertDialogFragment alertDialogFragment = AlertDialogFragment.newInstance(
                 true,
@@ -121,7 +136,7 @@ public class DialogUtils {
                 negativeButton,
                 onComplete,
                 onCreate,
-                null);
+                onCancel);
         alertDialogFragment.setTargetFragment(targetFragment, 0);
         alertDialogFragment.show(fragmentManager, TAG_DIALOG_ALERT);
         return alertDialogFragment;
@@ -141,7 +156,7 @@ public class DialogUtils {
     }
 
     private static void showErrorAlertDialog(Context context, FragmentManager fragmentManager, String title, String errorMessage, Throwable throwable) {
-        AlertDialogFragment dialog = AlertDialogFragment.newInstance(title, errorMessage);
+        AlertDialogFragment dialog = AlertDialogFragment.newInstance(context, title, errorMessage);
         fragmentManager.beginTransaction()
                 .add(dialog, TAG_DIALOG_ALERT)
                 .commitAllowingStateLoss();
@@ -163,9 +178,9 @@ public class DialogUtils {
                 case HTTP_NOT_FOUND:
                     switch(errorCategory){
                         case ISSUER:
-                            return R.string.http_not_found_issuer;
+                            return R.string.invalid_issuer_url;
                         case CERTIFICATE:
-                            return R.string.http_not_found_certificate;
+                            return R.string.invalid_certificate;
                         default:
                             return R.string.http_not_found_generic;
                     }
@@ -173,17 +188,34 @@ public class DialogUtils {
                 case HTTP_BAD_REQUEST:
                     switch(errorCategory){
                         case ISSUER:
-                            return R.string.http_bad_request_issuer;
+                            return R.string.invalid_issuer_nonce;
                         case CERTIFICATE:
-                            return R.string.http_bad_request_certificate;
+                            return R.string.invalid_certificate;
                         default:
-                            return R.string.http_bad_request_generic;
+                            return R.string.http_not_found_generic;
                     }
             }
         } else if (throwable instanceof ExceptionWithResourceString) {
             ExceptionWithResourceString exceptionWithResourceString = (ExceptionWithResourceString) throwable;
             return exceptionWithResourceString.getErrorMessageResId();
-        } else {
+        } else if (throwable instanceof JsonParseException) {
+            //There was an error parsing json
+            switch(errorCategory) {
+                case CERTIFICATE:
+                    return R.string.invalid_credential_error;
+                default:
+                    return 0;
+            }
+        } else if (throwable instanceof MalformedJsonException) {
+            switch(errorCategory) {
+                case ISSUER:
+                    //if the url json is malformed
+                    return R.string.invalid_issuer_url;
+                default:
+                    return 0;
+            }
+        }
+        else {
             return 0;
         }
     }

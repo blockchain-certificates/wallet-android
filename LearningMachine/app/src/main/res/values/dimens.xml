@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <dimen name="rounded_button_stroke_width">1dp</dimen>
 
@@ -10,6 +10,9 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="add_identity_top_padding">13dp</dimen>
+
+    <!--Default paddings and margins-->
+    <dimen name="default_small_padding">8dp</dimen>
 
     <!-- Splash -->
 
@@ -169,5 +172,11 @@
     <!-- Cert file dialog -->
 
     <dimen name="dialog_file_chooser_padding">8dp</dimen>
+    <dimen name="default_dialog_button_height">48dp</dimen>
+    <dimen name="default_dialog_item_height">48dp</dimen>
+    <dimen name="material_sub_title_text_size">14sp</dimen>
+    <dimen name="backup_checkmark_size">26dp</dimen>
+
+    <dimen name="design_bottom_navigation_height" tools:override="true">60dp</dimen>
 
 </resources>

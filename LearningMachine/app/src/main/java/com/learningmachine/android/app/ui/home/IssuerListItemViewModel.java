@@ -1,8 +1,11 @@
 package com.learningmachine.android.app.ui.home;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
+import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.model.IssuerRecord;
 
 public class IssuerListItemViewModel extends BaseObservable {
@@ -20,20 +23,20 @@ public class IssuerListItemViewModel extends BaseObservable {
         return mIssuer.getName();
     }
 
-    @Bindable
-    public String getNumberOfCertificatesAsString() {
+    public String getNumberOfCertificatesAsString(Context context) {
         if (mIssuer == null) {
             return null;
         }
 
-        // TODO: Move these to the strings.xml
-        if(mIssuer.cachedNumberOfCertificatesForIssuer == 0){
-            return "No Credentials";
+        Resources resources = context.getResources();
+
+        if (mIssuer.cachedNumberOfCertificatesForIssuer == 0) {
+            return resources.getString(R.string.issuer_no_certificates_desc);
         }
-        if(mIssuer.cachedNumberOfCertificatesForIssuer == 1){
-            return "1 Credential";
-        }
-        return String.format("%d Credentials", mIssuer.cachedNumberOfCertificatesForIssuer);
+
+        return resources.getQuantityString(R.plurals.certificate_counting,
+                mIssuer.cachedNumberOfCertificatesForIssuer,
+                mIssuer.cachedNumberOfCertificatesForIssuer);
     }
 
     public void bindIssuer(IssuerRecord issuer) {

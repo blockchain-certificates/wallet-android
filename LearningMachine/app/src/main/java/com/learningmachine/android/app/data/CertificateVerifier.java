@@ -1,24 +1,11 @@
 package com.learningmachine.android.app.data;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.os.Handler;
-import android.os.Looper;
-import android.util.Log;
-import android.webkit.JavascriptInterface;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
 
-import com.google.gson.JsonObject;
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.cert.BlockCert;
 import com.learningmachine.android.app.data.cert.BlockCertParser;
-import com.learningmachine.android.app.data.cert.v20.BlockCertV20;
-import com.learningmachine.android.app.data.cert.v20.MerkleProof2017Schema;
-import com.learningmachine.android.app.data.cert.v20.Proof;
 import com.learningmachine.android.app.data.error.ExceptionWithResourceString;
-import com.learningmachine.android.app.data.model.KeyRotation;
-import com.learningmachine.android.app.data.model.TxRecord;
 import com.learningmachine.android.app.data.webservice.BlockchainService;
 import com.learningmachine.android.app.data.webservice.IssuerService;
 import com.learningmachine.android.app.util.FileUtils;
@@ -27,11 +14,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.NoSuchElementException;
-import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
-import rx.Emitter;
 import rx.Observable;
 import timber.log.Timber;
 
@@ -40,7 +25,6 @@ import timber.log.Timber;
 // the actual certificate verification process.  Instead, this class now provides a
 // theatrical playback of the verification process only
 public class CertificateVerifier {
-    private final int delayTime = 1;
     private final Context mContext;
 
     @Inject
@@ -58,43 +42,6 @@ public class CertificateVerifier {
             Timber.e(e, "Could not read certificate file");
             return Observable.error(new ExceptionWithResourceString(e, R.string.error_cannot_load_certificate_json));
         }
-    }
-
-    public Observable<Object> CompareComputedHashWithExpectedHash() {
-        return Observable.create(emitter -> {
-            emitter.onNext("");
-        }, Emitter.BackpressureMode.DROP).delay(delayTime, TimeUnit.SECONDS);
-    }
-
-    public Observable<Object> EnsuringMerkleReceiptIsValid() {
-        return Observable.create(emitter -> {
-            emitter.onNext("");
-        }, Emitter.BackpressureMode.DROP).delay(delayTime, TimeUnit.SECONDS);
-    }
-
-    public Observable<Object> ComparingExpectedMerkleRootWithValueOnTheBlockchain() {
-        return Observable.create(emitter -> {
-            emitter.onNext("");
-        }, Emitter.BackpressureMode.DROP).delay(delayTime, TimeUnit.SECONDS);
-
-    }
-
-    public Observable<Object> ValidatingIssuerIdentity() {
-        return Observable.create(emitter -> {
-            emitter.onNext("");
-        }, Emitter.BackpressureMode.DROP).delay(delayTime, TimeUnit.SECONDS);
-    }
-
-    public Observable<Object> CheckingIfTheCredentialHasBeenRevoked() {
-        return Observable.create(emitter -> {
-            emitter.onNext("");
-        }, Emitter.BackpressureMode.DROP).delay(delayTime, TimeUnit.SECONDS);
-    }
-
-    public Observable<Object> CheckingExpirationDate() {
-        return Observable.create(emitter -> {
-            emitter.onNext("");
-        }, Emitter.BackpressureMode.DROP).delay(delayTime, TimeUnit.SECONDS);
     }
 
 }

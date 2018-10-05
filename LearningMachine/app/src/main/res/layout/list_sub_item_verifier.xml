@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/sub_item_mark"
+        android:layout_width="6dp"
+        android:layout_height="6dp"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="3dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/verification_sub_item_dot"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/verifier_sub_item_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        style="@style/Text.VerifierSubItem"
+        tools:text="sub item"
+        app:layout_constraintStart_toEndOf="@id/sub_item_mark"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/sub_item_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/ic_verification_status_sub_item_error"
+        app:layout_constraintTop_toTopOf="@id/verifier_sub_item_title"
+        app:layout_constraintBottom_toBottomOf="@id/verifier_sub_item_title"
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/verifier_sub_item_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="4dp"
+        android:paddingEnd="32dp"
+        android:paddingStart="50dp"
+        android:textColor="@color/c9"
+        android:fontFamily="@font/opensans_reg"
+        android:textSize="@dimen/material_sub_title_text_size"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/verifier_sub_item_title"
+        tools:text="Mussum Ipsum, cacilds vidis litro abertis. Cevadis im ampola pa arma uma pindureta. Atirei o pau no gatis, per gatis num morreus. Suco de cevadiss, é um leite divinis, qui tem lupuliz, matis, aguis e fermentis. A ordem dos tratores não altera o pão duris." />
+
+</android.support.constraint.ConstraintLayout>

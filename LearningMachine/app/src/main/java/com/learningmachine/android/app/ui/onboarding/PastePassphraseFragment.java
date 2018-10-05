@@ -1,12 +1,10 @@
 package com.learningmachine.android.app.ui.onboarding;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.text.Editable;
@@ -17,63 +15,25 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.bitcoin.BitcoinManager;
 import com.learningmachine.android.app.data.inject.Injector;
-import com.learningmachine.android.app.data.preferences.SharedPreferencesManager;
 import com.learningmachine.android.app.databinding.FragmentPastePassphraseBinding;
 import com.learningmachine.android.app.ui.LMActivity;
 import com.learningmachine.android.app.ui.home.HomeActivity;
 import com.learningmachine.android.app.util.DialogUtils;
 import com.learningmachine.android.app.util.StringUtils;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 import javax.inject.Inject;
+
+import timber.log.Timber;
 
 public class PastePassphraseFragment extends OnboardingFragment {
 
     @Inject protected BitcoinManager mBitcoinManager;
 
     private FragmentPastePassphraseBinding mBinding;
-
-    private Timer countingTimer;
-    private int countingSeconds = 1;
-
-    public void startCountingTimer() {
-        if(countingTimer != null) {
-            return;
-        }
-
-        TimerTask timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                Activity activity = getActivity();
-                if(activity != null) {
-                    activity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            mBinding.passphraseLabel.setText(getResources().getString(R.string.onboarding_paste_passphrase_load_1) + " " + countingSeconds + "s");
-                            countingSeconds++;
-                        }
-                    });
-                }
-            }
-        };
-
-        countingTimer = new Timer();
-        countingTimer.scheduleAtFixedRate(timerTask, 0, 1000);
-    }
-
-    public void stopCountingTimer() {
-        countingTimer.cancel();
-        countingTimer = null;
-    }
-
 
     public static PastePassphraseFragment newInstance() {
         return new PastePassphraseFragment();
@@ -90,14 +50,11 @@ public class PastePassphraseFragment extends OnboardingFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_paste_passphrase, container, false);
 
-        mBinding.passphraseLabel.setText(R.string.onboarding_paste_passphrase_load_0);
-
         ((LMActivity)getActivity()).askToGetPassphraseFromDevice((passphrase) -> {
             if (passphrase != null) {
                 mBinding.pastePassphraseEditText.setText(passphrase.toString());
                 onDone();
             } else {
-                mBinding.passphraseLabel.setText(R.string.onboarding_paste_passphrase_load_2);
                 mBinding.passphraseLabel.requestFocus();
             }
             return null;
@@ -115,7 +72,6 @@ public class PastePassphraseFragment extends OnboardingFragment {
         });
 
         mBinding.pastePassphraseEditText.addTextChangedListener(new PastePassphraseTextWatcher());
-        mBinding.doneButton.setAlpha(0.3f);
         mBinding.doneButton.setEnabled(false);
         mBinding.doneButton.setOnClickListener(view -> onDone());
 
@@ -124,13 +80,10 @@ public class PastePassphraseFragment extends OnboardingFragment {
 
 
     private void onDone() {
-
+        displayProgressDialog(R.string.onboarding_passphrase_loading);
         String passphrase = mBinding.pastePassphraseEditText.getText().toString();
         Activity activity = getActivity();
 
-        startCountingTimer();
-
-        mBinding.doneButton.setAlpha(0.3f);
         mBinding.doneButton.setEnabled(false);
         mBinding.pastePassphraseEditText.setEnabled(false);
 
@@ -140,8 +93,6 @@ public class PastePassphraseFragment extends OnboardingFragment {
                 mBitcoinManager.setPassphrase(passphrase)
                         .compose(bindToMainThread())
                         .subscribe(wallet -> {
-
-                            stopCountingTimer();
 
                             if(isVisible()) {
 
@@ -165,7 +116,12 @@ public class PastePassphraseFragment extends OnboardingFragment {
                                     }
                                 });
                             }
-                        }, e -> displayErrorsLocal(e, DialogUtils.ErrorCategory.GENERIC, R.string.error_title_message));
+                            hideProgressDialog();
+                        }, e -> {
+                            Timber.e(e, "Could not set passphrase.");
+                            hideProgressDialog();
+                            displayErrorsLocal(e, DialogUtils.ErrorCategory.GENERIC, R.string.error_title_message);
+                        });
             }
         });
     }
@@ -192,18 +148,15 @@ public class PastePassphraseFragment extends OnboardingFragment {
     }
 
     protected void displayErrorsLocal(Throwable throwable, DialogUtils.ErrorCategory errorCategory, @StringRes int errorTitleResId) {
-        stopCountingTimer();
-
-        mBinding.passphraseLabel.setText(R.string.onboarding_paste_passphrase_load_2);
         mBinding.pastePassphraseEditText.setEnabled(true);
         mBinding.pastePassphraseEditText.setText("");
 
         DialogUtils.showAlertDialog(getContext(), this,
                 R.drawable.ic_dialog_failure,
-                getResources().getString(R.string.cert_passphrase_invalid_title),
-                getResources().getString(R.string.cert_passphrase_invalid_desc),
+                getResources().getString(R.string.onboarding_passphrase_invalid_title),
+                getResources().getString(R.string.onboarding_passphrase_invalid_desc),
                 null,
-                getResources().getString(R.string.onboarding_passphrase_ok),
+                getResources().getString(R.string.ok_button),
                 (btnIdx) -> {
                     return null;
                 });
@@ -225,11 +178,6 @@ public class PastePassphraseFragment extends OnboardingFragment {
                     .toString();
             boolean emptyPassphrase = StringUtils.isEmpty(passphrase);
             mBinding.doneButton.setEnabled(!emptyPassphrase);
-            if (mBinding.doneButton.isEnabled()) {
-                mBinding.doneButton.setAlpha(1.0f);
-            } else {
-                mBinding.doneButton.setAlpha(0.3f);
-            }
         }
     }
 }

@@ -55,22 +55,38 @@ public class CertificateHeaderViewHolder extends RecyclerView.ViewHolder impleme
             String uuid = issuer.getUuid();
             File file = ImageUtils.getImageFile(mContext, uuid);
 
-            Picasso.with(mContext).load(file).fetch(new Callback() {
-                @Override
-                public void onSuccess() {
+            if(file != null) {
+                Picasso.with(mContext).load(file).fetch(new Callback() {
+                    @Override
+                    public void onSuccess() {
 
-                    Picasso.with(mContext).load(file).into(mBinding.imageView);
-                    Bitmap bitmap = ((BitmapDrawable)mBinding.imageView.getDrawable()).getBitmap();
+                        Picasso.with(mContext).load(file).into(mBinding.imageView, new com.squareup.picasso.Callback() {
+                            @Override
+                            public void onSuccess() {
+                                //do smth when picture is loaded successfully
+                                BitmapDrawable drawable = (BitmapDrawable) mBinding.imageView.getDrawable();
+                                if (drawable != null) {
+                                    Bitmap bitmap = drawable.getBitmap();
+                                    int pixel = bitmap.getPixel(bitmap.getWidth() - 1, 0);
+                                    if (!ImageUtils.hasTransparentPixel(bitmap)) {
+                                        mBinding.imageView.setBackgroundColor(pixel);
+                                    }
+                                }
+                            }
 
-                    int pixel = bitmap.getPixel(bitmap.getWidth()-1,0);
-                    mBinding.imageView.setBackgroundColor(pixel);
-                }
+                            @Override
+                            public void onError() {
+                                //do smth when there is picture loading error
+                            }
+                        });
+                    }
 
-                @Override
-                public void onError() {
+                    @Override
+                    public void onError() {
 
-                }
-            });
+                    }
+                });
+            }
 
         }
     }

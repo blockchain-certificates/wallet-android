@@ -18,84 +18,10 @@
             android:id="@+id/web_view"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/guideline2"
+            app:layout_constraintBottom_toTopOf="@+id/cert_bottom_navigation"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <android.support.constraint.Guideline
-            android:id="@+id/guideline2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_end="128dp" />
-
-        <View
-            android:id="@+id/bottomBackground"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="@color/off_white_background"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/guideline2" />
-
-
-        <Button
-            android:id="@+id/share_button"
-            style="@style/RoundedButton.Dark"
-            android:layout_width="0dp"
-            android:layout_height="52dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginStart="20dp"
-            app:layout_constraintBottom_toTopOf="@+id/verify_button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/bottomBackground" />
-
-        <ImageView
-            android:id="@+id/share_button_icon"
-            android:layout_width="0dp"
-            android:layout_height="25dp"
-            android:layout_marginBottom="13dp"
-            android:layout_marginTop="13dp"
-            android:layout_marginRight="13dp"
-            android:src="@drawable/ic_share"
-            android:scaleType="fitEnd"
-            android:clickable="false"
-            app:layout_constraintBottom_toBottomOf="@+id/share_button"
-            app:layout_constraintLeft_toLeftOf="@+id/share_button"
-            app:layout_constraintRight_toLeftOf="@+id/share_button_title"
-            app:layout_constraintTop_toTopOf="@+id/share_button" />
-
-        <TextView
-            android:id="@+id/share_button_title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/certificate_share_button"
-            android:textAlignment="viewStart"
-            style="@style/ButtonTitleWhite"
-            android:clickable="false"
-            app:layout_constraintBottom_toBottomOf="@+id/share_button"
-            app:layout_constraintLeft_toRightOf="@+id/share_button_icon"
-            app:layout_constraintRight_toRightOf="@+id/share_button"
-            app:layout_constraintTop_toTopOf="@+id/share_button" />
-
-
-        <Button
-            android:id="@+id/verify_button"
-            style="@style/RoundedButton.NoBorder"
-            android:layout_width="0dp"
-            android:layout_height="52dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginStart="20dp"
-            android:text="@string/certificate_verify_button"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/share_button" />
 
 
         <com.learningmachine.android.app.ui.LMProgressView
@@ -107,6 +33,24 @@
             app:layout_constraintLeft_toLeftOf="@+id/web_view"
             app:layout_constraintRight_toRightOf="@+id/web_view"
             app:layout_constraintTop_toTopOf="@+id/web_view" />
+
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/cert_bottom_navigation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:itemIconTint="@color/colorCertificateMenuItem"
+            app:menu="@menu/fragment_certificate_menu"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0.5dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/cert_bottom_navigation"
+            android:background="@color/colorDivider"/>
 
 
     </android.support.constraint.ConstraintLayout>

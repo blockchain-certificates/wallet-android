@@ -30,6 +30,8 @@ import java.io.InputStreamReader;
 
 import javax.inject.Inject;
 
+import timber.log.Timber;
+
 
 public class SettingsFragment extends LMFragment {
 
@@ -56,6 +58,7 @@ public class SettingsFragment extends LMFragment {
                 false);
 
         binding.settingsRevealPassphraseTextView.setOnClickListener(v -> {
+            Timber.i("My passphrase tapped in settings");
             Intent intent = RevealPassphraseActivity.newIntent(getContext());
             startActivity(intent);
         });
@@ -63,12 +66,13 @@ public class SettingsFragment extends LMFragment {
         setupReplacePassphrase(binding);
 
         binding.settingsAddIssuerTextView.setOnClickListener(v -> {
+            Timber.i("Add Issuer tapped in settings");
             Intent intent = AddIssuerActivity.newIntent(getContext());
             startActivity(intent);
         });
 
         binding.settingsAddCredentialTextView.setOnClickListener(v -> {
-
+            Timber.i("Add Credential tapped in settings");
             DialogUtils.showCustomSheet(getContext(), this,
                     R.layout.dialog_add_by_file_or_url,
                     0,
@@ -77,6 +81,11 @@ public class SettingsFragment extends LMFragment {
                     "",
                     "",
                     (btnIdx) -> {
+                        if ((int)btnIdx == 0) {
+                            Timber.i("Add Credential from URL tapped in settings");
+                        } else {
+                            Timber.i("User has chosen to add a certificate from file");
+                        }
                         Intent intent = AddCertificateActivity.newIntent(getContext(), (int)btnIdx, null);
                         startActivity(intent);
                         return null;
@@ -88,6 +97,7 @@ public class SettingsFragment extends LMFragment {
         });
 
         binding.settingsEmailLogsTextView.setOnClickListener(v -> {
+            Timber.i("Share device logs");
             String emailData = FileLoggingTree.logAsString();
 
             //send file using email
@@ -103,6 +113,7 @@ public class SettingsFragment extends LMFragment {
         });
 
         binding.settingsAboutPassphraseTextView.setOnClickListener(v -> {
+            Timber.i("About passphrase tapped in settings");
             String actionBarTitle = getString(R.string.about_passphrases_title);
             String endPoint = getString(R.string.about_passphrases_endpoint);
             Intent intent = LMWebActivity.newIntent(getContext(), actionBarTitle, endPoint);
@@ -110,6 +121,7 @@ public class SettingsFragment extends LMFragment {
         });
 
         binding.settingsPrivacyPolicyTextView.setOnClickListener(v -> {
+            Timber.i("Privacy statement tapped in settings");
             String actionBarTitle = getString(R.string.settings_privacy_policy);
             String endPoint = getString(R.string.settings_privacy_policy_endpoint);
             Intent intent = LMWebActivity.newIntent(getContext(), actionBarTitle, endPoint);
@@ -117,6 +129,12 @@ public class SettingsFragment extends LMFragment {
         });
 
         return binding.getRoot();
+    }
+
+    @Override
+    public void onStop() {
+        Timber.i("Dismissing the settings screen");
+        super.onStop();
     }
 
     private void setupReplacePassphrase(FragmentSettingsBinding binding) {

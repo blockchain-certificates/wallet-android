@@ -74,6 +74,7 @@ public class CertificateStore implements DataStore {
         String certDescription = blockCert.getCertDescription();
         String issueDate = blockCert.getIssueDate();
         String metadata = blockCert.getMetadata();
+        String expirationDate = blockCert.getExpirationDate();
 
         ContentValues contentValues = new ContentValues();
 
@@ -83,6 +84,7 @@ public class CertificateStore implements DataStore {
         contentValues.put(LMDatabaseHelper.Column.Certificate.ISSUER_UUID, issuerId);
         contentValues.put(LMDatabaseHelper.Column.Certificate.ISSUE_DATE, issueDate);
         contentValues.put(LMDatabaseHelper.Column.Certificate.URL, urlString);
+        contentValues.put(LMDatabaseHelper.Column.Certificate.EXPIRATION_DATE, expirationDate);
         contentValues.put(LMDatabaseHelper.Column.Certificate.METADATA, metadata);
 
         if (loadCertificate(certUid) == null) {

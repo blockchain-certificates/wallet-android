@@ -1,23 +1,22 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion '26.0.2'
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
     dexOptions {
-        incremental true
         javaMaxHeapSize "4g"
     }
     defaultConfig {
         applicationId "com.learningmachine.android.app"
         minSdkVersion 19
-        targetSdkVersion 25
-        versionName "3.0.5"
+        targetSdkVersion 26
+        versionName "3.0.4"
         def buildNumber = System.getenv("BUILD_NUMBER")
         if (buildNumber != null) {
             versionCode buildNumber.toInteger()
             versionNameSuffix "-" + buildNumber
         } else {
-            versionCode 23
+            versionCode 29
         }
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -94,22 +93,25 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.LearningMachineRelease
         }
-
         debug {
             if (System.getenv("BUILD_NUMBER") == null) {
                 versionNameSuffix "-debug"
             }
             buildConfigField "boolean", "DEBUG_BUILD", "true"
-
+            debuggable true
         }
     }
 
     dataBinding {
         enabled = true
     }
+
+    lintOptions {
+        abortOnError false
+    }
 }
 
-final SUPPORT_VERSION = '27.0.2'
+final SUPPORT_VERSION = '27.1.1'
 final MULTIDEX_VERSION = '1.0.1'
 final DAGGER_VERSION = '2.11'
 final SLF4J_VERSION = '1.7.25'
@@ -158,6 +160,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "com.android.support:appcompat-v7:$SUPPORT_VERSION"
     implementation "com.android.support:recyclerview-v7:$SUPPORT_VERSION"
+    implementation "com.android.support:cardview-v7:$SUPPORT_VERSION"
     implementation "com.android.support:design:$SUPPORT_VERSION"
     implementation "com.android.support:multidex:$MULTIDEX_VERSION"
     implementation "org.slf4j:slf4j-log4j12:$SLF4J_VERSION"
@@ -179,8 +182,10 @@ dependencies {
     implementation "nl.littlerobots.rxlint:rxlint:$RXLINT_VERSION"
     implementation "com.squareup.picasso:picasso:$PICASSO_VERSION"
     implementation "com.google.guava:guava:$GUAVA_VERSION"
+    implementation 'com.bugsee:bugsee-android:1.12.3'
 
-    compile 'com.google.android.exoplayer:exoplayer:2.7.0'
+    implementation 'com.google.android.exoplayer:exoplayer:2.8.4'
+
 
     androidTestImplementation("com.android.support.test.espresso:espresso-core:$ESPRESSO_VERSION", {
         exclude group: 'com.android.support', module: 'support-annotations'

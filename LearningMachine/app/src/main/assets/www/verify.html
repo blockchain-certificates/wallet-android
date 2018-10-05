@@ -1,13 +1,12 @@
 <html>
 	<head>
+		<meta charset="UTF-8">
 		<script src="./verifier.js"></script>
 	</head>
 
 	<body>
-		<div id="output" />
-		
-		<script>
-			function loadJSON(url, callback) {   
+    <script>
+			function loadJSON(url, callback) {
 				var xobj = new XMLHttpRequest();
 				xobj.overrideMimeType("text/plain");
 				xobj.open('GET', url, true);
@@ -16,19 +15,20 @@
 						  callback(xobj.responseText);
 				      }
 				};
-				xobj.send(null);  
+				xobj.send(null);
 			}
-		
+
 			function statusCallback(arg1) {
-				const output = document.getElementById('output')
-				console.log(arg1)
-				output.innerHTML = output.innerHTML + arg1 + "<br>"
+				Android.notifyStatusChanged(JSON.stringify(arg1))
 			}
-			
+
 			loadJSON("./certificate.json", function(certificateContentsString) {
-				v = new Verifier.CertificateVerifier(certificateContentsString, statusCallback)
-				v.verify()
-			});
+                var certificate = new Verifier.Certificate(certificateContentsString, { locale: 'auto' })
+                Android.notifyChainName(certificate.chain.name)
+                var verificationSteps = certificate.verificationSteps
+                Android.notifyVerificationSteps(JSON.stringify(verificationSteps))
+                certificate.verify(statusCallback)
+            });
 		</script>
-	</body>
+    </body>
 </html>

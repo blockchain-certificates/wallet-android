@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
 
     <android.support.constraint.ConstraintLayout
@@ -17,7 +18,7 @@
             android:layout_marginBottom="8dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
-            android:text="My Passphrase"
+            android:text="@string/settings_reveal_passphrase"
             android:textAlignment="center"
             app:layout_constraintBottom_toTopOf="@+id/onboarding_passphrase_content"
             app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +37,7 @@
             android:layout_weight="1"
             android:gravity="left"
             android:padding="16dp"
-            android:text=" "
+            tools:text=" "
             app:layout_constraintBottom_toTopOf="@+id/onboarding_save_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -63,6 +64,7 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:src="@drawable/ic_checkmark"
+            android:importantForAccessibility="no"
             app:layout_constraintBottom_toBottomOf="@+id/onboarding_save_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.9"
@@ -90,6 +92,7 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:src="@drawable/ic_checkmark"
+            android:importantForAccessibility="no"
             app:layout_constraintBottom_toBottomOf="@+id/onboarding_email_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.9"
@@ -111,48 +114,5 @@
             app:layout_constraintTop_toBottomOf="@+id/onboarding_email_button" />
 
     </android.support.constraint.ConstraintLayout>
-
-
-
-
-
-    <!--
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/off_white_background"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/fragment_reveal_passphrase_instructional_message_margin"
-            android:text="@string/reveal_passphrase_instructional_message"
-            style="@style/Material.Light.Body1"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:orientation="vertical"
-            android:padding="@dimen/fragment_reveal_passphrase_current_container_padding">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/fragment_reveal_passphrase_current_passphrase_title_bottom_margin"
-                android:text="@string/reveal_passphrase_current_title"
-                style="@style/Material.Light.Subhead.Secondary"/>
-
-            <TextView
-                android:id="@+id/current_passphrase_text_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textIsSelectable="true"
-                style="@style/Material.Light.Body1"/>
-
-        </LinearLayout>
-
-    </LinearLayout>-->
 
 </layout>
