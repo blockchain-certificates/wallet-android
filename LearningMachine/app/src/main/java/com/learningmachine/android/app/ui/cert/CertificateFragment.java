@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.internal.BottomNavigationMenuView;
 import android.support.v4.content.FileProvider;
+import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Pair;
 import android.util.TypedValue;
@@ -159,8 +160,7 @@ public class CertificateFragment extends LMFragment {
         String customCss = "body {padding: 20px; font-size: 12px; line-height: 1.5;} body > section { padding: 0;} body section { max-width: 100%; } body img { max-width: 100%; height: auto; width: inherit; }";
         String wrappedHtml = String.format("<!doctype html><html class=\"no-js\" lang=\"\"><head><meta charset=\"utf-8\"><meta http-equiv=\"x-ua-compatible\" content=\"ie=edge\"><title></title><meta content=\"width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0\" name=\"viewport\" /><meta name=”viewport” content=”width=device-width” /><style type=\"text/css\">%s</style><style type=\"text/css\">%s</style></head><body>%s</body></html>", normalizeCss, customCss, displayHTML);
 
-        // google 72 does not allow '#' and requires replacing with %23
-        return wrappedHtml.replaceAll("#","%23");
+        return wrappedHtml;
     }
 
     private void setupWebView() {
@@ -173,7 +173,8 @@ public class CertificateFragment extends LMFragment {
                 .subscribe(certificate -> {
 
                     String html = displayHTML(certificate);
-                    mBinding.webView.loadData(html, "text/html; charset=UTF-8", null);
+                    String encodedHtml = Base64.encodeToString(html.getBytes(), Base64.NO_PADDING);
+                    mBinding.webView.loadData(encodedHtml, "text/html; charset=UTF-8", "base64");
 
                 }, throwable -> {
                     Timber.e(throwable, "Could not setup webview.");
