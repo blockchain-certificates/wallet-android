@@ -40,7 +40,14 @@ public class LMApplication extends MultiDexApplication {
         setupJodaTime();
         enableWebDebugging();
         setupMnemonicCode();
+        setupBugsee();
         Timber.i("Application was launched!");
+    }
+
+    private void setupBugsee() {
+        if (BuildConfig.BUILD_TYPE.equals("qa")) {
+            Bugsee.launch(this, BuildConfig.BUGSEE_KEY);
+        }
     }
 
     @Override
