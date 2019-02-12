@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 27
-    buildToolsVersion '27.0.3'
     dexOptions {
         javaMaxHeapSize "4g"
     }
@@ -10,13 +9,13 @@ android {
         applicationId "com.learningmachine.android.app"
         minSdkVersion 19
         targetSdkVersion 26
-        versionName "3.0.5"
+        versionName "3.0.4"
         def buildNumber = System.getenv("BUILD_NUMBER")
         if (buildNumber != null) {
             versionCode buildNumber.toInteger()
             versionNameSuffix "-" + buildNumber
         } else {
-            versionCode 23
+            versionCode 29
         }
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -192,7 +191,7 @@ dependencies {
     implementation "nl.littlerobots.rxlint:rxlint:$RXLINT_VERSION"
     implementation "com.squareup.picasso:picasso:$PICASSO_VERSION"
     implementation "com.google.guava:guava:$GUAVA_VERSION"
-    implementation 'com.bugsee:bugsee-android:1.12.3'
+    implementation 'com.bugsee:bugsee-android:1.13.8'
 
     implementation 'com.google.android.exoplayer:exoplayer:2.8.4'
 
