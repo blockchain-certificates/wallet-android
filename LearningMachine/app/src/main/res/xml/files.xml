@@ -3,4 +3,7 @@
     <files-path
         name="cert_files"
         path="./certs/"/>
+    <files-path
+        name="log_files"
+        path="./logs/"/>
 </paths>

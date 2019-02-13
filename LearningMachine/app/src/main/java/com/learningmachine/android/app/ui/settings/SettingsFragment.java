@@ -2,9 +2,11 @@ package com.learningmachine.android.app.ui.settings;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
+import android.support.v4.content.FileProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,7 @@ import com.learningmachine.android.app.ui.onboarding.OnboardingActivity;
 import com.learningmachine.android.app.ui.settings.passphrase.RevealPassphraseActivity;
 import com.learningmachine.android.app.util.DialogUtils;
 import com.learningmachine.android.app.util.FileLoggingTree;
+import com.learningmachine.android.app.util.FileUtils;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -98,14 +101,26 @@ public class SettingsFragment extends LMFragment {
 
         binding.settingsEmailLogsTextView.setOnClickListener(v -> {
             Timber.i("Share device logs");
-            String emailData = FileLoggingTree.logAsString();
+            FileLoggingTree.saveLogToFile(getContext());
+
+            File file = FileUtils.getLogsFile(getContext(), false);
+
+            Uri fileUri = FileProvider.getUriForFile(
+                    getContext(),
+                    "com.learningmachine.android.app.fileprovider",
+                    file);
+
 
             //send file using email
             Intent emailIntent = new Intent(Intent.ACTION_SEND);
             String to[] = {"techsupport@learningmachine.com"};
             emailIntent .putExtra(Intent.EXTRA_EMAIL, to);
             // the attachment
-            emailIntent .putExtra(Intent.EXTRA_TEXT, emailData);
+            String type = getContext().getContentResolver()
+                    .getType(fileUri);
+            emailIntent.setType(type);
+            emailIntent.putExtra(Intent.EXTRA_STREAM, fileUri);
+            emailIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             // the mail subject
             emailIntent .putExtra(Intent.EXTRA_SUBJECT, "Logcat content for Blockcerts");
             emailIntent.setType("message/rfc822");

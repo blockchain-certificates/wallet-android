@@ -130,7 +130,9 @@ public class AddIssuerFragment extends LMIssuerBaseFragment {
     }
 
     private void enableImportButton(boolean enable) {
-        mBinding.importButton.setEnabled(enable);
+        if (getActivity() != null && !getActivity().isFinishing()) {
+            getActivity().runOnUiThread(() -> mBinding.importButton.setEnabled(enable));
+        }
     }
 
     private void didAddIssuer(String uuid) {
