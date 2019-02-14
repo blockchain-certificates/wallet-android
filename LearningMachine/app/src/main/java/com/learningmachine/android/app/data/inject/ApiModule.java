@@ -7,9 +7,7 @@ import com.learningmachine.android.app.data.webservice.CertificateService;
 import com.learningmachine.android.app.data.webservice.IssuerService;
 import com.learningmachine.android.app.data.webservice.VersionService;
 
-import org.apache.commonscopy.io.IOUtils;
-
-import java.io.StringWriter;
+import java.nio.charset.Charset;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -20,7 +18,9 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 import okio.Buffer;
+import okio.BufferedSource;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -49,13 +49,15 @@ public class ApiModule {
             Response response = chain.proceed(request);
             Timber.d(String.format("response: %s", response.toString()));
             if (response.body() != null) {
-                StringWriter writer = new StringWriter();
-                IOUtils.copy(response.body().byteStream(), writer, "UTF-8");
-                String responseBody = writer.toString();
-                Timber.d(String.format("response body: %s", responseBody));
+                ResponseBody responseBody = response.body();
+                BufferedSource source = responseBody.source();
+                source.request(Long.MAX_VALUE);
+                Buffer buffer = source.buffer();
+                String responseBodyString = buffer.clone().readString(Charset.forName("UTF-8"));
+                Timber.d(String.format("response body: %s", responseBodyString));
             }
 
-            return chain.proceed(request);
+            return response;
         };
     }
 
