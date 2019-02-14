@@ -177,6 +177,7 @@ public class LMFragment extends Fragment implements LifecycleProvider<FragmentEv
     }
 
     protected void checkVersion(OnVersionChecked onVersionChecked) {
+        Timber.i("Checking app version");
         if (mVersionService == null) {
             if (onVersionChecked != null) {
                 onVersionChecked.needsUpdate(false);

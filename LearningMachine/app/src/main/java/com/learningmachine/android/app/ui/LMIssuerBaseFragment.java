@@ -72,6 +72,7 @@ public abstract class LMIssuerBaseFragment extends LMFragment {
     }
 
     protected void startIssuerIntroduction() {
+        Timber.i("Starting Issuer Introduction");
         displayProgressDialog(R.string.fragment_add_issuer_adding_issuer_progress_dialog_message);
         checkVersion(updateNeeded -> {
             if (updateNeeded) {
@@ -113,6 +114,7 @@ public abstract class LMIssuerBaseFragment extends LMFragment {
     }
 
     private void performStandardIssuerIntroduction(IssuerIntroductionRequest request) {
+        Timber.i("Performing Standard Issuer Introduction");
         mIssuerManager.addIssuer(request)
                 .compose(bindToMainThread())
                 .subscribe(this::addIssuerOnIssuerAdded,
@@ -130,9 +132,11 @@ public abstract class LMIssuerBaseFragment extends LMFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_WEB_AUTH) {
             if (!WebAuthActivity.isWebAuthSuccess(data) || resultCode != Activity.RESULT_OK) {
+                Timber.i("OAuth authentication failure");
                 return;
             }
             String bitcoinAddress = WebAuthActivity.getWebAuthBitcoinAddress(data);
+            Timber.i("Got result from OAuth. Fetching Issuer");
             mIssuerManager.fetchIssuer(mIntroUrl)
                     .doOnSubscribe(() -> displayProgressDialog(R.string.fragment_add_issuer_adding_issuer_progress_dialog_message))
                     .compose(bindToMainThread())
