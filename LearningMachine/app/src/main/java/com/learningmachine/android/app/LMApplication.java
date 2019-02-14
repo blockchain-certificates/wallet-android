@@ -1,6 +1,9 @@
 package com.learningmachine.android.app;
 
+import android.content.Context;
 import android.content.pm.ApplicationInfo;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.multidex.MultiDexApplication;
@@ -17,6 +20,8 @@ import com.learningmachine.android.app.util.BitcoinUtils;
 import com.learningmachine.android.app.util.FileLoggingTree;
 
 import net.danlew.android.joda.JodaTimeAndroid;
+
+import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -42,6 +47,7 @@ public class LMApplication extends MultiDexApplication {
         setupMnemonicCode();
         setupBugsee();
         Timber.i("Application was launched!");
+        logDeviceInfo();
     }
 
     private void setupBugsee() {
@@ -66,6 +72,50 @@ public class LMApplication extends MultiDexApplication {
     private void setupTimber() {
         Timber.plant(mTree);
         Timber.plant(new FileLoggingTree());
+    }
+
+    private void logDeviceInfo() {
+        ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo wifiNetwork = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        NetworkInfo mobileNetwork = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+
+        String device = Build.DEVICE;
+        String display = Build.DISPLAY;
+        String fingerprint = Build.FINGERPRINT;
+        String hardware = Build.HARDWARE;
+        String host = Build.HOST;
+        String id = Build.ID;
+        String manufacturer = Build.MANUFACTURER;
+        String model = Build.MODEL;
+        String product = Build.PRODUCT;
+        int sdk = Build.VERSION.SDK_INT;
+        String codename = Build.VERSION.CODENAME;
+        String release = Build.VERSION.RELEASE;
+        String versionName = BuildConfig.VERSION_NAME;
+        int versionCode = BuildConfig.VERSION_CODE;
+        String displayCountry = Locale.getDefault().getDisplayCountry();
+        String displayLanguage = Locale.getDefault().getDisplayLanguage();
+        Timber.d(String.format(Locale.US, "Device Information:\n" +
+                "device: %s\n" +
+                "display: %s\n" +
+                "fingerprint: %s\n" +
+                "hardware: %s\n" +
+                "host: %s\n" +
+                "id: %s\n" +
+                "manufacturer: %s\n" +
+                "model: %s\n" +
+                "product: %s\n" +
+                "sdk: %d\n" +
+                "codename: %s\n" +
+                "release: %s\n" +
+                "app version name: %s\n" +
+                "app version code: %d\n" +
+                "wifi: %s\n" +
+                "mobile: %s\n" +
+                "country: %s\n" +
+                "language %s\n", device, display, fingerprint, hardware, host, id,
+                model, manufacturer, product, sdk, codename, release, versionName, versionCode,
+                wifiNetwork, mobileNetwork, displayCountry, displayLanguage));
     }
 
     protected void setupJodaTime() {
