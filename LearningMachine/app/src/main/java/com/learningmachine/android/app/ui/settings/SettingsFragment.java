@@ -113,8 +113,6 @@ public class SettingsFragment extends LMFragment {
 
             //send file using email
             Intent emailIntent = new Intent(Intent.ACTION_SEND);
-            String to[] = {"techsupport@learningmachine.com"};
-            emailIntent .putExtra(Intent.EXTRA_EMAIL, to);
             // the attachment
             String type = getContext().getContentResolver()
                     .getType(fileUri);
