@@ -17,6 +17,7 @@ import com.learningmachine.android.app.data.inject.LMGraph;
 import com.learningmachine.android.app.data.preferences.SharedPreferencesManager;
 import com.learningmachine.android.app.util.BitcoinUtils;
 import com.learningmachine.android.app.util.FileLoggingTree;
+import com.learningmachine.android.app.util.FileUtils;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
@@ -46,6 +47,7 @@ public class LMApplication extends MultiDexApplication {
         setupMnemonicCode();
         Timber.i("Application was launched!");
         logDeviceInfo();
+        checkLogFileValidity();
     }
 
     @Override
@@ -108,6 +110,18 @@ public class LMApplication extends MultiDexApplication {
                 "language %s\n", device, display, fingerprint, hardware, host, id,
                 model, manufacturer, product, sdk, codename, release, versionName, versionCode,
                 wifiNetwork, mobileNetwork, displayCountry, displayLanguage));
+    }
+
+    //Delete the logs file after 7 days
+    private void checkLogFileValidity() {
+        long sevenDays = 7 * 24 * 60 * 60 * 1000;
+        long lastLogTimestamp = mPreferencesManager.getLastLogDeletedTimestamp();
+        if (lastLogTimestamp == 0) {
+            mPreferencesManager.setLastLogDeletedTimestamp(System.currentTimeMillis());
+        } else if (System.currentTimeMillis() - lastLogTimestamp > sevenDays) {
+            FileUtils.deleteLogs(this);
+            mPreferencesManager.setLastLogDeletedTimestamp(System.currentTimeMillis());
+        }
     }
 
     protected void setupJodaTime() {

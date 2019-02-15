@@ -20,6 +20,8 @@ public class FileLoggingTree extends Timber.DebugTree {
     //TODO: call this function also before closing the app
     public static void saveLogToFile(Context context) {
         FileUtils.saveLogs(context, memoryLog);
+        //After save, clean memoryLog
+        memoryLog = new StringBuilder();
     }
 
     @Override

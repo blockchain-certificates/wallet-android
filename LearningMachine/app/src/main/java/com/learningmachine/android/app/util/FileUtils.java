@@ -45,6 +45,11 @@ public class FileUtils {
         return file.delete();
     }
 
+    public static boolean deleteLogs(Context context) {
+        File file = getLogsFile(context, false);
+        return file.delete();
+    }
+
     public static void renameCertificateFile(Context context, String oldName, String newName) {
         File oldFile = getCertificateFile(context, oldName);
         File newFile = getCertificateFile(context, newName);

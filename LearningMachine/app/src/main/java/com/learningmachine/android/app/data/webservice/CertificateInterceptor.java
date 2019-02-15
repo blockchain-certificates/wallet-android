@@ -43,6 +43,9 @@ public class CertificateInterceptor implements Interceptor {
             source.request(Long.MAX_VALUE);
             Buffer buffer = source.buffer();
             String responseBodyString = buffer.clone().readString(Charset.forName("UTF-8"));
+            if (responseBodyString.length() > 2000) {
+                responseBodyString = responseBodyString.substring(0, 2000);
+            }
             Timber.d(String.format("response body: %s", responseBodyString));
         }
 
