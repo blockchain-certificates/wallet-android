@@ -91,23 +91,13 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.LearningMachineRelease
-            buildConfigField "String", "BUGSEE_KEY", '""'
         }
         debug {
             if (System.getenv("BUILD_NUMBER") == null) {
                 versionNameSuffix "-debug"
             }
             buildConfigField "boolean", "DEBUG_BUILD", "true"
-            buildConfigField "String", "BUGSEE_KEY", '""'
             debuggable true
-        }
-        qa {
-            if (System.getenv("BUILD_NUMBER") == null) {
-                versionNameSuffix "-qa"
-            }
-            signingConfig signingConfigs.debug
-            debuggable true
-            buildConfigField "String", "BUGSEE_KEY", LMWALLET_BUGSEE_KEY
         }
     }
 
@@ -191,7 +181,6 @@ dependencies {
     implementation "nl.littlerobots.rxlint:rxlint:$RXLINT_VERSION"
     implementation "com.squareup.picasso:picasso:$PICASSO_VERSION"
     implementation "com.google.guava:guava:$GUAVA_VERSION"
-    implementation 'com.bugsee:bugsee-android:1.13.8'
 
     implementation 'com.google.android.exoplayer:exoplayer:2.8.4'
 
