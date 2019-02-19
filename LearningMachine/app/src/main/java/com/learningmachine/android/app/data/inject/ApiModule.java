@@ -5,6 +5,7 @@ import com.learningmachine.android.app.data.webservice.BlockchainService;
 import com.learningmachine.android.app.data.webservice.CertificateInterceptor;
 import com.learningmachine.android.app.data.webservice.CertificateService;
 import com.learningmachine.android.app.data.webservice.IssuerService;
+import com.learningmachine.android.app.data.webservice.LMGsonConverterFactory;
 import com.learningmachine.android.app.data.webservice.VersionService;
 
 import java.nio.charset.Charset;
@@ -75,7 +76,7 @@ public class ApiModule {
     Retrofit provideIssuerRetrofit(@Named("issuer") OkHttpClient okHttpClient) {
         return new Retrofit.Builder().baseUrl(LMConstants.BASE_URL)
                 .client(okHttpClient)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(LMGsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.createWithScheduler(Schedulers.io()))
                 .build();
     }
