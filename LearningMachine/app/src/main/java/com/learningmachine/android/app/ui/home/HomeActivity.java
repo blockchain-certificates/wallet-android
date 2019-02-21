@@ -3,9 +3,12 @@ package com.learningmachine.android.app.ui.home;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.ui.LMSingleFragmentActivity;
+import com.learningmachine.android.app.util.FileLoggingTree;
+import com.learningmachine.android.app.util.FileUtils;
 
 public class HomeActivity extends LMSingleFragmentActivity {
 
@@ -77,5 +80,11 @@ public class HomeActivity extends LMSingleFragmentActivity {
             getLastFragment().updateArgsCert(certUrl);
         }
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        FileLoggingTree.saveLogToFile(this);
+        super.onDestroy();
     }
 }

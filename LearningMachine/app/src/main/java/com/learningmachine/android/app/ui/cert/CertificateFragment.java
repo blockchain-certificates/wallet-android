@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.internal.BottomNavigationMenuView;
 import android.support.v4.content.FileProvider;
+import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Pair;
 import android.util.TypedValue;
@@ -15,6 +16,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.ConsoleMessage;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
@@ -172,7 +175,8 @@ public class CertificateFragment extends LMFragment {
                 .subscribe(certificate -> {
 
                     String html = displayHTML(certificate);
-                    mBinding.webView.loadData(html, "text/html; charset=UTF-8", null);
+                    String encodedHtml = Base64.encodeToString(html.getBytes(), Base64.NO_PADDING);
+                    mBinding.webView.loadData(encodedHtml, "text/html; charset=UTF-8", "base64");
 
                 }, throwable -> {
                     Timber.e(throwable, "Could not setup webview.");

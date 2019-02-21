@@ -126,11 +126,14 @@ public class AddIssuerFragment extends LMIssuerBaseFragment {
 
     @Override
     protected void addIssuerOnIssuerAdded(String uuid) {
+        Timber.i("Issuer Added withh uuid: " + uuid);
         didAddIssuer(uuid);
     }
 
     private void enableImportButton(boolean enable) {
-        mBinding.importButton.setEnabled(enable);
+        if (getActivity() != null && !getActivity().isFinishing()) {
+            getActivity().runOnUiThread(() -> mBinding.importButton.setEnabled(enable));
+        }
     }
 
     private void didAddIssuer(String uuid) {

@@ -311,6 +311,7 @@ public class HomeFragment extends LMIssuerBaseFragment {
 
     @Override
     protected void addIssuerOnIssuerAdded(String uuid) {
+        Timber.i("Issuer Added with uuid: " + uuid);
         hideProgressDialog();
         mIssuerManager.getIssuers()
                 .compose(bindToMainThread())

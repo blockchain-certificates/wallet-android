@@ -147,6 +147,7 @@ public class LMFragment extends Fragment implements LifecycleProvider<FragmentEv
 
 
     protected void displayErrors(Throwable throwable, DialogUtils.ErrorCategory errorCategory, @StringRes int errorTitleResId) {
+        Timber.e(throwable, "Displaying error");
         hideProgressDialog();
         DialogUtils.showErrorAlertDialog(getContext(), getFragmentManager(), errorTitleResId, throwable, errorCategory);
     }
@@ -176,6 +177,7 @@ public class LMFragment extends Fragment implements LifecycleProvider<FragmentEv
     }
 
     protected void checkVersion(OnVersionChecked onVersionChecked) {
+        Timber.i("Checking app version");
         if (mVersionService == null) {
             if (onVersionChecked != null) {
                 onVersionChecked.needsUpdate(false);

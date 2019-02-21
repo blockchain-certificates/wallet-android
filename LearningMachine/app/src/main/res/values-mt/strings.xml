@@ -158,7 +158,7 @@
 
 
     <!--Certificate error messages-->
-    <string name="cert_old_version_error">Dan il-kredenzjali għandu format skadut u ma jistax jintwera kif suppost. Jekk jogħġbok iċċekkja mal-emittent u erġa' pprova.</string>
+    <string name="cert_old_version_error">Dan il-kredenzjali għandu format skadut u ma jistax jintwera kif suppost. Jekk jogħġbok iċċekkja mal-emittent u erġa\' pprova.</string>
 
     <!-- vvv OLD vvv -->
 

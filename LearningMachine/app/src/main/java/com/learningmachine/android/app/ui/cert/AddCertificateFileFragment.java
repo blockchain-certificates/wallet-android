@@ -105,13 +105,15 @@ public class AddCertificateFileFragment extends LMFragment {
     };
 
     private void addCertificateFile() {
+        Timber.i("Adding certificate file");
         if (mSelectedFile == null) {
+            Timber.e("No file selected");
             return;
         }
         mCertificateManager.addCertificate(mSelectedFile)
                 .compose(bindToMainThread())
                 .subscribe(uuid -> {
-                    Timber.d("Cert copied");
+                    Timber.d("Certificate copied");
                     hideProgressDialog();
                     Intent intent = CertificateActivity.newIntent(getContext(), uuid);
                     startActivity(intent);

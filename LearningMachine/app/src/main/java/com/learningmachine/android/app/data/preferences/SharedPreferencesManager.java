@@ -16,6 +16,8 @@ public class SharedPreferencesManager {
 
     private static final String DELAYED_CERTIFICATE_URL = "SharedPreferencesManager.DelayedCertificate.URL";
 
+    private static final String PREF_LAST_LOG_DELETED_TIMESTAMP = "SharedPreferencesManager.Logs.LogsDeletedTimestamp";
+
     private SharedPreferences mPrefs;
 
     public SharedPreferencesManager(Context context) {
@@ -89,5 +91,15 @@ public class SharedPreferencesManager {
         mPrefs.edit()
                 .putString(PREF_LEGACY_RECEIVE_ADDRESS, receiveAddress)
                 .apply();
+    }
+
+    public void setLastLogDeletedTimestamp(long timestamp) {
+        mPrefs.edit()
+                .putLong(PREF_LAST_LOG_DELETED_TIMESTAMP, timestamp)
+                .apply();
+    }
+
+    public long getLastLogDeletedTimestamp() {
+        return mPrefs.getLong(PREF_LAST_LOG_DELETED_TIMESTAMP, 0);
     }
 }

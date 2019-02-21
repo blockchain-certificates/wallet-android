@@ -125,7 +125,7 @@ public class AddCertificateURLFragment extends LMFragment {
                     startActivity(intent);
                     getActivity().finish();
                 }, throwable -> {
-                    Timber.e("Failed to load certificate from " + url);
+                    Timber.e(throwable, "Failed to load certificate from " + url);
                     displayErrors(throwable, DialogUtils.ErrorCategory.CERTIFICATE, R.string.error_title_message);
                 });
     }

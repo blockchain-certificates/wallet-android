@@ -1,15 +1,27 @@
 package com.learningmachine.android.app.util;
 
 
+import android.content.Context;
 import android.util.Log;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 import timber.log.Timber;
 
 public class FileLoggingTree extends Timber.DebugTree {
 
     static StringBuilder memoryLog;
 
-    public static String logAsString() {
-        return memoryLog.toString();
+    //TODO: call this function also before closing the app
+    public static void saveLogToFile(Context context) {
+        FileUtils.saveLogs(context, memoryLog);
+        //After save, clean memoryLog
+        memoryLog = new StringBuilder();
     }
 
     @Override
@@ -22,7 +34,9 @@ public class FileLoggingTree extends Timber.DebugTree {
             memoryLog = new StringBuilder();
         }
 
-        String logMessage = tag + ": " + message;
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd HH:mm:ss", Locale.US);
+        String dateString = formatter.format(new java.util.Date());
+        String logMessage = "[" + dateString + "]" + tag + ": " + message;
         switch (priority) {
             case Log.DEBUG:
                 memoryLog.append(String.format("[d] %s\n", logMessage));

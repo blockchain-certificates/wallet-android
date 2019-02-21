@@ -5,6 +5,7 @@ import android.content.Context;
 import com.google.common.io.Files;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -20,11 +21,18 @@ import timber.log.Timber;
 public class FileUtils {
 
     private static final String CERT_DIR = "certs";
+    private static final String LOGS_DIR = "logs";
     private static final String JSON_EXT = ".json";
+    private static final String LOGS_FILE = "logs.txt";
 
     public static boolean saveCertificate(Context context, Buffer buffer, String uuid) {
         File file = getCertificateFile(context, uuid, true);
         return writeResponseBodyToDisk(file, buffer);
+    }
+
+    public static void saveLogs(Context context, StringBuilder buffer) {
+        File file = getLogsFile(context, true);
+        writeLogsToDisk(file, buffer);
     }
 
     public static boolean copyCertificateStream(Context context, InputStream inputStream, String uuid) {
@@ -34,6 +42,11 @@ public class FileUtils {
 
     public static boolean deleteCertificate(Context context, String uuid) {
         File file = getCertificateFile(context, uuid);
+        return file.delete();
+    }
+
+    public static boolean deleteLogs(Context context) {
+        File file = getLogsFile(context, false);
         return file.delete();
     }
 
@@ -80,6 +93,29 @@ public class FileUtils {
         } catch (IOException e) {
             Timber.e(e, "Unable to write ResponseBody to file");
             return false;
+        }
+    }
+
+    public static File getLogsFile(Context context, boolean createDir) {
+        File logsDir = getLogsDirectory(context, createDir);
+        return new File(logsDir, LOGS_FILE);
+    }
+
+    private static File getLogsDirectory(Context context, boolean createDir) {
+        File certDir = new File(context.getFilesDir(), LOGS_DIR);
+        if (createDir) {
+            certDir.mkdirs();
+        }
+        return certDir;
+    }
+
+    private static void writeLogsToDisk(File file, StringBuilder buffer) {
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
+            writer.write(buffer.toString());
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
