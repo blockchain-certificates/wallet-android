@@ -11,14 +11,15 @@ android:
   components:
     # Travis workaround for Android SDK 25 License
     # travis-ci/docs-travis-ci-com#779
-    - tools
+    - tools # Update 24.0.2 to 24.4.1
     - platform-tools
     # The BuildTools version used by your project
     - build-tools-28.0.3
     # The SDK version used to compile your project
     - android-27
     - android-28
-    - tools
+    - tools # Update SDK Tools to 25.2.5
+    - tools # Update SDK Tools to more current?
     # Additional components
     - extra-android-support
     - extra-google-m2repository
@@ -33,8 +34,8 @@ before_install:
     - git submodule update --init --recursive
     # Start the Android emulator https://docs.travis-ci.com/user/languages/android/#How-to-Create-and-Start-an-Emulator
     - echo 'count=0' > /home/travis/.android/repositories.cfg
-    - yes | sdkmanager "platforms;android-27"
-    - yes | sdkmanager --licenses
+    # - yes | sdkmanager "platforms;android-27"
+    # - yes | sdkmanager --licenses
     # - android list targets
     # - sdkmanager --help || true
     # - sdkmanager --verbose --list
