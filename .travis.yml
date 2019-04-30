@@ -2,22 +2,23 @@ dist: xenial
 language: android
 jdk:
   - oraclejdk8
-licenses:
-    - 'android-sdk-preview-license-.+'
-    - 'android-sdk-license-.+'
-    - 'google-gdk-license-.+'
+#  Accept all licenses
+# licenses:
+#     - 'android-sdk-preview-license-.+'
+#     - 'android-sdk-license-.+'
+#     - 'google-gdk-license-.+'
 android:
   components:
     # Travis workaround for Android SDK 25 License
     # travis-ci/docs-travis-ci-com#779
-    - tools
+    - tools # Update 24.0.2 to 24.4.1
     - platform-tools
-    - tools
     # The BuildTools version used by your project
-    - build-tools-27.0.3
+    - build-tools-28.0.3
     # The SDK version used to compile your project
-    # - android-25
     - android-27
+    - android-28
+    - tools # Update SDK Tools to 25.2.5
     # Additional components
     - extra-android-support
     - extra-google-m2repository
@@ -33,8 +34,10 @@ before_install:
     # Start the Android emulator https://docs.travis-ci.com/user/languages/android/#How-to-Create-and-Start-an-Emulator
     - echo 'count=0' > /home/travis/.android/repositories.cfg
     # - android list targets
-    # - sdkmanager --help || true
-    # - sdkmanager --verbose --list
+    - sdkmanager --help || true
+    - sdkmanager --verbose --list
+    - yes | sdkmanager "tools" # Update tools from 25.2.5 to current
+    - yes | sdkmanager --licenses
     # - echo no | android create avd --force -n test -t android-25 --abi armeabi-v7a
     # - emulator -avd test -no-audio -no-window &
     # - android-wait-for-emulator
