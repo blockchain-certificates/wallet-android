@@ -21,7 +21,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.mock;
 
 @RunWith(RobolectricTestRunner.class)
-@Config(constants = BuildConfig.class, sdk = 23)
+@Config(constants = BuildConfig.class, sdk = 27)
 public class InnerJoinTest {
 
     private IssuerStore mIssuerStore;
@@ -39,16 +39,18 @@ public class InnerJoinTest {
 
     @Test
     public void testIssuer_save_andLoad() throws Exception {
-        String issuerUuid = "https://www.learningmachine.com/sample-issuer/issuer.json";
-        String certsUrl = "https://www.learningmachine.com/sample-issuer";
-        String introUrl = "https://www.learningmachine.com/sample-issuer/intro/";
-        String name = "Sample Issuer";
-        String email = "sample-certificate@learningmachine.com";
+        String issuerUrl = "https://www.blockcerts.org/mockissuer/issuer/got-issuer.json";
+        String issuerUuid = "http://www.blockcerts.org/mockissuer/issuer/got-issuer.json";
+        String certsUrl = "http://www.blockcerts.org/mockissuer/certificates/";
+        String introUrl = "http://www.blockcerts.org/mockissuer/intro/";
+        String name = "Game of thrones issuer on testnet";
+        String email = "org@org.org";
         String introducedOn = "2017-05-11T18:28:27.415+00:00";
         String analytics = "https://www.learningmachine.com/analytics";
         String recipientPubKey = "aaaabbbbcccc";
 
-        IssuerRecord issuerOrig = new IssuerRecord(name, email, issuerUuid, certsUrl, introUrl, introducedOn, analytics, recipientPubKey);
+	//    public IssuerRecord(String name, String email, String issuerURL, String uuid, String certsUrl, String introUrl, String introducedOn, String analyticsUrlString, String recipientPubKey) 
+        IssuerRecord issuerOrig = new IssuerRecord(name, email, issuerUrl, issuerUuid, certsUrl, introUrl, introducedOn, analytics, recipientPubKey);
         issuerOrig.setRevocationKeys(new ArrayList<>());
         issuerOrig.setIssuerKeys(new ArrayList<>());
 

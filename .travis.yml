@@ -34,8 +34,8 @@ before_install:
     # Start the Android emulator https://docs.travis-ci.com/user/languages/android/#How-to-Create-and-Start-an-Emulator
     - echo 'count=0' > /home/travis/.android/repositories.cfg
     # - android list targets
-    - sdkmanager --help || true
-    - sdkmanager --verbose --list
+    # - sdkmanager --help || true
+    # - sdkmanager --verbose --list
     - yes | sdkmanager "tools" # Update tools from 25.2.5 to current
     - yes | sdkmanager --licenses
     # - echo no | android create avd --force -n test -t android-25 --abi armeabi-v7a
@@ -72,6 +72,7 @@ jobs:
           script:
             - pushd LearningMachine
             - ./gradlew clean testDevDebug -PdisablePreDex -PdevBuild --console=plain 
+
 
 # script:
 #     - ./scripts/build.sh

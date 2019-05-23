@@ -25,7 +25,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(RobolectricTestRunner.class)
-@Config(constants = BuildConfig.class, sdk = 23)
+@Config(constants = BuildConfig.class, sdk = 27)
 public class CertificateStoreTest {
 
     private CertificateStore mCertificateStore;
@@ -44,6 +44,8 @@ public class CertificateStoreTest {
         String name = "Sample Certificate 1";
         String description = "Welcome to the sample certificate!";
         String issuedDate = "2017-05-11T18:28:27.415+00:00";
+	// This file doesn't exists, but if it did, I suspect the source correctly spells the word
+	// "sample"
         String urlString = "https://certificates.learningmachine.com/certificate/sampelcertificate";
 
         BlockCert blockCert = BlockCertV12.createInstance(certUuid, issuerUuid, name, description, issuedDate, urlString);
