@@ -71,7 +71,8 @@ jobs:
           name: "Run Automated Tests: Master PR"
           script:
             - pushd LearningMachine
-            - ./gradlew clean testDevDebug -PdisablePreDex -PdevBuild --console=plain 
+            - ./gradlew clean testDevDebug -PdisablePreDex -PdevBuild --console=plain  --stacktrace
+
 
 # script:
 #     - ./scripts/build.sh
