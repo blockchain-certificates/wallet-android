@@ -72,7 +72,6 @@ jobs:
           script:
             - pushd LearningMachine
             - ./gradlew clean testDevDebug -PdisablePreDex -PdevBuild --console=plain 
-            - ./cat-results.sh
 
 
 # script:
