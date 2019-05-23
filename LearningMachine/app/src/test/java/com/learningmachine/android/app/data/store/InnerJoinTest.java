@@ -21,7 +21,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.mock;
 
 @RunWith(RobolectricTestRunner.class)
-@Config(constants = BuildConfig.class, sdk = 23)
+@Config(constants = BuildConfig.class, sdk = 27)
 public class InnerJoinTest {
 
     private IssuerStore mIssuerStore;
@@ -37,7 +37,6 @@ public class InnerJoinTest {
         mCertificateStore = new CertificateStore(database);
     }
 
-    /* This throws an unknown exception - 20190523
     @Test
     public void testIssuer_save_andLoad() throws Exception {
         String issuerUrl = "https://www.blockcerts.org/mockissuer/issuer/got-issuer.json";
@@ -77,6 +76,5 @@ public class InnerJoinTest {
         assertEquals(introUrl, issuerLoaded.getIntroUrl());
         assertEquals(introducedOn, issuerLoaded.getIntroducedOn());
     }
-    */
 
 }

@@ -134,7 +134,7 @@ final ESPRESSO_VERSION = '3.0.1'
 // test
 final JUNIT_VERSION = '4.12'
 final MOCKITO_VERSION = '2.2.11'
-final ROBOLECTRIC_VERSION = '3.3.2'
+final ROBOLECTRIC_VERSION = '3.8'
 final JODATIME_VERSION = '2.8.1'
 
 // These must be forced until everyone gets on the same page

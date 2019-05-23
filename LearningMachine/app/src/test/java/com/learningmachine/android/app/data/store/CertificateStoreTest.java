@@ -25,7 +25,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(RobolectricTestRunner.class)
-@Config(constants = BuildConfig.class, sdk = 23)
+@Config(constants = BuildConfig.class, sdk = 27)
 public class CertificateStoreTest {
 
     private CertificateStore mCertificateStore;
@@ -37,7 +37,6 @@ public class CertificateStoreTest {
         mCertificateStore = new CertificateStore(databaseHelper);
     }
 
-    /* Test fails.
     @Test
     public void testCertificate_save_andLoad() throws URISyntaxException {
         String certUuid = "certUuid";
@@ -87,5 +86,4 @@ public class CertificateStoreTest {
         assertNotNull("Should be able to load the certificate by UUID", certificateRecord);
         assertTrue(certificateRecord.urlStringContainsUrl());
     }
-    */
 }
