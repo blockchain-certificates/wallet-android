@@ -58,12 +58,12 @@ public class IssuerStoreTest {
         issuerOrig.setIssuerKeys(new ArrayList<>());
         mIssuerStore.saveIssuer(issuerOrig, recipientPubKey);
 
-        IssuerRecord issuerLoaded = mIssuerStore.loadIssuer(uuid);
+        IssuerRecord issuerLoaded = mIssuerStore.loadIssuer(IssuerUuid);
 
         assertNotNull(issuerLoaded);
         assertEquals(name, issuerLoaded.getName());
         assertEquals(email, issuerLoaded.getEmail());
-        assertEquals(uuid, issuerLoaded.getUuid());
+        assertEquals(issuerUuid, issuerLoaded.getUuid());
         assertEquals(certsUrl, issuerLoaded.getCertsUrl());
         assertEquals(introUrl, issuerLoaded.getIntroUrl());
         assertEquals(introducedOn, issuerLoaded.getIntroducedOn());
