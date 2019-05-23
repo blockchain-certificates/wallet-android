@@ -72,7 +72,7 @@ jobs:
           script:
             - pushd LearningMachine
             - ./gradlew clean testDevDebug -PdisablePreDex -PdevBuild --console=plain 
-            - [ -e /home/travis/build/blockchain-certificates/wallet-android/LearningMachine/app/build/reports/tests/testDevDebugUnitTest/index.html ] && cat /home/travis/build/blockchain-certificates/wallet-android/LearningMachine/app/build/reports/tests/testDevDebugUnitTest/index.html
+            - ./cat-results.sh
 
 
 # script:
