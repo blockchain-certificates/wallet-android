@@ -71,7 +71,8 @@ jobs:
           name: "Run Automated Tests: Master PR"
           script:
             - pushd LearningMachine
-            - ./gradlew clean testDevDebug -PdisablePreDex -PdevBuild --console=plain  --stacktrace
+            - ./gradlew clean testDevDebug -PdisablePreDex -PdevBuild --console=plain 
+            - [ -e /home/travis/build/blockchain-certificates/wallet-android/LearningMachine/app/build/reports/tests/testDevDebugUnitTest/index.html ] && cat /home/travis/build/blockchain-certificates/wallet-android/LearningMachine/app/build/reports/tests/testDevDebugUnitTest/index.html
 
 
 # script:
