@@ -1,3 +1,8 @@
+# Specify xenial, but still get trusty. See - 
+# https://travis-ci.community/t/bug-requesting-xenial-getting-precise-with-language-android/1773/6
+# tl;dr - currently there isn't an android image build for Ubuntu 14.04 or later
+# workaround - install everything from scratch using a minimal system
+# example - https://travis-ci.com/G00fY2/android-ci-testproject/jobs/187085499/config
 dist: xenial
 language: android
 jdk:
@@ -64,6 +69,10 @@ before_script:
     # - adb shell input keyevent 82 &
     # - sleep 15
     
+env:
+    global:
+        - BUILD_NUMBER=$TRAVIS_BUILD_NUMBER
+
 jobs:
     include:
         - stage: test
@@ -72,7 +81,12 @@ jobs:
           script:
             - pushd LearningMachine
             - ./gradlew clean testDevDebug -PdisablePreDex -PdevBuild --console=plain 
-
+        - stage: build
+          if: branch = master AND type = push
+          name: "Building Dev Debug build (unsigned) on $TRAVIS_BRANCH"
+          script:
+            - pushd LearningMachine
+            - ./gradlew clean assembleDevDebug  -PdisablePreDex
 
 # script:
 #     - ./scripts/build.sh
