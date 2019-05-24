@@ -1,4 +1,4 @@
-# Specify xenial, but still get trusty. See - 
+# Specify xenial, but still get trusty. See
 # https://travis-ci.community/t/bug-requesting-xenial-getting-precise-with-language-android/1773/6
 # tl;dr - currently there isn't an android image build for Ubuntu 14.04 or later
 # workaround - install everything from scratch using a minimal system
