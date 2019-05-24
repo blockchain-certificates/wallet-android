@@ -112,7 +112,7 @@ android {
 
 final SUPPORT_VERSION = '27.1.1'
 final MULTIDEX_VERSION = '1.0.1'
-final DAGGER_VERSION = '2.13'
+final DAGGER_VERSION = '2.22.1'
 final SLF4J_VERSION = '1.7.25'
 final SPONGYCASTLE_VERSION = '1.56.0.0'
 final PROTOBUF_VERSION = '3.3.1'
@@ -139,7 +139,7 @@ final JODATIME_VERSION = '2.8.1'
 
 // These must be forced until everyone gets on the same page
 // ?: 18.0, Robolectric: 20.0
-final GUAVA_VERSION = '22.0-android'
+final GUAVA_VERSION = '25.1-android'
 // RxLifecycle: 3.0.1, Robolectric: 2.0.1
 final FINDBUGS_VERSION = '3.0.1'
 
