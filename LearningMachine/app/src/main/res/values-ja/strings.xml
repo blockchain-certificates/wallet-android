@@ -95,7 +95,7 @@
     <string name="error_no_engine">認証エンジンをロードできませんでした。</string>
     <string name="error_cannot_load_certificate_json">証明書ファイルをロードできませんでした。</string>
 
-    <string name="success_verification">これは有効な%@証明書です。</string>
+    <string name="success_verification">これは有効な%1$s証明書です。</string>
     <string name="error_verification">この証明書は認証されていません。発行者へお問い合わせください。</string>
 
     <!-- Certificate View -->
