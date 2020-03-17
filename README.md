@@ -158,6 +158,42 @@ We suggest the following method orgainization:
 * We like and make extensive use of these.
 * They are a great way to enforce implementation of something a calling class may need.
 
+## Blockcerts Libraries
+
+### Cert-verifier-js
+* Javascript library for verifying Blockcerts Certificates
+
+#### Updating cert-verifier-js to a new version
+
+Pull down the cvjs repository: 
+
+```
+https://github.com/blockchain-certificates/cert-verifier-js.git && cd cert-verifier-js
+```
+
+CVJS requires an npm token, so create one on [npm](https://docs.npmjs.com/creating-and-viewing-authentication-tokens)
+
+```
+export NPM_TOKEN={insert token here}
+```
+
+Install
+
+```
+npm install
+```
+
+Generate build
+
+```
+npm run-script build
+```
+
+Copy content of `/dist/verifier-iife.js`
+
+Paste in this android project at this location: `wallet-android/LearningMachine/app/src/main/assets/www/verifier.js`
+
+
 ## External Libraries
 
 ### [BitcoinJ](https://bitcoinj.github.io/)
