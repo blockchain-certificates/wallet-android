@@ -5,19 +5,6 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class PropertyDef {
-    public enum Type {
-        @SerializedName("string")
-        STRING,
-        @SerializedName("number")
-        NUMBER,
-        @SerializedName("integer")
-        INTEGER,
-        @SerializedName("array")
-        ARRAY,
-        @SerializedName("boolean")
-        BOOLEAN
-    }
-
     public enum Format {
         @SerializedName("uri")
         URI,
@@ -25,7 +12,7 @@ public class PropertyDef {
         EMAIL
     }
 
-    public Type type;
+    public PropertyType type;
     public Format format;
     public String title;
     public String description;

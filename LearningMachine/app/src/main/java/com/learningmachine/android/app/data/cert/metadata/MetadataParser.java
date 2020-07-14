@@ -17,9 +17,11 @@ public class MetadataParser {
         NumberFormat integerFormat = NumberFormat.getIntegerInstance();
         String trueString = context.getString(R.string.cert_metadata_boolean_true);
         String falseString = context.getString(R.string.cert_metadata_boolean_false);
-        MetadataTypeAdapter typeAdapter = new MetadataTypeAdapter(numberFormat, integerFormat, trueString, falseString);
+        MetadataTypeAdapter metadataTypeAdapter = new MetadataTypeAdapter(numberFormat, integerFormat, trueString, falseString);
+        PropertyTypeTypeAdapter propertyTypeTypeAdapter = new PropertyTypeTypeAdapter();
         mGson = new GsonBuilder()
-                .registerTypeAdapter(Metadata.class, typeAdapter)
+                .registerTypeAdapter(Metadata.class, metadataTypeAdapter)
+                .registerTypeAdapter(PropertyType.class, propertyTypeTypeAdapter)
                 .create();
     }
 

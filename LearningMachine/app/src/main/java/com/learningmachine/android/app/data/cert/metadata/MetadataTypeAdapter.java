@@ -14,6 +14,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import timber.log.Timber;
+
 public class MetadataTypeAdapter implements JsonDeserializer<Metadata> {
     private NumberFormat mNumberFormat;
     private NumberFormat mIntegerFormat;
@@ -93,32 +95,42 @@ public class MetadataTypeAdapter implements JsonDeserializer<Metadata> {
             PropertyDef propertyDef = groupDef.properties.get(fieldName);
             JsonElement fieldValueElement = group.get(fieldName);
             String value = null;
-            switch (propertyDef.type) {
-                case STRING:
-                    value = fieldValueElement.getAsString();
-                    break;
-                case NUMBER:
-                    value = mNumberFormat.format(fieldValueElement.getAsDouble());
-                    break;
-                case INTEGER:
-                    value = mIntegerFormat.format(fieldValueElement.getAsInt());
-                    break;
-                case ARRAY:
-                    // This is the same algorithm as TextUtils.join and StringUtils.join
-                    StringBuilder sb = new StringBuilder();
-                    Iterator<JsonElement> it = fieldValueElement.getAsJsonArray().iterator();
-                    if (it.hasNext()) {
-                        sb.append(it.next().toString());
-                        while (it.hasNext()) {
-                            sb.append(", ");
-                            sb.append(it.next().toString());
-                        }
+            List<PropertyType.JsonType> jsonTypes = propertyDef.type.getPossibleJsonTypes();
+            for (PropertyType.JsonType jsonType: jsonTypes) {
+                try {
+                    switch (jsonType) {
+                        case STRING:
+                            value = fieldValueElement.getAsString();
+                            break;
+                        case NUMBER:
+                            value = mNumberFormat.format(fieldValueElement.getAsDouble());
+                            break;
+                        case INTEGER:
+                            value = mIntegerFormat.format(fieldValueElement.getAsInt());
+                            break;
+                        case ARRAY:
+                            // This is the same algorithm as TextUtils.join and StringUtils.join
+                            StringBuilder sb = new StringBuilder();
+                            Iterator<JsonElement> it = fieldValueElement.getAsJsonArray().iterator();
+                            if (it.hasNext()) {
+                                sb.append(it.next().toString());
+                                while (it.hasNext()) {
+                                    sb.append(", ");
+                                    sb.append(it.next().toString());
+                                }
+                            }
+                            value = sb.toString();
+                            break;
+                        case BOOLEAN:
+                            value = fieldValueElement.getAsBoolean() ? mTrueString : mFalseString;
+                            break;
                     }
-                    value = sb.toString();
-                break;
-                case BOOLEAN:
-                    value = fieldValueElement.getAsBoolean() ? mTrueString : mFalseString;
+                } catch (ClassCastException | IllegalStateException | UnsupportedOperationException e) {
+                    Timber.d(e, String.format("Incorrect type: $1%s", jsonType));
+                }
+                if (value != null) {
                     break;
+                }
             }
             Field field = new Field(propertyDef.title, value);
             fields.add(field);
