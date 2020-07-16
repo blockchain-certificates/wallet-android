@@ -8,7 +8,7 @@ android {
     defaultConfig {
         applicationId "com.learningmachine.android.app"
         minSdkVersion 19
-        targetSdkVersion 29
+        targetSdkVersion 28
         versionName "3.1.5"
         def buildNumber = System.getenv("BUILD_NUMBER")
         if (buildNumber != null) {

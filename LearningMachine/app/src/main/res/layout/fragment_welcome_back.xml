@@ -25,19 +25,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageButton
-            android:id="@+id/play_video"
-            android:src="@drawable/ic_play_button"
-            android:background="@null"
-            android:layout_width="85dp"
-            android:layout_height="85dp"
-            android:contentDescription="@string/play_intro_video"
-            app:layout_constraintBottom_toBottomOf="@+id/image_view"
-            app:layout_constraintTop_toTopOf="@+id/image_view"
-            app:layout_constraintLeft_toLeftOf="@+id/image_view"
-            app:layout_constraintRight_toRightOf="@+id/image_view"
-            />
-
         <View
             android:id="@+id/spreader1"
             android:layout_width="65dp"

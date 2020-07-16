@@ -1,7 +1,6 @@
 package com.learningmachine.android.app.ui.onboarding;
 
 import android.content.Context;
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -12,7 +11,6 @@ import android.view.ViewGroup;
 
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.databinding.FragmentAccountChooserBinding;
-import com.learningmachine.android.app.ui.video.VideoActivity;
 import com.smallplanet.labalib.Laba;
 
 import timber.log.Timber;
@@ -64,11 +62,6 @@ public class AccountChooserFragment extends OnboardingFragment {
             }
         });
         mBinding.backgroundVideo.start();
-
-
-        mBinding.playVideo.setOnClickListener(view2 -> {
-            startActivity(new Intent(getContext(), VideoActivity.class));
-        });
 
         mBinding.newAccountButton.setOnClickListener(view -> mCallback.onNewAccount());
         mBinding.existingAccountButton.setOnClickListener(view -> mCallback.onExistingAccount());
