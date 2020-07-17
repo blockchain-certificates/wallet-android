@@ -1,5 +1,6 @@
 package com.learningmachine.android.app.ui.cert;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
@@ -16,8 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.ConsoleMessage;
-import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
@@ -51,9 +51,12 @@ public class CertificateFragment extends LMFragment {
     private static final String FILE_PROVIDER_AUTHORITY = "com.learningmachine.android.app.fileprovider";
     private static final String TEXT_MIME_TYPE = "text/plain";
 
-    @Inject protected CertificateManager mCertificateManager;
-    @Inject protected IssuerManager mIssuerManager;
-    @Inject protected CertificateVerifier mCertificateVerifier;
+    @Inject
+    protected CertificateManager mCertificateManager;
+    @Inject
+    protected IssuerManager mIssuerManager;
+    @Inject
+    protected CertificateVerifier mCertificateVerifier;
 
     private FragmentCertificateBinding mBinding;
     private String mCertUuid;
@@ -113,6 +116,7 @@ public class CertificateFragment extends LMFragment {
 
     /**
      * Set the Bottom Navigation Icons size
+     *
      * @param size The size (width an height) in dp
      */
     private void setBottomIconsSize(int size) {
@@ -132,7 +136,7 @@ public class CertificateFragment extends LMFragment {
     /**
      * This method will make all items in menu have the same size.
      */
-    private void setAllItemsChecked(){
+    private void setAllItemsChecked() {
         Menu menu = mBinding.certBottomNavigation.getMenu();
 
         for (int i = 0, size = menu.size(); i < size; i++) {
@@ -145,7 +149,7 @@ public class CertificateFragment extends LMFragment {
     private String displayHTML(BlockCert certificate) {
         String displayHTML = "";
 
-        if(certificate instanceof BlockCertV20) {
+        if (certificate instanceof BlockCertV20) {
             BlockCertV20 cert2 = (BlockCertV20) certificate;
             displayHTML = cert2.getDisplayHtml();
             if (displayHTML != null) {
@@ -154,45 +158,61 @@ public class CertificateFragment extends LMFragment {
             } else {
                 displayHTML = "<center>" + getString(R.string.cert_old_version_error) + "</center>";
             }
-        }else{
+        } else {
             displayHTML = "<center>" + getString(R.string.cert_old_version_error) + "</center>";
+        }
+
+        String scalingMetaContent = "";
+        if (!displayHTML.trim().startsWith("<div")) {
+            scalingMetaContent = ", maximum-scale=1.0, user-scalable=0";
         }
 
         String normalizeCss = "/*! normalize.css v7.0.0 | MIT License | github.com/necolas/normalize.css */html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,aside,footer,header,nav,section{display:block}h1{font-size:2em;margin:.67em 0}figcaption,figure,main{display:block}figure{margin:1em 40px}hr{box-sizing:content-box;height:0;overflow:visible}pre{font-family:monospace,monospace;font-size:1em}a{background-color:transparent;-webkit-text-decoration-skip:objects}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}b,strong{font-weight:inherit}b,strong{font-weight:bolder}code,kbd,samp{font-family:monospace,monospace;font-size:1em}dfn{font-style:italic}mark{background-color:#ff0;color:#000}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}audio,video{display:inline-block}audio:not([controls]){display:none;height:0}img{border-style:none}svg:not(:root){overflow:hidden}button,input,optgroup,select,textarea{font-family:sans-serif;font-size:100%;line-height:1.15;margin:0}button,input{overflow:visible}button,select{text-transform:none}[type=reset],[type=submit],button,html [type=button]{-webkit-appearance:button}[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner,button::-moz-focus-inner{border-style:none;padding:0}[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring,button:-moz-focusring{outline:1px dotted ButtonText}fieldset{padding:.35em .75em .625em}legend{box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}progress{display:inline-block;vertical-align:baseline}textarea{overflow:auto}[type=checkbox],[type=radio]{box-sizing:border-box;padding:0}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-cancel-button,[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}details,menu{display:block}summary{display:list-item}canvas{display:inline-block}template{display:none}[hidden]{display:none}/*# sourceMappingURL=normalize.min.css.map */";
         String customCss = "body { font-size: 12px; line-height: 1.5; margin:20px; display: inline-block; } body > section { padding: 0; } body section { max-width: 100%; word-break: break-word; } body img { max-width: 100%; height: auto; width: inherit; }";
-        String wrappedHtml = String.format("<!doctype html><html class=\"no-js\" lang=\"\"><head><meta charset=\"utf-8\"><meta http-equiv=\"x-ua-compatible\" content=\"ie=edge\"><title></title><meta content=\"width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0\" name=\"viewport\" /><meta name=”viewport” content=”width=device-width” /><style type=\"text/css\">%s</style><style type=\"text/css\">%s</style></head><body>%s</body></html>", normalizeCss, customCss, displayHTML);
-
-        if (displayHTML.trim().startsWith("<div")) {
-            customCss = "body { font-size: 12px; line-height: 1.5; margin:20px; display: inline-block; } body > section { padding: 0; } body section { max-width: 100%; word-break: break-word; } body img { max-width: 100%; height: auto; width: inherit; }";
-            wrappedHtml = String.format("<!doctype html><html class=\"no-js\" lang=\"\"><head><meta charset=\"utf-8\"><meta http-equiv=\"x-ua-compatible\" content=\"ie=edge\"><title></title><meta content=\"width=device-width, initial-scale=1.0\" name=\"viewport\" /><meta name=”viewport” content=”width=device-width” /><style type=\"text/css\">%s</style><style type=\"text/css\">%s</style></head><body>%s</body></html>", normalizeCss, customCss, displayHTML);
-        }
-        return wrappedHtml;
+        String autolinkerScript = getAutolinkerScript();
+        return String.format("<!doctype html><html class=\"no-js\" lang=\"\"><head><meta charset=\"utf-8\"><meta http-equiv=\"x-ua-compatible\" content=\"ie=edge\"><title></title><meta content=\"width=device-width, initial-scale=1.0%s\" name=\"viewport\" /><meta name=”viewport” content=”width=device-width” /><style type=\"text/css\">%s</style><style type=\"text/css\">%s</style></head><body><div id=\"_displayHTML\">%s</div></script><script type=\"text/javascript\">%s</script></body></html>", scalingMetaContent, normalizeCss, customCss, displayHTML, autolinkerScript);
     }
 
+    private String getAutolinkerScript() {
+        String script = "";
+        try {
+            FileUtils.copyAssetFile(getContext(), "www/Autolinker.min.js", "Autolinker.js");
+            script = FileUtils.getStringFromFile(getContext().getFilesDir() + "/Autolinker.js") + "\n";
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return script +
+                "var _displayHTML = document.getElementById('_displayHTML');\n" +
+                "_displayHTML.innerHTML = Autolinker.link(_displayHTML.innerHTML, {\n" +
+                "    stripPrefix: false,\n" +
+                "    email: true,\n" +
+                "    phone: false\n" +
+                "  });";
+    }
+
+    @SuppressLint("SetJavaScriptEnabled")
     private void setupWebView() {
         // Note: This entire code has been reworked to more closely match the iOS application.
         mBinding.webView.setWebViewClient(new LMWebViewClient());
         mBinding.progressBar.setVisibility(View.VISIBLE);
-
-        mBinding.webView.getSettings().setLoadWithOverviewMode(true);
-        mBinding.webView.getSettings().setUseWideViewPort(true);
-        mBinding.webView.getSettings().setBuiltInZoomControls(true);
-        mBinding.webView.getSettings().setDisplayZoomControls(false);
         mBinding.webView.setInitialScale(1);
-
+        WebSettings webSettings = mBinding.webView.getSettings();
+        webSettings.setLoadWithOverviewMode(true);
+        webSettings.setUseWideViewPort(true);
+        webSettings.setBuiltInZoomControls(true);
+        webSettings.setDisplayZoomControls(false);
+        webSettings.setJavaScriptEnabled(true);
 
         mCertificateVerifier.loadCertificate(mCertUuid)
                 .compose(bindToMainThread())
                 .subscribe(certificate -> {
-
                     String html = displayHTML(certificate);
                     String encodedHtml = Base64.encodeToString(html.getBytes(), Base64.NO_PADDING);
                     mBinding.webView.loadData(encodedHtml, "text/html; charset=UTF-8", "base64");
-
                 }, throwable -> {
                     Timber.e(throwable, "Could not setup webview.");
 
-                    ExceptionWithResourceString throwableRS = (ExceptionWithResourceString)throwable;
+                    ExceptionWithResourceString throwableRS = (ExceptionWithResourceString) throwable;
                     showFailureDialog(throwableRS.getErrorMessageResId());
                 });
     }
@@ -201,15 +221,17 @@ public class CertificateFragment extends LMFragment {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             // Handle local URLs
-            if (Uri.parse(url)
-                    .getHost()
-                    .length() == 0) {
-                return false;
+            Uri uri = Uri.parse(url);
+            if (uri.getScheme() != null && uri.getScheme().toLowerCase().equals("mailto")) {
+                Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
+                startActivity(intent);
+                return true;
+            } else if (uri.getHost() != null && uri.getHost().length() > 0) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+                return true;
             }
-
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-            startActivity(intent);
-            return true;
+            return false;
         }
 
         @Override
