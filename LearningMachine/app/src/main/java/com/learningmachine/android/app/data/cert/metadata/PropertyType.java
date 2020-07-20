@@ -28,29 +28,7 @@ public class PropertyType {
     public PropertyType(List<String> types) {
         this.possibleJsonTypes = new ArrayList<>();
         for (String type : types) {
-            switch (type) {
-                case "string":
-                    this.possibleJsonTypes.add(JsonType.STRING);
-                    break;
-                case "number":
-                    this.possibleJsonTypes.add(JsonType.NUMBER);
-                    break;
-                case "integer":
-                    this.possibleJsonTypes.add(JsonType.INTEGER);
-                    break;
-                case "array":
-                    this.possibleJsonTypes.add(JsonType.ARRAY);
-                    break;
-                case "boolean":
-                    this.possibleJsonTypes.add(JsonType.BOOLEAN);
-                    break;
-                case "object":
-                    this.possibleJsonTypes.add(JsonType.OBJECT);
-                    break;
-                case "null":
-                    this.possibleJsonTypes.add(JsonType.NULL);
-                    break;
-            }
+            this.possibleJsonTypes.add(JsonType.valueOf(type.toUpperCase()));
         }
     }
 
