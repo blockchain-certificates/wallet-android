@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 29
     dexOptions {
         javaMaxHeapSize "4g"
     }
@@ -9,13 +9,13 @@ android {
         applicationId "com.learningmachine.android.app"
         minSdkVersion 19
         targetSdkVersion 28
-        versionName "3.1.4"
+        versionName "3.1.7"
         def buildNumber = System.getenv("BUILD_NUMBER")
         if (buildNumber != null) {
             versionCode buildNumber.toInteger()
             versionNameSuffix "-" + buildNumber
         } else {
-            versionCode 43
+            versionCode 49
         }
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -120,7 +120,7 @@ final TIMBER_VERSION = '4.5.1'
 final JODATIMEANDROID_VERSION = '2.9.9'
 final RETROFIT_VERSION = '2.5.0'
 final LOGGINGINTERCEPTOR_VERSION = '3.4.1'
-final GSON_VERSION = '2.8.1'
+final GSON_VERSION = '2.8.6'
 final RXJAVA_VERSION = '1.3.0'
 final RXANDROID_VERSION = '1.2.1'
 final RXLIFECYCLE_VERSION = '1.0'

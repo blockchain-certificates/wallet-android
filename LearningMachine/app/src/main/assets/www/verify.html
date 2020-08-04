@@ -22,12 +22,13 @@
 				Android.notifyStatusChanged(JSON.stringify(arg1))
 			}
 
-			loadJSON("./certificate.json", function(certificateContentsString) {
-                var certificate = new Verifier.Certificate(certificateContentsString, { locale: 'auto' })
-                Android.notifyChainName(certificate.chain.name)
-                var verificationSteps = certificate.verificationSteps
-                Android.notifyVerificationSteps(JSON.stringify(verificationSteps))
-                certificate.verify(statusCallback)
+			loadJSON("./certificate.json", async function(certificateContentsString) {
+                var certificate = new Verifier.Certificate(certificateContentsString, { locale: 'auto' });
+                await certificate.init();
+                Android.notifyChainName(certificate.chain.name);
+                var verificationSteps = certificate.verificationSteps;
+                Android.notifyVerificationSteps(JSON.stringify(verificationSteps));
+                certificate.verify(statusCallback);
             });
 		</script>
     </body>

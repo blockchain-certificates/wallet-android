@@ -1,26 +1,24 @@
 # learning-machine-android
+
 [![Build Status](https://travis-ci.org/blockchain-certificates/wallet-android.svg?branch=master)](https://travis-ci.org/blockchain-certificates/wallet-android)
 
 [Blockcerts](https://www.blockcerts.org) Android application by Learning Machine
-
 
 ## Build variants
 
 Gradle allows us to define different product variants. Each has a separate app id and can be installed simultaneously. Currently they all use the Bitcoin main net and do not differ all that much. Production has an empty logging tree.
 
 * `dev`
-    * App id: `com.learningmachine.android.app.dev`
-    * Dimension: `env`
+  * App id: `com.learningmachine.android.app.dev`
+  * Dimension: `env`
 * `staging`
-    * App id: `com.learningmachine.android.app.staging`
-    * Dimension: `env`
+  * App id: `com.learningmachine.android.app.staging`
+  * Dimension: `env`
 * `production`
-    * App id: `com.learningmachine.android.app`
-    * Dimension: `env`
+  * App id: `com.learningmachine.android.app`
+  * Dimension: `env`
 
 ## Glossary
-
-
 
 ## Conventions
 
@@ -29,10 +27,10 @@ The following are guidelines for this Android project.
 ### Classes
 
 * Naming
-    * Suffix with the type of class: `Activity`, `Fragment`, `Listener`, `ListItemView`, `Manager`
-    * Prefix member variables with `m`.
-    * If a variable is a view, consider suffixing with the type: `mPasswordEditText`, `mLoginButton`
-    * Boolean member variables should reflect state (`mLocked`) and have getters using `isState()` (ie: `isLocked`)
+  * Suffix with the type of class: `Activity`, `Fragment`, `Listener`, `ListItemView`, `Manager`
+  * Prefix member variables with `m`.
+  * If a variable is a view, consider suffixing with the type: `mPasswordEditText`, `mLoginButton`
+  * Boolean member variables should reflect state (`mLocked`) and have getters using `isState()` (ie: `isLocked`)
 * Extract common elements to a superclass to avoid duplication.
 * Prefer `abstract` methods in super over implicit setup in subclass constructors.
 * The suggested template below should guide naming:
@@ -108,6 +106,7 @@ public class TemplateFragment {
 We suggest the following method orgainization:
 
 1. newInstance and other static methods
+
 * lifecycle, onSavedInstanceState, options menu, onActivityResult
 * private methods
 * all other protected methods (including immediate parent overrides)
@@ -120,9 +119,9 @@ We suggest the following method orgainization:
 ### Layout files
 
 * Naming
-    * Reverse DNS style.
-    * Prefix with the type of layout: `activity_login`, `fragment_login`, `list_item_login`
-    * Describe widgets and suffix with the type: `login_username_text_view`
+  * Reverse DNS style.
+  * Prefix with the type of layout: `activity_login`, `fragment_login`, `list_item_login`
+  * Describe widgets and suffix with the type: `login_username_text_view`
 * Use auto format for consistency.
 * Prefer `/>` over open and close tags that do not contain children.
 * Extract strings and dimensions to their respective xml resources. `0dp` is an exception and should remain in the layout file.
@@ -132,19 +131,19 @@ We suggest the following method orgainization:
 ### `strings.xml`
 
 * Naming
-    * Describe where it is used: `fragment_login_username_hint`
-    * For long strings, append `_message`: "We would like to welcome you to this app because it is amazing" becomes `fragment_login_welcome_message`
-    * If error, append `_error_message`: "Failed to login" would be `login_error_message`
+  * Describe where it is used: `fragment_login_username_hint`
+  * For long strings, append `_message`: "We would like to welcome you to this app because it is amazing" becomes `fragment_login_welcome_message`
+  * If error, append `_error_message`: "Failed to login" would be `login_error_message`
 * Formatted strings
-    * Use the [recommended pattern](http://developer.android.com/guide/topics/resources/string-resource.html#FormattingAndStyling): `%1$s`
-    * Use the correct type for the data it will be formatting: `s`, `d`, `f`, etc.
+  * Use the [recommended pattern](http://developer.android.com/guide/topics/resources/string-resource.html#FormattingAndStyling): `%1$s`
+  * Use the correct type for the data it will be formatting: `s`, `d`, `f`, etc.
 
 ### Managers
 
 * Responsibilities
-    * Loading and providing data
-    * Creating success and failure callbacks
-    * Fetching / pushing data from / to the `WebService`
+  * Loading and providing data
+  * Creating success and failure callbacks
+  * Fetching / pushing data from / to the `WebService`
 
 * Prefix data operations with `load`, this signifies an asynchronous call (i.e. webservice or database)
 * Prefix direct data accessors with `get`. These methods will synchronously return data directly to the caller.
@@ -161,11 +160,12 @@ We suggest the following method orgainization:
 ## Blockcerts Libraries
 
 ### Cert-verifier-js
+
 * Javascript library for verifying Blockcerts Certificates
 
 #### Updating cert-verifier-js to a new version
 
-Pull down the cvjs repository: 
+Pull down the cvjs repository:
 
 ```
 https://github.com/blockchain-certificates/cert-verifier-js.git && cd cert-verifier-js
@@ -193,8 +193,13 @@ Copy content of `/dist/verifier-iife.js`
 
 Paste in this android project at this location: `wallet-android/LearningMachine/app/src/main/assets/www/verifier.js`
 
-
 ## External Libraries
+
+### [Autolinker.js](https://github.com/gregjacobs/Autolinker.js)
+
+* Utility to convert urls found in HTML into links
+* Minified javascript included as a static asset in the `www` directory of the app
+* MIT
 
 ### [BitcoinJ](https://bitcoinj.github.io/)
 
