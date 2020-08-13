@@ -14,9 +14,6 @@ import okio.BufferedSource;
 import timber.log.Timber;
 
 public class CertificateInterceptor implements Interceptor {
-
-    private static final String JSON_EXT = ".json";
-
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
