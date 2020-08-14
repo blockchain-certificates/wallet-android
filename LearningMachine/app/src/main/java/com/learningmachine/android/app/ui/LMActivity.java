@@ -1,12 +1,17 @@
 package com.learningmachine.android.app.ui;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import androidx.core.app.ActivityCompat;
 import androidx.appcompat.app.ActionBar;
@@ -15,9 +20,10 @@ import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 
+import com.learningmachine.android.app.data.CertificateManager;
+import com.learningmachine.android.app.data.passphrase.PassphraseManager;
 import com.learningmachine.android.app.ui.home.HomeActivity;
 import com.learningmachine.android.app.ui.issuer.IssuerActivity;
-import com.learningmachine.android.app.ui.onboarding.OnboardingActivity;
 import com.learningmachine.android.app.ui.settings.SettingsActivity;
 import com.learningmachine.android.app.util.AESCrypt;
 import com.smallplanet.labalib.Laba;
@@ -27,12 +33,14 @@ import com.trello.rxlifecycle.RxLifecycle;
 import com.trello.rxlifecycle.android.ActivityEvent;
 import com.trello.rxlifecycle.android.RxLifecycleAndroid;
 
-import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.security.GeneralSecurityException;
 import java.util.Scanner;
 
 import javax.annotation.Nonnull;
+import javax.inject.Inject;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -40,13 +48,13 @@ import rx.subjects.BehaviorSubject;
 import timber.log.Timber;
 
 public abstract class LMActivity extends AppCompatActivity implements LifecycleProvider<ActivityEvent> {
-
     protected static Class lastImportantClassSeen = HomeActivity.class;
 
     // Used by LifecycleProvider interface to transform lifeycycle events into a stream of events through an observable.
     private final BehaviorSubject<ActivityEvent> mLifecycleSubject = BehaviorSubject.create();
     private Observable.Transformer mMainThreadTransformer;
 
+    @Inject PassphraseManager mPassphraseManager;
 
     public void safeGoBack() {
 
@@ -102,20 +110,16 @@ public abstract class LMActivity extends AppCompatActivity implements LifecycleP
         if(didReceivePermissionsCallback){
             if(tempPassphrase != null && passphraseCallback != null) {
                 if (didSucceedInPermissionsRequest) {
-                    savePassphraseToDevice(tempPassphrase, passphraseCallback);
+                    mPassphraseManager.savePassphraseToDevice(tempPassphrase, passphraseCallback);
                 } else {
-                    savePassphraseToDevice(null, passphraseCallback);
+                    mPassphraseManager.savePassphraseToDevice(null, passphraseCallback);
                 }
                 tempPassphrase = null;
                 passphraseCallback = null;
             }
 
             if(passphraseCallback != null) {
-                if(didSucceedInPermissionsRequest){
-                    getSavedPassphraseFromDevice(passphraseCallback);
-                } else {
-                    getSavedPassphraseFromDevice(passphraseCallback);
-                }
+                mPassphraseManager.getSavedPassphraseFromDevice(passphraseCallback);
                 passphraseCallback = null;
             }
 
@@ -223,110 +227,38 @@ public abstract class LMActivity extends AppCompatActivity implements LifecycleP
         return false;
     }
 
-
-
-
-
-
     /* Saving passphrases to device */
 
-    @FunctionalInterface
-    public interface Callback <A, R> {
-        public R apply (A a);
-    }
-
     private String tempPassphrase = null;
-    private Callback passphraseCallback = null;
+    private PassphraseManager.Callback<String, Boolean> passphraseCallback = null;
 
-
-    public static String pathToSavedPassphraseFile() {
-        return Environment.getExternalStorageDirectory() + "/learningmachine.dat";
-    }
-
-    private String getDeviceId(Context context) {
-        final String deviceId = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
-        if(deviceId == null || deviceId.length() == 0) {
-            return "NOT_IDEAL_KEY";
-        }
-        return deviceId;
-    }
-
-    private void savePassphraseToDevice(String passphrase, Callback passphraseCallback) {
-        if (passphrase == null) {
-            passphraseCallback.apply(null);
-            return;
-        }
-
-        String passphraseFile = pathToSavedPassphraseFile();
-        try( PrintWriter out = new PrintWriter(passphraseFile) ) {
-            String encryptionKey= getDeviceId(getApplicationContext());
-            String mneumonicString = "mneumonic:"+passphrase;
-            try {
-                String encryptedMsg = AESCrypt.encrypt(encryptionKey, mneumonicString);
-                out.println(encryptedMsg);
-                passphraseCallback.apply(passphrase);
-            }catch (GeneralSecurityException e){
-                Timber.e(e, "Could not encrypt passphrase.");
-                passphraseCallback.apply(null);
-            }
-        } catch(Exception e) {
-            Timber.e(e, "Could not write to passphrase file");
-            passphraseCallback.apply(null);
-        }
-    }
-
-    public void askToSavePassphraseToDevice(String passphrase, Callback passphraseCallback) {
+    public void askToSavePassphraseToDevice(String passphrase, PassphraseManager.Callback<String, Boolean> passphraseCallback) {
         if (Build.VERSION.SDK_INT >= 23) {
             if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
                     checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                savePassphraseToDevice(passphrase, passphraseCallback);
+                mPassphraseManager.savePassphraseToDevice(passphrase, passphraseCallback);
             } else {
                 tempPassphrase = passphrase;
                 this.passphraseCallback = passphraseCallback;
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
             }
         } else {
-            savePassphraseToDevice(passphrase, passphraseCallback);
+            mPassphraseManager.savePassphraseToDevice(passphrase, passphraseCallback);
         }
     }
 
-    public void askToGetPassphraseFromDevice(Callback passphraseCallback) {
-
+    public void askToGetPassphraseFromDevice(PassphraseManager.Callback<String, Boolean> passphraseCallback) {
         if (Build.VERSION.SDK_INT >= 23) {
             if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                getSavedPassphraseFromDevice(passphraseCallback);
+                mPassphraseManager.getSavedPassphraseFromDevice(passphraseCallback);
             } else {
                 this.passphraseCallback = passphraseCallback;
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
             }
         } else {
-            getSavedPassphraseFromDevice(passphraseCallback);
+            mPassphraseManager.getSavedPassphraseFromDevice(passphraseCallback);
         }
     }
-
-    private boolean getSavedPassphraseFromDevice(Callback passphraseCallback) {
-        String passphraseFile = OnboardingActivity.pathToSavedPassphraseFile();
-        try {
-            String encryptedMsg = new Scanner(new File(passphraseFile)).useDelimiter("\\Z").next();
-            String encryptionKey = getDeviceId(getApplicationContext());
-            try {
-                String content = AESCrypt.decrypt(encryptionKey, encryptedMsg);
-                if (content.startsWith("mneumonic:")) {
-                    passphraseCallback.apply(content.substring(10).trim());
-                    return true;
-                }
-            }catch (GeneralSecurityException e){
-                Timber.e(e, "Could not decrypt passphrase.");
-            }
-        } catch(Exception e) {
-            // note: this is a non-critical feature, so if this fails nbd
-        }
-
-        passphraseCallback.apply(null);
-        return false;
-    }
-
-
 
     private boolean didReceivePermissionsCallback = false;
     private boolean didSucceedInPermissionsRequest = false;

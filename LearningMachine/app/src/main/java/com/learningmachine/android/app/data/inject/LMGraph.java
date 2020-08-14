@@ -1,6 +1,7 @@
 package com.learningmachine.android.app.data.inject;
 
 import com.learningmachine.android.app.LMApplication;
+import com.learningmachine.android.app.ui.LMActivity;
 import com.learningmachine.android.app.ui.LMFragment;
 import com.learningmachine.android.app.ui.LMIssuerBaseFragment;
 import com.learningmachine.android.app.ui.cert.AddCertificateFileFragment;
@@ -31,6 +32,7 @@ public interface LMGraph {
     void inject(IssuerActivity activity);
     void inject(IssuerInfoActivity activity);
     void inject(OnboardingActivity activity);
+    void inject(LMActivity activity);
 
     // Fragments
     void inject(ViewPassphraseFragment fragment);

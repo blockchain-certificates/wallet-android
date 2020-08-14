@@ -6,13 +6,15 @@ import android.os.Bundle;
 
 import com.learningmachine.android.app.data.bitcoin.BitcoinManager;
 import com.learningmachine.android.app.data.inject.Injector;
+import com.learningmachine.android.app.data.passphrase.PassphraseManager;
 import com.learningmachine.android.app.data.preferences.SharedPreferencesManager;
 import com.learningmachine.android.app.data.url.LaunchData;
 import com.learningmachine.android.app.data.url.SplashUrlDecoder;
 import com.learningmachine.android.app.ui.LMActivity;
-import com.learningmachine.android.app.ui.cert.AddCertificateActivity;
 import com.learningmachine.android.app.ui.home.HomeActivity;
 import com.learningmachine.android.app.ui.onboarding.OnboardingActivity;
+
+import java.io.File;
 
 import javax.inject.Inject;
 
@@ -25,13 +27,23 @@ public class SplashActivity extends LMActivity {
 
     @Inject SharedPreferencesManager mSharedPreferencesManager;
     @Inject protected BitcoinManager mBitcoinManager;
+    @Inject PassphraseManager mPassphraseManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Injector.obtain(this)
                 .inject(this);
-
+        if (mPassphraseManager.doesLegacyPassphraseFileExist()) {
+            mPassphraseManager.migrateSavedPassphrase((o) -> {
+                launch();
+                return null;
+            });
+        } else {
+            launch();
+        }
+    }
+    private void launch() {
         Intent intent = getIntent();
         Uri data = intent.getData();
         String uriString = (data == null) ? null : data.toString();

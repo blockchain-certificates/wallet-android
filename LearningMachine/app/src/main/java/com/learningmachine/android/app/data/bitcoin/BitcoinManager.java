@@ -8,6 +8,7 @@ import android.util.Pair;
 import com.learningmachine.android.app.LMConstants;
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.error.ExceptionWithResourceString;
+import com.learningmachine.android.app.data.passphrase.PassphraseManager;
 import com.learningmachine.android.app.data.preferences.SharedPreferencesManager;
 import com.learningmachine.android.app.data.store.CertificateStore;
 import com.learningmachine.android.app.data.store.IssuerStore;
@@ -39,14 +40,19 @@ public class BitcoinManager {
     private final IssuerStore mIssuerStore;
     private final CertificateStore mCertificateStore;
     private final SharedPreferencesManager mSharedPreferencesManager;
+    private final PassphraseManager mPassphraseManager;
     private Wallet mWallet;
 
-    public BitcoinManager(Context context, NetworkParameters networkParameters, IssuerStore issuerStore, CertificateStore certificateStore, SharedPreferencesManager sharedPreferencesManager) {
+    public BitcoinManager(Context context, NetworkParameters networkParameters,
+                          IssuerStore issuerStore, CertificateStore certificateStore,
+                          SharedPreferencesManager sharedPreferencesManager,
+                          PassphraseManager passphraseManager) {
         mContext = context;
         mNetworkParameters = networkParameters;
         mIssuerStore = issuerStore;
         mCertificateStore = certificateStore;
         mSharedPreferencesManager = sharedPreferencesManager;
+        mPassphraseManager = passphraseManager;
     }
 
     private Observable<Wallet> getWallet() {
@@ -146,10 +152,7 @@ public class BitcoinManager {
     public void resetEverything() {
         mIssuerStore.reset();
         mCertificateStore.reset();
-
-        String passphraseFileOnExternalStorage = Environment.getExternalStorageDirectory() + "/learningmachine.dat";
-        File file = new File(passphraseFileOnExternalStorage);
-        file.delete();
+        mPassphraseManager.reset();
     }
 
     public Observable<Wallet> setPassphrase(String newPassphrase) {
