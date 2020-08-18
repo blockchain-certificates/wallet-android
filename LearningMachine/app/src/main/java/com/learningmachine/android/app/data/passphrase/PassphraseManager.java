@@ -1,14 +1,17 @@
 package com.learningmachine.android.app.data.passphrase;
 
 import android.annotation.SuppressLint;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.net.Uri;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.provider.Settings;
 
 import com.learningmachine.android.app.util.AESCrypt;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.security.GeneralSecurityException;
 import java.util.Scanner;
@@ -17,43 +20,46 @@ import timber.log.Timber;
 
 public class PassphraseManager {
     private final Context mContext;
+    private String mPassphrase;
+    private PassphraseCallback mCallback;
 
     @FunctionalInterface
-    public interface Callback <A, R> {
-        R apply(A a);
+    public interface PassphraseCallback {
+        void apply (String a);
     }
 
     public PassphraseManager(Context context) {
         mContext = context;
     }
 
-    private String getPassphraseFilePath() {
-        return MediaStore.Files.getContentUri("external").getPath() + "/learningmachine.dat";
-    }
-
-    private String getLegacyPassphraseFilePath() {
-        return Environment.getExternalStorageDirectory() + "/learningmachine.dat";
+    private Uri getLegacyPassphraseFileUri() {
+        return Uri.parse(Environment.getExternalStorageDirectory() + "/learningmachine.dat");
     }
 
     public boolean doesLegacyPassphraseFileExist() {
-        String passphraseFilePath = getLegacyPassphraseFilePath();
+        String passphraseFilePath = getLegacyPassphraseFileUri().getPath();
         return passphraseFilePath != null && new File(passphraseFilePath).exists();
     }
 
-    public void migrateSavedPassphrase(Callback passphraseCallback) {
-        getLegacyPassphraseFromDevice((passphrase) -> {
-            savePassphraseToDevice((String)passphrase, passphraseCallback);
-            File legacyFile = new File(getLegacyPassphraseFilePath());
+    public void deleteLegacyPassphrase() {
+        String passphraseFile = getLegacyPassphraseFileUri().getPath();
+        if (passphraseFile != null) {
+            File legacyFile = new File(passphraseFile);
             legacyFile.delete();
-            return null;
+        }
+    }
+
+    public void migrateSavedPassphrase(PassphraseCallback passphraseCallback) {
+        getLegacyPassphraseFromDevice((passphrase) -> {
+            savePassphraseInLegacyStorage(passphrase, passphraseCallback);
+            deleteLegacyPassphrase();
         });
     }
 
     public void reset() {
-        File file = new File(getPassphraseFilePath());
-        file.delete();
+        deleteLegacyPassphrase();
     }
-    private String getDeviceId(Context context) {
+    private String getDeviceId() {
         @SuppressLint("HardwareIds")
         final String deviceId = Settings.Secure.getString(mContext.getContentResolver(), Settings.Secure.ANDROID_ID);
         if(deviceId == null || deviceId.length() == 0) {
@@ -62,49 +68,81 @@ public class PassphraseManager {
         return deviceId;
     }
 
-    public void savePassphraseToDevice(String passphrase, Callback passphraseCallback) {
+    public void initPassphraseBackup(String passphrase, PassphraseCallback callback) {
+        mPassphrase = passphrase;
+        mCallback = callback;
+    }
+
+    public void storePassphraseBackup(Uri location) {
+        ContentResolver resolver = mContext.getContentResolver();
+        try (OutputStream stream = resolver.openOutputStream(location)) {
+            PrintWriter out = new PrintWriter(stream);
+            String encryptionKey= getDeviceId();
+            String mneumonicString = "mneumonic:"+mPassphrase;
+            try {
+                String encryptedMsg = AESCrypt.encrypt(encryptionKey, mneumonicString);
+                out.println(encryptedMsg);
+                mCallback.apply(mPassphrase);
+            }catch (GeneralSecurityException e){
+                Timber.e(e, "Could not encrypt passphrase.");
+                mCallback.apply(null);
+            }
+        } catch (Exception e) {
+            Timber.e(e, "Could not write to passphrase file");
+            mCallback.apply(null);
+        }
+    }
+
+    public void cleanupPassphraseBackup() {
+        mPassphrase = null;
+        mCallback = null;
+    }
+
+    public void savePassphraseInLegacyStorage(String passphrase, PassphraseCallback passphraseCallback) {
         if (passphrase == null) {
             passphraseCallback.apply(null);
             return;
         }
 
-        String passphraseFile = getPassphraseFilePath();
-        try(PrintWriter out = new PrintWriter(passphraseFile)) {
-            String encryptionKey= getDeviceId(mContext);
-            String mneumonicString = "mneumonic:"+passphrase;
-            try {
-                String encryptedMsg = AESCrypt.encrypt(encryptionKey, mneumonicString);
-                out.println(encryptedMsg);
-                passphraseCallback.apply(passphrase);
-            }catch (GeneralSecurityException e){
-                Timber.e(e, "Could not encrypt passphrase.");
+        ContentResolver resolver = mContext.getContentResolver();
+        Uri passphraseFile = getLegacyPassphraseFileUri();
+        try (OutputStream stream = resolver.openOutputStream(passphraseFile)) {
+            try(PrintWriter out = new PrintWriter(stream)) {
+                String encryptionKey= getDeviceId();
+                String mneumonicString = "mneumonic:"+passphrase;
+                try {
+                    String encryptedMsg = AESCrypt.encrypt(encryptionKey, mneumonicString);
+                    out.println(encryptedMsg);
+                    passphraseCallback.apply(passphrase);
+                }catch (GeneralSecurityException e){
+                    Timber.e(e, "Could not encrypt passphrase.");
+                    passphraseCallback.apply(null);
+                }
+            } catch(Exception e) {
+                Timber.e(e, "Could not write to passphrase file");
                 passphraseCallback.apply(null);
             }
-        } catch(Exception e) {
+        } catch (IOException e) {
             Timber.e(e, "Could not write to passphrase file");
             passphraseCallback.apply(null);
         }
     }
 
-    private boolean getLegacyPassphraseFromDevice(Callback passphraseCallback) {
-        String passphraseFile = getLegacyPassphraseFilePath();
-        return getPassphraseFromDevice(passphraseFile, passphraseCallback);
+    public void getLegacyPassphraseFromDevice(PassphraseCallback passphraseCallback) {
+        Uri passphraseFile = getLegacyPassphraseFileUri();
+        getPassphraseFromDevice(passphraseFile, passphraseCallback);
     }
 
-    public boolean getSavedPassphraseFromDevice(Callback passphraseCallback) {
-        String passphraseFile = getPassphraseFilePath();
-        return getPassphraseFromDevice(passphraseFile, passphraseCallback);
-    }
-
-    private boolean getPassphraseFromDevice(String passphraseFile, Callback passphraseCallback) {
+    private void getPassphraseFromDevice(Uri passphraseFile, PassphraseCallback passphraseCallback) {
         try {
-            String encryptedMsg = new Scanner(passphraseFile).useDelimiter("\\Z").next();
-            String encryptionKey = getDeviceId(mContext);
+            ContentResolver resolver = mContext.getContentResolver();
+            String encryptedMsg = new Scanner(resolver.openInputStream(passphraseFile)).useDelimiter("\\Z").next();
+            String encryptionKey = getDeviceId();
             try {
                 String content = AESCrypt.decrypt(encryptionKey, encryptedMsg);
                 if (content.startsWith("mneumonic:")) {
                     passphraseCallback.apply(content.substring(10).trim());
-                    return true;
+                    return;
                 }
             }catch (GeneralSecurityException e){
                 Timber.e(e, "Could not decrypt passphrase.");
@@ -115,6 +153,5 @@ public class PassphraseManager {
         }
 
         passphraseCallback.apply(null);
-        return false;
     }
 }

@@ -133,7 +133,7 @@ public class BackupPassphraseFragment extends OnboardingFragment {
                             HandleBackupOptionCompleted(null);
                             return null;
                         });
-                return null;
+                return;
             }
 
             DialogUtils.showAlertDialog(getContext(), this,
@@ -153,7 +153,6 @@ public class BackupPassphraseFragment extends OnboardingFragment {
                         }
                         return null;
                     });
-            return null;
         });
     }
 

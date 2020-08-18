@@ -1,18 +1,11 @@
 package com.learningmachine.android.app.ui;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
-import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.provider.Settings;
 import androidx.core.app.ActivityCompat;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,12 +13,10 @@ import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 
-import com.learningmachine.android.app.data.CertificateManager;
 import com.learningmachine.android.app.data.passphrase.PassphraseManager;
 import com.learningmachine.android.app.ui.home.HomeActivity;
 import com.learningmachine.android.app.ui.issuer.IssuerActivity;
 import com.learningmachine.android.app.ui.settings.SettingsActivity;
-import com.learningmachine.android.app.util.AESCrypt;
 import com.smallplanet.labalib.Laba;
 import com.trello.rxlifecycle.LifecycleProvider;
 import com.trello.rxlifecycle.LifecycleTransformer;
@@ -33,21 +24,15 @@ import com.trello.rxlifecycle.RxLifecycle;
 import com.trello.rxlifecycle.android.ActivityEvent;
 import com.trello.rxlifecycle.android.RxLifecycleAndroid;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.security.GeneralSecurityException;
-import java.util.Scanner;
-
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.subjects.BehaviorSubject;
-import timber.log.Timber;
 
 public abstract class LMActivity extends AppCompatActivity implements LifecycleProvider<ActivityEvent> {
+    private static final int REQUEST_CREATE_BACKUP = 101;
     protected static Class lastImportantClassSeen = HomeActivity.class;
 
     // Used by LifecycleProvider interface to transform lifeycycle events into a stream of events through an observable.
@@ -58,7 +43,7 @@ public abstract class LMActivity extends AppCompatActivity implements LifecycleP
 
     public void safeGoBack() {
 
-        // ideallt what we want to do here is to safely go back to a known good activity in our flow.
+        // ideally what we want to do here is to safely go back to a known good activity in our flow.
         // for example, if we enter the app at home, go to settings, add a cert, go to cert info,
         // and delete the cert, where should we go back to?  Ideally that would be settings.
         //
@@ -110,16 +95,16 @@ public abstract class LMActivity extends AppCompatActivity implements LifecycleP
         if(didReceivePermissionsCallback){
             if(tempPassphrase != null && passphraseCallback != null) {
                 if (didSucceedInPermissionsRequest) {
-                    mPassphraseManager.savePassphraseToDevice(tempPassphrase, passphraseCallback);
+                    mPassphraseManager.savePassphraseInLegacyStorage(tempPassphrase, passphraseCallback);
                 } else {
-                    mPassphraseManager.savePassphraseToDevice(null, passphraseCallback);
+                    mPassphraseManager.savePassphraseInLegacyStorage(null, passphraseCallback);
                 }
                 tempPassphrase = null;
                 passphraseCallback = null;
             }
 
             if(passphraseCallback != null) {
-                mPassphraseManager.getSavedPassphraseFromDevice(passphraseCallback);
+                mPassphraseManager.getLegacyPassphraseFromDevice(passphraseCallback);
                 passphraseCallback = null;
             }
 
@@ -230,34 +215,53 @@ public abstract class LMActivity extends AppCompatActivity implements LifecycleP
     /* Saving passphrases to device */
 
     private String tempPassphrase = null;
-    private PassphraseManager.Callback<String, Boolean> passphraseCallback = null;
+    private PassphraseManager.PassphraseCallback passphraseCallback = null;
 
-    public void askToSavePassphraseToDevice(String passphrase, PassphraseManager.Callback<String, Boolean> passphraseCallback) {
-        if (Build.VERSION.SDK_INT >= 23) {
+    public void askToSavePassphraseToDevice(String passphrase, PassphraseManager.PassphraseCallback callback) {
+        if (Build.VERSION.SDK_INT >= 30) {
+            mPassphraseManager.initPassphraseBackup(passphrase, callback);
+            createPassphraseBackup();
+        } else if (Build.VERSION.SDK_INT >= 23) {
             if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
                     checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                mPassphraseManager.savePassphraseToDevice(passphrase, passphraseCallback);
+                mPassphraseManager.savePassphraseInLegacyStorage(passphrase, callback);
             } else {
                 tempPassphrase = passphrase;
-                this.passphraseCallback = passphraseCallback;
+                this.passphraseCallback = callback;
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
             }
         } else {
-            mPassphraseManager.savePassphraseToDevice(passphrase, passphraseCallback);
+            mPassphraseManager.savePassphraseInLegacyStorage(passphrase, callback);
         }
     }
 
-    public void askToGetPassphraseFromDevice(PassphraseManager.Callback<String, Boolean> passphraseCallback) {
+    public void askToGetPassphraseFromDevice(PassphraseManager.PassphraseCallback passphraseCallback) {
         if (Build.VERSION.SDK_INT >= 23) {
             if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                mPassphraseManager.getSavedPassphraseFromDevice(passphraseCallback);
+                mPassphraseManager.getLegacyPassphraseFromDevice(passphraseCallback);
             } else {
                 this.passphraseCallback = passphraseCallback;
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
             }
         } else {
-            mPassphraseManager.getSavedPassphraseFromDevice(passphraseCallback);
+            mPassphraseManager.getLegacyPassphraseFromDevice(passphraseCallback);
         }
+    }
+
+    private void createPassphraseBackup() {
+        Intent createBackupIntent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+        createBackupIntent.addCategory(Intent.CATEGORY_OPENABLE);
+        createBackupIntent.setType("application/octet-stream");
+        createBackupIntent.putExtra(Intent.EXTRA_TITLE, "learningmachine.dat");
+        startActivityForResult(createBackupIntent, REQUEST_CREATE_BACKUP);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CREATE_BACKUP && resultCode == RESULT_OK) {
+            mPassphraseManager.storePassphraseBackup(data.getData());
+        }
+        mPassphraseManager.cleanupPassphraseBackup();
     }
 
     private boolean didReceivePermissionsCallback = false;

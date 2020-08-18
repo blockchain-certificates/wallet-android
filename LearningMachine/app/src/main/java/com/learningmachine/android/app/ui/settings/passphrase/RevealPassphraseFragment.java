@@ -93,7 +93,7 @@ public class RevealPassphraseFragment extends LMFragment {
                             HandleBackupOptionCompleted(null);
                             return null;
                         });
-                return null;
+                return;
             }
 
             DialogUtils.showAlertDialog(getContext(), this,
@@ -113,8 +113,6 @@ public class RevealPassphraseFragment extends LMFragment {
                         }
                         return null;
                     });
-
-            return null;
         });
     }
 
