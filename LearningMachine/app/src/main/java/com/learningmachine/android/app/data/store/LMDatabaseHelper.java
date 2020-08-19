@@ -3,7 +3,7 @@ package com.learningmachine.android.app.data.store;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.support.annotation.VisibleForTesting;
+import androidx.annotation.VisibleForTesting;
 
 import com.learningmachine.android.app.data.store.db.Migration;
 

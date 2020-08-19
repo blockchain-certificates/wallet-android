@@ -2,9 +2,9 @@ package com.learningmachine.android.app.data.bitcoin;
 
 
 import android.content.Context;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
-import android.test.suitebuilder.annotation.LargeTest;
+import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.filters.LargeTest;
 
 import org.bitcoinj.core.NetworkParameters;
 import org.bitcoinj.params.MainNetParams;
@@ -24,7 +24,7 @@ public class BitcoinManagerTest {
 
     @Test
     public void walletShouldBeSaved_andLoaded() {
-        Context context = InstrumentationRegistry.getTargetContext();
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
         NetworkParameters networkParameters = MainNetParams.get();
 
         StringHolder stringHolder = new StringHolder();
@@ -44,7 +44,7 @@ public class BitcoinManagerTest {
 
     @Test
     public void walletShouldIssueNewReceiveAddressesAfterReload() {
-        Context context = InstrumentationRegistry.getTargetContext();
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
         NetworkParameters networkParameters = MainNetParams.get();
 
         StringHolder stringHolder = new StringHolder();

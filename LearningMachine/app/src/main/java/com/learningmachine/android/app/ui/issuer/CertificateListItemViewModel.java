@@ -1,17 +1,11 @@
 package com.learningmachine.android.app.ui.issuer;
 
-import android.content.Context;
-import android.content.res.Resources;
-import android.databinding.BaseObservable;
-import android.databinding.Bindable;
+import androidx.databinding.BaseObservable;
+import androidx.databinding.Bindable;
 
-import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.model.CertificateRecord;
 
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-import org.joda.time.LocalDate;
-import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
 

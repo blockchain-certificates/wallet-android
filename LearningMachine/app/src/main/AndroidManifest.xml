@@ -108,7 +108,7 @@
             android:launchMode="singleTask"/>
 
         <provider
-            android:name="android.support.v4.content.FileProvider"
+            android:name="androidx.core.content.FileProvider"
             android:authorities="com.learningmachine.android.app.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">

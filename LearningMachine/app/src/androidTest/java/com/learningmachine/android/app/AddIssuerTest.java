@@ -1,10 +1,10 @@
 package com.learningmachine.android.app;
 
-import android.databinding.adapters.ViewBindingAdapter;
-import android.support.test.espresso.ViewAssertion;
-import android.support.test.filters.LargeTest;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
+import androidx.databinding.adapters.ViewBindingAdapter;
+import androidx.test.espresso.ViewAssertion;
+import androidx.test.filters.LargeTest;
+import androidx.test.rule.ActivityTestRule;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.learningmachine.android.app.ui.home.HomeActivity;
 
@@ -16,12 +16,12 @@ import org.junit.runner.RunWith;
 
 import timber.log.Timber;
 
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
 /**
  * Created by chris on 12/20/17.
@@ -46,7 +46,7 @@ public class AddIssuerTest {
 
     @Test
     public void addIssuer_fromEmptyState() {
-        onView(withId(R.id.issuer_add_button)).perform(click());
+        onView(withId(R.id.settings_add_issuer_text_view)).perform(click());
 
         onView(withId(R.id.add_issuer_url_edit_text)).check(matches(isDisplayed()));
 

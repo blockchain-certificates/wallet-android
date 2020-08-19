@@ -2,12 +2,12 @@ package com.learningmachine.android.app.ui.cert;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
+import androidx.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.internal.BottomNavigationMenuView;
-import android.support.v4.content.FileProvider;
+import androidx.annotation.Nullable;
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
+import androidx.core.content.FileProvider;
 import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Pair;
@@ -122,8 +122,8 @@ public class CertificateFragment extends LMFragment {
     private void setBottomIconsSize(int size) {
         BottomNavigationMenuView menuView = (BottomNavigationMenuView) mBinding.certBottomNavigation.getChildAt(0);
         for (int i = 0; i < menuView.getChildCount(); i++) {
-            View icon = menuView.getChildAt(i).findViewById(android.support.design.R.id.icon);
-            TextView textView = menuView.getChildAt(i).findViewById(android.support.design.R.id.largeLabel);
+            View icon = menuView.getChildAt(i).findViewById(R.id.icon);
+            TextView textView = menuView.getChildAt(i).findViewById(R.id.largeLabel);
             textView.setTextAppearance(getContext(), R.style.Text_Footer_4);
             ViewGroup.LayoutParams layoutParams = icon.getLayoutParams();
             DisplayMetrics displayMetrics = getResources().getDisplayMetrics();

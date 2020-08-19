@@ -1,15 +1,12 @@
 package com.learningmachine.android.app.ui.splash;
 
 
-import android.app.ActivityManager;
-import android.content.Context;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.espresso.UiController;
-import android.support.test.espresso.ViewAction;
-import android.support.test.espresso.ViewInteraction;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
-import android.test.suitebuilder.annotation.LargeTest;
+import androidx.test.espresso.UiController;
+import androidx.test.espresso.ViewAction;
+import androidx.test.espresso.ViewInteraction;
+import androidx.test.rule.ActivityTestRule;
+
+import androidx.test.filters.LargeTest;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -21,26 +18,22 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 import org.hamcrest.core.IsInstanceOf;
-import org.junit.Before;
 import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.w3c.dom.Text;
 
 import timber.log.Timber;
 
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.scrollTo;
-import static android.support.test.espresso.action.ViewActions.swipeLeft;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
-import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withParent;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.scrollTo;
+import static androidx.test.espresso.action.ViewActions.swipeLeft;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
+import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withParent;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
 
@@ -86,29 +79,8 @@ public class GeneratePassphraseTest {
                         isDisplayed()));
         onboardingViewPager.perform(swipeLeft());
 
-        ViewInteraction appCompatButton2 = onView(
-                allOf(withId(R.id.generate_passphrase), withText("Generate Passphrase"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.onboarding_view_pager),
-                                        1),
-                                3),
-                        isDisplayed()));
-        appCompatButton2.perform(click());
-
-        ViewInteraction onboardingViewPager2 = onView(
-                allOf(withId(R.id.onboarding_view_pager),
-                        childAtPosition(
-                                allOf(withId(android.R.id.content),
-                                        childAtPosition(
-                                                withId(R.id.action_bar_root),
-                                                1)),
-                                0),
-                        isDisplayed()));
-        onboardingViewPager2.perform(swipeLeft());
-
         ViewInteraction textView = onView(
-                allOf(withId(R.id.onboarding_passphrase_text_view),
+                allOf(withId(R.id.onboarding_passphrase_content),
                         childAtPosition(
                                 withParent(withId(R.id.onboarding_view_pager)),
                                 3),
@@ -165,7 +137,7 @@ public class GeneratePassphraseTest {
         appCompatTextView.perform(scrollTo(), click());
 
         ViewInteraction textView2 = onView(
-                allOf(withId(R.id.current_passphrase_text_view),
+                allOf(withId(R.id.onboarding_passphrase_content),
                         childAtPosition(
                                 childAtPosition(
                                         IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class),

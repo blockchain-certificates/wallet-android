@@ -2,8 +2,8 @@ package com.learningmachine.android.app.ui.home;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.databinding.BaseObservable;
-import android.databinding.Bindable;
+import androidx.databinding.BaseObservable;
+import androidx.databinding.Bindable;
 
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.model.IssuerRecord;

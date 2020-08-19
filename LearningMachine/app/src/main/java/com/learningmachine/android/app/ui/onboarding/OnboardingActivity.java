@@ -1,17 +1,11 @@
 package com.learningmachine.android.app.ui.onboarding;
 
-import android.Manifest;
-import android.content.Context;
-import android.content.pm.PackageManager;
-import android.databinding.DataBindingUtil;
-import android.os.Build;
+import androidx.databinding.DataBindingUtil;
+
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.Settings;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.view.ViewPager;
-import android.telephony.TelephonyManager;
-import android.util.Log;
+
+import androidx.core.app.ActivityCompat;
+import androidx.viewpager.widget.ViewPager;
 
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.inject.Injector;
@@ -19,12 +13,6 @@ import com.learningmachine.android.app.data.preferences.SharedPreferencesManager
 import com.learningmachine.android.app.databinding.ActivityOnboardingBinding;
 import com.learningmachine.android.app.ui.LMActivity;
 import com.learningmachine.android.app.ui.onboarding.OnboardingFlow.FlowType;
-import com.learningmachine.android.app.util.AESCrypt;
-
-import java.io.File;
-import java.io.PrintWriter;
-import java.security.GeneralSecurityException;
-import java.util.Scanner;
 
 import javax.inject.Inject;
 

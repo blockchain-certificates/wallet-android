@@ -1,12 +1,12 @@
 package com.learningmachine.android.app.ui.settings;
 
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
+import androidx.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.support.annotation.Nullable;
-import android.support.v4.content.FileProvider;
+
+import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,10 +26,7 @@ import com.learningmachine.android.app.util.DialogUtils;
 import com.learningmachine.android.app.util.FileLoggingTree;
 import com.learningmachine.android.app.util.FileUtils;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
 
 import javax.inject.Inject;
 
