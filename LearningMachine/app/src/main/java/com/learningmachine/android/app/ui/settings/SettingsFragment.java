@@ -3,6 +3,7 @@ package com.learningmachine.android.app.ui.settings;
 import android.content.Intent;
 import androidx.databinding.DataBindingUtil;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -15,7 +16,9 @@ import com.learningmachine.android.app.BuildConfig;
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.bitcoin.BitcoinManager;
 import com.learningmachine.android.app.data.inject.Injector;
+import com.learningmachine.android.app.data.passphrase.PassphraseManager;
 import com.learningmachine.android.app.databinding.FragmentSettingsBinding;
+import com.learningmachine.android.app.dialog.AlertDialogFragment;
 import com.learningmachine.android.app.ui.LMFragment;
 import com.learningmachine.android.app.ui.LMWebActivity;
 import com.learningmachine.android.app.ui.cert.AddCertificateActivity;
@@ -32,11 +35,17 @@ import javax.inject.Inject;
 
 import timber.log.Timber;
 
+import static android.app.Activity.RESULT_OK;
+import static android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION;
+import static android.content.Intent.FLAG_GRANT_WRITE_URI_PERMISSION;
+
 
 public class SettingsFragment extends LMFragment {
 
-    @Inject
-    protected BitcoinManager mBitcoinManager;
+    private static final int REQUEST_OPEN = 201;
+
+    @Inject protected BitcoinManager mBitcoinManager;
+    @Inject protected PassphraseManager mPassphraseManager;
 
     public static SettingsFragment newInstance() {
         return new SettingsFragment();
@@ -115,7 +124,7 @@ public class SettingsFragment extends LMFragment {
                     .getType(fileUri);
             emailIntent.setType(type);
             emailIntent.putExtra(Intent.EXTRA_STREAM, fileUri);
-            emailIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            emailIntent.addFlags(FLAG_GRANT_READ_URI_PERMISSION);
             // the mail subject
             emailIntent .putExtra(Intent.EXTRA_SUBJECT, "Logcat content for Blockcerts");
             emailIntent.setType("message/rfc822");
@@ -156,28 +165,55 @@ public class SettingsFragment extends LMFragment {
         }
 
         binding.settingsLogout.setOnClickListener(v -> {
+            String message = getResources().getString(R.string.settings_logout_legacy_message);
+            AlertDialogFragment.Callback<Integer, Void> callback = (btnIdx) -> {
+                if(btnIdx == 1) {
+                    mBitcoinManager.resetEverything();
+
+                    Intent intent = new Intent(getActivity(), OnboardingActivity.class);
+                    startActivity(intent);
+                    getActivity().finish();
+                }
+                return null;
+            };
+            if (Build.VERSION.SDK_INT >= 30) {
+                message = getResources().getString(R.string.settings_logout_message);
+                callback = (btnIdx) -> {
+                    if(btnIdx == 1) {
+                        Intent openIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                        openIntent.addCategory(Intent.CATEGORY_OPENABLE);
+                        openIntent.addFlags(FLAG_GRANT_READ_URI_PERMISSION | FLAG_GRANT_WRITE_URI_PERMISSION);
+                        openIntent.setType("application/octet-stream");
+                        openIntent.putExtra(Intent.EXTRA_TITLE, "learningmachine.dat");
+                        startActivityForResult(openIntent, REQUEST_OPEN);
+                    }
+                    return null;
+                };
+            }
 
             DialogUtils.showAlertDialog(getContext(), this,
                     R.drawable.ic_dialog_failure,
                     getResources().getString(R.string.settings_logout_title),
-                    getResources().getString(R.string.settings_logout_message),
+                    message,
                     getResources().getString(R.string.settings_logout_button_title),
                     getResources().getString(R.string.onboarding_passphrase_cancel),
-                    (btnIdx) -> {
-                        if((int)btnIdx == 1) {
-                            mBitcoinManager.resetEverything();
-
-                            Intent intent = new Intent(getActivity(), OnboardingActivity.class);
-                            startActivity(intent);
-                            getActivity().finish();
-                        }
-                        return null;
-                    });
-
-
+                    callback);
         });
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_OPEN && resultCode == RESULT_OK) {
+            if (Build.VERSION.SDK_INT >= 30) {
+                mPassphraseManager.deletePassphrase(data.getData());
+            }
+            mBitcoinManager.resetEverything();
+
+            Intent intent = new Intent(getActivity(), OnboardingActivity.class);
+            startActivity(intent);
+            getActivity().finish();
+        }
+    }
 }
 
 

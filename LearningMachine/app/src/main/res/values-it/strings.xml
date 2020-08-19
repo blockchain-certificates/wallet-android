@@ -115,7 +115,7 @@
 
     <string name="settings_logout">Disconnetti e resetta</string>
     <string name="settings_logout_title">Disconnetti e pulisci il Device</string>
-    <string name="settings_logout_message">La disconnessione rimuoverà tutte le credenziali e tutte le frasi di accesso archiviate su questo dispositivo.</string>
+    <string name="settings_logout_legacy_message">La disconnessione rimuoverà tutte le credenziali e tutte le frasi di accesso archiviate su questo dispositivo.</string>
     <string name="settings_logout_button_title">Log out</string>
 
 

@@ -31,8 +31,12 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.subjects.BehaviorSubject;
 
+import static android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION;
+import static android.content.Intent.FLAG_GRANT_WRITE_URI_PERMISSION;
+
 public abstract class LMActivity extends AppCompatActivity implements LifecycleProvider<ActivityEvent> {
     private static final int REQUEST_CREATE_BACKUP = 101;
+    private static final int REQUEST_RESTORE_BACKUP = 102;
     protected static Class lastImportantClassSeen = HomeActivity.class;
 
     // Used by LifecycleProvider interface to transform lifeycycle events into a stream of events through an observable.
@@ -236,7 +240,10 @@ public abstract class LMActivity extends AppCompatActivity implements LifecycleP
     }
 
     public void askToGetPassphraseFromDevice(PassphraseManager.PassphraseCallback passphraseCallback) {
-        if (Build.VERSION.SDK_INT >= 23) {
+        if (Build.VERSION.SDK_INT >= 30) {
+            mPassphraseManager.initRestoreBackup(passphraseCallback);
+            openPassphraseBackup();
+        } else if (Build.VERSION.SDK_INT >= 23) {
             if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                 mPassphraseManager.getLegacyPassphraseFromDevice(passphraseCallback);
             } else {
@@ -251,15 +258,27 @@ public abstract class LMActivity extends AppCompatActivity implements LifecycleP
     private void createPassphraseBackup() {
         Intent createBackupIntent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
         createBackupIntent.addCategory(Intent.CATEGORY_OPENABLE);
+        createBackupIntent.addFlags(FLAG_GRANT_READ_URI_PERMISSION | FLAG_GRANT_WRITE_URI_PERMISSION);
         createBackupIntent.setType("application/octet-stream");
         createBackupIntent.putExtra(Intent.EXTRA_TITLE, "learningmachine.dat");
         startActivityForResult(createBackupIntent, REQUEST_CREATE_BACKUP);
+    }
+
+    private void openPassphraseBackup() {
+        Intent createBackupIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        createBackupIntent.addCategory(Intent.CATEGORY_OPENABLE);
+        createBackupIntent.addFlags(FLAG_GRANT_READ_URI_PERMISSION);
+        createBackupIntent.setType("application/octet-stream");
+        createBackupIntent.putExtra(Intent.EXTRA_TITLE, "learningmachine.dat");
+        startActivityForResult(createBackupIntent, REQUEST_RESTORE_BACKUP);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CREATE_BACKUP && resultCode == RESULT_OK) {
             mPassphraseManager.storePassphraseBackup(data.getData());
+        } else if (requestCode == REQUEST_RESTORE_BACKUP && resultCode == RESULT_OK) {
+            mPassphraseManager.restoreBackup(data.getData());
         }
         mPassphraseManager.cleanupPassphraseBackup();
     }

@@ -52,12 +52,11 @@ public class PastePassphraseFragment extends OnboardingFragment {
 
         ((LMActivity)getActivity()).askToGetPassphraseFromDevice((passphrase) -> {
             if (passphrase != null) {
-                mBinding.pastePassphraseEditText.setText(passphrase.toString());
+                mBinding.pastePassphraseEditText.setText(passphrase);
                 onDone();
             } else {
                 mBinding.passphraseLabel.requestFocus();
             }
-            return null;
         });
 
         mBinding.pastePassphraseEditText.setFilters(new InputFilter[] {
@@ -157,9 +156,7 @@ public class PastePassphraseFragment extends OnboardingFragment {
                 getResources().getString(R.string.onboarding_passphrase_invalid_desc),
                 null,
                 getResources().getString(R.string.ok_button),
-                (btnIdx) -> {
-                    return null;
-                });
+                (btnIdx) -> null);
     }
 
 
