@@ -1,22 +1,23 @@
 package com.learningmachine.android.app.data.passphrase;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
-import android.os.ParcelFileDescriptor;
 import android.provider.Settings;
-import android.support.annotation.RequiresApi;
+
+import androidx.annotation.RequiresApi;
 
 import com.learningmachine.android.app.util.AESCrypt;
 
 import java.io.File;
-import java.io.FileDescriptor;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.security.GeneralSecurityException;
@@ -48,13 +49,23 @@ public class PassphraseManager {
     }
 
     public void savePassphraseInLegacyStorage(String passphrase, PassphraseCallback passphraseCallback) {
-        Uri location = getLegacyPassphraseFileUri();
-        storePassphraseBackup(passphrase, location, passphraseCallback);
+        Uri passphraseFile = getLegacyPassphraseFileUri();
+        try (PrintWriter out = new PrintWriter(passphraseFile.getPath())) {
+            storePassphraseBackup(passphrase, out, passphraseCallback);
+        } catch (IOException e) {
+            Timber.e(e, "Failed to save passphrase backup");
+            passphraseCallback.apply(null);
+        }
     }
 
     public void getLegacyPassphraseFromDevice(PassphraseCallback passphraseCallback) {
         Uri passphraseFile = getLegacyPassphraseFileUri();
-        getPassphraseFromDevice(passphraseFile, passphraseCallback);
+        try (FileInputStream inputStream = new FileInputStream(passphraseFile.getPath())) {
+            getPassphraseFromDevice(inputStream, passphraseCallback);
+        } catch (IOException e) {
+            Timber.e(e, "Failed to retrieve passphrase backup");
+            passphraseCallback.apply(null);
+        }
     }
 
     public void deleteLegacyPassphrase() {
@@ -67,7 +78,10 @@ public class PassphraseManager {
 
     public void migrateSavedPassphrase(PassphraseCallback passphraseCallback) {
         getLegacyPassphraseFromDevice((passphrase) -> {
-            savePassphraseInLegacyStorage(passphrase, passphraseCallback);
+            // TODO: select new location
+            OutputStream location = null;
+            PrintWriter out = new PrintWriter(location);
+            storePassphraseBackup(passphrase, out, passphraseCallback);
             deleteLegacyPassphrase();
         });
     }
@@ -92,31 +106,30 @@ public class PassphraseManager {
         mCallback = callback;
     }
 
-    public void storePassphraseBackup(Uri location) {
-        storePassphraseBackup(mPassphrase, location, mCallback);
+    public void storePassphraseBackup(Uri location)  {
+        ContentResolver resolver = mContext.getContentResolver();
+        try (OutputStream outputStream = resolver.openOutputStream(location)){
+            PrintWriter out = new PrintWriter(outputStream);
+            storePassphraseBackup(mPassphrase, out, mCallback);
+        } catch (IOException e) {
+            Timber.e(e);
+        }
     }
 
-    private void storePassphraseBackup(String passphrase, Uri location, PassphraseCallback callback) {
+    private void storePassphraseBackup(String passphrase, PrintWriter out, PassphraseCallback callback) {
         if (passphrase == null) {
             callback.apply(null);
             return;
         }
 
-        ContentResolver resolver = mContext.getContentResolver();
-        try (OutputStream stream = resolver.openOutputStream(location)) {
-            PrintWriter out = new PrintWriter(stream);
-            String encryptionKey= getDeviceId();
-            String mneumonicString = "mneumonic:"+passphrase;
-            try {
-                String encryptedMsg = AESCrypt.encrypt(encryptionKey, mneumonicString);
-                out.println(encryptedMsg);
-                callback.apply(passphrase);
-            }catch (GeneralSecurityException e){
-                Timber.e(e, "Could not encrypt passphrase.");
-                callback.apply(null);
-            }
-        } catch (Exception e) {
-            Timber.e(e, "Could not write to passphrase file");
+        String encryptionKey= getDeviceId();
+        String mneumonicString = "mneumonic:"+passphrase;
+        try {
+            String encryptedMsg = AESCrypt.encrypt(encryptionKey, mneumonicString);
+            out.println(encryptedMsg);
+            callback.apply(passphrase);
+        }catch (GeneralSecurityException e){
+            Timber.e(e, "Could not encrypt passphrase.");
             callback.apply(null);
         }
     }
@@ -130,14 +143,19 @@ public class PassphraseManager {
         mCallback = callback;
     }
 
-    public void restoreBackup(Uri passphraseFile) {
-        getPassphraseFromDevice(passphraseFile, mCallback);
+    public void getPassphraseBackup(Uri passphraseFile) {
+        ContentResolver resolver = mContext.getContentResolver();
+        try (InputStream inputStream = resolver.openInputStream(passphraseFile)) {
+            getPassphraseFromDevice(inputStream, mCallback);
+        } catch (IOException e) {
+            Timber.e(e, "Failed to retrieve passphrase backup");
+            mCallback.apply(null);
+        }
     }
 
-    private void getPassphraseFromDevice(Uri passphraseFile, PassphraseCallback passphraseCallback) {
+    private void getPassphraseFromDevice(InputStream inputStream, PassphraseCallback passphraseCallback) {
         try {
-            ContentResolver resolver = mContext.getContentResolver();
-            String encryptedMsg = new Scanner(resolver.openInputStream(passphraseFile)).useDelimiter("\\Z").next();
+            String encryptedMsg = new Scanner(inputStream).useDelimiter("\\Z").next();
             String encryptionKey = getDeviceId();
             try {
                 String content = AESCrypt.decrypt(encryptionKey, encryptedMsg);

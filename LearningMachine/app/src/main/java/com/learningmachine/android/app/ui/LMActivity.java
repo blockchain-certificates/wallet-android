@@ -278,7 +278,7 @@ public abstract class LMActivity extends AppCompatActivity implements LifecycleP
         if (requestCode == REQUEST_CREATE_BACKUP && resultCode == RESULT_OK) {
             mPassphraseManager.storePassphraseBackup(data.getData());
         } else if (requestCode == REQUEST_RESTORE_BACKUP && resultCode == RESULT_OK) {
-            mPassphraseManager.restoreBackup(data.getData());
+            mPassphraseManager.getPassphraseBackup(data.getData());
         }
         mPassphraseManager.cleanupPassphraseBackup();
     }
