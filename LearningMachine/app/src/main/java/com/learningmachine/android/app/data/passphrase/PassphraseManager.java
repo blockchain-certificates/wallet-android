@@ -15,7 +15,6 @@ import com.learningmachine.android.app.util.AESCrypt;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -76,13 +75,16 @@ public class PassphraseManager {
         }
     }
 
-    public void migrateSavedPassphrase(PassphraseCallback passphraseCallback) {
+    public void migrateSavedPassphrase(Uri location) {
         getLegacyPassphraseFromDevice((passphrase) -> {
-            // TODO: select new location
-            OutputStream location = null;
-            PrintWriter out = new PrintWriter(location);
-            storePassphraseBackup(passphrase, out, passphraseCallback);
-            deleteLegacyPassphrase();
+            ContentResolver resolver = mContext.getContentResolver();
+            try (OutputStream outputStream = resolver.openOutputStream(location)) {
+                PrintWriter out = new PrintWriter(outputStream);
+                storePassphraseBackup(passphrase, out, mCallback);
+                deleteLegacyPassphrase();
+            } catch (IOException e) {
+                Timber.e(e, "Failed to migrate passphrase");
+            }
         });
     }
 
@@ -127,8 +129,10 @@ public class PassphraseManager {
         try {
             String encryptedMsg = AESCrypt.encrypt(encryptionKey, mneumonicString);
             out.println(encryptedMsg);
+            out.flush();
+            out.close();
             callback.apply(passphrase);
-        }catch (GeneralSecurityException e){
+        } catch (GeneralSecurityException e){
             Timber.e(e, "Could not encrypt passphrase.");
             callback.apply(null);
         }
@@ -140,6 +144,10 @@ public class PassphraseManager {
     }
 
     public void initRestoreBackup(PassphraseCallback callback) {
+        mCallback = callback;
+    }
+
+    public void initPassphraseMigration(PassphraseCallback callback) {
         mCallback = callback;
     }
 

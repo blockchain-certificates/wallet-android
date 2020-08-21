@@ -4,8 +4,11 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,6 +40,7 @@ import static android.content.Intent.FLAG_GRANT_WRITE_URI_PERMISSION;
 public abstract class LMActivity extends AppCompatActivity implements LifecycleProvider<ActivityEvent> {
     private static final int REQUEST_CREATE_BACKUP = 101;
     private static final int REQUEST_RESTORE_BACKUP = 102;
+    private static final int REQUEST_MIGRATE_BACKUP = 103;
     protected static Class lastImportantClassSeen = HomeActivity.class;
 
     // Used by LifecycleProvider interface to transform lifeycycle events into a stream of events through an observable.
@@ -44,6 +48,9 @@ public abstract class LMActivity extends AppCompatActivity implements LifecycleP
     private Observable.Transformer mMainThreadTransformer;
 
     @Inject PassphraseManager mPassphraseManager;
+    private Uri mStorePassphraseBackupUri;
+    private Uri mRetrievePassphraseBackupUri;
+    private Uri mMigratePassphraseBackupUri;
 
     public void safeGoBack() {
 
@@ -87,6 +94,20 @@ public abstract class LMActivity extends AppCompatActivity implements LifecycleP
         Class c = this.getClass();
         if(c == HomeActivity.class || c == IssuerActivity.class || c == SettingsActivity.class) {
             lastImportantClassSeen = c;
+        }
+
+        if (mStorePassphraseBackupUri != null) {
+            mPassphraseManager.storePassphraseBackup(mStorePassphraseBackupUri);
+            mStorePassphraseBackupUri = null;
+            mPassphraseManager.cleanupPassphraseBackup();
+        } else if (mRetrievePassphraseBackupUri != null) {
+            mPassphraseManager.getPassphraseBackup(mRetrievePassphraseBackupUri);
+            mRetrievePassphraseBackupUri = null;
+            mPassphraseManager.cleanupPassphraseBackup();
+        } else if (mMigratePassphraseBackupUri != null) {
+            mPassphraseManager.migrateSavedPassphrase(mMigratePassphraseBackupUri);
+            mMigratePassphraseBackupUri = null;
+            mPassphraseManager.cleanupPassphraseBackup();
         }
     }
 
@@ -223,8 +244,7 @@ public abstract class LMActivity extends AppCompatActivity implements LifecycleP
 
     public void askToSavePassphraseToDevice(String passphrase, PassphraseManager.PassphraseCallback callback) {
         if (Build.VERSION.SDK_INT >= 30) {
-            mPassphraseManager.initPassphraseBackup(passphrase, callback);
-            createPassphraseBackup();
+            createPassphraseBackup(passphrase, callback);
         } else if (Build.VERSION.SDK_INT >= 23) {
             if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
                     checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
@@ -241,8 +261,7 @@ public abstract class LMActivity extends AppCompatActivity implements LifecycleP
 
     public void askToGetPassphraseFromDevice(PassphraseManager.PassphraseCallback passphraseCallback) {
         if (Build.VERSION.SDK_INT >= 30) {
-            mPassphraseManager.initRestoreBackup(passphraseCallback);
-            openPassphraseBackup();
+            openPassphraseBackup(passphraseCallback);
         } else if (Build.VERSION.SDK_INT >= 23) {
             if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                 mPassphraseManager.getLegacyPassphraseFromDevice(passphraseCallback);
@@ -255,7 +274,8 @@ public abstract class LMActivity extends AppCompatActivity implements LifecycleP
         }
     }
 
-    private void createPassphraseBackup() {
+    private void createPassphraseBackup(String passphrase, PassphraseManager.PassphraseCallback callback) {
+        mPassphraseManager.initPassphraseBackup(passphrase, callback);
         Intent createBackupIntent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
         createBackupIntent.addCategory(Intent.CATEGORY_OPENABLE);
         createBackupIntent.addFlags(FLAG_GRANT_READ_URI_PERMISSION | FLAG_GRANT_WRITE_URI_PERMISSION);
@@ -264,7 +284,8 @@ public abstract class LMActivity extends AppCompatActivity implements LifecycleP
         startActivityForResult(createBackupIntent, REQUEST_CREATE_BACKUP);
     }
 
-    private void openPassphraseBackup() {
+    private void openPassphraseBackup(PassphraseManager.PassphraseCallback callback) {
+        mPassphraseManager.initRestoreBackup(callback);
         Intent createBackupIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         createBackupIntent.addCategory(Intent.CATEGORY_OPENABLE);
         createBackupIntent.addFlags(FLAG_GRANT_READ_URI_PERMISSION);
@@ -273,14 +294,25 @@ public abstract class LMActivity extends AppCompatActivity implements LifecycleP
         startActivityForResult(createBackupIntent, REQUEST_RESTORE_BACKUP);
     }
 
+    protected void migratePassphrase(PassphraseManager.PassphraseCallback callback) {
+        mPassphraseManager.initPassphraseMigration(callback);
+        Intent createBackupIntent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+        createBackupIntent.addCategory(Intent.CATEGORY_OPENABLE);
+        createBackupIntent.addFlags(FLAG_GRANT_READ_URI_PERMISSION | FLAG_GRANT_WRITE_URI_PERMISSION);
+        createBackupIntent.setType("application/octet-stream");
+        createBackupIntent.putExtra(Intent.EXTRA_TITLE, "learningmachine.dat");
+        startActivityForResult(createBackupIntent, REQUEST_MIGRATE_BACKUP);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CREATE_BACKUP && resultCode == RESULT_OK) {
-            mPassphraseManager.storePassphraseBackup(data.getData());
+            mStorePassphraseBackupUri = data.getData();
         } else if (requestCode == REQUEST_RESTORE_BACKUP && resultCode == RESULT_OK) {
-            mPassphraseManager.getPassphraseBackup(data.getData());
+            mRetrievePassphraseBackupUri = data.getData();
+        } else if (requestCode == REQUEST_MIGRATE_BACKUP && resultCode == RESULT_OK) {
+            mMigratePassphraseBackupUri = data.getData();
         }
-        mPassphraseManager.cleanupPassphraseBackup();
     }
 
     private boolean didReceivePermissionsCallback = false;

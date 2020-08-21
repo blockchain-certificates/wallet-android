@@ -23,6 +23,8 @@ import javax.inject.Inject;
 
 import timber.log.Timber;
 
+import static android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION;
+import static android.content.Intent.FLAG_GRANT_WRITE_URI_PERMISSION;
 import static com.learningmachine.android.app.data.url.LaunchType.ADD_CERTIFICATE;
 import static com.learningmachine.android.app.data.url.LaunchType.ADD_ISSUER;
 
@@ -55,9 +57,7 @@ public class SplashActivity extends LMActivity {
                 getResources().getString(R.string.migrate_passphrase_move),
                 getResources().getString(R.string.migrate_passphrase_delete),
                 (btnIdx) -> {
-                    mPassphraseManager.migrateSavedPassphrase((o) -> {
-                        launch();
-                    });
+                    migratePassphrase((o) -> launch());
                     return null;
                 },
                 null,
