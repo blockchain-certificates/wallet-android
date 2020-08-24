@@ -43,8 +43,18 @@ public class PassphraseManager {
     }
 
     public boolean doesLegacyPassphraseFileExist() {
-        String passphraseFilePath = getLegacyPassphraseFileUri().getPath();
-        return passphraseFilePath != null && new File(passphraseFilePath).exists();
+        Uri passphraseUri = getLegacyPassphraseFileUri();
+        if (passphraseUri != null && passphraseUri.getPath() != null) {
+            File passphraseFile = new File(passphraseUri.getPath());
+            try {
+                if (passphraseFile.exists() && new FileInputStream(passphraseFile).available() > 0) {
+                    return true;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
     }
 
     public void savePassphraseInLegacyStorage(String passphrase, PassphraseCallback passphraseCallback) {
