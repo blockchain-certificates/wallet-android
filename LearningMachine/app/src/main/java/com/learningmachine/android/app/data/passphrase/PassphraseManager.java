@@ -45,14 +45,7 @@ public class PassphraseManager {
     public boolean doesLegacyPassphraseFileExist() {
         Uri passphraseUri = getLegacyPassphraseFileUri();
         if (passphraseUri != null && passphraseUri.getPath() != null) {
-            File passphraseFile = new File(passphraseUri.getPath());
-            try {
-                if (passphraseFile.exists() && new FileInputStream(passphraseFile).available() > 0) {
-                    return true;
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            return new File(passphraseUri.getPath()).exists();
         }
         return false;
     }
@@ -95,7 +88,13 @@ public class PassphraseManager {
             } catch (IOException e) {
                 Timber.e(e, "Failed to migrate passphrase");
             }
+            cleanupPassphraseBackup();
         });
+    }
+
+    public void handleCanceledRequest() {
+        mCallback.apply(null);
+        cleanupPassphraseBackup();
     }
 
     public void reset() {
@@ -126,6 +125,7 @@ public class PassphraseManager {
         } catch (IOException e) {
             Timber.e(e);
         }
+        cleanupPassphraseBackup();
     }
 
     private void storePassphraseBackup(String passphrase, PrintWriter out, PassphraseCallback callback) {
@@ -148,7 +148,7 @@ public class PassphraseManager {
         }
     }
 
-    public void cleanupPassphraseBackup() {
+    private void cleanupPassphraseBackup() {
         mPassphrase = null;
         mCallback = null;
     }
@@ -169,6 +169,7 @@ public class PassphraseManager {
             Timber.e(e, "Failed to retrieve passphrase backup");
             mCallback.apply(null);
         }
+        cleanupPassphraseBackup();
     }
 
     private void getPassphraseFromDevice(InputStream inputStream, PassphraseCallback passphraseCallback) {

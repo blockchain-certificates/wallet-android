@@ -239,7 +239,9 @@
     <!--Delete Backup-->
     <string name="delete_backup_title">Delete Backup</string>
     <string name="delete_backup_message">Are you sure you want to delete your passphrase backup?  This action cannot be undone.</string>
-    <string name="delete_backup_confirm">Confirm Delete</string>
-    <string name="delete_backup_cancel">Cancel</string>
+    <string name="dialog_confirm">Confirm Delete</string>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="migration_failed_title">Migration Failed</string>
+    <string name="migration_failed_message">Failed to move passphrase backup file.  Please manually move the learningmachine.dat file to the downloads folder.</string>
 
 </resources>

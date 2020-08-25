@@ -23,8 +23,6 @@ import javax.inject.Inject;
 
 import timber.log.Timber;
 
-import static android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION;
-import static android.content.Intent.FLAG_GRANT_WRITE_URI_PERMISSION;
 import static com.learningmachine.android.app.data.url.LaunchType.ADD_CERTIFICATE;
 import static com.learningmachine.android.app.data.url.LaunchType.ADD_ISSUER;
 
@@ -39,7 +37,8 @@ public class SplashActivity extends LMActivity {
         super.onCreate(savedInstanceState);
         Injector.obtain(this)
                 .inject(this);
-        if (Build.VERSION.SDK_INT >= 30 && mPassphraseManager.doesLegacyPassphraseFileExist()) {
+        if (Build.VERSION.SDK_INT >= 30 && mPassphraseManager.doesLegacyPassphraseFileExist() &&
+                !mSharedPreferencesManager.shouldSkipMigration()) {
             movePassphraseBackup();
         } else {
             launch();
@@ -57,7 +56,13 @@ public class SplashActivity extends LMActivity {
                 getResources().getString(R.string.migrate_passphrase_move),
                 getResources().getString(R.string.migrate_passphrase_delete),
                 (btnIdx) -> {
-                    migratePassphrase((o) -> launch());
+                    migratePassphrase((passphrase) -> {
+                        if (passphrase != null) {
+                            launch();
+                        } else {
+                            migrationFailed();
+                        }
+                    });
                     return null;
                 },
                 null,
@@ -76,8 +81,8 @@ public class SplashActivity extends LMActivity {
                 R.drawable.ic_dialog_warning,
                 getResources().getString(R.string.delete_backup_title),
                 getResources().getString(R.string.delete_backup_message),
-                getResources().getString(R.string.delete_backup_confirm),
-                getResources().getString(R.string.delete_backup_cancel),
+                getResources().getString(R.string.dialog_confirm),
+                getResources().getString(R.string.dialog_cancel),
                 (btnIdx) -> {
                     mPassphraseManager.deleteLegacyPassphrase();
                     launch();
@@ -88,6 +93,26 @@ public class SplashActivity extends LMActivity {
                     movePassphraseBackup();
                     return null;
                 });
+        alertDialogFragment.show(fragmentManager, "PassphraseMigrationAlert");
+    }
+
+    private void migrationFailed() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        AlertDialogFragment alertDialogFragment = AlertDialogFragment.newInstance(
+                false,
+                0,
+                R.drawable.ic_dialog_warning,
+                getResources().getString(R.string.migration_failed_title),
+                getResources().getString(R.string.migration_failed_message),
+                getResources().getString(R.string.ok_button),
+                null,
+                (btnIdx) -> {
+                    mSharedPreferencesManager.setSkipMigration(true);
+                    launch();
+                    return null;
+                },
+                null,
+                null);
         alertDialogFragment.show(fragmentManager, "PassphraseMigrationAlert");
     }
 
