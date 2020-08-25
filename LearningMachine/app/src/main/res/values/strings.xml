@@ -243,5 +243,6 @@
     <string name="dialog_cancel">Cancel</string>
     <string name="migration_failed_title">Migration Failed</string>
     <string name="migration_failed_message">Failed to move passphrase backup file.  Please manually move the learningmachine.dat file to the downloads folder.</string>
+    <string name="onboarding_paste_passphrase_choose_backup_button">Choose Backup File...</string>
 
 </resources>

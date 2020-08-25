@@ -85,11 +85,27 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="24dp"
             android:text="@string/onboarding_paste_passphrase_done"
-            app:layout_constraintBottom_toTopOf="@+id/spreader3"
+            app:layout_constraintBottom_toTopOf="@+id/chooseBackupFileButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/paste_passphrase_edit_text" />
+
+        <Button
+            android:id="@+id/chooseBackupFileButton"
+            style="@style/RoundedButton.Light"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/onboarding_paste_passphrase_choose_backup_button"
+            app:layout_constraintBottom_toTopOf="@+id/spreader3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/doneButton"
+            android:visibility="gone"/>
 
         <View
             android:id="@+id/spreader3"
@@ -101,7 +117,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/doneButton" />
+            app:layout_constraintTop_toBottomOf="@+id/chooseBackupFileButton" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
