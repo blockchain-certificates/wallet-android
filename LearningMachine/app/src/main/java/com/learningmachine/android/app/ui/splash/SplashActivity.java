@@ -28,9 +28,9 @@ import static com.learningmachine.android.app.data.url.LaunchType.ADD_ISSUER;
 
 public class SplashActivity extends LMActivity {
 
-    @Inject SharedPreferencesManager mSharedPreferencesManager;
+    @Inject protected SharedPreferencesManager mSharedPreferencesManager;
     @Inject protected BitcoinManager mBitcoinManager;
-    @Inject PassphraseManager mPassphraseManager;
+    @Inject protected PassphraseManager mPassphraseManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

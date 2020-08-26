@@ -6,6 +6,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.provider.DocumentsContract;
 import android.provider.Settings;
 
 import androidx.annotation.RequiresApi;
@@ -196,6 +197,10 @@ public class PassphraseManager {
     @RequiresApi(api = Build.VERSION_CODES.R)
     public void deletePassphrase(Uri passphraseFile) {
         ContentResolver resolver = mContext.getContentResolver();
-        resolver.delete(passphraseFile, null);
+        try {
+            DocumentsContract.deleteDocument(resolver, passphraseFile);
+        } catch (FileNotFoundException e) {
+            Timber.e(e, "Could not delete passphrase backup.");
+        }
     }
 }

@@ -203,8 +203,8 @@ public class SettingsFragment extends LMFragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_OPEN && resultCode == RESULT_OK) {
-            if (Build.VERSION.SDK_INT >= 30) {
+        if (requestCode == REQUEST_OPEN) {
+            if (Build.VERSION.SDK_INT >= 30 && resultCode == RESULT_OK) {
                 mPassphraseManager.deletePassphrase(data.getData());
             }
             mBitcoinManager.resetEverything();

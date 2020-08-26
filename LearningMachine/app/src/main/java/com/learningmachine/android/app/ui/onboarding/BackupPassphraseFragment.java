@@ -120,7 +120,9 @@ public class BackupPassphraseFragment extends OnboardingFragment {
     protected void onSave() {
         ((OnboardingActivity)getActivity()).askToSavePassphraseToDevice(mPassphrase, (passphrase) -> {
             if(passphrase == null) {
-
+                if(Build.VERSION.SDK_INT >= 30) {
+                    return;
+                }
                 DialogUtils.showAlertDialog(getContext(), this,
                         R.drawable.ic_dialog_failure,
                         getResources().getString(R.string.onboarding_passphrase_permissions_error_title),

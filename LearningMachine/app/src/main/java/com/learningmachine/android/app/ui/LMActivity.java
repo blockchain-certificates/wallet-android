@@ -16,6 +16,7 @@ import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 
+import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.data.passphrase.PassphraseManager;
 import com.learningmachine.android.app.data.preferences.SharedPreferencesManager;
 import com.learningmachine.android.app.ui.home.HomeActivity;
@@ -48,7 +49,7 @@ public abstract class LMActivity extends AppCompatActivity implements LifecycleP
     private final BehaviorSubject<ActivityEvent> mLifecycleSubject = BehaviorSubject.create();
     private Observable.Transformer mMainThreadTransformer;
 
-    @Inject PassphraseManager mPassphraseManager;
+    @Inject protected PassphraseManager mPassphraseManager;
     private Uri mStorePassphraseBackupUri;
     private Uri mRetrievePassphraseBackupUri;
     private Uri mMigratePassphraseBackupUri;
@@ -79,6 +80,8 @@ public abstract class LMActivity extends AppCompatActivity implements LifecycleP
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mLifecycleSubject.onNext(ActivityEvent.CREATE);
+        Injector.obtain(this)
+                .inject(this);
         Laba.setContext(getBaseContext());
     }
 
@@ -335,6 +338,7 @@ public abstract class LMActivity extends AppCompatActivity implements LifecycleP
         } else if (resultCode == RESULT_CANCELED) {
             mCanceledRequest = requestCode;
         }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     private boolean didReceivePermissionsCallback = false;
