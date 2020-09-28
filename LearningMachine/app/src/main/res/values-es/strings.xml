@@ -63,8 +63,8 @@
     <string name="fragment_verify_cert_chain_format" formatted="true">Verificando la Credencial %1$s…</string>
     <string name="verification_header">Verificación</string>
     <string name="error_no_internet_title">Error de Conexión de Red</string>
-    <string name="error_no_internet_message">Verifique su conexión de internet e inténtelo de nuevo</string>
-    <string name="error_no_engine">No se ha podido cargar el mecanismo de verificación</string>
+    <string name="error_no_internet_message">Verifique su conexión de internet e intente nuevamente.</string>
+    <string name="error_no_engine">No fue posible cargar el motor de verificación.</string>
     <string name="error_cannot_load_certificate_json">No se ha podido cargar el archivo de la credencial</string>
     <string name="success_verification">Esta es una credencial %1$s válida.</string>
     <string name="error_verification">Esta credencial no ha sido verificada. Favor de contactar al emisor.</string>
@@ -82,7 +82,7 @@
     <string name="settings_email_logs">Registro de Correos Electrónicos</string>
     <string name="settings_logout">Salir del Sistema y Reiniciar</string>
     <string name="settings_logout_title">Salir del Sistema y Limpiar Dispositivo</string>
-    <string name="settings_logout_message">Al salirse del sistema todas las credenciales y frases de contraseñas guardadas en este dispositivo serán removidas</string>
+    <string name="settings_logout_message">Al cerrar la sesión todas sus credenciales y cualquier frase de contraseña guardada serán removidas de este dispositivo.</string>
     <string name="settings_logout_button_title">Salir del Sistema</string>
     <!-- Add Issuer / Add Certificate -->
     <string name="add_certificate_import">Importar</string>
@@ -133,7 +133,7 @@
     <string name="fragment_add_issuer_url">URL del emisor</string>
     <string name="fragment_add_issuer_identity_text">Ingresar el código de un solo uso</string>
     <string name="fragment_add_issuer_add_identity">Código de un solo uso</string>
-    <string name="fragment_add_issuer_adding_issuer_progress_dialog_message">Añadiendo Emisor…</string>
+    <string name="fragment_add_issuer_adding_issuer_progress_dialog_message">Agregando emisor</string>
     <string name="fragment_add_issuer_import_button">Añadir Emisor</string>
     <!-- About Passphrase -->
     <string name="about_passphrases_title">Frases de Contraseña</string>
