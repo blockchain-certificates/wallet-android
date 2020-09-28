@@ -2,27 +2,18 @@
 <resources>
     <string name="home_issuers">Portafoglio Blockcerts</string>
     <string name="home_settings_menu_item_title">Impostazioni</string>
-
     <string name="settings_privacy_policy_endpoint">https://www.blockcerts.org/it/mobile-privacy</string>
     <string name="about_passphrases_endpoint">https://www.blockcerts.org/it/about-passphrase</string>
-
     <!-- Onboarding -->
-
     <string name="onboarding_new_user">Nuovo Utente</string>
     <string name="onboarding_returning_user">Utente corrente</string>
-
     <!--This is for accessibility-->
     <string name="play_intro_video">Riprodurre video introduttivo</string>
-
-
-    <string name="onboarding_passphrase_status_0">Generazione della tua frase di accesso...</string>
+    <string name="onboarding_passphrase_status_0">Generazione della tua frase di accesso…</string>
     <string name="onboarding_passphrase_status_1">Frase di accesso generata!</string>
-
     <string name="onboarding_passphrase_description">Questa è la frase di accesso del tuo portafoglio. È necessario disporre di un backup nel caso in cui si reinstalli l\'app o si cambi dispositivo.</string>
     <string name="onboarding_passphrase">Frase di accesso</string>
     <string name="onboarding_passphrase_create_backup">Creare Backup</string>
-
-
     <string name="onboarding_backup_methods">Seleziona metodi di Backup</string>
     <string name="onboarding_backup_description">Per favore seleziona almeno due opzioni presenti sotto.</string>
     <string name="onboarding_backup_write_button">Copia manuale</string>
@@ -30,34 +21,23 @@
     <string name="onboarding_backup_email_button">Copia su email o negli appunti</string>
     <string name="select_two_to_continue">Selezionane almeno due per continuare</string>
     <string name="onboarding_backup_done_button">Fatto</string>
-
-
     <string name="onboarding_paste_passphrase_title">Inserisci la frase di accesso</string>
     <string name="onboarding_paste_passphrase_desc">Per piacere digita o copia la tua frase di accesso:</string>
     <string name="onboarding_paste_passphrase_done">Invia</string>
-
     <string name="onboarding_passphrase_invalid_title">Frase di accesso non valida</string>
     <string name="onboarding_passphrase_invalid_desc">Per piacere controlla e ridigita.</string>
     <string name="onboarding_passphrase_loading">Caricamento della frase di accesso salvata…</string>
-
     <string name="error_invalid_passphrase_malformed">Frase di accesso non valida</string>
-
     <string name="onboarding_welcome_title">Benvenuto al nuovo Portafoglio Blockcerts!</string>
     <string name="onboarding_welcome_desc">Abbiamo migliorato l\'esperienza, ma sarai in grado di ricevere e gestire le tue credenziali come prima. Si prega di notare che ora è necessario eseguire il backup della frase di accesso, ma è possibile farlo facilmente nell\'app. Premi Continua per iniziare.</string>
     <string name="onboarding_welcome_button_title">Continua</string>
-
-
     <!-- Home -->
-
     <string name="onboarding_home_no_issuers_title">Pronto!</string>
-    <string name="onboarding_home_issuers_title">Issuers</string>
+    <string name="onboarding_home_issuers_title">Emittenti</string>
     <string name="onboarding_home_no_issuers_desc_new_user">Riceverai un\'e-mail quando un issuer è pronto per essere aggiunto. Segui il link nell\'e-mail per completare il processo.</string>
     <string name="onboarding_home_no_issuers_title_returning_user">Reimporta le tue credenziali</string>
     <string name="onboarding_home_no_issuers_desc_returning_user">Per vedere i tuoi issuer, vai su Impostazioni per aggiungere le tue credenziali o aggiungile tramite l’e-mail del issuer.</string>
-
     <string name="onboarding_home_no_issuers_desc2">Puoi aggiungere un issuer manualmente andando su Impostazioni e toccando Aggiungi un issuer.</string>
-
-
     <!-- Issuer (Certificate List) -->
     <string name="issuer_no_certificates_desc">Nessuna credenziale</string>
     <string name="issuer_no_certificates_desc2">Riceverai un\'e-mail quando viene emessa una credenziale. Segui il link nell\'e-mail per completare il processo.</string>
@@ -65,61 +45,45 @@
         <item quantity="one">Tu hai %d credenziale:</item>
         <item quantity="other">Tu hai %d credenziali:</item>
     </plurals>
-
     <plurals name="certificate_counting">
         <item quantity="one">%d Credenziale</item>
         <item quantity="other">%d Credenziali</item>
     </plurals>
-
     <!-- Issuer Info -->
-    <string name="fragment_issuer_title">Issuer</string>
-    <string name="issuer_info_title">Issuer Info</string>
+    <string name="fragment_issuer_title">Emittente</string>
+    <string name="issuer_info_title">Informazioni sull\'emittente</string>
     <string name="issuer_info_menu_item_title">Info</string>
-    <string name="fragment_issuer_info_title">Issuer</string>
+    <string name="fragment_issuer_info_title">Emittente</string>
     <string name="fragment_issuer_info_email">Contatto Issuer</string>
-
     <string name="issuer_name">Nome Issuer</string>
-
     <string name="fragment_issuer_info_introduced_on">Introdotto</string>
     <string name="fragment_issuer_info_shared_address">Indirizzo condiviso</string>
     <string name="fragment_issuer_info_description">Descrizione</string>
-
     <!-- Verification -->
-
     <string name="verification_header">Verifica</string>
-
     <string name="fragment_verify_cert_chain_format" formatted="true">Verificando la Credenziale %1$s …</string>
-
-
     <string name="error_no_internet_title">Errore di connessione di rete</string>
     <string name="error_no_internet_message">Per piacere controlla la tua connessione ad Internet e prova nuovamente.</string>
     <string name="error_no_engine">Impossibile caricare il motore di verifica.</string>
     <string name="error_cannot_load_certificate_json">Impossibile caricare il motore di verifica</string>
-
     <string name="success_verification">Questa è una credenziale %1$s valida.</string>
     <string name="error_verification">Questa credenziale non è stata verificata. Per piacere contatta l\'issuer.</string>
-
     <!-- Certificate View -->
     <string name="certificate_share_menu_item_title">Condividi</string>
     <string name="certificate_verify_menu_item_title">Verifica</string>
     <string name="certificate_info_title">Info sulle Credenziali</string>
     <string name="certificate_delete_button">Cancella Credenziali</string>
-
     <!-- Settings -->
     <string name="settings_add_issuer">Aggiungi Issuer</string>
     <string name="settings_add_credential">Aggiungi Credenziali</string>
     <string name="settings_reveal_passphrase">Mia Frase di Accesso</string>
     <string name="settings_about_passphrases">Circa la Frase di Accesso</string>
-    <string name="settings_privacy_policy">Privacy Policy</string>
+    <string name="settings_privacy_policy">politica sulla riservatezza</string>
     <string name="settings_email_logs">Invia Log a Email</string>
-
     <string name="settings_logout">Disconnetti e resetta</string>
     <string name="settings_logout_title">Disconnetti e pulisci il Device</string>
     <string name="settings_logout_message">La disconnessione rimuoverà tutte le credenziali e tutte le frasi di accesso archiviate su questo dispositivo.</string>
-    <string name="settings_logout_button_title">Log out</string>
-
-
-
+    <string name="settings_logout_button_title">Disconnettersi</string>
     <!-- Add Issuer / Add Certificate -->
     <string name="add_certificate_import">Importa</string>
     <string name="add_certificate_by_file">Importa da File</string>
@@ -130,37 +94,23 @@
     <string name="framgent_add_certificate_file_choose_file_button_title">Scegli il File</string>
     <string name="fragment_add_certificate_title">Aggiungi le Credenziali</string>
     <string name="fragment_add_certificate_progress_dialog_message">Aggiungendo le Credenziali</string>
-
     <!-- Share certificate -->
     <string name="fragment_certificate_share_url_button_title">Condividi il Link</string>
     <string name="fragment_certificate_share_file_button_title">Condividi il File</string>
-
-
-
     <!-- Dialog Error Messages -->
-
     <string name="connection_error_message">Per piacere controlla la tua connessione internet e riprova.</string>
     <string name="error_title_message">Errore</string>
     <string name="ime_action_done">Fatto</string>
-
     <string name="invalid_issuer_url">Questo non sembra essere un valido URL dell\'issuer. Per piacere verifica e riprova.</string>
     <string name="invalid_issuer_nonce">Questo non sembra essere un valido codice d\'uso one-time. Per piacere verifica e riprova.</string>
-
     <string name="invalid_certificate">Questo non sembra essere un valido URL di credenziali. Per piacere verifica e riprova.</string>
-
     <string name="http_not_found_generic">Questo non sembra essere un valido URL. Per piacere verifica e riprova.</string>
-
     <string name="invalid_credential_error">Questo non sembra essere un valido file di credenziali. Per piacere verifica e riprova.</string>
-
     <string name="no_files_downloaded_title">Nessun file di credenziali</string>
     <string name="no_files_downloaded_message">Non ci sono file di credenziali salvati su questo dispositivo.</string>
-
-
     <!--Certificate error messages-->
     <string name="cert_old_version_error">Questa credenziale è in un formato obsoleto e non può essere visualizzata correttamente. Si prega di verificare con l\'emittente e riprovare.</string>
-
     <!-- vvv OLD vvv -->
-
     <string name="onboarding_passphrase_write_title">Hard Copy manuale</string>
     <string name="onboarding_passphrase_write_message">Scrivi la tua frase di accesso su un pezzo di carta e conservalo in un posto sicuro.</string>
     <string name="onboarding_passphrase_write_confirmation">Fatto</string>'
@@ -168,66 +118,47 @@
 
     <string name="onboarding_passphrase_email_before_title">Sei sicuro?</string>
     <string name="onboarding_passphrase_email_before">Questo è un metodo di backup a bassa sicurezza. Vuoi continuare?</string>
-
     <string name="onboarding_passphrase_permissions_error_title">Errore di Backup</string>
     <string name="onboarding_passphrase_permissions_error">Per salvare la tua frase di accesso su questo device tu devi dare i permessi del Portafoglio Blockcerts per accedere ai tuoi files.</string>
-
     <string name="onboarding_passphrase_complete_title">Backup Completo</string>
     <string name="onboarding_passphrase_save_complete">La tua frase di accesso è stata salvata sul device come learningmachine.dat.</string>
-
-
     <string name="onboarding_passphrase_cancel">Annulla</string>
     <string name="ok_button">Ok</string>
-
-
     <!-- Settings -->
     <string name="settings_fragment">Impostazioni</string>
-
     <!-- Add Issuer -->
     <string name="fragment_add_issuer_title">Aggiungi un Issuer</string>
     <string name="fragment_add_issuer_info_url_text">Inserisci l\'URL fornito dall\'issuer</string>
-    <string name="fragment_add_issuer_url">Issuer URL</string>
+    <string name="fragment_add_issuer_url">URL emittente</string>
     <string name="fragment_add_issuer_identity_text">Inserisci il codice one-time</string>
     <string name="fragment_add_issuer_add_identity">Codice One-time</string>
     <string name="fragment_add_issuer_adding_issuer_progress_dialog_message">Aggiungendo un Issuer</string>
     <string name="fragment_add_issuer_import_button">Aggiungi un Issuer</string>
-
     <!-- About Passphrase -->
     <string name="about_passphrases_title">Circa la frase di accesso</string>
-
     <!-- Certificate Fragment -->
     <string name="fragment_certificate_title">Credenziali</string>
     <string name="certificate_info_menu_item_title">Info</string>
     <string name="fragment_certificate_share_url_format">Controlla le mie credenziali da %1$s! %2$s</string>
     <string name="fragment_certificate_share_file_format">Controlla le mie credenziali da %1$s!</string>
-
-
     <!-- Certificate Info Fragment -->
     <string name="fragment_certificate_info_delete_warning_title">Attenzione!</string>
     <string name="fragment_certificate_info_delete_warning_message">Se elimini questa credenziale e non hai un backup, dovrai chiedere all\'issuer di inviarla di nuovo se la vuoi recuperare. Sei sicuro di voler eliminare questa credenziale?</string>
     <string name="fragment_certificate_info_delete_warning_positive_title">Annulla</string>
     <string name="fragment_certificate_info_delete_warning_negative_title">Cancella</string>
-
     <!-- Check version -->
     <string name="check_version_title">Per piacere aggiorna il Portafoglio Blockcerts</string>
     <string name="check_version_message">Per poter aggiungere un issuer o credenziali, tu devi essere in possesso dell\'ultima versione del Portafoglio Blockcerts.</string>
     <string name="check_version_message_cancel_title">Annulla</string>
-
     <!-- Certificate Verification -->
-
     <string name="cert_verification_success_title">Verificato!</string>
     <string name="cert_verification_failure_title">Fallimento</string>
-
-
     <!--Certificate Info Fragment-->
-
     <string name="fragment_certificate_info_issuer_issue_date">Data di emissione</string>
     <string name="fragment_certificate_info_cert_name">Nome delle credenziali</string>
     <string name="fragment_certificate_info_cert_expiration">Scadenza delle credenziali</string>
     <string name="fragment_certificate_info_cert_description">Descrizione</string>
     <string name="fragment_certificate_info_cert_expiration_never">Mai</string>
-
     <!--SAML login title-->
     <string name="login_to_issuer">Accedi all\'Issuer</string>
-
 </resources>
