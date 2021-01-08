@@ -1,10 +1,16 @@
 package com.learningmachine.android.app.ui.cert;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import androidx.databinding.DataBindingUtil;
+
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import androidx.annotation.NonNull;
@@ -12,6 +18,9 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AlertDialog;
+
+import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,20 +36,28 @@ import com.learningmachine.android.app.util.DialogUtils;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
+import rx.Subscription;
 import timber.log.Timber;
+
+import static android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION;
 
 
 public class AddCertificateFileFragment extends LMFragment {
-
     private static final int REQUEST_READ_STORAGE = 124;
+    private static final int REQUEST_SELECT_FILE = 125;
 
     @Inject CertificateManager mCertificateManager;
 
     private FragmentAddCertificateFileBinding mBinding;
-    private File mSelectedFile;
+    private Uri mSelectedFileUri;
+    private Subscription mAddCertificateSubscription;
 
     public static AddCertificateFileFragment newInstance() {
         return new AddCertificateFileFragment();
@@ -52,6 +69,14 @@ public class AddCertificateFileFragment extends LMFragment {
         setHasOptionsMenu(true);
         Injector.obtain(getContext())
                 .inject(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        if (mAddCertificateSubscription != null) {
+            mAddCertificateSubscription.unsubscribe();
+        }
+        super.onDestroy();
     }
 
     @Nullable
@@ -79,7 +104,7 @@ public class AddCertificateFileFragment extends LMFragment {
     }
 
 
-    private View.OnClickListener mOnClickListener = v -> {
+    private final View.OnClickListener mOnClickListener = v -> {
         if (ContextCompat.checkSelfPermission(getContext(),
                 Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(),
@@ -89,39 +114,83 @@ public class AddCertificateFileFragment extends LMFragment {
             return;
         }
 
-        File downloadDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-        if (downloadDir.exists()) {
-            FileFilter filter = new JsonFilter();
-            File[] files = downloadDir.listFiles(filter);
-            if (files == null) {
-                Timber.e("Unable to list files");
-                return;
-            }
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+            Intent openJsonCertificateIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            openJsonCertificateIntent.addCategory(Intent.CATEGORY_OPENABLE);
+            openJsonCertificateIntent.addFlags(FLAG_GRANT_READ_URI_PERMISSION);
+            openJsonCertificateIntent.setType("application/json");
+            startActivityForResult(openJsonCertificateIntent, REQUEST_SELECT_FILE);
+        } else {
+            File downloadDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+            if (downloadDir.exists()) {
+                FileFilter filter = new JsonFilter();
+                File[] files = downloadDir.listFiles(filter);
+                if (files == null) {
+                    Timber.e("Unable to list files");
+                    return;
+                }
 
-            // filter to json files, check if 0
-            // show snackbar
-            showFileDialog(files);
+                // filter to json files, check if 0
+                // show snackbar
+                showFileDialog(files);
+            }
         }
     };
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == REQUEST_SELECT_FILE && resultCode == Activity.RESULT_OK && data != null) {
+            Uri certificateUri = data.getData();
+            selectFile(certificateUri);
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
     private void addCertificateFile() {
         Timber.i("Adding certificate file");
-        if (mSelectedFile == null) {
+        if (mSelectedFileUri == null) {
             Timber.e("No file selected");
             return;
         }
-        mCertificateManager.addCertificate(mSelectedFile)
-                .compose(bindToMainThread())
-                .subscribe(uuid -> {
-                    Timber.d("Certificate copied");
-                    hideProgressDialog();
-                    Intent intent = CertificateActivity.newIntent(getContext(), uuid);
-                    startActivity(intent);
-                    getActivity().finish();
-                }, throwable -> {
-                    Timber.e(throwable, "Importing failed with error");
-                    displayErrors(throwable, DialogUtils.ErrorCategory.CERTIFICATE, R.string.error_title_message);
-                });
+        ContentResolver resolver = getContext().getContentResolver();
+        try (InputStream certificateInputStream = resolver.openInputStream(mSelectedFileUri)) {
+            mAddCertificateSubscription = mCertificateManager.addCertificate(certificateInputStream)
+                    .compose(bindToMainThread())
+                    .subscribe(uuid -> {
+                        Timber.d("Certificate copied");
+                        hideProgressDialog();
+                        Intent intent = CertificateActivity.newIntent(getContext(), uuid);
+                        startActivity(intent);
+                        getActivity().finish();
+                    }, throwable -> {
+                        Timber.e(throwable, "Importing failed with error");
+                        displayErrors(throwable, DialogUtils.ErrorCategory.CERTIFICATE, R.string.error_title_message);
+                    });
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void selectFile(Uri uri) {
+        if (uri == null) {
+            Timber.e("Selected file is null");
+            return;
+        }
+
+        mSelectedFileUri = uri;
+        Timber.d("File selected: %1$s", mSelectedFileUri.getPath());
+        ContentResolver resolver = getContext().getContentResolver();
+        try (Cursor cursor = resolver.query(uri, null, null, null, null)) {
+            if (cursor != null && cursor.moveToFirst()) {
+                int nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+                String filename = cursor.getString(nameIndex);
+                mBinding.chooseFileButton.setText(filename);
+            }
+        }
+        mBinding.importButton.setEnabled(true);
     }
 
     private void selectFile(File file) {
@@ -130,10 +199,10 @@ public class AddCertificateFileFragment extends LMFragment {
             return;
         }
 
-        mSelectedFile = file;
-        Timber.d("File selected: %1$s", mSelectedFile.getAbsolutePath());
+        mSelectedFileUri = Uri.fromFile(file);
+        Timber.d("File selected: %1$s", file.getAbsolutePath());
 
-        String filename = mSelectedFile.getName();
+        String filename = file.getName();
         mBinding.chooseFileButton.setText(filename);
 
         mBinding.importButton.setEnabled(true);
@@ -163,7 +232,7 @@ public class AddCertificateFileFragment extends LMFragment {
         builder.show();
     }
 
-    private class JsonFilter implements FileFilter {
+    private static class JsonFilter implements FileFilter {
         @Override
         public boolean accept(File file) {
             String path = file.getAbsolutePath()
@@ -172,7 +241,7 @@ public class AddCertificateFileFragment extends LMFragment {
         }
     }
 
-    private class FileArrayAdapter extends ArrayAdapter<File> {
+    private static class FileArrayAdapter extends ArrayAdapter<File> {
 
         FileArrayAdapter(Context context, File[] files) {
             super(context, R.layout.dialog_file_chooser, files);

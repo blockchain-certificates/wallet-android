@@ -78,6 +78,10 @@ public class CertificateManager {
         return handleCertificateFile(file);
     }
 
+    public Observable<String> addCertificate(InputStream inputStream) {
+        return handleCertificateInputStream(inputStream);
+    }
+
     public Observable<Boolean> removeCertificate(String uuid) {
         return Observable.just(FileUtils.deleteCertificate(mContext, uuid))
                 .map(success -> mCertificateStore.deleteCertificate(uuid));
