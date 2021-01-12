@@ -113,7 +113,7 @@
 
     <string name="settings_logout">Salir del Sistema y Reiniciar</string>
     <string name="settings_logout_title">Salir del Sistema y Limpiar Dispositivo</string>
-    <string name="settings_logout_message">Al salirse del sistema todas las credenciales y frases de contraseñas guardadas en este dispositivo serán removidas</string>
+    <string name="settings_logout_legacy_message">Al salirse del sistema todas las credenciales y frases de contraseñas guardadas en este dispositivo serán removidas</string>
     <string name="settings_logout_button_title">Salir del Sistema</string>
 
 

@@ -116,7 +116,7 @@
 
     <string name="settings_logout">Illoggja \'l barra u Rrisettja</string>
     <string name="settings_logout_title">Illoggja \'l barra u neħħi mit-tagħmir</string>
-    <string name="settings_logout_message">Meta tilloggja \'l barra jitneħħew il-kredenzjali kollha tiegħek u kwalunkwe passphrases maħżuna fuq dan it-tagħmir.</string>
+    <string name="settings_logout_legacy_message">Meta tilloggja \'l barra jitneħħew il-kredenzjali kollha tiegħek u kwalunkwe passphrases maħżuna fuq dan it-tagħmir.</string>
     <string name="settings_logout_button_title">Illoggja \'l barra</string>
 
 

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import androidx.databinding.DataBindingUtil;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
@@ -19,6 +20,7 @@ import android.view.ViewGroup;
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.bitcoin.BitcoinManager;
 import com.learningmachine.android.app.data.inject.Injector;
+import com.learningmachine.android.app.data.passphrase.PassphraseManager;
 import com.learningmachine.android.app.databinding.FragmentPastePassphraseBinding;
 import com.learningmachine.android.app.ui.LMActivity;
 import com.learningmachine.android.app.ui.home.HomeActivity;
@@ -32,6 +34,7 @@ import timber.log.Timber;
 public class PastePassphraseFragment extends OnboardingFragment {
 
     @Inject protected BitcoinManager mBitcoinManager;
+    @Inject protected PassphraseManager mPassphraseManager;
 
     private FragmentPastePassphraseBinding mBinding;
 
@@ -50,16 +53,12 @@ public class PastePassphraseFragment extends OnboardingFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_paste_passphrase, container, false);
 
-        ((LMActivity)getActivity()).askToGetPassphraseFromDevice((passphrase) -> {
-            if (passphrase != null) {
-                mBinding.pastePassphraseEditText.setText(passphrase.toString());
-                onDone();
-            } else {
-                mBinding.passphraseLabel.requestFocus();
-            }
-            return null;
-        });
-
+        if (Build.VERSION.SDK_INT >= 30) {
+            mBinding.chooseBackupFileButton.setVisibility(View.VISIBLE);
+            mBinding.chooseBackupFileButton.setOnClickListener(view -> retrievePassphraseFromDevice());
+        } else {
+            retrievePassphraseFromDevice();
+        }
         mBinding.pastePassphraseEditText.setFilters(new InputFilter[] {
                 new InputFilter.AllCaps() {
                     @Override
@@ -78,6 +77,16 @@ public class PastePassphraseFragment extends OnboardingFragment {
         return mBinding.getRoot();
     }
 
+    private void retrievePassphraseFromDevice() {
+        ((LMActivity)getActivity()).askToGetPassphraseFromDevice((passphrase) -> {
+            if (passphrase != null) {
+                mBinding.pastePassphraseEditText.setText(passphrase);
+                onDone();
+            } else {
+                mBinding.passphraseLabel.requestFocus();
+            }
+        });
+    }
 
     private void onDone() {
         displayProgressDialog(R.string.onboarding_passphrase_loading);
@@ -157,9 +166,7 @@ public class PastePassphraseFragment extends OnboardingFragment {
                 getResources().getString(R.string.onboarding_passphrase_invalid_desc),
                 null,
                 getResources().getString(R.string.ok_button),
-                (btnIdx) -> {
-                    return null;
-                });
+                (btnIdx) -> null);
     }
 
 

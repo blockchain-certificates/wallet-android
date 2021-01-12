@@ -114,7 +114,7 @@
 
     <string name="settings_logout">ログアウトしてリセットする</string>
     <string name="settings_logout_title">ログアウトしてデバイスをクリアする</string>
-    <string name="settings_logout_message">ログアウトをすれば、全ての証明書及び保存されたパスフレーズがこのデバイスから削除される。</string>
+    <string name="settings_logout_legacy_message">ログアウトをすれば、全ての証明書及び保存されたパスフレーズがこのデバイスから削除される。</string>
     <string name="settings_logout_button_title">ログアウト</string>
 
 

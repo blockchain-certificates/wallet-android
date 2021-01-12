@@ -49,13 +49,11 @@ public class BackupPassphraseFragment extends OnboardingFragment {
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
-
-
         savedInstanceState.putString("p", mPassphrase);
         savedInstanceState.putBoolean("onboardingSaveCheckmark", mBinding.onboardingSaveCheckmark.getVisibility() == View.VISIBLE);
         savedInstanceState.putBoolean("onboardingWriteCheckmark", mBinding.onboardingWriteCheckmark.getVisibility() == View.VISIBLE);
         savedInstanceState.putBoolean("onboardingEmailCheckmark", mBinding.onboardingEmailCheckmark.getVisibility() == View.VISIBLE);
+        super.onSaveInstanceState(savedInstanceState);
     }
 
     @Override
@@ -122,7 +120,9 @@ public class BackupPassphraseFragment extends OnboardingFragment {
     protected void onSave() {
         ((OnboardingActivity)getActivity()).askToSavePassphraseToDevice(mPassphrase, (passphrase) -> {
             if(passphrase == null) {
-
+                if(Build.VERSION.SDK_INT >= 30) {
+                    return;
+                }
                 DialogUtils.showAlertDialog(getContext(), this,
                         R.drawable.ic_dialog_failure,
                         getResources().getString(R.string.onboarding_passphrase_permissions_error_title),
@@ -133,7 +133,7 @@ public class BackupPassphraseFragment extends OnboardingFragment {
                             HandleBackupOptionCompleted(null);
                             return null;
                         });
-                return null;
+                return;
             }
 
             DialogUtils.showAlertDialog(getContext(), this,
@@ -153,7 +153,6 @@ public class BackupPassphraseFragment extends OnboardingFragment {
                         }
                         return null;
                     });
-            return null;
         });
     }
 

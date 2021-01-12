@@ -51,8 +51,8 @@ public class OnboardingActivity extends LMActivity implements AccountChooserFrag
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
         outState.putSerializable(SAVED_FLOW, mOnboardingFlow);
+        super.onSaveInstanceState(outState);
     }
 
     @Override

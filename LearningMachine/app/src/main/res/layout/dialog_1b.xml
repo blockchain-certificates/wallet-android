@@ -69,15 +69,16 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/default_dialog_button_height"
             android:layout_marginBottom="24dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginTop="16dp"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             tools:text="Negative"
             android:textSize="14dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/guideline3" />
 
         <androidx.constraintlayout.widget.Guideline

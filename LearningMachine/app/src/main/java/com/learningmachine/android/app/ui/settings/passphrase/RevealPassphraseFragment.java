@@ -2,6 +2,8 @@ package com.learningmachine.android.app.ui.settings.passphrase;
 
 import android.content.Intent;
 import androidx.databinding.DataBindingUtil;
+
+import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -80,9 +82,10 @@ public class RevealPassphraseFragment extends LMFragment {
 
     protected void onSave() {
         ((LMActivity)getActivity()).askToSavePassphraseToDevice(mPassphrase, (passphrase) -> {
-
             if(passphrase == null) {
-
+                if(Build.VERSION.SDK_INT >= 30) {
+                    return;
+                }
                 DialogUtils.showAlertDialog(getContext(), this,
                         R.drawable.ic_dialog_failure,
                         getResources().getString(R.string.onboarding_passphrase_permissions_error_title),
@@ -93,7 +96,7 @@ public class RevealPassphraseFragment extends LMFragment {
                             HandleBackupOptionCompleted(null);
                             return null;
                         });
-                return null;
+                return;
             }
 
             DialogUtils.showAlertDialog(getContext(), this,
@@ -113,8 +116,6 @@ public class RevealPassphraseFragment extends LMFragment {
                         }
                         return null;
                     });
-
-            return null;
         });
     }
 
