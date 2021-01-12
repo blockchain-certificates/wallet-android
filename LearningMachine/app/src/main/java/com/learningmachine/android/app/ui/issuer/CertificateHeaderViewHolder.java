@@ -1,18 +1,13 @@
 package com.learningmachine.android.app.ui.issuer;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 
-import com.learningmachine.android.app.R;
-import com.learningmachine.android.app.data.model.CertificateRecord;
 import com.learningmachine.android.app.data.model.IssuerRecord;
 import com.learningmachine.android.app.databinding.ListCertificateHeaderBinding;
-import com.learningmachine.android.app.databinding.ListItemCertificateBinding;
-import com.learningmachine.android.app.ui.cert.CertificateActivity;
 import com.learningmachine.android.app.util.ImageUtils;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;

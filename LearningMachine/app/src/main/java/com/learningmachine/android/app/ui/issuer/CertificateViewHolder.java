@@ -2,7 +2,7 @@ package com.learningmachine.android.app.ui.issuer;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 
 import com.learningmachine.android.app.data.model.CertificateRecord;

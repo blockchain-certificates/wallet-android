@@ -1,7 +1,7 @@
 package com.learningmachine.android.app.ui.issuer;
 
-import android.databinding.BaseObservable;
-import android.databinding.Bindable;
+import androidx.databinding.BaseObservable;
+import androidx.databinding.Bindable;
 
 import com.learningmachine.android.app.data.model.IssuerRecord;
 import com.learningmachine.android.app.util.DateUtils;

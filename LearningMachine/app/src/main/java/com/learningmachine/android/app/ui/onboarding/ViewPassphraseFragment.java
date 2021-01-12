@@ -1,7 +1,7 @@
 package com.learningmachine.android.app.ui.onboarding;
 
 import android.app.Activity;
-import android.databinding.DataBindingUtil;
+import androidx.databinding.DataBindingUtil;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;

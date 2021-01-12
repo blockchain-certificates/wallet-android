@@ -21,47 +21,15 @@ public class CertificateInterceptor implements Interceptor {
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
         HttpUrl url = request.url();
-        String urlString = url.toString();
 
-        Timber.d(String.format("Performing Request: %s %s",
-                request.method(), urlString));
-
-        if (!urlString.endsWith(JSON_EXT)) {
-            // first try to append json
-            String urlStringAppended = urlString + JSON_EXT;
-            HttpUrl urlAppended = HttpUrl.parse(urlStringAppended);
-            request = request.newBuilder()
-                    .url(urlAppended)
-                    .build();
-        }
-
-        Response response = chain.proceed(request);
-        Timber.d(String.format("response: %s", response.toString()));
-        if (response.body() != null) {
-            ResponseBody responseBody = response.body();
-            BufferedSource source = responseBody.source();
-            source.request(Long.MAX_VALUE);
-            Buffer buffer = source.buffer();
-            String responseBodyString = buffer.clone().readString(Charset.forName("UTF-8"));
-            if (responseBodyString.length() > 2000) {
-                responseBodyString = responseBodyString.substring(0, 2000);
-            }
-            Timber.d(String.format("response body: %s", responseBodyString));
-        }
-
-        if (!response.isSuccessful()) {
-            // use query params
-            url = request.url();
-            urlString = url.toString();
-            String jsonExtRemoved = urlString.replace(JSON_EXT, "");
-            HttpUrl jsonFormatAdded = HttpUrl.parse(jsonExtRemoved)
-                    .newBuilder()
-                    .addEncodedQueryParameter("format", "json")
-                    .build();
-            request = request.newBuilder()
-                    .url(jsonFormatAdded)
-                    .build();
-        }
+        HttpUrl jsonFormatAdded = url
+                .newBuilder()
+                .addEncodedQueryParameter("format", "json")
+                .build();
+        request = request.newBuilder()
+                .url(jsonFormatAdded)
+                .build();
+        Timber.d(String.format("Performing Request: %s %s", request.method(), url.toString()));
 
         return chain.proceed(request);
     }

@@ -2,7 +2,7 @@ package com.learningmachine.android.app.ui.onboarding;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.data.preferences.SharedPreferencesManager;

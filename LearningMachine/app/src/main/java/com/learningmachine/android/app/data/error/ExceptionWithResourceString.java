@@ -1,6 +1,6 @@
 package com.learningmachine.android.app.data.error;
 
-import android.support.annotation.StringRes;
+import androidx.annotation.StringRes;
 
 public class ExceptionWithResourceString extends Exception {
     private @StringRes int mErrorMessageResId;

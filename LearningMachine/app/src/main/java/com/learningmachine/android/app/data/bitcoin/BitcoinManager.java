@@ -2,7 +2,7 @@ package com.learningmachine.android.app.data.bitcoin;
 
 import android.content.Context;
 import android.os.Environment;
-import android.support.annotation.VisibleForTesting;
+import androidx.annotation.VisibleForTesting;
 import android.util.Pair;
 
 import com.learningmachine.android.app.LMConstants;
