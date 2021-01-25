@@ -1,167 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="home_issuers">Blockcerts Wallet</string>
     <string name="home_settings_menu_item_title">Settings</string>
-
     <string name="settings_privacy_policy_endpoint">https://www.blockcerts.org/mt/mobile-privacy</string>
     <string name="about_passphrases_endpoint">https://www.blockcerts.org/mt/about-passphrase</string>
-
     <!-- Onboarding -->
-
     <string name="onboarding_new_user">Utent Ġdid</string>
     <string name="onboarding_returning_user">Utent Attwali</string>
-
     <!--This is for accessibility-->
     <string name="play_intro_video">Ara l-intro video</string>
-
-
     <string name="onboarding_passphrase_status_0">Qed tiġi ġġenerta l-passphrase tiegħek…</string>
     <string name="onboarding_passphrase_status_1">Il-Passphrase Ġiet Iġġenerata!</string>
-
     <string name="onboarding_passphrase_description">Din hija l-passphrase għall-wallet tiegħek. Irid ikollok backup f\'każ li terġa\' tinstalla l-app jew tibdel it-tagħmir.</string>
     <string name="onboarding_passphrase">Passphrase</string>
     <string name="onboarding_passphrase_create_backup">Oħloq Backup</string>
-
-
     <string name="onboarding_backup_methods">Agħżel il-Metodi ta\' Backup</string>
-    <string name="onboarding_backup_description">Jekk jogħġbok agħżel mill-inqas żewġ għażliet minn hawn taħt:</string>
+    <string name="onboarding_backup_description">Jekk jogħġbok agħżel mill-inqas żewġ għażliet hawn taħt.</string>
     <string name="onboarding_backup_write_button">Kopja Stampata tal-Manwal</string>
     <string name="onboarding_backup_save_button">Issejvja Fuq Dan it-Tagħmir</string>
     <string name="onboarding_backup_email_button">Ikkopja fuq Email jew Clipboard</string>
     <string name="select_two_to_continue">Agħżel mill-Inqas Tnejn Biex Tkompli</string>
     <string name="onboarding_backup_done_button">Lest</string>
-
-
     <string name="onboarding_paste_passphrase_title">Daħħal il-Passphrase</string>
     <string name="onboarding_paste_passphrase_desc">Jekk jogħġbok ikteb jew ippejstja l-passphrase tiegħek hawn:</string>
     <string name="onboarding_paste_passphrase_done">Idħol</string>
-
     <string name="onboarding_passphrase_invalid_title">Passphrase Invalida</string>
     <string name="onboarding_passphrase_invalid_desc">Jekk jogħġbok iċċekkjaha u erġa\' pprova.</string>
     <string name="onboarding_passphrase_loading">Il-passphrase ssejvjata qed tillowdja…</string>
-
     <string name="error_invalid_passphrase_malformed">Passphrase Invalida</string>
-
     <string name="onboarding_welcome_title">Merħba għall-Blockcerts Wallet il-ġdid!</string>
     <string name="onboarding_welcome_desc">Aħna tejjibna din l-esperjenza, imma int se tkun tista\' tirċievi u tamministra l-kredenzjali tiegħek bħal qabel. Jekk jogħġbok innota li issa għandek bżonn tagħmel backup tal-passphrase tiegħek, imma tista\' tagħmel hekk faċilment fl-app. Agħfas il-buttuna Kompli sabiex tibda.</string>
     <string name="onboarding_welcome_button_title">Kompli</string>
-
-
     <!-- Home -->
-
     <string name="onboarding_home_no_issuers_title">Lest!</string>
     <string name="onboarding_home_issuers_title">Emittenti</string>
     <string name="onboarding_home_no_issuers_desc_new_user">Int ser tirċievi email meta l-emittent ikun lest biex jiżdied. Segwi l-link fl-email biex tlesti l-proċess.</string>
     <string name="onboarding_home_no_issuers_title_returning_user">Erġa\' Importa il-Kredenzjali Tiegħek</string>
     <string name="onboarding_home_no_issuers_desc_returning_user">Biex tara l-emittenti tiegħek, mur fis-Settings biex iżżid il-kredenzjali tiegħek jew żidhom permezz tal-email mill-Emittent.</string>
-
     <string name="onboarding_home_no_issuers_desc2">Inti tista\' żżid emittent manwalment billi żżur is-Settings u tagħżel Żid Emittent.</string>
-
-
     <!-- Issuer (Certificate List) -->
     <string name="issuer_no_certificates_desc">L-ebda Kredenzjali</string>
     <string name="issuer_no_certificates_desc2">Inti ser tirċievi email meta jinħareġ kredenzjali. Segwi l-link fl-email biex tlesti l-proċess.</string>
     <plurals name="certificate_counting_head">
-        <item quantity="one">Int għandek %d kredenzjali:</item>
-        <item quantity="other">Int għandek %d kredenzjali:</item>
+        <item quantity="one">Għandek% d kredenzjali:</item>
         <item quantity="few">Int għandek %d kredenzjali:</item>
         <item quantity="many">Int għandek %d kredenzjali:</item>
+        <item quantity="other">Int għandek %d kredenzjali:</item>
     </plurals>
-
     <plurals name="certificate_counting">
         <item quantity="one">%d Kredenzjali</item>
         <item quantity="other">%d Kredenzjali</item>
         <item quantity="few">%d kredenzjali</item>
         <item quantity="many">%d kredenzjali</item>
     </plurals>
-
     <!-- Issuer Info -->
     <string name="fragment_issuer_title">Emittent</string>
     <string name="issuer_info_title">Info tal-Emittent</string>
     <string name="issuer_info_menu_item_title">Info</string>
     <string name="fragment_issuer_info_title">Emittent</string>
     <string name="fragment_issuer_info_email">Kuntatt tal-Emittent</string>
-
     <string name="issuer_name">Isem l-Emittent</string>
-
     <string name="fragment_issuer_info_introduced_on">Introdott</string>
     <string name="fragment_issuer_info_shared_address">Indirizz Ikkondiviż</string>
     <string name="fragment_issuer_info_description">Deskrizzjoni</string>
-
     <!-- Verification -->
     <string name="fragment_verify_cert_chain_format" formatted="true">Qed jiġi vverifikat il-kredenzjali %1$s…</string>
-    <string name="verification_header">Verification</string>
-
-
+    <string name="verification_header">Verifika</string>
     <string name="error_no_internet_title">Żball fil-Konnessjoni tan-Netwerk</string>
     <string name="error_no_internet_message">Jekk jogħġbok iċċekkja l-konnessjoni tal-internet tiegħek u erġa\' pprova.</string>
     <string name="error_no_engine">Mhux possibbli li tiġi llowdjata l-magna tal-verifika.</string>
     <string name="error_cannot_load_certificate_json">Il-fajl tal-kredenzjali ma setax jillowdja</string>
-
     <string name="success_verification">Dan huwa kredenzjali validu %1$s.</string>
     <string name="error_verification">Dan il-kredenzjali mhux ivverifikat. Jekk jogħġbok ikkuntattja lill-emittent.</string>
-
     <!-- Certificate View -->
     <string name="certificate_share_menu_item_title">Ikkondividi</string>
     <string name="certificate_verify_menu_item_title">Ivverifika</string>
     <string name="certificate_info_title">Info tal-Kredenzjali</string>
     <string name="certificate_delete_button">Ħassar il-Kredenzjali</string>
-
     <!-- Settings -->
     <string name="settings_add_issuer">Żid Emittent</string>
     <string name="settings_add_credential">Żid Kredenzjali</string>
     <string name="settings_reveal_passphrase">Il-Passphrase Tiegħi</string>
     <string name="settings_about_passphrases">Dwar il-Passphrases</string>
     <string name="settings_privacy_policy">Strateġija tal-Privatezza</string>
-    <string name="settings_email_logs">Email Logs</string>
-
+    <string name="settings_email_logs">Zkuk tal-Email</string>
     <string name="settings_logout">Illoggja \'l barra u Rrisettja</string>
     <string name="settings_logout_title">Illoggja \'l barra u neħħi mit-tagħmir</string>
     <string name="settings_logout_legacy_message">Meta tilloggja \'l barra jitneħħew il-kredenzjali kollha tiegħek u kwalunkwe passphrases maħżuna fuq dan it-tagħmir.</string>
     <string name="settings_logout_button_title">Illoggja \'l barra</string>
-
-
-
     <!-- Add Issuer / Add Certificate -->
     <string name="add_certificate_import">Importa</string>
     <string name="add_certificate_by_file">Importa minn Fajl</string>
     <string name="add_certificate_by_url">Importa minn URL</string>
     <string name="certificate_add_url_label">Jekk jogħġbok ikteb jew ippejstja l-URL tal-kredenzjali:</string>
     <string name="certificate_add_url_edit_text_hint">Il-URL tal-Kredenzjali</string>
-    <string name="fragment_add_certificate_file_label">Jekk jogħġbok agħżel il-fajl tal-kredenzjali t-tajjeb</string>
+    <string name="fragment_add_certificate_file_label">Jekk jogħġbok agħżel il-fajl tal-kredenzjali xieraq:</string>
     <string name="framgent_add_certificate_file_choose_file_button_title">Agħżel il-Fajl</string>
     <string name="fragment_add_certificate_title">Żid Kredenzjali</string>
     <string name="fragment_add_certificate_progress_dialog_message">Qed jiġi miżjud Kredenzjali</string>
-
     <!-- Share certificate -->
     <string name="fragment_certificate_share_url_button_title">Ikkondividi l-Link</string>
     <string name="fragment_certificate_share_file_button_title">Ikkondividi l-Fajl</string>
-
-
-
     <!-- Dialog Error Messages -->
-
     <string name="connection_error_message">Jekk jogħġbok iċċekkja l-konnessjoni tal-internet tiegħek u erġa\' pprova.</string>
     <string name="error_title_message">Żball</string>
     <string name="ime_action_done">Lest</string>
-
     <string name="invalid_issuer_url">Dan ma jidhirx li huwa URL ta\' emittent validu. Jekk jogħġbok iċċekkjah u erġa\' pprova.</string>
     <string name="invalid_issuer_nonce">Dan il-kodiċi li jintuża darba ma jidhirx li hu validu. Jekk jogħġbok iċċekkjah u erġa\' pprova.</string>
-
     <string name="invalid_certificate">Dan ma jidhirx li hu URL ta\' kredenzjali validu. Jekk jogħġbok iċċekkjah u erġa\' pprova.</string>
-
     <string name="http_not_found_generic">Dan ma jidhirx li hu URL validu. Jekk jogħġbok iċċekkjah u erġa\' pprova.</string>
-
     <string name="invalid_credential_error">Dan ma jidhirx li hu fajl ta\' kredenzjali validu. Jekk jogħġbok iċċekkjah u erġa\' pprova.</string>
-
     <string name="no_files_downloaded_title">M\'hemmx Fajls tal-Kredenzjali</string>
-    <string name="no_files_downloaded_message">M\'hemmx fajls tal-kredenzjali ssejvjati fuq dan it-tagħmir</string>
-
-
+    <string name="no_files_downloaded_message">M\'hemm l-ebda fajls ta \'kredenzjali salvati f\'dan l-apparat.</string>
     <!--Certificate error messages-->
     <string name="cert_old_version_error">Dan il-kredenzjali għandu format skadut u ma jistax jintwera kif suppost. Jekk jogħġbok iċċekkja mal-emittent u erġa\' pprova.</string>
-
     <!-- vvv OLD vvv -->
-
     <string name="onboarding_passphrase_write_title">Kopja Stampata tal-Manwal</string>
     <string name="onboarding_passphrase_write_message">Ikteb il-passphrase tiegħek fuq biċċa karta u erfagħha f\'post sigur.</string>
     <string name="onboarding_passphrase_write_confirmation">Lest</string>'
@@ -169,21 +122,14 @@
 
     <string name="onboarding_passphrase_email_before_title">Inti Ċert?</string>
     <string name="onboarding_passphrase_email_before">Dan huwa metodu ta\' backup b\'sigurtà baxxa. Trid tkompli?</string>
-
     <string name="onboarding_passphrase_permissions_error_title">Żball fil-Backup</string>
     <string name="onboarding_passphrase_permissions_error">Biex tissejvja l-passphrase fuq dan it-tagħmir trid tagħti permess lil Blockcerts Wallet biex jaċċessa l-fajls tiegħek.</string>
-
     <string name="onboarding_passphrase_complete_title">Il-Backup Lest</string>
     <string name="onboarding_passphrase_save_complete">Il-passphrase tiegħek ġiet issejvjata fuq dan it-tagħmir bħala learningmachine.dat.</string>
-
-
     <string name="onboarding_passphrase_cancel">Ikkanċella</string>
     <string name="ok_button">Okay</string>
-
-
     <!-- Settings -->
     <string name="settings_fragment">Settings</string>
-
     <!-- Add Issuer -->
     <string name="fragment_add_issuer_title">Żid Emittent</string>
     <string name="fragment_add_issuer_info_url_text">Daħħal il-URL ipprovdut mill-emittent</string>
@@ -192,43 +138,31 @@
     <string name="fragment_add_issuer_add_identity">Kodiċi li jintuża darba</string>
     <string name="fragment_add_issuer_adding_issuer_progress_dialog_message">L-Emittent qed jiġi miżjud</string>
     <string name="fragment_add_issuer_import_button">Żid Emittent</string>
-
     <!-- About Passphrase -->
     <string name="about_passphrases_title">Dwar il-Passphrases</string>
-
     <!-- Certificate Fragment -->
     <string name="fragment_certificate_title">Kredenzjali</string>
     <string name="certificate_info_menu_item_title">Info</string>
     <string name="fragment_certificate_share_url_format">Iċċekkja l-kredenzjali tiegħi minn %1$s! %2$s</string>
     <string name="fragment_certificate_share_file_format">Iċċekkja l-kredenzjali tiegħi minn %1$s!</string>
-
-
     <!-- Certificate Info Fragment -->
     <string name="fragment_certificate_info_delete_warning_title">Kawtela!</string>
     <string name="fragment_certificate_info_delete_warning_message">Jekk tħassar din il-kredenzjali u m\'għandekx backup, ikollok titlob lill-emittent biex jibgħatha mill-ġdid jekk trid tirkupraha. Inti ċert li trid tħassar din il-kredenzjali?</string>
     <string name="fragment_certificate_info_delete_warning_positive_title">Ikkanċella</string>
     <string name="fragment_certificate_info_delete_warning_negative_title">Ħassar</string>
-
     <!-- Check version -->
     <string name="check_version_title">Jekk Jogħġbok Aġġorna l-Blockcerts Wallet</string>
     <string name="check_version_message">Sabiex iżżid xi emittent jew kredenzjali, irid ikollok l-aħħar verżjoni ta\' Blockerts Wallet.</string>
     <string name="check_version_message_cancel_title">Ikkanċella</string>
-
     <!-- Certificate Verification -->
-
     <string name="cert_verification_success_title">Ivverifikat!</string>
     <string name="cert_verification_failure_title">Ma rnexxietx</string>
-
-
     <!--Certificate Info Fragment-->
-
     <string name="fragment_certificate_info_issuer_issue_date">Data tal-Ħruġ</string>
     <string name="fragment_certificate_info_cert_name">Isem il-Kredenzjali</string>
     <string name="fragment_certificate_info_cert_expiration">Skadenza tal-Kredenzjali</string>
     <string name="fragment_certificate_info_cert_description">Deskrizzjoni</string>
     <string name="fragment_certificate_info_cert_expiration_never">Qatt</string>
-
     <!--SAML login title-->
     <string name="login_to_issuer">Idħol</string>
-
 </resources>
