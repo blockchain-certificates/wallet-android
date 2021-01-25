@@ -1,232 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="home_issuers">ブロックサーツウォレット</string>
+    <string name="home_issuers">Blockcerts Wallet</string>
     <string name="home_settings_menu_item_title">設定</string>
-
     <string name="settings_privacy_policy_endpoint">https://www.blockcerts.org/ja/mobile-privacy</string>
     <string name="about_passphrases_endpoint">https://www.blockcerts.org/ja/about-passphrase</string>
-
     <!-- Onboarding -->
-
-    <string name="onboarding_new_user">新規ユーザー</string>
-    <string name="onboarding_returning_user">既存のユーザー</string>
-
+    <string name="onboarding_new_user">新しいユーザー</string>
+    <string name="onboarding_returning_user">現在のユーザー</string>
     <!--This is for accessibility-->
     <string name="play_intro_video">紹介動画を再生</string>
-
-
-    <string name="onboarding_passphrase_status_0">パスフレーズを作っています…</string>
-    <string name="onboarding_passphrase_status_1">パスフレーズを作りました！</string>
-
-    <string name="onboarding_passphrase_description">ウォレット用のパスフレーズです。デバイスの中にバックアップは入っていますが、デバイス変更の場合に備えてもう一つのバックアップを作る必要があります。</string>
+    <string name="onboarding_passphrase_status_0">パスフレーズを作成しています…</string>
+    <string name="onboarding_passphrase_status_1">パスフレーズを作成しました！</string>
+    <string name="onboarding_passphrase_description">ウォレット用のパスフレーズです。アプリの再インストールやデバイスの切り替えの場合に備えて、バックアップを作成する必要があります。</string>
     <string name="onboarding_passphrase">パスフレーズ</string>
-    <string name="onboarding_passphrase_create_backup">バックアップを作る</string>
-
-
+    <string name="onboarding_passphrase_create_backup">バックアップを作成</string>
     <string name="onboarding_backup_methods">バックアップ方法を選択</string>
-    <string name="onboarding_backup_description">以下の選択肢から二つ以上を選んでください：</string>
+    <string name="onboarding_backup_description">以下のオプションから少なくとも二つ選択してください。</string>
     <string name="onboarding_backup_write_button">手動によるハードコピー</string>
-    <string name="onboarding_backup_save_button">デバイスへ保存</string>
-    <string name="onboarding_backup_email_button">メールまたはクリップボードへコピーする</string>
-    <string name="select_two_to_continue">続けるために二つ以上を選択してください</string>
+    <string name="onboarding_backup_save_button">デバイスに保存</string>
+    <string name="onboarding_backup_email_button">Eメールまたはクリップボードにコピー</string>
+    <string name="select_two_to_continue">続行スるには、少なくとも二つ選択</string>
     <string name="onboarding_backup_done_button">完了</string>
-
-
     <string name="onboarding_paste_passphrase_title">パスフレーズを入力</string>
-    <string name="onboarding_paste_passphrase_desc">パスフレーズを入力またはペーストしてください：</string>
-    <string name="onboarding_paste_passphrase_done">完了</string>
-
+    <string name="onboarding_paste_passphrase_desc">パスフレーズをここに入力するか、貼り付けてください：</string>
+    <string name="onboarding_paste_passphrase_done">入力</string>
     <string name="onboarding_passphrase_invalid_title">無効なパスフレーズ</string>
-    <string name="onboarding_passphrase_invalid_desc">パスフレーズをチェックしてからもう一度お試しください。</string>
-    <string name="onboarding_passphrase_loading">保存されたパスフレーズをロードしています…</string>
-
-    <string name="error_invalid_passphrase_malformed">無効なパスフレーズです</string>
-
-    <string name="onboarding_welcome_title">新しいブロックサーツウォレットへようこそ！</string>
-    <string name="onboarding_welcome_desc">アプリをアップグレードしましたが、以前と同様に証明書を受け取る・管理することができます。今後はパスフレーズのバックアップが必要ですが、アプリから簡単にできます。「続ける」をタップしてください。</string>
-    <string name="onboarding_welcome_button_title">続ける</string>
-
-
+    <string name="onboarding_passphrase_invalid_desc">確認して、やり直してください。</string>
+    <string name="onboarding_passphrase_loading">保存したパスフレーズを読み込んでいます…</string>
+    <string name="error_invalid_passphrase_malformed">無効なパスフレース</string>
+    <string name="onboarding_welcome_title">新しいBlockcerts Walletへようこそ！</string>
+    <string name="onboarding_welcome_desc">エクスペリエンスを向上させましたが、以前と同じように資格情報の受け取りや管理ができるようになります。パスフレーズのバックアップが必要になりましたが、アプリ内で簡単にできます。続行をタップして開始します。</string>
+    <string name="onboarding_welcome_button_title">続行</string>
     <!-- Home -->
-
     <string name="onboarding_home_no_issuers_title">準備完了！</string>
     <string name="onboarding_home_issuers_title">発行者</string>
-    <string name="onboarding_home_no_issuers_desc_new_user">発行者を追加できるとメールが届きます。メールの中のリンクをクリックして、手続きを完了してください。</string>
-    <string name="onboarding_home_no_issuers_title_returning_user">証明書をもう一度インポートする</string>
-    <string name="onboarding_home_no_issuers_desc_returning_user">設定画面または発行者からのメールで証明書を追加することで発行者を閲覧することができます。</string>
-
-    <string name="onboarding_home_no_issuers_desc2">設定で「発行者を追加」をタップすると手動で発行者を追加することができます。</string>
-
-
+    <string name="onboarding_home_no_issuers_desc_new_user">発行者が追加できるようになるとメールが届きます。メールの中のリンクに従って、プロセスを完了してください。</string>
+    <string name="onboarding_home_no_issuers_title_returning_user">資格証明を再インポート</string>
+    <string name="onboarding_home_no_issuers_desc_returning_user">発行者を確認するには、 設定に移動して資格証明を追加するか、発行者からのEメールを使用して資格証明を追加します。</string>
+    <string name="onboarding_home_no_issuers_desc2">発行者を手動で追加するには、 設定にアクセスして 発行者の追加 をタップします。</string>
     <!-- Issuer (Certificate List) -->
-    <string name="issuer_no_certificates_desc">証明書がありません</string>
-    <string name="issuer_no_certificates_desc2">証明書が発行されるとメールが届きます。メールの中のリンクをクリックすれば手続きを完了することができます。</string>
+    <string name="issuer_no_certificates_desc">資格証明がありません</string>
+    <string name="issuer_no_certificates_desc2">資格証明が発行されると、Eメールが届きます。Eメール内のリンクに従ってプロセスを完了します。</string>
     <plurals name="certificate_counting_head">
-        <item quantity="one">あなたの証明書の数：%d</item>
-        <item quantity="other">あなたの証明書の数：%d</item>
+        <item quantity="other">%dの資格証明があります：</item>
     </plurals>
-
     <plurals name="certificate_counting">
-        <item quantity="one">%dの証明書</item>
-        <item quantity="other">%dの証明書</item>
+        <item quantity="other">%dの資格証明</item>
     </plurals>
-
     <!-- Issuer Info -->
     <string name="fragment_issuer_title">発行者</string>
     <string name="issuer_info_title">発行者情報</string>
     <string name="issuer_info_menu_item_title">情報</string>
     <string name="fragment_issuer_info_title">発行者</string>
     <string name="fragment_issuer_info_email">発行者の連絡先</string>
-
     <string name="issuer_name">発行者名</string>
-
-    <string name="fragment_issuer_info_introduced_on">Introduced</string>
+    <string name="fragment_issuer_info_introduced_on">紹介</string>
     <string name="fragment_issuer_info_shared_address">共有アドレス</string>
     <string name="fragment_issuer_info_description">説明</string>
-
     <!-- Verification -->
-
-    <string name="verification_header">認証</string>
-
-    <string name="fragment_verify_cert_chain_format" formatted="true">%1$s証明書を認証しています…</string>
-
-
+    <string name="verification_header">確認</string>
+    <string name="fragment_verify_cert_chain_format" formatted="true">%1$s資格証明を確認しています…</string>
     <string name="error_no_internet_title">ネットワーク接続エラー</string>
-    <string name="error_no_internet_message">ネットワーク接続を確認してからもう一度お試しください。</string>
-    <string name="error_no_engine">認証エンジンをロードできませんでした。</string>
-    <string name="error_cannot_load_certificate_json">証明書ファイルをロードできませんでした。</string>
-
-    <string name="success_verification">これは有効な%1$s証明書です。</string>
-    <string name="error_verification">この証明書は認証されていません。発行者へお問い合わせください。</string>
-
+    <string name="error_no_internet_message">ネットワーク接続を確認して、やり直してください。</string>
+    <string name="error_no_engine">確認エンジンを読み込めませんでした。</string>
+    <string name="error_cannot_load_certificate_json">資格証明ファイルを読み込めませんでした</string>
+    <string name="success_verification">これは有効な%1$s資格証明です。</string>
+    <string name="error_verification">この資格証明は確認されていません。発行者へお問い合わせください。</string>
     <!-- Certificate View -->
-    <string name="certificate_share_menu_item_title">シェア</string>
-    <string name="certificate_verify_menu_item_title">認証</string>
-    <string name="certificate_info_title">証明書の情報</string>
-    <string name="certificate_delete_button">証明書を削除</string>
-
+    <string name="certificate_share_menu_item_title">共有</string>
+    <string name="certificate_verify_menu_item_title">確認</string>
+    <string name="certificate_info_title">資格証明情報</string>
+    <string name="certificate_delete_button">資格証明を削除</string>
     <!-- Settings -->
     <string name="settings_add_issuer">発行者を追加</string>
-    <string name="settings_add_credential">証明書を追加</string>
-    <string name="settings_reveal_passphrase">マイ・パスフレーズ</string>
+    <string name="settings_add_credential">資格証明を追加</string>
+    <string name="settings_reveal_passphrase">マイパスフレーズ</string>
     <string name="settings_about_passphrases">パスフレーズについて</string>
     <string name="settings_privacy_policy">プライバシーポリシー</string>
-    <string name="settings_email_logs">メールのログ</string>
-
-    <string name="settings_logout">ログアウトしてリセットする</string>
-    <string name="settings_logout_title">ログアウトしてデバイスをクリアする</string>
-    <string name="settings_logout_legacy_message">ログアウトをすれば、全ての証明書及び保存されたパスフレーズがこのデバイスから削除される。</string>
+    <string name="settings_email_logs">Eメールログ</string>
+    <string name="settings_logout">ログアウトしてリセット</string>
+    <string name="settings_logout_title">ログアウトしてデバイスをクリア</string>
+    <string name="settings_logout_legacy_message">ログアウトすると、このデバイス上のすべての資格証明と保存されたパスフレーズが削除されます。</string>
     <string name="settings_logout_button_title">ログアウト</string>
-
-
-
     <!-- Add Issuer / Add Certificate -->
     <string name="add_certificate_import">インポート</string>
     <string name="add_certificate_by_file">ファイルからインポート</string>
     <string name="add_certificate_by_url">URLからインポート</string>
-    <string name="certificate_add_url_label">証明書URLを入力またはペーストしてください：</string>
-    <string name="certificate_add_url_edit_text_hint">証明書URL</string>
-    <string name="fragment_add_certificate_file_label">ご希望の証明書ファイルを選択して下さい：</string>
+    <string name="certificate_add_url_label">資格証明URLを入力するか、貼り付けてください：</string>
+    <string name="certificate_add_url_edit_text_hint">資格証明URL</string>
+    <string name="fragment_add_certificate_file_label">適切な資格証明ファイルを選択してください：</string>
     <string name="framgent_add_certificate_file_choose_file_button_title">ファイルを選択</string>
-    <string name="fragment_add_certificate_title">証明書を追加</string>
-    <string name="fragment_add_certificate_progress_dialog_message">証明書を追加しています…</string>
-
+    <string name="fragment_add_certificate_title">資格証明を追加</string>
+    <string name="fragment_add_certificate_progress_dialog_message">資格証明を追加中</string>
     <!-- Share certificate -->
-    <string name="fragment_certificate_share_url_button_title">リンクをシェア</string>
-    <string name="fragment_certificate_share_file_button_title">ファイルをシェア</string>
-
-
-
+    <string name="fragment_certificate_share_url_button_title">リンクを共有</string>
+    <string name="fragment_certificate_share_file_button_title">ファイルを共有</string>
     <!-- Dialog Error Messages -->
-
-    <string name="connection_error_message">ネット接続を確認してからもう一度お試しください。</string>
+    <string name="connection_error_message">インターネット接続を確認して、やり直してください。</string>
     <string name="error_title_message">エラー</string>
     <string name="ime_action_done">完了</string>
-
-    <string name="invalid_issuer_url">この発行者URLは無効のようです。確認してからもう一度お試しください。</string>
-    <string name="invalid_issuer_nonce">このワンタイムコードは無効のようです。確認してからもう一度お試しください。</string>
-
-    <string name="invalid_certificate">この証明書URLは無効のようです。確認してからもう一度お試しください。</string>
-
-    <string name="http_not_found_generic">このURLは無効のようです。確認してからもう一度お試しください。</string>
-
-    <string name="invalid_credential_error">この証明書ファイルは無効のようです。確認してからもう一度お試しください。</string>
-
-    <string name="no_files_downloaded_title">証明書ファイルがありません</string>
-    <string name="no_files_downloaded_message">このデバイスには証明書ファイルが保存されていません。</string>
-
-
+    <string name="invalid_issuer_url">この発行者URLは無効のようです。確認して、やり直してください。</string>
+    <string name="invalid_issuer_nonce">このワンタイム使用コードは無効のようです。確認して、やり直してください。</string>
+    <string name="invalid_certificate">この資格証明URLは無効のようです。確認して、やり直してください。</string>
+    <string name="http_not_found_generic">このURLは無効のようです。確認して、やり直してください。</string>
+    <string name="invalid_credential_error">この資格証明ファイルは無効のようです。確認して、やり直してください。</string>
+    <string name="no_files_downloaded_title">資格証明ファイルがありません</string>
+    <string name="no_files_downloaded_message">このデバイスに保存された資格証明ファイルはありません。</string>
     <!--Certificate error messages-->
-    <string name="cert_old_version_error">この証明書は形式が古いため正常に表示できません。発行者へ問い合わせてからもう一度お試しください。</string>
-
+    <string name="cert_old_version_error">この資格証明はフォーマットが古いため正常に表示できません。発行者に確認して、やり直してください。</string>
     <!-- vvv OLD vvv -->
-
     <string name="onboarding_passphrase_write_title">手動によるハードコピー</string>
     <string name="onboarding_passphrase_write_message">パスフレーズを紙に書いて安全な場所に保管してください。</string>
     <string name="onboarding_passphrase_write_confirmation">完了</string>'
 
 
-    <string name="onboarding_passphrase_email_before_title">よろしいでしょうか？</string>
-    <string name="onboarding_passphrase_email_before">このバックアップ方法は安全性が低いです。続けますか？</string>
-
-    <string name="onboarding_passphrase_permissions_error_title">バックアップのエラー</string>
-    <string name="onboarding_passphrase_permissions_error">パスフレーズをこのデバイスに保存するには、ファイルへのアクセス許可をブロックサーツウォレットに提供する必要があります。</string>
-
+    <string name="onboarding_passphrase_email_before_title">続行しますか？</string>
+    <string name="onboarding_passphrase_email_before">このバックアップ方法は安全性が低いです。続行しますか？</string>
+    <string name="onboarding_passphrase_permissions_error_title">バックアップエラー</string>
+    <string name="onboarding_passphrase_permissions_error">パスフレーズをこのデバイスに保存するには、ファイルへのアクセス許可をBlockcerts Wallet に提供する必要があります。</string>
     <string name="onboarding_passphrase_complete_title">バックアップ完了</string>
-    <string name="onboarding_passphrase_save_complete">あなたのパスフレーズは「learningmachine.dat」としてこのデバイスに保存されました。</string>
-
-
+    <string name="onboarding_passphrase_save_complete">パスフレーズはlearningmachine.datとしてこのデバイスに保存されました。</string>
     <string name="onboarding_passphrase_cancel">キャンセル</string>
     <string name="ok_button">OK</string>
-
-
     <!-- Settings -->
     <string name="settings_fragment">設定</string>
-
     <!-- Add Issuer -->
     <string name="fragment_add_issuer_title">発行者を追加</string>
-    <string name="fragment_add_issuer_info_url_text">発行者から提供されたURLを入力してください</string>
+    <string name="fragment_add_issuer_info_url_text">発行者から提供されたURLを入力</string>
     <string name="fragment_add_issuer_url">発行者URL</string>
-    <string name="fragment_add_issuer_identity_text">ワンタイムコードを入力してください</string>
+    <string name="fragment_add_issuer_identity_text">ワンタイムコードを入力</string>
     <string name="fragment_add_issuer_add_identity">ワンタイムコード</string>
     <string name="fragment_add_issuer_adding_issuer_progress_dialog_message">発行者を追加中</string>
     <string name="fragment_add_issuer_import_button">発行者を追加</string>
-
     <!-- About Passphrase -->
     <string name="about_passphrases_title">パスフレーズについて</string>
-
     <!-- Certificate Fragment -->
-    <string name="fragment_certificate_title">証明書</string>
+    <string name="fragment_certificate_title">資格証明</string>
     <string name="certificate_info_menu_item_title">情報</string>
-    <string name="fragment_certificate_share_url_format">%1$sから証明書を取得しました！ %2$s</string>
-    <string name="fragment_certificate_share_file_format">%1$sから証明書を取得しました！</string>
-
-
+    <string name="fragment_certificate_share_url_format">%1$s! %2$sから資格証明を確認</string>
+    <string name="fragment_certificate_share_file_format">%1$s!から資格証明を確認！</string>
     <!-- Certificate Info Fragment -->
-    <string name="fragment_certificate_info_delete_warning_title">警告！</string>
-    <string name="fragment_certificate_info_delete_warning_message">バックアップを持たずにこの証明書を削除すれば、復旧するには発行者に証明書の再送依頼をしなければなりません。本当に削除してよろしいでしょうか？</string>
+    <string name="fragment_certificate_info_delete_warning_title">注意！</string>
+    <string name="fragment_certificate_info_delete_warning_message">この資格証明を削除し、バックアップがない場合、回復するには、発行者に資格証明を再送するよう依頼する必要があります。この資格証明を削除しますか\?</string>
     <string name="fragment_certificate_info_delete_warning_positive_title">キャンセル</string>
     <string name="fragment_certificate_info_delete_warning_negative_title">削除</string>
-
     <!-- Check version -->
-    <string name="check_version_title">ブロックサーツウォレットを更新してください</string>
-    <string name="check_version_message">発行者または証明書を追加するにはブロックサーツウォレットの最新バージョンが必要です。</string>
+    <string name="check_version_title">Blockcerts Walletを更新してください</string>
+    <string name="check_version_message">発行者または資格証明を追加するには、Blockcerts Walletの最新バージョンが必要です。</string>
     <string name="check_version_message_cancel_title">キャンセル</string>
-
     <!-- Certificate Verification -->
-
-    <string name="cert_verification_success_title">認証されました！</string>
+    <string name="cert_verification_success_title">確認されました！</string>
     <string name="cert_verification_failure_title">失敗</string>
-
-
     <!--Certificate Info Fragment-->
-
     <string name="fragment_certificate_info_issuer_issue_date">発行日</string>
-    <string name="fragment_certificate_info_cert_name">証明書の名称</string>
-    <string name="fragment_certificate_info_cert_expiration">証明書の有効期限</string>
+    <string name="fragment_certificate_info_cert_name">資格証明の名称</string>
+    <string name="fragment_certificate_info_cert_expiration">資格証明の有効期限</string>
     <string name="fragment_certificate_info_cert_description">説明</string>
     <string name="fragment_certificate_info_cert_expiration_never">無期限</string>
-
     <!--SAML login title-->
-    <string name="login_to_issuer">発行者へのログイン</string>
-
+    <string name="login_to_issuer">発行者にログイン</string>
 </resources>
