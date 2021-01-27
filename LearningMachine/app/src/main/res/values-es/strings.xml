@@ -163,4 +163,16 @@
     <string name="fragment_certificate_info_cert_expiration_never">Nunca</string>
     <!--SAML login title-->
     <string name="login_to_issuer">Iniciar sesión en el emisor</string>
+    <string name="onboarding_paste_passphrase_choose_backup_button">Seleccionar archivo de copia de seguridad...</string>
+    <string name="migration_failed_message">Error al mover el archivo de copia de seguridad de frase de contraseña. Mueva manualmente el archivo learningmachine.dat a la carpeta de descargas.</string>
+    <string name="migration_failed_title">Error de migración</string>
+    <string name="dialog_cancel">Cancelar</string>
+    <string name="dialog_confirm">Confirmar eliminación</string>
+    <string name="delete_backup_message">¿Está seguro que desea eliminar su copia de seguridad de frase de contraseña\? Esta acción no se puede deshacer.</string>
+    <string name="delete_backup_title">Eliminar copia de seguridad</string>
+    <string name="migrate_passphrase_delete">Eliminar</string>
+    <string name="migrate_passphrase_move">Mover</string>
+    <string name="migrate_passphrase_message">Los permisos de archivo de Android han cambiado. Su archivo de copia de seguridad de frase de contraseña debe ser movido a otra ubicación.</string>
+    <string name="migrate_passphrase_title">Mover copia de seguridad de frase de contraseña</string>
+    <string name="settings_logout_message">Cerrar sesión removerá todas sus credenciales. Debe eliminar cualquier frase de contraseñaen este dispositivo.</string>
 </resources>
