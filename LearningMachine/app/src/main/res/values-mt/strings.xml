@@ -165,4 +165,16 @@
     <string name="fragment_certificate_info_cert_expiration_never">Qatt</string>
     <!--SAML login title-->
     <string name="login_to_issuer">Idħol</string>
+    <string name="settings_logout_message">Jekk tillogja barra l-kredenzjali tiegħek jiġu mneħija. Għandek tħassar kull passphrase maħzuna fuq dan iit-tagħmir.</string>
+    <string name="migrate_passphrase_title">Ressaq il-passphrase backup</string>
+    <string name="migrate_passphrase_message">Il-permessi tal-Android fajl ġew mibdula. Il-passphrase backup file irid jiġi mressaq f\'post ieħor.</string>
+    <string name="migrate_passphrase_move">Ressaq</string>
+    <string name="migrate_passphrase_delete">Ħassar</string>
+    <string name="delete_backup_title">Ħassar il-backup</string>
+    <string name="delete_backup_message">Ċert il trid tħassar il-passphrase backup tiegħek\? Din l-azzjoni ma tistax tiġi revokata.</string>
+    <string name="dialog_confirm">Ikkonferma li trid tħassar</string>
+    <string name="dialog_cancel">Ikkanċella</string>
+    <string name="migration_failed_title">Il-migrazzjoni ma rnexxitx</string>
+    <string name="migration_failed_message">Ma rnexxilekx tressaq il-fajl tal-passphrase backup. Jekk jogħġbok ressaq il-fajl learningmachine.dat b\'mod manwali fid-downloads folder.</string>
+    <string name="onboarding_paste_passphrase_choose_backup_button">Agħżel il-file tal-backup.</string>
 </resources>
