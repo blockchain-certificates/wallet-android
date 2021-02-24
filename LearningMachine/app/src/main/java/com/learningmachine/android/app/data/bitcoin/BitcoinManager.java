@@ -152,7 +152,6 @@ public class BitcoinManager {
     public void resetEverything() {
         mIssuerStore.reset();
         mCertificateStore.reset();
-        mPassphraseManager.reset();
     }
 
     public Observable<Wallet> setPassphrase(String newPassphrase) {

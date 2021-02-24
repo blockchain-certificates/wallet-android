@@ -53,7 +53,7 @@ public class PastePassphraseFragment extends OnboardingFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_paste_passphrase, container, false);
 
-        if (Build.VERSION.SDK_INT >= 30) {
+        if (Build.VERSION.SDK_INT >= 23) {
             mBinding.chooseBackupFileButton.setVisibility(View.VISIBLE);
             mBinding.chooseBackupFileButton.setOnClickListener(view -> retrievePassphraseFromDevice());
         } else {

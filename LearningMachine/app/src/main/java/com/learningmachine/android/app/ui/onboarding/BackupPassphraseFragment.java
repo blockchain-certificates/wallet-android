@@ -120,7 +120,7 @@ public class BackupPassphraseFragment extends OnboardingFragment {
     protected void onSave() {
         ((OnboardingActivity)getActivity()).askToSavePassphraseToDevice(mPassphrase, (passphrase) -> {
             if(passphrase == null) {
-                if(Build.VERSION.SDK_INT >= 30) {
+                if(Build.VERSION.SDK_INT >= 23) {
                     return;
                 }
                 DialogUtils.showAlertDialog(getContext(), this,

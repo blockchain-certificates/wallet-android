@@ -18,8 +18,6 @@ public class SharedPreferencesManager {
 
     private static final String PREF_LAST_LOG_DELETED_TIMESTAMP = "SharedPreferencesManager.Logs.LogsDeletedTimestamp";
 
-    private static final String PREF_SKIP_MIGRATION = "SharedPreferencesManager.SkipMigration";
-
     private SharedPreferences mPrefs;
 
     public SharedPreferencesManager(Context context) {
@@ -103,15 +101,5 @@ public class SharedPreferencesManager {
 
     public long getLastLogDeletedTimestamp() {
         return mPrefs.getLong(PREF_LAST_LOG_DELETED_TIMESTAMP, 0);
-    }
-
-    public boolean shouldSkipMigration() {
-        return mPrefs.getBoolean(PREF_SKIP_MIGRATION, false);
-    }
-
-    public void setSkipMigration(boolean skip) {
-        mPrefs.edit()
-                .putBoolean(PREF_SKIP_MIGRATION, skip)
-                .apply();
     }
 }

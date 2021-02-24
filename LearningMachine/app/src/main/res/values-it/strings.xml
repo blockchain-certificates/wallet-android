@@ -162,15 +162,9 @@
     <!--SAML login title-->
     <string name="login_to_issuer">Accedi all\'emittente</string>
     <string name="settings_logout_message">Il disconnettersi rimuoverà tutte le tue credenziali. È necessario eliminare tutte le passphrase memorizzate su questo dispositivo.</string>
-    <string name="migrate_passphrase_message">I permessi dei file Android sono cambiati. Il tuo file di backup della passphrase deve essere spostato in un\'altra posizione.</string>
-    <string name="migrate_passphrase_title">Spostare il backup della passphrase</string>
-    <string name="migrate_passphrase_move">Sposta</string>
-    <string name="migrate_passphrase_delete">Elimina</string>
     <string name="delete_backup_title">Elimina Backup</string>
     <string name="delete_backup_message">Sei sicuro di voler eliminare il backup della passphrase\? Questa azione non può essere annullata.</string>
     <string name="dialog_confirm">Conferma eliminazione</string>
     <string name="dialog_cancel">Annulla</string>
-    <string name="migration_failed_message">Impossibile spostare il file di backup della passphrase. Per favore sposta manualmente il file learningmachine.dat nella cartella dei download.</string>
-    <string name="migration_failed_title">Migrazione non riuscita</string>
     <string name="onboarding_paste_passphrase_choose_backup_button">Scegli file di Backup...</string>
 </resources>

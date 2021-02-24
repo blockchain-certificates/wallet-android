@@ -51,6 +51,19 @@ public class PassphraseManager {
         return false;
     }
 
+    public boolean canAccessLegacyPassphraseFile() {
+        boolean canAccessFile = false;
+        if (doesLegacyPassphraseFileExist()) {
+            Uri passphraseFile = getLegacyPassphraseFileUri();
+            try (FileInputStream inputStream = new FileInputStream(passphraseFile.getPath())) {
+                canAccessFile = true;
+            } catch (IOException e) {
+                Timber.e(e, "Failed to retrieve passphrase backup");
+            }
+        }
+        return canAccessFile;
+    }
+
     public void savePassphraseInLegacyStorage(String passphrase, PassphraseCallback passphraseCallback) {
         Uri passphraseFile = getLegacyPassphraseFileUri();
         try (PrintWriter out = new PrintWriter(passphraseFile.getPath())) {
@@ -71,37 +84,9 @@ public class PassphraseManager {
         }
     }
 
-    public void deleteLegacyPassphrase() {
-        String passphraseFile = getLegacyPassphraseFileUri().getPath();
-        if (passphraseFile != null) {
-            File legacyFile = new File(passphraseFile);
-            legacyFile.delete();
-        }
-    }
-
-    public void migrateSavedPassphrase(Uri location) {
-        getLegacyPassphraseFromDevice((passphrase) -> {
-            ContentResolver resolver = mContext.getContentResolver();
-            try (OutputStream outputStream = resolver.openOutputStream(location)) {
-                PrintWriter out = new PrintWriter(outputStream);
-                storePassphraseBackup(passphrase, out, mCallback);
-                deleteLegacyPassphrase();
-            } catch (IOException e) {
-                Timber.e(e, "Failed to migrate passphrase");
-            }
-            cleanupPassphraseBackup();
-        });
-    }
-
     public void handleCanceledRequest() {
         mCallback.apply(null);
         cleanupPassphraseBackup();
-    }
-
-    public void reset() {
-        if (doesLegacyPassphraseFileExist()) {
-            deleteLegacyPassphrase();
-        }
     }
 
     private String getDeviceId() {
@@ -120,11 +105,12 @@ public class PassphraseManager {
 
     public void storePassphraseBackup(Uri location)  {
         ContentResolver resolver = mContext.getContentResolver();
-        try (OutputStream outputStream = resolver.openOutputStream(location)){
+        try (OutputStream outputStream = resolver.openOutputStream(location)) {
             PrintWriter out = new PrintWriter(outputStream);
             storePassphraseBackup(mPassphrase, out, mCallback);
         } catch (IOException e) {
             Timber.e(e);
+            mCallback.apply(null);
         }
         cleanupPassphraseBackup();
     }
@@ -158,10 +144,6 @@ public class PassphraseManager {
         mCallback = callback;
     }
 
-    public void initPassphraseMigration(PassphraseCallback callback) {
-        mCallback = callback;
-    }
-
     public void getPassphraseBackup(Uri passphraseFile) {
         ContentResolver resolver = mContext.getContentResolver();
         try (InputStream inputStream = resolver.openInputStream(passphraseFile)) {
@@ -192,15 +174,5 @@ public class PassphraseManager {
         }
 
         passphraseCallback.apply(null);
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.R)
-    public void deletePassphrase(Uri passphraseFile) {
-        ContentResolver resolver = mContext.getContentResolver();
-        try {
-            DocumentsContract.deleteDocument(resolver, passphraseFile);
-        } catch (FileNotFoundException e) {
-            Timber.e(e, "Could not delete passphrase backup.");
-        }
     }
 }
