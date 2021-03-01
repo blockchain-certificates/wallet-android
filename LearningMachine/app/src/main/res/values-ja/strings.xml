@@ -160,15 +160,9 @@
     <!--SAML login title-->
     <string name="login_to_issuer">発行者にログイン</string>
     <string name="onboarding_paste_passphrase_choose_backup_button">バックアップファイルを選択...</string>
-    <string name="migration_failed_message">パスフレーズバックアップファイルの移動に失敗しました。learningmachine.datファイルをダウンロードフォルダに手動で移動してください。</string>
-    <string name="migration_failed_title">移行に失敗しました</string>
     <string name="dialog_cancel">キャンセル</string>
     <string name="dialog_confirm">削除の確認</string>
     <string name="delete_backup_message">パスフレーズバックアップを削除しますか？このアクションを元に戻すことはできません。</string>
     <string name="delete_backup_title">バックアップを削除</string>
-    <string name="migrate_passphrase_delete">削除</string>
-    <string name="migrate_passphrase_move">移動</string>
-    <string name="migrate_passphrase_message">Androidファイルパーミッションが変更されました。パスフレーズバックアップファイルを別の場所に移動する必要があります。</string>
-    <string name="migrate_passphrase_title">パスフレーズのバックアップを移動</string>
     <string name="settings_logout_message">ログアウトすると、すべての資格情報が削除されます。このデバイスに保存されているパスフレーズを削除する必要があります。</string>
 </resources>

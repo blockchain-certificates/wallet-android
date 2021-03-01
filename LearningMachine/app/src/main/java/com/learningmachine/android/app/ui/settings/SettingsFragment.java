@@ -45,7 +45,6 @@ public class SettingsFragment extends LMFragment {
     private static final int REQUEST_OPEN = 201;
 
     @Inject protected BitcoinManager mBitcoinManager;
-    @Inject protected PassphraseManager mPassphraseManager;
 
     public static SettingsFragment newInstance() {
         return new SettingsFragment();
@@ -176,20 +175,6 @@ public class SettingsFragment extends LMFragment {
                 }
                 return null;
             };
-            if (Build.VERSION.SDK_INT >= 30) {
-                message = getResources().getString(R.string.settings_logout_message);
-                callback = (btnIdx) -> {
-                    if(btnIdx == 1) {
-                        Intent openIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-                        openIntent.addCategory(Intent.CATEGORY_OPENABLE);
-                        openIntent.addFlags(FLAG_GRANT_READ_URI_PERMISSION | FLAG_GRANT_WRITE_URI_PERMISSION);
-                        openIntent.setType("application/octet-stream");
-                        openIntent.putExtra(Intent.EXTRA_TITLE, "learningmachine.dat");
-                        startActivityForResult(openIntent, REQUEST_OPEN);
-                    }
-                    return null;
-                };
-            }
 
             DialogUtils.showAlertDialog(getContext(), this,
                     R.drawable.ic_dialog_failure,
@@ -199,20 +184,6 @@ public class SettingsFragment extends LMFragment {
                     getResources().getString(R.string.onboarding_passphrase_cancel),
                     callback);
         });
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_OPEN) {
-            if (Build.VERSION.SDK_INT >= 30 && resultCode == RESULT_OK) {
-                mPassphraseManager.deletePassphrase(data.getData());
-            }
-            mBitcoinManager.resetEverything();
-
-            Intent intent = new Intent(getActivity(), OnboardingActivity.class);
-            startActivity(intent);
-            getActivity().finish();
-        }
     }
 }
 
