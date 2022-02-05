@@ -17,7 +17,6 @@ import com.learningmachine.android.app.data.model.CertificateRecord;
 import com.learningmachine.android.app.data.store.CertificateStore;
 import com.learningmachine.android.app.data.store.IssuerStore;
 import com.learningmachine.android.app.data.webservice.CertificateService;
-import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 import com.learningmachine.android.app.util.FileUtils;
 
 import java.io.File;
@@ -62,11 +61,11 @@ public class CertificateManager {
     }
 
     public Observable<CertificateRecord> getCertificate(String certificateUuid) {
-        return Observable.just(mCertificateStore.loadCertificate(certificateUuid));
+        return Observable.just(mCertificateStore.load(certificateUuid));
     }
 
     public Observable<List<CertificateRecord>> getCertificatesForIssuer(String issuerUuid) {
-        return Observable.just(mCertificateStore.loadCertificatesForIssuer(issuerUuid));
+        return Observable.just(mCertificateStore.loadForIssuer(issuerUuid));
     }
 
     public Observable<String> addCertificate(String url) {
@@ -84,7 +83,7 @@ public class CertificateManager {
 
     public Observable<Boolean> removeCertificate(String uuid) {
         return Observable.just(FileUtils.deleteCertificate(mContext, uuid))
-                .map(success -> mCertificateStore.deleteCertificate(uuid));
+                .map(success -> mCertificateStore.delete(uuid));
     }
 
     /**
@@ -196,6 +195,6 @@ public class CertificateManager {
 
     private void saveBlockCert(BlockCert blockCert) {
         Timber.i("Saving certificate " + blockCert.getCertName());
-        mCertificateStore.saveBlockchainCertificate(blockCert);
+        mCertificateStore.save(blockCert);
     }
 }

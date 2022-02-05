@@ -26,15 +26,15 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(RobolectricTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = 27)
-public class CertificateStoreTest {
+public class SQLiteCertificateStoreTest {
 
-    private CertificateStore mCertificateStore;
+    private SQLiteCertificateStore mCertificateStore;
 
     @Before
     public void setup() {
         Context context = RuntimeEnvironment.application;
         LMDatabaseHelper databaseHelper = new LMDatabaseHelper(context);
-        mCertificateStore = new CertificateStore(databaseHelper);
+        mCertificateStore = new SQLiteCertificateStore(databaseHelper);
     }
 
     @Test
@@ -50,9 +50,9 @@ public class CertificateStoreTest {
 
         BlockCert blockCert = BlockCertV12.createInstance(certUuid, issuerUuid, name, description, issuedDate, urlString);
 
-        mCertificateStore.saveBlockchainCertificate(blockCert);
+        mCertificateStore.save(blockCert);
 
-        CertificateRecord actualCertificate = mCertificateStore.loadCertificate(certUuid);
+        CertificateRecord actualCertificate = mCertificateStore.load(certUuid);
 
         assertNotNull(actualCertificate);
         assertEquals(certUuid, actualCertificate.getUuid());
@@ -80,8 +80,8 @@ public class CertificateStoreTest {
         blockCert.setBadge(badge);
         blockCert.setIssuedOn("2017-05-11T18:28:27.415+00:00");
 
-        mCertificateStore.saveBlockchainCertificate(blockCert);
-        CertificateRecord certificateRecord = mCertificateStore.loadCertificate(certUuid);
+        mCertificateStore.save(blockCert);
+        CertificateRecord certificateRecord = mCertificateStore.load(certUuid);
 
         assertNotNull("Should be able to load the certificate by UUID", certificateRecord);
         assertTrue(certificateRecord.urlStringContainsUrl());

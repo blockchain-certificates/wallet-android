@@ -7,6 +7,7 @@ import com.learningmachine.android.app.data.IssuerManager;
 import com.learningmachine.android.app.data.bitcoin.BitcoinManager;
 import com.learningmachine.android.app.data.passphrase.PassphraseManager;
 import com.learningmachine.android.app.data.preferences.SharedPreferencesManager;
+import com.learningmachine.android.app.data.store.SQLiteCertificateStore;
 import com.learningmachine.android.app.data.store.CertificateStore;
 import com.learningmachine.android.app.data.store.ImageStore;
 import com.learningmachine.android.app.data.store.IssuerStore;
@@ -21,7 +22,7 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 
-@Module
+@Module(includes = DataBindings.class)
 public class DataModule {
 
     @Provides
@@ -63,12 +64,6 @@ public class DataModule {
     CertificateManager providesCertificateManager(Context context, CertificateStore certificateStore,
                                                   IssuerStore issuerStore, CertificateService certificateService, BitcoinManager bitcoinManager, IssuerManager issuerManager) {
         return new CertificateManager(context, certificateStore, issuerStore, certificateService, bitcoinManager, issuerManager);
-    }
-
-    @Provides
-    @Singleton
-    CertificateStore providesCertificateStore(LMDatabaseHelper databaseHelper) {
-        return new CertificateStore(databaseHelper);
     }
 
     @Provides

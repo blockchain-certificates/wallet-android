@@ -34,7 +34,7 @@ public class InnerJoinTest {
         LMDatabaseHelper database = new LMDatabaseHelper(context);
 
         mIssuerStore = new IssuerStore(database, imageStore);
-        mCertificateStore = new CertificateStore(database);
+        mCertificateStore = new SQLiteCertificateStore(database);
     }
 
     @Test
@@ -64,7 +64,7 @@ public class InnerJoinTest {
 
         BlockCert blockCert = BlockCertV12.createInstance(certUuid, issuerUuid, certName, description, issuedDate, urlString);
 
-        mCertificateStore.saveBlockchainCertificate(blockCert);
+        mCertificateStore.save(blockCert);
 
         IssuerRecord issuerLoaded = mIssuerStore.loadIssuerForCertificate(certUuid);
 
