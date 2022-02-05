@@ -4,18 +4,13 @@ import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Environment;
-import android.provider.DocumentsContract;
 import android.provider.Settings;
-
-import androidx.annotation.RequiresApi;
 
 import com.learningmachine.android.app.util.AESCrypt;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -23,8 +18,12 @@ import java.io.PrintWriter;
 import java.security.GeneralSecurityException;
 import java.util.Scanner;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import timber.log.Timber;
 
+@Singleton
 public class PassphraseManager {
     private final Context mContext;
     private String mPassphrase;
@@ -35,6 +34,7 @@ public class PassphraseManager {
         void apply (String a);
     }
 
+    @Inject
     public PassphraseManager(Context context) {
         mContext = context;
     }

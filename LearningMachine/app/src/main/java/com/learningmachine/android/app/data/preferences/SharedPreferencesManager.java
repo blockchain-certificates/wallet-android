@@ -3,6 +3,10 @@ package com.learningmachine.android.app.data.preferences;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+@Singleton
 public class SharedPreferencesManager {
 
     private static final String PREF_NAME = "LearningMachine";
@@ -18,8 +22,9 @@ public class SharedPreferencesManager {
 
     private static final String PREF_LAST_LOG_DELETED_TIMESTAMP = "SharedPreferencesManager.Logs.LogsDeletedTimestamp";
 
-    private SharedPreferences mPrefs;
+    private final SharedPreferences mPrefs;
 
+    @Inject
     public SharedPreferencesManager(Context context) {
         mPrefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
     }

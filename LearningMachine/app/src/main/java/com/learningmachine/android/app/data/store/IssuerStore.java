@@ -3,6 +3,7 @@ package com.learningmachine.android.app.data.store;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
 import androidx.annotation.VisibleForTesting;
 
 import com.learningmachine.android.app.data.model.IssuerRecord;
@@ -18,11 +19,16 @@ import org.joda.time.DateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+@Singleton
 public class IssuerStore implements DataStore {
 
-    private SQLiteDatabase mDatabase;
-    private ImageStore mImageStore;
+    private final SQLiteDatabase mDatabase;
+    private final ImageStore mImageStore;
 
+    @Inject
     public IssuerStore(LMDatabaseHelper databaseHelper, ImageStore imageStore) {
         mDatabase = databaseHelper.getWritableDatabase();
         mImageStore = imageStore;

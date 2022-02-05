@@ -3,10 +3,15 @@ package com.learningmachine.android.app.data.store;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
 import androidx.annotation.VisibleForTesting;
 
 import com.learningmachine.android.app.data.store.db.Migration;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+@Singleton
 public class LMDatabaseHelper extends SQLiteOpenHelper {
 
     @VisibleForTesting static final String DB_NAME = "com.learningmachine.android.app.sqlite";
@@ -15,6 +20,7 @@ public class LMDatabaseHelper extends SQLiteOpenHelper {
 
     private Migration[] mMigrations = { };
 
+    @Inject
     public LMDatabaseHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }

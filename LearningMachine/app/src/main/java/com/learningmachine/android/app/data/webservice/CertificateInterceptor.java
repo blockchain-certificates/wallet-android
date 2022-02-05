@@ -2,18 +2,22 @@ package com.learningmachine.android.app.data.webservice;
 
 
 import java.io.IOException;
-import java.nio.charset.Charset;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
-import okhttp3.ResponseBody;
-import okio.Buffer;
-import okio.BufferedSource;
 import timber.log.Timber;
 
+@Singleton
 public class CertificateInterceptor implements Interceptor {
+
+    @Inject
+    public CertificateInterceptor() {}
+
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();

@@ -15,14 +15,19 @@ import com.learningmachine.android.app.util.StringUtils;
 import java.io.IOException;
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import rx.Observable;
 import timber.log.Timber;
 
+@Singleton
 public class IssuerManager {
 
-    private IssuerStore mIssuerStore;
-    private IssuerService mIssuerService;
+    private final IssuerStore mIssuerStore;
+    private final IssuerService mIssuerService;
 
+    @Inject
     public IssuerManager(IssuerStore issuerStore, IssuerService issuerService) {
         mIssuerStore = issuerStore;
         mIssuerService = issuerService;

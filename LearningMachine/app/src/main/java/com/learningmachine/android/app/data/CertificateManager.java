@@ -25,12 +25,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import okhttp3.ResponseBody;
 import okio.Buffer;
 import okio.BufferedSource;
 import rx.Observable;
 import timber.log.Timber;
 
+@Singleton
 public class CertificateManager {
 
     private final Context mContext;
@@ -40,6 +44,7 @@ public class CertificateManager {
     private final BitcoinManager mBitcoinManager;
     private final IssuerManager mIssuerManager;
 
+    @Inject
     public CertificateManager(Context context, CertificateStore certificateStore,
                               IssuerStore issuerStore, CertificateService certificateService,
                               BitcoinManager bitcoinManager, IssuerManager issuerManager) {

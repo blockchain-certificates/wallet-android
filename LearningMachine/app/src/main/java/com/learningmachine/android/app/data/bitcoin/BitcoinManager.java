@@ -1,9 +1,9 @@
 package com.learningmachine.android.app.data.bitcoin;
 
 import android.content.Context;
-import android.os.Environment;
-import androidx.annotation.VisibleForTesting;
 import android.util.Pair;
+
+import androidx.annotation.VisibleForTesting;
 
 import com.learningmachine.android.app.LMConstants;
 import com.learningmachine.android.app.R;
@@ -28,9 +28,13 @@ import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import rx.Observable;
 import timber.log.Timber;
 
+@Singleton
 public class BitcoinManager {
 
     private static final String PASSPHRASE_DELIMETER = " ";
@@ -43,6 +47,7 @@ public class BitcoinManager {
     private final PassphraseManager mPassphraseManager;
     private Wallet mWallet;
 
+    @Inject
     public BitcoinManager(Context context, NetworkParameters networkParameters,
                           IssuerStore issuerStore, CertificateStore certificateStore,
                           SharedPreferencesManager sharedPreferencesManager,

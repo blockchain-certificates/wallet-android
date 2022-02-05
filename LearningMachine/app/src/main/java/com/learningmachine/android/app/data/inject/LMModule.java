@@ -10,7 +10,7 @@ import dagger.Provides;
 @Module
 public class LMModule {
 
-    private Context mApplicationContext;
+    private final Context mApplicationContext;
 
     public LMModule(Context applicationContext) {
         mApplicationContext = applicationContext;

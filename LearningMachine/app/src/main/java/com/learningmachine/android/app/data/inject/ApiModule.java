@@ -89,12 +89,6 @@ public class ApiModule {
 
     @Provides
     @Singleton
-    CertificateInterceptor provideCertificateInterceptor() {
-        return new CertificateInterceptor();
-    }
-
-    @Provides
-    @Singleton
     @Named("certificate")
     OkHttpClient provideCertificateOkHttpClient(Interceptor loggingInterceptor, CertificateInterceptor certificateInterceptor) {
         return new OkHttpClient.Builder()

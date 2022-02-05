@@ -10,12 +10,17 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import timber.log.Timber;
 
+@Singleton
 public class ImageStore implements DataStore {
 
-    private Context mContext;
+    private final Context mContext;
 
+    @Inject
     public ImageStore(Context context) {
         mContext = context;
     }

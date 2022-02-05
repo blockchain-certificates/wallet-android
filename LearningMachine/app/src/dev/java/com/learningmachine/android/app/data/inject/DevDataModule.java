@@ -2,7 +2,6 @@ package com.learningmachine.android.app.data.inject;
 
 import org.bitcoinj.core.NetworkParameters;
 import org.bitcoinj.params.MainNetParams;
-import org.bitcoinj.params.TestNet3Params;
 
 import javax.inject.Singleton;
 
@@ -12,7 +11,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import timber.log.Timber;
 import timber.log.Timber.DebugTree;
 
-@Module(includes = DataModule.class)
+@Module(includes = DataBindings.class)
 public class DevDataModule {
 
     @Provides
