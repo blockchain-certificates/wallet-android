@@ -1,6 +1,12 @@
 package com.learningmachine.android.app.data.store;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.mock;
+
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 
 import com.learningmachine.android.app.BuildConfig;
 import com.learningmachine.android.app.data.model.IssuerRecord;
@@ -17,11 +23,6 @@ import org.robolectric.annotation.Config;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.mock;
-
 /**
  * Currently only tests saving and loading since users cannot modify Issuer or KeyRotations
  */
@@ -35,7 +36,7 @@ public class IssuerStoreTest {
     public void setup() throws Exception {
         ImageStore imageStore = mock(ImageStore.class);
         Context context = RuntimeEnvironment.application;
-        LMDatabaseHelper database = new LMDatabaseHelper(context);
+        SQLiteDatabase database = new LMDatabaseHelper(context).getWritableDatabase();
 
         mIssuerStore = new IssuerStore(database, imageStore);
     }

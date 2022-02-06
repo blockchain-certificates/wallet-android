@@ -11,7 +11,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import timber.log.Timber;
 import timber.log.Timber.DebugTree;
 
-@Module(includes = DataBindings.class)
+@Module(includes = DataModule.class)
 public class DevDataModule {
 
     @Provides

@@ -20,8 +20,8 @@ public class SQLiteCertificateStore implements CertificateStore {
     private final SQLiteDatabase mDatabase;
 
     @Inject
-    public SQLiteCertificateStore(LMDatabaseHelper databaseHelper) {
-        mDatabase = databaseHelper.getWritableDatabase();
+    public SQLiteCertificateStore(SQLiteDatabase database) {
+        mDatabase = database;
     }
 
     public CertificateRecord load(String certId) {

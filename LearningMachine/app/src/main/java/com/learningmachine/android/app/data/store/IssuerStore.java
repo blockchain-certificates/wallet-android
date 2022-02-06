@@ -29,8 +29,8 @@ public class IssuerStore implements DataStore {
     private final ImageStore mImageStore;
 
     @Inject
-    public IssuerStore(LMDatabaseHelper databaseHelper, ImageStore imageStore) {
-        mDatabase = databaseHelper.getWritableDatabase();
+    public IssuerStore(SQLiteDatabase database, ImageStore imageStore) {
+        mDatabase = database;
         mImageStore = imageStore;
     }
 
@@ -87,7 +87,7 @@ public class IssuerStore implements DataStore {
         } else {
             mDatabase.update(LMDatabaseHelper.Table.ISSUER,
                     contentValues, LMDatabaseHelper.Column.Issuer.UUID + " = ?",
-                    new String[] {issuerUuid});
+                    new String[]{issuerUuid});
         }
     }
 
@@ -129,7 +129,7 @@ public class IssuerStore implements DataStore {
                 LMDatabaseHelper.Table.ISSUER,
                 null,
                 LMDatabaseHelper.Column.Issuer.UUID + " = ?",
-                new String[] { uuid },
+                new String[]{uuid},
                 null,
                 null,
                 null);
@@ -170,7 +170,7 @@ public class IssuerStore implements DataStore {
                 + " WHERE " + LMDatabaseHelper.Table.CERTIFICATE + "." + LMDatabaseHelper.Column.Certificate.UUID
                 + " = ?";
 
-        Cursor cursor = mDatabase.rawQuery(selectQuery, new String[] { certUuid });
+        Cursor cursor = mDatabase.rawQuery(selectQuery, new String[]{certUuid});
 
         if (cursor.moveToFirst()) {
             IssuerCursorWrapper cursorWrapper = new IssuerCursorWrapper(cursor);
@@ -216,8 +216,8 @@ public class IssuerStore implements DataStore {
             mDatabase.update(tableName,
                     contentValues,
                     LMDatabaseHelper.Column.KeyRotation.KEY + " = ? "
-                    + " AND " + LMDatabaseHelper.Column.KeyRotation.ISSUER_UUID + " = ?",
-                    new String[] { keyRotation.getKey(), issuerUuid });
+                            + " AND " + LMDatabaseHelper.Column.KeyRotation.ISSUER_UUID + " = ?",
+                    new String[]{keyRotation.getKey(), issuerUuid});
         }
     }
 
@@ -237,7 +237,7 @@ public class IssuerStore implements DataStore {
                 tableName,
                 null,
                 LMDatabaseHelper.Column.KeyRotation.ISSUER_UUID + " = ?",
-                new String[] { issuerUuid },
+                new String[]{issuerUuid},
                 null,
                 null,
                 null);

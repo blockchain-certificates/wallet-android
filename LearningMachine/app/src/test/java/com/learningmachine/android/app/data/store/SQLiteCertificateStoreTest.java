@@ -1,6 +1,11 @@
 package com.learningmachine.android.app.data.store;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 
 import com.learningmachine.android.app.BuildConfig;
 import com.learningmachine.android.app.data.cert.BlockCert;
@@ -20,10 +25,6 @@ import org.robolectric.annotation.Config;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
 @RunWith(RobolectricTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = 27)
 public class SQLiteCertificateStoreTest {
@@ -33,8 +34,8 @@ public class SQLiteCertificateStoreTest {
     @Before
     public void setup() {
         Context context = RuntimeEnvironment.application;
-        LMDatabaseHelper databaseHelper = new LMDatabaseHelper(context);
-        mCertificateStore = new SQLiteCertificateStore(databaseHelper);
+        SQLiteDatabase database = new LMDatabaseHelper(context).getWritableDatabase();
+        mCertificateStore = new SQLiteCertificateStore(database);
     }
 
     @Test
