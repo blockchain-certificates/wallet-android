@@ -17,7 +17,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
+@Singleton
 public class SQLiteIssuerStore implements IssuerStore {
 
     private final SQLiteDatabase mDatabase;
@@ -68,23 +70,23 @@ public class SQLiteIssuerStore implements IssuerStore {
         if (!StringUtils.isEmpty(analyticsUrlString)) {
             contentValues.put(LMDatabaseHelper.Column.Issuer.ANALYTICS, analyticsUrlString);
         }
-        String issuerUuid = issuer.getUuid();
+        String issuerId = issuer.getUuid();
         if (!ListUtils.isEmpty(issuer.getIssuerKeys())) {
-            saveIssuerKeys(issuer.getIssuerKeys(), issuerUuid);
+            saveIssuerKeys(issuer.getIssuerKeys(), issuerId);
         }
         if (!ListUtils.isEmpty(issuer.getRevocationKeys())) {
-            saveRevocationKeys(issuer.getRevocationKeys(), issuerUuid);
+            saveRevocationKeys(issuer.getRevocationKeys(), issuerId);
         }
 
-        if (loadIssuer(issuerUuid) == null) {
-            contentValues.put(LMDatabaseHelper.Column.Issuer.UUID, issuerUuid);
+        if (loadIssuer(issuerId) == null) {
+            contentValues.put(LMDatabaseHelper.Column.Issuer.UUID, issuerId);
             mDatabase.insert(LMDatabaseHelper.Table.ISSUER,
                     null,
                     contentValues);
         } else {
             mDatabase.update(LMDatabaseHelper.Table.ISSUER,
                     contentValues, LMDatabaseHelper.Column.Issuer.UUID + " = ?",
-                    new String[]{issuerUuid});
+                    new String[]{issuerId});
         }
     }
 
@@ -123,13 +125,13 @@ public class SQLiteIssuerStore implements IssuerStore {
     }
 
     @Override
-    public IssuerRecord loadIssuer(String uuid) {
+    public IssuerRecord loadIssuer(String issuerId) {
         IssuerRecord issuer = null;
         Cursor cursor = mDatabase.query(
                 LMDatabaseHelper.Table.ISSUER,
                 null,
                 LMDatabaseHelper.Column.Issuer.UUID + " = ?",
-                new String[]{uuid},
+                new String[]{issuerId},
                 null,
                 null,
                 null);
@@ -149,7 +151,7 @@ public class SQLiteIssuerStore implements IssuerStore {
     }
 
     @Override
-    public IssuerRecord loadIssuerForCertificate(String certUuid) {
+    public IssuerRecord loadIssuerForCertificate(String certId) {
         IssuerRecord issuer = null;
 
         String selectQuery = "SELECT "
@@ -171,7 +173,7 @@ public class SQLiteIssuerStore implements IssuerStore {
                 + " WHERE " + LMDatabaseHelper.Table.CERTIFICATE + "." + LMDatabaseHelper.Column.Certificate.UUID
                 + " = ?";
 
-        Cursor cursor = mDatabase.rawQuery(selectQuery, new String[]{certUuid});
+        Cursor cursor = mDatabase.rawQuery(selectQuery, new String[]{certId});
 
         if (cursor.moveToFirst()) {
             IssuerCursorWrapper cursorWrapper = new IssuerCursorWrapper(cursor);
@@ -188,14 +190,14 @@ public class SQLiteIssuerStore implements IssuerStore {
     }
 
     @Override
-    public void saveKeyRotation(KeyRotation keyRotation, String issuerUuid, String tableName) {
+    public void saveKeyRotation(KeyRotation keyRotation, String issuerId, String tableName) {
         ContentValues contentValues = new ContentValues();
 
         contentValues.put(LMDatabaseHelper.Column.KeyRotation.KEY, keyRotation.getKey());
         contentValues.put(LMDatabaseHelper.Column.KeyRotation.CREATED_DATE, keyRotation.getCreatedDate());
-        contentValues.put(LMDatabaseHelper.Column.KeyRotation.ISSUER_UUID, issuerUuid);
+        contentValues.put(LMDatabaseHelper.Column.KeyRotation.ISSUER_UUID, issuerId);
 
-        if (ListUtils.isEmpty(loadKeyRotations(issuerUuid, tableName))) {
+        if (ListUtils.isEmpty(loadKeyRotations(issuerId, tableName))) {
             mDatabase.insert(tableName,
                     null,
                     contentValues);
@@ -204,12 +206,12 @@ public class SQLiteIssuerStore implements IssuerStore {
                     contentValues,
                     LMDatabaseHelper.Column.KeyRotation.KEY + " = ? "
                             + " AND " + LMDatabaseHelper.Column.KeyRotation.ISSUER_UUID + " = ?",
-                    new String[]{keyRotation.getKey(), issuerUuid});
+                    new String[]{keyRotation.getKey(), issuerId});
         }
     }
 
     @Override
-    public List<KeyRotation> loadKeyRotations(String issuerUuid, String tableName) {
+    public List<KeyRotation> loadKeyRotations(String issuerId, String tableName) {
         return null;
     }
 
@@ -221,26 +223,25 @@ public class SQLiteIssuerStore implements IssuerStore {
         mImageStore.reset();
     }
 
-    private List<KeyRotation> loadIssuerKeys(String issuerUuid) {
-        return loadKeyRotations(issuerUuid, LMDatabaseHelper.Table.ISSUER_KEY);
+    private List<KeyRotation> loadIssuerKeys(String issuerId) {
+        return loadKeyRotations(issuerId, LMDatabaseHelper.Table.ISSUER_KEY);
     }
 
-    private List<KeyRotation> loadRevocationKeys(String issuerUuid) {
-        return loadKeyRotations(issuerUuid, LMDatabaseHelper.Table.REVOCATION_KEY);
+    private List<KeyRotation> loadRevocationKeys(String issuerId) {
+        return loadKeyRotations(issuerId, LMDatabaseHelper.Table.REVOCATION_KEY);
     }
 
-
-    private void saveIssuerKeys(List<KeyRotation> keyRotationList, String issuerUuid) {
-        saveKeyRotations(keyRotationList, issuerUuid, LMDatabaseHelper.Table.ISSUER_KEY);
+    private void saveIssuerKeys(Iterable<KeyRotation> keyRotations, String issuerId) {
+        saveKeyRotations(keyRotations, issuerId, LMDatabaseHelper.Table.ISSUER_KEY);
     }
 
-    private void saveRevocationKeys(List<KeyRotation> keyRotationList, String issuerUuid) {
-        saveKeyRotations(keyRotationList, issuerUuid, LMDatabaseHelper.Table.REVOCATION_KEY);
+    private void saveRevocationKeys(Iterable<KeyRotation> keyRotations, String issuerId) {
+        saveKeyRotations(keyRotations, issuerId, LMDatabaseHelper.Table.REVOCATION_KEY);
     }
 
-    private void saveKeyRotations(List<KeyRotation> keyRotationList, String issuerUuid, String tableName) {
-        for (KeyRotation keyRotation : keyRotationList) {
-            saveKeyRotation(keyRotation, issuerUuid, tableName);
+    private void saveKeyRotations(Iterable<KeyRotation> keyRotations, String issuerId, String tableName) {
+        for (KeyRotation keyRotation : keyRotations) {
+            saveKeyRotation(keyRotation, issuerId, tableName);
         }
     }
 }
