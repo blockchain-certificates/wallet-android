@@ -38,7 +38,7 @@ public class IssuerStoreTest {
         Context context = RuntimeEnvironment.application;
         SQLiteDatabase database = new LMDatabaseHelper(context).getWritableDatabase();
 
-        mIssuerStore = new IssuerStore(database, imageStore);
+        mIssuerStore = new SQLiteIssuerStore(database, imageStore);
     }
 
     @Test

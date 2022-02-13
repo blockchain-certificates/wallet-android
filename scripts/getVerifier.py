@@ -45,7 +45,7 @@ def _parse() -> argparse.Namespace:
             
             https://github.com/blockchain-certificates/wallet-android
              
-            Note: this script requires sudo access to install yarn (instead 
+            Note: this script requires runas  access to install yarn (instead 
             of npm). Checksum integrity errors result when attempting to use 
             npm, as described in the cert-verifier-js README.
             """))
@@ -81,7 +81,7 @@ def _export_token(npm_token: Optional[str]) -> None:
 
 def _install_and_build() -> None:
     print(f"INSTALLING YARN AND BUILDING {CV_REPO}")
-    os.system("sudo npm install --global yarn")
+    os.system("runas  npm install --global yarn")
     os.system("yarn cache clean")
     os.system("yarn --update-checksums")
     os.system("yarn build")
@@ -97,7 +97,7 @@ def _copy_verifier(wallet_path: str) -> None:
 def _clean_up(uninstall_yarn: bool) -> None:
     if uninstall_yarn:
         print("UNINSTALLING YARN")
-        os.system("sudo npm uninstall --global yarn")
+        os.system("runas  npm uninstall --global yarn")
 
 
 if __name__ == '__main__':
