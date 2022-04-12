@@ -55,11 +55,10 @@ public class CertificateVerificationTest {
     public static final String BTC_TX_RECORD_C7667D_FILENAME = "txrecord-" + BTC_TX_RECORD_ID_C7667D + ".json";
     public static final String BTC_TX_RECORD_ID_A05E8B = "a05e8b7998c14820036fae46eb3c4e698433db8036114ef62fcc8ab5850b5dea";
     public static final String BTC_TX_RECORD_MAINNET_20_FILENAME = "txrecord-" + BTC_TX_RECORD_ID_A05E8B + ".json";
-    public static final String CERT_ID = "8e02c2c4499e4e108b07ff5504438f4d";
-    public static final String CERT_FILENAME = V20_ALPHA_CERTIFICATE_PATH + "/certificate-" + CERT_ID + ".json";
     public static final String CERT_V20_ALPHA_FILENAME = V20_ALPHA_CERTIFICATE_PATH + "/mainnet-bolot.json";
     public static final String CERT_V20_FILENAME = V20_CERTIFICATE_PATH + "/mainnet.json";
-    public static final String FORGED_CERT_FILENAME = "forged-cert-" + CERT_ID + ".json";
+    public static final String CERT_V1_2_FILENAME = "certificate-8e02c2c4499e4e108b07ff5504438f4d.json";
+    public static final String FORGED_V1_2_CERT_FILENAME = "forged-cert-v1-8e02c2c4499e4e108b07ff5504438f4d.json";
 
     public static final String ISSUER_FILENAME = "issuer-v2.json";
 
@@ -94,10 +93,10 @@ public class CertificateVerificationTest {
         subject = new CertificateVerifier(context, blockchainService, issuerService);
 
         BlockCertParser blockCertParser = new BlockCertParser();
-        validCertV12 = blockCertParser.fromJson(getResourceAsStream(CERT_FILENAME));
+        validCertV12 = blockCertParser.fromJson(getResourceAsStream(CERT_V1_2_FILENAME));
         validCertV20alpha = blockCertParser.fromJson(getResourceAsStream(CERT_V20_ALPHA_FILENAME));
         validCertV20 = blockCertParser.fromJson(getResourceAsStream(CERT_V20_FILENAME));
-        forgedCertificate = blockCertParser.fromJson(getResourceAsStream(FORGED_CERT_FILENAME));
+        forgedCertificate = blockCertParser.fromJson(getResourceAsStream(FORGED_V1_2_CERT_FILENAME));
     }
 
     /* These funcations no longer exist, causing tests to fail */
@@ -170,7 +169,7 @@ public class CertificateVerificationTest {
         // txId would now be used to download the blockchain transaction record
         assertThat(txId, equalTo(BTC_TX_RECORD_ID_D3F042));
 
-        Sha256Hash localHash = Sha256Hash.of(ByteStreams.toByteArray(getResourceAsStream(CERT_FILENAME)));
+        Sha256Hash localHash = Sha256Hash.of(ByteStreams.toByteArray(getResourceAsStream(CERT_V1_2_FILENAME)));
 
         // download blockchain transaction record from https://blockchain.info/rawtx/<transaction_id>
 

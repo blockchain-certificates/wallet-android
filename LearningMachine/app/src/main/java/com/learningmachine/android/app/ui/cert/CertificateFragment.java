@@ -146,7 +146,7 @@ public class CertificateFragment extends LMFragment {
         }
     }
 
-    private String displayHTML(BlockCert certificate) {
+    public String displayHTML(BlockCert certificate) {
         String displayHTML = "";
 
         if (certificate instanceof BlockCertV20) {
