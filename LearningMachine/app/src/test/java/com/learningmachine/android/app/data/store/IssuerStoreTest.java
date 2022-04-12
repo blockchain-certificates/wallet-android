@@ -12,7 +12,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
-import org.robolectric.annotation.Config;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +25,6 @@ import static org.mockito.Mockito.mock;
  * Currently only tests saving and loading since users cannot modify Issuer or KeyRotations
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(constants = BuildConfig.class, sdk = 27)
 public class IssuerStoreTest {
 
     private IssuerStore mIssuerStore;
