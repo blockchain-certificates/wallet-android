@@ -1,3 +1,3 @@
 [submodule "External/wallet-test-resources"]
 	path = External/wallet-test-resources
-	url = git@github.com:blockchain-certificates/wallet-test-resources.git
+	url = https://github.com/blockchain-certificates/wallet-test-resources.git
