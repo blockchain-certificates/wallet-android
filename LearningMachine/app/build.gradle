@@ -203,6 +203,8 @@ dependencies {
 
     testImplementation "junit:junit:$JUNIT_VERSION"
     testImplementation "org.hamcrest:hamcrest:2.2"
+    testImplementation "net.javacrumbs.json-unit:json-unit:2.33.0"
+    testImplementation "org.json:json:20140107"
     testImplementation "org.mockito:mockito-core:$MOCKITO_VERSION"
     testImplementation "org.robolectric:robolectric:$ROBOLECTRIC_VERSION"
     testImplementation "org.robolectric:shadows-multidex:$ROBOLECTRIC_VERSION"
