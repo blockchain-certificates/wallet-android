@@ -19,6 +19,7 @@ public interface BlockCert {
     String getReceiptHash();
     String getExpirationDate();
     abstract String getDisplayHtml();
+    abstract String version();
 
     /**
      * @return The portion of the certificate whose hash needs to be compared against the

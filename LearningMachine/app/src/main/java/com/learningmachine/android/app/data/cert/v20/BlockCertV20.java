@@ -31,6 +31,10 @@ public class BlockCertV20 extends CertSchemaV20 implements BlockCert {
         return mDisplayHtml;
     }
 
+    public String version () {
+        return "v2";
+    }
+
     @Override
     public String getCertUid() {
         if (getBadge() == null

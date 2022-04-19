@@ -38,6 +38,9 @@ public class BlockCertV12 extends BlockchainCertificate implements BlockCert {
     public String getDisplayHtml() {
         return "";
     }
+    public String version () {
+        return "v1.2";
+    }
 
     @Override
     public String getCertUid() {

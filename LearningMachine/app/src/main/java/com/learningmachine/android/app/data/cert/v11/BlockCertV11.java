@@ -22,6 +22,10 @@ public class BlockCertV11 extends CertificateSchemaV11 implements BlockCert {
         return "";
     }
 
+    public String version () {
+        return "v1.1";
+    }
+
     @Override
     public String getCertName() {
         return getCertificate().getTitle();
