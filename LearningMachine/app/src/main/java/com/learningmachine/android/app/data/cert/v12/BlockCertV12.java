@@ -185,6 +185,7 @@ public class BlockCertV12 extends BlockchainCertificate implements BlockCert {
     }
 
     public void setDocumentNode(JsonObject documentNode) {
-        mDocumentNode = documentNode;
+        final JsonObject document = documentNode.getAsJsonObject("document");
+        mDocumentNode = document;
     }
 }

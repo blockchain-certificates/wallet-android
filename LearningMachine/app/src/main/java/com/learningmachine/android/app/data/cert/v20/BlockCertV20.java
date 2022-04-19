@@ -185,6 +185,7 @@ public class BlockCertV20 extends CertSchemaV20 implements BlockCert {
     }
 
     public void setDocumentNode(JsonObject documentNode) {
+        documentNode.remove("signature");
         mDocumentNode = documentNode;
     }
 
