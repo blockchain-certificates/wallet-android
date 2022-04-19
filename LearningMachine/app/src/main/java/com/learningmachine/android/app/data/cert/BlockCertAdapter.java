@@ -28,17 +28,22 @@ public class BlockCertAdapter implements JsonSerializer<BlockCert>, JsonDeserial
     public BlockCert deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         BlockCert blockCert = null;
         JsonObject jsonObject = json.getAsJsonObject();
-        if (isV20(jsonObject)) {
-            blockCert = context.deserialize(json, BlockCertV20.class);
-            blockCert.setDocumentNode(jsonObject);
-        } else if (isV12(jsonObject)) {
-            blockCert = context.deserialize(json, BlockCertV12.class);
-            blockCert.setDocumentNode(jsonObject);
-        } else if (isV11(jsonObject)) {
-            blockCert = context.deserialize(json, BlockCertV11.class);
+        blockCert = context.deserialize(json, getAdapterClass(jsonObject));
+        if (blockCert != null) {
             blockCert.setDocumentNode(jsonObject);
         }
         return blockCert;
+    }
+
+    private Class<?> getAdapterClass (JsonObject jsonObject) {
+        if (isV20(jsonObject)) {
+            return BlockCertV20.class;
+        } else if (isV12(jsonObject)) {
+            return BlockCertV12.class;
+        } else if (isV11(jsonObject)) {
+            return BlockCertV11.class;
+        }
+        return null;
     }
 
     private boolean isV11(JsonObject jsonObject) {
