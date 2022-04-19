@@ -48,7 +48,7 @@ public class BlockCertAdapter implements JsonSerializer<BlockCert>, JsonDeserial
                 && jsonObject.get("verify") != null
                 && jsonObject.get("recipient") != null
                 && jsonObject.get("signature") != null
-                && jsonObject.get("extension") != null) {
+                && jsonObject.get("@context") == null) {
             return true;
         }
         return false;
