@@ -31,8 +31,27 @@ public class BlockCertV30 implements BlockCert {
     @Override
     public String getDisplayHtml() {
         final JsonObject displayAsJsonObject = mDisplay.getAsJsonObject();
+        final String contentMediaType = displayAsJsonObject.get("contentMediaType").getAsString();
         final String content = displayAsJsonObject.get("content").getAsString();
-        return content;
+        String contentEncoding = "";
+        if (displayAsJsonObject.has("contentEncoding")) {
+            contentEncoding = displayAsJsonObject.get("contentEncoding").getAsString();
+        }
+
+        switch (contentMediaType) {
+            case "text/html":
+                return content;
+
+            case "image/png":
+            case "image/jpeg":
+            case "image/gif":
+            case "image/bmp":
+                return "<img src=\"data:" + contentMediaType + ";" + contentEncoding + "," + content + "\"/>";
+
+            default:
+                return "";
+        }
+
     }
 
     @Override
