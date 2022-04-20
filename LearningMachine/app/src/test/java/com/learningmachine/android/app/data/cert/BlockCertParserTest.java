@@ -23,6 +23,32 @@ public class BlockCertParserTest {
     }
 
     @Test
+    public void parseV30SetsCorrectVersionTest () {
+        try {
+            final String dir = System.getProperty("user.dir");
+            final String jsonV3String = readFileAsString(dir + "/src/test/resources/v3-testnet-valid.json");
+            final BlockCert output = instance.fromJson(jsonV3String);
+            assertEquals(output.version(), "v3");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    public void parseV30SetsDocumentNodeTest () {
+        try {
+            final String dir = System.getProperty("user.dir");
+            final String jsonV3String = readFileAsString(dir + "/src/test/resources/v3-testnet-valid.json");
+            final JSONObject expectedOutput = new JSONObject(jsonV3String);
+            final BlockCert output = instance.fromJson(jsonV3String);
+            final JsonObject outputDocument = output.getDocumentNode();
+            assertThat(expectedOutput.toString(), jsonEquals(outputDocument));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
     public void parseV20SetsCorrectVersionTest () {
         try {
             final String dir = System.getProperty("user.dir");

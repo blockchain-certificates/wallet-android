@@ -11,6 +11,7 @@ import com.google.gson.JsonSerializer;
 import com.learningmachine.android.app.data.cert.v11.BlockCertV11;
 import com.learningmachine.android.app.data.cert.v12.BlockCertV12;
 import com.learningmachine.android.app.data.cert.v20.BlockCertV20;
+import com.learningmachine.android.app.data.cert.v30.BlockCertV30;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -52,6 +53,10 @@ public class BlockCertAdapter implements JsonSerializer<BlockCert>, JsonDeserial
             case "v2.0":
             case "v2.1":
                 return BlockCertV20.class;
+
+            case "v3":
+            case "v3.0":
+                return BlockCertV30.class;
 
             default:
                 return null;

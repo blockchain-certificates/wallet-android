@@ -8,6 +8,6 @@ import static org.junit.Assert.assertEquals;
 public class BlockcertsV3Test {
   @Test
   public void getDocumentNode () {
-    // should return the document node, the unsigned piece of the blockcerts
+    // should return the document node - maybe?
   }
 }
