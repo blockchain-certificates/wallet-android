@@ -66,16 +66,10 @@ public class BlockCertAdapter implements JsonSerializer<BlockCert>, JsonDeserial
         final JsonElement context = jsonObject.get("@context");
         if (context.isJsonArray()) {
             final JsonArray contextObjectAsArray = jsonObject.getAsJsonArray("@context");
-            for (int i = 0; i < contextObjectAsArray.size(); i++) {
-                if (!contextObjectAsArray.get(i).isJsonObject()) {
-                    contextArray.add(contextObjectAsArray.get(i).toString());
-                }
-            }
+            getStringsFromContextArray(contextObjectAsArray, contextArray);
         } else {
             contextArray.add(context.toString());
         }
-
-        System.out.println(contextArray);
 
         final String blockcertsContextUrl = filterBlockcertsContext(contextArray);
         System.out.println(blockcertsContextUrl);
@@ -88,6 +82,14 @@ public class BlockCertAdapter implements JsonSerializer<BlockCert>, JsonDeserial
             return "v" + version;
         }
         return "invalid blockcerts version";
+    }
+
+    private void getStringsFromContextArray (JsonArray array, ArrayList targetArray) {
+        for (int i = 0; i < array.size(); i++) {
+            if (!array.get(i).isJsonObject()) {
+                targetArray.add(array.get(i).toString());
+            }
+        }
     }
 
     private String filterBlockcertsContext(ArrayList<String> contextArray) {
