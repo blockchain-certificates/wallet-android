@@ -40,7 +40,7 @@ public class CertificateFragmentTest {
 					"</body>" +
 				"</html>";
 
-		InputStream inputStream = getResourceAsStream("v3-testnet-valid.json");
+		InputStream inputStream = getResourceAsStream("v3/testnet-valid.json");
 		BlockCertParser blockCertParser = new BlockCertParser();
 		BlockCert blockCert = blockCertParser.fromJson(inputStream);
 		CertificateFragment certificateFragment = new CertificateFragment();
