@@ -48,8 +48,11 @@ public class BlockCertV30 implements BlockCert {
             case "image/bmp":
                 return "<img src=\"data:" + contentMediaType + ";" + contentEncoding + "," + content + "\"/>";
 
+            case "application/pdf":
+                return "<embed width=\"100%\" height=\"100%\" type=\"application/pdf\" src=\"data:" + contentMediaType + ";" + contentEncoding + "," + content + "\"/>";
+
             default:
-                return "";
+                return "No readable content";
         }
 
     }

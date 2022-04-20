@@ -8,9 +8,23 @@ import java.nio.file.Paths;
 
 public class V3Assertions {
     public static String getBase64PngValue () {
+        // TODO: refactor open file function
         try {
             final String dir = System.getProperty("user.dir");
             final String blockcertString = readFileAsString(dir + "/src/test/resources/v3/testnet-display-png.json");
+            JsonObject blockcertAsJsonObject = new Gson().fromJson(blockcertString, JsonObject.class);
+            return blockcertAsJsonObject
+                    .get("display").getAsJsonObject()
+                    .get("content").getAsString();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public static String getBase64PDFValue () {
+        // TODO: refactor open file function
+        try {
+            final String dir = System.getProperty("user.dir");
+            final String blockcertString = readFileAsString(dir + "/src/test/resources/v3/testnet-display-pdf.json");
             JsonObject blockcertAsJsonObject = new Gson().fromJson(blockcertString, JsonObject.class);
             return blockcertAsJsonObject
                     .get("display").getAsJsonObject()

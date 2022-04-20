@@ -24,6 +24,7 @@ public class BlockCertParserTest {
 
     @Test
     public void parseV30SetsCorrectVersionTest () {
+        // TODO: refactor open file function
         try {
             final String dir = System.getProperty("user.dir");
             final String jsonV3String = readFileAsString(dir + "/src/test/resources/v3/testnet-valid.json");
