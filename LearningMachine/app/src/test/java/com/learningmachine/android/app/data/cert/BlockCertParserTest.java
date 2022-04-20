@@ -35,6 +35,47 @@ public class BlockCertParserTest {
     }
 
     @Test
+    public void parseV20SetsDocumentNodeTest () {
+        try {
+            final String dir = System.getProperty("user.dir");
+            final String jsonV2String = readFileAsString(dir + "/src/test/resources/mainnet-valid-2.0.json");
+            final JSONObject expectedOutput = new JSONObject(jsonV2String);
+            expectedOutput.remove("signature");
+            final BlockCert output = instance.fromJson(jsonV2String);
+            final JsonObject outputDocument = output.getDocumentNode();
+            assertThat(expectedOutput.toString(), jsonEquals(outputDocument));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    public void parseV12SetsCurrectVersionTest () {
+        try {
+            final String dir = System.getProperty("user.dir");
+            final String jsonV12String = readFileAsString(dir + "/src/test/resources/common/Certificates/v1.2/sample_signed_cert-valid-1.2.0.json");
+            final BlockCert output = instance.fromJson(jsonV12String);
+            assertEquals(output.version(), "v1.2");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    public void parseV12SetsDocumentNodeTest () {
+        try {
+            final String dir = System.getProperty("user.dir");
+            final String jsonV12String = readFileAsString(dir + "/src/test/resources/common/Certificates/v1.2/sample_signed_cert-valid-1.2.0.json");
+            final String AssertionV12DocumentNodeString = readFileAsString(dir + "/src/test/resources/assertions/v1.2-document-node.json");
+            final BlockCert output = instance.fromJson(jsonV12String);
+            final JsonObject outputDocument = output.getDocumentNode();
+            assertThat(AssertionV12DocumentNodeString, jsonEquals(outputDocument));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
     public void parseV11SetsCorrectVersionTest () {
         try {
             final String dir = System.getProperty("user.dir");
