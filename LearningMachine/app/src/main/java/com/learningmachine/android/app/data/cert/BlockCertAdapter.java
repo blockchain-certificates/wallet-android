@@ -72,10 +72,8 @@ public class BlockCertAdapter implements JsonSerializer<BlockCert>, JsonDeserial
         }
 
         final String blockcertsContextUrl = filterBlockcertsContext(contextArray);
-        System.out.println(blockcertsContextUrl);
         if (blockcertsContextUrl != "") {
             final String version = getVersionNumber(blockcertsContextUrl);
-            System.out.println(version);
             if (version.startsWith("v")) {
                 return version;
             }
