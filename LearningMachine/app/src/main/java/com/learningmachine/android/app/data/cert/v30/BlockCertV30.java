@@ -1,12 +1,19 @@
 package com.learningmachine.android.app.data.cert.v30;
 
 import com.google.gson.JsonObject;
+import com.google.gson.JsonElement;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import com.learningmachine.android.app.data.cert.BlockCert;
 import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 
 public class BlockCertV30 implements BlockCert {
     private JsonObject mDocumentNode;
+
+    @SerializedName("display")
+    @Expose
+    private JsonElement mDisplay;
 
     public String version () {
         return "v3";
@@ -22,14 +29,16 @@ public class BlockCertV30 implements BlockCert {
     }
 
     @Override
-    public IssuerResponse getIssuer() {
-        // Not implemented
-        return null;
+    public String getDisplayHtml() {
+        final JsonObject displayAsJsonObject = mDisplay.getAsJsonObject();
+        final String content = displayAsJsonObject.get("content").getAsString();
+        return content;
     }
 
     @Override
-    public String getDisplayHtml() {
-        return "Not implemented";
+    public IssuerResponse getIssuer() {
+        // Not implemented
+        return null;
     }
 
     @Override
