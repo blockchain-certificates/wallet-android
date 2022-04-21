@@ -15,6 +15,10 @@ public class BlockCertV30 implements BlockCert {
     @Expose
     private JsonElement mDisplay;
 
+    @SerializedName("issuer")
+    @Expose
+    private JsonElement mIssuer; // TODO: handle string
+
     public String version () {
         return "v3";
     }
@@ -59,8 +63,12 @@ public class BlockCertV30 implements BlockCert {
 
     @Override
     public IssuerResponse getIssuer() {
-        // Not implemented
+        // not implemented
         return null;
+    }
+
+    public JsonElement getIssuerProfile() {
+        return mIssuer;
     }
 
     @Override
@@ -86,7 +94,10 @@ public class BlockCertV30 implements BlockCert {
 
     @Override
     public String getIssuerId() {
-        return "Not implemented";
+        if (getIssuerProfile().isJsonObject()) {
+            return getIssuerProfile().getAsJsonObject().get("id").getAsString();
+        }
+        return getIssuerProfile().getAsString();
     }
 
     @Override
