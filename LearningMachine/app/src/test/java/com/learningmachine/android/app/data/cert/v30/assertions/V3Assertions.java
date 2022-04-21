@@ -9,10 +9,7 @@ public class V3Assertions {
     public static String getBase64PngValue () {
         try {
             final String blockcertString = FileHelpers.readFileAsString("/src/test/resources/v3/testnet-display-png.json");
-            JsonObject blockcertAsJsonObject = new Gson().fromJson(blockcertString, JsonObject.class);
-            return blockcertAsJsonObject
-                    .get("display").getAsJsonObject()
-                    .get("content").getAsString();
+            return getBlockcertsDisplayContent(blockcertString);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -20,12 +17,16 @@ public class V3Assertions {
     public static String getBase64PDFValue () {
         try {
             final String blockcertString = FileHelpers.readFileAsString("/src/test/resources/v3/testnet-display-pdf.json");
-            JsonObject blockcertAsJsonObject = new Gson().fromJson(blockcertString, JsonObject.class);
-            return blockcertAsJsonObject
-                    .get("display").getAsJsonObject()
-                    .get("content").getAsString();
+            return getBlockcertsDisplayContent(blockcertString);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private static String getBlockcertsDisplayContent (String blockcertString) {
+        JsonObject blockcertAsJsonObject = new Gson().fromJson(blockcertString, JsonObject.class);
+        return blockcertAsJsonObject
+                .get("display").getAsJsonObject()
+                .get("content").getAsString();
     }
 }
