@@ -17,7 +17,11 @@ public class BlockCertV30 implements BlockCert {
 
     @SerializedName("issuer")
     @Expose
-    private JsonElement mIssuer; // TODO: handle string
+    private JsonElement mIssuer;
+
+    @SerializedName("id")
+    @Expose
+    private JsonElement mUid;
 
     public String version () {
         return "v3";
@@ -79,7 +83,7 @@ public class BlockCertV30 implements BlockCert {
 
     @Override
     public String getCertUid() {
-        return "Not implemented";
+        return mUid.getAsString();
     }
 
     @Override
