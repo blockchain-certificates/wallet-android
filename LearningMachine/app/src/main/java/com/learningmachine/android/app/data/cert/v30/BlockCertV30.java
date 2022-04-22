@@ -32,6 +32,10 @@ public class BlockCertV30 implements BlockCert {
     @Expose
     private String mIssuanceDate;
 
+    @SerializedName("expirationDate")
+    @Expose
+    private String mExpirationDate;
+
     @SerializedName("metadata")
     @Expose
     private String mMetadata;
@@ -98,7 +102,7 @@ public class BlockCertV30 implements BlockCert {
 
     @Override
     public String getExpirationDate() {
-        return "Not implemented";
+        return mExpirationDate;
     }
 
 
