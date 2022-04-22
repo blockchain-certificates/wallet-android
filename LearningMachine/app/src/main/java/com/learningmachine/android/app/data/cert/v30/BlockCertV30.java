@@ -23,6 +23,10 @@ public class BlockCertV30 implements BlockCert {
     @Expose
     private JsonElement mUid;
 
+    @SerializedName("credentialSubject")
+    @Expose
+    private JsonElement mCredentialSubject;
+
     public String version () {
         return "v3";
     }
@@ -75,6 +79,14 @@ public class BlockCertV30 implements BlockCert {
         return mIssuer;
     }
 
+    public JsonObject getCredentialSubject() {
+        return mCredentialSubject.getAsJsonObject();
+    }
+
+    public JsonObject getClaim() {
+        return getCredentialSubject().get("claim").getAsJsonObject();
+    }
+
     @Override
     public String getExpirationDate() {
         return "Not implemented";
@@ -88,7 +100,7 @@ public class BlockCertV30 implements BlockCert {
 
     @Override
     public String getCertName() {
-        return "Not implemented";
+        return getClaim().get("name").getAsString();
     }
 
     @Override
