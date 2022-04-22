@@ -32,6 +32,10 @@ public class BlockCertV30 implements BlockCert {
     @Expose
     private JsonElement mIssuanceDate;
 
+    @SerializedName("metadata")
+    @Expose
+    private String mMetadata;
+
     public String version () {
         return "v3";
     }
@@ -162,7 +166,7 @@ public class BlockCertV30 implements BlockCert {
 
     @Override
     public String getMetadata() {
-        return "Not implemented";
+        return mMetadata;
     }
 
     @Override
