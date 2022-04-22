@@ -22,15 +22,15 @@ public class BlockCertV30 implements BlockCert {
 
     @SerializedName("id")
     @Expose
-    private JsonElement mUid;
+    private String mUid;
 
     @SerializedName("credentialSubject")
     @Expose
-    private JsonElement mCredentialSubject;
+    private JsonObject mCredentialSubject;
 
     @SerializedName("issuanceDate")
     @Expose
-    private JsonElement mIssuanceDate;
+    private String mIssuanceDate;
 
     @SerializedName("metadata")
     @Expose
@@ -89,7 +89,7 @@ public class BlockCertV30 implements BlockCert {
     }
 
     public JsonObject getCredentialSubject() {
-        return mCredentialSubject.getAsJsonObject();
+        return mCredentialSubject;
     }
 
     public JsonObject getClaim() {
@@ -104,7 +104,7 @@ public class BlockCertV30 implements BlockCert {
 
     @Override
     public String getCertUid() {
-        return mUid.getAsString();
+        return mUid;
     }
 
     @Override
@@ -133,7 +133,7 @@ public class BlockCertV30 implements BlockCert {
 
     @Override
     public String getIssueDate() {
-        return mIssuanceDate.getAsString();
+        return mIssuanceDate;
     }
 
     @Override
