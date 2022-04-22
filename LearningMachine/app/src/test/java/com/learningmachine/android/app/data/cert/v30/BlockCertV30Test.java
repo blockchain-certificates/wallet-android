@@ -36,6 +36,12 @@ public class BlockCertV30Test {
   }
 
   @Test
+  public void testGetIssueDate () {
+    final BlockCert blockCert = BlockCertHelpers.fileToBlockCertInstance("/src/test/resources/v3/testnet-valid.json");
+    assertEquals("2022-02-02T15:00:00Z", blockCert.getIssueDate());
+  }
+
+  @Test
   public void testGetIssuerIdIssuerProfileIsObject () {
     final BlockCert blockCert = BlockCertHelpers.fileToBlockCertInstance("/src/test/resources/v3/testnet-valid.json");
     assertEquals("did:ion:EiA_Z6LQILbB2zj_eVrqfQ2xDm4HNqeJUw5Kj2Z7bFOOeQ", blockCert.getIssuerId());

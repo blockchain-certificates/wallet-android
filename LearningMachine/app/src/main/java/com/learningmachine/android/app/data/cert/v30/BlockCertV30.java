@@ -28,6 +28,10 @@ public class BlockCertV30 implements BlockCert {
     @Expose
     private JsonElement mCredentialSubject;
 
+    @SerializedName("issuanceDate")
+    @Expose
+    private JsonElement mIssuanceDate;
+
     public String version () {
         return "v3";
     }
@@ -125,7 +129,7 @@ public class BlockCertV30 implements BlockCert {
 
     @Override
     public String getIssueDate() {
-        return "Not implemented";
+        return mIssuanceDate.getAsString();
     }
 
     @Override
