@@ -101,12 +101,18 @@ public class BlockCertV30 implements BlockCert {
 
     @Override
     public String getCertName() {
-        return getClaim().get("name").getAsString();
+        if (getClaim().get("name") != null) {
+            return getClaim().get("name").getAsString();
+        }
+        return null;
     }
 
     @Override
     public String getCertDescription() {
-        return getClaim().get("description").getAsString();
+        if (getClaim().get("description") != null) {
+            return getClaim().get("description").getAsString();
+        }
+        return null;
     }
 
     @Override
