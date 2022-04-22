@@ -7,6 +7,7 @@ import com.google.gson.annotations.SerializedName;
 
 import com.learningmachine.android.app.data.cert.BlockCert;
 import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
+import com.learningmachine.android.app.util.StringUtils;
 
 public class BlockCertV30 implements BlockCert {
     private JsonObject mDocumentNode;
@@ -123,7 +124,10 @@ public class BlockCertV30 implements BlockCert {
 
     @Override
     public String getUrl() {
-        return "Not implemented";
+        if (StringUtils.isWebUrl(getCertUid())) {
+            return getCertUid();
+        }
+        return null;
     }
 
     @Override

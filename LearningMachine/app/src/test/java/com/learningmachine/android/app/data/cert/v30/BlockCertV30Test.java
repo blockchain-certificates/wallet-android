@@ -23,6 +23,13 @@ public class BlockCertV30Test {
   }
 
   @Test
+  public void testGetUrl () {
+    final BlockCert blockCert = BlockCertHelpers.fileToBlockCertInstance("/src/test/resources/v3/testnet-valid.json");
+    // if the certificate is hosted, then its id should be the URL
+    assertEquals(null, blockCert.getUrl());
+  }
+
+  @Test
   public void testGetIssuerIdIssuerProfileIsObject () {
     final BlockCert blockCert = BlockCertHelpers.fileToBlockCertInstance("/src/test/resources/v3/testnet-valid.json");
     assertEquals("did:ion:EiA_Z6LQILbB2zj_eVrqfQ2xDm4HNqeJUw5Kj2Z7bFOOeQ", blockCert.getIssuerId());

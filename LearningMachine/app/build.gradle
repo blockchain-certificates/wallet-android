@@ -28,6 +28,10 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
     signingConfigs {
         LearningMachineRelease {
             keyAlias System.getenv("SIGNING_KEY_ALIAS")
