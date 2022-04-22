@@ -106,7 +106,7 @@ public class BlockCertV30 implements BlockCert {
 
     @Override
     public String getCertDescription() {
-        return "Not implemented";
+        return getClaim().get("description").getAsString();
     }
 
     @Override

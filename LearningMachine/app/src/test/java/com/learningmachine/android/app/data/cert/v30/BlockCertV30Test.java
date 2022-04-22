@@ -30,6 +30,12 @@ public class BlockCertV30Test {
   }
 
   @Test
+  public void testGetCertDescription () {
+    final BlockCert blockCert = BlockCertHelpers.fileToBlockCertInstance("/src/test/resources/v3/testnet-valid.json");
+    assertEquals("A v3 working example for test purposes", blockCert.getCertDescription());
+  }
+
+  @Test
   public void testGetIssuerIdIssuerProfileIsObject () {
     final BlockCert blockCert = BlockCertHelpers.fileToBlockCertInstance("/src/test/resources/v3/testnet-valid.json");
     assertEquals("did:ion:EiA_Z6LQILbB2zj_eVrqfQ2xDm4HNqeJUw5Kj2Z7bFOOeQ", blockCert.getIssuerId());
