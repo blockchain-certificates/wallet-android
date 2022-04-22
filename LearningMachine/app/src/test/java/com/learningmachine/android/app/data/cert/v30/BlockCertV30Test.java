@@ -3,6 +3,7 @@ package com.learningmachine.android.app.data.cert.v30;
 import com.learningmachine.android.app.data.cert.BlockCert;
 
 import com.learningmachine.android.test.helpers.BlockCertHelpers;
+import com.learningmachine.android.test.data.cert.v30.V3Assertions;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -51,6 +52,19 @@ public class BlockCertV30Test {
   public void testGetIssuerIdIssuerProfileIsObject () {
     final BlockCert blockCert = BlockCertHelpers.fileToBlockCertInstance("/src/test/resources/v3/testnet-valid.json");
     assertEquals("did:ion:EiA_Z6LQILbB2zj_eVrqfQ2xDm4HNqeJUw5Kj2Z7bFOOeQ", blockCert.getIssuerId());
+  }
+
+  @Test
+  public void testGetDisplayHtml () {
+    final BlockCert blockCert = BlockCertHelpers.fileToBlockCertInstance("/src/test/resources/v3/testnet-valid.json");
+    assertEquals("<div>Hello World</div>", blockCert.getDisplayHtml());
+  }
+
+  @Test
+  public void testGetDisplayHtmlPng () {
+    final BlockCert blockCert = BlockCertHelpers.fileToBlockCertInstance("/src/test/resources/v3/testnet-display-png.json");
+    String base64PngValue = V3Assertions.getBase64PngValue();
+    assertEquals("<img src=\"data:image/png;base64,"+ base64PngValue + "\"/>", blockCert.getDisplayHtml());
   }
 
   @Test
