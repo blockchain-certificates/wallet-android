@@ -97,7 +97,11 @@ public class BlockCertV30 implements BlockCert {
     }
 
     public JsonObject getClaim() {
-        return getCredentialSubject().get("claim").getAsJsonObject();
+        if (getCredentialSubject().get("claim") != null) {
+            return getCredentialSubject().get("claim").getAsJsonObject();
+        }
+        return null;
+
     }
 
     @Override
@@ -113,18 +117,24 @@ public class BlockCertV30 implements BlockCert {
 
     @Override
     public String getCertName() {
-        if (getClaim().get("name") != null) {
-            return getClaim().get("name").getAsString();
+        if (getClaim() == null) {
+            return null;
         }
-        return null;
+        if (getClaim().get("name") == null) {
+            return null;
+        }
+        return getClaim().get("name").getAsString();
     }
 
     @Override
     public String getCertDescription() {
-        if (getClaim().get("description") != null) {
-            return getClaim().get("description").getAsString();
+        if (getClaim() == null) {
+            return null;
         }
-        return null;
+        if (getClaim().get("description") == null) {
+            return null;
+        }
+        return getClaim().get("description").getAsString();
     }
 
     @Override
