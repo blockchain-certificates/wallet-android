@@ -8,6 +8,7 @@ import com.google.gson.annotations.SerializedName;
 import com.learningmachine.android.app.data.cert.BlockCert;
 import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 import com.learningmachine.android.app.util.StringUtils;
+import com.learningmachine.android.app.LMConstants;
 
 public class BlockCertV30 implements BlockCert {
     private JsonObject mDocumentNode;
@@ -160,7 +161,14 @@ public class BlockCertV30 implements BlockCert {
 
     @Override
     public String getRecipientPublicKey() {
-        return "Not implemented";
+        if (getCredentialSubject().get("publicKey") == null) {
+            return null;
+        }
+        String keyString = getCredentialSubject().get("publicKey").getAsString();
+        if (keyString.startsWith(LMConstants.ECDSA_KOBLITZ_PUBKEY_PREFIX)) {
+            keyString = keyString.substring(LMConstants.ECDSA_KOBLITZ_PUBKEY_PREFIX.length());
+        }
+        return keyString;
     }
 
     @Override

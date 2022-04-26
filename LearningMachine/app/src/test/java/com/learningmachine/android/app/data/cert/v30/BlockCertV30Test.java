@@ -56,6 +56,12 @@ public class BlockCertV30Test {
   }
 
   @Test
+  public void testGetRecipientPublicKey () {
+    final BlockCert blockCert = BlockCertHelpers.fileToBlockCertInstance("/src/test/resources/v3/has-recipient-publicKey.json");
+    assertEquals("1BPQXndcz5Uf3qZQkgnvJC87LUD5n7a2mC", blockCert.getRecipientPublicKey());
+  }
+
+  @Test
   public void testGetIssuerIdIssuerProfileIsObject () {
     final BlockCert blockCert = BlockCertHelpers.fileToBlockCertInstance("/src/test/resources/v3/testnet-valid.json");
     assertEquals("did:ion:EiA_Z6LQILbB2zj_eVrqfQ2xDm4HNqeJUw5Kj2Z7bFOOeQ", blockCert.getIssuerId());
