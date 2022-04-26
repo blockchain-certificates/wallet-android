@@ -3,10 +3,14 @@ package com.learningmachine.android.app.data.cert.metadata;
 import android.content.Context;
 
 import com.learningmachine.android.app.R;
+import com.learningmachine.android.app.data.cert.BlockCert;
+import com.learningmachine.android.test.helpers.BlockCertHelpers;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
+import java.util.ArrayList;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -61,6 +65,16 @@ public class MetadataTest {
         Field field = subject.getFields().get(6);
         assertEquals("is this a boolean?", field.getTitle());
         assertEquals("True", field.getValue());
+    }
+
+    @Test
+    public void malformedMetadataObjectDoesNotBreak() {
+        final Context context = mock(Context.class);
+        final MetadataParser metadataParser = new MetadataParser(context);
+
+        final List<String> expectedEmptyListOutput = new ArrayList<>();
+        final Metadata output = metadataParser.fromJson("{\"classOf\":\"2022\"}");
+        assertEquals(expectedEmptyListOutput, output.getFields());
     }
 
     private Reader getResourceAsReader(String name) {
