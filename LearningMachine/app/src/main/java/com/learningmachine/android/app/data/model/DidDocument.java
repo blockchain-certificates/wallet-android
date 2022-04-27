@@ -16,7 +16,15 @@ public class DidDocument {
     private String[] mAuthentication;
 
     public String getIssuerProfile () {
-        // return mService.find(entry => entry.type === "IssuerProfile");
-        return "https://www.blockcerts.org/samples/3.0/issuer-blockcerts.json";
+        Iterator iterator = mService.iterator();
+        String issuerProfileUrl = "";
+        while (iterator.hasNext()) {
+            JsonObject serviceEntry = (JsonObject) iterator.next();
+            if (serviceEntry.get("type").getAsString().equals("IssuerProfile")) {
+                issuerProfileUrl = serviceEntry.get("serviceEndpoint").getAsString();
+            }
+            break;
+        }
+        return issuerProfileUrl;
     }
 }
