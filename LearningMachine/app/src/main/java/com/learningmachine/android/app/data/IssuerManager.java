@@ -56,10 +56,9 @@ public class IssuerManager {
         if (StringUtils.isDid(url)) {
             final String didUniversalResolverUrl = "https://dev.uniresolver.io/1.0/identifiers";
             final String didUri = url;
-            final String resolveUrl = didUniversalResolverUrl + "/" + didUri;
-            // resolve DID
-            // get issuerProfile url
-            // continue regular path with URL
+            final String didResolveUrl = didUniversalResolverUrl + "/" + didUri;
+            return mIssuerService.getIssuerDID(didResolveUrl)
+                    .flatMap(didDocument -> mIssuerService.getIssuer(didDocument.getIssuerProfileUrl()));
         }
         return mIssuerService.getIssuer(url);
     }

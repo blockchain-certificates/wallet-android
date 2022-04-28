@@ -9,12 +9,12 @@ import static junit.framework.Assert.assertEquals;
 
 public class DidResponseTest {
     @Test
-    public void setsDidDocumentValue () {
+    public void getIssuerProfileUrlTest () {
         try {
             final String didResponseFixtureString = FileHelpers.readFileAsString("/src/test/resources/did/didUniversalResolverResponse.json");
             Gson gson = new Gson();
             final DidResponse parsedResponse = gson.fromJson(didResponseFixtureString, DidResponse.class);
-            assertEquals("https://www.blockcerts.org/samples/3.0/issuer-blockcerts.json", parsedResponse.getIssuerProfile());
+            assertEquals("https://www.blockcerts.org/samples/3.0/issuer-blockcerts.json", parsedResponse.getIssuerProfileUrl());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

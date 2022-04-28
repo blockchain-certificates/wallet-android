@@ -15,7 +15,7 @@ public class DidDocument {
     @SerializedName("authentication")
     private String[] mAuthentication;
 
-    public String getIssuerProfile () {
+    public String getIssuerProfileUrl () {
         Iterator iterator = mService.iterator();
         String issuerProfileUrl = "";
         while (iterator.hasNext()) {

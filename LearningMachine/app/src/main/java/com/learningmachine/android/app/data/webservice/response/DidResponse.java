@@ -17,7 +17,7 @@ public class DidResponse {
     @SerializedName("didDocument")
     private DidDocument mDidDocument;
 
-    public String getIssuerProfile () {
-        return mDidDocument.getIssuerProfile();
+    public String getIssuerProfileUrl () {
+        return mDidDocument.getIssuerProfileUrl();
     }
 }
