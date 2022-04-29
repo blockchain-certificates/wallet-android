@@ -3,6 +3,7 @@ package com.learningmachine.android.app.data;
 import android.content.Context;
 
 import com.learningmachine.android.app.LMConstants;
+import com.learningmachine.android.app.data.cert.BlockCert;
 import com.learningmachine.android.app.data.error.IssuerAnalyticsException;
 import com.learningmachine.android.app.data.model.IssuerRecord;
 import com.learningmachine.android.app.data.store.IssuerStore;
@@ -51,6 +52,13 @@ public class IssuerManager {
 
     public Observable<List<IssuerRecord>> getIssuers() {
         return Observable.just(mIssuerStore.loadIssuers());
+    }
+
+    public Observable<String> fetchAndSaveIssuerOf (BlockCert blockCert) {
+        return fetchIssuer(blockCert.getIssuerId()).<String>flatMap(issuer -> {
+            String recipientPublicKey = blockCert.getRecipientPublicKey();
+            return Observable.just(saveIssuer(issuer, recipientPublicKey));
+        });
     }
 
     public Observable<IssuerResponse> fetchIssuer(String url) {

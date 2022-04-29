@@ -19,6 +19,7 @@ import com.learningmachine.android.app.data.store.IssuerStore;
 import com.learningmachine.android.app.data.webservice.CertificateService;
 import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 import com.learningmachine.android.app.util.FileUtils;
+import com.learningmachine.android.app.util.StringUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -36,17 +37,19 @@ public class CertificateManager {
 
     private final Context mContext;
     private final CertificateStore mCertificateStore;
-    private final IssuerStore mIssuerStore;
     private final CertificateService mCertificateService;
     private final BitcoinManager mBitcoinManager;
     private final IssuerManager mIssuerManager;
 
-    public CertificateManager(Context context, CertificateStore certificateStore,
-                              IssuerStore issuerStore, CertificateService certificateService,
-                              BitcoinManager bitcoinManager, IssuerManager issuerManager) {
+    public CertificateManager(
+            Context context,
+            CertificateStore certificateStore,
+            CertificateService certificateService,
+            BitcoinManager bitcoinManager,
+            IssuerManager issuerManager
+    ) {
         mContext = context;
         mCertificateStore = certificateStore;
-        mIssuerStore = issuerStore;
         mCertificateService = certificateService;
         mBitcoinManager = bitcoinManager;
         mIssuerManager = issuerManager;
@@ -126,11 +129,8 @@ public class CertificateManager {
             String certUid = blockCert.getCertUid();
             FileUtils.saveCertificate(mContext, buffer, certUid);
 
-            return mIssuerManager.fetchIssuer(blockCert.getIssuerId()).map(issuer -> {
-                String recipientPublicKey = blockCert.getRecipientPublicKey();
-                mIssuerStore.saveIssuerResponse(issuer, recipientPublicKey);
-                return certUid;
-            });
+            saveIssuer(blockCert);
+            return Observable.just(certUid);
         } catch (JsonSyntaxException e) {
             Timber.w(e, "Certificate failed to parse");
             return Observable.error(e);
@@ -187,15 +187,21 @@ public class CertificateManager {
         String certUid = blockCert.getCertUid();
         FileUtils.renameCertificateFile(mContext, tempFilename, certUid);
 
-        return mIssuerManager.fetchIssuer(blockCert.getIssuerId()).map(issuer -> {
-            String recipientPublicKey = blockCert.getRecipientPublicKey();
-            mIssuerStore.saveIssuerResponse(issuer, recipientPublicKey);
-            return certUid;
-        });
+        saveIssuer(blockCert);
+        return Observable.just(certUid);
+    }
+
+    private void saveIssuer(BlockCert blockCert) {
+        mIssuerManager.fetchAndSaveIssuerOf(blockCert)
+            .subscribe(issuerUuid -> updateBlockCertIssuerUuid(blockCert.getCertUid(), issuerUuid));
     }
 
     private void saveBlockCert(BlockCert blockCert) {
         Timber.i("Saving certificate " + blockCert.getCertName());
         mCertificateStore.saveBlockchainCertificate(blockCert);
+    }
+
+    private void updateBlockCertIssuerUuid (String blockCertUuid, String issuerUuid) {
+        mCertificateStore.updateIssuerUuid(blockCertUuid, issuerUuid);
     }
 }
