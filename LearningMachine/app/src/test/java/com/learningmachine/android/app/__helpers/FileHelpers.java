@@ -1,5 +1,6 @@
 package com.learningmachine.android.test.helpers;
 
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import com.google.gson.Gson;
@@ -19,5 +20,10 @@ public class FileHelpers {
         } catch (Exception e) {
             throw new RuntimeException (e);
         }
+    }
+
+    public static InputStream getResourceAsStream(String name, ClassLoader classLoader) {
+        InputStream inputStream = classLoader.getResourceAsStream(name);
+        return inputStream;
     }
 }

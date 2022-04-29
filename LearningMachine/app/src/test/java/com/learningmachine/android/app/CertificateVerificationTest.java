@@ -13,6 +13,7 @@ import com.learningmachine.android.app.data.model.TxRecordOut;
 import com.learningmachine.android.app.data.webservice.BlockchainService;
 import com.learningmachine.android.app.data.webservice.IssuerService;
 import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
+import com.learningmachine.android.test.helpers.FileHelpers;
 
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.ECKey;
@@ -93,10 +94,10 @@ public class CertificateVerificationTest {
         subject = new CertificateVerifier(context, blockchainService, issuerService);
 
         BlockCertParser blockCertParser = new BlockCertParser();
-        validCertV12 = blockCertParser.fromJson(getResourceAsStream(CERT_V1_2_FILENAME));
-        validCertV20alpha = blockCertParser.fromJson(getResourceAsStream(CERT_V20_ALPHA_FILENAME));
-        validCertV20 = blockCertParser.fromJson(getResourceAsStream(CERT_V20_FILENAME));
-        forgedCertificate = blockCertParser.fromJson(getResourceAsStream(FORGED_V1_2_CERT_FILENAME));
+        validCertV12 = blockCertParser.fromJson(FileHelpers.getResourceAsStream(CERT_V1_2_FILENAME, getClass().getClassLoader()));
+        validCertV20alpha = blockCertParser.fromJson(FileHelpers.getResourceAsStream(CERT_V20_ALPHA_FILENAME, getClass().getClassLoader()));
+        validCertV20 = blockCertParser.fromJson(FileHelpers.getResourceAsStream(CERT_V20_FILENAME, getClass().getClassLoader()));
+        forgedCertificate = blockCertParser.fromJson(FileHelpers.getResourceAsStream(FORGED_V1_2_CERT_FILENAME, getClass().getClassLoader()));
     }
 
     /* These funcations no longer exist, causing tests to fail */
@@ -169,7 +170,7 @@ public class CertificateVerificationTest {
         // txId would now be used to download the blockchain transaction record
         assertThat(txId, equalTo(BTC_TX_RECORD_ID_D3F042));
 
-        Sha256Hash localHash = Sha256Hash.of(ByteStreams.toByteArray(getResourceAsStream(CERT_V1_2_FILENAME)));
+        Sha256Hash localHash = Sha256Hash.of(ByteStreams.toByteArray(FileHelpers.getResourceAsStream(CERT_V1_2_FILENAME, getClass().getClassLoader())));
 
         // download blockchain transaction record from https://blockchain.info/rawtx/<transaction_id>
 
@@ -200,15 +201,8 @@ public class CertificateVerificationTest {
     }
 
     private Reader getResourceAsReader(String name) {
-        InputStream inputStream = getResourceAsStream(name);
+        InputStream inputStream = FileHelpers.getResourceAsStream(name, getClass().getClassLoader());
         Reader reader = new InputStreamReader(inputStream);
         return reader;
-    }
-
-    private InputStream getResourceAsStream(String name) {
-        ClassLoader classLoader = getClass().getClassLoader();
-
-        InputStream inputStream = classLoader.getResourceAsStream(name);
-        return inputStream;
     }
 }

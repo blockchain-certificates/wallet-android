@@ -5,6 +5,7 @@ import com.learningmachine.android.app.data.cert.BlockCert;
 import com.learningmachine.android.app.data.cert.BlockCertParser;
 
 import com.learningmachine.android.test.data.cert.v30.V3Assertions;
+import com.learningmachine.android.test.helpers.FileHelpers;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -44,7 +45,7 @@ public class CertificateFragmentTest {
 					"</body>" +
 				"</html>";
 
-		InputStream inputStream = getResourceAsStream("v3/testnet-valid.json");
+		InputStream inputStream = FileHelpers.getResourceAsStream("v3/testnet-valid.json", getClass().getClassLoader());
 		BlockCertParser blockCertParser = new BlockCertParser();
 		BlockCert blockCert = blockCertParser.fromJson(inputStream);
 		CertificateFragment certificateFragment = new CertificateFragment();
@@ -55,7 +56,7 @@ public class CertificateFragmentTest {
 
 	@Test
 	public void displayHTMLV3_content_png () {
-		InputStream inputStream = getResourceAsStream("v3/testnet-display-png.json");
+		InputStream inputStream = FileHelpers.getResourceAsStream("v3/testnet-display-png.json", getClass().getClassLoader());
 		BlockCertParser blockCertParser = new BlockCertParser();
 		BlockCert blockCert = blockCertParser.fromJson(inputStream);
 
@@ -94,7 +95,7 @@ public class CertificateFragmentTest {
 
 	@Test
 	public void displayHTMLV3_content_pdf () {
-		InputStream inputStream = getResourceAsStream("v3/testnet-display-pdf.json");
+		InputStream inputStream = FileHelpers.getResourceAsStream("v3/testnet-display-pdf.json", getClass().getClassLoader());
 		BlockCertParser blockCertParser = new BlockCertParser();
 		BlockCert blockCert = blockCertParser.fromJson(inputStream);
 
@@ -176,7 +177,7 @@ public class CertificateFragmentTest {
 						"</script>" +
 					"</body>" +
 				"</html>";
-		InputStream inputStream = getResourceAsStream("mainnet-valid-2.0.json");
+		InputStream inputStream = FileHelpers.getResourceAsStream("mainnet-valid-2.0.json", getClass().getClassLoader());
 		BlockCertParser blockCertParser = new BlockCertParser();
 		BlockCert blockCert = blockCertParser.fromJson(inputStream);
 		CertificateFragment certificateFragment = new CertificateFragment();
@@ -189,12 +190,5 @@ public class CertificateFragmentTest {
 		InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
 		return new Gson().fromJson(inputStreamReader, JsonObject.class);
 	}
-
-    private InputStream getResourceAsStream (String name) {
-        ClassLoader classLoader = getClass().getClassLoader();
-
-        InputStream inputStream = classLoader.getResourceAsStream(name);
-        return inputStream;
-    }
 }
 
