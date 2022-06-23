@@ -71,20 +71,12 @@ public class VerificationCustomView extends LinearLayout {
             });
             addView(verificationCustomItem);
 
-            for (VerificationSteps.SubSteps verificationSubStep :
-                    verificationStep.subSteps) {
-                verificationCustomItem.addSubItem(verificationSubStep.label,
-                        verificationSubStep.code, verificationStep.subSteps.length);
-            }
+            this.registerSubSteps(verificationStep.subSteps, verificationCustomItem);
 
             if (verificationStep.suites != null) {
-                for (VerificationSteps.Suites verificationSuite :
+                for (VerificationSteps.Suites verificationSuite:
                         verificationStep.suites) {
-                    for (VerificationSteps.SubSteps verificationSuiteSubStep:
-                            verificationSuite.subSteps) {
-                        verificationCustomItem.addSubItem(verificationSuiteSubStep.label,
-                                verificationSuiteSubStep.code, verificationSuite.subSteps.length);
-                    }
+                    this.registerSubSteps(verificationSuite.subSteps, verificationCustomItem);
                 }
             }
 
@@ -113,6 +105,17 @@ public class VerificationCustomView extends LinearLayout {
             mStatusQueue.add(status);
         } else {
             animateItem(status);
+        }
+    }
+
+    private void registerSubSteps (VerificationSteps.SubSteps[] subStepsList,
+                                  VerificationCustomItem verificationCustomItem) {
+        for (VerificationSteps.SubSteps verificationSubStep: subStepsList) {
+            verificationCustomItem.addSubItem(
+                verificationSubStep.label,
+                verificationSubStep.code,
+                subStepsList.length
+            );
         }
     }
 
