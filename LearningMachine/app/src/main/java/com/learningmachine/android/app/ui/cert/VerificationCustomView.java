@@ -150,14 +150,33 @@ public class VerificationCustomView extends LinearLayout {
     private VerificationSteps.SubSteps getSubStepFromCode(String code) {
         for (VerificationSteps step :
                 mVerificationSteps) {
-            for (VerificationSteps.SubSteps subStep:
-                    step.subSteps) {
-                if (subStep.code.equals(code)) {
-                    return subStep;
+            VerificationSteps.SubSteps subStep = findSubstepIn(step.subSteps, code);
+            if (subStep != null) {
+                return subStep;
+            }
+
+            if (step.suites != null) {
+                for (VerificationSteps.Suites suite: step.suites) {
+                    subStep = findSubstepIn(suite.subSteps, code);
+                    if (subStep != null) {
+                        return subStep;
+                    }
                 }
             }
         }
         return null;
     }
 
+    private VerificationSteps.SubSteps findSubstepIn (
+            VerificationSteps.SubSteps[] subStepsList,
+            String code
+    ) {
+        for (VerificationSteps.SubSteps subStep:
+                subStepsList) {
+            if (subStep.code.equals(code)) {
+                return subStep;
+            }
+        }
+        return null;
+    }
 }
