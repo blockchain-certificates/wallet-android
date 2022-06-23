@@ -265,7 +265,7 @@ Paste in this android project at this location: `wallet-android/LearningMachine/
 * Automatically complete sequences based on a second lifecycle stream
 * Apache 2.0
 
-### [RxLint](https://bitbucket.org/littlerobots/rxlint)
+### [RxLint](https://github.com/littlerobots/rxlint)
 
 * A set of lint checks that check your RxJava code
 * Apache 2.0
