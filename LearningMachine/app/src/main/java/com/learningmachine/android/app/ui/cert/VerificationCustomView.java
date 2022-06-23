@@ -77,6 +77,17 @@ public class VerificationCustomView extends LinearLayout {
                         verificationSubStep.code, verificationStep.subSteps.length);
             }
 
+            if (verificationStep.suites != null) {
+                for (VerificationSteps.Suites verificationSuite :
+                        verificationStep.suites) {
+                    for (VerificationSteps.SubSteps verificationSuiteSubStep:
+                            verificationSuite.subSteps) {
+                        verificationCustomItem.addSubItem(verificationSuiteSubStep.label,
+                                verificationSuiteSubStep.code, verificationSuite.subSteps.length);
+                    }
+                }
+            }
+
         }
     }
 
