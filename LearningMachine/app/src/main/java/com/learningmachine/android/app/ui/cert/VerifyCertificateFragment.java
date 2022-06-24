@@ -34,6 +34,7 @@ public class VerifyCertificateFragment extends Fragment {
     private FragmentVerifyCertificateBinding mBinding;
     private boolean mStartedVerification;
     private WeakReference<Activity> mParentActivity;
+    private String mChainName;
 
     public static VerifyCertificateFragment newInstance(String certificateUuid) {
 
@@ -75,7 +76,7 @@ public class VerifyCertificateFragment extends Fragment {
         }
     }
 
-    private void setupStatus(VerificationSteps[] verificationSteps, String chainName) {
+    private void setupStatus(VerificationSteps[] verificationSteps) {
         if (!isValidFragmentInstance()) {
             return;
         }
@@ -87,11 +88,15 @@ public class VerifyCertificateFragment extends Fragment {
                 if (withError) {
                     showVerificationErrorStatus();
                 } else {
-                    showVerificationSuccessStatus(chainName);
+                    showVerificationSuccessStatus(mChainName);
                 }
             });
             mBinding.statusView.addVerificationSteps(verificationSteps);
         });
+    }
+
+    private void setupChainName (String chainName) {
+        mChainName = chainName;
     }
 
     private boolean isValidFragmentInstance() {
@@ -209,7 +214,6 @@ public class VerifyCertificateFragment extends Fragment {
     private class JavascriptInterface {
         private VerificationSteps[] mVerificationSteps;
         private Anchor.ChainType mChainType;
-        private String mChainName;
 
         /**
          * This method will be called when a new Status is available in a Credential verification process.
@@ -228,7 +232,7 @@ public class VerifyCertificateFragment extends Fragment {
         @android.webkit.JavascriptInterface
         public void notifyVerificationSteps(String verificationStepsStr) {
             mVerificationSteps = VerificationSteps.getFromString(verificationStepsStr);
-            setupStatus(mVerificationSteps, mChainName);
+            setupStatus(mVerificationSteps);
         }
 
         /**
@@ -237,7 +241,7 @@ public class VerifyCertificateFragment extends Fragment {
          */
         @android.webkit.JavascriptInterface
         public void notifyChainName(String chainName) {
-            mChainName = chainName;
+            setupChainName(chainName);
         }
     }
 
