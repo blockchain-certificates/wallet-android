@@ -80,7 +80,7 @@ public class VerifyCertificateFragment extends Fragment {
             return;
         }
         mParentActivity.get().runOnUiThread(() -> {
-            showVerificationStartedStatus(chainName);
+            showVerificationStartedStatus();
             mBinding.statusView.setOnVerificationFinishListener(withError -> {
                 showDoneButton();
                 mBinding.statusViewScrollContainer.fullScroll(View.FOCUS_DOWN);
@@ -98,8 +98,8 @@ public class VerifyCertificateFragment extends Fragment {
         return isAdded() && mParentActivity.get() != null && !mParentActivity.get().isFinishing();
     }
 
-    private void showVerificationStartedStatus(String chainName) {
-        String status = getString(R.string.fragment_verify_cert_chain_format, chainName);
+    private void showVerificationStartedStatus() {
+        String status = getString(R.string.fragment_verify_cert_chain_format);
         mBinding.verificationStatus.setText(status);
     }
 
