@@ -71,12 +71,13 @@ public class VerificationCustomView extends LinearLayout {
             });
             addView(verificationCustomItem);
 
-            this.registerSubSteps(verificationStep.subSteps, verificationCustomItem);
+            registerSubSteps(verificationStep.subSteps, verificationCustomItem);
 
             if (verificationStep.suites != null) {
                 for (VerificationSteps.Suites verificationSuite:
                         verificationStep.suites) {
-                    this.registerSubSteps(verificationSuite.subSteps, verificationCustomItem);
+                    setSubStepsGroupTitle(verificationSuite.proofType, verificationCustomItem);
+                    registerSubSteps(verificationSuite.subSteps, verificationCustomItem);
                 }
             }
 
@@ -117,6 +118,11 @@ public class VerificationCustomView extends LinearLayout {
                 subStepsList.length
             );
         }
+    }
+
+    private void setSubStepsGroupTitle (String title,
+                                  VerificationCustomItem verificationCustomItem) {
+        verificationCustomItem.addGroupTitleItem(title);
     }
 
     /**

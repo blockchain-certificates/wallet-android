@@ -100,7 +100,9 @@ public class VerificationCustomItem extends RelativeLayout {
         for (int i = 0; i < mSubItemsContainer.getChildCount(); i++) {
             View subItem = mSubItemsContainer.getChildAt(i);
             View subItemMark = subItem.findViewById(R.id.sub_item_mark);
-            subItemMark.requestLayout();
+            if (subItemMark != null) {
+                subItemMark.requestLayout();
+            }
         }
     }
 
@@ -162,12 +164,15 @@ public class VerificationCustomItem extends RelativeLayout {
         subItem.requestLayout();
     }
 
-    /**
-     * Set the title of this item.
-     * @param title The title.
-     */
     public void setItemTitle(String title) {
         mItemTitle.setText(title);
+    }
+
+    public void addGroupTitleItem (String title) {
+        View groupTitleItem = inflate(mContext, R.layout.list_group_sub_item_title, null);
+        TextView groupTitleItemView = groupTitleItem.findViewById(R.id.group_title);
+        groupTitleItemView.setText(title);
+        mSubItemsContainer.addView(groupTitleItem);
     }
 
     /**
