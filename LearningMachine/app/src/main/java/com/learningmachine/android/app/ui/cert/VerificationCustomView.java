@@ -76,8 +76,10 @@ public class VerificationCustomView extends LinearLayout {
             if (verificationStep.suites != null) {
                 for (VerificationSteps.Suites verificationSuite:
                         verificationStep.suites) {
-                    setSubStepsGroupTitle(verificationSuite.proofType, verificationCustomItem);
-                    registerSubSteps(verificationSuite.subSteps, verificationCustomItem);
+                    if (verificationSuite.subSteps.length > 0) {
+                        setSubStepsGroupTitle(verificationSuite.proofType, verificationCustomItem);
+                        registerSubSteps(verificationSuite.subSteps, verificationCustomItem);
+                    }
                 }
             }
 
