@@ -189,12 +189,7 @@ public class VerificationCustomItem extends RelativeLayout {
         subItemTitle.setText(title);
         mSubItemsContainer.addView(subItem);
 
-        if (!mIsFirstItem) {
-            setItemMarginTop(FIRST_ITEM_MARGIN_TOP);
-        }
-
         if (mSubItemTotalCount == mSubItemsContainer.getChildCount()) {
-            setSubItemMarginBottom(subItem, LAST_SUB_ITEM_MARGIN_BOTTOM);
             subItem.post(() -> {
                 mSubItemHeight = subItem.getHeight();
                 mPlaceholderStatusBar.getLayoutParams().height += mSubItemHeight * mSubItemTotalCount;
