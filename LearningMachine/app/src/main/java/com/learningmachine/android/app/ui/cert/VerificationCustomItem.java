@@ -139,42 +139,25 @@ public class VerificationCustomItem extends RelativeLayout {
         if (!mHasStarted) {
             startProcess();
         }
-        System.out.println("activate " + status.code);
+
         View subItem = mSubItemsContainer.findViewWithTag(status.code);
+        activateTitle(subItem, status.isFailure());
 
         if (status.isSuccess()) {
             getParentScrollView().smoothScrollTo(0, subItem.getTop() + getTop());
-            activateTitle(subItem, false);
 
             if (isLastSubItem(subItem)) {
                 mSubItemHeight += fromDpToPx(24);
                 showSuccessIcon();
             }
 
-            animateStatusBar(subItem);
+            animateStatusBar(subItem, onFinishAnimation);
+        }
 
-        } else if(status.isFailure()) {
+        if (status.isFailure()) {
             mItemStatusBar.getLayoutParams().height += mSubItemHeight;
-            activateTitle(subItem, true);
-            TextView subItemError = subItem.findViewById(R.id.verifier_sub_item_error);
-            subItemError.setText(status.errorMessage);
-            subItemError.setVisibility(INVISIBLE);
-
-            subItemError.post(() -> {
-                int subItemErrorHeight = subItemError.getHeight();
-                mPlaceholderStatusBar.getLayoutParams().height += subItemErrorHeight;
-                mPlaceholderStatusBar.getLayoutParams().height += fromDpToPx(8);
-                mPlaceholderStatusBar.requestLayout();
-                View subItemIcon = subItem.findViewById(R.id.sub_item_status);
-                View subItemMark = subItem.findViewById(R.id.sub_item_mark);
-                subItemIcon.setVisibility(VISIBLE);
-                subItemMark.setVisibility(INVISIBLE);
-                subItemError.setVisibility(VISIBLE);
-                showErrorIcon();
-                if (mOnVerificationFinishListener != null) {
-                    mOnVerificationFinishListener.verificationFinish(true);
-                }
-            });
+            setErrorMessage(subItem, status.errorMessage);
+            showErrorIcon();
         }
     }
 
@@ -189,7 +172,7 @@ public class VerificationCustomItem extends RelativeLayout {
         }
     }
 
-    private void animateStatusBar(View subItem) {
+    private void animateStatusBar(View subItem, OnFinishAnimation onFinishAnimation) {
         int statusBarHeight = mItemStatusBar.getLayoutParams().height;
         int targetNextStatusBarHeight = subItem.getBottom() + subItem.getHeight();
         ValueAnimator anim = ValueAnimator.ofInt(statusBarHeight, targetNextStatusBarHeight).setDuration(200);
@@ -209,6 +192,29 @@ public class VerificationCustomItem extends RelativeLayout {
                         mOnVerificationFinishListener.verificationFinish(false);
                     }
                 }
+            }
+        });
+    }
+
+    private void setErrorMessage(View subItem, String errorMessage) {
+        TextView subItemError = subItem.findViewById(R.id.verifier_sub_item_error);
+        subItemError.setText(errorMessage);
+        subItemError.setVisibility(INVISIBLE);
+
+        subItemError.post(() -> {
+            int subItemErrorHeight = subItemError.getHeight();
+            mPlaceholderStatusBar.getLayoutParams().height += subItemErrorHeight;
+            mPlaceholderStatusBar.getLayoutParams().height += fromDpToPx(8);
+            mPlaceholderStatusBar.requestLayout();
+
+            View subItemIcon = subItem.findViewById(R.id.sub_item_status);
+            View subItemMark = subItem.findViewById(R.id.sub_item_mark);
+            subItemIcon.setVisibility(VISIBLE);
+            subItemMark.setVisibility(INVISIBLE);
+            subItemError.setVisibility(VISIBLE);
+
+            if (mOnVerificationFinishListener != null) {
+                mOnVerificationFinishListener.verificationFinish(true);
             }
         });
     }
@@ -239,8 +245,8 @@ public class VerificationCustomItem extends RelativeLayout {
      * @return The Container Scroll View.
      */
     private ScrollView getParentScrollView() {
-        ViewParent parent = getParent(); //VerificationCustomView
-        parent = parent.getParent();//LinearLayout
+        ViewParent parent = getParent(); // VerificationCustomView
+        parent = parent.getParent(); // LinearLayout
         if (mParentScrollView == null) {
             mParentScrollView = (ScrollView) parent.getParent();
         }
