@@ -139,7 +139,7 @@ public class VerificationCustomItem extends RelativeLayout {
         if (!mHasStarted) {
             startProcess();
         }
-
+        System.out.println("activate " + status.code);
         View subItem = mSubItemsContainer.findViewWithTag(status.code);
 
         if (status.isSuccess()) {
@@ -151,26 +151,7 @@ public class VerificationCustomItem extends RelativeLayout {
                 showSuccessIcon();
             }
 
-            int itemHeight = mItemStatusBar.getLayoutParams().height;
-            ValueAnimator anim = ValueAnimator.ofInt(itemHeight, itemHeight + mSubItemHeight).setDuration(200);
-            anim.addUpdateListener(animation -> {
-                mItemStatusBar.getLayoutParams().height = (Integer) animation.getAnimatedValue();
-                mItemStatusBar.requestLayout();
-            });
-            anim.start();
-            anim.addListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    super.onAnimationEnd(animation);
-                    onFinishAnimation.animationFinished();
-                    if (isLastSubItem(subItem) && mIsLastItem) {
-                        showVerifiedInfo();
-                        if (mOnVerificationFinishListener != null) {
-                            mOnVerificationFinishListener.verificationFinish(false);
-                        }
-                    }
-                }
-            });
+            animateStatusBar(subItem);
 
         } else if(status.isFailure()) {
             mItemStatusBar.getLayoutParams().height += mSubItemHeight;
@@ -206,6 +187,30 @@ public class VerificationCustomItem extends RelativeLayout {
                 mSubItemHeight = subView.getHeight();
             }
         }
+    }
+
+    private void animateStatusBar(View subItem) {
+        int statusBarHeight = mItemStatusBar.getLayoutParams().height;
+        int targetNextStatusBarHeight = subItem.getBottom() + subItem.getHeight();
+        ValueAnimator anim = ValueAnimator.ofInt(statusBarHeight, targetNextStatusBarHeight).setDuration(200);
+        anim.addUpdateListener(animation -> {
+            mItemStatusBar.getLayoutParams().height = targetNextStatusBarHeight;
+            mItemStatusBar.requestLayout();
+        });
+        anim.start();
+        anim.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                onFinishAnimation.animationFinished();
+                if (isLastSubItem(subItem) && mIsLastItem) {
+                    showVerifiedInfo();
+                    if (mOnVerificationFinishListener != null) {
+                        mOnVerificationFinishListener.verificationFinish(false);
+                    }
+                }
+            }
+        });
     }
 
     private boolean isLastSubItem(View subItem) {
