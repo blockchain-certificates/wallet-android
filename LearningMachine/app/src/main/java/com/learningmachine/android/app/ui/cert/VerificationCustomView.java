@@ -58,12 +58,13 @@ public class VerificationCustomView extends LinearLayout {
         mStatusQueue = new LinkedList<>();
         mIsAnimating = false;
         for (int i = 0; i < verificationSteps.length; i++) {
+            boolean isLast = i == verificationSteps.length-1;
             VerificationSteps verificationStep = verificationSteps[i];
             VerificationCustomItem verificationCustomItem = new VerificationCustomItem(getContext());
             verificationCustomItem.setItemTitle(verificationStep.label);
             verificationCustomItem.setTag(verificationStep.code);
             verificationCustomItem.setIsFirstItem(i == 0);
-            verificationCustomItem.setIsLastItem(i == verificationSteps.length-1);
+            verificationCustomItem.setIsLastItem(isLast);
             verificationCustomItem.setOnVerificationFinishListener(withError -> {
                 mOnVerificationFinishListener.verificationFinish(withError);
                 //We need to call this to show elements correctly after verification ends.
@@ -82,7 +83,7 @@ public class VerificationCustomView extends LinearLayout {
                     registerSubSteps(verificationSuite.subSteps, verificationCustomItem);
                 }
             }
-
+            verificationCustomItem.finalizeItem();
         }
     }
 
@@ -116,8 +117,7 @@ public class VerificationCustomView extends LinearLayout {
         for (VerificationSteps.SubSteps verificationSubStep: subStepsList) {
             verificationCustomItem.addSubItem(
                 verificationSubStep.label,
-                verificationSubStep.code,
-                subStepsList.length
+                verificationSubStep.code
             );
         }
     }

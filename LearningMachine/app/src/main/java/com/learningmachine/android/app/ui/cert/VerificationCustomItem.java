@@ -22,7 +22,7 @@ import com.learningmachine.android.app.data.verifier.VerifierStatus;
 public class VerificationCustomItem extends RelativeLayout {
     public static final int FIRST_ITEM_MARGIN_TOP = -14;
     public static final int LAST_SUB_ITEM_MARGIN_BOTTOM = 20;
-    public static final int EXTRA_HEIGHT_FOR_STATUS_BAR = 28;
+    public static final int EXTRA_HEIGHT_FOR_STATUS_BAR = 90;
     private TextView mItemTitle;
     private LinearLayout mSubItemsContainer;
     private Context mContext;
@@ -96,7 +96,6 @@ public class VerificationCustomItem extends RelativeLayout {
      * Will request layout of sub item mark. Needed to show all elements correctly.
      */
     public void reconstructView() {
-        mSubItemsContainer.getChildCount();
         for (int i = 0; i < mSubItemsContainer.getChildCount(); i++) {
             View subItem = mSubItemsContainer.getChildAt(i);
             View subItemMark = subItem.findViewById(R.id.sub_item_mark);
@@ -175,31 +174,26 @@ public class VerificationCustomItem extends RelativeLayout {
         mSubItemsContainer.addView(groupTitleItem);
     }
 
-    /**
-     * Add a sub item to this item.
-     * @param title The sub item title.
-     * @param code The code to be set as a tag.
-     * @param totalSubItemCount The total count of sub items. Needed for view construction.
-     */
-    public void addSubItem(String title, String code, int totalSubItemCount) {
-        mSubItemTotalCount = totalSubItemCount;
+    public void addSubItem(String title, String code) {
         View subItem = inflate(mContext, R.layout.list_sub_item_verifier, null);
         subItem.setTag(code);
         TextView subItemTitle = subItem.findViewById(R.id.verifier_sub_item_title);
         subItemTitle.setText(title);
         mSubItemsContainer.addView(subItem);
 
-        if (mSubItemTotalCount == mSubItemsContainer.getChildCount()) {
-            subItem.post(() -> {
-                mSubItemHeight = subItem.getHeight();
-                mPlaceholderStatusBar.getLayoutParams().height += mSubItemHeight * mSubItemTotalCount;
-                mPlaceholderStatusBar.requestLayout();
-            });
-            
-            mPlaceholderStatusBar.getLayoutParams().height += fromDpToPx(EXTRA_HEIGHT_FOR_STATUS_BAR);
-        }
-
         requestLayout();
+    }
+
+    public void finalizeItem() {
+        mSubItemTotalCount = mSubItemsContainer.getChildCount();
+        adjustHeight();
+    }
+
+    public void adjustHeight() {
+        mPlaceholderStatusBar.post(() -> {
+            mPlaceholderStatusBar.getLayoutParams().height = getTotalHeightOfSubItems() + EXTRA_HEIGHT_FOR_STATUS_BAR;
+            mPlaceholderStatusBar.requestLayout();
+        });
     }
 
     @Override
@@ -223,11 +217,20 @@ public class VerificationCustomItem extends RelativeLayout {
             View subItem = mSubItemsContainer.findViewWithTag(status.code);
             subItem.post(() -> {
                 mSubItemHeight = subItem.getHeight();
-                activateSubItemWithHeight(status, onFinishAnimation);
+//                activateSubItemWithHeight(status, onFinishAnimation);
             });
         } else {
-            activateSubItemWithHeight(status, onFinishAnimation);
+//            activateSubItemWithHeight(status, onFinishAnimation);
         }
+    }
+
+    private int getTotalHeightOfSubItems () {
+        int totalHeight = 0;
+        for (int i = 0; i < mSubItemTotalCount; i++) {
+            View subItem = mSubItemsContainer.getChildAt(i);
+            totalHeight += subItem.getHeight();
+        }
+        return totalHeight;
     }
 
     /**
