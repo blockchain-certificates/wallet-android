@@ -105,64 +105,6 @@ public class VerificationCustomItem extends RelativeLayout {
         }
     }
 
-    /**
-     * Inflates all items in this view.
-     */
-    private void inflateItem() {
-        View item = inflate(mContext, R.layout.list_item_verifier, this);
-        mItemTitle = item.findViewById(R.id.verifier_item_title);
-        mSubItemsContainer = item.findViewById(R.id.verifier_sub_item_container);
-        mItemStatusBar = item.findViewById(R.id.item_status_bar);
-        mVerifiedInfo = item.findViewById(R.id.verified_info);
-        mPlaceholderStatusBar = item.findViewById(R.id.placeholder_status_bar);
-        mProgress = item.findViewById(R.id.item_status_progress);
-        mItemStatusIconBackground = item.findViewById(R.id.item_status_icon);
-        View itemStatusIconContainer = item.findViewById(R.id.status_icon_container);
-        itemStatusIconContainer.bringToFront();
-    }
-
-    /**
-     * Returns the scroll view. Can be used to scroll to an item in the list.
-     * @return The Container Scroll View.
-     */
-    private ScrollView getParentScrollView() {
-        ViewParent parent = getParent(); //VerificationCustomView
-        parent = parent.getParent();//LinearLayout
-        if (mParentScrollView == null) {
-            mParentScrollView = (ScrollView) parent.getParent();
-        }
-        return mParentScrollView;
-    }
-
-    /**
-     * Set the top margin for this item.
-     * @param marginTop The value for the top margin. Can be negative.
-     */
-    private void setItemMarginTop(int marginTop) {
-        LinearLayout.LayoutParams linearParams = new LinearLayout.LayoutParams(
-                new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT));
-        linearParams.setMargins(0, fromDpToPx(marginTop), 0, 0);
-        setLayoutParams(linearParams);
-        requestLayout();
-    }
-
-    /**
-     * Set the bottom margin of a sub item.
-     * @param subItem The sub item to set the bottom margin.
-     * @param marginBottom The bottom margin value. Can be negative.
-     */
-    private void setSubItemMarginBottom(View subItem, int marginBottom) {
-        LinearLayout.LayoutParams linearParams = new LinearLayout.LayoutParams(
-                new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT));
-        linearParams.setMargins(0, 0, 0, fromDpToPx(marginBottom));
-        subItem.setLayoutParams(linearParams);
-        subItem.requestLayout();
-    }
-
     public void setItemTitle(String title) {
         mItemTitle.setText(title);
     }
@@ -187,24 +129,6 @@ public class VerificationCustomItem extends RelativeLayout {
     public void finalizeItem() {
         mSubItemTotalCount = mSubItemsContainer.getChildCount();
         adjustHeight();
-    }
-
-    public void adjustHeight() {
-        mPlaceholderStatusBar.post(() -> {
-            mPlaceholderStatusBar.getLayoutParams().height = getTotalHeightOfSubItems() + EXTRA_HEIGHT_FOR_STATUS_BAR;
-            mPlaceholderStatusBar.requestLayout();
-        });
-    }
-
-    @Override
-    protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        super.onLayout(changed, l, t, r, b);
-        if (changed) {
-            if (mSubItemsContainer.getChildCount() > 0) {
-                View subView = mSubItemsContainer.getChildAt(0);
-                mSubItemHeight = subView.getHeight();
-            }
-        }
     }
 
     /**
@@ -273,6 +197,82 @@ public class VerificationCustomItem extends RelativeLayout {
                 }
             });
         }
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        super.onLayout(changed, l, t, r, b);
+        if (changed) {
+            if (mSubItemsContainer.getChildCount() > 0) {
+                View subView = mSubItemsContainer.getChildAt(0);
+                mSubItemHeight = subView.getHeight();
+            }
+        }
+    }
+
+    /**
+     * Inflates all items in this view.
+     */
+    private void inflateItem() {
+        View item = inflate(mContext, R.layout.list_item_verifier, this);
+        mItemTitle = item.findViewById(R.id.verifier_item_title);
+        mSubItemsContainer = item.findViewById(R.id.verifier_sub_item_container);
+        mItemStatusBar = item.findViewById(R.id.item_status_bar);
+        mVerifiedInfo = item.findViewById(R.id.verified_info);
+        mPlaceholderStatusBar = item.findViewById(R.id.placeholder_status_bar);
+        mProgress = item.findViewById(R.id.item_status_progress);
+        mItemStatusIconBackground = item.findViewById(R.id.item_status_icon);
+        View itemStatusIconContainer = item.findViewById(R.id.status_icon_container);
+        itemStatusIconContainer.bringToFront();
+    }
+
+    /**
+     * Returns the scroll view. Can be used to scroll to an item in the list.
+     * @return The Container Scroll View.
+     */
+    private ScrollView getParentScrollView() {
+        ViewParent parent = getParent(); //VerificationCustomView
+        parent = parent.getParent();//LinearLayout
+        if (mParentScrollView == null) {
+            mParentScrollView = (ScrollView) parent.getParent();
+        }
+        return mParentScrollView;
+    }
+
+    /**
+     * Set the top margin for this item.
+     * @param marginTop The value for the top margin. Can be negative.
+     */
+    private void setItemMarginTop(int marginTop) {
+        LinearLayout.LayoutParams linearParams = new LinearLayout.LayoutParams(
+                new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT));
+        linearParams.setMargins(0, fromDpToPx(marginTop), 0, 0);
+        setLayoutParams(linearParams);
+        requestLayout();
+    }
+
+    /**
+     * Set the bottom margin of a sub item.
+     * @param subItem The sub item to set the bottom margin.
+     * @param marginBottom The bottom margin value. Can be negative.
+     */
+    private void setSubItemMarginBottom(View subItem, int marginBottom) {
+        LinearLayout.LayoutParams linearParams = new LinearLayout.LayoutParams(
+                new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT));
+        linearParams.setMargins(0, 0, 0, fromDpToPx(marginBottom));
+        subItem.setLayoutParams(linearParams);
+        subItem.requestLayout();
+    }
+
+    private void adjustHeight() {
+        mPlaceholderStatusBar.post(() -> {
+            mPlaceholderStatusBar.getLayoutParams().height = getTotalHeightOfSubItems() + EXTRA_HEIGHT_FOR_STATUS_BAR;
+            mPlaceholderStatusBar.requestLayout();
+        });
     }
 
     private int getTotalHeightOfSubItems () {
