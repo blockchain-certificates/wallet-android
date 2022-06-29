@@ -208,19 +208,72 @@ public class VerificationCustomItem extends RelativeLayout {
     }
 
     /**
-     * Activates a sub item bu changing text color and changing icons.
+     * Activate a sub item, also changing the status bar height.
      * @param status The status of the sub item.
-     * @param onFinishAnimation Listener to get the animation finish events.
+     * @param onFinishAnimation The animation listener.
      */
     public void activateSubItem(VerifierStatus status, OnFinishAnimation onFinishAnimation) {
-        if (mSubItemHeight == 0) {
-            View subItem = mSubItemsContainer.findViewWithTag(status.code);
-            subItem.post(() -> {
-                mSubItemHeight = subItem.getHeight();
-//                activateSubItemWithHeight(status, onFinishAnimation);
+        if (!mHasStarted) {
+            mHasStarted = true;
+            showProgressIcon();
+            mItemStatusBar.setVisibility(VISIBLE);
+        }
+
+        View subItem = mSubItemsContainer.findViewWithTag(status.code);
+
+        if (status.isSuccess()) {
+            getParentScrollView().smoothScrollTo(0, subItem.getTop() + getTop());
+            activateTitle(subItem, false);
+
+            mSubItemCount += 1;
+            if (mSubItemCount == mSubItemTotalCount) {
+                mSubItemHeight += fromDpToPx(24);
+                showSuccessIcon();
+            }
+
+            int itemHeight = mItemStatusBar.getLayoutParams().height;
+            ValueAnimator anim = ValueAnimator.ofInt(itemHeight, itemHeight + mSubItemHeight).setDuration(200);
+            anim.addUpdateListener(animation -> {
+                mItemStatusBar.getLayoutParams().height = (Integer) animation.getAnimatedValue();
+                mItemStatusBar.requestLayout();
             });
-        } else {
-//            activateSubItemWithHeight(status, onFinishAnimation);
+            anim.start();
+            anim.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    onFinishAnimation.animationFinished();
+                    if (mSubItemCount == mSubItemTotalCount && mIsLastItem) {
+                        showVerifiedInfo();
+                        if (mOnVerificationFinishListener != null) {
+                            mOnVerificationFinishListener.verificationFinish(false);
+                        }
+                    }
+                }
+            });
+
+        } else if(status.isFailure()) {
+            mItemStatusBar.getLayoutParams().height += mSubItemHeight;
+            activateTitle(subItem, true);
+            TextView subItemError = subItem.findViewById(R.id.verifier_sub_item_error);
+            subItemError.setText(status.errorMessage);
+            subItemError.setVisibility(INVISIBLE);
+
+            subItemError.post(() -> {
+                int subItemErrorHeight = subItemError.getHeight();
+                mPlaceholderStatusBar.getLayoutParams().height += subItemErrorHeight;
+                mPlaceholderStatusBar.getLayoutParams().height += fromDpToPx(8);
+                mPlaceholderStatusBar.requestLayout();
+                View subItemIcon = subItem.findViewById(R.id.sub_item_status);
+                View subItemMark = subItem.findViewById(R.id.sub_item_mark);
+                subItemIcon.setVisibility(VISIBLE);
+                subItemMark.setVisibility(INVISIBLE);
+                subItemError.setVisibility(VISIBLE);
+                showErrorIcon();
+                if (mOnVerificationFinishListener != null) {
+                    mOnVerificationFinishListener.verificationFinish(true);
+                }
+            });
         }
     }
 
@@ -257,80 +310,11 @@ public class VerificationCustomItem extends RelativeLayout {
         mProgress.setVisibility(GONE);
     }
 
-
-    /**
-     * Activate a sub item, also changing the status bar height.
-     * @param status The status of the sub item.
-     * @param onFinishAnimation The animation listener.
-     */
-    private void activateSubItemWithHeight(VerifierStatus status, OnFinishAnimation onFinishAnimation) {
-        if (!mHasStarted) {
-            mHasStarted = true;
-            showProgressIcon();
-            mItemStatusBar.setVisibility(VISIBLE);
-        }
-
-        View subItem = mSubItemsContainer.findViewWithTag(status.code);
+    private void activateTitle(View subItem, boolean withError) {
         TextView subItemTitle = subItem.findViewById(R.id.verifier_sub_item_title);
-
-        if (status.isSuccess()) {
-            getParentScrollView().smoothScrollTo(0, subItem.getTop() + getTop());
-            mSubItemCount += 1;
-            if (mSubItemCount == mSubItemTotalCount) {
-                mSubItemHeight += fromDpToPx(24);
-                showSuccessIcon();
-            }
-
-            int itemHeight = mItemStatusBar.getLayoutParams().height;
-            ValueAnimator anim = ValueAnimator.ofInt(itemHeight, itemHeight + mSubItemHeight).setDuration(200);
-            anim.addUpdateListener(animation -> {
-                mItemStatusBar.getLayoutParams().height = (Integer) animation.getAnimatedValue();
-                mItemStatusBar.requestLayout();
-            });
-            anim.start();
-            anim.addListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    super.onAnimationEnd(animation);
-                    onFinishAnimation.animationFinished();
-                    if (mSubItemCount == mSubItemTotalCount && mIsLastItem) {
-                        showVerifiedInfo();
-                        if (mOnVerificationFinishListener != null) {
-                            mOnVerificationFinishListener.verificationFinish(false);
-                        }
-                    }
-                }
-            });
-
-            TextViewCompat.setTextAppearance(subItemTitle, R.style.Text_VerifierSubItem_Active);
-            TextViewCompat.setTextAppearance(mItemTitle, R.style.Text_VerifierItem_Active);
-
-        } else if(status.isFailure()) {
-            mItemStatusBar.getLayoutParams().height += mSubItemHeight;
-            TextViewCompat.setTextAppearance(subItemTitle, R.style.Text_VerifierSubItem_Active_Error);
-            TextViewCompat.setTextAppearance(mItemTitle, R.style.Text_VerifierItem_Active);
-
-            TextView subItemError = subItem.findViewById(R.id.verifier_sub_item_error);
-            subItemError.setText(status.errorMessage);
-            subItemError.setVisibility(INVISIBLE);
-
-            subItemError.post(() -> {
-                int subItemErrorHeight = subItemError.getHeight();
-                mPlaceholderStatusBar.getLayoutParams().height += subItemErrorHeight;
-                mPlaceholderStatusBar.getLayoutParams().height += fromDpToPx(8);
-                mPlaceholderStatusBar.requestLayout();
-                View subItemIcon = subItem.findViewById(R.id.sub_item_status);
-                View subItemMark = subItem.findViewById(R.id.sub_item_mark);
-                subItemIcon.setVisibility(VISIBLE);
-                subItemMark.setVisibility(INVISIBLE);
-                subItemError.setVisibility(VISIBLE);
-                showErrorIcon();
-                if (mOnVerificationFinishListener != null) {
-                    mOnVerificationFinishListener.verificationFinish(true);
-                }
-            });
-        }
-
+        int style = withError ? R.style.Text_VerifierSubItem_Active_Error : R.style.Text_VerifierSubItem_Active;
+        TextViewCompat.setTextAppearance(subItemTitle, style);
+        TextViewCompat.setTextAppearance(mItemTitle, R.style.Text_VerifierItem_Active);
     }
 
     private void showVerifiedInfo() {
