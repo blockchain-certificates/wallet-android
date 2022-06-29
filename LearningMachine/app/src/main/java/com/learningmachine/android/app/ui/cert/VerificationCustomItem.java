@@ -127,7 +127,9 @@ public class VerificationCustomItem extends RelativeLayout {
 
     public void finalizeItem() {
         mSubItemTotalCount = mSubItemsContainer.getChildCount();
-        adjustHeight();
+        mPlaceholderStatusBar.post(() -> {
+            adjustHeightOfPlaceholderStatusBar(getTotalHeightOfSubItems() + EXTRA_HEIGHT_FOR_STATUS_BAR);
+        });
     }
 
     /**
@@ -203,9 +205,7 @@ public class VerificationCustomItem extends RelativeLayout {
 
         subItemError.post(() -> {
             int subItemErrorHeight = subItemError.getHeight();
-            mPlaceholderStatusBar.getLayoutParams().height += subItemErrorHeight;
-            mPlaceholderStatusBar.getLayoutParams().height += fromDpToPx(8);
-            mPlaceholderStatusBar.requestLayout();
+            adjustHeightOfPlaceholderStatusBar(subItemErrorHeight + fromDpToPx(8));
 
             View subItemIcon = subItem.findViewById(R.id.sub_item_status);
             View subItemMark = subItem.findViewById(R.id.sub_item_mark);
@@ -282,11 +282,9 @@ public class VerificationCustomItem extends RelativeLayout {
         subItem.requestLayout();
     }
 
-    private void adjustHeight() {
-        mPlaceholderStatusBar.post(() -> {
-            mPlaceholderStatusBar.getLayoutParams().height = getTotalHeightOfSubItems() + EXTRA_HEIGHT_FOR_STATUS_BAR;
-            mPlaceholderStatusBar.requestLayout();
-        });
+    private void adjustHeightOfPlaceholderStatusBar(int height) {
+        mPlaceholderStatusBar.getLayoutParams().height = height;
+        mPlaceholderStatusBar.requestLayout();
     }
 
     private int getTotalHeightOfSubItems () {
