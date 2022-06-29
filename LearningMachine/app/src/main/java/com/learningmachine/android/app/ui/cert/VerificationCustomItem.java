@@ -30,7 +30,6 @@ public class VerificationCustomItem extends RelativeLayout {
     private View mPlaceholderStatusBar;
     private int mSubItemHeight = 0;
     private int mSubItemTotalCount = 0;
-    private int mSubItemCount = 0;
     private ImageView mItemStatusIconBackground;
     private boolean mIsFirstItem;
     private boolean mHasStarted;
@@ -147,8 +146,7 @@ public class VerificationCustomItem extends RelativeLayout {
             getParentScrollView().smoothScrollTo(0, subItem.getTop() + getTop());
             activateTitle(subItem, false);
 
-            mSubItemCount += 1;
-            if (mSubItemCount == mSubItemTotalCount) {
+            if (isLastSubItem(subItem)) {
                 mSubItemHeight += fromDpToPx(24);
                 showSuccessIcon();
             }
@@ -165,7 +163,7 @@ public class VerificationCustomItem extends RelativeLayout {
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
                     onFinishAnimation.animationFinished();
-                    if (mSubItemCount == mSubItemTotalCount && mIsLastItem) {
+                    if (isLastSubItem(subItem) && mIsLastItem) {
                         showVerifiedInfo();
                         if (mOnVerificationFinishListener != null) {
                             mOnVerificationFinishListener.verificationFinish(false);
@@ -208,6 +206,11 @@ public class VerificationCustomItem extends RelativeLayout {
                 mSubItemHeight = subView.getHeight();
             }
         }
+    }
+
+    private boolean isLastSubItem(View subItem) {
+        View lastChild = mSubItemsContainer.getChildAt(mSubItemTotalCount - 1);
+        return subItem == lastChild;
     }
 
     /**
@@ -284,7 +287,7 @@ public class VerificationCustomItem extends RelativeLayout {
         return totalHeight;
     }
 
-    private startProcess() {
+    private void startProcess() {
         mHasStarted = true;
         showProgressIcon();
         mItemStatusBar.setVisibility(VISIBLE);
