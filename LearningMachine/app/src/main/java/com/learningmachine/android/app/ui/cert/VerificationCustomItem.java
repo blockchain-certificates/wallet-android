@@ -214,9 +214,7 @@ public class VerificationCustomItem extends RelativeLayout {
      */
     public void activateSubItem(VerifierStatus status, OnFinishAnimation onFinishAnimation) {
         if (!mHasStarted) {
-            mHasStarted = true;
-            showProgressIcon();
-            mItemStatusBar.setVisibility(VISIBLE);
+            startProcess();
         }
 
         View subItem = mSubItemsContainer.findViewWithTag(status.code);
@@ -284,6 +282,12 @@ public class VerificationCustomItem extends RelativeLayout {
             totalHeight += subItem.getHeight();
         }
         return totalHeight;
+    }
+
+    private startProcess() {
+        mHasStarted = true;
+        showProgressIcon();
+        mItemStatusBar.setVisibility(VISIBLE);
     }
 
     /**
