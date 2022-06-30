@@ -20,8 +20,7 @@ import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.verifier.VerifierStatus;
 
 public class VerificationCustomItem extends RelativeLayout {
-    public static final int FIRST_ITEM_MARGIN_TOP = -14;
-    public static final int LAST_SUB_ITEM_MARGIN_BOTTOM = 20;
+    public static final int ADJUSTED_MARGIN_TOP = -8;
     public static final int EXTRA_HEIGHT_FOR_STATUS_BAR = 90;
     private TextView mItemTitle;
     private LinearLayout mSubItemsContainer;
@@ -32,10 +31,10 @@ public class VerificationCustomItem extends RelativeLayout {
     private int mSubItemTotalCount = 0;
     private ImageView mItemStatusIconBackground;
     private boolean mIsFirstItem;
+    private boolean mIsLastItem;
     private boolean mHasStarted;
     private View mProgress;
     private View mVerifiedInfo;
-    private boolean mIsLastItem;
     private VerificationCustomView.OnVerificationFinish mOnVerificationFinishListener;
     private ScrollView mParentScrollView;
 
@@ -127,6 +126,11 @@ public class VerificationCustomItem extends RelativeLayout {
 
     public void finalizeItem() {
         mSubItemTotalCount = mSubItemsContainer.getChildCount();
+
+        if (!mIsFirstItem) {
+            setItemMarginTop(ADJUSTED_MARGIN_TOP);
+        }
+
         mPlaceholderStatusBar.post(() -> {
             adjustHeightOfPlaceholderStatusBar(getTotalHeightOfSubItems() + EXTRA_HEIGHT_FOR_STATUS_BAR);
         });
@@ -220,8 +224,11 @@ public class VerificationCustomItem extends RelativeLayout {
     }
 
     private boolean isLastSubItem(View subItem) {
-        View lastChild = mSubItemsContainer.getChildAt(mSubItemTotalCount - 1);
-        return subItem == lastChild;
+        return subItem == getLastSubItem();
+    }
+
+    private View getLastSubItem() {
+        return mSubItemsContainer.getChildAt(mSubItemTotalCount - 1);
     }
 
     /**
