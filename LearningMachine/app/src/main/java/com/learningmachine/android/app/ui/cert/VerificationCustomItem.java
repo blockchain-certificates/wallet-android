@@ -153,7 +153,9 @@ public class VerificationCustomItem extends RelativeLayout {
             getParentScrollView().smoothScrollTo(0, subItem.getTop() + getTop());
 
             if (isLastSubItem(subItem)) {
-                mSubItemHeight += fromDpToPx(24);
+                subItem.post(() -> {
+                    adjustHeightOfPlaceholderStatusBar(mPlaceholderStatusBar.getLayoutParams().height + fromDpToPx(24));
+                });
                 showSuccessIcon();
             }
 
