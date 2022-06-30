@@ -183,7 +183,11 @@ public class VerificationCustomItem extends RelativeLayout {
         int targetNextStatusBarHeight = subItem.getBottom() + subItem.getHeight();
         ValueAnimator anim = ValueAnimator.ofInt(statusBarHeight, targetNextStatusBarHeight).setDuration(200);
         anim.addUpdateListener(animation -> {
-            mItemStatusBar.getLayoutParams().height = targetNextStatusBarHeight;
+            if (isLastSubItem(subItem)) {
+                mItemStatusBar.getLayoutParams().height = mPlaceholderStatusBar.getLayoutParams().height;
+            } else {
+                mItemStatusBar.getLayoutParams().height = targetNextStatusBarHeight;
+            }
             mItemStatusBar.requestLayout();
         });
         anim.start();
