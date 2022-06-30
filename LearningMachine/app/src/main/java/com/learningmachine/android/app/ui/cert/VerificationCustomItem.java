@@ -215,7 +215,7 @@ public class VerificationCustomItem extends RelativeLayout {
 
         subItemError.post(() -> {
             int subItemErrorHeight = subItemError.getHeight();
-            adjustHeightOfPlaceholderStatusBar(subItemErrorHeight + fromDpToPx(8));
+            adjustHeightOfPlaceholderStatusBar(mPlaceholderStatusBar.getLayoutParams().height + subItemErrorHeight + fromDpToPx(8));
 
             View subItemIcon = subItem.findViewById(R.id.sub_item_status);
             View subItemMark = subItem.findViewById(R.id.sub_item_mark);
