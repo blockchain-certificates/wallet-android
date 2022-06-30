@@ -47,10 +47,6 @@ public class VerificationCustomItem extends RelativeLayout {
         void animationFinished();
     }
 
-    /**
-     * Set a listener for the animation finish event.
-     * @param onVerificationFinishListener The listener.
-     */
     public void setOnVerificationFinishListener(VerificationCustomView.OnVerificationFinish onVerificationFinishListener) {
         mOnVerificationFinishListener = onVerificationFinishListener;
     }
@@ -73,18 +69,10 @@ public class VerificationCustomItem extends RelativeLayout {
         inflateItem();
     }
 
-    /**
-     * Set if this is the first item in the list. Needed to set margins.
-     * @param isFirstItem True if first item.
-     */
     public void setIsFirstItem(boolean isFirstItem) {
         mIsFirstItem = isFirstItem;
     }
 
-    /**
-     * Set if this is the last item in the list. Needed to show completion info.
-     * @param isLastItem True if last item.
-     */
     public void setIsLastItem(boolean isLastItem) {
         mIsLastItem = isLastItem;
     }
@@ -225,9 +213,6 @@ public class VerificationCustomItem extends RelativeLayout {
         return mSubItemsContainer.getChildAt(mSubItemTotalCount - 1);
     }
 
-    /**
-     * Inflates all items in this view.
-     */
     private void inflateItem() {
         View item = inflate(mContext, R.layout.list_item_verifier, this);
         mItemTitle = item.findViewById(R.id.verifier_item_title);
@@ -254,10 +239,6 @@ public class VerificationCustomItem extends RelativeLayout {
         return mParentScrollView;
     }
 
-    /**
-     * Set the top margin for this item.
-     * @param marginTop The value for the top margin. Can be negative.
-     */
     private void setItemMarginTop(int marginTop) {
         LinearLayout.LayoutParams linearParams = new LinearLayout.LayoutParams(
                 new LinearLayout.LayoutParams(
@@ -266,21 +247,6 @@ public class VerificationCustomItem extends RelativeLayout {
         linearParams.setMargins(0, fromDpToPx(marginTop), 0, 0);
         setLayoutParams(linearParams);
         requestLayout();
-    }
-
-    /**
-     * Set the bottom margin of a sub item.
-     * @param subItem The sub item to set the bottom margin.
-     * @param marginBottom The bottom margin value. Can be negative.
-     */
-    private void setSubItemMarginBottom(View subItem, int marginBottom) {
-        LinearLayout.LayoutParams linearParams = new LinearLayout.LayoutParams(
-                new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT));
-        linearParams.setMargins(0, 0, 0, fromDpToPx(marginBottom));
-        subItem.setLayoutParams(linearParams);
-        subItem.requestLayout();
     }
 
     private void adjustHeightOfPlaceholderStatusBar(int height) {
@@ -303,25 +269,16 @@ public class VerificationCustomItem extends RelativeLayout {
         mItemStatusBar.setVisibility(VISIBLE);
     }
 
-    /**
-     * Show a progress indicator inside the status icon.
-     */
     private void showProgressIcon() {
         mItemStatusIconBackground.setImageResource(R.drawable.ic_verification_status_item_bg);
         mProgress.setVisibility(VISIBLE);
     }
 
-    /**
-     * Show the success icon.
-     */
     private void showSuccessIcon() {
         mItemStatusIconBackground.setImageResource(R.drawable.ic_verification_status_item_ok);
         mProgress.setVisibility(GONE);
     }
 
-    /**
-     * Show the error icon.
-     */
     private void showErrorIcon() {
         mItemStatusIconBackground.setImageResource(R.drawable.ic_verification_status_item_error);
         mProgress.setVisibility(GONE);
