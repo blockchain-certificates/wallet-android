@@ -28,10 +28,10 @@
                   didResolverUrl: 'https://dev.uniresolver.io/1.0/identifiers'
                 });
                 await certificate.init();
-                Android.notifyChainName(certificate.chain.name);
                 var verificationSteps = certificate.verificationSteps;
                 Android.notifyVerificationSteps(JSON.stringify(verificationSteps));
-                certificate.verify(statusCallback);
+                await certificate.verify(statusCallback);
+                Android.notifyChainName(certificate.signers[0].chain.name);
             });
 		</script>
     </body>

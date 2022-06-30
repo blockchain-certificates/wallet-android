@@ -7,6 +7,7 @@ public class VerifierStatus {
     public String label;
     public String status;
     public String errorMessage;
+    public String parentStep;
 
     public static VerifierStatus getFromString(String status) {
         return new Gson().fromJson(status, VerifierStatus.class);
