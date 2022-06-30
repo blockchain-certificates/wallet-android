@@ -109,10 +109,20 @@ public class VerifyCertificateFragment extends Fragment {
     }
 
     private void showVerificationSuccessStatus(String chainName) {
-        String status = getString(R.string.success_verification, chainName);
+        String status = getSuccessStatusString(chainName);
         mBinding.verificationStatus.setText(status);
         mBinding.verificationStatus.setTextColor(getResources().getColor(R.color.c3));
         mBinding.verificationStatus.setBackgroundColor(getResources().getColor(R.color.c14));
+    }
+
+    private String getSuccessStatusString(String chainName) {
+        if (chainName == null) {
+            chainName = "";
+        }
+        String status = getString(R.string.success_verification, chainName);
+        status.replace("  ", " "); // replace double spaces if chainName is empty string
+        status.replace(" .", ".");
+        return status;
     }
 
     private void showVerificationErrorStatus() {
