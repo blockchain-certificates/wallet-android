@@ -27,7 +27,6 @@ public class VerificationCustomItem extends RelativeLayout {
     private Context mContext;
     private View mItemStatusBar;
     private View mPlaceholderStatusBar;
-    private int mSubItemHeight = 0;
     private int mSubItemTotalCount = 0;
     private ImageView mItemStatusIconBackground;
     private boolean mIsFirstItem;
@@ -163,20 +162,9 @@ public class VerificationCustomItem extends RelativeLayout {
         }
 
         if (status.isFailure()) {
-            mItemStatusBar.getLayoutParams().height += mSubItemHeight;
+            mItemStatusBar.getLayoutParams().height += subItem.getHeight();
             setErrorMessage(subItem, status.errorMessage);
             showErrorIcon();
-        }
-    }
-
-    @Override
-    protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        super.onLayout(changed, l, t, r, b);
-        if (changed) {
-            if (mSubItemsContainer.getChildCount() > 0) {
-                View subView = mSubItemsContainer.getChildAt(0);
-                mSubItemHeight = subView.getHeight();
-            }
         }
     }
 
