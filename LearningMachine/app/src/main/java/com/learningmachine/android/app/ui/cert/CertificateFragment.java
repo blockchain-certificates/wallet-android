@@ -347,6 +347,10 @@ public class CertificateFragment extends LMFragment {
 
     private void verifyCertificate() {
         Timber.i("User tapped verify on this certificate");
+        mIssuerManager.certificateVerified(mCertUuid)
+                .compose(bindToMainThread())
+                .subscribe(aVoid -> Timber.d("Issuer analytics: Certificate verified"),
+                        throwable -> Timber.e(throwable, "Issuer has no analytics url."));
         Intent certificateActivity = VerifyCertificateActivity.newIntent(getContext(), mCertUuid);
         startActivity(certificateActivity);
     }
