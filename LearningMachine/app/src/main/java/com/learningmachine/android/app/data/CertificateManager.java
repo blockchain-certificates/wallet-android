@@ -25,6 +25,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import okhttp3.ResponseBody;
 import okio.Buffer;
@@ -85,6 +86,18 @@ public class CertificateManager {
     public Observable<Boolean> removeCertificate(String uuid) {
         return Observable.just(FileUtils.deleteCertificate(mContext, uuid))
                 .map(success -> mCertificateStore.deleteCertificate(uuid));
+    }
+
+    public Observable<BlockCert> loadCertificateFromFileSystem(String certificateUuid) {
+        File file = FileUtils.getCertificateFile(mContext, certificateUuid);
+        try (FileInputStream inputStream = new FileInputStream(file)) {
+            BlockCertParser blockCertParser = new BlockCertParser();
+            BlockCert blockCert = blockCertParser.fromJson(inputStream);
+            return Observable.just(blockCert);
+        } catch (IOException | NoSuchElementException e) {
+            Timber.e(e, "Could not read certificate file");
+            return Observable.error(new ExceptionWithResourceString(e, R.string.error_cannot_load_certificate_json));
+        }
     }
 
     /**

@@ -24,7 +24,6 @@ import android.widget.TextView;
 
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.CertificateManager;
-import com.learningmachine.android.app.data.CertificateVerifier;
 import com.learningmachine.android.app.data.IssuerManager;
 import com.learningmachine.android.app.data.cert.BlockCert;
 import com.learningmachine.android.app.data.cert.v20.BlockCertV20;
@@ -55,8 +54,6 @@ public class CertificateFragment extends LMFragment {
     protected CertificateManager mCertificateManager;
     @Inject
     protected IssuerManager mIssuerManager;
-    @Inject
-    protected CertificateVerifier mCertificateVerifier;
 
     private FragmentCertificateBinding mBinding;
     private String mCertUuid;
@@ -206,7 +203,7 @@ public class CertificateFragment extends LMFragment {
         webSettings.setDisplayZoomControls(false);
         webSettings.setJavaScriptEnabled(true);
 
-        mCertificateVerifier.loadCertificate(mCertUuid)
+        mCertificateManager.loadCertificateFromFileSystem(mCertUuid)
                 .compose(bindToMainThread())
                 .subscribe(certificate -> {
                     String html = displayHTML(certificate);
