@@ -25,6 +25,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Objects;
 import java.util.NoSuchElementException;
 
 import okhttp3.ResponseBody;
@@ -93,6 +94,15 @@ public class CertificateManager {
         try (FileInputStream inputStream = new FileInputStream(file)) {
             BlockCertParser blockCertParser = new BlockCertParser();
             BlockCert blockCert = blockCertParser.fromJson(inputStream);
+            if (!Objects.equals(certificateUuid, blockCert.getCertUid())) {
+                Timber.i("Certificate id mismatch due to error in legacy implementation");
+                // update filename
+                Timber.i("Renaming certificate");
+                FileUtils.renameCertificateFile(mContext, certificateUuid, blockCert.getCertUid());
+                // update id in db
+                Timber.i("Updating id of certificate in database");
+                mCertificateStore.updateCertificateIdFromLegacy(certificateUuid, blockCert.getCertUid());
+            }
             return Observable.just(blockCert);
         } catch (IOException | NoSuchElementException e) {
             Timber.e(e, "Could not read certificate file");

@@ -75,10 +75,6 @@ public class CertificateFragment extends LMFragment {
         Injector.obtain(getContext())
                 .inject(this);
         mCertUuid = getArguments().getString(ARG_CERTIFICATE_UUID);
-        mIssuerManager.certificateViewed(mCertUuid)
-                .compose(bindToMainThread())
-                .subscribe(aVoid -> Timber.d("Issuer analytics: Certificate viewed"),
-                        throwable -> Timber.e(throwable, "Issuer has no analytics url."));
     }
 
     @Nullable
@@ -206,9 +202,15 @@ public class CertificateFragment extends LMFragment {
         mCertificateManager.loadCertificateFromFileSystem(mCertUuid)
                 .compose(bindToMainThread())
                 .subscribe(certificate -> {
+                    // potentially the id has been rewritten as initial v20 implementation stored the wrong id
+                    mCertUuid = certificate.getCertUid();
                     String html = displayHTML(certificate);
                     String encodedHtml = Base64.encodeToString(html.getBytes(), Base64.NO_PADDING);
                     mBinding.webView.loadData(encodedHtml, "text/html; charset=UTF-8", "base64");
+                    mIssuerManager.certificateViewed(mCertUuid)
+                            .compose(bindToMainThread())
+                            .subscribe(aVoid -> Timber.d("Issuer analytics: Certificate viewed"),
+                                    throwable -> Timber.e(throwable, "Issuer has no analytics url."));
                 }, throwable -> {
                     Timber.e(throwable, "Could not setup webview.");
 
@@ -241,8 +243,7 @@ public class CertificateFragment extends LMFragment {
     }
 
     private void shareCertificate() {
-        String certUuid = getArguments().getString(ARG_CERTIFICATE_UUID);
-        mCertificateManager.getCertificate(certUuid)
+        mCertificateManager.getCertificate(mCertUuid)
                 .compose(bindToMainThread())
                 .subscribe(certificateRecord -> {
                     if (certificateRecord.urlStringContainsUrl()) {
