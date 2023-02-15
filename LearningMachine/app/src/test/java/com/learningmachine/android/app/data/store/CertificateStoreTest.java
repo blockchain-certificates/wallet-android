@@ -15,7 +15,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
-import org.robolectric.annotation.Config;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -25,7 +24,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(RobolectricTestRunner.class)
-@Config(constants = BuildConfig.class, sdk = 27)
 public class CertificateStoreTest {
 
     private CertificateStore mCertificateStore;
@@ -65,6 +63,7 @@ public class CertificateStoreTest {
 
     @Test
     public void testCertV20_id_and_url_distinction() {
+        // this test is modified, we only want to rely on the cert id and not the badge id
         BlockCertV20 blockCert = new BlockCertV20();
         String certId = "https://certificates.learningmachine.com/certificate/43b0224572a7541693999fd441077c68";
         blockCert.setId(certId);
@@ -81,9 +80,9 @@ public class CertificateStoreTest {
         blockCert.setIssuedOn("2017-05-11T18:28:27.415+00:00");
 
         mCertificateStore.saveBlockchainCertificate(blockCert);
-        CertificateRecord certificateRecord = mCertificateStore.loadCertificate(certUuid);
+        CertificateRecord certificateRecord = mCertificateStore.loadCertificate(certId);
 
-        assertNotNull("Should be able to load the certificate by UUID", certificateRecord);
+        assertNotNull("Should be able to load the certificate by Id", certificateRecord);
         assertTrue(certificateRecord.urlStringContainsUrl());
     }
 }

@@ -99,6 +99,17 @@ public class CertificateStore implements DataStore {
         }
     }
 
+    public void updateCertificateIdFromLegacy(String oldId, String newId) {
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(LMDatabaseHelper.Column.Certificate.UUID, newId);
+
+        mDatabase.update(LMDatabaseHelper.Table.CERTIFICATE,
+                contentValues,
+                LMDatabaseHelper.Column.Certificate.UUID + " = ? ",
+                new String[] { oldId });
+    }
+
     public boolean deleteCertificate(String uuid) {
         // the delete operation should remove 1 row from the table
         return 1 == mDatabase.delete(LMDatabaseHelper.Table.CERTIFICATE,

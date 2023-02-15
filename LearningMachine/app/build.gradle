@@ -10,13 +10,13 @@ android {
         applicationId "com.learningmachine.android.app"
         minSdkVersion 19
         targetSdkVersion 30
-        versionName "3.1.9"
+        versionName "3.1.10"
         def buildNumber = System.getenv("BUILD_NUMBER")
         if (buildNumber != null) {
             versionCode buildNumber.toInteger()
             versionNameSuffix "-" + buildNumber
         } else {
-            versionCode 56
+            versionCode 57
         }
 
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
@@ -135,7 +135,7 @@ final ESPRESSO_VERSION = '3.0.1'
 // test
 final JUNIT_VERSION = '4.12'
 final MOCKITO_VERSION = '2.2.11'
-final ROBOLECTRIC_VERSION = '3.8'
+final ROBOLECTRIC_VERSION = '4.4'
 final JODATIME_VERSION = '2.8.1'
 
 // These must be forced until everyone gets on the same page
@@ -202,6 +202,7 @@ dependencies {
     androidTestImplementation('androidx.test.ext:junit:1.1.1')
 
     testImplementation "junit:junit:$JUNIT_VERSION"
+    testImplementation "org.hamcrest:hamcrest:2.2"
     testImplementation "org.mockito:mockito-core:$MOCKITO_VERSION"
     testImplementation "org.robolectric:robolectric:$ROBOLECTRIC_VERSION"
     testImplementation "org.robolectric:shadows-multidex:$ROBOLECTRIC_VERSION"
