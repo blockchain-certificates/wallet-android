@@ -24,6 +24,12 @@ Gradle allows us to define different product variants. Each has a separate app i
 
 At the time of writing it seems Robolectric is not compatible with JDK > 13 (https://github.com/robolectric/robolectric/issues/5863)
 
+## Building APKs
+
+`sh scripts/GenerateReleaseBuild.command`
+Answer the prompts as they come. Store password and Key password should be the same as per https://stackoverflow.com/questions/66621669/warning-different-store-and-key-passwords-not-supported-for-pkcs12-keystores-i#comment126692841_67508240
+Blockcerts team members password is stored in regular password manager.
+
 ## Glossary
 
 ## Conventions
