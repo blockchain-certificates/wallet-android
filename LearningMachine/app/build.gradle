@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 33
     buildToolsVersion '30.0.3'
     dexOptions {
         javaMaxHeapSize "4g"
@@ -9,7 +9,7 @@ android {
     defaultConfig {
         applicationId "com.learningmachine.android.app"
         minSdkVersion 19
-        targetSdkVersion 30
+        targetSdkVersion 33
         versionName "3.1.10"
         def buildNumber = System.getenv("BUILD_NUMBER")
         if (buildNumber != null) {
@@ -32,7 +32,7 @@ android {
         LearningMachineRelease {
             keyAlias System.getenv("SIGNING_KEY_ALIAS")
             keyPassword System.getenv("SIGNING_KEY_PASSWORD")
-            storeFile file('../../keys/blockcerts.jks')
+            storeFile file('../../keys/learning-machine.jks')
             storePassword System.getenv("SIGNING_STORE_PASSWORD")
         }
     }
