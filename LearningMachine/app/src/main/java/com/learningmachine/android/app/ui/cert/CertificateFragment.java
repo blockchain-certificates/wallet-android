@@ -24,7 +24,6 @@ import android.widget.TextView;
 
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.CertificateManager;
-import com.learningmachine.android.app.data.CertificateVerifier;
 import com.learningmachine.android.app.data.IssuerManager;
 import com.learningmachine.android.app.data.cert.BlockCert;
 import com.learningmachine.android.app.data.cert.v20.BlockCertV20;
@@ -55,8 +54,6 @@ public class CertificateFragment extends LMFragment {
     protected CertificateManager mCertificateManager;
     @Inject
     protected IssuerManager mIssuerManager;
-    @Inject
-    protected CertificateVerifier mCertificateVerifier;
 
     private FragmentCertificateBinding mBinding;
     private String mCertUuid;
@@ -78,10 +75,6 @@ public class CertificateFragment extends LMFragment {
         Injector.obtain(getContext())
                 .inject(this);
         mCertUuid = getArguments().getString(ARG_CERTIFICATE_UUID);
-        mIssuerManager.certificateViewed(mCertUuid)
-                .compose(bindToMainThread())
-                .subscribe(aVoid -> Timber.d("Issuer analytics: Certificate viewed"),
-                        throwable -> Timber.e(throwable, "Issuer has no analytics url."));
     }
 
     @Nullable
@@ -201,12 +194,18 @@ public class CertificateFragment extends LMFragment {
         webSettings.setDisplayZoomControls(false);
         webSettings.setJavaScriptEnabled(true);
 
-        mCertificateVerifier.loadCertificate(mCertUuid)
+        mCertificateManager.loadCertificateFromFileSystem(mCertUuid)
                 .compose(bindToMainThread())
                 .subscribe(certificate -> {
+                    // potentially the id has been rewritten as initial v20 implementation stored the wrong id
+                    mCertUuid = certificate.getCertUid();
                     String html = displayHTML(certificate);
                     String encodedHtml = Base64.encodeToString(html.getBytes(), Base64.NO_PADDING);
                     mBinding.webView.loadData(encodedHtml, "text/html; charset=UTF-8", "base64");
+                    mIssuerManager.certificateViewed(mCertUuid)
+                            .compose(bindToMainThread())
+                            .subscribe(aVoid -> Timber.d("Issuer analytics: Certificate viewed"),
+                                    throwable -> Timber.e(throwable, "Issuer has no analytics url."));
                 }, throwable -> {
                     Timber.e(throwable, "Could not setup webview.");
 
@@ -239,8 +238,7 @@ public class CertificateFragment extends LMFragment {
     }
 
     private void shareCertificate() {
-        String certUuid = getArguments().getString(ARG_CERTIFICATE_UUID);
-        mCertificateManager.getCertificate(certUuid)
+        mCertificateManager.getCertificate(mCertUuid)
                 .compose(bindToMainThread())
                 .subscribe(certificateRecord -> {
                     if (certificateRecord.urlStringContainsUrl()) {
@@ -342,6 +340,10 @@ public class CertificateFragment extends LMFragment {
 
     private void verifyCertificate() {
         Timber.i("User tapped verify on this certificate");
+        mIssuerManager.certificateVerified(mCertUuid)
+                .compose(bindToMainThread())
+                .subscribe(aVoid -> Timber.d("Issuer analytics: Certificate verified"),
+                        throwable -> Timber.e(throwable, "Issuer has no analytics url."));
         Intent certificateActivity = VerifyCertificateActivity.newIntent(getContext(), mCertUuid);
         startActivity(certificateActivity);
     }

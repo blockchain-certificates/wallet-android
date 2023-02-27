@@ -37,16 +37,7 @@ public class BlockCertV20 extends CertSchemaV20 implements BlockCert {
 
     @Override
     public String getCertUid() {
-        if (getBadge() == null
-                || getBadge().getId() == null) {
-            return null;
-        }
-        String idString = getBadge().getId()
-                .toString();
-        if (idString.startsWith(URN_PREFIX)) {
-            idString = idString.substring(URN_PREFIX.length());
-        }
-        return idString;
+        return getId();
     }
 
     @Override

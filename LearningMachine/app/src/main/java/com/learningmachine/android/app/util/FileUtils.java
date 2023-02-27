@@ -14,6 +14,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.io.UnsupportedEncodingException;
+import com.learningmachine.android.app.util.StringUtils;
 
 import okio.Buffer;
 import timber.log.Timber;
@@ -74,8 +78,21 @@ public class FileUtils {
 
     private static File getCertificateFile(Context context, String uuid, boolean createDir) {
         File certDir = getCertificateDirectory(context, createDir);
+        if (StringUtils.isWebUrl(uuid)) {
+            Timber.i("uuid " + uuid + " is a url, rewriting to " +  encodeURLValue(uuid));
+            uuid = encodeURLValue(uuid);
+        }
         String filename = uuid + JSON_EXT;
+        Timber.i("Getting file name " + filename + " at directory " + certDir + " from uuid " + uuid);
         return new File(certDir, filename);
+    }
+
+    private static String encodeURLValue(String value) {
+        try {
+            return URLEncoder.encode(value, StandardCharsets.UTF_8.toString());
+        } catch (UnsupportedEncodingException ex) {
+            throw new RuntimeException(ex.getCause());
+        }
     }
 
     private static File getCertificateDirectory(Context context, boolean createDir) {

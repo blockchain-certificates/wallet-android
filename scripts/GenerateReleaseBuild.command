@@ -1,11 +1,8 @@
 #!/bin/sh
 
-# set the directory to the dir in which this script resides
-newPath=`echo $0 | awk '{split($0, a, ";"); split(a[1], b, "/"); for(x = 2; x < length(b); x++){printf("/%s", b[x]);} print "";}'`
-cd "$newPath/../LearningMachine/"
+cd "./LearningMachine/"
 
-
-echo "version code (11):"
+echo "version code (match versionCode in build.gradle):"
 read versioncode
 
 echo "key password:"
@@ -27,4 +24,4 @@ open ./app/build/outputs/apk/production/release/
 
 #apksigner sign --ks my-release-key.jks --out my-app-release.apk my-app-unsigned-aligned.apk
 
-#jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore ../keys/learning-machine.jks  ./app/production/release/productionRelease-1.1.0.apk alias_name.
+#jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore ../keys/blockcerts.jks  ./app/production/release/productionRelease-1.1.0.apk alias_name.

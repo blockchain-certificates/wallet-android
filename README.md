@@ -18,6 +18,18 @@ Gradle allows us to define different product variants. Each has a separate app i
   * App id: `com.learningmachine.android.app`
   * Dimension: `env`
 
+## Running Tests
+
+`sh scripts/run_tests.sh`
+
+At the time of writing it seems Robolectric is not compatible with JDK > 13 (https://github.com/robolectric/robolectric/issues/5863)
+
+## Building APKs
+
+`sh scripts/GenerateReleaseBuild.command`
+Answer the prompts as they come.
+Blockcerts team members: password is stored in regular password manager.
+
 ## Glossary
 
 ## Conventions
