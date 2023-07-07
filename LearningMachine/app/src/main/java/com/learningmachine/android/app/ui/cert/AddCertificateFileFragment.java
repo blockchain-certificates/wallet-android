@@ -105,10 +105,12 @@ public class AddCertificateFileFragment extends LMFragment {
 
 
     private final View.OnClickListener mOnClickListener = v -> {
+        String readPermission = android.os.Build.VERSION.SDK_INT >= 33 ? Manifest.permission.READ_MEDIA_IMAGES : Manifest.permission.READ_EXTERNAL_STORAGE;
+
         if (ContextCompat.checkSelfPermission(getContext(),
-                Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                readPermission) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(),
-                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    new String[]{readPermission},
                     REQUEST_READ_STORAGE);
             Timber.d("Requesting external storage read permission");
             return;
