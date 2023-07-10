@@ -3,7 +3,7 @@
 # tl;dr - currently there isn't an android image build for Ubuntu 14.04 or later
 # workaround - install everything from scratch using a minimal system
 # example - https://travis-ci.com/G00fY2/android-ci-testproject/jobs/187085499/config
-dist: xenial
+dist: focal
 language: android
 jdk:
   - oraclejdk11
