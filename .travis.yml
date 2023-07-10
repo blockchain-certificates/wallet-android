@@ -3,7 +3,7 @@
 # tl;dr - currently there isn't an android image build for Ubuntu 14.04 or later
 # workaround - install everything from scratch using a minimal system
 # example - https://travis-ci.com/G00fY2/android-ci-testproject/jobs/187085499/config
-dist: focal
+dist: xenial
 language: android
 jdk:
   - oraclejdk11
@@ -29,9 +29,19 @@ android:
     - extra-android-m2repository
     # Emulator ABIs for testing
     # - sys-img-armeabi-v7a-android-25
+env:
+  global:
+    - TARGET_VERSION=33
+    - ANDROID_BUILD_TOOLS_VERSION=33.0.0
+    - ANDROID_HOME=~/android-sdk
 git:
     submodules: false
 before_install:
+    - touch $HOME/.android/repositories.cfg
+    - wget "https://dl.google.com/android/repository/commandlinetools-linux-7302050_latest.zip" -O commandlinetools.zip
+    - unzip commandlinetools.zip -d $ANDROID_HOME/
+    - yes | $ANDROID_HOME/cmdline-tools/bin/sdkmanager "platforms;android-${TARGET_VERSION}" --sdk_root=$ANDROID_HOME
+    - yes | $ANDROID_HOME/cmdline-tools/bin/sdkmanager "build-tools;${ANDROID_BUILD_TOOLS_VERSION}" --sdk_root=$ANDROID_HOME
     # Install git submodules via https
     - sed --in-place -e "s/git@github.com:/https:\/\/github.com\//" ".gitmodules"
     - git submodule update --init --recursive
