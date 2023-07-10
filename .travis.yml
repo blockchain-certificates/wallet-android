@@ -40,7 +40,7 @@ before_install:
     - touch $HOME/.android/repositories.cfg
     - wget "https://dl.google.com/android/repository/commandlinetools-linux-7302050_latest.zip" -O commandlinetools.zip
     - unzip commandlinetools.zip -d $ANDROID_HOME/
-    - yes | $ANDROID_HOME/cmdline-tools/bin/sdkmanager "platforms;android-33" --sdk_root=$ANDROID_HOME
+    - yes | $ANDROID_HOME/cmdline-tools/bin/sdkmanager "platforms;android-${TARGET_VERSION}" --sdk_root=$ANDROID_HOME
     - yes | $ANDROID_HOME/cmdline-tools/bin/sdkmanager "build-tools;${ANDROID_BUILD_TOOLS_VERSION}" --sdk_root=$ANDROID_HOME
     # Install git submodules via https
     - sed --in-place -e "s/git@github.com:/https:\/\/github.com\//" ".gitmodules"
@@ -77,10 +77,6 @@ before_script:
     # - sleep 30
     # - adb shell input keyevent 82 &
     # - sleep 15
-    
-env:
-    global:
-        - BUILD_NUMBER=$TRAVIS_BUILD_NUMBER
 
 jobs:
     include:
