@@ -21,8 +21,7 @@ android:
     # The BuildTools version used by your project
     - build-tools-28.0.3
     # The SDK version used to compile your project
-    - android-27
-    - android-28
+    - android-33
     - tools # Update SDK Tools to 25.2.5
     # Additional components
     - extra-android-support
