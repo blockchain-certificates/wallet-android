@@ -60,7 +60,7 @@
     <string name="fragment_issuer_info_shared_address">Dirección compartida</string>
     <string name="fragment_issuer_info_description">Descripción</string>
     <!-- Verification -->
-    <string name="fragment_verify_cert_chain_format" formatted="true">Verificando la credencial %1$s…</string>
+    <string name="fragment_verify_cert_chain_format" formatted="true">Verificando la credencial…</string>
     <string name="verification_header">Verificación</string>
     <string name="error_no_internet_title">Error de conexión de la red</string>
     <string name="error_no_internet_message">Verifique su conexión de internet e intente nuevamente.</string>

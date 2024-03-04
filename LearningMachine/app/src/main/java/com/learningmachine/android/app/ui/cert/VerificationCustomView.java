@@ -58,12 +58,13 @@ public class VerificationCustomView extends LinearLayout {
         mStatusQueue = new LinkedList<>();
         mIsAnimating = false;
         for (int i = 0; i < verificationSteps.length; i++) {
+            boolean isLast = i == verificationSteps.length-1;
             VerificationSteps verificationStep = verificationSteps[i];
             VerificationCustomItem verificationCustomItem = new VerificationCustomItem(getContext());
             verificationCustomItem.setItemTitle(verificationStep.label);
             verificationCustomItem.setTag(verificationStep.code);
             verificationCustomItem.setIsFirstItem(i == 0);
-            verificationCustomItem.setIsLastItem(i == verificationSteps.length-1);
+            verificationCustomItem.setIsLastItem(isLast);
             verificationCustomItem.setOnVerificationFinishListener(withError -> {
                 mOnVerificationFinishListener.verificationFinish(withError);
                 //We need to call this to show elements correctly after verification ends.
@@ -71,12 +72,18 @@ public class VerificationCustomView extends LinearLayout {
             });
             addView(verificationCustomItem);
 
-            for (VerificationSteps.SubSteps verificationSubStep :
-                    verificationStep.subSteps) {
-                verificationCustomItem.addSubItem(verificationSubStep.label,
-                        verificationSubStep.code, verificationStep.subSteps.length);
-            }
+            registerSubSteps(verificationStep.subSteps, verificationCustomItem);
 
+            if (verificationStep.suites != null) {
+                for (VerificationSteps.Suites verificationSuite:
+                        verificationStep.suites) {
+                    if (verificationSuite.subSteps.length > 0 && verificationStep.suites.length > 1) {
+                        setSubStepsGroupTitle(verificationSuite.proofType, verificationCustomItem);
+                    }
+                    registerSubSteps(verificationSuite.subSteps, verificationCustomItem);
+                }
+            }
+            verificationCustomItem.finalizeItem();
         }
     }
 
@@ -105,18 +112,24 @@ public class VerificationCustomView extends LinearLayout {
         }
     }
 
-    /**
-     * Coordinates items animations in sequence.
-     * @param status The status to activate a step, with success or failure.
-     */
+    private void registerSubSteps (VerificationSteps.SubSteps[] subStepsList,
+                                  VerificationCustomItem verificationCustomItem) {
+        for (VerificationSteps.SubSteps verificationSubStep: subStepsList) {
+            verificationCustomItem.addSubItem(
+                verificationSubStep.label,
+                verificationSubStep.code
+            );
+        }
+    }
+
+    private void setSubStepsGroupTitle (String title,
+                                  VerificationCustomItem verificationCustomItem) {
+        verificationCustomItem.addGroupTitleItem(title);
+    }
+
     private void animateItem(VerifierStatus status) {
         mIsAnimating = true;
-        VerificationSteps.SubSteps subSteps = getSubStepFromCode(status.code);
-        String parentStep = "";
-        if (subSteps != null) {
-            parentStep = subSteps.parentStep;
-        }
-        VerificationCustomItem itemWithTag = findViewWithTag(parentStep);
+        VerificationCustomItem itemWithTag = findViewWithTag(status.parentStep);
         if (itemWithTag != null) {
             itemWithTag.activateSubItem(status, () -> {
                 if (mStatusQueue.size() == 0) {
@@ -127,23 +140,4 @@ public class VerificationCustomView extends LinearLayout {
             });
         }
     }
-
-    /**
-     * Helper method to get a sub status from code.
-     * @param code The code for the sub status.
-     * @return The sub status.
-     */
-    private VerificationSteps.SubSteps getSubStepFromCode(String code) {
-        for (VerificationSteps step :
-                mVerificationSteps) {
-            for (VerificationSteps.SubSteps subStep:
-                    step.subSteps) {
-                if (subStep.code.equals(code)) {
-                    return subStep;
-                }
-            }
-        }
-        return null;
-    }
-
 }

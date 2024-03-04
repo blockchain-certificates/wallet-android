@@ -7,12 +7,19 @@ public class VerificationSteps {
     public String labelPending;
     public String code;
     public SubSteps[] subSteps;
+    public Suites[] suites;
 
     public class SubSteps {
         public String code;
         public String label;
         public String labelPending;
         public String parentStep;
+        public String status;
+    }
+
+    public class Suites {
+        public String proofType;
+        public SubSteps[] subSteps;
     }
 
     public static VerificationSteps[] getFromString(String verificationSteps) {
