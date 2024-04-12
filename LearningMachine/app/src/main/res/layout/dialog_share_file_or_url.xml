@@ -13,29 +13,19 @@
         <View android:layout_width="match_parent"
             android:layout_height="120dp" />
 
+
+        <!-- SHARE LINK -->
         <Button
             android:id="@+id/dialog_positive_button"
             style="@style/RoundedButton.NoBorder"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="26dp"
             android:importantForAccessibility="no"
             app:layout_constraintBottom_toBottomOf="@+id/horizontal"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-        <Button
-            android:id="@+id/dialog_negative_button"
-            style="@style/RoundedButton.NoBorder"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:importantForAccessibility="no"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/horizontal" />
-
+            app:layout_constraintTop_toTopOf="parent"
+        />
 
         <ImageView
             android:id="@+id/link_icon"
@@ -46,19 +36,34 @@
             app:layout_constraintBottom_toBottomOf="@+id/horizontal"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="@+id/vertical"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+        />
 
         <TextView
             android:id="@+id/link_text"
             style="@style/Text.Body"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="26dp"
             android:text="@string/fragment_certificate_share_url_button_title"
             android:gravity="center_vertical"
             app:layout_constraintBottom_toBottomOf="@+id/horizontal"
             app:layout_constraintLeft_toLeftOf="@+id/vertical"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+        />
+
+
+        <!-- SHARE FILE -->
+        <Button
+            android:id="@+id/dialog_negative_button"
+            style="@style/RoundedButton.NoBorder"
+            android:layout_width="0dp"
+            android:layout_height="26dp"
+            android:importantForAccessibility="no"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dialog_positive_button"
+        />
 
         <ImageView
             android:id="@+id/file_icon"
@@ -66,28 +71,55 @@
             android:layout_height="26dp"
             android:src="@drawable/ic_upload"
             android:importantForAccessibility="no"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="@+id/vertical"
-            app:layout_constraintTop_toTopOf="@+id/horizontal" />
+            app:layout_constraintTop_toBottomOf="@+id/dialog_positive_button"
+        />
 
         <TextView
             android:id="@+id/file_text"
             style="@style/Text.Body"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="26dp"
             android:text="@string/fragment_certificate_share_file_button_title"
             android:gravity="center_vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="@+id/vertical"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/horizontal" />
+            app:layout_constraintTop_toBottomOf="@+id/dialog_positive_button"
+        />
 
 
+        <!-- SELECTIVE DISCLOSURE -->
+        <Button
+            android:id="@+id/dialog_sd_button"
+            style="@style/RoundedButton.NoBorder"
+            android:layout_width="0dp"
+            android:layout_height="26dp"
+            android:importantForAccessibility="no"
+            app:layout_constraintTop_toBottomOf="@+id/dialog_negative_button"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
 
+        <ImageView
+            android:id="@+id/sd_icon"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:src="@drawable/ic_writedown"
+            android:importantForAccessibility="no"
+            app:layout_constraintTop_toBottomOf="@+id/dialog_negative_button"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="@+id/vertical" />
 
-
-
+        <TextView
+            android:id="@+id/sd_text"
+            style="@style/Text.Body"
+            android:layout_width="0dp"
+            android:layout_height="26dp"
+            android:text="@string/fragment_certificate_share_sd_button_title"
+            android:gravity="center_vertical"
+            app:layout_constraintTop_toBottomOf="@+id/dialog_negative_button"
+            app:layout_constraintLeft_toLeftOf="@+id/vertical"
+            app:layout_constraintRight_toRightOf="parent" />
 
 
 

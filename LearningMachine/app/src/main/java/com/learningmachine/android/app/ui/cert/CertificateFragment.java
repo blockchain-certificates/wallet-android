@@ -259,6 +259,7 @@ public class CertificateFragment extends LMFragment {
                 "",
                 "",
                 (btnIdx) -> {
+                    // see codes set at AlertDialogFragment.java:30
                     if ((int) btnIdx == 0) {
                         Timber.i("User chose to share certificate via file");
                         shareCertificateTypeResult(true);
@@ -266,6 +267,9 @@ public class CertificateFragment extends LMFragment {
                     if ((int) btnIdx == 1) {
                         Timber.i("User chose to share the certificate via URL");
                         shareCertificateTypeResult(false);
+                    }
+                    if((int) btnIdx == 2) {
+                        Timber.i("User chose to selectively disclose certifcate before sharing");
                     }
                     return null;
                 },

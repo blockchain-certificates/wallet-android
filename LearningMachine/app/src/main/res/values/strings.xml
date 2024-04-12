@@ -132,6 +132,7 @@
     <string name="fragment_add_certificate_progress_dialog_message">Adding Credential</string>
 
     <!-- Share certificate -->
+    <string name="fragment_certificate_share_sd_button_title">Selectively disclose before share</string>
     <string name="fragment_certificate_share_url_button_title">Share Link</string>
     <string name="fragment_certificate_share_file_button_title">Share File</string>
 

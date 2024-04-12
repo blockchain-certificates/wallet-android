@@ -29,6 +29,7 @@ public class AlertDialogFragment extends DialogFragment {
 
     public static final int RESULT_POSITIVE = 1;
     public static final int RESULT_NEGATIVE = 0;
+    public static final int RESULT_SELECTIVE_DISCLOSURE = 2;
 
     private static final String ARG_BOTTOM = "AlertDialogFragment.BOTTOM";
     private static final String ARG_ICON = "AlertDialogFragment.Icon";
@@ -195,6 +196,7 @@ public class AlertDialogFragment extends DialogFragment {
         mMessageView = (TextView) dialogContent.findViewById(R.id.messageView);
         Button positiveButtonView = (Button) dialogContent.findViewById(R.id.dialog_positive_button);
         Button negativeButtonView = (Button) dialogContent.findViewById(R.id.dialog_negative_button);
+        Button selectiveDisclosureButtonView = (Button) dialogContent.findViewById(R.id.dialog_sd_button);
 
         if (iconView != null) {
             if (dialogIcon > 0) {
@@ -262,6 +264,13 @@ public class AlertDialogFragment extends DialogFragment {
             negativeButtonView.setOnClickListener(view -> {
                 dismiss();
                 onButtonTapped(RESULT_NEGATIVE);
+            });
+        }
+
+        if (selectiveDisclosureButtonView != null) {
+            selectiveDisclosureButtonView.setOnClickListener(view -> {
+                dismiss();
+                onButtonTapped(RESULT_SELECTIVE_DISCLOSURE);
             });
         }
 
