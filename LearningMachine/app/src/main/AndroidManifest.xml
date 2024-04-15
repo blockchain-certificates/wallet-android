@@ -108,6 +108,10 @@
             android:screenOrientation="portrait"
             android:launchMode="singleTask"/>
 
+        <activity android:name=".ui.cert.SelectiveDisclosureCertificateActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"/>
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.learningmachine.android.app.fileprovider"

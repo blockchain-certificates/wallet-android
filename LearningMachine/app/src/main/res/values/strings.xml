@@ -83,6 +83,10 @@
     <string name="fragment_issuer_info_shared_address">Shared Address</string>
     <string name="fragment_issuer_info_description">Description</string>
 
+    <!-- Selective Disclosure -->
+
+    <string name="selective_disclosure_header">Selective Disclosure</string>
+
     <!-- Verification -->
 
     <string name="verification_header">Verification</string>

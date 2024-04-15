@@ -270,6 +270,7 @@ public class CertificateFragment extends LMFragment {
                     }
                     if((int) btnIdx == 2) {
                         Timber.i("User chose to selectively disclose certifcate before sharing");
+                        selectivelyDiscloseCertificate();
                     }
                     return null;
                 },
@@ -350,5 +351,12 @@ public class CertificateFragment extends LMFragment {
                         throwable -> Timber.e(throwable, "Issuer has no analytics url."));
         Intent certificateActivity = VerifyCertificateActivity.newIntent(getContext(), mCertUuid);
         startActivity(certificateActivity);
+    }
+
+
+    private void selectivelyDiscloseCertificate() {
+        Timber.i("User chose to selectively disclose this certificate");
+        Intent certificateSD = SelectiveDisclosureCertificateActivity.newIntent(getContext(), mCertUuid);
+        startActivity(certificateSD);
     }
 }

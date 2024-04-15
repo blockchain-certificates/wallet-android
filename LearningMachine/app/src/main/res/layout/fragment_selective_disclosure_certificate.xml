@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.learningmachine.android.app.ui.cert.SelectiveDisclosureCertificateFragment">
+
+        <WebView
+            android:id="@+id/selective_disclosure_view"
+            android:layout_width="1dp"
+            android:layout_height="1dp"
+            android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/selective_disclosure_status"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/c5"
+            android:fontFamily="@font/opensans_bold"
+            android:gravity="center_vertical"
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/material_sub_title_text_size"
+            tools:text="Choose the information you would like to disclose" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
