@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/selective_disclosure_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="com.learningmachine.android.app.ui.cert.SelectiveDisclosureCertificateFragment">
@@ -23,7 +24,7 @@
             android:paddingEnd="16dp"
             android:paddingStart="16dp"
             android:textAlignment="center"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="@dimen/material_sub_title_text_size"
             tools:text="Choose the information you would like to disclose" />
 

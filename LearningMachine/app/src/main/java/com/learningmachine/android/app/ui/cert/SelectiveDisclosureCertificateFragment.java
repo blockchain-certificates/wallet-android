@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import android.widget.CheckBox;
 
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.cert.v20.Anchor;
@@ -33,6 +35,7 @@ public class SelectiveDisclosureCertificateFragment extends Fragment {
     private FragmentSelectiveDisclosureCertificateBinding mBinding;
     private WeakReference<Activity> mParentActivity;
     private String mChainName;
+    private ConstraintLayout mSelectiveDisclosureLayout;
 
     public static SelectiveDisclosureCertificateFragment newInstance(String certificateUuid) {
 
@@ -63,6 +66,7 @@ public class SelectiveDisclosureCertificateFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_selective_disclosure_certificate, container, false);
+        mSelectiveDisclosureLayout = findViewById(R.id.selective_disclosure_layout);
         return mBinding.getRoot();
     }
 
@@ -100,7 +104,12 @@ public class SelectiveDisclosureCertificateFragment extends Fragment {
                 return;
             }
 
-            
+            String memberValue = memberSplitStrings[1];
+
+            Checkbox checkbox = new Checkbox(getContext());
+            checkbox.setLabel(memberValue);
+
+            mSelectiveDisclosureLayout.addView(checkbox);
         }
     }
 
