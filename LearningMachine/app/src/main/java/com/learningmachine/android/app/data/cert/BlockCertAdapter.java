@@ -84,7 +84,8 @@ public class BlockCertAdapter implements JsonSerializer<BlockCert>, JsonDeserial
             }
             return "v" + version;
         }
-        return "invalid blockcerts version";
+        return "v3";
+//        return "invalid blockcerts version";
     }
 
     private void getStringsFromContextArray (JsonArray array, ArrayList targetArray) {

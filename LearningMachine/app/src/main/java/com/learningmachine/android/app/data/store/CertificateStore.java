@@ -11,6 +11,7 @@ import com.learningmachine.android.app.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import timber.log.Timber;
 
 public class CertificateStore implements DataStore {
 
@@ -87,6 +88,9 @@ public class CertificateStore implements DataStore {
         contentValues.put(LMDatabaseHelper.Column.Certificate.URL, urlString);
         contentValues.put(LMDatabaseHelper.Column.Certificate.EXPIRATION_DATE, expirationDate);
         contentValues.put(LMDatabaseHelper.Column.Certificate.METADATA, metadata);
+
+        Timber.i("Saving certificate with UUID: %s", certUid);
+        Timber.i("contentValues: %s", contentValues.toString());
 
         if (loadCertificate(certUid) == null) {
             mDatabase.insert(LMDatabaseHelper.Table.CERTIFICATE,

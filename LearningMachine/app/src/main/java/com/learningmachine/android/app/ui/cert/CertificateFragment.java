@@ -241,11 +241,12 @@ public class CertificateFragment extends LMFragment {
         mCertificateManager.getCertificate(mCertUuid)
                 .compose(bindToMainThread())
                 .subscribe(certificateRecord -> {
-                    if (certificateRecord.urlStringContainsUrl()) {
-                        showShareTypeDialog();
-                    } else {
-                        shareCertificateTypeResult(true);
-                    }
+                    // commenting as this does not apply with selective disclosure
+//                    if (certificateRecord.urlStringContainsUrl()) {
+                    showShareTypeDialog();
+//                    } else {
+//                        shareCertificateTypeResult(true);
+//                    }
                 }, throwable -> Timber.e(throwable, "Unable to share certificate"));
     }
 

@@ -19,8 +19,11 @@ import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.databinding.FragmentSelectiveDisclosureCertificateBinding;
 import com.learningmachine.android.app.util.DialogUtils;
 import com.learningmachine.android.app.util.FileUtils;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import java.lang.ref.WeakReference;
+import java.util.Set;
 import timber.log.Timber;
 
 public class SelectiveDisclosureCertificateFragment extends Fragment {
@@ -71,12 +74,33 @@ public class SelectiveDisclosureCertificateFragment extends Fragment {
     private String setupSelectiveDisclosureCertificate () {
         try {
             String certificateJSON = FileUtils.getCertificateFileJSON(getContext(), mCertUuid);
-            Timber.i("loaded certificate", certificateJSON);
-            String localJsonPath = getContext().getFilesDir() + "/" + "certificate.json";
-            FileUtils.writeStringToFile(certificateJSON, localJsonPath);
+            Timber.i("loaded certificate for selective disclosure: " + certificateJSON);
+            JsonObject certificate = new Gson().fromJson(certificateJSON, JsonObject.class);
+            JsonObject credentialSubject = certificate.get("credentialSubject").getAsJsonObject();
+            displaySelectiveDisclosureData(credentialSubject, "");
+
             return "";
         } catch (Exception e) {
+            Timber.e(e, "Unable to prepare the certificate selective disclosure system");
             return "Unable to prepare the certificate selective disclosure system<br>"+e.toString();
+        }
+    }
+
+    private void displaySelectiveDisclosureData (JsonObject credentialSubject, String parentLabel) {
+        Timber.i("displaySelectiveDisclosureData: " + credentialSubject.toString());
+        Set members = credentialSubject.entrySet();
+        for (Object member : members) {
+            String[] memberSplitStrings = member.toString().split("=");
+            String memberLabel = memberSplitStrings[0];
+            String jsonPointer = parentLabel != "" ? "/credentialSubject/" + parentLabel + "/" + memberLabel : "/credentialSubject/" + memberLabel;
+            Timber.i("member pointer: " + jsonPointer);
+            if (memberSplitStrings[1].startsWith("{")) {
+                JsonObject memberObject = new Gson().fromJson(memberSplitStrings[1], JsonObject.class);
+                displaySelectiveDisclosureData(memberObject, memberLabel);
+                return;
+            }
+
+            
         }
     }
 
