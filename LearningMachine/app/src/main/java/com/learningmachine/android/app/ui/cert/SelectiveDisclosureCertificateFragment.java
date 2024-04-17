@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.CompoundButton;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 
@@ -28,6 +29,8 @@ import com.google.gson.JsonObject;
 
 import java.lang.ref.WeakReference;
 import java.util.Set;
+import java.util.List;
+import java.util.ArrayList;
 import timber.log.Timber;
 
 public class SelectiveDisclosureCertificateFragment extends Fragment {
@@ -36,7 +39,7 @@ public class SelectiveDisclosureCertificateFragment extends Fragment {
     private String mCertUuid;
     private FragmentSelectiveDisclosureCertificateBinding mBinding;
     private WeakReference<Activity> mParentActivity;
-    private String mChainName;
+    private List<String> mDisclosurePointers = new ArrayList<String>();
 
     public static SelectiveDisclosureCertificateFragment newInstance(String certificateUuid) {
 
@@ -119,6 +122,19 @@ public class SelectiveDisclosureCertificateFragment extends Fragment {
             checkbox.setText(memberValue);
             checkbox.setPadding(20, 0, 0, 0);
             checkbox.setButtonTintList(ColorStateList.valueOf(Color.BLACK));
+
+            checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    String msg = "You have " + (isChecked ? "checked" : "unchecked") + " " + jsonPointer;
+                    if (mDisclosurePointers.contains(jsonPointer)) {
+                        mDisclosurePointers.remove(jsonPointer);
+                    } else {
+                        mDisclosurePointers.add(jsonPointer);
+                    }
+                    Timber.i("Current disclosure pointers: " + mDisclosurePointers.toString());
+                }
+            });
 
             mBinding.selectiveDisclosureLayout.addView(checkbox);
         }
