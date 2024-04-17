@@ -13,6 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.widget.CheckBox;
+import android.widget.TextView;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.cert.v20.Anchor;
@@ -108,8 +111,14 @@ public class SelectiveDisclosureCertificateFragment extends Fragment {
 
             String memberValue = memberSplitStrings[1];
 
+            TextView textView = new TextView(getContext());
+            textView.setText(memberLabel);
+            mBinding.selectiveDisclosureLayout.addView(textView);
+
             CheckBox checkbox = new CheckBox(getContext());
             checkbox.setText(memberValue);
+            checkbox.setPadding(20, 0, 0, 0);
+            checkbox.setButtonTintList(ColorStateList.valueOf(Color.BLACK));
 
             mBinding.selectiveDisclosureLayout.addView(checkbox);
         }

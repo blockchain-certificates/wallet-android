@@ -86,6 +86,7 @@
     <!-- Selective Disclosure -->
 
     <string name="selective_disclosure_header">Selective Disclosure</string>
+    <string name="selective_disclosure_instruction">Choose the information you would like to disclose</string>
 
     <!-- Verification -->
 
