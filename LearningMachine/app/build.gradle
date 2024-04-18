@@ -188,6 +188,8 @@ dependencies {
     implementation "nl.littlerobots.rxlint:rxlint:$RXLINT_VERSION"
     implementation "com.squareup.picasso:picasso:$PICASSO_VERSION"
     implementation "com.google.guava:guava:$GUAVA_VERSION"
+    implementation "com.apicatalog:iron-verifiable-credentials-jre8:0.14.0"
+    implementation "com.apicatalog:iron-ecdsa-sd-2023-jre8:0.14.0"
 
     implementation 'com.google.android.exoplayer:exoplayer:2.8.4'
 
