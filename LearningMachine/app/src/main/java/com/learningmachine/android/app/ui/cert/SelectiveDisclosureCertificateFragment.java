@@ -33,6 +33,10 @@ import java.util.List;
 import java.util.ArrayList;
 import timber.log.Timber;
 
+// TODO: move this away from the view
+import com.apicatalog.ld.signature.ecdsa.sd;
+import com.apicatalog.vc.holder.Holder;
+
 public class SelectiveDisclosureCertificateFragment extends Fragment {
     private static final String ARG_CERTIFICATE_UUID = "SelectiveDisclosureCertificateFragment.CertificateUuid";
 
@@ -40,6 +44,7 @@ public class SelectiveDisclosureCertificateFragment extends Fragment {
     private FragmentSelectiveDisclosureCertificateBinding mBinding;
     private WeakReference<Activity> mParentActivity;
     private List<String> mDisclosurePointers = new ArrayList<String>();
+    private JsonObject mCertificate;
 
     public static SelectiveDisclosureCertificateFragment newInstance(String certificateUuid) {
 
@@ -88,6 +93,7 @@ public class SelectiveDisclosureCertificateFragment extends Fragment {
             String certificateJSON = FileUtils.getCertificateFileJSON(getContext(), mCertUuid);
             Timber.i("loaded certificate for selective disclosure: " + certificateJSON);
             JsonObject certificate = new Gson().fromJson(certificateJSON, JsonObject.class);
+            mCertificate = certificate;
             JsonObject credentialSubject = certificate.get("credentialSubject").getAsJsonObject();
             displaySelectiveDisclosureData(credentialSubject, "");
 
@@ -131,6 +137,10 @@ public class SelectiveDisclosureCertificateFragment extends Fragment {
                         mDisclosurePointers.remove(jsonPointer);
                     } else {
                         mDisclosurePointers.add(jsonPointer);
+                        // POC try to derive early
+                        final Holder HOLDER = Holder.with(new ECDSASelective2023());
+                        JsonObject derived = HOLDER.derive(mCertificate, mDisclosurePointers).compacted();
+                        Timber.i("Derived: " + derived.toString());
                     }
                     Timber.i("Current disclosure pointers: " + mDisclosurePointers.toString());
                 }
