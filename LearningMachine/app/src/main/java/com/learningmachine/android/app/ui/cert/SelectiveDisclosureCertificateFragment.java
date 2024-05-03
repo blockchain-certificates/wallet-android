@@ -24,18 +24,25 @@ import com.learningmachine.android.app.data.inject.Injector;
 import com.learningmachine.android.app.databinding.FragmentSelectiveDisclosureCertificateBinding;
 import com.learningmachine.android.app.util.DialogUtils;
 import com.learningmachine.android.app.util.FileUtils;
+import com.learningmachine.android.app.data.url.loader.StaticContextLoader;
+import com.apicatalog.jsonld.loader.DocumentLoader;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import java.lang.ref.WeakReference;
 import java.util.Set;
-import java.util.List;
+import java.util.Collection;
 import java.util.ArrayList;
 import timber.log.Timber;
+import java.io.StringReader;
 
 // TODO: move this away from the view
-import com.apicatalog.ld.signature.ecdsa.sd;
-import com.apicatalog.vc.holder.Holder;
+import com.learningmachine.android.app.data.cert.SelectiveDisclosureHolder;
+import com.apicatalog.ld.signature.ecdsa.sd.ECDSASelective2023;
+import com.apicatalog.ld.signature.SigningError;
+import com.apicatalog.ld.DocumentError;
+import jakarta.json.Json;
+import jakarta.json.JsonReader;
 
 public class SelectiveDisclosureCertificateFragment extends Fragment {
     private static final String ARG_CERTIFICATE_UUID = "SelectiveDisclosureCertificateFragment.CertificateUuid";
@@ -43,7 +50,7 @@ public class SelectiveDisclosureCertificateFragment extends Fragment {
     private String mCertUuid;
     private FragmentSelectiveDisclosureCertificateBinding mBinding;
     private WeakReference<Activity> mParentActivity;
-    private List<String> mDisclosurePointers = new ArrayList<String>();
+    private Collection<String> mDisclosurePointers = new ArrayList<String>();
     private JsonObject mCertificate;
 
     public static SelectiveDisclosureCertificateFragment newInstance(String certificateUuid) {
@@ -81,6 +88,7 @@ public class SelectiveDisclosureCertificateFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setupSelectiveDisclosureCertificate();
+        showDoneButton();
     }
 
     @Override
@@ -137,10 +145,6 @@ public class SelectiveDisclosureCertificateFragment extends Fragment {
                         mDisclosurePointers.remove(jsonPointer);
                     } else {
                         mDisclosurePointers.add(jsonPointer);
-                        // POC try to derive early
-                        final Holder HOLDER = Holder.with(new ECDSASelective2023());
-                        JsonObject derived = HOLDER.derive(mCertificate, mDisclosurePointers).compacted();
-                        Timber.i("Derived: " + derived.toString());
                     }
                     Timber.i("Current disclosure pointers: " + mDisclosurePointers.toString());
                 }
@@ -150,62 +154,35 @@ public class SelectiveDisclosureCertificateFragment extends Fragment {
         }
     }
 
-//    private void setupStatus(VerificationSteps[] verificationSteps) {
-//        if (!isValidFragmentInstance()) {
-//            return;
-//        }
-//        mParentActivity.get().runOnUiThread(() -> {
-//            showVerificationStartedStatus();
-//            mBinding.statusView.setOnVerificationFinishListener(withError -> {
-//                showDoneButton();
-//                mBinding.statusViewScrollContainer.fullScroll(View.FOCUS_DOWN);
-//                if (withError) {
-//                    showVerificationErrorStatus();
-//                } else {
-//                    showVerificationSuccessStatus(mChainName);
-//                }
-//            });
-//            mBinding.statusView.addVerificationSteps(verificationSteps);
-//        });
-//    }
-//
-//    private boolean isValidFragmentInstance() {
-//        return isAdded() && mParentActivity.get() != null && !mParentActivity.get().isFinishing();
-//    }
-//
-//    private void showVerificationStartedStatus() {
-//        String status = getString(R.string.fragment_verify_cert_chain_format);
-//        mBinding.verificationStatus.setText(status);
-//    }
-//
-//    private void showVerificationSuccessStatus(String chainName) {
-//        String status = getSuccessStatusString(chainName);
-//        mBinding.verificationStatus.setText(status);
-//        mBinding.verificationStatus.setTextColor(getResources().getColor(R.color.c3));
-//        mBinding.verificationStatus.setBackgroundColor(getResources().getColor(R.color.c14));
-//    }
-//
-//    private void showVerificationErrorStatus() {
-//        String status = getString(R.string.error_verification);
-//        mBinding.verificationStatus.setText(status);
-//        mBinding.verificationStatus.setTextColor(getResources().getColor(R.color.c9));
-//        mBinding.verificationStatus.setBackgroundColor(getResources().getColor(R.color.c15));
-//    }
-//
-//    private void showDoneButton() {
-//        mBinding.doneVerification.setVisibility(View.VISIBLE);
-//        mBinding.doneVerification.setEnabled(true);
-//        mBinding.doneVerification.setOnClickListener(v -> mParentActivity.get().finish());
-//    }
-//
-//    private void showVerificationFailureDialog(String error, String title) {
-//        DialogUtils.showAlertDialog(getContext(), this,
-//                R.drawable.ic_dialog_failure,
-//                title,
-//                error,
-//                null,
-//                getResources().getString(R.string.ok_button),
-//                (btnIdx) -> null);
-//    }
+    private void showDoneButton() {
+        mBinding.doneSelection.setOnClickListener(v -> {
+            Timber.i("Done button tapped");
+            if (mDisclosurePointers.size() == 0) {
+                DialogUtils.showAlertDialog(getContext(), this,
+                        R.drawable.ic_dialog_failure,
+                        "No data selected",
+                        "Please select at least one data point to disclose",
+                        null,
+                        getResources().getString(R.string.ok_button),
+                        (btnIdx) -> null);
+                return;
+            }
+            Timber.i("Disclosure pointers: " + mDisclosurePointers.toString());
+
+            final SelectiveDisclosureHolder HOLDER = new SelectiveDisclosureHolder(new ECDSASelective2023());
+            // convert Gson.JsonObject to Jakarta.JsonObject
+            JsonReader reader = Json.createReader(new StringReader(mCertificate.toString()));
+            jakarta.json.JsonObject certificateAsJakartaJson = reader.readObject();
+            try {
+                DocumentLoader defaultLoader = (DocumentLoader) new StaticContextLoader();
+                Timber.i("attempting to derive the certificate " + certificateAsJakartaJson.toString());
+                Timber.i("with pointers " + mDisclosurePointers.toString());
+                jakarta.json.JsonObject derived = HOLDER.deriveWithLoader(certificateAsJakartaJson, mDisclosurePointers, defaultLoader).compacted();
+                Timber.i("Derived: " + derived.toString());
+            } catch (SigningError | DocumentError e) {
+                Timber.e(e, "Unable to derive the certificate");
+            }
+        });
+    }
 
 }

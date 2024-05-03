@@ -118,12 +118,10 @@ public class HomeFragment extends LMIssuerBaseFragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.fragment_home_settings_menu_item:
-                Timber.i("Settings button tapped");
-                Intent intent = SettingsActivity.newIntent(getContext());
-                startActivity(intent);
-                break;
+        if (item.getItemId() == R.id.fragment_home_settings_menu_item) {
+            Timber.i("Settings button tapped");
+            Intent intent = SettingsActivity.newIntent(getContext());
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }

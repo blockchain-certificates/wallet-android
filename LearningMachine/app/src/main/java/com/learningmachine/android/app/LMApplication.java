@@ -30,6 +30,7 @@ import timber.log.Timber;
 public class LMApplication extends MultiDexApplication {
 
     protected LMGraph mGraph;
+    private static Context mContext;
 
     @Inject Timber.Tree mTree;
     @Inject SharedPreferencesManager mPreferencesManager;
@@ -39,6 +40,8 @@ public class LMApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        mContext = this;
 
         setupDagger();
         setupTimber();
@@ -56,6 +59,10 @@ public class LMApplication extends MultiDexApplication {
             return mGraph;
         }
         return super.getSystemService(name);
+    }
+
+    public static Context getContext() {
+        return mContext;
     }
 
     private void setupDagger() {

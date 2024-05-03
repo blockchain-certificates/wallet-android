@@ -114,8 +114,10 @@ public class IssuerFragment extends LMFragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
+        final int issuerInfoMenuItemId = 0;
+
         switch (item.getItemId()) {
-            case R.id.fragment_issuer_info_menu_item:
+            case issuerInfoMenuItemId:
                 Timber.i("More info tapped on the Issuer display");
                 Intent intent = IssuerInfoActivity.newIntent(getContext(), mIssuerUuid);
                 startActivity(intent);

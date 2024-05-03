@@ -64,39 +64,39 @@ android {
         dev {
             applicationId "com.learningmachine.android.app.dev"
             dimension "env"
-            if (project.hasProperty("devBuild")) {
-                // don't package all resources for dev builds
-                resConfigs("en", "xxhdpi")
-
-                // avoid legacy multidex
-                minSdkVersion 21
-            }
+//            if (project.hasProperty("devBuild")) {
+//                // don't package all resources for dev builds
+//                resConfigs("en", "xxhdpi")
+//
+//                // avoid legacy multidex
+//                minSdkVersion 21
+//            }
         }
-        staging {
-            applicationId "com.learningmachine.android.app.staging"
-            dimension "env"
-        }
-        production {
-            dimension "env"
-        }
+//        staging {
+//            applicationId "com.learningmachine.android.app.staging"
+//            dimension "env"
+//        }
+//        production {
+//            dimension "env"
+//        }
     }
 
     buildTypes {
-        release {
-//            if (System.getenv("BUILD_NUMBER") == null) {
-//                versionNameSuffix "-nontravis"
+//        release {
+////            if (System.getenv("BUILD_NUMBER") == null) {
+////                versionNameSuffix "-nontravis"
+////            }
+//
+//            applicationVariants.all { variant ->
+//                variant.outputs.all {
+//                    outputFileName = "${variant.name}-${versionName}.apk"
+//                }
 //            }
-
-            applicationVariants.all { variant ->
-                variant.outputs.all {
-                    outputFileName = "${variant.name}-${versionName}.apk"
-                }
-            }
-
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.LearningMachineRelease
-        }
+//
+//            minifyEnabled false
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//            signingConfig signingConfigs.LearningMachineRelease
+//        }
         debug {
             if (System.getenv("BUILD_NUMBER") == null) {
                 versionNameSuffix "-debug"
@@ -154,6 +154,13 @@ configurations.all {
     resolutionStrategy {
         force "com.google.guava:guava:$GUAVA_VERSION"
         force "com.google.code.findbugs:jsr305:$FINDBUGS_VERSION"
+        force "jakarta.json:jakarta.json-api:2.0.1"
+
+        eachDependency { DependencyResolveDetails details ->
+            if (details.requested.group == 'org.glassfish' && details.requested.name == 'jakarta.json') {
+                details.useVersion "2.0.1"
+            }
+        }
     }
 }
 
@@ -192,7 +199,9 @@ dependencies {
     implementation "com.google.guava:guava:$GUAVA_VERSION"
     implementation "com.apicatalog:iron-verifiable-credentials-jre8:0.14.0"
     implementation "com.apicatalog:iron-ecdsa-sd-2023-jre8:0.14.0"
-
+    implementation "com.apicatalog:titanium-json-ld-jre8:1.4.0"
+    implementation "org.glassfish:jakarta.json:2.0.1"
+    implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
     implementation 'com.google.android.exoplayer:exoplayer:2.8.4'
 
 
