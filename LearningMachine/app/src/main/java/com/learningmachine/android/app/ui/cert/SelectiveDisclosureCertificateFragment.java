@@ -43,6 +43,8 @@ import com.apicatalog.ld.signature.SigningError;
 import com.apicatalog.ld.DocumentError;
 import jakarta.json.Json;
 import jakarta.json.JsonReader;
+import android.os.Looper;
+import java.lang.Runnable;
 
 public class SelectiveDisclosureCertificateFragment extends Fragment {
     private static final String ARG_CERTIFICATE_UUID = "SelectiveDisclosureCertificateFragment.CertificateUuid";
@@ -179,6 +181,14 @@ public class SelectiveDisclosureCertificateFragment extends Fragment {
                 Timber.i("with pointers " + mDisclosurePointers.toString());
                 jakarta.json.JsonObject derived = HOLDER.deriveWithLoader(certificateAsJakartaJson, mDisclosurePointers, defaultLoader).compacted();
                 Timber.i("Derived: " + derived.toString());
+                mBinding.doneSelection.setText("Redacted Certificate Generated!");
+                new android.os.Handler(Looper.getMainLooper()).postDelayed(
+                        new Runnable() {
+                            public void run() {
+                                mBinding.doneSelection.setText("Done");
+                            }
+                        },
+                        1000);
             } catch (SigningError | DocumentError e) {
                 Timber.e(e, "Unable to derive the certificate");
             }

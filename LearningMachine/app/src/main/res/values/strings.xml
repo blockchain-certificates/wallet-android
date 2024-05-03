@@ -148,6 +148,7 @@
     <string name="connection_error_message">Please check your internet connection and try again.</string>
     <string name="error_title_message">Error</string>
     <string name="ime_action_done">Done</string>
+    <string name="button_derive_certificate">Generate redacted certificate</string>
 
     <string name="invalid_issuer_url">This doesn\'t appear to be a valid issuer URL. Please check it and try again.</string>
     <string name="invalid_issuer_nonce">This doesn\'t appear to be a valid one-time use code. Please check it and try again. </string>
