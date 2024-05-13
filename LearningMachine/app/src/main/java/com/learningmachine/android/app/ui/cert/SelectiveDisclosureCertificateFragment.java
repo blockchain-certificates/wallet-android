@@ -6,7 +6,6 @@ import androidx.databinding.DataBindingUtil;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +16,12 @@ import android.widget.TextView;
 import android.widget.CompoundButton;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.util.Pair;
+import androidx.core.content.FileProvider;
+import java.io.File;
+import java.io.IOException;
+import android.net.Uri;
+import android.content.Intent;
 
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.cert.v20.Anchor;
@@ -25,6 +30,11 @@ import com.learningmachine.android.app.databinding.FragmentSelectiveDisclosureCe
 import com.learningmachine.android.app.util.DialogUtils;
 import com.learningmachine.android.app.util.FileUtils;
 import com.learningmachine.android.app.data.url.loader.StaticContextLoader;
+import com.learningmachine.android.app.data.CertificateManager;
+import com.learningmachine.android.app.data.IssuerManager;
+import com.learningmachine.android.app.ui.LMFragment;
+import com.learningmachine.android.app.data.model.IssuerRecord;
+
 import com.apicatalog.jsonld.loader.DocumentLoader;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -35,8 +45,9 @@ import java.util.Collection;
 import java.util.ArrayList;
 import timber.log.Timber;
 import java.io.StringReader;
+import javax.inject.Inject;
+import rx.Observable;
 
-// TODO: move this away from the view
 import com.learningmachine.android.app.data.cert.SelectiveDisclosureHolder;
 import com.apicatalog.ld.signature.ecdsa.sd.ECDSASelective2023;
 import com.apicatalog.ld.signature.SigningError;
@@ -46,14 +57,20 @@ import jakarta.json.JsonReader;
 import android.os.Looper;
 import java.lang.Runnable;
 
-public class SelectiveDisclosureCertificateFragment extends Fragment {
+public class SelectiveDisclosureCertificateFragment extends LMFragment {
     private static final String ARG_CERTIFICATE_UUID = "SelectiveDisclosureCertificateFragment.CertificateUuid";
+    private static final String FILE_PROVIDER_AUTHORITY = "com.learningmachine.android.app.fileprovider";
 
     private String mCertUuid;
     private FragmentSelectiveDisclosureCertificateBinding mBinding;
     private WeakReference<Activity> mParentActivity;
     private Collection<String> mDisclosurePointers = new ArrayList<String>();
     private JsonObject mCertificate;
+
+    @Inject
+    protected CertificateManager mCertificateManager;
+    @Inject
+    protected IssuerManager mIssuerManager;
 
     public static SelectiveDisclosureCertificateFragment newInstance(String certificateUuid) {
 
@@ -185,7 +202,8 @@ public class SelectiveDisclosureCertificateFragment extends Fragment {
                 new android.os.Handler(Looper.getMainLooper()).postDelayed(
                         new Runnable() {
                             public void run() {
-                                mBinding.doneSelection.setText("Done");
+                                mBinding.doneSelection.setText("Share now");
+                                shareRedactedCertificate(derived);
                             }
                         },
                         1000);
@@ -193,6 +211,41 @@ public class SelectiveDisclosureCertificateFragment extends Fragment {
                 Timber.e(e, "Unable to derive the certificate");
             }
         });
+    }
+
+    private void shareRedactedCertificate(jakarta.json.JsonObject redactedCertificate) {
+        mIssuerManager.certificateShared(mCertUuid)
+                .compose(bindToMainThread())
+                .subscribe(aVoid -> Timber.d("Issuer analytics: Certificate shared"),
+                        throwable -> Timber.e(throwable, "Issuer has no analytics url."));
+        Observable.combineLatest(mCertificateManager.getCertificate(mCertUuid),
+                        mIssuerManager.getIssuerForCertificate(mCertUuid),
+                        Pair::new)
+                .compose(bindToMainThread())
+                .subscribe(pair -> {
+
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+
+                    IssuerRecord issuer = pair.second;
+                    String issuerName = issuer.getName();
+//                    File certFile = FileUtils.getCertificateFile(getContext(), mCertUuid);
+                    try {
+                        File certFile = File.createTempFile("redacted_certificate", ".json", getContext().getCacheDir());
+                        FileUtils.appendStringToFile(redactedCertificate.toString(), certFile);
+                        Uri uri = FileProvider.getUriForFile(getContext(), FILE_PROVIDER_AUTHORITY, certFile);
+                        String type = getContext().getContentResolver()
+                                .getType(uri);
+                        intent.setType(type);
+                        intent.putExtra(Intent.EXTRA_STREAM, uri);
+                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                        String sharingText = getString(R.string.fragment_certificate_share_file_format, issuerName);
+
+                        intent.putExtra(Intent.EXTRA_TEXT, sharingText);
+                        startActivity(intent);
+                    } catch (IOException e) {
+                        Timber.e(e, "Unable to share certificate");
+                    }
+                }, throwable -> Timber.e(throwable, "Unable to share certificate"));
     }
 
 }

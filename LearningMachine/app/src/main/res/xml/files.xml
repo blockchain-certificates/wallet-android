@@ -6,4 +6,7 @@
     <files-path
         name="log_files"
         path="./logs/"/>
+    <cache-path
+        name="temp_files"
+        path="/"/>
 </paths>
