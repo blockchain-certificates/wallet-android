@@ -6,7 +6,7 @@
 dist: xenial
 language: android
 jdk:
-  - oraclejdk8
+  - oraclejdk11
 #  Accept all licenses
 # licenses:
 #     - 'android-sdk-preview-license-.+'
@@ -16,23 +16,32 @@ android:
   components:
     # Travis workaround for Android SDK 25 License
     # travis-ci/docs-travis-ci-com#779
-    - tools # Update 24.0.2 to 24.4.1
-    - platform-tools
+    #- tools # Update 24.0.2 to 24.4.1
+    #- platform-tools
     # The BuildTools version used by your project
-    - build-tools-28.0.3
+    #- build-tools-28.0.3
     # The SDK version used to compile your project
-    - android-27
-    - android-28
-    - tools # Update SDK Tools to 25.2.5
+    #- android-33
+    #- tools # Update SDK Tools to 25.2.5
     # Additional components
     - extra-android-support
     - extra-google-m2repository
     - extra-android-m2repository
     # Emulator ABIs for testing
     # - sys-img-armeabi-v7a-android-25
+env:
+  global:
+    - TARGET_VERSION=33
+    - ANDROID_BUILD_TOOLS_VERSION=33.0.0
+    - ANDROID_HOME=~/android-sdk
 git:
     submodules: false
 before_install:
+    - touch $HOME/.android/repositories.cfg
+    - wget "https://dl.google.com/android/repository/commandlinetools-linux-7302050_latest.zip" -O commandlinetools.zip
+    - unzip commandlinetools.zip -d $ANDROID_HOME/
+    - yes | $ANDROID_HOME/cmdline-tools/bin/sdkmanager "platforms;android-${TARGET_VERSION}" --sdk_root=$ANDROID_HOME
+    - yes | $ANDROID_HOME/cmdline-tools/bin/sdkmanager "build-tools;${ANDROID_BUILD_TOOLS_VERSION}" --sdk_root=$ANDROID_HOME
     # Install git submodules via https
     - sed --in-place -e "s/git@github.com:/https:\/\/github.com\//" ".gitmodules"
     - git submodule update --init --recursive
@@ -41,8 +50,7 @@ before_install:
     # - android list targets
     # - sdkmanager --help || true
     # - sdkmanager --verbose --list
-    - yes | sdkmanager "tools" # Update tools from 25.2.5 to current
-    - yes | sdkmanager --licenses
+    # - yes | sdkmanager "tools" # Update tools from 25.2.5 to current
     # - echo no | android create avd --force -n test -t android-25 --abi armeabi-v7a
     # - emulator -avd test -no-audio -no-window &
     # - android-wait-for-emulator
@@ -68,10 +76,6 @@ before_script:
     # - sleep 30
     # - adb shell input keyevent 82 &
     # - sleep 15
-    
-env:
-    global:
-        - BUILD_NUMBER=$TRAVIS_BUILD_NUMBER
 
 jobs:
     include:
