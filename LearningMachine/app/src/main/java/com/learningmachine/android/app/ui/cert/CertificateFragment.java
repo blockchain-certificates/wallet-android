@@ -21,6 +21,8 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
+import android.widget.ImageView;
+import java.lang.reflect.Field;
 
 import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.CertificateManager;
@@ -84,16 +86,15 @@ public class CertificateFragment extends LMFragment {
         setAllItemsChecked();
         mBinding.certBottomNavigation.setOnNavigationItemSelectedListener(item -> {
             setAllItemsChecked();
-            switch (item.getItemId()) {
-                case R.id.fragment_certificate_info_menu_item:
+            if (item.getItemId() == R.id.fragment_certificate_info_menu_item) {
                     Timber.i("More info tapped on the Certificate display");
                     viewCertificateInfo();
                     return true;
-                case R.id.fragment_certificate_verify_menu_item:
+            } else if (item.getItemId() == R.id.fragment_certificate_verify_menu_item) {
                     Timber.i("Verify Certificate tapped on the Certificate display");
                     verifyCertificate();
                     return true;
-                case R.id.fragment_certificate_share_menu_item:
+            } else if (item.getItemId() == R.id.fragment_certificate_share_menu_item) {
                     Timber.i("Share Certificate tapped on the Certificate display");
                     shareCertificate();
                     return true;
@@ -115,14 +116,23 @@ public class CertificateFragment extends LMFragment {
     private void setBottomIconsSize(int size) {
         BottomNavigationMenuView menuView = (BottomNavigationMenuView) mBinding.certBottomNavigation.getChildAt(0);
         for (int i = 0; i < menuView.getChildCount(); i++) {
-            View icon = menuView.getChildAt(i).findViewById(R.id.icon);
-            TextView textView = menuView.getChildAt(i).findViewById(R.id.largeLabel);
-            textView.setTextAppearance(getContext(), R.style.Text_Footer_4);
-            ViewGroup.LayoutParams layoutParams = icon.getLayoutParams();
-            DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
-            layoutParams.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, size, displayMetrics);
-            layoutParams.width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, size, displayMetrics);
-            icon.setLayoutParams(layoutParams);
+            final View menuItem = menuView.getChildAt(i);
+            try {
+                Field iconField = menuItem.getClass().getDeclaredField("icon");
+                iconField.setAccessible(true);
+                ImageView iconView = (ImageView) iconField.get(menuItem);
+                Field textField = menuItem.getClass().getDeclaredField("largeLabel");
+                textField.setAccessible(true);
+                TextView textView = (TextView) textField.get(menuItem);
+                textView.setTextAppearance(getContext(), R.style.Text_Footer_4);
+                ViewGroup.LayoutParams layoutParams = iconView.getLayoutParams();
+                DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+                layoutParams.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, size, displayMetrics);
+                layoutParams.width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, size, displayMetrics);
+                iconView.setLayoutParams(layoutParams);
+            } catch (NoSuchFieldException | IllegalAccessException e) {
+                e.printStackTrace();
+            }
         }
     }
 
