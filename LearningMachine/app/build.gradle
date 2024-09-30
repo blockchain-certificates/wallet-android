@@ -16,7 +16,7 @@ android {
             versionCode buildNumber.toInteger()
             versionNameSuffix "-" + buildNumber
         } else {
-            versionCode 58
+            versionCode 60
         }
 
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
