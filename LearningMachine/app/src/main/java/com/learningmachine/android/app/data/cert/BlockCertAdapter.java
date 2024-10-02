@@ -17,6 +17,8 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.regex.*;
 
+import timber.log.Timber;
+
 public class BlockCertAdapter implements JsonSerializer<BlockCert>, JsonDeserializer<BlockCert> {
     @Override
     public JsonElement serialize(BlockCert src, Type typeOfSrc, JsonSerializationContext context) {
@@ -56,9 +58,11 @@ public class BlockCertAdapter implements JsonSerializer<BlockCert>, JsonDeserial
 
             case "v3":
             case "v3.0":
+            case "v3.1":
                 return BlockCertV30.class;
 
             default:
+                Timber.e(String.format("Unrecognized blockcerts version: %s", version));
                 return null;
         }
     }

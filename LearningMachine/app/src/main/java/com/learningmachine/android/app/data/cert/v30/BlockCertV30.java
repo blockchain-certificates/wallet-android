@@ -29,6 +29,10 @@ public class BlockCertV30 implements BlockCert {
     @Expose
     private JsonObject mCredentialSubject;
 
+    @SerializedName("credentialStatus")
+    @Expose
+    private JsonObject mCredentialStatus;
+
     @SerializedName("issuanceDate")
     @Expose
     private String mIssuanceDate;
