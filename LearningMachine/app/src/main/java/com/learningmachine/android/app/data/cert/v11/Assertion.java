@@ -33,7 +33,7 @@ public class Assertion {
      */
     @SerializedName("issuedOn")
     @Expose
-    private DateTime issuedOn;
+    private String issuedOn;
     /**
      * URI that links to the certificate on the viewer. Default is https://[domain]/[uid]
      * (Required)
@@ -92,7 +92,7 @@ public class Assertion {
      * (Required)
      * 
      */
-    public DateTime getIssuedOn() {
+    public String getIssuedOn() {
         return issuedOn;
     }
 
@@ -101,7 +101,7 @@ public class Assertion {
      * (Required)
      * 
      */
-    public void setIssuedOn(DateTime issuedOn) {
+    public void setIssuedOn(String issuedOn) {
         this.issuedOn = issuedOn;
     }
 

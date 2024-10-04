@@ -89,6 +89,12 @@ public class StringUtils {
                 && Patterns.WEB_URL.matcher(maybeUrl).matches();
     }
 
+    public static boolean isDid (String maybeDid) {
+        final String[] splitDid = maybeDid.split(":", 0);
+        return maybeDid.startsWith("did:")
+                && splitDid.length == 3;
+    }
+
     public static String md5(String string) {
         try {
             MessageDigest messageDigest = MessageDigest.getInstance("MD5");

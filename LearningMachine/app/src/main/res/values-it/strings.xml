@@ -61,7 +61,7 @@
     <string name="fragment_issuer_info_description">Descrizione</string>
     <!-- Verification -->
     <string name="verification_header">Verifica</string>
-    <string name="fragment_verify_cert_chain_format" formatted="true">Verificando la Credenziale %1$s…</string>
+    <string name="fragment_verify_cert_chain_format" formatted="true">Verificando la Credenziale…</string>
     <string name="error_no_internet_title">Errore di connessione di rete</string>
     <string name="error_no_internet_message">Per piacere controlla la tua connessione ad Internet e prova nuovamente.</string>
     <string name="error_no_engine">Impossibile caricare il motore di verifica.</string>

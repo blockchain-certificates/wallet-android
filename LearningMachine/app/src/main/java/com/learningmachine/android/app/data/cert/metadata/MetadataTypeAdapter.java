@@ -31,25 +31,33 @@ public class MetadataTypeAdapter implements JsonDeserializer<Metadata> {
 
     @Override
     public Metadata deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        JsonObject jsonObject = json.getAsJsonObject();
-        List<String> displayOrder = getDisplayOrder(jsonObject);
-        Map<String, JsonObject> groups = getGroups(jsonObject);
-        Map<String, GroupDef> groupDefinitions = getGroupDefinitions(jsonObject, context);
-        List<Field> fields = getFields(displayOrder, groups, groupDefinitions);
+        if (json.isJsonObject()) {
+            JsonObject jsonObject = json.getAsJsonObject();
+            List<String> displayOrder = getDisplayOrder(jsonObject);
+            Map<String, JsonObject> groups = getGroups(jsonObject);
+            Map<String, GroupDef> groupDefinitions = getGroupDefinitions(jsonObject, context);
+            List<Field> fields = getFields(displayOrder, groups, groupDefinitions);
 
-        return new Metadata(displayOrder, groups, groupDefinitions, fields);
+            return new Metadata(displayOrder, groups, groupDefinitions, fields);
+        }
+        return null;
     }
 
     private List<String> getDisplayOrder(JsonObject jsonObject) {
         List<String> displayOrder = new ArrayList<>();
-        for (JsonElement item : jsonObject.get("displayOrder").getAsJsonArray()) {
-            displayOrder.add(item.getAsString());
+        if (jsonObject.get("displayOrder") != null) {
+            for (JsonElement item : jsonObject.get("displayOrder").getAsJsonArray()) {
+                displayOrder.add(item.getAsString());
+            }
         }
         return displayOrder;
     }
 
     private Map<String, GroupDef> getGroupDefinitions(JsonObject jsonObject, JsonDeserializationContext context) {
         Map<String, GroupDef> groupDefinitions = new HashMap<>();
+        if (jsonObject.get("schema") == null) {
+            return groupDefinitions;
+        }
         JsonObject schema = jsonObject.get("schema").getAsJsonObject();
         JsonObject schemaProperties = schema.get("properties").getAsJsonObject();
         for (Map.Entry<String, JsonElement> entry : schemaProperties.entrySet()) {
@@ -76,7 +84,9 @@ public class MetadataTypeAdapter implements JsonDeserializer<Metadata> {
             if (entryKey.equals("schema") || entryKey.equals("displayOrder")) {
                 continue;
             }
-            groups.put(entryKey, entry.getValue().getAsJsonObject());
+            if (entry.getValue().isJsonObject()) {
+                groups.put(entryKey, entry.getValue().getAsJsonObject());
+            }
         }
         return groups;
     }

@@ -87,7 +87,7 @@
 
     <string name="verification_header">Verification</string>
 
-    <string name="fragment_verify_cert_chain_format" formatted="true">Verifying %1$s Credential…</string>
+    <string name="fragment_verify_cert_chain_format" formatted="true">Verifying Credential…</string>
 
 
     <string name="error_no_internet_title">Network Connection Error</string>

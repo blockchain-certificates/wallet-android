@@ -59,7 +59,7 @@
     <string name="fragment_issuer_info_description">説明</string>
     <!-- Verification -->
     <string name="verification_header">確認</string>
-    <string name="fragment_verify_cert_chain_format" formatted="true">%1$s資格証明を確認しています…</string>
+    <string name="fragment_verify_cert_chain_format" formatted="true">資格証明を確認しています…</string>
     <string name="error_no_internet_title">ネットワーク接続エラー</string>
     <string name="error_no_internet_message">ネットワーク接続を確認して、やり直してください。</string>
     <string name="error_no_engine">確認エンジンを読み込めませんでした。</string>

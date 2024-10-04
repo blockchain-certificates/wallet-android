@@ -1,0 +1,51 @@
+{
+  "@context": "https://w3id.org/did-resolution/v1",
+  "didDocument": {
+    "id": "did:ion:EiA_Z6LQILbB2zj_eVrqfQ2xDm4HNqeJUw5Kj2Z7bFOOeQ",
+    "verificationMethod": [
+      {
+        "id": "#key-1",
+        "controller": "did:ion:EiA_Z6LQILbB2zj_eVrqfQ2xDm4HNqeJUw5Kj2Z7bFOOeQ",
+        "type": "EcdsaSecp256k1VerificationKey2019",
+        "publicKeyJwk": {
+          "kty": "EC",
+          "crv": "secp256k1",
+          "x": "6_JKJIXL7PJQT9hnr03yQNda_fUfmfrcZpymkRqsmH4",
+          "y": "steT4D8LrgwmqASd1EMy6ZyyAqsl-KvNlD7rBhX3za8",
+          "kid": "_0qG5QVt8vd6pbVGs5ReFJA4-yvYNEi4Ov1HZHTsobM"
+        }
+      }
+    ],
+    "service": [
+      {
+        "id": "#service-1",
+        "type": "IssuerProfile",
+        "serviceEndpoint": "https://www.blockcerts.org/samples/3.0/issuer-blockcerts.json"
+      }
+    ],
+    "authentication": [
+      "#key-1"
+    ]
+  },
+  "didResolutionMetadata": {
+    "pattern": "^(did:ion:(?!test).+)$",
+    "driverUrl": "http://driver-did-ion:8080/1.0/identifiers/",
+    "duration": 498,
+    "did": {
+      "didString": "did:ion:EiA_Z6LQILbB2zj_eVrqfQ2xDm4HNqeJUw5Kj2Z7bFOOeQ",
+      "methodSpecificId": "EiA_Z6LQILbB2zj_eVrqfQ2xDm4HNqeJUw5Kj2Z7bFOOeQ",
+      "method": "ion"
+    },
+    "contentType": "application/did+ld+json",
+    "convertedFrom": "application/did+json",
+    "convertedTo": "application/did+ld+json"
+  },
+  "didDocumentMetadata": {
+    "method": {
+      "published": true,
+      "recoveryCommitment": "EiA81eICxoPZ2ZxObe7BmuTYeehfXWkBGZiARTxKan1_1g",
+      "updateCommitment": "EiAn-k6sdxGPn03KMHRTdOcsJGX6oJ9Uk3Ij9gMedJJAcA"
+    },
+    "canonicalId": "did:ion:EiA_Z6LQILbB2zj_eVrqfQ2xDm4HNqeJUw5Kj2Z7bFOOeQ"
+  }
+}

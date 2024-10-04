@@ -96,6 +96,7 @@ public class LMDatabaseHelper extends SQLiteOpenHelper {
             public static final String ID = "id";
             public static final String UUID = "uuid";
             public static final String ISSUER_UUID = "issuer_id";
+            public static final String ISSUER_DID = "issuer_did";
             public static final String NAME = "name";
             public static final String DESCRIPTION = "description";
             public static final String ISSUE_DATE = "issue_date";
@@ -147,6 +148,7 @@ public class LMDatabaseHelper extends SQLiteOpenHelper {
                 + " ( " + Column.Certificate.ID + " TEXT PRIMARY KEY "
                 + ", " + Column.Certificate.UUID + " TEXT"
                 + ", " + Column.Certificate.ISSUER_UUID + " TEXT"
+                + ", " + Column.Certificate.ISSUER_DID + " TEXT"
                 + ", " + Column.Certificate.NAME + " TEXT"
                 + ", " + Column.Certificate.DESCRIPTION + " TEXT"
                 + ", " + Column.Certificate.ISSUE_DATE + " TEXT"

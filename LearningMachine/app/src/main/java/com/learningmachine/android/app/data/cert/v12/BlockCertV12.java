@@ -35,6 +35,14 @@ public class BlockCertV12 extends BlockchainCertificate implements BlockCert {
     }
 
     @Override
+    public String getDisplayHtml() {
+        return "";
+    }
+    public String version () {
+        return "v1.2";
+    }
+
+    @Override
     public String getCertUid() {
         if (getDocument() == null
                 || getDocument().getAssertion() == null) {
@@ -177,6 +185,7 @@ public class BlockCertV12 extends BlockchainCertificate implements BlockCert {
     }
 
     public void setDocumentNode(JsonObject documentNode) {
-        mDocumentNode = documentNode;
+        final JsonObject document = documentNode.getAsJsonObject("document");
+        mDocumentNode = document;
     }
 }

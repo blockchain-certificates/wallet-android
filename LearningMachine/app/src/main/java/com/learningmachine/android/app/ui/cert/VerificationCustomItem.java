@@ -20,23 +20,20 @@ import com.learningmachine.android.app.R;
 import com.learningmachine.android.app.data.verifier.VerifierStatus;
 
 public class VerificationCustomItem extends RelativeLayout {
-    public static final int FIRST_ITEM_MARGIN_TOP = -14;
-    public static final int LAST_SUB_ITEM_MARGIN_BOTTOM = 20;
-    public static final int EXTRA_HEIGHT_FOR_STATUS_BAR = 28;
+    public static final int ADJUSTED_MARGIN_TOP = -8;
+    public static final int EXTRA_HEIGHT_FOR_STATUS_BAR = 90;
     private TextView mItemTitle;
     private LinearLayout mSubItemsContainer;
     private Context mContext;
     private View mItemStatusBar;
     private View mPlaceholderStatusBar;
-    private int mSubItemHeight = 0;
     private int mSubItemTotalCount = 0;
-    private int mSubItemCount = 0;
     private ImageView mItemStatusIconBackground;
     private boolean mIsFirstItem;
+    private boolean mIsLastItem;
     private boolean mHasStarted;
     private View mProgress;
     private View mVerifiedInfo;
-    private boolean mIsLastItem;
     private VerificationCustomView.OnVerificationFinish mOnVerificationFinishListener;
     private ScrollView mParentScrollView;
 
@@ -50,10 +47,6 @@ public class VerificationCustomItem extends RelativeLayout {
         void animationFinished();
     }
 
-    /**
-     * Set a listener for the animation finish event.
-     * @param onVerificationFinishListener The listener.
-     */
     public void setOnVerificationFinishListener(VerificationCustomView.OnVerificationFinish onVerificationFinishListener) {
         mOnVerificationFinishListener = onVerificationFinishListener;
     }
@@ -76,18 +69,10 @@ public class VerificationCustomItem extends RelativeLayout {
         inflateItem();
     }
 
-    /**
-     * Set if this is the first item in the list. Needed to set margins.
-     * @param isFirstItem True if first item.
-     */
     public void setIsFirstItem(boolean isFirstItem) {
         mIsFirstItem = isFirstItem;
     }
 
-    /**
-     * Set if this is the last item in the list. Needed to show completion info.
-     * @param isLastItem True if last item.
-     */
     public void setIsLastItem(boolean isLastItem) {
         mIsLastItem = isLastItem;
     }
@@ -96,17 +81,138 @@ public class VerificationCustomItem extends RelativeLayout {
      * Will request layout of sub item mark. Needed to show all elements correctly.
      */
     public void reconstructView() {
-        mSubItemsContainer.getChildCount();
         for (int i = 0; i < mSubItemsContainer.getChildCount(); i++) {
             View subItem = mSubItemsContainer.getChildAt(i);
             View subItemMark = subItem.findViewById(R.id.sub_item_mark);
-            subItemMark.requestLayout();
+            if (subItemMark != null) {
+                subItemMark.requestLayout();
+            }
         }
     }
 
+    public void setItemTitle(String title) {
+        mItemTitle.setText(title);
+    }
+
+    public void addGroupTitleItem (String title) {
+        View groupTitleItem = inflate(mContext, R.layout.list_group_sub_item_title, null);
+        TextView groupTitleItemView = groupTitleItem.findViewById(R.id.group_title);
+        groupTitleItemView.setText(title);
+        mSubItemsContainer.addView(groupTitleItem);
+    }
+
+    public void addSubItem(String title, String code) {
+        View subItem = inflate(mContext, R.layout.list_sub_item_verifier, null);
+        subItem.setTag(code);
+        TextView subItemTitle = subItem.findViewById(R.id.verifier_sub_item_title);
+        subItemTitle.setText(title);
+        mSubItemsContainer.addView(subItem);
+
+        requestLayout();
+    }
+
+    public void finalizeItem() {
+        mSubItemTotalCount = mSubItemsContainer.getChildCount();
+
+        if (!mIsFirstItem) {
+            setItemMarginTop(ADJUSTED_MARGIN_TOP);
+        }
+
+        mPlaceholderStatusBar.post(() -> {
+            adjustHeightOfPlaceholderStatusBar(getTotalHeightOfSubItems() + EXTRA_HEIGHT_FOR_STATUS_BAR);
+        });
+    }
+
     /**
-     * Inflates all items in this view.
+     * Activate a sub item, also changing the status bar height.
+     * @param status The status of the sub item.
+     * @param onFinishAnimation The animation listener.
      */
+    public void activateSubItem(VerifierStatus status, OnFinishAnimation onFinishAnimation) {
+        if (!mHasStarted) {
+            startProcess();
+        }
+
+        View subItem = mSubItemsContainer.findViewWithTag(status.code);
+        activateTitle(subItem, status.isFailure());
+
+        if (status.isSuccess()) {
+            getParentScrollView().smoothScrollTo(0, subItem.getTop() + getTop());
+
+            if (isLastSubItem(subItem)) {
+                subItem.post(() -> {
+                    adjustHeightOfPlaceholderStatusBar(mPlaceholderStatusBar.getLayoutParams().height + fromDpToPx(24));
+                });
+                showSuccessIcon();
+            }
+
+            animateStatusBar(subItem, onFinishAnimation);
+        }
+
+        if (status.isFailure()) {
+            mItemStatusBar.getLayoutParams().height += subItem.getHeight();
+            setErrorMessage(subItem, status.errorMessage);
+            showErrorIcon();
+        }
+    }
+
+    private void animateStatusBar(View subItem, OnFinishAnimation onFinishAnimation) {
+        int statusBarHeight = mItemStatusBar.getLayoutParams().height;
+        int targetNextStatusBarHeight = subItem.getBottom() + subItem.getHeight();
+        ValueAnimator anim = ValueAnimator.ofInt(statusBarHeight, targetNextStatusBarHeight).setDuration(200);
+        anim.addUpdateListener(animation -> {
+            if (isLastSubItem(subItem)) {
+                mItemStatusBar.getLayoutParams().height = mPlaceholderStatusBar.getLayoutParams().height;
+            } else {
+                mItemStatusBar.getLayoutParams().height = targetNextStatusBarHeight;
+            }
+            mItemStatusBar.requestLayout();
+        });
+        anim.start();
+        anim.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                onFinishAnimation.animationFinished();
+                if (isLastSubItem(subItem) && mIsLastItem) {
+                    showVerifiedInfo();
+                    if (mOnVerificationFinishListener != null) {
+                        mOnVerificationFinishListener.verificationFinish(false);
+                    }
+                }
+            }
+        });
+    }
+
+    private void setErrorMessage(View subItem, String errorMessage) {
+        TextView subItemError = subItem.findViewById(R.id.verifier_sub_item_error);
+        subItemError.setText(errorMessage);
+        subItemError.setVisibility(INVISIBLE);
+
+        subItemError.post(() -> {
+            int subItemErrorHeight = subItemError.getHeight();
+            adjustHeightOfPlaceholderStatusBar(mPlaceholderStatusBar.getLayoutParams().height + subItemErrorHeight + fromDpToPx(8));
+
+            View subItemIcon = subItem.findViewById(R.id.sub_item_status);
+            View subItemMark = subItem.findViewById(R.id.sub_item_mark);
+            subItemIcon.setVisibility(VISIBLE);
+            subItemMark.setVisibility(INVISIBLE);
+            subItemError.setVisibility(VISIBLE);
+
+            if (mOnVerificationFinishListener != null) {
+                mOnVerificationFinishListener.verificationFinish(true);
+            }
+        });
+    }
+
+    private boolean isLastSubItem(View subItem) {
+        return subItem == getLastSubItem();
+    }
+
+    private View getLastSubItem() {
+        return mSubItemsContainer.getChildAt(mSubItemTotalCount - 1);
+    }
+
     private void inflateItem() {
         View item = inflate(mContext, R.layout.list_item_verifier, this);
         mItemTitle = item.findViewById(R.id.verifier_item_title);
@@ -125,18 +231,14 @@ public class VerificationCustomItem extends RelativeLayout {
      * @return The Container Scroll View.
      */
     private ScrollView getParentScrollView() {
-        ViewParent parent = getParent(); //VerificationCustomView
-        parent = parent.getParent();//LinearLayout
+        ViewParent parent = getParent(); // VerificationCustomView
+        parent = parent.getParent(); // LinearLayout
         if (mParentScrollView == null) {
             mParentScrollView = (ScrollView) parent.getParent();
         }
         return mParentScrollView;
     }
 
-    /**
-     * Set the top margin for this item.
-     * @param marginTop The value for the top margin. Can be negative.
-     */
     private void setItemMarginTop(int marginTop) {
         LinearLayout.LayoutParams linearParams = new LinearLayout.LayoutParams(
                 new LinearLayout.LayoutParams(
@@ -147,187 +249,46 @@ public class VerificationCustomItem extends RelativeLayout {
         requestLayout();
     }
 
-    /**
-     * Set the bottom margin of a sub item.
-     * @param subItem The sub item to set the bottom margin.
-     * @param marginBottom The bottom margin value. Can be negative.
-     */
-    private void setSubItemMarginBottom(View subItem, int marginBottom) {
-        LinearLayout.LayoutParams linearParams = new LinearLayout.LayoutParams(
-                new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT));
-        linearParams.setMargins(0, 0, 0, fromDpToPx(marginBottom));
-        subItem.setLayoutParams(linearParams);
-        subItem.requestLayout();
+    private void adjustHeightOfPlaceholderStatusBar(int height) {
+        mPlaceholderStatusBar.getLayoutParams().height = height;
+        mPlaceholderStatusBar.requestLayout();
     }
 
-    /**
-     * Set the title of this item.
-     * @param title The title.
-     */
-    public void setItemTitle(String title) {
-        mItemTitle.setText(title);
-    }
-
-    /**
-     * Add a sub item to this item.
-     * @param title The sub item title.
-     * @param code The code to be set as a tag.
-     * @param totalSubItemCount The total count of sub items. Needed for view construction.
-     */
-    public void addSubItem(String title, String code, int totalSubItemCount) {
-        mSubItemTotalCount = totalSubItemCount;
-        View subItem = inflate(mContext, R.layout.list_sub_item_verifier, null);
-        subItem.setTag(code);
-        TextView subItemTitle = subItem.findViewById(R.id.verifier_sub_item_title);
-        subItemTitle.setText(title);
-        mSubItemsContainer.addView(subItem);
-
-        if (!mIsFirstItem) {
-            setItemMarginTop(FIRST_ITEM_MARGIN_TOP);
+    private int getTotalHeightOfSubItems () {
+        int totalHeight = 0;
+        for (int i = 0; i < mSubItemTotalCount; i++) {
+            View subItem = mSubItemsContainer.getChildAt(i);
+            totalHeight += subItem.getHeight();
         }
-
-        if (mSubItemTotalCount == mSubItemsContainer.getChildCount()) {
-            setSubItemMarginBottom(subItem, LAST_SUB_ITEM_MARGIN_BOTTOM);
-            subItem.post(() -> {
-                mSubItemHeight = subItem.getHeight();
-                mPlaceholderStatusBar.getLayoutParams().height += mSubItemHeight * mSubItemTotalCount;
-                mPlaceholderStatusBar.requestLayout();
-            });
-            
-            mPlaceholderStatusBar.getLayoutParams().height += fromDpToPx(EXTRA_HEIGHT_FOR_STATUS_BAR);
-        }
-
-        requestLayout();
+        return totalHeight;
     }
 
-    @Override
-    protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        super.onLayout(changed, l, t, r, b);
-        if (changed) {
-            if (mSubItemsContainer.getChildCount() > 0) {
-                View subView = mSubItemsContainer.getChildAt(0);
-                mSubItemHeight = subView.getHeight();
-            }
-        }
+    private void startProcess() {
+        mHasStarted = true;
+        showProgressIcon();
+        mItemStatusBar.setVisibility(VISIBLE);
     }
 
-    /**
-     * Activates a sub item bu changing text color and changing icons.
-     * @param status The status of the sub item.
-     * @param onFinishAnimation Listener to get the animation finish events.
-     */
-    public void activateSubItem(VerifierStatus status, OnFinishAnimation onFinishAnimation) {
-        if (mSubItemHeight == 0) {
-            View subItem = mSubItemsContainer.findViewWithTag(status.code);
-            subItem.post(() -> {
-                mSubItemHeight = subItem.getHeight();
-                activateSubItemWithHeight(status, onFinishAnimation);
-            });
-        } else {
-            activateSubItemWithHeight(status, onFinishAnimation);
-        }
-    }
-
-    /**
-     * Show a progress indicator inside the status icon.
-     */
     private void showProgressIcon() {
         mItemStatusIconBackground.setImageResource(R.drawable.ic_verification_status_item_bg);
         mProgress.setVisibility(VISIBLE);
     }
 
-    /**
-     * Show the success icon.
-     */
     private void showSuccessIcon() {
         mItemStatusIconBackground.setImageResource(R.drawable.ic_verification_status_item_ok);
         mProgress.setVisibility(GONE);
     }
 
-    /**
-     * Show the error icon.
-     */
     private void showErrorIcon() {
         mItemStatusIconBackground.setImageResource(R.drawable.ic_verification_status_item_error);
         mProgress.setVisibility(GONE);
     }
 
-
-    /**
-     * Activate a sub item, also changing the status bar height.
-     * @param status The status of the sub item.
-     * @param onFinishAnimation The animation listener.
-     */
-    private void activateSubItemWithHeight(VerifierStatus status, OnFinishAnimation onFinishAnimation) {
-        if (!mHasStarted) {
-            mHasStarted = true;
-            showProgressIcon();
-            mItemStatusBar.setVisibility(VISIBLE);
-        }
-
-        View subItem = mSubItemsContainer.findViewWithTag(status.code);
+    private void activateTitle(View subItem, boolean withError) {
         TextView subItemTitle = subItem.findViewById(R.id.verifier_sub_item_title);
-
-        if (status.isSuccess()) {
-            getParentScrollView().smoothScrollTo(0, subItem.getTop() + getTop());
-            mSubItemCount += 1;
-            if (mSubItemCount == mSubItemTotalCount) {
-                mSubItemHeight += fromDpToPx(24);
-                showSuccessIcon();
-            }
-
-            int itemHeight = mItemStatusBar.getLayoutParams().height;
-            ValueAnimator anim = ValueAnimator.ofInt(itemHeight, itemHeight + mSubItemHeight).setDuration(200);
-            anim.addUpdateListener(animation -> {
-                mItemStatusBar.getLayoutParams().height = (Integer) animation.getAnimatedValue();
-                mItemStatusBar.requestLayout();
-            });
-            anim.start();
-            anim.addListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    super.onAnimationEnd(animation);
-                    onFinishAnimation.animationFinished();
-                    if (mSubItemCount == mSubItemTotalCount && mIsLastItem) {
-                        showVerifiedInfo();
-                        if (mOnVerificationFinishListener != null) {
-                            mOnVerificationFinishListener.verificationFinish(false);
-                        }
-                    }
-                }
-            });
-
-            TextViewCompat.setTextAppearance(subItemTitle, R.style.Text_VerifierSubItem_Active);
-            TextViewCompat.setTextAppearance(mItemTitle, R.style.Text_VerifierItem_Active);
-
-        } else if(status.isFailure()) {
-            mItemStatusBar.getLayoutParams().height += mSubItemHeight;
-            TextViewCompat.setTextAppearance(subItemTitle, R.style.Text_VerifierSubItem_Active_Error);
-            TextViewCompat.setTextAppearance(mItemTitle, R.style.Text_VerifierItem_Active);
-
-            TextView subItemError = subItem.findViewById(R.id.verifier_sub_item_error);
-            subItemError.setText(status.errorMessage);
-            subItemError.setVisibility(INVISIBLE);
-
-            subItemError.post(() -> {
-                int subItemErrorHeight = subItemError.getHeight();
-                mPlaceholderStatusBar.getLayoutParams().height += subItemErrorHeight;
-                mPlaceholderStatusBar.getLayoutParams().height += fromDpToPx(8);
-                mPlaceholderStatusBar.requestLayout();
-                View subItemIcon = subItem.findViewById(R.id.sub_item_status);
-                View subItemMark = subItem.findViewById(R.id.sub_item_mark);
-                subItemIcon.setVisibility(VISIBLE);
-                subItemMark.setVisibility(INVISIBLE);
-                subItemError.setVisibility(VISIBLE);
-                showErrorIcon();
-                if (mOnVerificationFinishListener != null) {
-                    mOnVerificationFinishListener.verificationFinish(true);
-                }
-            });
-        }
-
+        int style = withError ? R.style.Text_VerifierSubItem_Active_Error : R.style.Text_VerifierSubItem_Active;
+        TextViewCompat.setTextAppearance(subItemTitle, style);
+        TextViewCompat.setTextAppearance(mItemTitle, R.style.Text_VerifierItem_Active);
     }
 
     private void showVerifiedInfo() {
