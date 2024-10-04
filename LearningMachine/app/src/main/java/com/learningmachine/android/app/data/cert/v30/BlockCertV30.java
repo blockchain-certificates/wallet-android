@@ -102,7 +102,7 @@ public class BlockCertV30 implements BlockCert {
     }
 
     public JsonObject getClaim() {
-        if (getCredentialSubject().get("claim") != null) {
+        if (getCredentialSubject().get("claim") != null && getCredentialSubject().get("claim").isJsonObject()) {
             return getCredentialSubject().get("claim").getAsJsonObject();
         }
         return null;
