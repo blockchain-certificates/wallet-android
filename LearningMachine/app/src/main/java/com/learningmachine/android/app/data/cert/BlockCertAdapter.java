@@ -59,6 +59,7 @@ public class BlockCertAdapter implements JsonSerializer<BlockCert>, JsonDeserial
             case "v3":
             case "v3.0":
             case "v3.1":
+            case "v3.2":
                 return BlockCertV30.class;
 
             default:

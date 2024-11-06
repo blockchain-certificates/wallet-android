@@ -1,5 +1,6 @@
 package com.learningmachine.android.app.data.cert.v30;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonElement;
 import com.google.gson.annotations.Expose;
@@ -9,6 +10,8 @@ import com.learningmachine.android.app.data.cert.BlockCert;
 import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
 import com.learningmachine.android.app.util.StringUtils;
 import com.learningmachine.android.app.LMConstants;
+
+import timber.log.Timber;
 
 public class BlockCertV30 implements BlockCert {
     private JsonObject mDocumentNode;
@@ -25,6 +28,14 @@ public class BlockCertV30 implements BlockCert {
     @Expose
     private String mUid;
 
+    @SerializedName("name")
+    @Expose
+    private JsonElement mName;
+
+    @SerializedName("description")
+    @Expose
+    private JsonElement mDescription;
+
     @SerializedName("credentialSubject")
     @Expose
     private JsonObject mCredentialSubject;
@@ -37,9 +48,20 @@ public class BlockCertV30 implements BlockCert {
     @Expose
     private String mIssuanceDate;
 
+
     @SerializedName("expirationDate")
     @Expose
     private String mExpirationDate;
+
+    // v3.2 (VC v2.0)
+    @SerializedName("validFrom")
+    @Expose
+    private String mValidFrom;
+
+    // v3.2 (VC v2.0)
+    @SerializedName("validUntil")
+    @Expose
+    private String mValidUntil;
 
     @SerializedName("metadata")
     @Expose
@@ -111,6 +133,9 @@ public class BlockCertV30 implements BlockCert {
 
     @Override
     public String getExpirationDate() {
+        if (mValidUntil != null) {
+            return mValidUntil;
+        }
         return mExpirationDate;
     }
 
@@ -122,6 +147,15 @@ public class BlockCertV30 implements BlockCert {
 
     @Override
     public String getCertName() {
+        if (mName.isJsonArray()) {
+            // TODO: deal with OS/app language
+            return getPropertyValueForLanguage(mName.getAsJsonArray(), "en");
+        }
+
+        if (mName.isJsonPrimitive() && mName.getAsJsonPrimitive().isString()) {
+            return mName.getAsString();
+        }
+
         if (getClaim() == null) {
             return null;
         }
@@ -133,6 +167,15 @@ public class BlockCertV30 implements BlockCert {
 
     @Override
     public String getCertDescription() {
+        if (mDescription.isJsonArray()) {
+            // TODO: deal with OS/app language
+            return getPropertyValueForLanguage(mDescription.getAsJsonArray(), "en");
+        }
+
+        if (mDescription.isJsonPrimitive() && mDescription.getAsJsonPrimitive().isString()) {
+            return mDescription.getAsString();
+        }
+
         if (getClaim() == null) {
             return null;
         }
@@ -152,6 +195,9 @@ public class BlockCertV30 implements BlockCert {
 
     @Override
     public String getIssueDate() {
+        if (mValidFrom != null) {
+            return mValidFrom;
+        }
         return mIssuanceDate;
     }
 
@@ -198,5 +244,14 @@ public class BlockCertV30 implements BlockCert {
     @Override
     public String getReceiptHash() {
         return "Not implemented";
+    }
+
+    private String getPropertyValueForLanguage(JsonArray property, String language) {
+        for (JsonElement element : property) {
+            if (element.getAsJsonObject().get("@language").getAsString().equals(language)) {
+                return element.getAsJsonObject().get("@value").getAsString();
+            }
+        }
+        return "";
     }
 }
