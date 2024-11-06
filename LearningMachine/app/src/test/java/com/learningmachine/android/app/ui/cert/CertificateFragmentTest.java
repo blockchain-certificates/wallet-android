@@ -4,6 +4,12 @@ import com.learningmachine.android.app.ui.cert.CertificateFragment;
 import com.learningmachine.android.app.data.cert.BlockCert;
 import com.learningmachine.android.app.data.cert.BlockCertParser;
 
+import com.learningmachine.android.test.data.cert.v30.V3Assertions;
+import com.learningmachine.android.test.helpers.FileHelpers;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
 import java.io.Reader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -11,8 +17,121 @@ import java.io.InputStreamReader;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
-
 public class CertificateFragmentTest {
+	@Test
+	public void displayHTMLV3 () {
+		String expectedOutput = "<!doctype html>" +
+				"<html class=\"no-js\" lang=\"\">" +
+				"<head>" +
+				"<meta charset=\"utf-8\">" +
+				"<meta http-equiv=\"x-ua-compatible\" content=\"ie=edge\">" +
+				"<title></title>" +
+				"<meta content=\"width=device-width, initial-scale=1.0\" name=\"viewport\" />" +
+				"<meta name=”viewport” content=”width=device-width” />" +
+				"<style type=\"text/css\">/*! normalize.css v7.0.0 | MIT License | github.com/necolas/normalize.css */html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,aside,footer,header,nav,section{display:block}h1{font-size:2em;margin:.67em 0}figcaption,figure,main{display:block}figure{margin:1em 40px}hr{box-sizing:content-box;height:0;overflow:visible}pre{font-family:monospace,monospace;font-size:1em}a{background-color:transparent;-webkit-text-decoration-skip:objects}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}b,strong{font-weight:inherit}b,strong{font-weight:bolder}code,kbd,samp{font-family:monospace,monospace;font-size:1em}dfn{font-style:italic}mark{background-color:#ff0;color:#000}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}audio,video{display:inline-block}audio:not([controls]){display:none;height:0}img{border-style:none}svg:not(:root){overflow:hidden}button,input,optgroup,select,textarea{font-family:sans-serif;font-size:100%;line-height:1.15;margin:0}button,input{overflow:visible}button,select{text-transform:none}[type=reset],[type=submit],button,html [type=button]{-webkit-appearance:button}[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner,button::-moz-focus-inner{border-style:none;padding:0}[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring,button:-moz-focusring{outline:1px dotted ButtonText}fieldset{padding:.35em .75em .625em}legend{box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}progress{display:inline-block;vertical-align:baseline}textarea{overflow:auto}[type=checkbox],[type=radio]{box-sizing:border-box;padding:0}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-cancel-button,[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}details,menu{display:block}summary{display:list-item}canvas{display:inline-block}template{display:none}[hidden]{display:none}/*# sourceMappingURL=normalize.min.css.map */</style>" +
+				"<style type=\"text/css\">body { font-size: 12px; line-height: 1.5; margin:20px; display: inline-block; } body > section { padding: 0; } body section { max-width: 100%; word-break: break-word; } body img { max-width: 100%; height: auto; width: inherit; }</style>" +
+				"</head>" +
+				"<body>" +
+				"<div id=\"_displayHTML\">" +
+				"<div>Hello World</div>" +
+				"</div>" +
+				"<script type=\"text/javascript\">var _displayHTML = document.getElementById('_displayHTML');\n" +
+				"_displayHTML.innerHTML = Autolinker.link(_displayHTML.innerHTML, {\n" +
+				"    stripPrefix: false,\n" +
+				"    email: true,\n" +
+				"    phone: false\n" +
+				"  });" +
+				"</script>" +
+				"</body>" +
+				"</html>";
+
+		InputStream inputStream = FileHelpers.getResourceAsStream("v3/testnet-valid.json", getClass().getClassLoader());
+		BlockCertParser blockCertParser = new BlockCertParser();
+		BlockCert blockCert = blockCertParser.fromJson(inputStream);
+		CertificateFragment certificateFragment = new CertificateFragment();
+
+		String output = certificateFragment.displayHTML(blockCert);
+		assertEquals(expectedOutput, output);
+	}
+
+	@Test
+	public void displayHTMLV3_content_png () {
+		InputStream inputStream = FileHelpers.getResourceAsStream("v3/testnet-display-png.json", getClass().getClassLoader());
+		BlockCertParser blockCertParser = new BlockCertParser();
+		BlockCert blockCert = blockCertParser.fromJson(inputStream);
+
+		String base64PngValue = V3Assertions.getBase64PngValue();
+
+		String expectedOutput = "<!doctype html>" +
+				"<html class=\"no-js\" lang=\"\">" +
+				"<head>" +
+				"<meta charset=\"utf-8\">" +
+				"<meta http-equiv=\"x-ua-compatible\" content=\"ie=edge\">" +
+				"<title></title>" +
+				"<meta content=\"width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0\" name=\"viewport\" />" +
+				"<meta name=”viewport” content=”width=device-width” />" +
+				"<style type=\"text/css\">/*! normalize.css v7.0.0 | MIT License | github.com/necolas/normalize.css */html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,aside,footer,header,nav,section{display:block}h1{font-size:2em;margin:.67em 0}figcaption,figure,main{display:block}figure{margin:1em 40px}hr{box-sizing:content-box;height:0;overflow:visible}pre{font-family:monospace,monospace;font-size:1em}a{background-color:transparent;-webkit-text-decoration-skip:objects}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}b,strong{font-weight:inherit}b,strong{font-weight:bolder}code,kbd,samp{font-family:monospace,monospace;font-size:1em}dfn{font-style:italic}mark{background-color:#ff0;color:#000}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}audio,video{display:inline-block}audio:not([controls]){display:none;height:0}img{border-style:none}svg:not(:root){overflow:hidden}button,input,optgroup,select,textarea{font-family:sans-serif;font-size:100%;line-height:1.15;margin:0}button,input{overflow:visible}button,select{text-transform:none}[type=reset],[type=submit],button,html [type=button]{-webkit-appearance:button}[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner,button::-moz-focus-inner{border-style:none;padding:0}[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring,button:-moz-focusring{outline:1px dotted ButtonText}fieldset{padding:.35em .75em .625em}legend{box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}progress{display:inline-block;vertical-align:baseline}textarea{overflow:auto}[type=checkbox],[type=radio]{box-sizing:border-box;padding:0}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-cancel-button,[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}details,menu{display:block}summary{display:list-item}canvas{display:inline-block}template{display:none}[hidden]{display:none}/*# sourceMappingURL=normalize.min.css.map */</style>" +
+				"<style type=\"text/css\">body { font-size: 12px; line-height: 1.5; margin:20px;  } body > section { padding: 0; } body section { max-width: 100%; word-break: break-word; } body img { max-width: 100%; height: auto; width: inherit; }</style>" +
+				"</head>" +
+				"<body>" +
+				"<div id=\"_displayHTML\">" +
+				"<img title=\" \"  src=\"data:image/png;base64," + base64PngValue + "\"/>" +
+				"</div>" +
+				"<script type=\"text/javascript\">var _displayHTML = document.getElementById('_displayHTML');\n" +
+				"_displayHTML.innerHTML = Autolinker.link(_displayHTML.innerHTML, {\n" +
+				"    stripPrefix: false,\n" +
+				"    email: true,\n" +
+				"    phone: false\n" +
+				"  });" +
+				"</script>" +
+				"</body>" +
+				"</html>";
+
+
+		CertificateFragment certificateFragment = new CertificateFragment();
+		String output = certificateFragment.displayHTML(blockCert);
+		assertEquals(expectedOutput, output);
+	}
+
+	@Test
+	public void displayHTMLV3_content_pdf () {
+		InputStream inputStream = FileHelpers.getResourceAsStream("v3/testnet-display-pdf.json", getClass().getClassLoader());
+		BlockCertParser blockCertParser = new BlockCertParser();
+		BlockCert blockCert = blockCertParser.fromJson(inputStream);
+
+		String base64PDFValue = V3Assertions.getBase64PDFValue();
+
+		String expectedOutput = "<!doctype html>" +
+				"<html class=\"no-js\" lang=\"\">" +
+				"<head>" +
+				"<meta charset=\"utf-8\">" +
+				"<meta http-equiv=\"x-ua-compatible\" content=\"ie=edge\">" +
+				"<title></title>" +
+				"<meta content=\"width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0\" name=\"viewport\" />" +
+				"<meta name=”viewport” content=”width=device-width” />" +
+				"<style type=\"text/css\">/*! normalize.css v7.0.0 | MIT License | github.com/necolas/normalize.css */html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,aside,footer,header,nav,section{display:block}h1{font-size:2em;margin:.67em 0}figcaption,figure,main{display:block}figure{margin:1em 40px}hr{box-sizing:content-box;height:0;overflow:visible}pre{font-family:monospace,monospace;font-size:1em}a{background-color:transparent;-webkit-text-decoration-skip:objects}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}b,strong{font-weight:inherit}b,strong{font-weight:bolder}code,kbd,samp{font-family:monospace,monospace;font-size:1em}dfn{font-style:italic}mark{background-color:#ff0;color:#000}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}audio,video{display:inline-block}audio:not([controls]){display:none;height:0}img{border-style:none}svg:not(:root){overflow:hidden}button,input,optgroup,select,textarea{font-family:sans-serif;font-size:100%;line-height:1.15;margin:0}button,input{overflow:visible}button,select{text-transform:none}[type=reset],[type=submit],button,html [type=button]{-webkit-appearance:button}[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner,button::-moz-focus-inner{border-style:none;padding:0}[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring,button:-moz-focusring{outline:1px dotted ButtonText}fieldset{padding:.35em .75em .625em}legend{box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}progress{display:inline-block;vertical-align:baseline}textarea{overflow:auto}[type=checkbox],[type=radio]{box-sizing:border-box;padding:0}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-cancel-button,[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}details,menu{display:block}summary{display:list-item}canvas{display:inline-block}template{display:none}[hidden]{display:none}/*# sourceMappingURL=normalize.min.css.map */</style>" +
+				"<style type=\"text/css\">body { font-size: 12px; line-height: 1.5; margin:20px;  } body > section { padding: 0; } body section { max-width: 100%; word-break: break-word; } body img { max-width: 100%; height: auto; width: inherit; }</style>" +
+				"</head>" +
+				"<body>" +
+				"<div id=\"_displayHTML\">" +
+				"<embed width=\"100%\" height=\"100%\" type=\"application/pdf\" src=\"data:application/pdf;base64," + base64PDFValue + "\"/>" +
+				"</div>" +
+				"<script type=\"text/javascript\">var _displayHTML = document.getElementById('_displayHTML');\n" +
+				"_displayHTML.innerHTML = Autolinker.link(_displayHTML.innerHTML, {\n" +
+				"    stripPrefix: false,\n" +
+				"    email: true,\n" +
+				"    phone: false\n" +
+				"  });" +
+				"</script>" +
+				"</body>" +
+				"</html>";
+
+
+		CertificateFragment certificateFragment = new CertificateFragment();
+		String output = certificateFragment.displayHTML(blockCert);
+		assertEquals(expectedOutput, output);
+	}
+
 	@Test
 	public void displayHTMLV2 () {
 		String expectedOutput = "<!doctype html>" +
@@ -58,20 +177,13 @@ public class CertificateFragmentTest {
 						"</script>" +
 					"</body>" +
 				"</html>";
-		InputStream inputStream = getResourceAsStream("mainnet-valid-2.0.json");
+		InputStream inputStream = FileHelpers.getResourceAsStream("mainnet-valid-2.0.json", getClass().getClassLoader());
 		BlockCertParser blockCertParser = new BlockCertParser();
 		BlockCert blockCert = blockCertParser.fromJson(inputStream);
 		CertificateFragment certificateFragment = new CertificateFragment();
 
 		String output = certificateFragment.displayHTML(blockCert);
-		assertEquals(output, expectedOutput);
+		assertEquals(expectedOutput, output);
 	}
-
-    private InputStream getResourceAsStream(String name) {
-        ClassLoader classLoader = getClass().getClassLoader();
-
-        InputStream inputStream = classLoader.getResourceAsStream(name);
-        return inputStream;
-    }
 }
 

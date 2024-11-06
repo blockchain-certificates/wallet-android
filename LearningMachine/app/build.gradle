@@ -1,22 +1,22 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 33
-    buildToolsVersion '30.0.3'
+    namespace "com.learningmachine.android.app"
+    compileSdkVersion 34
     dexOptions {
         javaMaxHeapSize "4g"
     }
     defaultConfig {
         applicationId "com.learningmachine.android.app"
-        minSdkVersion 19
-        targetSdkVersion 33
-        versionName "3.1.11"
+        minSdkVersion 31
+        targetSdkVersion 34
+        versionName "3.2.0"
         def buildNumber = System.getenv("BUILD_NUMBER")
         if (buildNumber != null) {
             versionCode buildNumber.toInteger()
             versionNameSuffix "-" + buildNumber
         } else {
-            versionCode 58
+            versionCode 61
         }
 
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
@@ -26,6 +26,10 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
     }
 
     signingConfigs {
@@ -102,8 +106,10 @@ android {
         }
     }
 
-    dataBinding {
-        enabled = true
+    buildFeatures {
+        dataBinding true
+        viewBinding true
+        buildConfig true
     }
 
     lintOptions {
@@ -140,7 +146,7 @@ final JODATIME_VERSION = '2.8.1'
 
 // These must be forced until everyone gets on the same page
 // ?: 18.0, Robolectric: 20.0
-final GUAVA_VERSION = '25.1-android'
+final GUAVA_VERSION = '27.0.1-android'
 // RxLifecycle: 3.0.1, Robolectric: 2.0.1
 final FINDBUGS_VERSION = '3.0.1'
 
@@ -203,6 +209,8 @@ dependencies {
 
     testImplementation "junit:junit:$JUNIT_VERSION"
     testImplementation "org.hamcrest:hamcrest:2.2"
+    testImplementation "net.javacrumbs.json-unit:json-unit:2.33.0"
+    testImplementation "org.json:json:20140107"
     testImplementation "org.mockito:mockito-core:$MOCKITO_VERSION"
     testImplementation "org.robolectric:robolectric:$ROBOLECTRIC_VERSION"
     testImplementation "org.robolectric:shadows-multidex:$ROBOLECTRIC_VERSION"

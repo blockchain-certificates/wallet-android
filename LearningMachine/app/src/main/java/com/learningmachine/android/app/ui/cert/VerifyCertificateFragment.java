@@ -34,6 +34,7 @@ public class VerifyCertificateFragment extends Fragment {
     private FragmentVerifyCertificateBinding mBinding;
     private boolean mStartedVerification;
     private WeakReference<Activity> mParentActivity;
+    private String mChainName;
 
     public static VerifyCertificateFragment newInstance(String certificateUuid) {
 
@@ -75,39 +76,53 @@ public class VerifyCertificateFragment extends Fragment {
         }
     }
 
-    private void setupStatus(VerificationSteps[] verificationSteps, String chainName) {
+    private void setupStatus(VerificationSteps[] verificationSteps) {
         if (!isValidFragmentInstance()) {
             return;
         }
         mParentActivity.get().runOnUiThread(() -> {
-            showVerificationStartedStatus(chainName);
+            showVerificationStartedStatus();
             mBinding.statusView.setOnVerificationFinishListener(withError -> {
                 showDoneButton();
                 mBinding.statusViewScrollContainer.fullScroll(View.FOCUS_DOWN);
                 if (withError) {
                     showVerificationErrorStatus();
                 } else {
-                    showVerificationSuccessStatus(chainName);
+                    showVerificationSuccessStatus(mChainName);
                 }
             });
             mBinding.statusView.addVerificationSteps(verificationSteps);
         });
     }
 
+    private void setupChainName (String chainName) {
+        mChainName = chainName;
+    }
+
     private boolean isValidFragmentInstance() {
         return isAdded() && mParentActivity.get() != null && !mParentActivity.get().isFinishing();
     }
 
-    private void showVerificationStartedStatus(String chainName) {
-        String status = getString(R.string.fragment_verify_cert_chain_format, chainName);
+    private void showVerificationStartedStatus() {
+        String status = getString(R.string.fragment_verify_cert_chain_format);
         mBinding.verificationStatus.setText(status);
     }
 
     private void showVerificationSuccessStatus(String chainName) {
-        String status = getString(R.string.success_verification, chainName);
+        String status = getSuccessStatusString(chainName);
         mBinding.verificationStatus.setText(status);
         mBinding.verificationStatus.setTextColor(getResources().getColor(R.color.c3));
         mBinding.verificationStatus.setBackgroundColor(getResources().getColor(R.color.c14));
+    }
+
+    private String getSuccessStatusString(String chainName) {
+        if (chainName == null) {
+            chainName = "";
+        }
+        String status = getString(R.string.success_verification, chainName);
+        status.replace("  ", " "); // replace double spaces if chainName is empty string
+        status.replace(" .", ".");
+        return status;
     }
 
     private void showVerificationErrorStatus() {
@@ -209,7 +224,6 @@ public class VerifyCertificateFragment extends Fragment {
     private class JavascriptInterface {
         private VerificationSteps[] mVerificationSteps;
         private Anchor.ChainType mChainType;
-        private String mChainName;
 
         /**
          * This method will be called when a new Status is available in a Credential verification process.
@@ -228,7 +242,7 @@ public class VerifyCertificateFragment extends Fragment {
         @android.webkit.JavascriptInterface
         public void notifyVerificationSteps(String verificationStepsStr) {
             mVerificationSteps = VerificationSteps.getFromString(verificationStepsStr);
-            setupStatus(mVerificationSteps, mChainName);
+            setupStatus(mVerificationSteps);
         }
 
         /**
@@ -237,7 +251,7 @@ public class VerifyCertificateFragment extends Fragment {
          */
         @android.webkit.JavascriptInterface
         public void notifyChainName(String chainName) {
-            mChainName = chainName;
+            setupChainName(chainName);
         }
     }
 

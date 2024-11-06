@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import com.learningmachine.android.app.data.cert.BlockCert;
 import com.learningmachine.android.app.data.model.CertificateRecord;
 import com.learningmachine.android.app.data.store.cursor.CertificateCursorWrapper;
+import com.learningmachine.android.app.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,7 +82,7 @@ public class CertificateStore implements DataStore {
         contentValues.put(LMDatabaseHelper.Column.Certificate.UUID, certUid);
         contentValues.put(LMDatabaseHelper.Column.Certificate.NAME, certName);
         contentValues.put(LMDatabaseHelper.Column.Certificate.DESCRIPTION, certDescription);
-        contentValues.put(LMDatabaseHelper.Column.Certificate.ISSUER_UUID, issuerId);
+        contentValues = storeIssuerId(contentValues, issuerId);
         contentValues.put(LMDatabaseHelper.Column.Certificate.ISSUE_DATE, issueDate);
         contentValues.put(LMDatabaseHelper.Column.Certificate.URL, urlString);
         contentValues.put(LMDatabaseHelper.Column.Certificate.EXPIRATION_DATE, expirationDate);
@@ -92,11 +93,15 @@ public class CertificateStore implements DataStore {
                     null,
                     contentValues);
         } else {
-            mDatabase.update(LMDatabaseHelper.Table.CERTIFICATE,
-                    contentValues,
-                    LMDatabaseHelper.Column.Certificate.UUID + " = ? ",
-                    new String[] { certUid });
+            updateCertificateEntry(certUid, contentValues);
         }
+    }
+
+    public void updateIssuerUuid (String certUid, String issuerId) {
+        // when using DID, we don't know the issuer's issuer profile before fetching the documents
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(LMDatabaseHelper.Column.Certificate.ISSUER_UUID, issuerId);
+        updateCertificateEntry(certUid, contentValues);
     }
 
     public void updateCertificateIdFromLegacy(String oldId, String newId) {
@@ -120,5 +125,21 @@ public class CertificateStore implements DataStore {
     @Override
     public void reset() {
         mDatabase.delete(LMDatabaseHelper.Table.CERTIFICATE, null, null);
+    }
+
+    private void updateCertificateEntry (String certUid, ContentValues contentValues) {
+        mDatabase.update(LMDatabaseHelper.Table.CERTIFICATE,
+                contentValues,
+                LMDatabaseHelper.Column.Certificate.UUID + " = ? ",
+                new String[] { certUid });
+    }
+
+    private ContentValues storeIssuerId (ContentValues contentValues, String issuerId) {
+        final String didColumn = LMDatabaseHelper.Column.Certificate.ISSUER_DID;
+        final String idColumn = LMDatabaseHelper.Column.Certificate.ISSUER_UUID;
+        final String targetColumn = StringUtils.isDid(issuerId) ? didColumn : idColumn;
+
+        contentValues.put(targetColumn, issuerId);
+        return contentValues;
     }
 }

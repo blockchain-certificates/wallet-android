@@ -20,4 +20,6 @@ public class LMConstants {
     public static final boolean SHOULD_PERFORM_OWNERSHIP_CHECK = false;
     public static final String PLAY_STORE_URL = "market://details?id=com.learningmachine.android.app";
     public static final String PLAY_STORE_EXTERNAL_URL = "https://play.google.com/store/apps/details?id=com.learningmachine.android.app";
+
+    public static final String DID_RESOLVER_URL = "https://dev.uniresolver.io/1.0/identifiers";
 }
