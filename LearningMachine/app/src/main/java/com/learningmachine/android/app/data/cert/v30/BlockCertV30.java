@@ -38,7 +38,7 @@ public class BlockCertV30 implements BlockCert {
 
     @SerializedName("credentialSubject")
     @Expose
-    private JsonObject mCredentialSubject;
+    private JsonElement mCredentialSubject;
 
     @SerializedName("credentialStatus")
     @Expose
@@ -120,7 +120,12 @@ public class BlockCertV30 implements BlockCert {
     }
 
     public JsonObject getCredentialSubject() {
-        return mCredentialSubject;
+        if (mCredentialSubject.isJsonArray()) {
+            // TODO: definitely not ideal as multiple credential subjects could mean different things
+            // for now we are just assuming multilingual support, and defaulting to the first item
+            return mCredentialSubject.getAsJsonArray().get(0).getAsJsonObject();
+        }
+        return (JsonObject) mCredentialSubject;
     }
 
     public JsonObject getClaim() {
