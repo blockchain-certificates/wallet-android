@@ -6,7 +6,7 @@
 dist: xenial
 language: android
 jdk:
-  - oraclejdk11
+  - oraclejdk17
 #  Accept all licenses
 # licenses:
 #     - 'android-sdk-preview-license-.+'
@@ -31,7 +31,7 @@ android:
     # - sys-img-armeabi-v7a-android-25
 env:
   global:
-    - TARGET_VERSION=33
+    - TARGET_VERSION=34
     - ANDROID_BUILD_TOOLS_VERSION=33.0.0
     - ANDROID_HOME=~/android-sdk
 git:
