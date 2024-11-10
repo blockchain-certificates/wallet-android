@@ -1,12 +1,12 @@
 package com.learningmachine.android.app;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import androidx.annotation.NonNull;
-import androidx.multidex.MultiDexApplication;
 import android.webkit.WebView;
 
 import com.learningmachine.android.app.data.CertificateManager;
@@ -27,7 +27,7 @@ import javax.inject.Inject;
 
 import timber.log.Timber;
 
-public class LMApplication extends MultiDexApplication {
+public class LMApplication extends Application {
 
     protected LMGraph mGraph;
 
