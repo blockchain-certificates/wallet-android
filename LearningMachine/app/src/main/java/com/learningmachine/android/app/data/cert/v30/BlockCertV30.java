@@ -152,13 +152,15 @@ public class BlockCertV30 implements BlockCert {
 
     @Override
     public String getCertName() {
-        if (mName.isJsonArray()) {
-            // TODO: deal with OS/app language
-            return getPropertyValueForLanguage(mName.getAsJsonArray(), "en");
-        }
+        if (mName != null) {
+            if (mName.isJsonArray()) {
+                // TODO: deal with OS/app language
+                return getPropertyValueForLanguage(mName.getAsJsonArray(), "en");
+            }
 
-        if (mName.isJsonPrimitive() && mName.getAsJsonPrimitive().isString()) {
-            return mName.getAsString();
+            if (mName.isJsonPrimitive() && mName.getAsJsonPrimitive().isString()) {
+                return mName.getAsString();
+            }
         }
 
         if (getClaim() == null) {
@@ -172,13 +174,15 @@ public class BlockCertV30 implements BlockCert {
 
     @Override
     public String getCertDescription() {
-        if (mDescription.isJsonArray()) {
-            // TODO: deal with OS/app language
-            return getPropertyValueForLanguage(mDescription.getAsJsonArray(), "en");
-        }
+        if (mDescription != null) {
+            if (mDescription.isJsonArray()) {
+                // TODO: deal with OS/app language
+                return getPropertyValueForLanguage(mDescription.getAsJsonArray(), "en");
+            }
 
-        if (mDescription.isJsonPrimitive() && mDescription.getAsJsonPrimitive().isString()) {
-            return mDescription.getAsString();
+            if (mDescription.isJsonPrimitive() && mDescription.getAsJsonPrimitive().isString()) {
+                return mDescription.getAsString();
+            }
         }
 
         if (getClaim() == null) {
