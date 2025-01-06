@@ -135,7 +135,7 @@ final ESPRESSO_VERSION = '3.0.1'
 
 // test
 final JUNIT_VERSION = '4.12'
-final MOCKITO_VERSION = '2.2.11'
+final MOCKITO_VERSION = '5.15.2'
 final ROBOLECTRIC_VERSION = '4.4'
 final JODATIME_VERSION = '2.8.1'
 
