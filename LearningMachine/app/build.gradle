@@ -185,8 +185,7 @@ dependencies {
     implementation "com.squareup.picasso:picasso:$PICASSO_VERSION"
     implementation "com.google.guava:guava:$GUAVA_VERSION"
 
-    implementation 'com.google.android.exoplayer:exoplayer:2.8.4'
-
+    implementation 'com.google.android.exoplayer:exoplayer:2.13.3'
 
     androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0', {
         exclude group: 'com.android.support', module: 'support-annotations'
