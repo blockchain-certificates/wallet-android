@@ -2,7 +2,6 @@ package com.learningmachine.android.app.data.store;
 
 import android.content.Context;
 
-import com.learningmachine.android.app.BuildConfig;
 import com.learningmachine.android.app.data.cert.BlockCert;
 import com.learningmachine.android.app.data.cert.v12.BlockCertV12;
 import com.learningmachine.android.app.data.model.IssuerRecord;
@@ -11,13 +10,14 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.RuntimeEnvironment;
 
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.mock;
+
+import androidx.test.core.app.ApplicationProvider;
 
 @RunWith(RobolectricTestRunner.class)
 public class InnerJoinTest {
@@ -28,7 +28,7 @@ public class InnerJoinTest {
     @Before
     public void setup() throws Exception {
         ImageStore imageStore = mock(ImageStore.class);
-        Context context = RuntimeEnvironment.application;
+        Context context = ApplicationProvider.getApplicationContext();
         LMDatabaseHelper database = new LMDatabaseHelper(context);
 
         mIssuerStore = new IssuerStore(database, imageStore);

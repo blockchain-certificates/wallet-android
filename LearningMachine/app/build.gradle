@@ -140,15 +140,12 @@ final ROBOLECTRIC_VERSION = '4.14.1'
 final JODATIME_VERSION = '2.8.1'
 
 // These must be forced until everyone gets on the same page
-// ?: 18.0, Robolectric: 20.0
+// ?: 18.0, Robolectric: 33.3.1-jre
 final GUAVA_VERSION = '27.0.1-android'
-// RxLifecycle: 3.0.1, Robolectric: 2.0.1
-final FINDBUGS_VERSION = '3.0.1'
 
 configurations.all {
     resolutionStrategy {
         force "com.google.guava:guava:$GUAVA_VERSION"
-        force "com.google.code.findbugs:jsr305:$FINDBUGS_VERSION"
     }
 }
 
@@ -205,5 +202,6 @@ dependencies {
     testImplementation "org.mockito:mockito-core:$MOCKITO_VERSION"
     testImplementation "org.robolectric:robolectric:$ROBOLECTRIC_VERSION"
     testImplementation "joda-time:joda-time:$JODATIME_VERSION"
+    testImplementation "androidx.test:core:1.6.1"
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 }
