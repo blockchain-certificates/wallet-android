@@ -22,8 +22,6 @@ Gradle allows us to define different product variants. Each has a separate app i
 
 `sh scripts/run_tests.sh`
 
-At the time of writing it seems Robolectric is not compatible with JDK > 13 (https://github.com/robolectric/robolectric/issues/5863)
-
 ## Building APKs
 
 `sh scripts/GenerateReleaseBuild.command`

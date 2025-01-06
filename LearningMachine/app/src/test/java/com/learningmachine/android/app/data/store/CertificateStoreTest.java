@@ -2,7 +2,6 @@ package com.learningmachine.android.app.data.store;
 
 import android.content.Context;
 
-import com.learningmachine.android.app.BuildConfig;
 import com.learningmachine.android.app.data.cert.BlockCert;
 import com.learningmachine.android.app.data.cert.v12.BlockCertV12;
 import com.learningmachine.android.app.data.cert.v20.Badge;
@@ -14,7 +13,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.RuntimeEnvironment;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -23,6 +21,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import androidx.test.core.app.ApplicationProvider;
+
 @RunWith(RobolectricTestRunner.class)
 public class CertificateStoreTest {
 
@@ -30,7 +30,7 @@ public class CertificateStoreTest {
 
     @Before
     public void setup() {
-        Context context = RuntimeEnvironment.application;
+        Context context = ApplicationProvider.getApplicationContext();
         LMDatabaseHelper databaseHelper = new LMDatabaseHelper(context);
         mCertificateStore = new CertificateStore(databaseHelper);
     }
