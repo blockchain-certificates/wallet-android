@@ -135,20 +135,17 @@ final ESPRESSO_VERSION = '3.0.1'
 
 // test
 final JUNIT_VERSION = '4.12'
-final MOCKITO_VERSION = '2.2.11'
-final ROBOLECTRIC_VERSION = '4.4'
+final MOCKITO_VERSION = '5.15.2'
+final ROBOLECTRIC_VERSION = '4.14.1'
 final JODATIME_VERSION = '2.8.1'
 
 // These must be forced until everyone gets on the same page
-// ?: 18.0, Robolectric: 20.0
+// ?: 18.0, Robolectric: 33.3.1-jre
 final GUAVA_VERSION = '27.0.1-android'
-// RxLifecycle: 3.0.1, Robolectric: 2.0.1
-final FINDBUGS_VERSION = '3.0.1'
 
 configurations.all {
     resolutionStrategy {
         force "com.google.guava:guava:$GUAVA_VERSION"
-        force "com.google.code.findbugs:jsr305:$FINDBUGS_VERSION"
     }
 }
 
@@ -185,9 +182,6 @@ dependencies {
     implementation "com.squareup.picasso:picasso:$PICASSO_VERSION"
     implementation "com.google.guava:guava:$GUAVA_VERSION"
 
-    implementation 'com.google.android.exoplayer:exoplayer:2.8.4'
-
-
     androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -208,5 +202,6 @@ dependencies {
     testImplementation "org.mockito:mockito-core:$MOCKITO_VERSION"
     testImplementation "org.robolectric:robolectric:$ROBOLECTRIC_VERSION"
     testImplementation "joda-time:joda-time:$JODATIME_VERSION"
+    testImplementation "androidx.test:core:1.6.1"
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 }
