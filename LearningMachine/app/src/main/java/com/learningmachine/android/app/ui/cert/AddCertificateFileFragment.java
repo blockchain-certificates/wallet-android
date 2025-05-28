@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.ui.cert;
+package com.hyland.android.app.ui.cert;
 
 import android.Manifest;
 import android.app.Activity;
@@ -27,12 +27,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.learningmachine.android.app.R;
-import com.learningmachine.android.app.data.CertificateManager;
-import com.learningmachine.android.app.data.inject.Injector;
-import com.learningmachine.android.app.databinding.FragmentAddCertificateFileBinding;
-import com.learningmachine.android.app.ui.LMFragment;
-import com.learningmachine.android.app.util.DialogUtils;
+import com.hyland.android.app.R;
+import com.hyland.android.app.data.CertificateManager;
+import com.hyland.android.app.data.inject.Injector;
+import com.hyland.android.app.databinding.FragmentAddCertificateFileBinding;
+import com.hyland.android.app.ui.LMFragment;
+import com.hyland.android.app.util.DialogUtils;
 
 import java.io.File;
 import java.io.FileFilter;

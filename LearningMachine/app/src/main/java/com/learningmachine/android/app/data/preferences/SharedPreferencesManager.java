@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.data.preferences;
+package com.hyland.android.app.data.preferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;

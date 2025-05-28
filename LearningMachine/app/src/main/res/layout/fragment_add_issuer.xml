@@ -14,7 +14,7 @@
             android:orientation="vertical"
             android:paddingEnd="@dimen/fragment_add_issuer_linear_layout_padding_horizontal"
             android:paddingStart="@dimen/fragment_add_issuer_linear_layout_padding_horizontal"
-            tools:context="com.learningmachine.android.app.ui.issuer.AddIssuerActivity">
+            tools:context="com.hyland.android.app.ui.issuer.AddIssuerActivity">
 
             <TextView
                 android:id="@+id/add_issuer_url_info_text_view"

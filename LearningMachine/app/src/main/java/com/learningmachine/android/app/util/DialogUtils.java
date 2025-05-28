@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.util;
+package com.hyland.android.app.util;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -12,9 +12,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.google.gson.JsonParseException;
-import com.learningmachine.android.app.R;
-import com.learningmachine.android.app.data.error.ExceptionWithResourceString;
-import com.learningmachine.android.app.dialog.AlertDialogFragment;
+import com.hyland.android.app.R;
+import com.hyland.android.app.data.error.ExceptionWithResourceString;
+import com.hyland.android.app.dialog.AlertDialogFragment;
 
 import java.net.UnknownHostException;
 

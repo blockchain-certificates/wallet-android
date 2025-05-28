@@ -1,13 +1,13 @@
-package com.learningmachine.android.app.ui.onboarding;
+package com.hyland.android.app.ui.onboarding;
 
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 
-import com.learningmachine.android.app.data.inject.Injector;
-import com.learningmachine.android.app.data.preferences.SharedPreferencesManager;
-import com.learningmachine.android.app.ui.LMFragment;
-import com.learningmachine.android.app.ui.home.HomeActivity;
+import com.hyland.android.app.data.inject.Injector;
+import com.hyland.android.app.data.preferences.SharedPreferencesManager;
+import com.hyland.android.app.ui.LMFragment;
+import com.hyland.android.app.ui.home.HomeActivity;
 
 import javax.inject.Inject;
 

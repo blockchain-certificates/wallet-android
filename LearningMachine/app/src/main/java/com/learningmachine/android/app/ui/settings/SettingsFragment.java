@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.ui.settings;
+package com.hyland.android.app.ui.settings;
 
 import android.content.Intent;
 import androidx.databinding.DataBindingUtil;
@@ -12,22 +12,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.learningmachine.android.app.BuildConfig;
-import com.learningmachine.android.app.R;
-import com.learningmachine.android.app.data.bitcoin.BitcoinManager;
-import com.learningmachine.android.app.data.inject.Injector;
-import com.learningmachine.android.app.data.passphrase.PassphraseManager;
-import com.learningmachine.android.app.databinding.FragmentSettingsBinding;
-import com.learningmachine.android.app.dialog.AlertDialogFragment;
-import com.learningmachine.android.app.ui.LMFragment;
-import com.learningmachine.android.app.ui.LMWebActivity;
-import com.learningmachine.android.app.ui.cert.AddCertificateActivity;
-import com.learningmachine.android.app.ui.issuer.AddIssuerActivity;
-import com.learningmachine.android.app.ui.onboarding.OnboardingActivity;
-import com.learningmachine.android.app.ui.settings.passphrase.RevealPassphraseActivity;
-import com.learningmachine.android.app.util.DialogUtils;
-import com.learningmachine.android.app.util.FileLoggingTree;
-import com.learningmachine.android.app.util.FileUtils;
+import com.hyland.android.app.BuildConfig;
+import com.hyland.android.app.R;
+import com.hyland.android.app.data.bitcoin.BitcoinManager;
+import com.hyland.android.app.data.inject.Injector;
+import com.hyland.android.app.data.passphrase.PassphraseManager;
+import com.hyland.android.app.databinding.FragmentSettingsBinding;
+import com.hyland.android.app.dialog.AlertDialogFragment;
+import com.hyland.android.app.ui.LMFragment;
+import com.hyland.android.app.ui.LMWebActivity;
+import com.hyland.android.app.ui.cert.AddCertificateActivity;
+import com.hyland.android.app.ui.issuer.AddIssuerActivity;
+import com.hyland.android.app.ui.onboarding.OnboardingActivity;
+import com.hyland.android.app.ui.settings.passphrase.RevealPassphraseActivity;
+import com.hyland.android.app.util.DialogUtils;
+import com.hyland.android.app.util.FileLoggingTree;
+import com.hyland.android.app.util.FileUtils;
 
 import java.io.File;
 
@@ -112,7 +112,7 @@ public class SettingsFragment extends LMFragment {
 
             Uri fileUri = FileProvider.getUriForFile(
                     getContext(),
-                    "com.learningmachine.android.app.fileprovider",
+                    "com.hyland.android.app.fileprovider",
                     file);
 
 

@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.data.verifier;
+package com.hyland.android.app.data.verifier;
 
 import com.google.gson.Gson;
 

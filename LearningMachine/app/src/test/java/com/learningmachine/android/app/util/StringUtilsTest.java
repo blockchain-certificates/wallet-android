@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.util;
+package com.hyland.android.app.util;
 
 import org.junit.Test;
 import static org.junit.Assert.assertFalse;

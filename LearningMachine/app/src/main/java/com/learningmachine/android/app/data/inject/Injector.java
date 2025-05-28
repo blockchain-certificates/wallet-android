@@ -1,8 +1,8 @@
-package com.learningmachine.android.app.data.inject;
+package com.hyland.android.app.data.inject;
 
 import android.content.Context;
 
-import com.learningmachine.android.app.LMConstants;
+import com.hyland.android.app.LMConstants;
 
 public final class Injector {
 

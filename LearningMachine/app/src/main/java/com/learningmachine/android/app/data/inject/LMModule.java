@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.data.inject;
+package com.hyland.android.app.data.inject;
 
 import android.content.Context;
 

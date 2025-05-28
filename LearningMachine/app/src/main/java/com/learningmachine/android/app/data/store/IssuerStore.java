@@ -1,17 +1,17 @@
-package com.learningmachine.android.app.data.store;
+package com.hyland.android.app.data.store;
 
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import androidx.annotation.VisibleForTesting;
 
-import com.learningmachine.android.app.data.model.IssuerRecord;
-import com.learningmachine.android.app.data.model.KeyRotation;
-import com.learningmachine.android.app.data.store.cursor.IssuerCursorWrapper;
-import com.learningmachine.android.app.data.store.cursor.KeyRotationCursorWrapper;
-import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
-import com.learningmachine.android.app.util.ListUtils;
-import com.learningmachine.android.app.util.StringUtils;
+import com.hyland.android.app.data.model.IssuerRecord;
+import com.hyland.android.app.data.model.KeyRotation;
+import com.hyland.android.app.data.store.cursor.IssuerCursorWrapper;
+import com.hyland.android.app.data.store.cursor.KeyRotationCursorWrapper;
+import com.hyland.android.app.data.webservice.response.IssuerResponse;
+import com.hyland.android.app.util.ListUtils;
+import com.hyland.android.app.util.StringUtils;
 
 import org.joda.time.DateTime;
 

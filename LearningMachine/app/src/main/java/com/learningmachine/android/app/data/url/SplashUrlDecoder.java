@@ -1,14 +1,14 @@
-package com.learningmachine.android.app.data.url;
+package com.hyland.android.app.data.url;
 
-import com.learningmachine.android.app.util.StringUtils;
+import com.hyland.android.app.util.StringUtils;
 
 import java.io.IOException;
 import java.net.URLDecoder;
 
 import timber.log.Timber;
 
-import static com.learningmachine.android.app.data.url.LaunchType.ADD_CERTIFICATE;
-import static com.learningmachine.android.app.data.url.LaunchType.ADD_ISSUER;
+import static com.hyland.android.app.data.url.LaunchType.ADD_CERTIFICATE;
+import static com.hyland.android.app.data.url.LaunchType.ADD_ISSUER;
 
 public class SplashUrlDecoder {
     private static final String ADD_ISSUER_PATH = "introduce-recipient/";

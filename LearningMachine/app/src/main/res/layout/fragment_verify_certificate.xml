@@ -5,7 +5,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.learningmachine.android.app.ui.cert.VerifyCertificateFragment">
+        tools:context="com.hyland.android.app.ui.cert.VerifyCertificateFragment">
 
         <WebView
             android:id="@+id/verify_view"
@@ -38,7 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
-                <com.learningmachine.android.app.ui.cert.VerificationCustomView
+                <com.hyland.android.app.ui.cert.VerificationCustomView
                     android:id="@+id/status_view"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

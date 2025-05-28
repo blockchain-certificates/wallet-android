@@ -1,8 +1,8 @@
-package com.learningmachine.android.app.util;
+package com.hyland.android.app.util;
 
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
-import com.learningmachine.android.app.data.error.LMApiError;
+import com.hyland.android.app.data.error.LMApiError;
 
 import java.io.IOException;
 

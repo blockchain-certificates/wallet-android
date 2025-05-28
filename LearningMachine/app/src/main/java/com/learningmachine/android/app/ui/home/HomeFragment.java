@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.ui.home;
+package com.hyland.android.app.ui.home;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,19 +17,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.learningmachine.android.app.R;
-import com.learningmachine.android.app.data.CertificateManager;
-import com.learningmachine.android.app.data.inject.Injector;
-import com.learningmachine.android.app.data.model.IssuerRecord;
-import com.learningmachine.android.app.data.preferences.SharedPreferencesManager;
-import com.learningmachine.android.app.databinding.FragmentHomeBinding;
-import com.learningmachine.android.app.databinding.ListIssuerHeaderBinding;
-import com.learningmachine.android.app.databinding.ListItemIssuerBinding;
-import com.learningmachine.android.app.ui.LMIssuerBaseFragment;
-import com.learningmachine.android.app.ui.cert.CertificateActivity;
-import com.learningmachine.android.app.ui.settings.SettingsActivity;
-import com.learningmachine.android.app.util.DialogUtils;
-import com.learningmachine.android.app.util.StringUtils;
+import com.hyland.android.app.R;
+import com.hyland.android.app.data.CertificateManager;
+import com.hyland.android.app.data.inject.Injector;
+import com.hyland.android.app.data.model.IssuerRecord;
+import com.hyland.android.app.data.preferences.SharedPreferencesManager;
+import com.hyland.android.app.databinding.FragmentHomeBinding;
+import com.hyland.android.app.databinding.ListIssuerHeaderBinding;
+import com.hyland.android.app.databinding.ListItemIssuerBinding;
+import com.hyland.android.app.ui.LMIssuerBaseFragment;
+import com.hyland.android.app.ui.cert.CertificateActivity;
+import com.hyland.android.app.ui.settings.SettingsActivity;
+import com.hyland.android.app.util.DialogUtils;
+import com.hyland.android.app.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;

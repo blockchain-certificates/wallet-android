@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.data.webservice;
+package com.hyland.android.app.data.webservice;
 
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;

@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.ui.cert;
+package com.hyland.android.app.ui.cert;
 
 public class CertificateInfoItemViewModel {
     private String mTitle;

@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.data.webservice;
+package com.hyland.android.app.data.webservice;
 
 
 import java.io.IOException;

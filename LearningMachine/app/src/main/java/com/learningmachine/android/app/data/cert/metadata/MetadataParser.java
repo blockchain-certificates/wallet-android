@@ -1,10 +1,10 @@
-package com.learningmachine.android.app.data.cert.metadata;
+package com.hyland.android.app.data.cert.metadata;
 
 import android.content.Context;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.learningmachine.android.app.R;
+import com.hyland.android.app.R;
 
 import java.io.Reader;
 import java.text.NumberFormat;

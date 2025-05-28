@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.ui.cert;
+package com.hyland.android.app.ui.cert;
 
 import android.content.Context;
 import androidx.databinding.DataBindingUtil;
@@ -14,22 +14,22 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.gson.JsonParseException;
-import com.learningmachine.android.app.R;
-import com.learningmachine.android.app.data.CertificateManager;
-import com.learningmachine.android.app.data.IssuerManager;
-import com.learningmachine.android.app.data.cert.metadata.Field;
-import com.learningmachine.android.app.data.cert.metadata.Metadata;
-import com.learningmachine.android.app.data.cert.metadata.MetadataParser;
-import com.learningmachine.android.app.data.inject.Injector;
-import com.learningmachine.android.app.data.model.CertificateRecord;
-import com.learningmachine.android.app.data.model.IssuerRecord;
-import com.learningmachine.android.app.databinding.CertificateInfoItemBinding;
-import com.learningmachine.android.app.databinding.FragmentCertificateInfoBinding;
-import com.learningmachine.android.app.ui.LMActivity;
-import com.learningmachine.android.app.ui.LMFragment;
-import com.learningmachine.android.app.util.DateUtils;
-import com.learningmachine.android.app.util.DialogUtils;
-import com.learningmachine.android.app.util.StringUtils;
+import com.hyland.android.app.R;
+import com.hyland.android.app.data.CertificateManager;
+import com.hyland.android.app.data.IssuerManager;
+import com.hyland.android.app.data.cert.metadata.Field;
+import com.hyland.android.app.data.cert.metadata.Metadata;
+import com.hyland.android.app.data.cert.metadata.MetadataParser;
+import com.hyland.android.app.data.inject.Injector;
+import com.hyland.android.app.data.model.CertificateRecord;
+import com.hyland.android.app.data.model.IssuerRecord;
+import com.hyland.android.app.databinding.CertificateInfoItemBinding;
+import com.hyland.android.app.databinding.FragmentCertificateInfoBinding;
+import com.hyland.android.app.ui.LMActivity;
+import com.hyland.android.app.ui.LMFragment;
+import com.hyland.android.app.util.DateUtils;
+import com.hyland.android.app.util.DialogUtils;
+import com.hyland.android.app.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;

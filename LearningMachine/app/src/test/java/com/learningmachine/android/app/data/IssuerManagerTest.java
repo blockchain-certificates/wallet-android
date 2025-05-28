@@ -1,12 +1,12 @@
-package com.learningmachine.android.app.data;
+package com.hyland.android.app.data;
 
 import com.learningmachine.android.test.stubs.StubIssuerService;
 import com.learningmachine.android.test.helpers.FileHelpers;
 import com.learningmachine.android.test.helpers.BlockCertHelpers;
 
-import com.learningmachine.android.app.data.cert.BlockCert;
-import com.learningmachine.android.app.data.store.IssuerStore;
-import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
+import com.hyland.android.app.data.cert.BlockCert;
+import com.hyland.android.app.data.store.IssuerStore;
+import com.hyland.android.app.data.webservice.response.IssuerResponse;
 
 
 import com.google.gson.Gson;

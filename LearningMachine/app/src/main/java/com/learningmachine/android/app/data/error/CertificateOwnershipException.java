@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.data.error;
+package com.hyland.android.app.data.error;
 
 public class CertificateOwnershipException extends Exception {
     public CertificateOwnershipException() {

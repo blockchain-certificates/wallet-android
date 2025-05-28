@@ -1,10 +1,10 @@
-package com.learningmachine.android.app.data.store;
+package com.hyland.android.app.data.store;
 
 import android.content.Context;
 import android.util.Base64;
 
-import com.learningmachine.android.app.util.ImageUtils;
-import com.learningmachine.android.app.util.StringUtils;
+import com.hyland.android.app.util.ImageUtils;
+import com.hyland.android.app.util.StringUtils;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;

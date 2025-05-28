@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.learningmachine.android.app.ui.issuer.CertificateHeaderViewModel"/>
+            type="com.hyland.android.app.ui.issuer.CertificateHeaderViewModel"/>
     </data>
 
 

@@ -11,9 +11,9 @@
             android:id="@+id/web_view_controller"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context="com.learningmachine.android.app.ui.LMWebActivity"/>
+            tools:context="com.hyland.android.app.ui.LMWebActivity"/>
 
-        <com.learningmachine.android.app.ui.LMProgressView
+        <com.hyland.android.app.ui.LMProgressView
             android:id="@+id/progress_bar"
             android:layout_width="36dp"
             android:layout_height="36dp"

@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.learningmachine.android.app.ui.home.IssuerListItemViewModel"/>
+            type="com.hyland.android.app.ui.home.IssuerListItemViewModel"/>
     </data>
 
     <RelativeLayout
@@ -41,7 +41,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <com.learningmachine.android.app.ui.AutoResizeTextView
+                <com.hyland.android.app.ui.AutoResizeTextView
                     android:id="@+id/textView"
                     style="@style/Text.Title.2"
                     android:layout_width="0dp"

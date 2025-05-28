@@ -1,8 +1,8 @@
-package com.learningmachine.android.app.data.model;
+package com.hyland.android.app.data.model;
 
 import com.google.gson.annotations.SerializedName;
-import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
-import com.learningmachine.android.app.util.StringUtils;
+import com.hyland.android.app.data.webservice.response.IssuerResponse;
+import com.hyland.android.app.util.StringUtils;
 
 public class CertificateRecord {
 

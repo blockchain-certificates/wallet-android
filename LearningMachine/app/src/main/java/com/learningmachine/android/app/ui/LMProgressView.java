@@ -1,11 +1,11 @@
-package com.learningmachine.android.app.ui;
+package com.hyland.android.app.ui;
 
 import android.content.Context;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
-import com.learningmachine.android.app.R;
+import com.hyland.android.app.R;
 import com.smallplanet.labalib.Laba;
 
 public class LMProgressView extends ConstraintLayout {

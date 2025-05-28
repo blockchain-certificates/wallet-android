@@ -1,18 +1,18 @@
-package com.learningmachine.android.app.data;
+package com.hyland.android.app.data;
 
 import android.content.Context;
 
-import com.learningmachine.android.app.LMConstants;
-import com.learningmachine.android.app.data.cert.BlockCert;
-import com.learningmachine.android.app.data.error.IssuerAnalyticsException;
-import com.learningmachine.android.app.data.model.IssuerRecord;
-import com.learningmachine.android.app.data.store.IssuerStore;
-import com.learningmachine.android.app.data.webservice.IssuerService;
-import com.learningmachine.android.app.data.webservice.request.IssuerAnalytic;
-import com.learningmachine.android.app.data.webservice.request.IssuerIntroductionRequest;
-import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
-import com.learningmachine.android.app.util.GsonUtil;
-import com.learningmachine.android.app.util.StringUtils;
+import com.hyland.android.app.LMConstants;
+import com.hyland.android.app.data.cert.BlockCert;
+import com.hyland.android.app.data.error.IssuerAnalyticsException;
+import com.hyland.android.app.data.model.IssuerRecord;
+import com.hyland.android.app.data.store.IssuerStore;
+import com.hyland.android.app.data.webservice.IssuerService;
+import com.hyland.android.app.data.webservice.request.IssuerAnalytic;
+import com.hyland.android.app.data.webservice.request.IssuerIntroductionRequest;
+import com.hyland.android.app.data.webservice.response.IssuerResponse;
+import com.hyland.android.app.util.GsonUtil;
+import com.hyland.android.app.util.StringUtils;
 
 import java.io.IOException;
 import java.util.List;

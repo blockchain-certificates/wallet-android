@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.ui.issuer;
+package com.hyland.android.app.ui.issuer;
 
 import androidx.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -7,12 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.learningmachine.android.app.R;
-import com.learningmachine.android.app.data.IssuerManager;
-import com.learningmachine.android.app.data.bitcoin.BitcoinManager;
-import com.learningmachine.android.app.data.inject.Injector;
-import com.learningmachine.android.app.databinding.FragmentIssuerInfoBinding;
-import com.learningmachine.android.app.ui.LMFragment;
+import com.hyland.android.app.R;
+import com.hyland.android.app.data.IssuerManager;
+import com.hyland.android.app.data.bitcoin.BitcoinManager;
+import com.hyland.android.app.data.inject.Injector;
+import com.hyland.android.app.databinding.FragmentIssuerInfoBinding;
+import com.hyland.android.app.ui.LMFragment;
 
 import javax.inject.Inject;
 

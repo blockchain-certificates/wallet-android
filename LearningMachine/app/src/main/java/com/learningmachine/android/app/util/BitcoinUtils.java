@@ -1,10 +1,10 @@
-package com.learningmachine.android.app.util;
+package com.hyland.android.app.util;
 
 import android.content.Context;
 import android.content.res.AssetManager;
 import androidx.annotation.NonNull;
 
-import com.learningmachine.android.app.LMConstants;
+import com.hyland.android.app.LMConstants;
 
 import org.bitcoinj.core.NetworkParameters;
 import org.bitcoinj.crypto.MnemonicCode;

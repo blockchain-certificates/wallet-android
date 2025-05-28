@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.data.cert.v30;
+package com.hyland.android.app.data.cert.v30;
 
 import org.junit.Before;
 import org.junit.Test;

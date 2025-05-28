@@ -9,13 +9,13 @@
 Gradle allows us to define different product variants. Each has a separate app id and can be installed simultaneously. Currently they all use the Bitcoin main net and do not differ all that much. Production has an empty logging tree.
 
 * `dev`
-  * App id: `com.learningmachine.android.app.dev`
+  * App id: `com.hyland.android.app.dev`
   * Dimension: `env`
 * `staging`
-  * App id: `com.learningmachine.android.app.staging`
+  * App id: `com.hyland.android.app.staging`
   * Dimension: `env`
 * `production`
-  * App id: `com.learningmachine.android.app`
+  * App id: `com.hyland.android.app`
   * Dimension: `env`
 
 ## Running Tests

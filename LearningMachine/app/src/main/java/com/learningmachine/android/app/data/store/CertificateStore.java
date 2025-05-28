@@ -1,13 +1,13 @@
-package com.learningmachine.android.app.data.store;
+package com.hyland.android.app.data.store;
 
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.learningmachine.android.app.data.cert.BlockCert;
-import com.learningmachine.android.app.data.model.CertificateRecord;
-import com.learningmachine.android.app.data.store.cursor.CertificateCursorWrapper;
-import com.learningmachine.android.app.util.StringUtils;
+import com.hyland.android.app.data.cert.BlockCert;
+import com.hyland.android.app.data.model.CertificateRecord;
+import com.hyland.android.app.data.store.cursor.CertificateCursorWrapper;
+import com.hyland.android.app.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;

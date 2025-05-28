@@ -1,7 +1,7 @@
-package com.learningmachine.android.app.data.cert;
+package com.hyland.android.app.data.cert;
 
 import com.google.gson.JsonObject;
-import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
+import com.hyland.android.app.data.webservice.response.IssuerResponse;
 
 public interface BlockCert {
 

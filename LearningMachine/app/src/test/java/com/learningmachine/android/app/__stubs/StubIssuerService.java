@@ -2,11 +2,11 @@ package com.learningmachine.android.test.stubs;
 
 import com.learningmachine.android.test.helpers.FileHelpers;
 
-import com.learningmachine.android.app.data.webservice.request.IssuerAnalytic;
-import com.learningmachine.android.app.data.webservice.request.IssuerIntroductionRequest;
-import com.learningmachine.android.app.data.webservice.response.DidResponse;
-import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
-import com.learningmachine.android.app.data.webservice.IssuerService;
+import com.hyland.android.app.data.webservice.request.IssuerAnalytic;
+import com.hyland.android.app.data.webservice.request.IssuerIntroductionRequest;
+import com.hyland.android.app.data.webservice.response.DidResponse;
+import com.hyland.android.app.data.webservice.response.IssuerResponse;
+import com.hyland.android.app.data.webservice.IssuerService;
 
 import rx.Observable;
 

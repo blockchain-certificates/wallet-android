@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.data.store.db;
+package com.hyland.android.app.data.store.db;
 
 import android.database.sqlite.SQLiteDatabase;
 

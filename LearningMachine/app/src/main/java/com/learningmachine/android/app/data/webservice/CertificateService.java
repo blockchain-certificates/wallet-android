@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.data.webservice;
+package com.hyland.android.app.data.webservice;
 
 import okhttp3.ResponseBody;
 import retrofit2.http.GET;

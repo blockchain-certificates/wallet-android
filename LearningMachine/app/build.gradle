@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    namespace "com.learningmachine.android.app"
+    namespace "com.hyland.android.app"
     compileSdkVersion 34
     dexOptions {
         javaMaxHeapSize "4g"
     }
     defaultConfig {
-        applicationId "com.learningmachine.android.app"
+        applicationId "com.hyland.android.app"
         minSdkVersion 31
         targetSdkVersion 34
         versionName "3.2.1"
@@ -61,7 +61,7 @@ android {
 
     productFlavors {
         dev {
-            applicationId "com.learningmachine.android.app.dev"
+            applicationId "com.hyland.android.app.dev"
             dimension "env"
             if (project.hasProperty("devBuild")) {
                 // don't package all resources for dev builds
@@ -69,7 +69,7 @@ android {
             }
         }
         staging {
-            applicationId "com.learningmachine.android.app.staging"
+            applicationId "com.hyland.android.app.staging"
             dimension "env"
         }
         production {

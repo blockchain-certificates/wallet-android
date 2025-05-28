@@ -1,19 +1,19 @@
-package com.learningmachine.android.app.data.bitcoin;
+package com.hyland.android.app.data.bitcoin;
 
 import android.content.Context;
 import android.os.Environment;
 import androidx.annotation.VisibleForTesting;
 import android.util.Pair;
 
-import com.learningmachine.android.app.LMConstants;
-import com.learningmachine.android.app.R;
-import com.learningmachine.android.app.data.error.ExceptionWithResourceString;
-import com.learningmachine.android.app.data.passphrase.PassphraseManager;
-import com.learningmachine.android.app.data.preferences.SharedPreferencesManager;
-import com.learningmachine.android.app.data.store.CertificateStore;
-import com.learningmachine.android.app.data.store.IssuerStore;
-import com.learningmachine.android.app.util.BitcoinUtils;
-import com.learningmachine.android.app.util.StringUtils;
+import com.hyland.android.app.LMConstants;
+import com.hyland.android.app.R;
+import com.hyland.android.app.data.error.ExceptionWithResourceString;
+import com.hyland.android.app.data.passphrase.PassphraseManager;
+import com.hyland.android.app.data.preferences.SharedPreferencesManager;
+import com.hyland.android.app.data.store.CertificateStore;
+import com.hyland.android.app.data.store.IssuerStore;
+import com.hyland.android.app.util.BitcoinUtils;
+import com.hyland.android.app.util.StringUtils;
 
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.NetworkParameters;

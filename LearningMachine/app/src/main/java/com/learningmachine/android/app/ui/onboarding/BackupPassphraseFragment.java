@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.ui.onboarding;
+package com.hyland.android.app.ui.onboarding;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,13 +14,13 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.learningmachine.android.app.R;
-import com.learningmachine.android.app.data.bitcoin.BitcoinManager;
-import com.learningmachine.android.app.data.inject.Injector;
-import com.learningmachine.android.app.databinding.FragmentBackupPassphraseBinding;
-import com.learningmachine.android.app.dialog.AlertDialogFragment;
-import com.learningmachine.android.app.ui.home.HomeActivity;
-import com.learningmachine.android.app.util.DialogUtils;
+import com.hyland.android.app.R;
+import com.hyland.android.app.data.bitcoin.BitcoinManager;
+import com.hyland.android.app.data.inject.Injector;
+import com.hyland.android.app.databinding.FragmentBackupPassphraseBinding;
+import com.hyland.android.app.dialog.AlertDialogFragment;
+import com.hyland.android.app.ui.home.HomeActivity;
+import com.hyland.android.app.util.DialogUtils;
 import com.smallplanet.labalib.Laba;
 
 import java.lang.reflect.InvocationTargetException;

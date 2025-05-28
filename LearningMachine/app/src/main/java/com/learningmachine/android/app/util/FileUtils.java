@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.util;
+package com.hyland.android.app.util;
 
 import android.content.Context;
 
@@ -17,7 +17,7 @@ import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.io.UnsupportedEncodingException;
-import com.learningmachine.android.app.util.StringUtils;
+import com.hyland.android.app.util.StringUtils;
 
 import okio.Buffer;
 import timber.log.Timber;

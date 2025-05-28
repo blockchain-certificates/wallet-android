@@ -1,5 +1,5 @@
 
-package com.learningmachine.android.app.data.cert.v12;
+package com.hyland.android.app.data.cert.v12;
 
 import java.net.URI;
 import java.util.HashMap;

@@ -1,12 +1,12 @@
-package com.learningmachine.android.app.ui.home;
+package com.hyland.android.app.ui.home;
 
 import android.content.Context;
 import android.content.Intent;
 import androidx.fragment.app.Fragment;
 
-import com.learningmachine.android.app.R;
-import com.learningmachine.android.app.ui.LMSingleFragmentActivity;
-import com.learningmachine.android.app.util.FileLoggingTree;
+import com.hyland.android.app.R;
+import com.hyland.android.app.ui.LMSingleFragmentActivity;
+import com.hyland.android.app.util.FileLoggingTree;
 
 public class HomeActivity extends LMSingleFragmentActivity {
 

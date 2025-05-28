@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.util;
+package com.hyland.android.app.util;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;

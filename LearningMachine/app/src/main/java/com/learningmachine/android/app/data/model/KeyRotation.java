@@ -1,7 +1,7 @@
-package com.learningmachine.android.app.data.model;
+package com.hyland.android.app.data.model;
 
 import com.google.gson.annotations.SerializedName;
-import com.learningmachine.android.app.LMConstants;
+import com.hyland.android.app.LMConstants;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;

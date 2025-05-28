@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.data.log;
+package com.hyland.android.app.data.log;
 
 import timber.log.Timber;
 

@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.ui.onboarding;
+package com.hyland.android.app.ui.onboarding;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

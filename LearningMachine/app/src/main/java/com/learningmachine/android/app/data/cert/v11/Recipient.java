@@ -1,5 +1,5 @@
 
-package com.learningmachine.android.app.data.cert.v11;
+package com.hyland.android.app.data.cert.v11;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

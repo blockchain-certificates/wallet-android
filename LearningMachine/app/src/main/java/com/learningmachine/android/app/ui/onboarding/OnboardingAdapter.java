@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.ui.onboarding;
+package com.hyland.android.app.ui.onboarding;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;

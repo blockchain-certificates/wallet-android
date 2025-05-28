@@ -1,10 +1,10 @@
-package com.learningmachine.android.app.ui;
+package com.hyland.android.app.ui;
 
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.learningmachine.android.app.R;
+import com.hyland.android.app.R;
 
 public abstract class LMSingleFragmentActivity extends LMActivity {
 

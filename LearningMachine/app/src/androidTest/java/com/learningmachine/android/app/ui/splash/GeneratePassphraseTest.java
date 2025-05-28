@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.ui.splash;
+package com.hyland.android.app.ui.splash;
 
 
 import androidx.test.espresso.UiController;
@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.TextView;
 
-import com.learningmachine.android.app.R;
+import com.hyland.android.app.R;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;

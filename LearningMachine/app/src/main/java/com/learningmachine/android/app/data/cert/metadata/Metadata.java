@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.data.cert.metadata;
+package com.hyland.android.app.data.cert.metadata;
 
 import com.google.gson.JsonObject;
 

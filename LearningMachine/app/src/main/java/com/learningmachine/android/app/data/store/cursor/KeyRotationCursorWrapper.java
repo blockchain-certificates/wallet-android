@@ -1,10 +1,10 @@
-package com.learningmachine.android.app.data.store.cursor;
+package com.hyland.android.app.data.store.cursor;
 
 import android.database.Cursor;
 import android.database.CursorWrapper;
 
-import com.learningmachine.android.app.data.model.KeyRotation;
-import com.learningmachine.android.app.data.store.LMDatabaseHelper;
+import com.hyland.android.app.data.model.KeyRotation;
+import com.hyland.android.app.data.store.LMDatabaseHelper;
 
 public class KeyRotationCursorWrapper extends CursorWrapper {
 

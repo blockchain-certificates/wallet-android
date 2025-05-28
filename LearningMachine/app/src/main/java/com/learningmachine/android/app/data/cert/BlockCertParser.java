@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.data.cert;
+package com.hyland.android.app.data.cert;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

@@ -14,7 +14,7 @@
  *  0. You just DO WHAT YOU WANT TO.
  */
 
-package com.learningmachine.android.app.ui;
+package com.hyland.android.app.ui;
 
 import android.content.Context;
 import android.text.Layout.Alignment;

@@ -35,7 +35,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spreader1" />
 
-        <com.learningmachine.android.app.ui.LMProgressView
+        <com.hyland.android.app.ui.LMProgressView
             android:id="@+id/progress_bar"
             android:layout_width="40dp"
             android:layout_height="40dp"

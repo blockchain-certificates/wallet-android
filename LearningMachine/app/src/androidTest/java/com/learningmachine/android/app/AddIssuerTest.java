@@ -1,4 +1,4 @@
-package com.learningmachine.android.app;
+package com.hyland.android.app;
 
 import androidx.databinding.adapters.ViewBindingAdapter;
 import androidx.test.espresso.ViewAssertion;
@@ -6,7 +6,7 @@ import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import com.learningmachine.android.app.ui.home.HomeActivity;
+import com.hyland.android.app.ui.home.HomeActivity;
 
 import org.junit.After;
 import org.junit.Before;

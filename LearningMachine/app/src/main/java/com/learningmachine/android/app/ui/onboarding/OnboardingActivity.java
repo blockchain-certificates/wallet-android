@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.ui.onboarding;
+package com.hyland.android.app.ui.onboarding;
 
 import androidx.databinding.DataBindingUtil;
 
@@ -7,12 +7,12 @@ import android.os.Bundle;
 import androidx.core.app.ActivityCompat;
 import androidx.viewpager.widget.ViewPager;
 
-import com.learningmachine.android.app.R;
-import com.learningmachine.android.app.data.inject.Injector;
-import com.learningmachine.android.app.data.preferences.SharedPreferencesManager;
-import com.learningmachine.android.app.databinding.ActivityOnboardingBinding;
-import com.learningmachine.android.app.ui.LMActivity;
-import com.learningmachine.android.app.ui.onboarding.OnboardingFlow.FlowType;
+import com.hyland.android.app.R;
+import com.hyland.android.app.data.inject.Injector;
+import com.hyland.android.app.data.preferences.SharedPreferencesManager;
+import com.hyland.android.app.databinding.ActivityOnboardingBinding;
+import com.hyland.android.app.ui.LMActivity;
+import com.hyland.android.app.ui.onboarding.OnboardingFlow.FlowType;
 
 import javax.inject.Inject;
 

@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.dialog;
+package com.hyland.android.app.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -23,7 +23,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.learningmachine.android.app.R;
+import com.hyland.android.app.R;
 
 public class AlertDialogFragment extends DialogFragment {
 

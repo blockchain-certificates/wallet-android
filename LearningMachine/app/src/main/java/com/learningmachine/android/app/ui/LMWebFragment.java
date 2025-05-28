@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.ui;
+package com.hyland.android.app.ui;
 
 import androidx.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
@@ -11,8 +11,8 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.learningmachine.android.app.R;
-import com.learningmachine.android.app.databinding.FragmentWebBinding;
+import com.hyland.android.app.R;
+import com.hyland.android.app.databinding.FragmentWebBinding;
 
 public class LMWebFragment extends LMFragment {
 

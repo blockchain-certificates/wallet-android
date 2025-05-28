@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.ui.cert;
+package com.hyland.android.app.ui.cert;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,14 +13,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 
-import com.learningmachine.android.app.R;
-import com.learningmachine.android.app.data.cert.v20.Anchor;
-import com.learningmachine.android.app.data.inject.Injector;
-import com.learningmachine.android.app.data.verifier.VerificationSteps;
-import com.learningmachine.android.app.data.verifier.VerifierStatus;
-import com.learningmachine.android.app.databinding.FragmentVerifyCertificateBinding;
-import com.learningmachine.android.app.util.DialogUtils;
-import com.learningmachine.android.app.util.FileUtils;
+import com.hyland.android.app.R;
+import com.hyland.android.app.data.cert.v20.Anchor;
+import com.hyland.android.app.data.inject.Injector;
+import com.hyland.android.app.data.verifier.VerificationSteps;
+import com.hyland.android.app.data.verifier.VerifierStatus;
+import com.hyland.android.app.databinding.FragmentVerifyCertificateBinding;
+import com.hyland.android.app.util.DialogUtils;
+import com.hyland.android.app.util.FileUtils;
 
 import java.lang.ref.WeakReference;
 

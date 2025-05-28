@@ -1,10 +1,10 @@
-package com.learningmachine.android.app.data.store;
+package com.hyland.android.app.data.store;
 
 import android.content.Context;
 
-import com.learningmachine.android.app.data.model.IssuerRecord;
-import com.learningmachine.android.app.data.model.KeyRotation;
-import com.learningmachine.android.app.util.ListUtils;
+import com.hyland.android.app.data.model.IssuerRecord;
+import com.hyland.android.app.data.model.KeyRotation;
+import com.hyland.android.app.util.ListUtils;
 
 import org.junit.Before;
 import org.junit.Test;

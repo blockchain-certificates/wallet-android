@@ -1,8 +1,8 @@
-package com.learningmachine.android.app.ui.cert;
+package com.hyland.android.app.ui.cert;
 
-import com.learningmachine.android.app.ui.cert.CertificateFragment;
-import com.learningmachine.android.app.data.cert.BlockCert;
-import com.learningmachine.android.app.data.cert.BlockCertParser;
+import com.hyland.android.app.ui.cert.CertificateFragment;
+import com.hyland.android.app.data.cert.BlockCert;
+import com.hyland.android.app.data.cert.BlockCertParser;
 
 import com.learningmachine.android.test.data.cert.v30.V3Assertions;
 import com.learningmachine.android.test.helpers.FileHelpers;

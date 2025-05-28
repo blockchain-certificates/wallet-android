@@ -1,7 +1,7 @@
 // https://github.com/scottyab/AESCrypt-Android
 // Apache License, Version 2.0
 
-package com.learningmachine.android.app.util;
+package com.hyland.android.app.util;
 
 import android.util.Base64;
 import android.util.Log;

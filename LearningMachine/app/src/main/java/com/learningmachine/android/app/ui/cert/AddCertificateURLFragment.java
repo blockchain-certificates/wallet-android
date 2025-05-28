@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.ui.cert;
+package com.hyland.android.app.ui.cert;
 
 import android.content.Intent;
 import androidx.databinding.DataBindingUtil;
@@ -12,13 +12,13 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
-import com.learningmachine.android.app.R;
-import com.learningmachine.android.app.data.CertificateManager;
-import com.learningmachine.android.app.data.inject.Injector;
-import com.learningmachine.android.app.databinding.FragmentAddCertificateUrlBinding;
-import com.learningmachine.android.app.ui.LMFragment;
-import com.learningmachine.android.app.util.DialogUtils;
-import com.learningmachine.android.app.util.StringUtils;
+import com.hyland.android.app.R;
+import com.hyland.android.app.data.CertificateManager;
+import com.hyland.android.app.data.inject.Injector;
+import com.hyland.android.app.databinding.FragmentAddCertificateUrlBinding;
+import com.hyland.android.app.ui.LMFragment;
+import com.hyland.android.app.util.DialogUtils;
+import com.hyland.android.app.util.StringUtils;
 
 import javax.inject.Inject;
 

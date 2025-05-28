@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.ui.cert;
+package com.hyland.android.app.ui.cert;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -16,8 +16,8 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.learningmachine.android.app.R;
-import com.learningmachine.android.app.data.verifier.VerifierStatus;
+import com.hyland.android.app.R;
+import com.hyland.android.app.data.verifier.VerifierStatus;
 
 public class VerificationCustomItem extends RelativeLayout {
     public static final int ADJUSTED_MARGIN_TOP = -8;

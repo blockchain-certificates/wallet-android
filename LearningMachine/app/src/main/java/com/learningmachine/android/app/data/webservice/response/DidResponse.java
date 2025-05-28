@@ -1,6 +1,6 @@
-package com.learningmachine.android.app.data.webservice.response;
+package com.hyland.android.app.data.webservice.response;
 
-import com.learningmachine.android.app.data.model.DidDocument;
+import com.hyland.android.app.data.model.DidDocument;
 
 import com.google.gson.annotations.SerializedName;
 

@@ -1,8 +1,8 @@
-package com.learningmachine.android.app.ui.cert;
+package com.hyland.android.app.ui.cert;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.learningmachine.android.app.databinding.CertificateInfoItemBinding;
+import com.hyland.android.app.databinding.CertificateInfoItemBinding;
 
 public class CertificateInfoItemViewHolder extends RecyclerView.ViewHolder {
     private final CertificateInfoItemBinding mBinding;

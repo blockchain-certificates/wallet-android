@@ -1,14 +1,14 @@
-package com.learningmachine.android.app.ui.onboarding;
+package com.hyland.android.app.ui.onboarding;
 
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.learningmachine.android.app.ui.onboarding.OnboardingScreen.ACCOUNT_CHOOSER;
-import static com.learningmachine.android.app.ui.onboarding.OnboardingScreen.WELCOME_BACK;
-import static com.learningmachine.android.app.ui.onboarding.OnboardingScreen.BACKUP_PASSPHRASE;
-import static com.learningmachine.android.app.ui.onboarding.OnboardingScreen.VIEW_PASSPHRASE;
-import static com.learningmachine.android.app.ui.onboarding.OnboardingScreen.PASTE_PASSPHRASE;
+import static com.hyland.android.app.ui.onboarding.OnboardingScreen.ACCOUNT_CHOOSER;
+import static com.hyland.android.app.ui.onboarding.OnboardingScreen.WELCOME_BACK;
+import static com.hyland.android.app.ui.onboarding.OnboardingScreen.BACKUP_PASSPHRASE;
+import static com.hyland.android.app.ui.onboarding.OnboardingScreen.VIEW_PASSPHRASE;
+import static com.hyland.android.app.ui.onboarding.OnboardingScreen.PASTE_PASSPHRASE;
 
 public class OnboardingFlow implements Serializable {
 

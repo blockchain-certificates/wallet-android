@@ -109,7 +109,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.learningmachine.android.app.fileprovider"
+            android:authorities="com.hyland.android.app.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

@@ -1,25 +1,25 @@
-package com.learningmachine.android.app.data;
+package com.hyland.android.app.data;
 
 import android.content.Context;
 import android.content.res.AssetManager;
 
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
-import com.learningmachine.android.app.LMConstants;
-import com.learningmachine.android.app.R;
-import com.learningmachine.android.app.data.bitcoin.BitcoinManager;
-import com.learningmachine.android.app.data.cert.BlockCert;
-import com.learningmachine.android.app.data.cert.BlockCertParser;
-import com.learningmachine.android.app.data.error.CertificateFileImportException;
-import com.learningmachine.android.app.data.error.CertificateOwnershipException;
-import com.learningmachine.android.app.data.error.ExceptionWithResourceString;
-import com.learningmachine.android.app.data.model.CertificateRecord;
-import com.learningmachine.android.app.data.store.CertificateStore;
-import com.learningmachine.android.app.data.store.IssuerStore;
-import com.learningmachine.android.app.data.webservice.CertificateService;
-import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
-import com.learningmachine.android.app.util.FileUtils;
-import com.learningmachine.android.app.util.StringUtils;
+import com.hyland.android.app.LMConstants;
+import com.hyland.android.app.R;
+import com.hyland.android.app.data.bitcoin.BitcoinManager;
+import com.hyland.android.app.data.cert.BlockCert;
+import com.hyland.android.app.data.cert.BlockCertParser;
+import com.hyland.android.app.data.error.CertificateFileImportException;
+import com.hyland.android.app.data.error.CertificateOwnershipException;
+import com.hyland.android.app.data.error.ExceptionWithResourceString;
+import com.hyland.android.app.data.model.CertificateRecord;
+import com.hyland.android.app.data.store.CertificateStore;
+import com.hyland.android.app.data.store.IssuerStore;
+import com.hyland.android.app.data.webservice.CertificateService;
+import com.hyland.android.app.data.webservice.response.IssuerResponse;
+import com.hyland.android.app.util.FileUtils;
+import com.hyland.android.app.util.StringUtils;
 
 import java.io.File;
 import java.io.FileInputStream;

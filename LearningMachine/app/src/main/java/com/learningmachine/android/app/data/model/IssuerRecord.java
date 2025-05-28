@@ -1,9 +1,9 @@
-package com.learningmachine.android.app.data.model;
+package com.hyland.android.app.data.model;
 
 import com.google.gson.annotations.SerializedName;
-import com.learningmachine.android.app.LMConstants;
-import com.learningmachine.android.app.util.ImageUtils;
-import com.learningmachine.android.app.util.ListUtils;
+import com.hyland.android.app.LMConstants;
+import com.hyland.android.app.util.ImageUtils;
+import com.hyland.android.app.util.ListUtils;
 
 import java.util.List;
 

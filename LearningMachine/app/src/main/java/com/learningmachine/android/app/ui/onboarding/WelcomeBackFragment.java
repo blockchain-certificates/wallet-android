@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.ui.onboarding;
+package com.hyland.android.app.ui.onboarding;
 
 import android.content.Context;
 import androidx.databinding.DataBindingUtil;
@@ -7,8 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.learningmachine.android.app.R;
-import com.learningmachine.android.app.databinding.FragmentWelcomeBackBinding;
+import com.hyland.android.app.R;
+import com.hyland.android.app.databinding.FragmentWelcomeBackBinding;
 import com.smallplanet.labalib.Laba;
 
 public class WelcomeBackFragment extends OnboardingFragment {

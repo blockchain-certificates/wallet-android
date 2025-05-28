@@ -1,9 +1,9 @@
-package com.learningmachine.android.app.data.cert.v12;
+package com.hyland.android.app.data.cert.v12;
 
 import com.google.gson.JsonObject;
-import com.learningmachine.android.app.data.cert.BlockCert;
-import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
-import com.learningmachine.android.app.util.ListUtils;
+import com.hyland.android.app.data.cert.BlockCert;
+import com.hyland.android.app.data.webservice.response.IssuerResponse;
+import com.hyland.android.app.util.ListUtils;
 
 import org.joda.time.DateTime;
 
@@ -22,7 +22,7 @@ public class BlockCertV12 extends BlockchainCertificate implements BlockCert {
         Issuer issuer = new Issuer();
         issuer.setId(new URI(issuerUuid));
 
-        Certificate certificate = new com.learningmachine.android.app.data.cert.v12.Certificate();
+        Certificate certificate = new com.hyland.android.app.data.cert.v12.Certificate();
         certificate.setIssuer(issuer);
         certificate.setName(name);
         certificate.setDescription(description);

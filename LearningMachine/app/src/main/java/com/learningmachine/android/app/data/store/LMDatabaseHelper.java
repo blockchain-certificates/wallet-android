@@ -1,15 +1,15 @@
-package com.learningmachine.android.app.data.store;
+package com.hyland.android.app.data.store;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.VisibleForTesting;
 
-import com.learningmachine.android.app.data.store.db.Migration;
+import com.hyland.android.app.data.store.db.Migration;
 
 public class LMDatabaseHelper extends SQLiteOpenHelper {
 
-    @VisibleForTesting static final String DB_NAME = "com.learningmachine.android.app.sqlite";
+    @VisibleForTesting static final String DB_NAME = "com.hyland.android.app.sqlite";
 
     private static final int DB_VERSION = 6;
 

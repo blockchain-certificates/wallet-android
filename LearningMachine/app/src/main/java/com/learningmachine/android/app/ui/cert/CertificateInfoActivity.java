@@ -1,11 +1,11 @@
-package com.learningmachine.android.app.ui.cert;
+package com.hyland.android.app.ui.cert;
 
 import android.content.Context;
 import android.content.Intent;
 import androidx.fragment.app.Fragment;
 
-import com.learningmachine.android.app.R;
-import com.learningmachine.android.app.ui.LMSingleFragmentActivity;
+import com.hyland.android.app.R;
+import com.hyland.android.app.ui.LMSingleFragmentActivity;
 
 public class CertificateInfoActivity extends LMSingleFragmentActivity {
 

@@ -1,9 +1,9 @@
-package com.learningmachine.android.app.ui.issuer;
+package com.hyland.android.app.ui.issuer;
 
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 
-import com.learningmachine.android.app.data.model.CertificateRecord;
+import com.hyland.android.app.data.model.CertificateRecord;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;

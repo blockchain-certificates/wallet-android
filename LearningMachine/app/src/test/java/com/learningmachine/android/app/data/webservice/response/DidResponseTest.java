@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.data.webservice.response;
+package com.hyland.android.app.data.webservice.response;
 
 import com.learningmachine.android.test.helpers.FileHelpers;
 

@@ -1,6 +1,6 @@
-package com.learningmachine.android.app.data.cert.v30;
+package com.hyland.android.app.data.cert.v30;
 
-import com.learningmachine.android.app.data.cert.BlockCert;
+import com.hyland.android.app.data.cert.BlockCert;
 
 import com.learningmachine.android.test.helpers.BlockCertHelpers;
 import com.learningmachine.android.test.data.cert.v30.V3Assertions;

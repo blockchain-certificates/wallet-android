@@ -1,10 +1,10 @@
-package com.learningmachine.android.app.data.store;
+package com.hyland.android.app.data.store;
 
 import android.content.Context;
 
-import com.learningmachine.android.app.data.cert.BlockCert;
-import com.learningmachine.android.app.data.cert.v12.BlockCertV12;
-import com.learningmachine.android.app.data.model.IssuerRecord;
+import com.hyland.android.app.data.cert.BlockCert;
+import com.hyland.android.app.data.cert.v12.BlockCertV12;
+import com.hyland.android.app.data.model.IssuerRecord;
 
 import org.junit.Before;
 import org.junit.Test;

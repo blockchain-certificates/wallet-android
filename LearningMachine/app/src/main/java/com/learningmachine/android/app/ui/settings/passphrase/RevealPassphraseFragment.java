@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.ui.settings.passphrase;
+package com.hyland.android.app.ui.settings.passphrase;
 
 import android.content.Intent;
 import androidx.databinding.DataBindingUtil;
@@ -11,13 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.learningmachine.android.app.R;
-import com.learningmachine.android.app.data.bitcoin.BitcoinManager;
-import com.learningmachine.android.app.data.inject.Injector;
-import com.learningmachine.android.app.databinding.FragmentRevealPassphraseBinding;
-import com.learningmachine.android.app.ui.LMActivity;
-import com.learningmachine.android.app.ui.LMFragment;
-import com.learningmachine.android.app.util.DialogUtils;
+import com.hyland.android.app.R;
+import com.hyland.android.app.data.bitcoin.BitcoinManager;
+import com.hyland.android.app.data.inject.Injector;
+import com.hyland.android.app.databinding.FragmentRevealPassphraseBinding;
+import com.hyland.android.app.ui.LMActivity;
+import com.hyland.android.app.ui.LMFragment;
+import com.hyland.android.app.util.DialogUtils;
 import com.smallplanet.labalib.Laba;
 
 import javax.inject.Inject;

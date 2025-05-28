@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.ui.onboarding;
+package com.hyland.android.app.ui.onboarding;
 
 import androidx.test.espresso.UiController;
 import androidx.test.espresso.ViewAction;
@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.TextView;
 
-import com.learningmachine.android.app.R;
+import com.hyland.android.app.R;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;

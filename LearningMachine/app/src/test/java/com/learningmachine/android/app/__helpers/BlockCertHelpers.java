@@ -1,7 +1,7 @@
 package com.learningmachine.android.test.helpers;
 
-import com.learningmachine.android.app.data.cert.BlockCertParser;
-import com.learningmachine.android.app.data.cert.BlockCert;
+import com.hyland.android.app.data.cert.BlockCertParser;
+import com.hyland.android.app.data.cert.BlockCert;
 
 import com.learningmachine.android.test.helpers.FileHelpers;
 

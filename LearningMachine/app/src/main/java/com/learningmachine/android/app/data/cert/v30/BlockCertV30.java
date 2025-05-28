@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.data.cert.v30;
+package com.hyland.android.app.data.cert.v30;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -6,10 +6,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import com.learningmachine.android.app.data.cert.BlockCert;
-import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
-import com.learningmachine.android.app.util.StringUtils;
-import com.learningmachine.android.app.LMConstants;
+import com.hyland.android.app.data.cert.BlockCert;
+import com.hyland.android.app.data.webservice.response.IssuerResponse;
+import com.hyland.android.app.util.StringUtils;
+import com.hyland.android.app.LMConstants;
 
 import timber.log.Timber;
 

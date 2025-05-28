@@ -1,7 +1,7 @@
-package com.learningmachine.android.app.data.webservice.request;
+package com.hyland.android.app.data.webservice.request;
 
 import com.google.gson.annotations.SerializedName;
-import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
+import com.hyland.android.app.data.webservice.response.IssuerResponse;
 
 public class IssuerIntroductionRequest {
     @SerializedName("bitcoinAddress")

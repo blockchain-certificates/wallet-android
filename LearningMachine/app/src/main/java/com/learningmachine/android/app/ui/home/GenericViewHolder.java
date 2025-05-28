@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.ui.home;
+package com.hyland.android.app.ui.home;
 
 import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.RecyclerView;

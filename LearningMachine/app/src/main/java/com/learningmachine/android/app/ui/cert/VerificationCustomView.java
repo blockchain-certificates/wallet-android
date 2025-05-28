@@ -1,12 +1,12 @@
-package com.learningmachine.android.app.ui.cert;
+package com.hyland.android.app.ui.cert;
 
 import android.content.Context;
 import androidx.annotation.Nullable;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
-import com.learningmachine.android.app.data.verifier.VerificationSteps;
-import com.learningmachine.android.app.data.verifier.VerifierStatus;
+import com.hyland.android.app.data.verifier.VerificationSteps;
+import com.hyland.android.app.data.verifier.VerifierStatus;
 
 import java.util.LinkedList;
 import java.util.Queue;

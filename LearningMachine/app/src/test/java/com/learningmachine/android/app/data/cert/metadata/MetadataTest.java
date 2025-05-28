@@ -1,9 +1,9 @@
-package com.learningmachine.android.app.data.cert.metadata;
+package com.hyland.android.app.data.cert.metadata;
 
 import android.content.Context;
 
-import com.learningmachine.android.app.R;
-import com.learningmachine.android.app.data.cert.BlockCert;
+import com.hyland.android.app.R;
+import com.hyland.android.app.data.cert.BlockCert;
 import com.learningmachine.android.test.helpers.BlockCertHelpers;
 
 import org.junit.Before;

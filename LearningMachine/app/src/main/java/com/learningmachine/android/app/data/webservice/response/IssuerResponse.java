@@ -1,10 +1,10 @@
-package com.learningmachine.android.app.data.webservice.response;
+package com.hyland.android.app.data.webservice.response;
 
 import com.google.gson.annotations.SerializedName;
-import com.learningmachine.android.app.data.model.IssuerRecord;
-import com.learningmachine.android.app.data.model.KeyRotation;
-import com.learningmachine.android.app.data.model.TxRecord;
-import com.learningmachine.android.app.util.ListUtils;
+import com.hyland.android.app.data.model.IssuerRecord;
+import com.hyland.android.app.data.model.KeyRotation;
+import com.hyland.android.app.data.model.TxRecord;
+import com.hyland.android.app.util.ListUtils;
 
 import java.util.List;
 

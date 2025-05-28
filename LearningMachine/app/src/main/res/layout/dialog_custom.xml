@@ -10,7 +10,7 @@
         android:background="@color/white">
 
 
-        <com.learningmachine.android.app.ui.LMProgressView
+        <com.hyland.android.app.ui.LMProgressView
             android:id="@+id/progress_bar"
             android:layout_width="36dp"
             android:layout_height="36dp"

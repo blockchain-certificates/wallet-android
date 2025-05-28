@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.ui.onboarding;
+package com.hyland.android.app.ui.onboarding;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -17,15 +17,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.learningmachine.android.app.R;
-import com.learningmachine.android.app.data.bitcoin.BitcoinManager;
-import com.learningmachine.android.app.data.inject.Injector;
-import com.learningmachine.android.app.data.passphrase.PassphraseManager;
-import com.learningmachine.android.app.databinding.FragmentPastePassphraseBinding;
-import com.learningmachine.android.app.ui.LMActivity;
-import com.learningmachine.android.app.ui.home.HomeActivity;
-import com.learningmachine.android.app.util.DialogUtils;
-import com.learningmachine.android.app.util.StringUtils;
+import com.hyland.android.app.R;
+import com.hyland.android.app.data.bitcoin.BitcoinManager;
+import com.hyland.android.app.data.inject.Injector;
+import com.hyland.android.app.data.passphrase.PassphraseManager;
+import com.hyland.android.app.databinding.FragmentPastePassphraseBinding;
+import com.hyland.android.app.ui.LMActivity;
+import com.hyland.android.app.ui.home.HomeActivity;
+import com.hyland.android.app.util.DialogUtils;
+import com.hyland.android.app.util.StringUtils;
 
 import javax.inject.Inject;
 

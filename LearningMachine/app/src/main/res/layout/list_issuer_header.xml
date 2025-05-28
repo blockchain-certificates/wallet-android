@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.learningmachine.android.app.ui.home.IssuerListItemViewModel"/>
+            type="com.hyland.android.app.ui.home.IssuerListItemViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

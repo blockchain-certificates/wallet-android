@@ -1,8 +1,8 @@
-package com.learningmachine.android.app.data.url;
+package com.hyland.android.app.data.url;
 
 import org.junit.Test;
 
-import static com.learningmachine.android.app.data.url.LaunchType.*;
+import static com.hyland.android.app.data.url.LaunchType.*;
 import static junit.framework.Assert.assertEquals;
 
 public class SplashUrlDecoderTest {

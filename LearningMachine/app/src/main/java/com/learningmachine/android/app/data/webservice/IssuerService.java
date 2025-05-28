@@ -1,9 +1,9 @@
-package com.learningmachine.android.app.data.webservice;
+package com.hyland.android.app.data.webservice;
 
-import com.learningmachine.android.app.data.webservice.request.IssuerAnalytic;
-import com.learningmachine.android.app.data.webservice.request.IssuerIntroductionRequest;
-import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
-import com.learningmachine.android.app.data.webservice.response.DidResponse;
+import com.hyland.android.app.data.webservice.request.IssuerAnalytic;
+import com.hyland.android.app.data.webservice.request.IssuerIntroductionRequest;
+import com.hyland.android.app.data.webservice.response.IssuerResponse;
+import com.hyland.android.app.data.webservice.response.DidResponse;
 
 import retrofit2.http.Body;
 import retrofit2.http.GET;

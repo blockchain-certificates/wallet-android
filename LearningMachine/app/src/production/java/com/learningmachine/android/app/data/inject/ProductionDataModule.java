@@ -1,6 +1,6 @@
-package com.learningmachine.android.app.data.inject;
+package com.hyland.android.app.data.inject;
 
-import com.learningmachine.android.app.data.log.NoLoggingTree;
+import com.hyland.android.app.data.log.NoLoggingTree;
 
 import org.bitcoinj.core.NetworkParameters;
 import org.bitcoinj.params.MainNetParams;

@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.ui;
+package com.hyland.android.app.ui;
 
 import android.Manifest;
 import android.content.Context;
@@ -16,12 +16,12 @@ import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 
-import com.learningmachine.android.app.data.inject.Injector;
-import com.learningmachine.android.app.data.passphrase.PassphraseManager;
-import com.learningmachine.android.app.data.preferences.SharedPreferencesManager;
-import com.learningmachine.android.app.ui.home.HomeActivity;
-import com.learningmachine.android.app.ui.issuer.IssuerActivity;
-import com.learningmachine.android.app.ui.settings.SettingsActivity;
+import com.hyland.android.app.data.inject.Injector;
+import com.hyland.android.app.data.passphrase.PassphraseManager;
+import com.hyland.android.app.data.preferences.SharedPreferencesManager;
+import com.hyland.android.app.ui.home.HomeActivity;
+import com.hyland.android.app.ui.issuer.IssuerActivity;
+import com.hyland.android.app.ui.settings.SettingsActivity;
 import com.smallplanet.labalib.Laba;
 import com.trello.rxlifecycle.LifecycleProvider;
 import com.trello.rxlifecycle.LifecycleTransformer;

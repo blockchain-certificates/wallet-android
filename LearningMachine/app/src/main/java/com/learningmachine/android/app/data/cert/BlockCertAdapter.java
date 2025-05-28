@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.data.cert;
+package com.hyland.android.app.data.cert;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -8,10 +8,10 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
-import com.learningmachine.android.app.data.cert.v11.BlockCertV11;
-import com.learningmachine.android.app.data.cert.v12.BlockCertV12;
-import com.learningmachine.android.app.data.cert.v20.BlockCertV20;
-import com.learningmachine.android.app.data.cert.v30.BlockCertV30;
+import com.hyland.android.app.data.cert.v11.BlockCertV11;
+import com.hyland.android.app.data.cert.v12.BlockCertV12;
+import com.hyland.android.app.data.cert.v20.BlockCertV20;
+import com.hyland.android.app.data.cert.v30.BlockCertV30;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;

@@ -3,7 +3,7 @@
     <data>
         <variable
             name="item"
-            type="com.learningmachine.android.app.ui.cert.CertificateInfoItemViewModel"/>
+            type="com.hyland.android.app.ui.cert.CertificateInfoItemViewModel"/>
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

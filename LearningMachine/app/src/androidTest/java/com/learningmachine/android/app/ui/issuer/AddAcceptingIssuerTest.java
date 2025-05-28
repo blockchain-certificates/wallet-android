@@ -1,9 +1,9 @@
-package com.learningmachine.android.app.ui.issuer;
+package com.hyland.android.app.ui.issuer;
 
 import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.rule.ActivityTestRule;
 
-import com.learningmachine.android.app.R;
+import com.hyland.android.app.R;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -38,7 +38,7 @@ public class AddAcceptingIssuerTest {
         onView(withId(R.id.import_button)).perform(click());
 
 //        intended(hasComponent(IssuerActivity.class.getName()));
-//        intended(toPackage("com.learningmachine.android.app.ui.issuer.IssuerActivity"));
+//        intended(toPackage("com.hyland.android.app.ui.issuer.IssuerActivity"));
         Timber.i("Did it work??");
     }
 }

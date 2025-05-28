@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.ui.splash;
+package com.hyland.android.app.ui.splash;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -7,24 +7,24 @@ import android.os.Bundle;
 
 import androidx.fragment.app.FragmentManager;
 
-import com.learningmachine.android.app.R;
-import com.learningmachine.android.app.data.bitcoin.BitcoinManager;
-import com.learningmachine.android.app.data.inject.Injector;
-import com.learningmachine.android.app.data.passphrase.PassphraseManager;
-import com.learningmachine.android.app.data.preferences.SharedPreferencesManager;
-import com.learningmachine.android.app.data.url.LaunchData;
-import com.learningmachine.android.app.data.url.SplashUrlDecoder;
-import com.learningmachine.android.app.dialog.AlertDialogFragment;
-import com.learningmachine.android.app.ui.LMActivity;
-import com.learningmachine.android.app.ui.home.HomeActivity;
-import com.learningmachine.android.app.ui.onboarding.OnboardingActivity;
+import com.hyland.android.app.R;
+import com.hyland.android.app.data.bitcoin.BitcoinManager;
+import com.hyland.android.app.data.inject.Injector;
+import com.hyland.android.app.data.passphrase.PassphraseManager;
+import com.hyland.android.app.data.preferences.SharedPreferencesManager;
+import com.hyland.android.app.data.url.LaunchData;
+import com.hyland.android.app.data.url.SplashUrlDecoder;
+import com.hyland.android.app.dialog.AlertDialogFragment;
+import com.hyland.android.app.ui.LMActivity;
+import com.hyland.android.app.ui.home.HomeActivity;
+import com.hyland.android.app.ui.onboarding.OnboardingActivity;
 
 import javax.inject.Inject;
 
 import timber.log.Timber;
 
-import static com.learningmachine.android.app.data.url.LaunchType.ADD_CERTIFICATE;
-import static com.learningmachine.android.app.data.url.LaunchType.ADD_ISSUER;
+import static com.hyland.android.app.data.url.LaunchType.ADD_CERTIFICATE;
+import static com.hyland.android.app.data.url.LaunchType.ADD_ISSUER;
 
 public class SplashActivity extends LMActivity {
 

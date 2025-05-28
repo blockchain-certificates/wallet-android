@@ -1,18 +1,18 @@
-package com.learningmachine.android.app.ui;
+package com.hyland.android.app.ui;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 
-import com.learningmachine.android.app.R;
-import com.learningmachine.android.app.data.IssuerManager;
-import com.learningmachine.android.app.data.bitcoin.BitcoinManager;
-import com.learningmachine.android.app.data.inject.Injector;
-import com.learningmachine.android.app.data.webservice.request.IssuerIntroductionRequest;
-import com.learningmachine.android.app.util.DialogUtils;
-import com.learningmachine.android.app.util.ErrorUtils;
-import com.learningmachine.android.app.util.StringUtils;
+import com.hyland.android.app.R;
+import com.hyland.android.app.data.IssuerManager;
+import com.hyland.android.app.data.bitcoin.BitcoinManager;
+import com.hyland.android.app.data.inject.Injector;
+import com.hyland.android.app.data.webservice.request.IssuerIntroductionRequest;
+import com.hyland.android.app.util.DialogUtils;
+import com.hyland.android.app.util.ErrorUtils;
+import com.hyland.android.app.util.StringUtils;
 
 import javax.inject.Inject;
 

@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.ui.home;
+package com.hyland.android.app.ui.home;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,11 +8,11 @@ import android.graphics.drawable.BitmapDrawable;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 
-import com.learningmachine.android.app.R;
-import com.learningmachine.android.app.data.model.IssuerRecord;
-import com.learningmachine.android.app.databinding.ListItemIssuerBinding;
-import com.learningmachine.android.app.ui.issuer.IssuerActivity;
-import com.learningmachine.android.app.util.ImageUtils;
+import com.hyland.android.app.R;
+import com.hyland.android.app.data.model.IssuerRecord;
+import com.hyland.android.app.databinding.ListItemIssuerBinding;
+import com.hyland.android.app.ui.issuer.IssuerActivity;
+import com.hyland.android.app.util.ImageUtils;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 

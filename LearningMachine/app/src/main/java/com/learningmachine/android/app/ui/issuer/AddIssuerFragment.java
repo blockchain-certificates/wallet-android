@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.ui.issuer;
+package com.hyland.android.app.ui.issuer;
 
 import android.content.Intent;
 import androidx.databinding.DataBindingUtil;
@@ -14,11 +14,11 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
-import com.learningmachine.android.app.R;
-import com.learningmachine.android.app.databinding.FragmentAddIssuerBinding;
-import com.learningmachine.android.app.ui.LMIssuerBaseFragment;
-import com.learningmachine.android.app.ui.home.HomeActivity;
-import com.learningmachine.android.app.util.StringUtils;
+import com.hyland.android.app.R;
+import com.hyland.android.app.databinding.FragmentAddIssuerBinding;
+import com.hyland.android.app.ui.LMIssuerBaseFragment;
+import com.hyland.android.app.ui.home.HomeActivity;
+import com.hyland.android.app.util.StringUtils;
 
 import timber.log.Timber;
 

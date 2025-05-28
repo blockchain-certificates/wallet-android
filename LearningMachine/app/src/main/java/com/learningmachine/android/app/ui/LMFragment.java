@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.ui;
+package com.hyland.android.app.ui;
 
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
@@ -14,12 +14,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import android.view.View;
 
-import com.learningmachine.android.app.BuildConfig;
-import com.learningmachine.android.app.LMConstants;
-import com.learningmachine.android.app.R;
-import com.learningmachine.android.app.data.inject.Injector;
-import com.learningmachine.android.app.data.webservice.VersionService;
-import com.learningmachine.android.app.util.DialogUtils;
+import com.hyland.android.app.BuildConfig;
+import com.hyland.android.app.LMConstants;
+import com.hyland.android.app.R;
+import com.hyland.android.app.data.inject.Injector;
+import com.hyland.android.app.data.webservice.VersionService;
+import com.hyland.android.app.util.DialogUtils;
 import com.trello.rxlifecycle.LifecycleProvider;
 import com.trello.rxlifecycle.LifecycleTransformer;
 import com.trello.rxlifecycle.RxLifecycle;

@@ -1,12 +1,12 @@
-package com.learningmachine.android.app.data.inject;
+package com.hyland.android.app.data.inject;
 
-import com.learningmachine.android.app.LMConstants;
-import com.learningmachine.android.app.data.webservice.BlockchainService;
-import com.learningmachine.android.app.data.webservice.CertificateInterceptor;
-import com.learningmachine.android.app.data.webservice.CertificateService;
-import com.learningmachine.android.app.data.webservice.IssuerService;
-import com.learningmachine.android.app.data.webservice.LMGsonConverterFactory;
-import com.learningmachine.android.app.data.webservice.VersionService;
+import com.hyland.android.app.LMConstants;
+import com.hyland.android.app.data.webservice.BlockchainService;
+import com.hyland.android.app.data.webservice.CertificateInterceptor;
+import com.hyland.android.app.data.webservice.CertificateService;
+import com.hyland.android.app.data.webservice.IssuerService;
+import com.hyland.android.app.data.webservice.LMGsonConverterFactory;
+import com.hyland.android.app.data.webservice.VersionService;
 
 import java.nio.charset.Charset;
 

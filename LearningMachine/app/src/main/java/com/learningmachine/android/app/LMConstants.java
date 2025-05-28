@@ -1,8 +1,8 @@
-package com.learningmachine.android.app;
+package com.hyland.android.app;
 
 public class LMConstants {
 
-    public static final String INJECTOR_SERVICE = "com.learningmachine.android.app.data.inject.Injector";
+    public static final String INJECTOR_SERVICE = "com.hyland.android.app.data.inject.Injector";
 
     public static final String WALLET_FILE = "learningmachine.wallet";
     public static final int WALLET_SEED_BYTE_SIZE = 32;
@@ -18,8 +18,8 @@ public class LMConstants {
     public static final String ECDSA_KOBLITZ_PUBKEY_PREFIX = "ecdsa-koblitz-pubkey:";
 
     public static final boolean SHOULD_PERFORM_OWNERSHIP_CHECK = false;
-    public static final String PLAY_STORE_URL = "market://details?id=com.learningmachine.android.app";
-    public static final String PLAY_STORE_EXTERNAL_URL = "https://play.google.com/store/apps/details?id=com.learningmachine.android.app";
+    public static final String PLAY_STORE_URL = "market://details?id=com.hyland.android.app";
+    public static final String PLAY_STORE_EXTERNAL_URL = "https://play.google.com/store/apps/details?id=com.hyland.android.app";
 
     public static final String DID_RESOLVER_URL = "https://dev.uniresolver.io/1.0/identifiers";
 }

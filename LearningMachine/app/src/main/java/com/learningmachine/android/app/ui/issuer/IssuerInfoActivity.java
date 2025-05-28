@@ -1,14 +1,14 @@
-package com.learningmachine.android.app.ui.issuer;
+package com.hyland.android.app.ui.issuer;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
-import com.learningmachine.android.app.R;
-import com.learningmachine.android.app.data.IssuerManager;
-import com.learningmachine.android.app.data.inject.Injector;
-import com.learningmachine.android.app.ui.LMSingleFragmentActivity;
+import com.hyland.android.app.R;
+import com.hyland.android.app.data.IssuerManager;
+import com.hyland.android.app.data.inject.Injector;
+import com.hyland.android.app.ui.LMSingleFragmentActivity;
 
 import javax.inject.Inject;
 

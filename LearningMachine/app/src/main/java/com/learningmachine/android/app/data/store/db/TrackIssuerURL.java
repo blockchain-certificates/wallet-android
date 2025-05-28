@@ -1,8 +1,8 @@
-package com.learningmachine.android.app.data.store.db;
+package com.hyland.android.app.data.store.db;
 
 import android.database.sqlite.SQLiteDatabase;
 
-import com.learningmachine.android.app.data.store.LMDatabaseHelper;
+import com.hyland.android.app.data.store.LMDatabaseHelper;
 
 public class TrackIssuerURL implements Migration {
     public static final int BASE_VERSION = 1;

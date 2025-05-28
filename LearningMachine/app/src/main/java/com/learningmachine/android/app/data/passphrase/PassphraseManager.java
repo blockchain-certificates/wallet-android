@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.data.passphrase;
+package com.hyland.android.app.data.passphrase;
 
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
@@ -11,7 +11,7 @@ import android.provider.Settings;
 
 import androidx.annotation.RequiresApi;
 
-import com.learningmachine.android.app.util.AESCrypt;
+import com.hyland.android.app.util.AESCrypt;
 
 import java.io.File;
 import java.io.FileInputStream;

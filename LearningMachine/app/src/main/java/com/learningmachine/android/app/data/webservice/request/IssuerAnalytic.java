@@ -1,10 +1,10 @@
-package com.learningmachine.android.app.data.webservice.request;
+package com.hyland.android.app.data.webservice.request;
 
 import android.annotation.SuppressLint;
 import android.os.Build;
 
 import com.google.gson.annotations.SerializedName;
-import com.learningmachine.android.app.BuildConfig;
+import com.hyland.android.app.BuildConfig;
 
 public class IssuerAnalytic {
 

@@ -1,13 +1,13 @@
-package com.learningmachine.android.app.ui.issuer;
+package com.hyland.android.app.ui.issuer;
 
 import android.content.Context;
 import android.content.Intent;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 
-import com.learningmachine.android.app.data.model.CertificateRecord;
-import com.learningmachine.android.app.databinding.ListItemCertificateBinding;
-import com.learningmachine.android.app.ui.cert.CertificateActivity;
+import com.hyland.android.app.data.model.CertificateRecord;
+import com.hyland.android.app.databinding.ListItemCertificateBinding;
+import com.hyland.android.app.ui.cert.CertificateActivity;
 
 import timber.log.Timber;
 

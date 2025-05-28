@@ -1,4 +1,4 @@
-package com.learningmachine.android.app;
+package com.hyland.android.app;
 
 import android.app.Application;
 import android.content.Context;
@@ -9,15 +9,15 @@ import android.os.Build;
 import androidx.annotation.NonNull;
 import android.webkit.WebView;
 
-import com.learningmachine.android.app.data.CertificateManager;
-import com.learningmachine.android.app.data.IssuerManager;
-import com.learningmachine.android.app.data.inject.Injector;
-import com.learningmachine.android.app.data.inject.LMComponent;
-import com.learningmachine.android.app.data.inject.LMGraph;
-import com.learningmachine.android.app.data.preferences.SharedPreferencesManager;
-import com.learningmachine.android.app.util.BitcoinUtils;
-import com.learningmachine.android.app.util.FileLoggingTree;
-import com.learningmachine.android.app.util.FileUtils;
+import com.hyland.android.app.data.CertificateManager;
+import com.hyland.android.app.data.IssuerManager;
+import com.hyland.android.app.data.inject.Injector;
+import com.hyland.android.app.data.inject.LMComponent;
+import com.hyland.android.app.data.inject.LMGraph;
+import com.hyland.android.app.data.preferences.SharedPreferencesManager;
+import com.hyland.android.app.util.BitcoinUtils;
+import com.hyland.android.app.util.FileLoggingTree;
+import com.hyland.android.app.util.FileUtils;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 

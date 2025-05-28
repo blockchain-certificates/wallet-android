@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.ui.onboarding;
+package com.hyland.android.app.ui.onboarding;
 
 public enum OnboardingScreen {
     ACCOUNT_CHOOSER,

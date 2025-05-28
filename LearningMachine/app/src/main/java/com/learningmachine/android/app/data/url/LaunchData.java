@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.data.url;
+package com.hyland.android.app.data.url;
 
 public class LaunchData {
 

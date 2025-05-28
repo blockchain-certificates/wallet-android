@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.util;
+package com.hyland.android.app.util;
 
 import android.content.Context;
 import android.content.res.AssetManager;

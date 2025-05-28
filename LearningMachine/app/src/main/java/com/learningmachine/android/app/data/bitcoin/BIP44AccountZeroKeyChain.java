@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.data.bitcoin;
+package com.hyland.android.app.data.bitcoin;
 
 import com.google.common.collect.ImmutableList;
 

@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.ui.cert;
+package com.hyland.android.app.ui.cert;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,9 +12,9 @@ import androidx.viewpager.widget.ViewPager;
 import android.view.Menu;
 import android.view.MenuInflater;
 
-import com.learningmachine.android.app.R;
-import com.learningmachine.android.app.databinding.ActivityAddCertificateBinding;
-import com.learningmachine.android.app.ui.LMActivity;
+import com.hyland.android.app.R;
+import com.hyland.android.app.databinding.ActivityAddCertificateBinding;
+import com.hyland.android.app.ui.LMActivity;
 
 import java.util.ArrayList;
 import java.util.List;

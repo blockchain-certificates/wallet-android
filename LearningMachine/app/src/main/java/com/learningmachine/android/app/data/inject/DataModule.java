@@ -1,18 +1,18 @@
-package com.learningmachine.android.app.data.inject;
+package com.hyland.android.app.data.inject;
 
 import android.content.Context;
 
-import com.learningmachine.android.app.data.CertificateManager;
-import com.learningmachine.android.app.data.IssuerManager;
-import com.learningmachine.android.app.data.bitcoin.BitcoinManager;
-import com.learningmachine.android.app.data.passphrase.PassphraseManager;
-import com.learningmachine.android.app.data.preferences.SharedPreferencesManager;
-import com.learningmachine.android.app.data.store.CertificateStore;
-import com.learningmachine.android.app.data.store.ImageStore;
-import com.learningmachine.android.app.data.store.IssuerStore;
-import com.learningmachine.android.app.data.store.LMDatabaseHelper;
-import com.learningmachine.android.app.data.webservice.CertificateService;
-import com.learningmachine.android.app.data.webservice.IssuerService;
+import com.hyland.android.app.data.CertificateManager;
+import com.hyland.android.app.data.IssuerManager;
+import com.hyland.android.app.data.bitcoin.BitcoinManager;
+import com.hyland.android.app.data.passphrase.PassphraseManager;
+import com.hyland.android.app.data.preferences.SharedPreferencesManager;
+import com.hyland.android.app.data.store.CertificateStore;
+import com.hyland.android.app.data.store.ImageStore;
+import com.hyland.android.app.data.store.IssuerStore;
+import com.hyland.android.app.data.store.LMDatabaseHelper;
+import com.hyland.android.app.data.webservice.CertificateService;
+import com.hyland.android.app.data.webservice.IssuerService;
 
 import org.bitcoinj.core.NetworkParameters;
 

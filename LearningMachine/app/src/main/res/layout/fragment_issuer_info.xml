@@ -5,7 +5,7 @@
 
         <variable
             name="issuerInfo"
-            type="com.learningmachine.android.app.ui.issuer.IssuerInfoViewModel"/>
+            type="com.hyland.android.app.ui.issuer.IssuerInfoViewModel"/>
     </data>
 
     <LinearLayout

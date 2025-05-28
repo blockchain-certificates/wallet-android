@@ -1,13 +1,13 @@
-package com.learningmachine.android.app.ui;
+package com.hyland.android.app.ui;
 
 import android.content.Context;
 import android.content.Intent;
 import androidx.fragment.app.Fragment;
 import android.view.KeyEvent;
 
-import com.learningmachine.android.app.R;
-import com.learningmachine.android.app.data.webservice.request.IssuerIntroductionRequest;
-import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
+import com.hyland.android.app.R;
+import com.hyland.android.app.data.webservice.request.IssuerIntroductionRequest;
+import com.hyland.android.app.data.webservice.response.IssuerResponse;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;

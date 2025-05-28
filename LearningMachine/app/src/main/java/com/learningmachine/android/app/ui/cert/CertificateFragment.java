@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.ui.cert;
+package com.hyland.android.app.ui.cert;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -24,20 +24,20 @@ import android.widget.TextView;
 import android.widget.ImageView;
 import java.lang.reflect.Field;
 
-import com.learningmachine.android.app.R;
-import com.learningmachine.android.app.data.CertificateManager;
-import com.learningmachine.android.app.data.IssuerManager;
-import com.learningmachine.android.app.data.cert.BlockCert;
-import com.learningmachine.android.app.data.cert.v20.BlockCertV20;
-import com.learningmachine.android.app.data.error.ExceptionWithResourceString;
-import com.learningmachine.android.app.data.inject.Injector;
-import com.learningmachine.android.app.data.model.CertificateRecord;
-import com.learningmachine.android.app.data.model.IssuerRecord;
-import com.learningmachine.android.app.databinding.FragmentCertificateBinding;
-import com.learningmachine.android.app.dialog.AlertDialogFragment;
-import com.learningmachine.android.app.ui.LMFragment;
-import com.learningmachine.android.app.util.DialogUtils;
-import com.learningmachine.android.app.util.FileUtils;
+import com.hyland.android.app.R;
+import com.hyland.android.app.data.CertificateManager;
+import com.hyland.android.app.data.IssuerManager;
+import com.hyland.android.app.data.cert.BlockCert;
+import com.hyland.android.app.data.cert.v20.BlockCertV20;
+import com.hyland.android.app.data.error.ExceptionWithResourceString;
+import com.hyland.android.app.data.inject.Injector;
+import com.hyland.android.app.data.model.CertificateRecord;
+import com.hyland.android.app.data.model.IssuerRecord;
+import com.hyland.android.app.databinding.FragmentCertificateBinding;
+import com.hyland.android.app.dialog.AlertDialogFragment;
+import com.hyland.android.app.ui.LMFragment;
+import com.hyland.android.app.util.DialogUtils;
+import com.hyland.android.app.util.FileUtils;
 
 import java.io.File;
 
@@ -49,7 +49,7 @@ import timber.log.Timber;
 public class CertificateFragment extends LMFragment {
 
     private static final String ARG_CERTIFICATE_UUID = "CertificateFragment.CertificateUuid";
-    private static final String FILE_PROVIDER_AUTHORITY = "com.learningmachine.android.app.fileprovider";
+    private static final String FILE_PROVIDER_AUTHORITY = "com.hyland.android.app.fileprovider";
     private static final String TEXT_MIME_TYPE = "text/plain";
 
     @Inject

@@ -1,8 +1,8 @@
-package com.learningmachine.android.app.data.cert.v11;
+package com.hyland.android.app.data.cert.v11;
 
 import com.google.gson.JsonObject;
-import com.learningmachine.android.app.data.cert.BlockCert;
-import com.learningmachine.android.app.data.webservice.response.IssuerResponse;
+import com.hyland.android.app.data.cert.BlockCert;
+import com.hyland.android.app.data.webservice.response.IssuerResponse;
 
 import org.joda.time.DateTime;
 

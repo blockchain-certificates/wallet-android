@@ -1,13 +1,13 @@
-package com.learningmachine.android.app.data.store;
+package com.hyland.android.app.data.store;
 
 import android.content.Context;
 
-import com.learningmachine.android.app.data.cert.BlockCert;
-import com.learningmachine.android.app.data.cert.v12.BlockCertV12;
-import com.learningmachine.android.app.data.cert.v20.Badge;
-import com.learningmachine.android.app.data.cert.v20.BlockCertV20;
-import com.learningmachine.android.app.data.cert.v20.Issuer;
-import com.learningmachine.android.app.data.model.CertificateRecord;
+import com.hyland.android.app.data.cert.BlockCert;
+import com.hyland.android.app.data.cert.v12.BlockCertV12;
+import com.hyland.android.app.data.cert.v20.Badge;
+import com.hyland.android.app.data.cert.v20.BlockCertV20;
+import com.hyland.android.app.data.cert.v20.Issuer;
+import com.hyland.android.app.data.model.CertificateRecord;
 
 import org.junit.Before;
 import org.junit.Test;

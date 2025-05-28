@@ -1,10 +1,10 @@
-package com.learningmachine.android.app.ui.settings.passphrase;
+package com.hyland.android.app.ui.settings.passphrase;
 
 import android.content.Context;
 import android.content.Intent;
 import androidx.fragment.app.Fragment;
 
-import com.learningmachine.android.app.ui.LMSingleFragmentActivity;
+import com.hyland.android.app.ui.LMSingleFragmentActivity;
 
 public class RevealPassphraseActivity extends LMSingleFragmentActivity {
 

@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.data.error;
+package com.hyland.android.app.data.error;
 
 public class IssuerAnalyticsException extends Exception {
     public IssuerAnalyticsException() {

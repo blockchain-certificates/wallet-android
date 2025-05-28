@@ -1,4 +1,4 @@
-package com.learningmachine.android.app;
+package com.hyland.android.app;
 
 public class TestLMApplication extends LMApplication {
 

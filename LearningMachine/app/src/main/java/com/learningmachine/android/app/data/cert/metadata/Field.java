@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.data.cert.metadata;
+package com.hyland.android.app.data.cert.metadata;
 
 public class Field {
     private String mTitle;

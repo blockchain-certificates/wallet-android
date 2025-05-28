@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.data.model;
+package com.hyland.android.app.data.model;
 
 public class Version {
     public String android;

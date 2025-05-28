@@ -1,4 +1,4 @@
-package com.learningmachine.android.app.ui.issuer;
+package com.hyland.android.app.ui.issuer;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,18 +15,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.learningmachine.android.app.R;
-import com.learningmachine.android.app.data.CertificateManager;
-import com.learningmachine.android.app.data.IssuerManager;
-import com.learningmachine.android.app.data.inject.Injector;
-import com.learningmachine.android.app.data.model.CertificateRecord;
-import com.learningmachine.android.app.data.model.IssuerRecord;
-import com.learningmachine.android.app.databinding.FragmentIssuerBinding;
-import com.learningmachine.android.app.databinding.ListCertificateHeaderBinding;
-import com.learningmachine.android.app.databinding.ListItemCertificateBinding;
-import com.learningmachine.android.app.ui.LMFragment;
-import com.learningmachine.android.app.ui.cert.AddCertificateActivity;
-import com.learningmachine.android.app.util.DialogUtils;
+import com.hyland.android.app.R;
+import com.hyland.android.app.data.CertificateManager;
+import com.hyland.android.app.data.IssuerManager;
+import com.hyland.android.app.data.inject.Injector;
+import com.hyland.android.app.data.model.CertificateRecord;
+import com.hyland.android.app.data.model.IssuerRecord;
+import com.hyland.android.app.databinding.FragmentIssuerBinding;
+import com.hyland.android.app.databinding.ListCertificateHeaderBinding;
+import com.hyland.android.app.databinding.ListItemCertificateBinding;
+import com.hyland.android.app.ui.LMFragment;
+import com.hyland.android.app.ui.cert.AddCertificateActivity;
+import com.hyland.android.app.util.DialogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
