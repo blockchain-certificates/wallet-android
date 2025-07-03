@@ -2,21 +2,21 @@ apply plugin: 'com.android.application'
 
 android {
     namespace "com.learningmachine.android.app"
-    compileSdkVersion 34
+    compileSdkVersion 35
     dexOptions {
         javaMaxHeapSize "4g"
     }
     defaultConfig {
         applicationId "com.learningmachine.android.app"
-        minSdkVersion 31
-        targetSdkVersion 34
-        versionName "3.2.1"
+        minSdkVersion 28
+        targetSdkVersion 35
+        versionName "3.3.0"
         def buildNumber = System.getenv("BUILD_NUMBER")
         if (buildNumber != null) {
             versionCode buildNumber.toInteger()
             versionNameSuffix "-" + buildNumber
         } else {
-            versionCode 63
+            versionCode 64
         }
 
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
