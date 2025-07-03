@@ -105,16 +105,16 @@ public class AddCertificateFileFragment extends LMFragment {
 
 
     private final View.OnClickListener mOnClickListener = v -> {
-//        String readPermission = Manifest.permission.READ_EXTERNAL_STORAGE;
-//
-//        if (ContextCompat.checkSelfPermission(getContext(),
-//                readPermission) != PackageManager.PERMISSION_GRANTED) {
-//            ActivityCompat.requestPermissions(getActivity(),
-//                    new String[]{readPermission},
-//                    REQUEST_READ_STORAGE);
-//            Timber.d("Requesting external storage read permission");
-//            return;
-//        }
+        String readPermission = Manifest.permission.READ_EXTERNAL_STORAGE;
+
+        if (ContextCompat.checkSelfPermission(getContext(),
+                readPermission) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[]{readPermission},
+                    REQUEST_READ_STORAGE);
+            Timber.d("Requesting external storage read permission");
+            return;
+        }
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
             Intent openJsonCertificateIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
@@ -128,7 +128,7 @@ public class AddCertificateFileFragment extends LMFragment {
                 FileFilter filter = new JsonFilter();
                 File[] files = downloadDir.listFiles(filter);
                 if (files == null) {
-                    Timber.e("Unable to list files");
+                    Timber.e("Unable to list files, no JSON files found");
                     return;
                 }
 
