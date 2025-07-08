@@ -17,6 +17,7 @@ import org.joda.time.DateTime;
 
 import java.util.ArrayList;
 import java.util.List;
+import timber.log.Timber;
 
 public class IssuerStore implements DataStore {
 
@@ -74,11 +75,17 @@ public class IssuerStore implements DataStore {
         }
 
         if (loadIssuer(issuerUuid) == null) {
+            Timber.i("IssuerStore saving new issuer to DB %s with uuid %s",
+                    issuer.getName(),
+                    issuerUuid);
             contentValues.put(LMDatabaseHelper.Column.Issuer.UUID, issuerUuid);
             mDatabase.insert(LMDatabaseHelper.Table.ISSUER,
                     null,
                     contentValues);
         } else {
+            Timber.i("IssuerStore updating existing issuer in DB %s with uuid %s",
+                    issuer.getName(),
+                    issuerUuid);
             mDatabase.update(LMDatabaseHelper.Table.ISSUER,
                     contentValues, LMDatabaseHelper.Column.Issuer.UUID + " = ?",
                     new String[] {issuerUuid});
