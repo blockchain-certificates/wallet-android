@@ -26,15 +26,6 @@ git:
   submodules: false
 
 before_install:
-#  - mkdir -p $ANDROID_HOME/cmdline-tools
-#  - wget https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -O cmdline-tools.zip
-#  - unzip -q cmdline-tools.zip -d $ANDROID_HOME/cmdline-tools
-#  - mv $ANDROID_HOME/cmdline-tools/cmdline-tools $ANDROID_HOME/cmdline-tools/latest
-#  - yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --sdk_root=${ANDROID_HOME} "platforms;android-${TARGET_VERSION}" "build-tools;${ANDROID_BUILD_TOOLS_VERSION}" "platform-tools"
-#
-#  # Accept all SDK licenses
-#  - yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
-
   # Fix for Travis SSH URL in submodules
   - sed --in-place -e "s/git@github.com:/https:\/\/github.com\//" .gitmodules
   - git submodule update --init --recursive
