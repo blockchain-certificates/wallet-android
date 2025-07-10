@@ -2,6 +2,7 @@ dist: xenial
 language: android
 jdk:
   - oraclejdk17
+edge: true
 
 env:
   global:
