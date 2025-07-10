@@ -1,5 +1,7 @@
 package com.learningmachine.android.app.ui.cert;
 
+import android.os.Build;
+
 import android.Manifest;
 import android.app.Activity;
 import android.content.ContentResolver;
@@ -105,38 +107,20 @@ public class AddCertificateFileFragment extends LMFragment {
 
 
     private final View.OnClickListener mOnClickListener = v -> {
-        String readPermission = android.os.Build.VERSION.SDK_INT >= 33 ? Manifest.permission.READ_MEDIA_IMAGES : Manifest.permission.READ_EXTERNAL_STORAGE;
-
-        if (ContextCompat.checkSelfPermission(getContext(),
-                readPermission) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(),
-                    new String[]{readPermission},
-                    REQUEST_READ_STORAGE);
-            Timber.d("Requesting external storage read permission");
-            return;
+        Intent openFileIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        openFileIntent.addCategory(Intent.CATEGORY_OPENABLE);
+        openFileIntent.setType("*/*"); // Use a generic type to support custom extensions
+        if (Build.VERSION.SDK_INT >= 32) {
+            // limit selection to JSON files
+            String[] mimeTypes = {
+                    "application/json",             // For .json
+                    "application/ld+json",          // Official MIME type for .jsonld
+            };
+            openFileIntent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
         }
+        openFileIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
-            Intent openJsonCertificateIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-            openJsonCertificateIntent.addCategory(Intent.CATEGORY_OPENABLE);
-            openJsonCertificateIntent.addFlags(FLAG_GRANT_READ_URI_PERMISSION);
-            openJsonCertificateIntent.setType("application/json");
-            startActivityForResult(openJsonCertificateIntent, REQUEST_SELECT_FILE);
-        } else {
-            File downloadDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-            if (downloadDir.exists()) {
-                FileFilter filter = new JsonFilter();
-                File[] files = downloadDir.listFiles(filter);
-                if (files == null) {
-                    Timber.e("Unable to list files, no JSON files found");
-                    return;
-                }
-
-                // filter to json files, check if 0
-                // show snackbar
-                showFileDialog(files);
-            }
-        }
+        startActivityForResult(openFileIntent, REQUEST_SELECT_FILE);
     };
 
     @Override
