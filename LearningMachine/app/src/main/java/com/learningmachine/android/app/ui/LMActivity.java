@@ -283,7 +283,7 @@ public abstract class LMActivity extends AppCompatActivity implements LifecycleP
         super.onActivityResult(requestCode, resultCode, data);
 
         if (mStorePassphraseBackupUri != null) {
-            Timber.i("Going to store passphrase backup to URI: %s", mStorePassphraseBackupUri
+            Timber.i("Going to store passphrase backup to URI: %s", mStorePassphraseBackupUri);
             mPassphraseManager.storePassphraseBackup(mStorePassphraseBackupUri);
             mStorePassphraseBackupUri = null;
         } else if (mRetrievePassphraseBackupUri != null) {
