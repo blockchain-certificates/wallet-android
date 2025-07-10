@@ -20,6 +20,8 @@ import com.learningmachine.android.app.ui.LMFragment;
 import com.learningmachine.android.app.util.DialogUtils;
 import com.smallplanet.labalib.Laba;
 
+import timber.log.Timber;
+
 import javax.inject.Inject;
 
 public class RevealPassphraseFragment extends LMFragment {
@@ -83,19 +85,7 @@ public class RevealPassphraseFragment extends LMFragment {
     protected void onSave() {
         ((LMActivity)getActivity()).askToSavePassphraseToDevice(mPassphrase, (passphrase) -> {
             if(passphrase == null) {
-                if(Build.VERSION.SDK_INT >= 23) {
-                    return;
-                }
-                DialogUtils.showAlertDialog(getContext(), this,
-                        R.drawable.ic_dialog_failure,
-                        getResources().getString(R.string.onboarding_passphrase_permissions_error_title),
-                        getResources().getString(R.string.onboarding_passphrase_permissions_error),
-                        getResources().getString(R.string.ok_button),
-                        null,
-                        (btnIdx) -> {
-                            HandleBackupOptionCompleted(null);
-                            return null;
-                        });
+                Timber.e("Failed to save passphrase to device, passphrase is null");
                 return;
             }
 

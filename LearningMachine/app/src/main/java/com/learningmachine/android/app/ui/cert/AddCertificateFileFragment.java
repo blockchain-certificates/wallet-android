@@ -128,7 +128,7 @@ public class AddCertificateFileFragment extends LMFragment {
                 FileFilter filter = new JsonFilter();
                 File[] files = downloadDir.listFiles(filter);
                 if (files == null) {
-                    Timber.e("Unable to list files");
+                    Timber.e("Unable to list files, no JSON files found");
                     return;
                 }
 

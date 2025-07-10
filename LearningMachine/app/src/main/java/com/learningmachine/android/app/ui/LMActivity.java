@@ -36,6 +36,8 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.subjects.BehaviorSubject;
 
+import timber.log.Timber;
+
 import static android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION;
 import static android.content.Intent.FLAG_GRANT_WRITE_URI_PERMISSION;
 
@@ -85,6 +87,7 @@ public abstract class LMActivity extends AppCompatActivity implements LifecycleP
 
     @Override
     protected void onStart() {
+        Timber.i("onStart called for %s", this.getClass().getSimpleName());
         super.onStart();
         mLifecycleSubject.onNext(ActivityEvent.START);
         /*
@@ -95,20 +98,8 @@ public abstract class LMActivity extends AppCompatActivity implements LifecycleP
         setupActionBar();
 
         Class c = this.getClass();
-        if(c == HomeActivity.class || c == IssuerActivity.class || c == SettingsActivity.class) {
+        if (c == HomeActivity.class || c == IssuerActivity.class || c == SettingsActivity.class) {
             lastImportantClassSeen = c;
-        }
-
-        if (mStorePassphraseBackupUri != null) {
-            mPassphraseManager.storePassphraseBackup(mStorePassphraseBackupUri);
-            mStorePassphraseBackupUri = null;
-        } else if (mRetrievePassphraseBackupUri != null) {
-            mPassphraseManager.getPassphraseBackup(mRetrievePassphraseBackupUri);
-            mRetrievePassphraseBackupUri = null;
-        } else if (mCanceledRequest == REQUEST_CREATE_BACKUP ||
-                mCanceledRequest == REQUEST_RESTORE_BACKUP) {
-            mPassphraseManager.handleCanceledRequest();
-            mCanceledRequest = 0;
         }
     }
 
@@ -236,11 +227,7 @@ public abstract class LMActivity extends AppCompatActivity implements LifecycleP
     private PassphraseManager.PassphraseCallback passphraseCallback = null;
 
     public void askToSavePassphraseToDevice(String passphrase, PassphraseManager.PassphraseCallback callback) {
-        if (Build.VERSION.SDK_INT >= 23) {
-            createPassphraseBackup(passphrase, callback);
-        } else {
-            mPassphraseManager.savePassphraseInLegacyStorage(passphrase, callback);
-        }
+        createPassphraseBackup(passphrase, callback);
     }
 
     public void askToGetPassphraseFromDevice(PassphraseManager.PassphraseCallback passphraseCallback) {
@@ -264,6 +251,7 @@ public abstract class LMActivity extends AppCompatActivity implements LifecycleP
     }
 
     private void createPassphraseBackup(String passphrase, PassphraseManager.PassphraseCallback callback) {
+        Timber.i("Saving passphrase backup file content: %s", passphrase);
         mPassphraseManager.initPassphraseBackup(passphrase, callback);
         Intent createBackupIntent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
         createBackupIntent.addCategory(Intent.CATEGORY_OPENABLE);
@@ -293,6 +281,21 @@ public abstract class LMActivity extends AppCompatActivity implements LifecycleP
             mCanceledRequest = requestCode;
         }
         super.onActivityResult(requestCode, resultCode, data);
+
+        if (mStorePassphraseBackupUri != null) {
+            Timber.i("Going to store passphrase backup to URI: %s", mStorePassphraseBackupUri);
+            mPassphraseManager.storePassphraseBackup(mStorePassphraseBackupUri);
+            mStorePassphraseBackupUri = null;
+        } else if (mRetrievePassphraseBackupUri != null) {
+            Timber.i("Going to retrieve passphrase backup from URI: %s", mRetrievePassphraseBackupUri);
+            mPassphraseManager.getPassphraseBackup(mRetrievePassphraseBackupUri);
+            mRetrievePassphraseBackupUri = null;
+        } else if (mCanceledRequest == REQUEST_CREATE_BACKUP ||
+                mCanceledRequest == REQUEST_RESTORE_BACKUP) {
+            Timber.i("Passphrase backup request was canceled, clearing request state.");
+            mPassphraseManager.handleCanceledRequest();
+            mCanceledRequest = 0;
+        }
     }
 
     private boolean didReceivePermissionsCallback = false;

@@ -117,6 +117,7 @@ public class PassphraseManager {
 
     private void storePassphraseBackup(String passphrase, PrintWriter out, PassphraseCallback callback) {
         if (passphrase == null) {
+            Timber.e("Passphrase is null, cannot store backup.");
             callback.apply(null);
             return;
         }
@@ -124,10 +125,12 @@ public class PassphraseManager {
         String encryptionKey= getDeviceId();
         String mneumonicString = "mneumonic:"+passphrase;
         try {
+            Timber.i("Storing passphrase backup with encryption.");
             String encryptedMsg = AESCrypt.encrypt(encryptionKey, mneumonicString);
             out.println(encryptedMsg);
             out.flush();
             out.close();
+            Timber.i("Passphrase backup stored successfully. Calling callback.");
             callback.apply(passphrase);
         } catch (GeneralSecurityException e){
             Timber.e(e, "Could not encrypt passphrase.");
