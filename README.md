@@ -113,7 +113,7 @@ public class TemplateFragment {
 }
 ```
 
-We suggest the following method orgainization:
+We suggest the following method organization:
 
 1. newInstance and other static methods
 
