@@ -10,13 +10,13 @@ android {
         applicationId "com.learningmachine.android.app"
         minSdkVersion 28
         targetSdkVersion 36
-        versionName "3.3.0"
+        versionName "3.4.0"
         def buildNumber = System.getenv("BUILD_NUMBER")
         if (buildNumber != null) {
             versionCode buildNumber.toInteger()
             versionNameSuffix "-" + buildNumber
         } else {
-            versionCode 65
+            versionCode 66
         }
 
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
